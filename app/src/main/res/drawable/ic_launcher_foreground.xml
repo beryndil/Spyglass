@@ -3,49 +3,87 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+
+    <!-- Spyglass telescope — smooth, polished style, centered and rotated -->
+
     <group
-        android:translateX="22"
-        android:translateY="22"
-        android:scaleX="2"
-        android:scaleY="2">
-    <!-- Dark outline -->
-    <path android:fillColor="#28190A"
-        android:pathData="M27,6h4v1h-4z M26,7h1v1h-1z M30,7h1v1h-1z M23,8h3v1h-3z M30,8h1v1h-1z M30,9h1v1h-1z M21,10h2v1h-2z M30,10h1v1h-1z M20,11h1v1h-1z M30,11h1v1h-1z M17,12h3v1h-3z M30,12h1v1h-1z M16,13h1v1h-1z M29,13h1v1h-1z M14,14h2v1h-2z M27,14h2v1h-2z M13,15h1v1h-1z M26,15h1v1h-1z M11,16h2v1h-2z M22,16h4v1h-4z M10,17h1v1h-1z M20,17h2v1h-2z M7,18h3v1h-3z M17,18h3v1h-3z M6,19h1v1h-1z M16,19h1v1h-1z M4,20h2v1h-2z M11,20h5v1h-5z M3,21h1v1h-1z M10,21h1v1h-1z M2,22h1v1h-1z M7,22h3v1h-3z M2,23h1v1h-1z M5,23h2v1h-2z M2,24h3v1h-3z"/>
-    <!-- Copper body (medium) -->
-    <path android:fillColor="#B98C2D"
-        android:pathData="M27,10h1v1h-1z M26,11h2v1h-2z M23,12h4v1h-4z M20,13h1v1h-1z M23,13h3v1h-3z M17,14h4v1h-4z M16,15h5v1h-5z M14,16h6v1h-6z M14,17h3v1h-3z M11,18h1v1h-1z M14,18h2v1h-2z M10,19h1v1h-1z M7,20h3v1h-3z M6,21h1v1h-1z"/>
-    <!-- Copper body (dark) -->
-    <path android:fillColor="#825A19"
-        android:pathData="M27,12h1v1h-1z M26,13h2v1h-2z M23,14h4v1h-4z M23,15h3v1h-3z M20,16h1v1h-1z M17,17h3v1h-3z M16,18h1v1h-1z M11,19h1v1h-1z M14,19h2v1h-2z M10,20h1v1h-1z M7,21h3v1h-3z M6,22h1v1h-1z"/>
-    <!-- Copper body (bright) -->
-    <path android:fillColor="#D7AF41"
-        android:pathData="M27,8h1v1h-1z M26,9h2v1h-2z M23,10h4v1h-4z M23,11h3v1h-3z M11,17h1v1h-1z M10,18h1v1h-1z M7,19h3v1h-3z M6,20h1v1h-1z"/>
-    <!-- Copper highlight -->
-    <path android:fillColor="#F0D26E"
-        android:pathData="M27,7h1v1h-1z M26,8h1v1h-1z M23,9h3v1h-3z M20,12h1v1h-1z M17,13h3v1h-3z M16,14h1v1h-1z M14,15h2v1h-2z"/>
-    <!-- Dark accent -->
-    <path android:fillColor="#5A3C0F"
-        android:pathData="M21,11h2v1h-2z M21,12h1v1h-1z M22,14h1v1h-1z M21,15h2v1h-2z M13,16h1v1h-1z M21,16h1v1h-1z M12,17h1v1h-1z M12,19h2v1h-2z"/>
-    <!-- Mid accent -->
-    <path android:fillColor="#9B7323"
-        android:pathData="M22,12h1v1h-1z M21,13h2v1h-2z M21,14h1v1h-1z M13,17h1v1h-1z M12,18h2v1h-2z"/>
-    <!-- Blue lens (medium) -->
-    <path android:fillColor="#417DC3"
-        android:pathData="M28,8h2v1h-2z M28,9h1v1h-1z M29,12h1v1h-1z M28,13h1v1h-1z"/>
-    <!-- Handle dark -->
-    <path android:fillColor="#462D0F"
-        android:pathData="M4,22h2v1h-2z M3,23h2v1h-2z"/>
-    <!-- Blue lens (light) -->
-    <path android:fillColor="#6EAFE6"
-        android:pathData="M29,9h1v1h-1z M28,10h2v1h-2z"/>
-    <!-- Blue lens (highlight) -->
-    <path android:fillColor="#BEE1FA"
-        android:pathData="M28,11h2v1h-2z M28,12h1v1h-1z"/>
-    <!-- Handle mid -->
-    <path android:fillColor="#6E5019"
-        android:pathData="M4,21h2v1h-2z M3,22h1v1h-1z"/>
-    <!-- Blue lens (dark) -->
-    <path android:fillColor="#234B87"
-        android:pathData="M28,7h2v1h-2z"/>
+        android:translateX="16"
+        android:translateY="-2"
+        android:pivotX="54"
+        android:pivotY="54"
+        android:rotation="-40">
+
+        <!-- === HANDLE (bottom-left grip) === -->
+        <path
+            android:fillColor="#6E5019"
+            android:pathData="M38,68 L44,68 Q46,68 46,66 L46,60 Q46,58 44,58 L38,58 Q36,58 36,60 L36,66 Q36,68 38,68 Z"/>
+        <path
+            android:fillColor="#9B7323"
+            android:pathData="M38,58 L40,58 Q38,58 38,60 L38,66 Q38,68 40,68 L38,68 Q36,68 36,66 L36,60 Q36,58 38,58 Z"/>
+        <path
+            android:fillColor="#462D0F"
+            android:pathData="M44,58 L44,68 Q46,68 46,66 L46,60 Q46,58 44,58 Z"/>
+
+        <!-- === MAIN TUBE (body of spyglass) === -->
+        <path
+            android:fillColor="#B98C2D"
+            android:pathData="M36,58 L46,58 L50,32 L32,32 Z"/>
+        <path
+            android:fillColor="#D7AF41"
+            android:pathData="M36,58 L32,32 L36,32 L39,58 Z"/>
+        <path
+            android:fillColor="#F0D26E"
+            android:pathData="M36,58 L33,32 L35,32 L37.5,58 Z"/>
+        <path
+            android:fillColor="#825A19"
+            android:pathData="M44,58 L48,32 L50,32 L46,58 Z"/>
+        <path
+            android:fillColor="#5A3C0F"
+            android:pathData="M45.5,58 L49.5,32 L50,32 L46,58 Z"/>
+
+        <!-- === COPPER RING (top of tube) === -->
+        <path
+            android:fillColor="#D7AF41"
+            android:pathData="M30,33 Q30,30 33,30 L49,30 Q52,30 52,33 L52,34 L30,34 Z"/>
+        <path
+            android:fillColor="#F0D26E"
+            android:pathData="M30,33 Q30,30 33,30 L37,30 Q34,30 34,33 L34,34 L30,34 Z"/>
+        <path
+            android:fillColor="#825A19"
+            android:pathData="M48,30 Q52,30 52,33 L52,34 L50,34 L50,33 Q50,31 48,30 Z"/>
+
+        <!-- === COPPER RING (bottom near handle) === -->
+        <path
+            android:fillColor="#D7AF41"
+            android:pathData="M34,57 L48,57 L48,60 L34,60 Z"/>
+        <path
+            android:fillColor="#F0D26E"
+            android:pathData="M34,57 L37,57 L37,60 L34,60 Z"/>
+        <path
+            android:fillColor="#825A19"
+            android:pathData="M46,57 L48,57 L48,60 L46,60 Z"/>
+
+        <!-- === LENS HOUSING === -->
+        <path
+            android:fillColor="#28190A"
+            android:pathData="M28,30 Q28,26 32,26 L50,26 Q54,26 54,30 L54,32 L28,32 Z"/>
+        <path
+            android:fillColor="#462D0F"
+            android:pathData="M30,30 Q30,28 32,28 L50,28 Q52,28 52,30 L52,31 L30,31 Z"/>
+
+        <!-- === BLUE LENS === -->
+        <path
+            android:fillColor="#234B87"
+            android:pathData="M32,28 L50,28 Q51,28 51,29 L51,30 L31,30 L31,29 Q31,28 32,28 Z"/>
+        <path
+            android:fillColor="#417DC3"
+            android:pathData="M33,27 L49,27 Q50,27 50,28 L50,29 L32,29 L32,28 Q32,27 33,27 Z"/>
+        <path
+            android:fillColor="#6EAFE6"
+            android:pathData="M34,26.5 L48,26.5 Q49,26.5 49,27.5 L49,28 L33,28 L33,27.5 Q33,26.5 34,26.5 Z"/>
+        <path
+            android:fillColor="#BEE1FA"
+            android:pathData="M35,26.5 L40,26.5 L40,27.5 L35,27.5 Z"/>
+
     </group>
 </vector>

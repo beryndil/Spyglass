@@ -228,6 +228,7 @@ object BlockTextures {
         "end_stone_bricks" to R.drawable.block_end_stone_bricks,
         "purpur_pillar" to R.drawable.block_purpur_pillar,
         "grindstone" to R.drawable.block_grindstone,
+        "stonecutter" to R.drawable.block_stonecutter,
         "smithing_table" to R.drawable.block_smithing_table,
         "cartography_table" to R.drawable.block_cartography_table,
         "loom" to R.drawable.block_loom,

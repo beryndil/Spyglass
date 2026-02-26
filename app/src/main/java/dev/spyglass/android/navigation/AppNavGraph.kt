@@ -1,10 +1,7 @@
 package dev.spyglass.android.navigation
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -91,15 +88,7 @@ private fun SpyglassTopBar(navController: NavHostController) {
     ) {
 
         Row(
-            modifier = Modifier
-                .weight(1f)
-                .clickable {
-                    navController.navigate(TopDest.Calculators.route) {
-                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                },
+            modifier = Modifier.weight(1f),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
@@ -111,7 +100,7 @@ private fun SpyglassTopBar(navController: NavHostController) {
             SpyglassIconImage(
                 icon = SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.ic_launcher_foreground),
                 contentDescription = null,
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(32.dp),
                 tint = Color.Unspecified,
             )
         }

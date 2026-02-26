@@ -68,13 +68,22 @@ fun PotionsScreen(vm: PotionsViewModel = viewModel()) {
                 }
                 BrowseListItem(
                     headline    = p.name,
-                    supporting  = p.effect.ifBlank { p.ingredientPath },
-                    leadingIcon = PixelIcons.Potion,
-                    leadingIconTint = PotionBlue,
+                    supporting  = buildString {
+                        if (p.effect.isNotBlank() && p.effect != "none") append(p.effect)
+                        if (p.ingredientPath.isNotBlank()) {
+                            if (isNotEmpty()) append("\n")
+                            append("Brew: ${p.ingredientPath}")
+                        }
+                    },
+                    supportingMaxLines = 3,
+                    leadingIcon = PotionTextures.get(p.id) ?: PixelIcons.Potion,
                     trailing    = {
                         Column(horizontalAlignment = Alignment.End) {
-                            if (p.durationSeconds > 0)
-                                Text("${p.durationSeconds}s", style = MaterialTheme.typography.bodySmall, color = Gold)
+                            if (p.durationSeconds > 0) {
+                                val mins = p.durationSeconds / 60
+                                val secs = p.durationSeconds % 60
+                                Text("${mins}:%02d".format(secs), style = MaterialTheme.typography.bodySmall, color = Gold)
+                            }
                             Spacer(Modifier.height(2.dp))
                             CategoryBadge(label = p.category, color = catColor)
                         }
