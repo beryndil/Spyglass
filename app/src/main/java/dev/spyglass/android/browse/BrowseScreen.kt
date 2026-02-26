@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.spyglass.android.browse.biomes.BiomesScreen
 import dev.spyglass.android.browse.blocks.BlocksScreen
@@ -15,6 +16,8 @@ import dev.spyglass.android.browse.trades.TradesScreen
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassTab
 import dev.spyglass.android.core.ui.SpyglassTabRow
+import dev.spyglass.android.data.repository.GameDataRepository
+import kotlinx.coroutines.flow.map
 
 private val BROWSE_TABS = listOf(
     SpyglassTab("Blocks",   PixelIcons.Blocks),
@@ -34,14 +37,25 @@ fun BrowseScreen() {
     var targetBlockId by remember { mutableStateOf<String?>(null) }
     var targetRecipeId by remember { mutableStateOf<String?>(null) }
 
-    // Cross-tab item navigation callback
+    // Collect block IDs so we can route item taps to the correct tab
+    val context = LocalContext.current
+    val repo = remember { GameDataRepository.get(context) }
+    val blockIds by repo.searchBlocks("").map { list -> list.map { it.id }.toSet() }
+        .collectAsState(initial = emptySet())
+
+    // Cross-tab item navigation — route to Blocks if item is a block, else Recipes
     val onItemTap: (String) -> Unit = { itemId ->
-        // Try blocks tab first, then recipes tab
-        targetBlockId = itemId
-        targetRecipeId = null
         targetMobId = null
         targetBiomeId = null
-        tab = 0  // Navigate to Blocks tab
+        if (itemId in blockIds) {
+            targetBlockId = itemId
+            targetRecipeId = null
+            tab = 0  // Navigate to Blocks tab
+        } else {
+            targetRecipeId = itemId
+            targetBlockId = null
+            tab = 1  // Navigate to Recipes tab
+        }
     }
 
     val onBiomeTap: (String) -> Unit = { biomeId ->

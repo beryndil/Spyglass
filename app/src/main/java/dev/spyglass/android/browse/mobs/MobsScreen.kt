@@ -157,7 +157,7 @@ fun MobsScreen(
                             Column(horizontalAlignment = Alignment.End) {
                                 CategoryBadge(label = m.category, color = categoryColor)
                                 Spacer(Modifier.height(2.dp))
-                                Text("HP ${m.health.toInt()}", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                                Text("HP ${m.health}", style = MaterialTheme.typography.bodySmall, color = Stone500)
                             }
                         },
                     )
@@ -194,8 +194,8 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit) {
         }
 
         // Stats
-        StatRow("Health", "${mob.health.toInt()} HP")
-        StatRow("XP Drop", "${mob.xpDrop}")
+        StatRow("Health", "${mob.health} HP")
+        StatRow("XP Drop", mob.xpDrop)
         if (mob.isFireImmune) StatRow("Fire Immune", "Yes")
 
         // Drops

@@ -31,11 +31,11 @@ data class RecipeEntity(
 data class MobEntity(
     @PrimaryKey val id: String,
     val name: String,
-    val health: Float,
+    val health: String,             // "20" or "1-16" for size-based mobs
     val category: String,           // "hostile", "neutral", "passive", "boss"
     val spawnBiomesJson: String = "[]",
     val dropsJson: String = "[]",   // JSON: [{id, name, minCount, maxCount, chance}]
-    val xpDrop: Int = 0,
+    val xpDrop: String = "0",       // "5" or "1-4" for size-based mobs
     val isFireImmune: Boolean = false,
     val description: String = "",
 )

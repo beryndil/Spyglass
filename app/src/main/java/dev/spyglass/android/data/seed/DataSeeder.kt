@@ -66,7 +66,7 @@ object DataSeeder {
 
     @Serializable data class PotionJson(
         val id: String, val name: String, val effect: String = "",
-        val durationSeconds: Int = 0, val amplifier: Int = 0,
+        val duration: Int = 0, val amplifier: Int = 0,
         val category: String = "positive", val ingredientPath: String = "",
         val color: String = "",
     )
@@ -100,12 +100,12 @@ object DataSeeder {
         val raw = runCatching { readAsset(context, "minecraft/mobs.json") }.getOrNull() ?: return
         val items = json.decodeFromString<List<MobJson>>(raw)
         db.mobDao().insertAll(items.map {
-            val healthFloat = it.health.toString().trim('"').toFloatOrNull() ?: 20f
-            val xpInt = it.xp.toString().trim('"').toIntOrNull() ?: 0
+            val healthStr = it.health.toString().trim('"')
+            val xpStr = it.xp.toString().trim('"')
             val biomesList = if (it.spawnBiomes.isBlank()) "[]"
                 else "[${it.spawnBiomes.split(",").joinToString(",") { s -> "\"${s.trim()}\""}}]"
-            MobEntity(it.id, it.name, healthFloat, it.hostility.ifEmpty { it.category },
-                biomesList, it.drops, xpInt, it.isFireImmune, it.description)
+            MobEntity(it.id, it.name, healthStr, it.hostility.ifEmpty { it.category },
+                biomesList, it.drops, xpStr, it.isFireImmune, it.description)
         })
     }
 
@@ -132,7 +132,7 @@ object DataSeeder {
         val raw = runCatching { readAsset(context, "minecraft/potions.json") }.getOrNull() ?: return
         val items = json.decodeFromString<List<PotionJson>>(raw)
         db.potionDao().insertAll(items.map {
-            PotionEntity(it.id, it.name, it.effect, it.durationSeconds, it.amplifier,
+            PotionEntity(it.id, it.name, it.effect, it.duration, it.amplifier,
                 it.category, it.ingredientPath, it.color)
         })
     }
