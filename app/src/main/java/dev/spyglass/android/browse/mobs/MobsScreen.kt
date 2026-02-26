@@ -84,11 +84,19 @@ private fun parseBiomes(biomesJson: String): List<String> {
 private fun formatId(id: String): String =
     id.replace('_', ' ').replaceFirstChar { it.uppercase() }
 
+// Structure IDs that should be clickable in mob spawn locations
+private val STRUCTURE_IDS = setOf(
+    "nether_fortress", "ocean_monument", "woodland_mansion", "pillager_outpost",
+    "stronghold", "village", "swamp_hut", "bastion_remnant", "trial_chamber",
+    "mineshaft", "desert_village",
+)
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MobsScreen(
     targetMobId: String? = null,
     onNavigateToBiome: (biomeId: String) -> Unit = {},
+    onNavigateToStructure: (structureId: String) -> Unit = {},
     vm: MobsViewModel = viewModel(),
 ) {
     val query      by vm.query.collectAsState()
@@ -165,7 +173,7 @@ fun MobsScreen(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
                     ) {
-                        MobDetailCard(m, onNavigateToBiome)
+                        MobDetailCard(m, onNavigateToBiome, onNavigateToStructure)
                     }
                 }
             }
@@ -182,7 +190,7 @@ fun MobsScreen(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit) {
+private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit) {
     val drops  = parseDrops(mob.dropsJson)
     val biomes = parseBiomes(mob.spawnBiomesJson)
 
@@ -214,7 +222,17 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit) {
             Text("Found in", style = MaterialTheme.typography.labelSmall, color = Gold)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 biomes.forEach { biomeId ->
-                    if (biomeId in SPECIAL_LOCATIONS) {
+                    if (biomeId in STRUCTURE_IDS) {
+                        AssistChip(
+                            onClick = { onStructureTap(biomeId) },
+                            label = { Text(formatId(biomeId), style = MaterialTheme.typography.labelSmall) },
+                            colors = AssistChipDefaults.assistChipColors(
+                                labelColor = Gold,
+                                containerColor = Gold.copy(alpha = 0.12f),
+                            ),
+                            border = null,
+                        )
+                    } else if (biomeId in SPECIAL_LOCATIONS) {
                         CategoryBadge(label = formatId(biomeId), color = Stone500)
                     } else {
                         AssistChip(

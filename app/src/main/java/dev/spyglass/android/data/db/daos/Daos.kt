@@ -135,3 +135,18 @@ interface TradeDao {
     @Query("SELECT COUNT(*) FROM trades")
     suspend fun count(): Int
 }
+
+@Dao
+interface StructureDao {
+    @Query("SELECT * FROM structures WHERE name LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name")
+    fun search(q: String): Flow<List<StructureEntity>>
+
+    @Query("SELECT * FROM structures ORDER BY name")
+    fun all(): Flow<List<StructureEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(items: List<StructureEntity>)
+
+    @Query("SELECT COUNT(*) FROM structures")
+    suspend fun count(): Int
+}

@@ -1,0 +1,37 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Castle/tower pixel art icon -->
+    <!-- Base fill -->
+    <path android:fillColor="#888888"
+        android:pathData="M1,15h14v-1h-14z"/>
+    <!-- Main wall -->
+    <path android:fillColor="#888888"
+        android:pathData="M2,14h12v-7h-12z"/>
+    <!-- Left tower -->
+    <path android:fillColor="#888888"
+        android:pathData="M1,7h4v-4h-4z"/>
+    <!-- Right tower -->
+    <path android:fillColor="#888888"
+        android:pathData="M11,7h4v-4h-4z"/>
+    <!-- Crenellations left tower -->
+    <path android:fillColor="#888888"
+        android:pathData="M1,3h1v-2h-1z M3,3h1v-2h-1z"/>
+    <!-- Crenellations right tower -->
+    <path android:fillColor="#888888"
+        android:pathData="M12,3h1v-2h-1z M14,3h1v-2h-1z"/>
+    <!-- Crenellations main wall -->
+    <path android:fillColor="#888888"
+        android:pathData="M5,7h1v-1h-1z M7,7h2v-1h-2z M10,7h1v-1h-1z"/>
+    <!-- Door -->
+    <path android:fillColor="#444444"
+        android:pathData="M7,14h2v-3h-2z"/>
+    <!-- Windows -->
+    <path android:fillColor="#444444"
+        android:pathData="M4,11h2v-2h-2z M10,11h2v-2h-2z"/>
+    <!-- Tower windows -->
+    <path android:fillColor="#444444"
+        android:pathData="M2,5h2v-1h-2z M12,5h2v-1h-2z"/>
+</vector>

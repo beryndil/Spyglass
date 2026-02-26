@@ -12,6 +12,7 @@ import dev.spyglass.android.browse.crafting.CraftingScreen
 import dev.spyglass.android.browse.enchants.EnchantsScreen
 import dev.spyglass.android.browse.mobs.MobsScreen
 import dev.spyglass.android.browse.potions.PotionsScreen
+import dev.spyglass.android.browse.structures.StructuresScreen
 import dev.spyglass.android.browse.trades.TradesScreen
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassTab
@@ -21,13 +22,14 @@ import dev.spyglass.android.navigation.BrowseTarget
 import kotlinx.coroutines.flow.map
 
 private val BROWSE_TABS = listOf(
-    SpyglassTab("Blocks",   PixelIcons.Blocks),
-    SpyglassTab("Recipes",  PixelIcons.Crafting),
-    SpyglassTab("Mobs",     PixelIcons.Mob),
-    SpyglassTab("Biomes",   PixelIcons.Biome),
-    SpyglassTab("Enchants", PixelIcons.Enchant),
-    SpyglassTab("Potions",  PixelIcons.Potion),
-    SpyglassTab("Trades",   PixelIcons.Trade),
+    SpyglassTab("Blocks",     PixelIcons.Blocks),
+    SpyglassTab("Recipes",    PixelIcons.Crafting),
+    SpyglassTab("Mobs",       PixelIcons.Mob),
+    SpyglassTab("Biomes",     PixelIcons.Biome),
+    SpyglassTab("Enchants",   PixelIcons.Enchant),
+    SpyglassTab("Potions",    PixelIcons.Potion),
+    SpyglassTab("Trades",     PixelIcons.Trade),
+    SpyglassTab("Structures", PixelIcons.Structure),
 )
 
 @Composable
@@ -37,17 +39,19 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
     var targetBiomeId by remember { mutableStateOf<String?>(null) }
     var targetBlockId by remember { mutableStateOf<String?>(null) }
     var targetRecipeId by remember { mutableStateOf<String?>(null) }
+    var targetStructureId by remember { mutableStateOf<String?>(null) }
 
     // Handle incoming navigation from Search
     LaunchedEffect(initialTarget) {
         if (initialTarget != null) {
             tab = initialTarget.tab
-            targetMobId = null; targetBiomeId = null; targetBlockId = null; targetRecipeId = null
+            targetMobId = null; targetBiomeId = null; targetBlockId = null; targetRecipeId = null; targetStructureId = null
             when (initialTarget.tab) {
                 0 -> targetBlockId = initialTarget.id
                 1 -> targetRecipeId = initialTarget.id
                 2 -> targetMobId = initialTarget.id
                 3 -> targetBiomeId = initialTarget.id
+                7 -> targetStructureId = initialTarget.id
                 // Tabs 4-6 (enchants, potions, trades) just switch to the tab
             }
         }
@@ -63,6 +67,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
     val onItemTap: (String) -> Unit = { itemId ->
         targetMobId = null
         targetBiomeId = null
+        targetStructureId = null
         if (itemId in blockIds) {
             targetBlockId = itemId
             targetRecipeId = null
@@ -79,7 +84,17 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
         targetBlockId = null
         targetRecipeId = null
         targetMobId = null
+        targetStructureId = null
         tab = 3  // Navigate to Biomes tab
+    }
+
+    val onStructureTap: (String) -> Unit = { structureId ->
+        targetStructureId = structureId
+        targetBlockId = null
+        targetRecipeId = null
+        targetMobId = null
+        targetBiomeId = null
+        tab = 7  // Navigate to Structures tab
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -92,6 +107,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                 targetBiomeId = null
                 targetBlockId = null
                 targetRecipeId = null
+                targetStructureId = null
             },
         )
         HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp)
@@ -114,8 +130,10 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                     targetMobId = null
                     targetBlockId = null
                     targetRecipeId = null
+                    targetStructureId = null
                     tab = 3
                 },
+                onNavigateToStructure = onStructureTap,
             )
             3 -> BiomesScreen(
                 targetBiomeId = targetBiomeId,
@@ -124,12 +142,27 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                     targetBiomeId = null
                     targetBlockId = null
                     targetRecipeId = null
+                    targetStructureId = null
                     tab = 2
                 },
+                onNavigateToStructure = onStructureTap,
             )
             4 -> EnchantsScreen()
             5 -> PotionsScreen()
             6 -> TradesScreen()
+            7 -> StructuresScreen(
+                targetStructureId = targetStructureId,
+                onNavigateToMob = { mobId ->
+                    targetMobId = mobId
+                    targetBiomeId = null
+                    targetBlockId = null
+                    targetRecipeId = null
+                    targetStructureId = null
+                    tab = 2
+                },
+                onNavigateToBiome = onBiomeTap,
+                onItemTap = onItemTap,
+            )
         }
     }
 }

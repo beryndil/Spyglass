@@ -16,18 +16,20 @@ import dev.spyglass.android.data.db.entities.*
         EnchantEntity::class,
         PotionEntity::class,
         TradeEntity::class,
+        StructureEntity::class,
     ],
-    version = 6,
+    version = 8,
     exportSchema = false,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
-    abstract fun blockDao():   BlockDao
-    abstract fun recipeDao():  RecipeDao
-    abstract fun mobDao():     MobDao
-    abstract fun biomeDao():   BiomeDao
-    abstract fun enchantDao(): EnchantDao
-    abstract fun potionDao():  PotionDao
-    abstract fun tradeDao():   TradeDao
+    abstract fun blockDao():     BlockDao
+    abstract fun recipeDao():    RecipeDao
+    abstract fun mobDao():       MobDao
+    abstract fun biomeDao():     BiomeDao
+    abstract fun enchantDao():   EnchantDao
+    abstract fun potionDao():    PotionDao
+    abstract fun tradeDao():     TradeDao
+    abstract fun structureDao(): StructureDao
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null

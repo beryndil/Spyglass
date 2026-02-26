@@ -91,3 +91,17 @@ data class TradeEntity(
     val sellItem: String,
     val sellItemCount: Int,
 )
+
+@Entity(tableName = "structures")
+data class StructureEntity(
+    @PrimaryKey val id: String,
+    val name: String,
+    val dimension: String,
+    val difficulty: String = "",
+    val description: String = "",
+    val biomes: String = "",        // comma-separated biome IDs
+    val mobs: String = "",          // comma-separated mob IDs
+    val loot: String = "",          // comma-separated item IDs
+    val uniqueBlocks: String = "",  // comma-separated block IDs
+    val findMethod: String = "",
+)

@@ -24,7 +24,8 @@ object DataSeeder {
         if (db.enchantDao().count() == 0) seedEnchants(context, db)
         if (db.potionDao().count()  == 0) seedPotions(context, db)
         if (db.tradeDao().count()   == 0) seedTrades(context, db)
-        if (db.recipeDao().count()  == 0) seedRecipes(context, db)
+        if (db.recipeDao().count()    == 0) seedRecipes(context, db)
+        if (db.structureDao().count() == 0) seedStructures(context, db)
     }
 
     private fun readAsset(context: Context, path: String): String =
@@ -83,6 +84,13 @@ object DataSeeder {
         val id: String, val outputItem: String, val outputCount: Int = 1,
         val type: String = "crafting_shaped",
         val ingredientsJson: String = "[]",
+    )
+
+    @Serializable data class StructureJson(
+        val id: String, val name: String, val dimension: String = "overworld",
+        val difficulty: String = "", val description: String = "",
+        val biomes: String = "", val mobs: String = "", val loot: String = "",
+        val uniqueBlocks: String = "", val findMethod: String = "",
     )
 
     // ── Seed helpers ──────────────────────────────────────────────────────────
@@ -155,6 +163,15 @@ object DataSeeder {
         db.recipeDao().insertAll(items.map {
             RecipeEntity(it.id, it.outputItem, it.outputCount, it.type,
                 it.ingredientsJson, "")
+        })
+    }
+
+    private suspend fun seedStructures(context: Context, db: SpyglassDatabase) {
+        val raw = runCatching { readAsset(context, "minecraft/structures.json") }.getOrNull() ?: return
+        val items = json.decodeFromString<List<StructureJson>>(raw)
+        db.structureDao().insertAll(items.map {
+            StructureEntity(it.id, it.name, it.dimension, it.difficulty,
+                it.description, it.biomes, it.mobs, it.loot, it.uniqueBlocks, it.findMethod)
         })
     }
 }

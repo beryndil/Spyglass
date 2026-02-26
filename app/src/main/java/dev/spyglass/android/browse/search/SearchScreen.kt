@@ -40,22 +40,25 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
                 repo.searchEnchants(q),
                 repo.searchPotions(q),
                 repo.searchTrades(q),
+                repo.searchStructures(q),
             ) { results ->
-                val blocks   = (results[0] as List<*>)
-                val recipes  = (results[1] as List<*>)
-                val mobs     = (results[2] as List<*>)
-                val biomes   = (results[3] as List<*>)
-                val enchants = (results[4] as List<*>)
-                val potions  = (results[5] as List<*>)
-                val trades   = (results[6] as List<*>)
+                val blocks     = (results[0] as List<*>)
+                val recipes    = (results[1] as List<*>)
+                val mobs       = (results[2] as List<*>)
+                val biomes     = (results[3] as List<*>)
+                val enchants   = (results[4] as List<*>)
+                val potions    = (results[5] as List<*>)
+                val trades     = (results[6] as List<*>)
+                val structures = (results[7] as List<*>)
                 buildList {
-                    addAll(blocks.take(5).map   { it as dev.spyglass.android.data.db.entities.BlockEntity;   SearchResult("Block",       it.id, it.name, it.category) })
-                    addAll(recipes.take(5).map  { it as dev.spyglass.android.data.db.entities.RecipeEntity;  SearchResult("Recipe",      it.outputItem, it.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { c -> c.uppercase() }, it.type.replace('_', ' ')) })
-                    addAll(mobs.take(5).map     { it as dev.spyglass.android.data.db.entities.MobEntity;     SearchResult("Mob",         it.id, it.name, it.category) })
-                    addAll(biomes.take(5).map   { it as dev.spyglass.android.data.db.entities.BiomeEntity;   SearchResult("Biome",       it.id, it.name, it.category) })
-                    addAll(enchants.take(5).map { it as dev.spyglass.android.data.db.entities.EnchantEntity; SearchResult("Enchantment", it.id, it.name, it.target) })
-                    addAll(potions.take(5).map  { it as dev.spyglass.android.data.db.entities.PotionEntity;  SearchResult("Potion",      it.id, it.name, it.category) })
-                    addAll(trades.take(5).map   { it as dev.spyglass.android.data.db.entities.TradeEntity;   SearchResult("Trade",       it.profession, "${it.sellItem.replace('_', ' ')} (${it.levelName})", it.profession) })
+                    addAll(blocks.take(5).map   { it as dev.spyglass.android.data.db.entities.BlockEntity;     SearchResult("Block",       it.id, it.name, it.category) })
+                    addAll(recipes.take(5).map  { it as dev.spyglass.android.data.db.entities.RecipeEntity;    SearchResult("Recipe",      it.outputItem, it.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { c -> c.uppercase() }, it.type.replace('_', ' ')) })
+                    addAll(mobs.take(5).map     { it as dev.spyglass.android.data.db.entities.MobEntity;       SearchResult("Mob",         it.id, it.name, it.category) })
+                    addAll(biomes.take(5).map   { it as dev.spyglass.android.data.db.entities.BiomeEntity;     SearchResult("Biome",       it.id, it.name, it.category) })
+                    addAll(enchants.take(5).map { it as dev.spyglass.android.data.db.entities.EnchantEntity;   SearchResult("Enchantment", it.id, it.name, it.target) })
+                    addAll(potions.take(5).map  { it as dev.spyglass.android.data.db.entities.PotionEntity;    SearchResult("Potion",      it.id, it.name, it.category) })
+                    addAll(trades.take(5).map   { it as dev.spyglass.android.data.db.entities.TradeEntity;     SearchResult("Trade",       it.profession, "${it.sellItem.replace('_', ' ')} (${it.levelName})", it.profession) })
+                    addAll(structures.take(5).map { it as dev.spyglass.android.data.db.entities.StructureEntity; SearchResult("Structure",  it.id, it.name, it.dimension) })
                 }
             }
         }
@@ -64,7 +67,7 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
     fun setQuery(q: String) { _query.value = q }
 }
 
-/** Maps search result type → browse tab index */
+/** Maps search result type -> browse tab index */
 fun browseTabForType(type: String): Int = when (type) {
     "Block"       -> 0
     "Recipe"      -> 1
@@ -73,6 +76,7 @@ fun browseTabForType(type: String): Int = when (type) {
     "Enchantment" -> 4
     "Potion"      -> 5
     "Trade"       -> 6
+    "Structure"   -> 7
     else          -> 0
 }
 
@@ -84,6 +88,7 @@ private fun typeIcon(type: String): SpyglassIcon = when (type) {
     "Enchantment" -> PixelIcons.Enchant
     "Potion"      -> PixelIcons.Potion
     "Trade"       -> PixelIcons.Trade
+    "Structure"   -> PixelIcons.Structure
     else          -> PixelIcons.Search
 }
 
@@ -95,6 +100,7 @@ private fun typeColor(type: String) = when (type) {
     "Enchantment" -> EnderPurple
     "Potion"      -> PotionBlue
     "Trade"       -> Emerald
+    "Structure"   -> Gold
     else          -> Stone500
 }
 
@@ -109,7 +115,7 @@ fun SearchScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search all Minecraft data…", color = Stone500) },
+            placeholder = { Text("Search all Minecraft data\u2026", color = Stone500) },
             leadingIcon = { Icon(Icons.Default.Search, null, tint = Stone500) },
             singleLine = true,
             colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
@@ -120,7 +126,7 @@ fun SearchScreen(
             EmptyState(
                 icon     = PixelIcons.Search,
                 title    = "Search everything",
-                subtitle = "Type at least 2 characters to search blocks, mobs, biomes, recipes, trades, and more.",
+                subtitle = "Type at least 2 characters to search blocks, mobs, biomes, structures, recipes, trades, and more.",
             )
         } else {
             LazyColumn(

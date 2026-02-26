@@ -92,6 +92,7 @@ private fun parseBiomeColor(hex: String): Color? =
 fun BiomesScreen(
     targetBiomeId: String? = null,
     onNavigateToMob: (mobId: String) -> Unit = {},
+    onNavigateToStructure: (structureId: String) -> Unit = {},
     vm: BiomesViewModel = viewModel(),
 ) {
     val query       by vm.query.collectAsState()
@@ -139,7 +140,7 @@ fun BiomesScreen(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
                     ) {
-                        BiomeDetailCard(b, onNavigateToMob)
+                        BiomeDetailCard(b, onNavigateToMob, onNavigateToStructure)
                     }
                 }
             }
@@ -175,7 +176,7 @@ private fun BiomeListItem(b: BiomeEntity, onClick: () -> Unit) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun BiomeDetailCard(biome: BiomeEntity, onMobTap: (String) -> Unit) {
+private fun BiomeDetailCard(biome: BiomeEntity, onMobTap: (String) -> Unit, onStructureTap: (String) -> Unit) {
     val bgColor   = parseBiomeColor(biome.color) ?: SurfaceDark
     val isLight   = (0.299 * bgColor.red + 0.587 * bgColor.green + 0.114 * bgColor.blue) > 0.5
     val textColor    = if (isLight) Background else Stone100
@@ -213,13 +214,14 @@ private fun BiomeDetailCard(biome: BiomeEntity, onMobTap: (String) -> Unit) {
             Text("Structures", style = MaterialTheme.typography.labelSmall, color = labelColor)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 structures.forEach { s ->
-                    Text(
-                        text = formatId(s),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = textColor,
-                        modifier = Modifier
-                            .background(textColor.copy(alpha = 0.12f), RoundedCornerShape(4.dp))
-                            .padding(horizontal = 8.dp, vertical = 2.dp),
+                    AssistChip(
+                        onClick = { onStructureTap(s) },
+                        label = { Text(formatId(s), style = MaterialTheme.typography.labelSmall) },
+                        colors = AssistChipDefaults.assistChipColors(
+                            labelColor = textColor,
+                            containerColor = textColor.copy(alpha = 0.15f),
+                        ),
+                        border = null,
                     )
                 }
             }

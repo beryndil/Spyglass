@@ -41,6 +41,9 @@ class GameDataRepository(context: Context) {
     fun searchTrades(q: String): Flow<List<TradeEntity>>    = if (q.isBlank()) db.tradeDao().all() else db.tradeDao().search(q)
     fun tradesByProfession(prof: String): Flow<List<TradeEntity>> = db.tradeDao().byProfession(prof)
 
+    // Structures
+    fun searchStructures(q: String): Flow<List<StructureEntity>> = if (q.isBlank()) db.structureDao().all() else db.structureDao().search(q)
+
     companion object {
         @Volatile private var INSTANCE: GameDataRepository? = null
         fun get(context: Context) = INSTANCE ?: synchronized(this) {
