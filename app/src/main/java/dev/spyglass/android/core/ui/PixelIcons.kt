@@ -22,4 +22,5 @@ object PixelIcons {
     val Search    = SpyglassIcon.Drawable(R.drawable.ic_pixel_search)
     val SearchOff = SpyglassIcon.Drawable(R.drawable.ic_pixel_search_off)
     val Bookmark  = SpyglassIcon.Drawable(R.drawable.ic_pixel_bookmark)
+    val Menu      = SpyglassIcon.Drawable(R.drawable.ic_pixel_menu)
 }

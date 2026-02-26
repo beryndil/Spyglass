@@ -1,9 +1,10 @@
 package dev.spyglass.android.navigation
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -11,10 +12,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dev.spyglass.android.about.AboutScreen
 import dev.spyglass.android.calculators.CalculatorsScreen
 import dev.spyglass.android.browse.BrowseScreen
 import dev.spyglass.android.browse.search.SearchScreen
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.settings.SettingsScreen
 
 sealed class TopDest(val route: String, val label: String, val icon: SpyglassIcon) {
     data object Calculators : TopDest("calculators", "Calculators", PixelIcons.Calculator)
@@ -24,6 +27,8 @@ sealed class TopDest(val route: String, val label: String, val icon: SpyglassIco
 
 val TOP_DESTINATIONS = listOf(TopDest.Calculators, TopDest.Browse, TopDest.Search)
 
+private val SUB_ROUTES = setOf("about", "settings")
+
 /** Pending navigation target from Search → Browse */
 data class BrowseTarget(val tab: Int, val id: String)
 
@@ -32,8 +37,13 @@ fun AppNavGraph() {
     val navController: NavHostController = rememberNavController()
     var pendingTarget by remember { mutableStateOf<BrowseTarget?>(null) }
 
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route
+    val showBars = currentRoute !in SUB_ROUTES
+
     Scaffold(
-        bottomBar = { BottomNavBar(navController) },
+        topBar    = { SpyglassTopBar(navController) },
+        bottomBar = { if (showBars) BottomNavBar(navController) },
     ) { innerPadding ->
         NavHost(
             navController    = navController,
@@ -55,9 +65,68 @@ fun AppNavGraph() {
                     }
                 })
             }
+            composable("about") { AboutScreen() }
+            composable("settings") { SettingsScreen() }
         }
     }
 }
+
+// ── Top bar ──────────────────────────────────────────────────────────────────
+
+@Composable
+private fun SpyglassTopBar(navController: NavHostController) {
+    var menuExpanded by remember { mutableStateOf(false) }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+    ) {
+        Text(
+            text  = "SPYGLASS",
+            style = MaterialTheme.typography.labelSmall,
+            color = Gold,
+        )
+
+        Box {
+            IconButton(onClick = { menuExpanded = true }) {
+                SpyglassIconImage(
+                    icon = PixelIcons.Menu,
+                    contentDescription = "Menu",
+                    modifier = Modifier.size(20.dp),
+                )
+            }
+            DropdownMenu(
+                expanded = menuExpanded,
+                onDismissRequest = { menuExpanded = false },
+            ) {
+                DropdownMenuItem(
+                    text = { Text("Settings") },
+                    onClick = {
+                        menuExpanded = false
+                        navController.navigate("settings") {
+                            launchSingleTop = true
+                        }
+                    },
+                )
+                DropdownMenuItem(
+                    text = { Text("About") },
+                    onClick = {
+                        menuExpanded = false
+                        navController.navigate("about") {
+                            launchSingleTop = true
+                        }
+                    },
+                )
+            }
+        }
+    }
+}
+
+// ── Bottom nav ───────────────────────────────────────────────────────────────
 
 @Composable
 fun BottomNavBar(navController: NavHostController) {
