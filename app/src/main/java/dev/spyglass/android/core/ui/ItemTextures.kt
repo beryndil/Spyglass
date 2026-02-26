@@ -218,7 +218,7 @@ object ItemTextures {
         "spruce_fence_gate" to R.drawable.item_spruce_fence_gate,
         "spruce_pressure_plate" to R.drawable.item_spruce_pressure_plate,
         "spruce_sign" to R.drawable.item_spruce_sign,
-        "spyglass" to R.drawable.item_spyglass,
+        "spyglass" to R.drawable.ic_launcher_foreground,
         "stick" to R.drawable.item_stick,
         "stone_axe" to R.drawable.item_stone_axe,
         "stone_hoe" to R.drawable.item_stone_hoe,

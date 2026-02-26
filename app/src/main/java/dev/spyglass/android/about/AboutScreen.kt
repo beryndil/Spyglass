@@ -163,7 +163,7 @@ fun AboutScreen(onBack: () -> Unit = {}) {
                     style = MaterialTheme.typography.bodyMedium,
                     color = Gold,
                     modifier = Modifier.clickable {
-                        uriHandler.openUri("https://github.com/Provim-Gaming/Entity-Icons")
+                        uriHandler.openUri("https://github.com/Simplexity-Development/Entity-Icons")
                     },
                 )
             }

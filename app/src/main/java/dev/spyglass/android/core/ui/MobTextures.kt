@@ -1,0 +1,90 @@
+package dev.spyglass.android.core.ui
+
+import dev.spyglass.android.R
+
+/**
+ * Texture lookup for all Minecraft mob entities.
+ * Icons sourced from Entity-Icons (CC0 1.0).
+ */
+object MobTextures {
+    private val map = mapOf(
+        "allay" to R.drawable.mob_allay,
+        "armadillo" to R.drawable.mob_armadillo,
+        "axolotl" to R.drawable.mob_axolotl,
+        "bat" to R.drawable.mob_bat,
+        "bee" to R.drawable.mob_bee,
+        "blaze" to R.drawable.mob_blaze,
+        "bogged" to R.drawable.mob_bogged,
+        "breeze" to R.drawable.mob_breeze,
+        "camel" to R.drawable.mob_camel,
+        "cat" to R.drawable.mob_cat,
+        "cave_spider" to R.drawable.mob_cave_spider,
+        "chicken" to R.drawable.mob_chicken,
+        "cow" to R.drawable.mob_cow,
+        "creaking" to R.drawable.mob_creaking,
+        "creeper" to R.drawable.mob_creeper,
+        "dolphin" to R.drawable.mob_dolphin,
+        "donkey" to R.drawable.mob_donkey,
+        "drowned" to R.drawable.mob_drowned,
+        "elder_guardian" to R.drawable.mob_elder_guardian,
+        "ender_dragon" to R.drawable.mob_ender_dragon,
+        "enderman" to R.drawable.mob_enderman,
+        "endermite" to R.drawable.mob_endermite,
+        "evoker" to R.drawable.mob_evoker,
+        "fox" to R.drawable.mob_fox,
+        "frog" to R.drawable.mob_frog,
+        "ghast" to R.drawable.mob_ghast,
+        "glow_squid" to R.drawable.mob_glow_squid,
+        "goat" to R.drawable.mob_goat,
+        "guardian" to R.drawable.mob_guardian,
+        "hoglin" to R.drawable.mob_hoglin,
+        "horse" to R.drawable.mob_horse,
+        "husk" to R.drawable.mob_husk,
+        "iron_golem" to R.drawable.mob_iron_golem,
+        "llama" to R.drawable.mob_llama,
+        "magma_cube" to R.drawable.mob_magma_cube,
+        "mooshroom" to R.drawable.mob_mooshroom,
+        "mule" to R.drawable.mob_mule,
+        "ocelot" to R.drawable.mob_ocelot,
+        "panda" to R.drawable.mob_panda,
+        "parrot" to R.drawable.mob_parrot,
+        "phantom" to R.drawable.mob_phantom,
+        "pig" to R.drawable.mob_pig,
+        "piglin" to R.drawable.mob_piglin,
+        "piglin_brute" to R.drawable.mob_piglin_brute,
+        "pillager" to R.drawable.mob_pillager,
+        "polar_bear" to R.drawable.mob_polar_bear,
+        "pufferfish" to R.drawable.mob_pufferfish,
+        "rabbit" to R.drawable.mob_rabbit,
+        "ravager" to R.drawable.mob_ravager,
+        "sheep" to R.drawable.mob_sheep,
+        "shulker" to R.drawable.mob_shulker,
+        "silverfish" to R.drawable.mob_silverfish,
+        "skeleton" to R.drawable.mob_skeleton,
+        "slime" to R.drawable.mob_slime,
+        "sniffer" to R.drawable.mob_sniffer,
+        "snow_golem" to R.drawable.mob_snow_golem,
+        "spider" to R.drawable.mob_spider,
+        "squid" to R.drawable.mob_squid,
+        "stray" to R.drawable.mob_stray,
+        "strider" to R.drawable.mob_strider,
+        "turtle" to R.drawable.mob_turtle,
+        "vex" to R.drawable.mob_vex,
+        "villager" to R.drawable.mob_villager,
+        "vindicator" to R.drawable.mob_vindicator,
+        "wandering_trader" to R.drawable.mob_wandering_trader,
+        "warden" to R.drawable.mob_warden,
+        "witch" to R.drawable.mob_witch,
+        "wither" to R.drawable.mob_wither,
+        "wither_skeleton" to R.drawable.mob_wither_skeleton,
+        "wolf" to R.drawable.mob_wolf,
+        "zombie" to R.drawable.mob_zombie,
+        "zombie_pigman" to R.drawable.mob_zombie_pigman,
+        "zoglin" to R.drawable.mob_zoglin,
+    )
+
+    fun get(mobId: String): SpyglassIcon? {
+        val resId = map[mobId] ?: return null
+        return SpyglassIcon.Drawable(resId)
+    }
+}
