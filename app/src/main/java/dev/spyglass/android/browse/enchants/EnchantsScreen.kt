@@ -39,6 +39,12 @@ class EnchantsViewModel(app: Application) : AndroidViewModel(app) {
     fun setTarget(t: String) { _target.value = t }
 }
 
+private fun formatTarget(target: String): String =
+    target.split(",").joinToString(", ") {
+        it.trim().replace('_', ' ').replaceFirstChar { c -> c.uppercase() }
+    }
+
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
     val query   by vm.query.collectAsState()
@@ -54,9 +60,12 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
             colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
-        Row(modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            listOf("all", "armor", "sword", "tool", "bow", "crossbow", "fishing_rod").forEach { t ->
+        FlowRow(
+            modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            listOf("all", "armor", "sword", "bow", "crossbow", "trident", "mace", "fishing_rod").forEach { t ->
                 FilterChip(selected = target == t, onClick = { vm.setTarget(t) },
                     label = { Text(t.replace('_', ' ').replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) })
             }
@@ -75,10 +84,17 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
             }
             items(enchants, key = { it.id }) { e ->
                 BrowseListItem(
-                    headline    = e.name,
-                    supporting  = e.description.ifBlank { e.id },
-                    leadingIcon = PixelIcons.Enchant,
-                    leadingIconTint = if (e.isCurse) Red400 else EnderPurple,
+                    headline    = buildString {
+                        append(e.name)
+                        if (e.isTreasure && !e.isCurse) append("  \u2022 Anvil Only")
+                        if (e.isCurse) append("  \u2022 Curse")
+                    },
+                    supporting  = buildString {
+                        append(e.description.ifBlank { e.id })
+                        append("\nApplies to: ${formatTarget(e.target)}")
+                    },
+                    supportingMaxLines = 4,
+                    leadingIcon = EnchantTextures.get(e.id) ?: PixelIcons.Enchant,
                     trailing    = {
                         Column(horizontalAlignment = Alignment.End) {
                             Text("Max ${e.maxLevel}", style = MaterialTheme.typography.bodySmall, color = Gold)
@@ -91,6 +107,13 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
                                 else       -> Stone500
                             }
                             CategoryBadge(label = e.rarity.replace('_', ' '), color = rarityColor)
+                            if (e.isTreasure) {
+                                Spacer(Modifier.height(2.dp))
+                                CategoryBadge(
+                                    label = if (e.isCurse) "Curse" else "Anvil",
+                                    color = if (e.isCurse) Red400 else NetherRed,
+                                )
+                            }
                         }
                     },
                 )

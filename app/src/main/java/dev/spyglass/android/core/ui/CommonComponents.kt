@@ -174,6 +174,7 @@ fun BrowseListItem(
     supporting: String = "",
     leadingIcon: SpyglassIcon? = null,
     leadingIconTint: Color = Stone300,
+    supportingMaxLines: Int = 1,
     trailing: @Composable (() -> Unit)? = null,
 ) {
     Row(
@@ -193,7 +194,7 @@ fun BrowseListItem(
                 maxLines = 1, overflow = TextOverflow.Ellipsis)
             if (supporting.isNotEmpty()) {
                 Text(supporting, style = MaterialTheme.typography.bodySmall, color = Stone500,
-                    maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    maxLines = supportingMaxLines, overflow = TextOverflow.Ellipsis)
             }
         }
         if (trailing != null) {
