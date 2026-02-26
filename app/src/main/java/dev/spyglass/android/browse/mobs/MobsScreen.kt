@@ -1,18 +1,20 @@
 package dev.spyglass.android.browse.mobs
 
 import android.app.Application
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,6 +26,15 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 
+private val SPECIAL_LOCATIONS = setOf(
+    "all_overworld", "slime_chunks", "nether_fortress", "caves", "mineshaft",
+    "stronghold", "ocean_monument", "woodland_mansion", "pillager_outpost",
+    "raid", "bred", "summoned", "village", "swamp_hut", "desert_village",
+    "bastion_remnant", "trial_chamber", "deep_dark", "pale_garden",
+    "lush_caves", "underground_ocean", "nether_overworld", "breeds_only",
+    "extreme_hills",
+)
+
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class MobsViewModel(app: Application) : AndroidViewModel(app) {
     private val repo = GameDataRepository.get(app)
@@ -32,6 +43,9 @@ class MobsViewModel(app: Application) : AndroidViewModel(app) {
     val query:    StateFlow<String> = _query.asStateFlow()
     val category: StateFlow<String> = _category.asStateFlow()
 
+    private val _expandedIds = MutableStateFlow<Set<String>>(emptySet())
+    val expandedIds: StateFlow<Set<String>> = _expandedIds.asStateFlow()
+
     val mobs: StateFlow<List<MobEntity>> = combine(_query.debounce(200), _category) { q, cat ->
         if (cat == "all") repo.searchMobs(q) else repo.mobsByCategory(cat)
     }.flatMapLatest { it }
@@ -39,15 +53,60 @@ class MobsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setQuery(q: String) { _query.value = q }
     fun setCategory(c: String) { _category.value = c }
+    fun toggleExpanded(id: String) {
+        _expandedIds.value = _expandedIds.value.let { if (id in it) it - id else it + id }
+    }
+    fun expandMob(id: String) {
+        _expandedIds.value = _expandedIds.value + id
+    }
 }
 
+private fun parseDrops(dropsJson: String): List<String> {
+    val trimmed = dropsJson.trim()
+    if (trimmed.isBlank() || trimmed == "[]") return emptyList()
+    return trimmed.removeSurrounding("[", "]")
+        .replace("\"", "")
+        .split(",")
+        .map { it.trim() }
+        .filter { it.isNotEmpty() }
+}
+
+private fun parseBiomes(biomesJson: String): List<String> {
+    val trimmed = biomesJson.trim()
+    if (trimmed.isBlank() || trimmed == "[]") return emptyList()
+    return trimmed.removeSurrounding("[", "]")
+        .replace("\"", "")
+        .split(",")
+        .map { it.trim() }
+        .filter { it.isNotEmpty() }
+}
+
+private fun formatId(id: String): String =
+    id.replace('_', ' ').replaceFirstChar { it.uppercase() }
+
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun MobsScreen(vm: MobsViewModel = viewModel()) {
-    val query    by vm.query.collectAsState()
-    val category by vm.category.collectAsState()
-    val mobs     by vm.mobs.collectAsState()
+fun MobsScreen(
+    targetMobId: String? = null,
+    onNavigateToBiome: (biomeId: String) -> Unit = {},
+    vm: MobsViewModel = viewModel(),
+) {
+    val query      by vm.query.collectAsState()
+    val category   by vm.category.collectAsState()
+    val mobs       by vm.mobs.collectAsState()
+    val expandedIds by vm.expandedIds.collectAsState()
+    val listState  = rememberLazyListState()
 
     val categories = listOf("all", "hostile", "neutral", "passive", "boss")
+
+    // Auto-expand and scroll to target mob from cross-reference
+    LaunchedEffect(targetMobId, mobs) {
+        if (targetMobId != null && mobs.isNotEmpty()) {
+            vm.expandMob(targetMobId)
+            val idx = mobs.indexOfFirst { it.id == targetMobId }
+            if (idx >= 0) listState.animateScrollToItem(idx + 1) // +1 for intro header
+        }
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
@@ -66,10 +125,20 @@ fun MobsScreen(vm: MobsViewModel = viewModel()) {
             }
         }
         LazyColumn(
+            state = listState,
             contentPadding = PaddingValues(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
+            item {
+                TabIntroHeader(
+                    icon = PixelIcons.Mob,
+                    title = "Mobs",
+                    description = "Every Minecraft mob with health, drops, spawn biomes, and strategy tips",
+                    stat = "${mobs.size} mobs",
+                )
+            }
             items(mobs, key = { it.id }) { m ->
+                val isExpanded = m.id in expandedIds
                 val categoryColor = when (m.category) {
                     "hostile"  -> NetherRed
                     "neutral"  -> Gold
@@ -77,26 +146,89 @@ fun MobsScreen(vm: MobsViewModel = viewModel()) {
                     "boss"     -> EnderPurple
                     else       -> Stone500
                 }
-                BrowseListItem(
-                    headline    = m.name,
-                    supporting  = m.id,
-                    leadingIcon = Icons.Default.Pets,
-                    leadingIconTint = categoryColor,
-                    trailing    = {
-                        Column(horizontalAlignment = Alignment.End) {
-                            CategoryBadge(label = m.category, color = categoryColor)
-                            Spacer(Modifier.height(2.dp))
-                            Text("HP ${m.health.toInt()}", style = MaterialTheme.typography.bodySmall, color = Stone500)
-                        }
-                    },
-                )
+                Column {
+                    BrowseListItem(
+                        headline    = m.name,
+                        supporting  = m.id,
+                        leadingIcon = PixelIcons.Mob,
+                        leadingIconTint = categoryColor,
+                        modifier    = Modifier.clickable { vm.toggleExpanded(m.id) },
+                        trailing    = {
+                            Column(horizontalAlignment = Alignment.End) {
+                                CategoryBadge(label = m.category, color = categoryColor)
+                                Spacer(Modifier.height(2.dp))
+                                Text("HP ${m.health.toInt()}", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                            }
+                        },
+                    )
+                    AnimatedVisibility(
+                        visible = isExpanded,
+                        enter = expandVertically(),
+                        exit = shrinkVertically(),
+                    ) {
+                        MobDetailCard(m, onNavigateToBiome)
+                    }
+                }
             }
             if (mobs.isEmpty()) item {
                 EmptyState(
-                    icon     = Icons.Default.SearchOff,
+                    icon     = PixelIcons.SearchOff,
                     title    = "No mobs found",
                     subtitle = "Try a different search or category",
                 )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit) {
+    val drops  = parseDrops(mob.dropsJson)
+    val biomes = parseBiomes(mob.spawnBiomesJson)
+
+    ResultCard(modifier = Modifier.padding(top = 4.dp)) {
+        // Description
+        if (mob.description.isNotEmpty()) {
+            Text(mob.description, style = MaterialTheme.typography.bodyMedium, color = Stone300)
+        }
+
+        // Stats
+        StatRow("Health", "${mob.health.toInt()} HP")
+        StatRow("XP Drop", "${mob.xpDrop}")
+        if (mob.isFireImmune) StatRow("Fire Immune", "Yes")
+
+        // Drops
+        if (drops.isNotEmpty()) {
+            SpyglassDivider()
+            Text("Drops", style = MaterialTheme.typography.labelSmall, color = Gold)
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                drops.forEach { drop ->
+                    CategoryBadge(label = formatId(drop), color = Stone300)
+                }
+            }
+        }
+
+        // Spawn biomes
+        if (biomes.isNotEmpty()) {
+            SpyglassDivider()
+            Text("Found in", style = MaterialTheme.typography.labelSmall, color = Gold)
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                biomes.forEach { biomeId ->
+                    if (biomeId in SPECIAL_LOCATIONS) {
+                        CategoryBadge(label = formatId(biomeId), color = Stone500)
+                    } else {
+                        AssistChip(
+                            onClick = { onBiomeTap(biomeId) },
+                            label = { Text(formatId(biomeId), style = MaterialTheme.typography.labelSmall) },
+                            colors = AssistChipDefaults.assistChipColors(
+                                labelColor = Emerald,
+                                containerColor = Emerald.copy(alpha = 0.12f),
+                            ),
+                            border = null,
+                        )
+                    }
+                }
             }
         }
     }

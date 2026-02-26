@@ -1,8 +1,6 @@
 package dev.spyglass.android.calculators.anvil
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoFixHigh
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,7 +15,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
     val available = vm.enchantsForCurrentItem()
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        SectionHeader("Enchanting", icon = Icons.Default.AutoFixHigh)
+        SectionHeader("Enchanting", icon = PixelIcons.Anvil)
 
         InputCard {
             // Item selector

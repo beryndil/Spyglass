@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Science
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -54,6 +52,14 @@ fun PotionsScreen(vm: PotionsViewModel = viewModel()) {
             contentPadding = PaddingValues(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
+            item {
+                TabIntroHeader(
+                    icon = PixelIcons.Potion,
+                    title = "Potions",
+                    description = "Brewing paths and effects for every potion",
+                    stat = "${potions.size} potions",
+                )
+            }
             items(potions, key = { it.id }) { p ->
                 val catColor = when (p.category) {
                     "negative" -> NetherRed
@@ -63,7 +69,7 @@ fun PotionsScreen(vm: PotionsViewModel = viewModel()) {
                 BrowseListItem(
                     headline    = p.name,
                     supporting  = p.effect.ifBlank { p.ingredientPath },
-                    leadingIcon = Icons.Default.Science,
+                    leadingIcon = PixelIcons.Potion,
                     leadingIconTint = PotionBlue,
                     trailing    = {
                         Column(horizontalAlignment = Alignment.End) {
@@ -77,7 +83,7 @@ fun PotionsScreen(vm: PotionsViewModel = viewModel()) {
             }
             if (potions.isEmpty()) item {
                 EmptyState(
-                    icon     = Icons.Default.SearchOff,
+                    icon     = PixelIcons.SearchOff,
                     title    = "No potions found",
                     subtitle = "Try a different search term",
                 )

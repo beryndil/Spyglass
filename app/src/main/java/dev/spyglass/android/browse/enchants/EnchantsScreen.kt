@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoFixHigh
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -67,11 +65,19 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
             contentPadding = PaddingValues(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
+            item {
+                TabIntroHeader(
+                    icon = PixelIcons.Enchant,
+                    title = "Enchantments",
+                    description = "All enchantments by target, rarity, and compatibility",
+                    stat = "${enchants.size} enchantments",
+                )
+            }
             items(enchants, key = { it.id }) { e ->
                 BrowseListItem(
                     headline    = e.name,
                     supporting  = e.description.ifBlank { e.id },
-                    leadingIcon = Icons.Default.AutoFixHigh,
+                    leadingIcon = PixelIcons.Enchant,
                     leadingIconTint = if (e.isCurse) Red400 else EnderPurple,
                     trailing    = {
                         Column(horizontalAlignment = Alignment.End) {
@@ -91,7 +97,7 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
             }
             if (enchants.isEmpty()) item {
                 EmptyState(
-                    icon     = Icons.Default.SearchOff,
+                    icon     = PixelIcons.SearchOff,
                     title    = "No enchantments found",
                     subtitle = "Try a different search or filter",
                 )

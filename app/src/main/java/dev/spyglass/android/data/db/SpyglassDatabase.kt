@@ -17,7 +17,7 @@ import dev.spyglass.android.data.db.entities.*
         PotionEntity::class,
         TradeEntity::class,
     ],
-    version = 1,
+    version = 3,
     exportSchema = false,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
@@ -38,7 +38,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
                     context.applicationContext,
                     SpyglassDatabase::class.java,
                     "spyglass.db",
-                ).build().also { INSTANCE = it }
+                ).fallbackToDestructiveMigration().build().also { INSTANCE = it }
             }
     }
 }

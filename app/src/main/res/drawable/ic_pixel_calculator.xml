@@ -1,0 +1,41 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Stone base platform -->
+    <path android:fillColor="#8B8B8B"
+        android:pathData="M1,12h14v3h-14z"/>
+    <!-- Stone base highlight -->
+    <path android:fillColor="#A0A0A0"
+        android:pathData="M1,12h14v1h-14z"/>
+    <!-- Stone base dark edge -->
+    <path android:fillColor="#6B6B6B"
+        android:pathData="M1,14h14v1h-14z"/>
+    <!-- Center redstone torch (tall) -->
+    <path android:fillColor="#6B4F30"
+        android:pathData="M7,4h2v8h-2z"/>
+    <!-- Torch top flame (red) -->
+    <path android:fillColor="#D43A2F"
+        android:pathData="M7,2h2v3h-2z"/>
+    <!-- Torch bright center -->
+    <path android:fillColor="#FF5733"
+        android:pathData="M7,3h2v1h-2z"/>
+    <!-- Left torch -->
+    <path android:fillColor="#6B4F30"
+        android:pathData="M2,7h2v5h-2z"/>
+    <path android:fillColor="#D43A2F"
+        android:pathData="M2,5h2v3h-2z"/>
+    <path android:fillColor="#FF5733"
+        android:pathData="M2,6h2v1h-2z"/>
+    <!-- Right torch -->
+    <path android:fillColor="#6B4F30"
+        android:pathData="M12,7h2v5h-2z"/>
+    <path android:fillColor="#D43A2F"
+        android:pathData="M12,5h2v3h-2z"/>
+    <path android:fillColor="#FF5733"
+        android:pathData="M12,6h2v1h-2z"/>
+    <!-- Redstone line on base -->
+    <path android:fillColor="#D43A2F"
+        android:pathData="M4,13h8v1h-8z"/>
+</vector>

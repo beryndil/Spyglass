@@ -1,0 +1,27 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Lens ring (copper/gold) -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M1,4h2v1h1v-1h2v-1h1v-1h1v1h1v1h1v2h-1v1h-1v1h-2v1h-1v-1h-2v-1h-1v-1h-1z"/>
+    <!-- Lens glass (light blue) -->
+    <path android:fillColor="#A0D8EF"
+        android:pathData="M3,4h1v1h2v-1h1v-1h1v1h1v2h-1v1h-2v1h-1v-1h-1v-1h-1z"/>
+    <!-- Lens highlight -->
+    <path android:fillColor="#D0EEFF"
+        android:pathData="M4,3h1v1h1v1h-2z"/>
+    <!-- Tube body (copper) -->
+    <path android:fillColor="#9E7A2A"
+        android:pathData="M8,8h2v2h2v2h2v2h1v1h-2v-1h-2v-2h-2v-2h-1z"/>
+    <!-- Tube highlight -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M9,8h1v2h1v1h-1v-1h-1z"/>
+    <!-- Tube dark edge -->
+    <path android:fillColor="#6B4F20"
+        android:pathData="M12,12h2v2h-1v1h-2v-1h1z"/>
+    <!-- Lens ring darker edge -->
+    <path android:fillColor="#9E7A2A"
+        android:pathData="M1,5h1v2h1v1h2v-1h-1v-1h-1v-1h-1v-1h-1z"/>
+</vector>

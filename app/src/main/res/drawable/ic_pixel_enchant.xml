@@ -1,0 +1,33 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Book body (dark purple) -->
+    <path android:fillColor="#5B2D8E"
+        android:pathData="M3,4h10v10h-10z"/>
+    <!-- Book cover border -->
+    <path android:fillColor="#3D1A63"
+        android:pathData="M3,4h10v1h-10z M3,13h10v1h-10z M3,4h1v10h-1z M12,4h1v10h-1z"/>
+    <!-- Book spine -->
+    <path android:fillColor="#3D1A63"
+        android:pathData="M3,4h1v10h-1z"/>
+    <!-- Pages (light tan) -->
+    <path android:fillColor="#E8D5B3"
+        android:pathData="M5,5h7v8h-7z"/>
+    <!-- Page text lines (purple) -->
+    <path android:fillColor="#8B5FC7"
+        android:pathData="M6,6h4v1h-4z M6,8h5v1h-5z M6,10h3v1h-3z"/>
+    <!-- Sparkle top-left (gold) -->
+    <path android:fillColor="#F5D742"
+        android:pathData="M1,1h1v1h1v1h-1v1h-1v-1h-1v-1h1z"/>
+    <!-- Sparkle top-right (gold) -->
+    <path android:fillColor="#F5D742"
+        android:pathData="M13,2h1v1h-1z M14,1h1v1h-1z M14,3h1v1h-1z"/>
+    <!-- Sparkle bottom-right -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M14,12h1v1h-1z"/>
+    <!-- Book clasp (gold) -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M4,8h1v2h-1z"/>
+</vector>

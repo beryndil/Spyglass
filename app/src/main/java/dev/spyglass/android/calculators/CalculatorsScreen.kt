@@ -3,8 +3,6 @@ package dev.spyglass.android.calculators
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -15,16 +13,17 @@ import dev.spyglass.android.calculators.nether.NetherScreen
 import dev.spyglass.android.calculators.shapes.ShapesScreen
 import dev.spyglass.android.calculators.smelting.SmeltingScreen
 import dev.spyglass.android.calculators.storage.StorageScreen
+import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassTab
 import dev.spyglass.android.core.ui.SpyglassTabRow
 
 private val CALC_TABS = listOf(
-    SpyglassTab("Fill",        Icons.Default.GridOn),
-    SpyglassTab("Smelt",       Icons.Default.LocalFireDepartment),
-    SpyglassTab("Storage",     Icons.Default.Inventory2),
-    SpyglassTab("Nether",      Icons.Default.Whatshot),
-    SpyglassTab("Shapes",      Icons.Default.Hexagon),
-    SpyglassTab("Enchanting",  Icons.Default.AutoFixHigh),
+    SpyglassTab("Fill",        PixelIcons.Fill),
+    SpyglassTab("Smelt",       PixelIcons.Smelt),
+    SpyglassTab("Storage",     PixelIcons.Storage),
+    SpyglassTab("Nether",      PixelIcons.Nether),
+    SpyglassTab("Shapes",      PixelIcons.Shapes),
+    SpyglassTab("Enchanting",  PixelIcons.Anvil),
 )
 
 @Composable

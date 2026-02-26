@@ -1,13 +1,10 @@
 package dev.spyglass.android.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -18,15 +15,12 @@ import androidx.navigation.compose.rememberNavController
 import dev.spyglass.android.calculators.CalculatorsScreen
 import dev.spyglass.android.browse.BrowseScreen
 import dev.spyglass.android.browse.search.SearchScreen
-import dev.spyglass.android.core.ui.Background
-import dev.spyglass.android.core.ui.Gold
-import dev.spyglass.android.core.ui.GoldDim
-import dev.spyglass.android.core.ui.Stone500
+import dev.spyglass.android.core.ui.*
 
-sealed class TopDest(val route: String, val label: String, val icon: ImageVector) {
-    data object Calculators : TopDest("calculators", "Calculators", Icons.Default.Calculate)
-    data object Browse      : TopDest("browse",      "Browse",      Icons.Default.Inventory2)
-    data object Search      : TopDest("search",      "Search",      Icons.Default.Search)
+sealed class TopDest(val route: String, val label: String, val icon: SpyglassIcon) {
+    data object Calculators : TopDest("calculators", "Calculators", PixelIcons.Calculator)
+    data object Browse      : TopDest("browse",      "Browse",      PixelIcons.Browse)
+    data object Search      : TopDest("search",      "Search",      PixelIcons.Search)
 }
 
 val TOP_DESTINATIONS = listOf(TopDest.Calculators, TopDest.Browse, TopDest.Search)
@@ -66,7 +60,7 @@ fun BottomNavBar(navController: NavHostController) {
                         restoreState    = true
                     }
                 },
-                icon  = { Icon(dest.icon, contentDescription = dest.label) },
+                icon  = { SpyglassIconImage(dest.icon, contentDescription = dest.label) },
                 label = { Text(dest.label) },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor   = Gold,

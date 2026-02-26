@@ -1,0 +1,33 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Stone body outline -->
+    <path android:fillColor="#6B6B6B"
+        android:pathData="M2,1h12v14h-12z"/>
+    <!-- Stone body fill -->
+    <path android:fillColor="#8B8B8B"
+        android:pathData="M3,2h10v12h-10z"/>
+    <!-- Top vent slots (dark) -->
+    <path android:fillColor="#3A3A3A"
+        android:pathData="M4,3h3v2h-3z M9,3h3v2h-3z"/>
+    <!-- Eyes/vents (dark openings) -->
+    <path android:fillColor="#2A2A2A"
+        android:pathData="M4,6h3v2h-3z M9,6h3v2h-3z"/>
+    <!-- Mouth/fire opening -->
+    <path android:fillColor="#2A2A2A"
+        android:pathData="M5,9h6v4h-6z"/>
+    <!-- Fire glow (orange) -->
+    <path android:fillColor="#FF8800"
+        android:pathData="M6,10h4v3h-4z"/>
+    <!-- Fire bright center (yellow) -->
+    <path android:fillColor="#FFCC00"
+        android:pathData="M7,11h2v2h-2z"/>
+    <!-- Fire tip -->
+    <path android:fillColor="#FF5500"
+        android:pathData="M7,10h1v1h-1z M9,10h1v1h-1z"/>
+    <!-- Stone texture spots -->
+    <path android:fillColor="#7A7A7A"
+        android:pathData="M3,2h2v1h-2z M11,2h2v1h-2z M3,12h1v1h-1z M12,11h1v1h-1z"/>
+</vector>

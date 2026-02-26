@@ -1,0 +1,36 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Center block (gold/sand) -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M6,6h4v4h-4z"/>
+    <!-- Top block (red/terracotta) -->
+    <path android:fillColor="#B85C4A"
+        android:pathData="M6,1h4v4h-4z"/>
+    <!-- Top-right block (blue/lapis) -->
+    <path android:fillColor="#385DC6"
+        android:pathData="M11,3h4v4h-4z"/>
+    <!-- Bottom-right block (green/emerald) -->
+    <path android:fillColor="#17DD62"
+        android:pathData="M11,9h4v4h-4z"/>
+    <!-- Bottom block (purple/amethyst) -->
+    <path android:fillColor="#9B59B6"
+        android:pathData="M6,11h4v4h-4z"/>
+    <!-- Bottom-left block (orange/copper) -->
+    <path android:fillColor="#E07840"
+        android:pathData="M1,9h4v4h-4z"/>
+    <!-- Top-left block (white/quartz) -->
+    <path android:fillColor="#E8E0D4"
+        android:pathData="M1,3h4v4h-4z"/>
+    <!-- Outlines for all blocks -->
+    <path android:fillColor="#3A3730"
+        android:pathData="M6,1h4v1h-4z M6,4h4v1h-4z M6,1h1v4h-1z M9,1h1v4h-1z
+            M11,3h4v1h-4z M11,6h4v1h-4z M11,3h1v4h-1z M14,3h1v4h-1z
+            M11,9h4v1h-4z M11,12h4v1h-4z M11,9h1v4h-1z M14,9h1v4h-1z
+            M6,11h4v1h-4z M6,14h4v1h-4z M6,11h1v4h-1z M9,11h1v4h-1z
+            M1,9h4v1h-4z M1,12h4v1h-4z M1,9h1v4h-1z M4,9h1v4h-1z
+            M1,3h4v1h-4z M1,6h4v1h-4z M1,3h1v4h-1z M4,3h1v4h-1z
+            M6,6h4v1h-4z M6,9h4v1h-4z M6,6h1v4h-1z M9,6h1v4h-1z"/>
+</vector>

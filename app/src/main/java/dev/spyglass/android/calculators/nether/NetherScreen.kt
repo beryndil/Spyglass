@@ -2,9 +2,7 @@ package dev.spyglass.android.calculators.nether
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,7 +17,7 @@ fun NetherScreen(vm: NetherViewModel = viewModel()) {
     var subTab by remember { mutableIntStateOf(0) }
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        SectionHeader("Nether Tools", icon = Icons.Default.Whatshot)
+        SectionHeader("Nether Tools", icon = PixelIcons.Nether)
 
         TabRow(selectedTabIndex = subTab, containerColor = SurfaceMid) {
             listOf("Convert", "Obsidian", "Portals").forEachIndexed { i, t ->
@@ -60,11 +58,6 @@ private fun ConvertTab(s: NetherState, vm: NetherViewModel) {
             }
         }
 
-        OutlinedButton(onClick = {}, modifier = Modifier.fillMaxWidth()) {
-            Text("Paste F3 text", color = Stone300)
-        }
-        Text("Paste your F3 debug screen text — coordinates and facing are extracted automatically.",
-            style = MaterialTheme.typography.bodySmall, color = Stone500)
     }
 }
 
@@ -99,7 +92,7 @@ private fun PortalsTab(s: NetherState, vm: NetherViewModel) {
 
         if (s.savedPortals.isEmpty()) {
             EmptyState(
-                icon     = Icons.Default.BookmarkBorder,
+                icon     = PixelIcons.Bookmark,
                 title    = "No saved portals",
                 subtitle = "Save coordinates above to track your portals",
             )

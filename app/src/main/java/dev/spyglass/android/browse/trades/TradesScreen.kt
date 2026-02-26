@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Handshake
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -73,11 +71,19 @@ fun TradesScreen(vm: TradesViewModel = viewModel()) {
             contentPadding = PaddingValues(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
+            item {
+                TabIntroHeader(
+                    icon = PixelIcons.Trade,
+                    title = "Trades",
+                    description = "Villager trades by profession and level",
+                    stat = "${trades.size} trades",
+                )
+            }
             items(trades, key = { it.rowId }) { t ->
                 BrowseListItem(
                     headline    = "${t.buyItem1Count}× ${t.buyItem1.substringAfterLast(':')}${if (t.buyItem2.isNotBlank()) " + ${t.buyItem2Count}× ${t.buyItem2.substringAfterLast(':')}" else ""} → ${t.sellItemCount}× ${t.sellItem.substringAfterLast(':')}",
                     supporting  = "${t.profession.replaceFirstChar { it.uppercase() }} · ${t.levelName}",
-                    leadingIcon = Icons.Default.Handshake,
+                    leadingIcon = PixelIcons.Trade,
                     leadingIconTint = Emerald,
                     trailing    = {
                         CategoryBadge(label = "Lvl ${t.level}", color = Gold)
@@ -86,7 +92,7 @@ fun TradesScreen(vm: TradesViewModel = viewModel()) {
             }
             if (trades.isEmpty()) item {
                 EmptyState(
-                    icon     = Icons.Default.SearchOff,
+                    icon     = PixelIcons.SearchOff,
                     title    = "No trades found",
                     subtitle = "Try a different search or profession",
                 )

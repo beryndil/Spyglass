@@ -1,0 +1,24 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Obsidian frame (very dark purple) -->
+    <path android:fillColor="#1B0A2E"
+        android:pathData="M2,1h4v4h-4z M10,1h4v4h-4z M2,11h4v4h-4z M10,11h4v4h-4z M2,5h2v6h-2z M12,5h2v6h-2z M4,1h8v2h-8z M4,13h8v2h-8z"/>
+    <!-- Obsidian highlight -->
+    <path android:fillColor="#2D1450"
+        android:pathData="M2,1h2v2h-2z M12,1h2v2h-2z M2,13h2v2h-2z M12,13h2v2h-2z"/>
+    <!-- Portal interior (purple glow) -->
+    <path android:fillColor="#9B30FF"
+        android:pathData="M4,3h8v10h-8z"/>
+    <!-- Portal swirl pattern (lighter purple) -->
+    <path android:fillColor="#BB70FF"
+        android:pathData="M5,4h2v2h-2z M8,6h2v2h-2z M5,8h2v2h-2z M9,10h2v2h-2z"/>
+    <!-- Portal bright spots -->
+    <path android:fillColor="#D9A0FF"
+        android:pathData="M6,5h1v1h-1z M9,7h1v1h-1z M6,9h1v1h-1z M10,11h1v1h-1z"/>
+    <!-- Obsidian edge glow -->
+    <path android:fillColor="#5920A0"
+        android:pathData="M4,3h1v10h-1z M11,3h1v10h-1z"/>
+</vector>

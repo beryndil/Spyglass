@@ -5,8 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Hexagon
+import dev.spyglass.android.core.ui.PixelIcons
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,7 +22,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
     val s by vm.state.collectAsState()
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        SectionHeader("Shape Designer", icon = Icons.Default.Hexagon)
+        SectionHeader("Shape Designer", icon = PixelIcons.Shapes)
 
         InputCard {
             // Shape type selector

@@ -1,16 +1,19 @@
 package dev.spyglass.android.browse.crafting
 
 import android.app.Application
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Construction
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -35,17 +38,50 @@ class CraftingViewModel(app: Application) : AndroidViewModel(app) {
     private val _query = MutableStateFlow("")
     val query: StateFlow<String> = _query.asStateFlow()
 
+    private val _expandedIds = MutableStateFlow<Set<String>>(emptySet())
+    val expandedIds: StateFlow<Set<String>> = _expandedIds.asStateFlow()
+
     val recipes: StateFlow<List<RecipeEntity>> = _query.debounce(200)
         .flatMapLatest { repo.searchRecipes(it) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    val allRecipes: StateFlow<Map<String, RecipeEntity>> = repo.searchRecipes("")
+        .map { list -> list.associateBy { it.outputItem } }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     fun setQuery(q: String) { _query.value = q }
+    fun toggleExpanded(id: String) {
+        _expandedIds.value = _expandedIds.value.let { if (id in it) it - id else it + id }
+    }
+    fun expandRecipe(id: String) {
+        _expandedIds.value = _expandedIds.value + id
+    }
+
+    fun recipesForItem(itemId: String) = repo.recipesForItem(itemId)
+    fun recipesUsingItem(itemId: String) = repo.recipesUsingIngredient(itemId)
 }
 
 @Composable
-fun CraftingScreen(vm: CraftingViewModel = viewModel()) {
-    val query   by vm.query.collectAsState()
-    val recipes by vm.recipes.collectAsState()
+fun CraftingScreen(
+    targetRecipeId: String? = null,
+    onItemTap: (String) -> Unit = {},
+    onBiomeTap: (String) -> Unit = {},
+    vm: CraftingViewModel = viewModel(),
+) {
+    val query       by vm.query.collectAsState()
+    val recipes     by vm.recipes.collectAsState()
+    val expandedIds by vm.expandedIds.collectAsState()
+    val allRecipes  by vm.allRecipes.collectAsState()
+    val listState   = rememberLazyListState()
+
+    // Auto-expand and scroll to target recipe from cross-reference
+    LaunchedEffect(targetRecipeId, recipes) {
+        if (targetRecipeId != null && recipes.isNotEmpty()) {
+            vm.expandRecipe(targetRecipeId)
+            val idx = recipes.indexOfFirst { it.id == targetRecipeId || it.outputItem == targetRecipeId }
+            if (idx >= 0) listState.animateScrollToItem(idx + 1)
+        }
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
@@ -57,28 +93,69 @@ fun CraftingScreen(vm: CraftingViewModel = viewModel()) {
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
         LazyColumn(
+            state = listState,
             contentPadding = PaddingValues(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            items(recipes, key = { it.id }) { r ->
-                BrowseListItem(
-                    headline    = "${r.outputCount}× ${r.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { it.uppercase() }}",
-                    supporting  = r.type.replace('_', ' '),
-                    leadingIcon = Icons.Default.Construction,
-                    trailing    = {
-                        RecipeGridPreview(r)
-                    },
+            item {
+                TabIntroHeader(
+                    icon = PixelIcons.Crafting,
+                    title = "Recipes",
+                    description = "Crafting recipes for every craftable item",
+                    stat = "${recipes.size} recipes",
                 )
+            }
+            items(recipes, key = { it.id }) { r ->
+                val isExpanded = r.id in expandedIds
+                Column {
+                    BrowseListItem(
+                        headline    = "${r.outputCount}× ${r.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { it.uppercase() }}",
+                        supporting  = r.type.replace('_', ' '),
+                        leadingIcon = PixelIcons.Crafting,
+                        modifier    = Modifier.clickable { vm.toggleExpanded(r.id) },
+                        trailing    = {
+                            RecipeGridPreview(r)
+                        },
+                    )
+                    AnimatedVisibility(
+                        visible = isExpanded,
+                        enter = expandVertically(),
+                        exit = shrinkVertically(),
+                    ) {
+                        RecipeDetailContent(r.outputItem, allRecipes, vm, onItemTap, onBiomeTap)
+                    }
+                }
             }
             if (recipes.isEmpty()) item {
                 EmptyState(
-                    icon     = Icons.Default.SearchOff,
+                    icon     = PixelIcons.SearchOff,
                     title    = "No recipes found",
                     subtitle = "Try a different search term",
                 )
             }
         }
     }
+}
+
+@Composable
+private fun RecipeDetailContent(
+    outputItem: String,
+    allRecipes: Map<String, RecipeEntity>,
+    vm: CraftingViewModel,
+    onItemTap: (String) -> Unit,
+    onBiomeTap: (String) -> Unit,
+) {
+    val recipesForItem   by vm.recipesForItem(outputItem).collectAsState(initial = emptyList())
+    val recipesUsingItem by vm.recipesUsingItem(outputItem).collectAsState(initial = emptyList())
+
+    ItemDetailPager(
+        itemId = outputItem,
+        recipesForItem = recipesForItem,
+        recipesUsingItem = recipesUsingItem,
+        allRecipes = allRecipes,
+        onItemTap = onItemTap,
+        onBiomeTap = onBiomeTap,
+    )
 }
 
 @Composable

@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
@@ -21,13 +20,13 @@ import androidx.compose.ui.unit.dp
 // ── Section header ────────────────────────────────────────────────────────────
 
 @Composable
-fun SectionHeader(title: String, modifier: Modifier = Modifier, icon: ImageVector? = null) {
+fun SectionHeader(title: String, modifier: Modifier = Modifier, icon: SpyglassIcon? = null) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.fillMaxWidth().padding(bottom = 8.dp),
     ) {
         if (icon != null) {
-            Icon(icon, contentDescription = null, tint = Gold, modifier = Modifier.size(18.dp))
+            SpyglassIconImage(icon, contentDescription = null, tint = Gold, modifier = Modifier.size(18.dp))
             Spacer(Modifier.width(6.dp))
         }
         Text(
@@ -173,7 +172,7 @@ fun BrowseListItem(
     headline: String,
     modifier: Modifier = Modifier,
     supporting: String = "",
-    leadingIcon: ImageVector? = null,
+    leadingIcon: SpyglassIcon? = null,
     leadingIconTint: Color = Stone300,
     trailing: @Composable (() -> Unit)? = null,
 ) {
@@ -186,7 +185,7 @@ fun BrowseListItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (leadingIcon != null) {
-            Icon(leadingIcon, contentDescription = null, tint = leadingIconTint, modifier = Modifier.size(22.dp))
+            SpyglassIconImage(leadingIcon, contentDescription = null, tint = leadingIconTint, modifier = Modifier.size(22.dp))
             Spacer(Modifier.width(12.dp))
         }
         Column(modifier = Modifier.weight(1f)) {
@@ -208,7 +207,7 @@ fun BrowseListItem(
 
 @Composable
 fun EmptyState(
-    icon: ImageVector,
+    icon: SpyglassIcon,
     title: String,
     subtitle: String = "",
     modifier: Modifier = Modifier,
@@ -217,12 +216,44 @@ fun EmptyState(
         modifier = modifier.fillMaxWidth().padding(vertical = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Icon(icon, contentDescription = null, tint = Stone700, modifier = Modifier.size(56.dp))
+        SpyglassIconImage(icon, contentDescription = null, tint = Stone700, modifier = Modifier.size(56.dp))
         Spacer(Modifier.height(12.dp))
         Text(title, style = MaterialTheme.typography.titleLarge, color = Stone300)
         if (subtitle.isNotEmpty()) {
             Spacer(Modifier.height(4.dp))
             Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = Stone500)
+        }
+    }
+}
+
+// ── Tab intro header — icon + headline + description + optional stat ────────
+
+@Composable
+fun TabIntroHeader(
+    icon: SpyglassIcon,
+    title: String,
+    description: String,
+    stat: String = "",
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxWidth().padding(vertical = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        SpyglassIconImage(icon, contentDescription = null, tint = Gold, modifier = Modifier.size(36.dp))
+        Spacer(Modifier.height(8.dp))
+        Text(title, style = MaterialTheme.typography.headlineSmall, color = Stone100)
+        Spacer(Modifier.height(4.dp))
+        Text(
+            description,
+            style = MaterialTheme.typography.bodyMedium,
+            color = Stone500,
+            modifier = Modifier.padding(horizontal = 24.dp),
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+        )
+        if (stat.isNotEmpty()) {
+            Spacer(Modifier.height(6.dp))
+            Text(stat, style = MaterialTheme.typography.labelSmall, color = Gold)
         }
     }
 }
@@ -243,7 +274,7 @@ fun CategoryBadge(label: String, color: Color, modifier: Modifier = Modifier) {
 
 // ── Tab row — reusable icon+text tabs for Calculators and Browse ────────────
 
-data class SpyglassTab(val label: String, val icon: ImageVector)
+data class SpyglassTab(val label: String, val icon: SpyglassIcon)
 
 @Composable
 fun SpyglassTabRow(
@@ -267,7 +298,7 @@ fun SpyglassTabRow(
                 onClick  = { onSelect(i) },
                 text = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
+                        SpyglassIconImage(
                             tab.icon, contentDescription = null,
                             modifier = Modifier.size(16.dp),
                             tint = if (selected) Gold else Stone500,

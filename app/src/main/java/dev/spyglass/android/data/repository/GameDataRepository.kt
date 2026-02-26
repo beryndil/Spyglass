@@ -19,6 +19,7 @@ class GameDataRepository(context: Context) {
     // Recipes
     fun searchRecipes(q: String): Flow<List<RecipeEntity>> = if (q.isBlank()) db.recipeDao().all() else db.recipeDao().search(q)
     fun recipesForItem(itemId: String): Flow<List<RecipeEntity>> = db.recipeDao().forItem(itemId)
+    fun recipesUsingIngredient(ingredient: String): Flow<List<RecipeEntity>> = db.recipeDao().recipesUsingIngredient(ingredient)
 
     // Mobs
     fun searchMobs(q: String): Flow<List<MobEntity>>       = if (q.isBlank()) db.mobDao().all() else db.mobDao().search(q)

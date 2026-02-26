@@ -1,0 +1,30 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Left cover (brown leather) -->
+    <path android:fillColor="#734B29"
+        android:pathData="M1,2h6v12h-6z"/>
+    <!-- Right cover (brown leather) -->
+    <path android:fillColor="#734B29"
+        android:pathData="M9,2h6v12h-6z"/>
+    <!-- Spine (dark brown) -->
+    <path android:fillColor="#4A2E14"
+        android:pathData="M7,1h2v14h-2z"/>
+    <!-- Left page (cream) -->
+    <path android:fillColor="#E8D5B3"
+        android:pathData="M2,3h5v10h-5z"/>
+    <!-- Right page (cream) -->
+    <path android:fillColor="#E8D5B3"
+        android:pathData="M9,3h5v10h-5z"/>
+    <!-- Left page text lines (brown) -->
+    <path android:fillColor="#A08060"
+        android:pathData="M3,4h3v1h-3z M3,6h3v1h-3z M3,8h2v1h-2z M3,10h3v1h-3z"/>
+    <!-- Right page text lines (brown) -->
+    <path android:fillColor="#A08060"
+        android:pathData="M10,4h3v1h-3z M10,6h3v1h-3z M10,8h3v1h-3z M10,10h2v1h-2z"/>
+    <!-- Cover edge decoration (gold) -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M1,2h1v12h-1z M14,2h1v12h-1z"/>
+</vector>

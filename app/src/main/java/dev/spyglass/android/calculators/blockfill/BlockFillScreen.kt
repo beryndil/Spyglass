@@ -1,8 +1,6 @@
 package dev.spyglass.android.calculators.blockfill
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.GridOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,7 +15,7 @@ fun BlockFillScreen(vm: BlockFillViewModel = viewModel()) {
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
-        SectionHeader("Block Fill Calculator", icon = Icons.Default.GridOn)
+        SectionHeader("Block Fill Calculator", icon = PixelIcons.Fill)
 
         InputCard {
             // Width

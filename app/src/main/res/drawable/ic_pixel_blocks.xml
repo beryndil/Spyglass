@@ -1,0 +1,27 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Dark border -->
+    <path android:fillColor="#3A2714"
+        android:pathData="M0,0h16v16h-16z"/>
+    <!-- Green grass top -->
+    <path android:fillColor="#5D9B47"
+        android:pathData="M1,1h14v5h-14z"/>
+    <!-- Lighter green grass detail -->
+    <path android:fillColor="#79C354"
+        android:pathData="M2,1h2v1h-2z M7,1h1v1h-1z M11,1h2v1h-2z M4,3h2v1h-2z M9,2h2v1h-2z M1,4h2v1h-2z M13,3h1v1h-1z"/>
+    <!-- Grass-dirt transition row -->
+    <path android:fillColor="#6B9A3B"
+        android:pathData="M1,6h1v1h-1z M3,6h2v1h-2z M7,6h1v1h-1z M10,6h1v1h-1z M13,6h2v1h-2z"/>
+    <!-- Brown dirt body -->
+    <path android:fillColor="#8B6940"
+        android:pathData="M1,6h14v9h-14z"/>
+    <!-- Green hanging grass blades in dirt zone -->
+    <path android:fillColor="#5D9B47"
+        android:pathData="M1,6h1v2h-1z M4,6h1v1h-1z M7,6h1v2h-1z M10,6h2v1h-2z M14,6h1v1h-1z"/>
+    <!-- Darker dirt spots -->
+    <path android:fillColor="#6B4F30"
+        android:pathData="M2,8h2v2h-2z M7,9h2v2h-2z M12,8h2v2h-2z M4,12h2v2h-2z M9,11h3v2h-3z M1,11h2v1h-2z"/>
+</vector>

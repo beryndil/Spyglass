@@ -1,0 +1,21 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Emerald gem body (bright green) -->
+    <path android:fillColor="#17DD62"
+        android:pathData="M6,1h4v1h2v2h1v4h-1v2h-1v2h-1v2h-4v-2h-1v-2h-1v-2h-1v-4h1v-2h2z"/>
+    <!-- Darker green shadow/facets -->
+    <path android:fillColor="#0DAB48"
+        android:pathData="M9,3h2v2h1v4h-1v2h-1v2h-1v-3h-1v-2h2v-2h1v-2h-2z"/>
+    <!-- Inner highlight (light green) -->
+    <path android:fillColor="#5FFFAA"
+        android:pathData="M6,4h2v2h-1v2h-1v2h-1v-4h1z"/>
+    <!-- Top highlight (white-green) -->
+    <path android:fillColor="#AAFFCC"
+        android:pathData="M7,2h2v1h-2z"/>
+    <!-- Center sparkle -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M7,5h1v1h-1z"/>
+</vector>

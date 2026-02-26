@@ -41,6 +41,9 @@ interface RecipeDao {
 
     @Query("SELECT COUNT(*) FROM recipes")
     suspend fun count(): Int
+
+    @Query("SELECT * FROM recipes WHERE ingredientsJson LIKE '%\"' || :ingredient || '\"%' ORDER BY outputItem")
+    fun recipesUsingIngredient(ingredient: String): Flow<List<RecipeEntity>>
 }
 
 @Dao

@@ -5,11 +5,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -53,13 +52,13 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
     fun setQuery(q: String) { _query.value = q }
 }
 
-private fun typeIcon(type: String): ImageVector = when (type) {
-    "Block"       -> Icons.Default.ViewInAr
-    "Mob"         -> Icons.Default.Pets
-    "Biome"       -> Icons.Default.Terrain
-    "Enchantment" -> Icons.Default.AutoFixHigh
-    "Potion"      -> Icons.Default.Science
-    else          -> Icons.Default.Search
+private fun typeIcon(type: String): SpyglassIcon = when (type) {
+    "Block"       -> PixelIcons.Blocks
+    "Mob"         -> PixelIcons.Mob
+    "Biome"       -> PixelIcons.Biome
+    "Enchantment" -> PixelIcons.Enchant
+    "Potion"      -> PixelIcons.Potion
+    else          -> PixelIcons.Search
 }
 
 private fun typeColor(type: String) = when (type) {
@@ -88,7 +87,7 @@ fun SearchScreen(vm: SearchViewModel = viewModel()) {
 
         if (query.length < 2 && results.isEmpty()) {
             EmptyState(
-                icon     = Icons.Default.Search,
+                icon     = PixelIcons.Search,
                 title    = "Search everything",
                 subtitle = "Type at least 2 characters to search blocks, mobs, biomes, enchantments, and potions.",
             )
@@ -117,7 +116,7 @@ fun SearchScreen(vm: SearchViewModel = viewModel()) {
                 if (results.isEmpty() && query.length >= 2) {
                     item {
                         EmptyState(
-                            icon     = Icons.Default.SearchOff,
+                            icon     = PixelIcons.SearchOff,
                             title    = "No results",
                             subtitle = "No matches for \"$query\"",
                         )

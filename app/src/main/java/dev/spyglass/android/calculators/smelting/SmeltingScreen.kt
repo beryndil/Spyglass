@@ -3,8 +3,6 @@ package dev.spyglass.android.calculators.smelting
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,7 +16,7 @@ fun SmeltingScreen(vm: SmeltingViewModel = viewModel()) {
     val s by vm.state.collectAsState()
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        SectionHeader("Smelting / Fuel Calculator", icon = Icons.Default.LocalFireDepartment)
+        SectionHeader("Smelting / Fuel Calculator", icon = PixelIcons.Smelt)
 
         InputCard {
             SpyglassTextField(

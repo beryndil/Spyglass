@@ -1,0 +1,21 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Lens ring (copper/gold, dimmed) -->
+    <path android:fillColor="#9E7A2A"
+        android:pathData="M1,4h2v1h1v-1h2v-1h1v-1h1v1h1v1h1v2h-1v1h-1v1h-2v1h-1v-1h-2v-1h-1v-1h-1z"/>
+    <!-- Lens glass (dim blue) -->
+    <path android:fillColor="#7AABBF"
+        android:pathData="M3,4h1v1h2v-1h1v-1h1v1h1v2h-1v1h-2v1h-1v-1h-1v-1h-1z"/>
+    <!-- Tube body (copper, dimmed) -->
+    <path android:fillColor="#7A5E20"
+        android:pathData="M8,8h2v2h2v2h2v2h1v1h-2v-1h-2v-2h-2v-2h-1z"/>
+    <!-- Red X mark - first diagonal -->
+    <path android:fillColor="#D43A2F"
+        android:pathData="M1,1h2v2h2v2h-2v-2h-2z M5,5h2v2h2v2h-2v-2h-2z M9,9h2v2h2v2h-2v-2h-2z"/>
+    <!-- Red X mark - second diagonal -->
+    <path android:fillColor="#D43A2F"
+        android:pathData="M11,1h2v2h-2v2h-2v-2h2z M7,5h2v2h-2v2h-2v-2h2z M3,9h2v2h-2v2h-2v-2h2z"/>
+</vector>

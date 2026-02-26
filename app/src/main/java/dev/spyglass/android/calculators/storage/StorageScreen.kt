@@ -1,8 +1,6 @@
 package dev.spyglass.android.calculators.storage
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Inventory2
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -18,7 +16,7 @@ fun StorageScreen(vm: StorageViewModel = viewModel()) {
     val selectedItem = vm.items[s.selectedItemIndex]
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        SectionHeader("Storage Calculator", icon = Icons.Default.Inventory2)
+        SectionHeader("Storage Calculator", icon = PixelIcons.Storage)
 
         InputCard {
             SpyglassTextField(
