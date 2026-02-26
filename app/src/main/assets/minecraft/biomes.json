@@ -53,5 +53,9 @@
   {"id":"end_midlands","name":"End Midlands","temperature":0.5,"precipitation":"none","structures":"","mobs":"enderman","category":"end","color":"#8080FF"},
   {"id":"end_barrens","name":"End Barrens","temperature":0.5,"precipitation":"none","structures":"","mobs":"enderman","category":"end","color":"#8080FF"},
   {"id":"small_end_islands","name":"Small End Islands","temperature":0.5,"precipitation":"none","structures":"","mobs":"enderman","category":"end","color":"#8080FF"},
-  {"id":"void","name":"The Void","temperature":0.5,"precipitation":"none","structures":"","mobs":"","category":"end","color":"#000000"}
+  {"id":"void","name":"The Void","temperature":0.5,"precipitation":"none","structures":"","mobs":"","category":"end","color":"#000000"},
+  {"id":"lush_caves","name":"Lush Caves","temperature":0.5,"precipitation":"rain","structures":"mineshaft","mobs":"axolotl,glow_squid,bat,tropical_fish","category":"underground","color":"#6B8E23","features":"Azalea trees, moss, glow berries, dripleaf, spore blossoms, clay pools"},
+  {"id":"deep_dark","name":"Deep Dark","temperature":0.8,"precipitation":"none","structures":"ancient_city","mobs":"warden","category":"underground","color":"#0E1A24","features":"Sculk blocks, sculk shriekers, sculk sensors, ancient cities"},
+  {"id":"dripstone_caves","name":"Dripstone Caves","temperature":0.5,"precipitation":"rain","structures":"mineshaft","mobs":"bat,zombie,skeleton,spider,creeper,drowned","category":"underground","color":"#8B7355","features":"Pointed dripstone, dripstone blocks, small water pools"},
+  {"id":"pale_garden","name":"Pale Garden","temperature":0.7,"precipitation":"rain","structures":"","mobs":"creaking,chicken,pig,cow","category":"forest","color":"#C8C8B4","features":"Pale oak trees, pale moss, hanging moss, eyeblossoms, creaking hearts"}
 ]

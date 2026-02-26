@@ -1,3 +1,5 @@
+import java.util.Calendar
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,6 +7,17 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
 }
+
+// CalVer: versionCode = YYYYMMDD, versionName = "YYYY.MMDD"
+val calVerDate: Calendar = Calendar.getInstance()
+val calVerCode = calVerDate.get(Calendar.YEAR) * 10000 +
+    (calVerDate.get(Calendar.MONTH) + 1) * 100 +
+    calVerDate.get(Calendar.DAY_OF_MONTH)
+val calVerName = "%d.%02d%02d".format(
+    calVerDate.get(Calendar.YEAR),
+    calVerDate.get(Calendar.MONTH) + 1,
+    calVerDate.get(Calendar.DAY_OF_MONTH),
+)
 
 android {
     namespace = "dev.spyglass.android"
@@ -14,8 +27,8 @@ android {
         applicationId = "dev.spyglass.android"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = calVerCode
+        versionName = calVerName
     }
 
     buildTypes {

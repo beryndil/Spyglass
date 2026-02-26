@@ -9,6 +9,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
 
+private val WEAPONS = listOf(ItemType.SWORD, ItemType.BOW, ItemType.CROSSBOW, ItemType.TRIDENT, ItemType.MACE)
+private val TOOL_TYPES = listOf(ItemType.PICKAXE, ItemType.AXE, ItemType.SHOVEL, ItemType.HOE, ItemType.FISHING_ROD)
+private val ARMOR_TYPES = listOf(ItemType.HELMET, ItemType.CHESTPLATE, ItemType.LEGGINGS, ItemType.BOOTS)
+
+private fun ItemType.displayName(): String = name.lowercase().replace('_', ' ').replaceFirstChar { it.uppercase() }
+
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
     val s by vm.state.collectAsState()
@@ -18,14 +25,36 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
         SectionHeader("Enchanting", icon = PixelIcons.Anvil)
 
         InputCard {
-            // Item selector
-            Text("Item type", style = MaterialTheme.typography.bodySmall, color = Stone500)
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.fillMaxWidth()) {
-                listOf(ItemType.SWORD, ItemType.HELMET, ItemType.CHESTPLATE, ItemType.LEGGINGS, ItemType.BOOTS).forEach { t ->
+            // Item selector — grouped by category
+            Text("Weapons", style = MaterialTheme.typography.bodySmall, color = Stone500)
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                WEAPONS.forEach { t ->
                     FilterChip(
                         selected = s.selectedItem == t,
                         onClick  = { vm.setItem(t) },
-                        label    = { Text(t.name.lowercase().replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) },
+                        label    = { Text(t.displayName(), style = MaterialTheme.typography.labelSmall) },
+                    )
+                }
+            }
+            Spacer(Modifier.height(4.dp))
+            Text("Tools", style = MaterialTheme.typography.bodySmall, color = Stone500)
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                TOOL_TYPES.forEach { t ->
+                    FilterChip(
+                        selected = s.selectedItem == t,
+                        onClick  = { vm.setItem(t) },
+                        label    = { Text(t.displayName(), style = MaterialTheme.typography.labelSmall) },
+                    )
+                }
+            }
+            Spacer(Modifier.height(4.dp))
+            Text("Armor", style = MaterialTheme.typography.bodySmall, color = Stone500)
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                ARMOR_TYPES.forEach { t ->
+                    FilterChip(
+                        selected = s.selectedItem == t,
+                        onClick  = { vm.setItem(t) },
+                        label    = { Text(t.displayName(), style = MaterialTheme.typography.labelSmall) },
                     )
                 }
             }
@@ -59,6 +88,15 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                             }
                         }
                     }
+                }
+            }
+        }
+
+        // Incompatibility warnings
+        if (s.warnings.isNotEmpty()) {
+            ResultCard {
+                s.warnings.forEach { warning ->
+                    Text("⚠ $warning", style = MaterialTheme.typography.bodySmall, color = Red400)
                 }
             }
         }
