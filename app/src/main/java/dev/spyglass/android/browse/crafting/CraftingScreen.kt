@@ -111,7 +111,7 @@ fun CraftingScreen(
                     BrowseListItem(
                         headline    = "${r.outputCount}× ${r.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { it.uppercase() }}",
                         supporting  = r.type.replace('_', ' '),
-                        leadingIcon = PixelIcons.Crafting,
+                        leadingIcon = ItemTextures.get(r.outputItem) ?: PixelIcons.Crafting,
                         modifier    = Modifier.clickable { vm.toggleExpanded(r.id) },
                         trailing    = {
                             RecipeGridPreview(r)

@@ -111,7 +111,7 @@ fun BlocksScreen(
                     BrowseListItem(
                         headline    = b.name,
                         supporting  = b.id,
-                        leadingIcon = BlockTextures.get(b.id) ?: PixelIcons.Blocks,
+                        leadingIcon = ItemTextures.get(b.id) ?: PixelIcons.Blocks,
                         modifier    = Modifier.clickable { vm.toggleExpanded(b.id) },
                         trailing    = {
                             Column(horizontalAlignment = androidx.compose.ui.Alignment.End) {
