@@ -1,9 +1,15 @@
 package dev.spyglass.android.about
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,7 +23,7 @@ import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 @Composable
-fun AboutScreen() {
+fun AboutScreen(onBack: () -> Unit = {}) {
     val uriHandler = LocalUriHandler.current
 
     Column(
@@ -27,6 +33,14 @@ fun AboutScreen() {
             .padding(horizontal = 16.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
+        IconButton(onClick = onBack) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = "Back",
+                tint = Stone300,
+            )
+        }
+
         // ── App Info ─────────────────────────────────────────────────────────
         Column(
             modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
@@ -56,6 +70,40 @@ fun AboutScreen() {
                 style = MaterialTheme.typography.bodyMedium,
                 color = Stone300,
             )
+            Spacer(Modifier.height(2.dp))
+            Text(
+                text = "by Beryndil",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Stone500,
+            )
+            Spacer(Modifier.height(8.dp))
+            SpyglassIconImage(
+                icon = SpyglassIcon.Drawable(R.drawable.skin_beryndil),
+                contentDescription = "Beryndil",
+                modifier = Modifier.size(48.dp),
+                tint = Color.Unspecified,
+            )
+            Spacer(Modifier.height(12.dp))
+            // TODO: Replace with actual Buy Me a Coffee / Ko-fi URL
+            val coffeeUrl = "https://buymeacoffee.com/TODO"
+            Column(
+                modifier = Modifier
+                    .background(Gold, RoundedCornerShape(8.dp))
+                    .clickable { uriHandler.openUri(coffeeUrl) }
+                    .padding(horizontal = 20.dp, vertical = 10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(
+                    text = "Enjoy SpyGlass? Support its Development.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = SurfaceMid,
+                )
+                Text(
+                    text = "Buy Me a Cup of Coffee",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Background,
+                )
+            }
         }
 
         // ── Disclaimer ───────────────────────────────────────────────────────
@@ -123,7 +171,7 @@ fun AboutScreen() {
 
         // ── App License ──────────────────────────────────────────────────────
         Text(
-            text = "\u00A9 2026 All Rights Reserved except where noted above.",
+            text = "\u00A9 2026 Beryndil. All Rights Reserved except where noted above.",
             style = MaterialTheme.typography.bodySmall,
             color = Stone500,
             modifier = Modifier.fillMaxWidth(),

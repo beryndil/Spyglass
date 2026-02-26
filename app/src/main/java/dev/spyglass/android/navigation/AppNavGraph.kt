@@ -1,9 +1,14 @@
 package dev.spyglass.android.navigation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -65,8 +70,8 @@ fun AppNavGraph() {
                     }
                 })
             }
-            composable("about") { AboutScreen() }
-            composable("settings") { SettingsScreen() }
+            composable("about") { AboutScreen(onBack = { navController.popBackStack() }) }
+            composable("settings") { SettingsScreen(onBack = { navController.popBackStack() }) }
         }
     }
 }
@@ -82,14 +87,34 @@ private fun SpyglassTopBar(navController: NavHostController) {
             .fillMaxWidth()
             .statusBarsPadding()
             .padding(horizontal = 12.dp, vertical = 8.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
-            text  = "SPYGLASS",
-            style = MaterialTheme.typography.labelSmall,
-            color = Gold,
-        )
+
+        Row(
+            modifier = Modifier
+                .weight(1f)
+                .clickable {
+                    navController.navigate(TopDest.Calculators.route) {
+                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text  = "SPYGLASS",
+                style = MaterialTheme.typography.labelSmall,
+                color = Gold,
+            )
+            Spacer(Modifier.width(6.dp))
+            SpyglassIconImage(
+                icon = SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.ic_launcher_foreground),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp),
+                tint = Color.Unspecified,
+            )
+        }
 
         Box {
             IconButton(onClick = { menuExpanded = true }) {
