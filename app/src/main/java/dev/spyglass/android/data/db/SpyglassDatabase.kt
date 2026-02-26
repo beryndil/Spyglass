@@ -17,7 +17,7 @@ import dev.spyglass.android.data.db.entities.*
         PotionEntity::class,
         TradeEntity::class,
     ],
-    version = 4,
+    version = 5,
     exportSchema = false,
 )
 abstract class SpyglassDatabase : RoomDatabase() {

@@ -39,33 +39,54 @@ fun calculateChain(
     targetCount: Long,
     recipes: Map<String, RecipeEntity>,
 ): List<ChainStep> {
-    val steps = mutableListOf<ChainStep>()
-    val visited = mutableSetOf<String>()
+    // Accumulate total quantities needed per item across all branches
+    val quantities = mutableMapOf<String, Long>()    // total items needed
+    val crafts = mutableMapOf<String, Long>()         // total crafts needed
+    val recipeMap = mutableMapOf<String, RecipeEntity?>()
+    val biomeMap = mutableMapOf<String, List<String>>()
+    val order = mutableListOf<String>()               // insertion order for display
 
-    fun trace(itemId: String, needed: Long) {
-        if (itemId in visited || needed <= 0) return
-        visited.add(itemId)
+    fun trace(itemId: String, needed: Long, ancestors: Set<String>) {
+        if (itemId in ancestors || needed <= 0) return // cycle detection only
 
         val recipe = recipes[itemId]
         if (recipe == null || recipe.type == "found") {
-            val biomes = BiomeResourceMap.biomesForItem(itemId)
-            steps.add(ChainStep(itemId, needed, 0, null, biomes))
+            quantities[itemId] = (quantities[itemId] ?: 0L) + needed
+            if (itemId !in recipeMap) {
+                recipeMap[itemId] = null
+                biomeMap[itemId] = BiomeResourceMap.biomesForItem(itemId)
+                order.add(itemId)
+            }
             return
         }
 
         val outputCount = recipe.outputCount.coerceAtLeast(1)
         val craftsNeeded = ceil(needed.toDouble() / outputCount).toLong()
-        steps.add(ChainStep(itemId, needed, craftsNeeded, recipe))
+
+        quantities[itemId] = (quantities[itemId] ?: 0L) + needed
+        crafts[itemId] = (crafts[itemId] ?: 0L) + craftsNeeded
+        if (itemId !in recipeMap) {
+            recipeMap[itemId] = recipe
+            order.add(itemId)
+        }
 
         val ingredients = parseIngredientCounts(recipe)
         for ((ingredientId, countPerCraft) in ingredients) {
-            val totalNeeded = craftsNeeded * countPerCraft
-            trace(ingredientId, totalNeeded)
+            trace(ingredientId, craftsNeeded * countPerCraft, ancestors + itemId)
         }
     }
 
-    trace(targetItem, targetCount)
-    return steps
+    trace(targetItem, targetCount, emptySet())
+
+    return order.map { itemId ->
+        ChainStep(
+            itemId = itemId,
+            quantity = quantities[itemId] ?: 0L,
+            craftsNeeded = crafts[itemId] ?: 0L,
+            recipe = recipeMap[itemId],
+            biomes = biomeMap[itemId] ?: emptyList(),
+        )
+    }
 }
 
 private fun parseIngredientCounts(recipe: RecipeEntity): Map<String, Int> {
