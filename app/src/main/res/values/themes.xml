@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme — full-screen, no status bar chrome;
+         Compose Material3 takes over all theming at runtime. -->
+    <style name="Theme.Spyglass" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">#0E0C0A</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
+    </style>
+</resources>
