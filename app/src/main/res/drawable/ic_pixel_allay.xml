@@ -1,0 +1,27 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Head outline (medium blue) -->
+    <path android:fillColor="#38BDF8"
+        android:pathData="M3,2h10v1h1v10h-1v1h-10v-1h-1v-10h1z"/>
+    <!-- Face (light sky blue) -->
+    <path android:fillColor="#7DD3FC"
+        android:pathData="M4,3h8v10h-8z"/>
+    <!-- Forehead highlight (very light blue) -->
+    <path android:fillColor="#BAE6FD"
+        android:pathData="M4,3h8v2h-8z"/>
+    <!-- Left eye (dark navy, large) -->
+    <path android:fillColor="#0C2744"
+        android:pathData="M4,6h3v4h-3z"/>
+    <!-- Right eye (dark navy, large) -->
+    <path android:fillColor="#0C2744"
+        android:pathData="M9,6h3v4h-3z"/>
+    <!-- Left eye highlight -->
+    <path android:fillColor="#E0F2FE"
+        android:pathData="M4,6h1v1h-1z"/>
+    <!-- Right eye highlight -->
+    <path android:fillColor="#E0F2FE"
+        android:pathData="M9,6h1v1h-1z"/>
+</vector>

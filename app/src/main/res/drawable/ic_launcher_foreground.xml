@@ -3,16 +3,25 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Lens ring -->
-    <path
-        android:fillColor="#C9A84C"
-        android:pathData="M34,68 L34,56 L38,56 L38,52 L42,52 L42,48 L52,48 L52,52 L56,52 L56,56 L60,56 L60,68 L56,68 L56,72 L52,72 L52,76 L42,76 L42,72 L38,72 L38,68 Z M42,60 L42,64 L52,64 L52,60 Z" />
-    <!-- Tube body -->
-    <path
-        android:fillColor="#9E7A2A"
-        android:pathData="M56,48 L60,44 L64,44 L68,40 L72,40 L72,44 L68,48 L64,48 L60,52 L56,52 Z" />
-    <!-- Eyepiece -->
-    <path
-        android:fillColor="#C9A84C"
-        android:pathData="M70,38 L70,34 L78,34 L78,42 L74,42 L74,38 Z" />
+    <!-- Lens ring (copper/gold) — scaled 4× from ic_pixel_search, offset +22 -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M26,38h8v4h4v-4h8v-4h4v-4h4v4h4v4h4v8h-4v4h-4v4h-8v4h-4v-4h-8v-4h-4v-4h-4z"/>
+    <!-- Lens glass (light blue) -->
+    <path android:fillColor="#A0D8EF"
+        android:pathData="M34,38h4v4h8v-4h4v-4h4v4h4v8h-4v4h-8v4h-4v-4h-4v-4h-4z"/>
+    <!-- Lens highlight -->
+    <path android:fillColor="#D0EEFF"
+        android:pathData="M38,34h4v4h4v4h-8z"/>
+    <!-- Tube body (copper) -->
+    <path android:fillColor="#9E7A2A"
+        android:pathData="M54,54h8v8h8v8h8v8h4v4h-8v-4h-8v-8h-8v-8h-4z"/>
+    <!-- Tube highlight -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M58,54h4v8h4v4h-4v-4h-4z"/>
+    <!-- Tube dark edge -->
+    <path android:fillColor="#6B4F20"
+        android:pathData="M70,70h8v8h-4v4h-8v-4h4z"/>
+    <!-- Lens ring darker edge -->
+    <path android:fillColor="#9E7A2A"
+        android:pathData="M26,42h4v8h4v4h8v-4h-4v-4h-4v-4h-4v-4h-4z"/>
 </vector>

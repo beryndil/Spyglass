@@ -17,6 +17,7 @@ import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassTab
 import dev.spyglass.android.core.ui.SpyglassTabRow
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.navigation.BrowseTarget
 import kotlinx.coroutines.flow.map
 
 private val BROWSE_TABS = listOf(
@@ -30,12 +31,27 @@ private val BROWSE_TABS = listOf(
 )
 
 @Composable
-fun BrowseScreen() {
-    var tab by remember { mutableIntStateOf(0) }
+fun BrowseScreen(initialTarget: BrowseTarget? = null) {
+    var tab by remember { mutableIntStateOf(initialTarget?.tab ?: 0) }
     var targetMobId by remember { mutableStateOf<String?>(null) }
     var targetBiomeId by remember { mutableStateOf<String?>(null) }
     var targetBlockId by remember { mutableStateOf<String?>(null) }
     var targetRecipeId by remember { mutableStateOf<String?>(null) }
+
+    // Handle incoming navigation from Search
+    LaunchedEffect(initialTarget) {
+        if (initialTarget != null) {
+            tab = initialTarget.tab
+            targetMobId = null; targetBiomeId = null; targetBlockId = null; targetRecipeId = null
+            when (initialTarget.tab) {
+                0 -> targetBlockId = initialTarget.id
+                1 -> targetRecipeId = initialTarget.id
+                2 -> targetMobId = initialTarget.id
+                3 -> targetBiomeId = initialTarget.id
+                // Tabs 4-6 (enchants, potions, trades) just switch to the tab
+            }
+        }
+    }
 
     // Collect block IDs so we can route item taps to the correct tab
     val context = LocalContext.current

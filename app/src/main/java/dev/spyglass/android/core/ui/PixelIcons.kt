@@ -6,6 +6,7 @@ object PixelIcons {
     val Blocks    = SpyglassIcon.Drawable(R.drawable.ic_pixel_blocks)
     val Crafting  = SpyglassIcon.Drawable(R.drawable.ic_pixel_crafting)
     val Mob       = SpyglassIcon.Drawable(R.drawable.ic_pixel_mob)
+    val Allay     = SpyglassIcon.Drawable(R.drawable.ic_pixel_allay)
     val Biome     = SpyglassIcon.Drawable(R.drawable.ic_pixel_biome)
     val Enchant   = SpyglassIcon.Drawable(R.drawable.ic_pixel_enchant)
     val Potion    = SpyglassIcon.Drawable(R.drawable.ic_pixel_potion)

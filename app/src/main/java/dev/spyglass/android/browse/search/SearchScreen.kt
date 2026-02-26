@@ -1,6 +1,7 @@
 package dev.spyglass.android.browse.search
 
 import android.app.Application
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -33,17 +34,28 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
             if (q.length < 2) return@flatMapLatest flowOf(emptyList())
             combine(
                 repo.searchBlocks(q),
+                repo.searchRecipes(q),
                 repo.searchMobs(q),
                 repo.searchBiomes(q),
                 repo.searchEnchants(q),
                 repo.searchPotions(q),
-            ) { blocks, mobs, biomes, enchants, potions ->
+                repo.searchTrades(q),
+            ) { results ->
+                val blocks   = (results[0] as List<*>)
+                val recipes  = (results[1] as List<*>)
+                val mobs     = (results[2] as List<*>)
+                val biomes   = (results[3] as List<*>)
+                val enchants = (results[4] as List<*>)
+                val potions  = (results[5] as List<*>)
+                val trades   = (results[6] as List<*>)
                 buildList {
-                    addAll(blocks.take(5).map   { SearchResult("Block",       it.id, it.name, it.category) })
-                    addAll(mobs.take(5).map      { SearchResult("Mob",         it.id, it.name, it.category) })
-                    addAll(biomes.take(5).map    { SearchResult("Biome",       it.id, it.name, it.category) })
-                    addAll(enchants.take(5).map  { SearchResult("Enchantment", it.id, it.name, it.target) })
-                    addAll(potions.take(5).map   { SearchResult("Potion",      it.id, it.name, it.category) })
+                    addAll(blocks.take(5).map   { it as dev.spyglass.android.data.db.entities.BlockEntity;   SearchResult("Block",       it.id, it.name, it.category) })
+                    addAll(recipes.take(5).map  { it as dev.spyglass.android.data.db.entities.RecipeEntity;  SearchResult("Recipe",      it.outputItem, it.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { c -> c.uppercase() }, it.type.replace('_', ' ')) })
+                    addAll(mobs.take(5).map     { it as dev.spyglass.android.data.db.entities.MobEntity;     SearchResult("Mob",         it.id, it.name, it.category) })
+                    addAll(biomes.take(5).map   { it as dev.spyglass.android.data.db.entities.BiomeEntity;   SearchResult("Biome",       it.id, it.name, it.category) })
+                    addAll(enchants.take(5).map { it as dev.spyglass.android.data.db.entities.EnchantEntity; SearchResult("Enchantment", it.id, it.name, it.target) })
+                    addAll(potions.take(5).map  { it as dev.spyglass.android.data.db.entities.PotionEntity;  SearchResult("Potion",      it.id, it.name, it.category) })
+                    addAll(trades.take(5).map   { it as dev.spyglass.android.data.db.entities.TradeEntity;   SearchResult("Trade",       it.profession, "${it.sellItem.replace('_', ' ')} (${it.levelName})", it.profession) })
                 }
             }
         }
@@ -52,26 +64,45 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
     fun setQuery(q: String) { _query.value = q }
 }
 
+/** Maps search result type → browse tab index */
+fun browseTabForType(type: String): Int = when (type) {
+    "Block"       -> 0
+    "Recipe"      -> 1
+    "Mob"         -> 2
+    "Biome"       -> 3
+    "Enchantment" -> 4
+    "Potion"      -> 5
+    "Trade"       -> 6
+    else          -> 0
+}
+
 private fun typeIcon(type: String): SpyglassIcon = when (type) {
     "Block"       -> PixelIcons.Blocks
+    "Recipe"      -> PixelIcons.Crafting
     "Mob"         -> PixelIcons.Mob
     "Biome"       -> PixelIcons.Biome
     "Enchantment" -> PixelIcons.Enchant
     "Potion"      -> PixelIcons.Potion
+    "Trade"       -> PixelIcons.Trade
     else          -> PixelIcons.Search
 }
 
 private fun typeColor(type: String) = when (type) {
     "Block"       -> Stone300
+    "Recipe"      -> Gold
     "Mob"         -> NetherRed
     "Biome"       -> Emerald
     "Enchantment" -> EnderPurple
     "Potion"      -> PotionBlue
+    "Trade"       -> Emerald
     else          -> Stone500
 }
 
 @Composable
-fun SearchScreen(vm: SearchViewModel = viewModel()) {
+fun SearchScreen(
+    onResultTap: (tab: Int, id: String) -> Unit = { _, _ -> },
+    vm: SearchViewModel = viewModel(),
+) {
     val query   by vm.query.collectAsState()
     val results by vm.results.collectAsState()
 
@@ -89,7 +120,7 @@ fun SearchScreen(vm: SearchViewModel = viewModel()) {
             EmptyState(
                 icon     = PixelIcons.Search,
                 title    = "Search everything",
-                subtitle = "Type at least 2 characters to search blocks, mobs, biomes, enchantments, and potions.",
+                subtitle = "Type at least 2 characters to search blocks, mobs, biomes, recipes, trades, and more.",
             )
         } else {
             LazyColumn(
@@ -102,6 +133,7 @@ fun SearchScreen(vm: SearchViewModel = viewModel()) {
                         supporting  = r.id,
                         leadingIcon = typeIcon(r.type),
                         leadingIconTint = typeColor(r.type),
+                        modifier    = Modifier.clickable { onResultTap(browseTabForType(r.type), r.id) },
                         trailing    = {
                             Column(horizontalAlignment = androidx.compose.ui.Alignment.End) {
                                 CategoryBadge(label = r.type, color = typeColor(r.type))

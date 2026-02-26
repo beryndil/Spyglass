@@ -147,10 +147,11 @@ fun MobsScreen(
                     else       -> Stone500
                 }
                 Column {
+                    val mobIcon = if (m.id == "allay") PixelIcons.Allay else PixelIcons.Mob
                     BrowseListItem(
                         headline    = m.name,
                         supporting  = m.id,
-                        leadingIcon = PixelIcons.Mob,
+                        leadingIcon = mobIcon,
                         leadingIconTint = categoryColor,
                         modifier    = Modifier.clickable { vm.toggleExpanded(m.id) },
                         trailing    = {

@@ -2,8 +2,7 @@ package dev.spyglass.android.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -25,9 +24,13 @@ sealed class TopDest(val route: String, val label: String, val icon: SpyglassIco
 
 val TOP_DESTINATIONS = listOf(TopDest.Calculators, TopDest.Browse, TopDest.Search)
 
+/** Pending navigation target from Search → Browse */
+data class BrowseTarget(val tab: Int, val id: String)
+
 @Composable
 fun AppNavGraph() {
     val navController: NavHostController = rememberNavController()
+    var pendingTarget by remember { mutableStateOf<BrowseTarget?>(null) }
 
     Scaffold(
         bottomBar = { BottomNavBar(navController) },
@@ -38,8 +41,20 @@ fun AppNavGraph() {
             modifier         = Modifier.padding(innerPadding),
         ) {
             composable(TopDest.Calculators.route) { CalculatorsScreen() }
-            composable(TopDest.Browse.route)      { BrowseScreen() }
-            composable(TopDest.Search.route)      { SearchScreen() }
+            composable(TopDest.Browse.route) {
+                val target = pendingTarget
+                pendingTarget = null
+                BrowseScreen(initialTarget = target)
+            }
+            composable(TopDest.Search.route) {
+                SearchScreen(onResultTap = { tab, id ->
+                    pendingTarget = BrowseTarget(tab, id)
+                    navController.navigate(TopDest.Browse.route) {
+                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                        launchSingleTop = true
+                    }
+                })
+            }
         }
     }
 }
