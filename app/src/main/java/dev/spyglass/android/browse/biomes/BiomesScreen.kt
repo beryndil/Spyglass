@@ -161,8 +161,7 @@ private fun BiomeListItem(b: BiomeEntity, onClick: () -> Unit) {
     BrowseListItem(
         headline    = b.name,
         supporting  = b.id,
-        leadingIcon = PixelIcons.Biome,
-        leadingIconTint = biomeColor ?: Stone300,
+        leadingIcon = BiomeTextures.get(b.id) ?: PixelIcons.Biome,
         modifier    = Modifier.clickable { onClick() },
         trailing    = {
             Column(horizontalAlignment = Alignment.End) {
