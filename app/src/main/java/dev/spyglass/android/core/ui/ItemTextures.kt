@@ -278,6 +278,7 @@ object ItemTextures {
         "red_dye" to R.drawable.item_red_dye,
         "redstone" to R.drawable.item_redstone,
         "redstone_dust" to R.drawable.item_redstone,
+        "resin_brick" to R.drawable.item_resin_brick,
         "resin_clump" to R.drawable.item_resin_clump,
         "rotten_flesh" to R.drawable.item_rotten_flesh,
         "saddle" to R.drawable.item_saddle,

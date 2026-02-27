@@ -105,6 +105,7 @@ fun HomeScreen(
             description = "Your Minecraft companion for crafting, building, and exploring",
             stat = "Minecraft Java 1.21.4",
             iconTint = Color.Unspecified,
+            iconSize = 144.dp,
         )
 
         // ── B. Tip of the Day ──

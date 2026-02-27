@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.spyglass.android.data.db.entities.RecipeEntity
@@ -244,13 +245,14 @@ fun TabIntroHeader(
     description: String,
     stat: String = "",
     iconTint: Color = Gold,
+    iconSize: Dp = 36.dp,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxWidth().padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        SpyglassIconImage(icon, contentDescription = null, tint = iconTint, modifier = Modifier.size(36.dp))
+        SpyglassIconImage(icon, contentDescription = null, tint = iconTint, modifier = Modifier.size(iconSize))
         Spacer(Modifier.height(8.dp))
         Text(title, style = MaterialTheme.typography.headlineSmall, color = Stone100)
         Spacer(Modifier.height(4.dp))

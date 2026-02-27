@@ -6,14 +6,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.ComposeNavigator
+import androidx.navigation.compose.DialogNavigator
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import dev.spyglass.android.about.AboutScreen
 import dev.spyglass.android.calculators.CalculatorsScreen
 import dev.spyglass.android.browse.BrowseScreen
@@ -38,7 +40,13 @@ data class BrowseTarget(val tab: Int, val id: String)
 
 @Composable
 fun AppNavGraph() {
-    val navController: NavHostController = rememberNavController()
+    val context = LocalContext.current
+    val navController = remember {
+        NavHostController(context).apply {
+            navigatorProvider.addNavigator(ComposeNavigator())
+            navigatorProvider.addNavigator(DialogNavigator())
+        }
+    }
     var pendingTarget by remember { mutableStateOf<BrowseTarget?>(null) }
     var pendingCalcTab by remember { mutableStateOf<Int?>(null) }
 
