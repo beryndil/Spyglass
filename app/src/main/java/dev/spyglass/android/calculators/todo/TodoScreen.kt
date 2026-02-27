@@ -1,0 +1,541 @@
+package dev.spyglass.android.calculators.todo
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Link
+import androidx.compose.material.icons.filled.LinkOff
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.data.db.entities.ShoppingListEntity
+import dev.spyglass.android.data.db.entities.TodoEntity
+
+@Composable
+fun TodoScreen(vm: TodoViewModel = viewModel()) {
+    val todos by vm.allTodos.collectAsState()
+    val shoppingLists by vm.allShoppingLists.collectAsState()
+    val searchQuery by vm.searchQuery.collectAsState()
+    val searchResults by vm.searchResults.collectAsState()
+
+    var mode by remember { mutableIntStateOf(0) } // 0 = free-form, 1 = item-linked
+    var freeformInput by remember { mutableStateOf("") }
+    var selectedId by remember { mutableStateOf<String?>(null) }
+    var selectedName by remember { mutableStateOf("") }
+    var quantityInput by remember { mutableStateOf("64") }
+    var linkDialogTodo by remember { mutableStateOf<TodoEntity?>(null) }
+    var editDialogTodo by remember { mutableStateOf<TodoEntity?>(null) }
+    var createLinkedList by remember { mutableStateOf<ShoppingListEntity?>(null) }
+
+    val completedCount = todos.count { it.completed }
+
+    LazyColumn(
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        item(key = "header") {
+            TabIntroHeader(
+                icon = PixelIcons.Todo,
+                title = "Todo List",
+                description = "Track tasks, gather goals, and link to your tools",
+            )
+        }
+
+        // ── Add section ──
+        item(key = "add_section") {
+            InputCard {
+                TogglePill(
+                    options = listOf("Free-form", "Item-linked"),
+                    selected = mode,
+                    onSelect = { mode = it },
+                )
+
+                // ── Optional shopping list link ──
+                ShoppingListLinkPicker(
+                    shoppingLists = shoppingLists,
+                    selected = createLinkedList,
+                    onSelect = { createLinkedList = it },
+                )
+
+                if (mode == 0) {
+                    // Free-form input
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        OutlinedTextField(
+                            value = freeformInput,
+                            onValueChange = { freeformInput = it },
+                            placeholder = { Text("Build the east bridge\u2026", color = Stone500) },
+                            singleLine = true,
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold,
+                            ),
+                            modifier = Modifier.weight(1f),
+                        )
+                        IconButton(
+                            onClick = {
+                                vm.createFreeformTodo(
+                                    freeformInput,
+                                    linkedType = createLinkedList?.let { "shopping_list" },
+                                    linkedId = createLinkedList?.id,
+                                )
+                                freeformInput = ""
+                                createLinkedList = null
+                            },
+                            enabled = freeformInput.isNotBlank(),
+                            colors = IconButtonDefaults.iconButtonColors(
+                                containerColor = if (freeformInput.isNotBlank()) Gold else Stone700,
+                            ),
+                            modifier = Modifier.size(40.dp),
+                        ) {
+                            Icon(Icons.Default.Add, contentDescription = "Add", tint = Background, modifier = Modifier.size(20.dp))
+                        }
+                    }
+                } else {
+                    // Item-linked input
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        OutlinedTextField(
+                            value = searchQuery,
+                            onValueChange = {
+                                vm.setSearchQuery(it)
+                                if (selectedId != null) {
+                                    selectedId = null
+                                    selectedName = ""
+                                }
+                            },
+                            placeholder = { Text("Search items\u2026", color = Stone500) },
+                            singleLine = true,
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = if (selectedId != null) Emerald else Gold,
+                                unfocusedBorderColor = if (selectedId != null) Emerald else Stone700,
+                                cursorColor = Gold,
+                            ),
+                            modifier = Modifier.weight(1f),
+                        )
+                        OutlinedTextField(
+                            value = quantityInput,
+                            onValueChange = { quantityInput = it.filter { c -> c.isDigit() } },
+                            label = { Text("Qty") },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = Gold, unfocusedBorderColor = Stone700,
+                                focusedLabelColor = Gold, unfocusedLabelColor = Stone500, cursorColor = Gold,
+                            ),
+                            modifier = Modifier.width(80.dp),
+                        )
+                        if (selectedId != null) {
+                            IconButton(
+                                onClick = {
+                                    val qty = quantityInput.toIntOrNull() ?: 1
+                                    if (qty > 0) {
+                                        vm.createItemTodo(
+                                            selectedId!!, selectedName, qty,
+                                            linkedType = createLinkedList?.let { "shopping_list" },
+                                            linkedId = createLinkedList?.id,
+                                        )
+                                        selectedId = null
+                                        selectedName = ""
+                                        quantityInput = "64"
+                                        createLinkedList = null
+                                    }
+                                },
+                                colors = IconButtonDefaults.iconButtonColors(containerColor = Gold),
+                                modifier = Modifier.size(40.dp),
+                            ) {
+                                Icon(Icons.Default.Add, contentDescription = "Add", tint = Background, modifier = Modifier.size(20.dp))
+                            }
+                        }
+                    }
+
+                    // Search results dropdown
+                    if (selectedId == null && searchResults.isNotEmpty()) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(SurfaceMid, RoundedCornerShape(6.dp))
+                                .border(0.5.dp, Stone700, RoundedCornerShape(6.dp)),
+                        ) {
+                            searchResults.forEach { (id, name) ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            selectedId = id
+                                            selectedName = name
+                                            vm.setSearchQuery(name)
+                                        }
+                                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    val tex = ItemTextures.get(id)
+                                    if (tex != null) {
+                                        SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(20.dp))
+                                        Spacer(Modifier.width(8.dp))
+                                    }
+                                    Column(modifier = Modifier.weight(1f)) {
+                                        Text(name, style = MaterialTheme.typography.bodyMedium, color = Stone100)
+                                        Text(id, style = MaterialTheme.typography.bodySmall, color = Stone500)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // ── Task list ──
+        if (todos.isNotEmpty()) {
+            item(key = "list_header") {
+                SectionHeader("Tasks", icon = PixelIcons.Todo)
+            }
+        } else {
+            item(key = "empty") {
+                EmptyState(
+                    icon = PixelIcons.Todo,
+                    title = "No tasks yet",
+                    subtitle = "Add your first task above",
+                )
+            }
+        }
+
+        items(todos, key = { it.id }) { todo ->
+            TodoRow(
+                todo = todo,
+                onToggle = { vm.toggleCompleted(todo) },
+                onEdit = { editDialogTodo = todo },
+                onDelete = { vm.deleteTodo(todo.id) },
+                onLinkTap = { linkDialogTodo = todo },
+            )
+        }
+
+        // ── Clear completed ──
+        if (completedCount > 0) {
+            item(key = "clear_completed") {
+                TextButton(onClick = vm::deleteCompleted) {
+                    Icon(Icons.Default.Delete, contentDescription = null, tint = Red400, modifier = Modifier.size(16.dp))
+                    Spacer(Modifier.width(4.dp))
+                    Text("Clear $completedCount completed", color = Red400)
+                }
+            }
+        }
+
+        item { Spacer(Modifier.height(16.dp)) }
+    }
+
+    // ── Edit dialog ──
+    if (editDialogTodo != null) {
+        EditTodoDialog(
+            todo = editDialogTodo!!,
+            onSave = { newTitle -> vm.editTitle(editDialogTodo!!.id, newTitle); editDialogTodo = null },
+            onDismiss = { editDialogTodo = null },
+        )
+    }
+
+    // ── Link dialog ──
+    if (linkDialogTodo != null) {
+        LinkDialog(
+            todo = linkDialogTodo!!,
+            shoppingLists = shoppingLists,
+            onLink = { type, id -> vm.linkToTool(linkDialogTodo!!.id, type, id) },
+            onDismiss = { linkDialogTodo = null },
+        )
+    }
+}
+
+// ── Todo row ────────────────────────────────────────────────────────────────
+
+@Composable
+private fun TodoRow(
+    todo: TodoEntity,
+    onToggle: () -> Unit,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit,
+    onLinkTap: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(SurfaceCard, RoundedCornerShape(10.dp))
+            .border(1.dp, Stone700, RoundedCornerShape(10.dp))
+            .padding(horizontal = 10.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Checkbox(
+            checked = todo.completed,
+            onCheckedChange = { onToggle() },
+            colors = CheckboxDefaults.colors(
+                checkedColor = Gold,
+                uncheckedColor = Stone500,
+                checkmarkColor = Background,
+            ),
+            modifier = Modifier.size(24.dp),
+        )
+        Spacer(Modifier.width(8.dp))
+
+        // Item icon if item-linked
+        if (todo.itemId != null) {
+            val tex = ItemTextures.get(todo.itemId)
+            if (tex != null) {
+                SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(22.dp))
+                Spacer(Modifier.width(8.dp))
+            }
+        }
+
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .clickable(enabled = !todo.completed) { onEdit() },
+        ) {
+            Text(
+                todo.title,
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (todo.completed) Stone500 else Stone100,
+                textDecoration = if (todo.completed) TextDecoration.LineThrough else null,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                // Quantity badge
+                if (todo.quantity != null) {
+                    CategoryBadge(
+                        label = formatQuantity(todo.quantity),
+                        color = Gold,
+                    )
+                }
+                // Linked tool badge
+                if (todo.linkedType != null) {
+                    CategoryBadge(
+                        label = linkedLabel(todo.linkedType),
+                        color = Emerald,
+                    )
+                }
+            }
+        }
+
+        // Edit button
+        IconButton(onClick = onEdit, modifier = Modifier.size(28.dp)) {
+            Icon(Icons.Default.Edit, contentDescription = "Edit", tint = Stone500, modifier = Modifier.size(16.dp))
+        }
+        // Link button
+        IconButton(onClick = onLinkTap, modifier = Modifier.size(28.dp)) {
+            Icon(Icons.Default.Link, contentDescription = "Link", tint = Stone500, modifier = Modifier.size(16.dp))
+        }
+        // Delete button
+        IconButton(onClick = onDelete, modifier = Modifier.size(28.dp)) {
+            Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Stone500, modifier = Modifier.size(16.dp))
+        }
+    }
+}
+
+// ── Edit dialog ─────────────────────────────────────────────────────────────
+
+@Composable
+private fun EditTodoDialog(
+    todo: TodoEntity,
+    onSave: (String) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    var text by remember { mutableStateOf(todo.title) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Edit Task", color = Stone100) },
+        text = {
+            OutlinedTextField(
+                value = text,
+                onValueChange = { text = it },
+                singleLine = false,
+                maxLines = 3,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold,
+                ),
+                modifier = Modifier.fillMaxWidth(),
+            )
+        },
+        confirmButton = {
+            TextButton(
+                onClick = { onSave(text) },
+                enabled = text.isNotBlank() && text != todo.title,
+            ) {
+                Text("Save", color = if (text.isNotBlank() && text != todo.title) Gold else Stone500)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text("Cancel", color = Stone300) }
+        },
+        containerColor = SurfaceDark,
+    )
+}
+
+// ── Link dialog ─────────────────────────────────────────────────────────────
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun LinkDialog(
+    todo: TodoEntity,
+    shoppingLists: List<ShoppingListEntity>,
+    onLink: (String?, Long?) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    var selectedList by remember { mutableStateOf<ShoppingListEntity?>(null) }
+    var expanded by remember { mutableStateOf(false) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Link to Tool", color = Stone100) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text("Link \"${todo.title}\" to a shopping list", style = MaterialTheme.typography.bodySmall, color = Stone300)
+
+                if (shoppingLists.isEmpty()) {
+                    Text("No shopping lists yet", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                } else {
+                    ExposedDropdownMenuBox(
+                        expanded = expanded,
+                        onExpandedChange = { expanded = it },
+                    ) {
+                        OutlinedTextField(
+                            value = selectedList?.name ?: "Select a list",
+                            onValueChange = {},
+                            readOnly = true,
+                            singleLine = true,
+                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = Gold, unfocusedBorderColor = Stone700,
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .menuAnchor(MenuAnchorType.PrimaryNotEditable),
+                        )
+                        ExposedDropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false },
+                            containerColor = SurfaceDark,
+                        ) {
+                            shoppingLists.forEach { list ->
+                                DropdownMenuItem(
+                                    text = { Text(list.name, color = Stone100) },
+                                    onClick = {
+                                        selectedList = list
+                                        expanded = false
+                                    },
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    if (selectedList != null) {
+                        onLink("shopping_list", selectedList!!.id)
+                    }
+                    onDismiss()
+                },
+                enabled = selectedList != null,
+            ) {
+                Text("Link", color = if (selectedList != null) Gold else Stone500)
+            }
+        },
+        dismissButton = {
+            if (todo.linkedType != null) {
+                TextButton(onClick = { onLink(null, null); onDismiss() }) {
+                    Text("Unlink", color = Red400)
+                }
+            }
+            TextButton(onClick = onDismiss) { Text("Cancel", color = Stone300) }
+        },
+        containerColor = SurfaceDark,
+    )
+}
+
+// ── Shopping list link picker (inline in add section) ────────────────────────
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun ShoppingListLinkPicker(
+    shoppingLists: List<ShoppingListEntity>,
+    selected: ShoppingListEntity?,
+    onSelect: (ShoppingListEntity?) -> Unit,
+) {
+    if (shoppingLists.isEmpty()) return
+
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text(
+            "Link to shopping list (optional)",
+            style = MaterialTheme.typography.labelSmall,
+            color = Stone500,
+        )
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            shoppingLists.forEach { list ->
+                FilterChip(
+                    selected = selected?.id == list.id,
+                    onClick = { onSelect(if (selected?.id == list.id) null else list) },
+                    label = { Text(list.name, style = MaterialTheme.typography.labelSmall) },
+                    leadingIcon = if (selected?.id == list.id) {
+                        { Icon(Icons.Default.Link, contentDescription = null, modifier = Modifier.size(14.dp)) }
+                    } else null,
+                    colors = FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = Emerald.copy(alpha = 0.2f),
+                        selectedLabelColor = Emerald,
+                        selectedLeadingIconColor = Emerald,
+                    ),
+                )
+            }
+            if (selected != null) {
+                IconButton(onClick = { onSelect(null) }, modifier = Modifier.size(28.dp)) {
+                    Icon(Icons.Default.LinkOff, contentDescription = "Clear link", tint = Stone500, modifier = Modifier.size(16.dp))
+                }
+            }
+        }
+    }
+}
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+private fun formatQuantity(quantity: Int): String {
+    val chests = quantity / 1728
+    val afterChests = quantity % 1728
+    val stacks = afterChests / 64
+    val items = afterChests % 64
+
+    val parts = mutableListOf<String>()
+    if (chests > 0) parts += "$chests chest${if (chests > 1) "s" else ""}"
+    if (stacks > 0) parts += "$stacks stack${if (stacks > 1) "s" else ""}"
+    if (items > 0)  parts += "$items"
+    return if (parts.isEmpty()) "\u00d70" else parts.joinToString(", ")
+}
+
+private fun linkedLabel(type: String): String = when (type) {
+    "shopping_list" -> "Materials"
+    "inventory"     -> "Inventory"
+    "build"         -> "Build"
+    else            -> type.replaceFirstChar { it.uppercase() }
+}

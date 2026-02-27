@@ -12,11 +12,23 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.data.db.entities.FavoriteEntity
+import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.data.db.entities.TodoEntity
+import dev.spyglass.android.settings.PreferenceKeys
+import dev.spyglass.android.settings.dataStore
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PriorityHigh
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.datastore.preferences.core.edit
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import java.util.Calendar
 
 // ── Minecraft tips / Did You Know ───────────────────────────────────────────
@@ -81,7 +93,38 @@ private val CALC_LINKS = listOf(
     QuickLink(PixelIcons.Nether,  "Nether Portal"),
     QuickLink(PixelIcons.Shapes,  "Shapes"),
     QuickLink(PixelIcons.Anvil,   "Enchanting"),
+    QuickLink(PixelIcons.Bookmark, "Reference"),
+    QuickLink(PixelIcons.Storage,  "Shopping Lists"),
+    QuickLink(PixelIcons.Todo,     "Todo List"),
 )
+
+// ── Browse tab index for favorite types ─────────────────────────────────────
+
+private fun browseTabForType(type: String): Int = when (type) {
+    "block"     -> 0
+    "item"      -> 1
+    "recipe"    -> 2
+    "mob"       -> 3
+    "trade"     -> 4
+    "biome"     -> 5
+    "structure" -> 6
+    "enchant"   -> 7
+    "potion"    -> 8
+    else        -> 0
+}
+
+private fun iconForFavorite(type: String, id: String): SpyglassIcon = when (type) {
+    "block"     -> ItemTextures.get(id) ?: PixelIcons.Blocks
+    "item"      -> ItemTextures.get(id) ?: PixelIcons.Item
+    "recipe"    -> ItemTextures.get(id) ?: PixelIcons.Crafting
+    "mob"       -> MobTextures.get(id) ?: PixelIcons.Mob
+    "trade"     -> PixelIcons.Trade
+    "biome"     -> BiomeTextures.get(id) ?: PixelIcons.Biome
+    "structure" -> StructureTextures.get(id) ?: PixelIcons.Structure
+    "enchant"   -> EnchantTextures.get(id) ?: PixelIcons.Enchant
+    "potion"    -> PotionTextures.get(id) ?: PixelIcons.Potion
+    else        -> PixelIcons.Bookmark
+}
 
 // ── Home screen ─────────────────────────────────────────────────────────────
 
@@ -91,7 +134,57 @@ fun HomeScreen(
     onCalcTab: (Int) -> Unit,
     onSearch: () -> Unit,
 ) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     val tipIndex = remember { Calendar.getInstance().get(Calendar.DAY_OF_YEAR) % TIPS.size }
+
+    val showTipOfDay by remember {
+        context.dataStore.data.map { it[PreferenceKeys.SHOW_TIP_OF_DAY] ?: true }
+    }.collectAsState(initial = true)
+
+    val showFavoritesOnHome by remember {
+        context.dataStore.data.map { it[PreferenceKeys.SHOW_FAVORITES_ON_HOME] ?: false }
+    }.collectAsState(initial = false)
+
+    // Use a sentinel to know when DataStore has actually loaded
+    val prefsLoaded by remember {
+        context.dataStore.data.map { true }
+    }.collectAsState(initial = false)
+
+    val playerUsername by remember {
+        context.dataStore.data.map { it[PreferenceKeys.PLAYER_USERNAME] ?: "" }
+    }.collectAsState(initial = "")
+
+    val dismissUsernameDialog by remember {
+        context.dataStore.data.map { it[PreferenceKeys.DISMISS_USERNAME_DIALOG] ?: false }
+    }.collectAsState(initial = false)
+
+    val repo = remember { GameDataRepository.get(context) }
+    val favorites by repo.allFavorites().collectAsState(initial = emptyList())
+    val blockCount by repo.blockCountFlow().collectAsState(initial = 0)
+    val itemCount by repo.itemCountFlow().collectAsState(initial = 0)
+    val todoPreview by repo.incompleteTodosPreview(3).collectAsState(initial = emptyList())
+    val todoCount by repo.incompleteTodoCount().collectAsState(initial = 0)
+
+    // Username dialog state — only evaluate after DataStore has loaded
+    var showUsernameDialog by remember { mutableStateOf(false) }
+    LaunchedEffect(prefsLoaded, playerUsername, dismissUsernameDialog) {
+        showUsernameDialog = prefsLoaded && playerUsername.isBlank() && !dismissUsernameDialog
+    }
+
+    if (showUsernameDialog) {
+        UsernameDialog(
+            onSave = { name ->
+                scope.launch { context.dataStore.edit { it[PreferenceKeys.PLAYER_USERNAME] = name } }
+                showUsernameDialog = false
+            },
+            onLater = { showUsernameDialog = false },
+            onDontAskAgain = {
+                scope.launch { context.dataStore.edit { it[PreferenceKeys.DISMISS_USERNAME_DIALOG] = true } }
+                showUsernameDialog = false
+            },
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -103,26 +196,73 @@ fun HomeScreen(
         // ── A. Header / Branding ──
         TabIntroHeader(
             icon = SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.ic_launcher_foreground),
-            title = "Welcome to Spyglass",
+            title = if (playerUsername.isNotBlank()) "Welcome $playerUsername to Spyglass" else "Welcome to Spyglass",
             description = "Your Minecraft companion for crafting, building, and exploring",
             stat = "Minecraft Java 1.21.4",
             iconTint = Color.Unspecified,
             iconSize = 144.dp,
         )
 
-        // ── B. Tip of the Day ──
-        ResultCard {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Filled.PriorityHigh, contentDescription = null, tint = Gold, modifier = Modifier.size(20.dp))
-                Spacer(Modifier.width(8.dp))
-                Text("DID YOU KNOW?", style = MaterialTheme.typography.labelSmall, color = Gold)
+        // ── B. Todo list ──
+        if (todoCount > 0) {
+            SectionHeader("Todo", icon = PixelIcons.Todo)
+            ResultCard {
+                todoPreview.forEach { todo ->
+                    HomeTodoRow(
+                        todo = todo,
+                        onToggle = { scope.launch { repo.toggleTodoCompleted(todo.id, !todo.completed) } },
+                    )
+                }
+                if (todoCount > 3) {
+                    SpyglassDivider()
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onCalcTab(8) }
+                        .padding(vertical = 4.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        if (todoCount > 3) "View all $todoCount tasks" else "Edit Todo List",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Gold,
+                    )
+                    Icon(Icons.Default.Edit, contentDescription = null, tint = Gold, modifier = Modifier.size(14.dp))
+                }
             }
-            Spacer(Modifier.height(8.dp))
-            Text(
-                TIPS[tipIndex],
-                style = MaterialTheme.typography.bodyMedium,
-                color = Stone300,
-            )
+        } else {
+            SectionHeader("Todo", icon = PixelIcons.Todo)
+            ResultCard(
+                modifier = Modifier.clickable { onCalcTab(8) },
+            ) {
+                Text(
+                    "What do you have planned for today?",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Stone300,
+                )
+                Text(
+                    "Tap to open your Todo list \u2192",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Gold,
+                )
+            }
+        }
+
+        // ── B2. Favorites on Home ──
+        if (showFavoritesOnHome && favorites.isNotEmpty()) {
+            SectionHeader("Favorites", icon = PixelIcons.Bookmark)
+            favorites.forEach { fav ->
+                BrowseListItem(
+                    headline = fav.displayName,
+                    supporting = fav.type,
+                    leadingIcon = iconForFavorite(fav.type, fav.id),
+                    modifier = Modifier.clickable {
+                        onBrowseTab(browseTabForType(fav.type))
+                    },
+                )
+            }
         }
 
         // ── C. Quick Access — Browse ──
@@ -133,10 +273,27 @@ fun HomeScreen(
         SectionHeader("Tools", icon = SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.item_diamond_pickaxe))
         QuickLinkGrid(CALC_LINKS) { index -> onCalcTab(index) }
 
-        // ── E. What's New ──
+        // ── E. Tip of the Day ──
+        if (showTipOfDay) {
+            ResultCard {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Filled.PriorityHigh, contentDescription = null, tint = Gold, modifier = Modifier.size(20.dp))
+                    Spacer(Modifier.width(8.dp))
+                    Text("DID YOU KNOW?", style = MaterialTheme.typography.labelSmall, color = Gold)
+                }
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    TIPS[tipIndex],
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Stone300,
+                )
+            }
+        }
+
+        // ── F. What's New ──
         SectionHeader("What's New")
         ResultCard {
-            WhatsNewItem("598 blocks & 352 items", "Full database with categories, durability, and recipes")
+            WhatsNewItem("$blockCount blocks & $itemCount items", "Full database with categories, durability, and recipes")
             SpyglassDivider()
             WhatsNewItem("Enchant optimizer", "Calculate the cheapest XP order for combining books on the anvil")
             SpyglassDivider()
@@ -198,7 +355,45 @@ private fun QuickLinkGrid(links: List<QuickLink>, onTap: (Int) -> Unit) {
     }
 }
 
-// ── What's new item ─────────────────────────────────────────────────────────
+// ── Home todo row (interactive) ─────────────────────────────────────────────
+
+@Composable
+private fun HomeTodoRow(todo: TodoEntity, onToggle: () -> Unit) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onToggle() }
+            .padding(vertical = 4.dp),
+    ) {
+        Checkbox(
+            checked = todo.completed,
+            onCheckedChange = { onToggle() },
+            colors = CheckboxDefaults.colors(
+                checkedColor = Gold,
+                uncheckedColor = Stone500,
+                checkmarkColor = Background,
+            ),
+            modifier = Modifier.size(20.dp),
+        )
+        Spacer(Modifier.width(8.dp))
+        if (todo.itemId != null) {
+            val tex = ItemTextures.get(todo.itemId)
+            if (tex != null) {
+                SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(18.dp))
+                Spacer(Modifier.width(6.dp))
+            }
+        }
+        Text(
+            todo.title,
+            style = MaterialTheme.typography.bodyMedium,
+            color = if (todo.completed) Stone500 else Stone100,
+            textDecoration = if (todo.completed) TextDecoration.LineThrough else null,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
 
 @Composable
 private fun WhatsNewItem(title: String, desc: String) {

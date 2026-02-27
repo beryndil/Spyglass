@@ -1,0 +1,42 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Paper background -->
+    <path android:fillColor="#D4D1CA"
+        android:pathData="M3,1h10v14h-10z"/>
+    <!-- Paper edge shadow -->
+    <path android:fillColor="#9E9B94"
+        android:pathData="M13,1h1v14h-1z M3,15h11v1h-11z"/>
+    <!-- Paper top edge highlight -->
+    <path android:fillColor="#EEECEA"
+        android:pathData="M3,1h10v1h-10z"/>
+    <!-- Checkbox 1 (checked - gold) -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M4,3h3v3h-3z"/>
+    <!-- Checkmark 1 -->
+    <path android:fillColor="#0E0C0A"
+        android:pathData="M5,5h1v1h1v-1h1v-1h-1v1h-1v-1h-1z"/>
+    <!-- Line 1 -->
+    <path android:fillColor="#6B6860"
+        android:pathData="M8,4h4v1h-4z"/>
+    <!-- Checkbox 2 (checked - gold) -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M4,7h3v3h-3z"/>
+    <!-- Checkmark 2 -->
+    <path android:fillColor="#0E0C0A"
+        android:pathData="M5,9h1v1h1v-1h1v-1h-1v1h-1v-1h-1z"/>
+    <!-- Line 2 -->
+    <path android:fillColor="#6B6860"
+        android:pathData="M8,8h4v1h-4z"/>
+    <!-- Checkbox 3 (unchecked - empty) -->
+    <path android:fillColor="#3A3730"
+        android:pathData="M4,11h3v3h-3z"/>
+    <!-- Checkbox 3 inner -->
+    <path android:fillColor="#9E9B94"
+        android:pathData="M5,12h1v1h-1z"/>
+    <!-- Line 3 -->
+    <path android:fillColor="#6B6860"
+        android:pathData="M8,12h4v1h-4z"/>
+</vector>

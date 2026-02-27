@@ -5,7 +5,7 @@ import dev.spyglass.android.R
 object PixelIcons {
     val Blocks    = SpyglassIcon.Drawable(R.drawable.ic_pixel_blocks)
     val Crafting  = SpyglassIcon.Drawable(R.drawable.ic_pixel_crafting)
-    val Mob       = SpyglassIcon.Drawable(R.drawable.ic_pixel_mob)
+    val Mob       = SpyglassIcon.Drawable(R.drawable.mob_zombie)
     val Allay     = SpyglassIcon.Drawable(R.drawable.ic_pixel_allay)
     val Biome     = SpyglassIcon.Drawable(R.drawable.ic_pixel_biome)
     val Enchant   = SpyglassIcon.Drawable(R.drawable.ic_pixel_enchant)
@@ -25,4 +25,5 @@ object PixelIcons {
     val SearchOff = SpyglassIcon.Drawable(R.drawable.ic_pixel_search_off)
     val Bookmark  = SpyglassIcon.Drawable(R.drawable.ic_pixel_bookmark)
     val Menu      = SpyglassIcon.Drawable(R.drawable.ic_pixel_menu)
+    val Todo      = SpyglassIcon.Drawable(R.drawable.ic_pixel_todo)
 }
