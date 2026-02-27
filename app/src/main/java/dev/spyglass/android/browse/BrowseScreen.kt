@@ -23,15 +23,15 @@ import dev.spyglass.android.navigation.BrowseTarget
 import kotlinx.coroutines.flow.map
 
 private val BROWSE_TABS = listOf(
-    SpyglassTab("Blocks",     PixelIcons.Blocks),
-    SpyglassTab("Recipes",    PixelIcons.Crafting),
-    SpyglassTab("Mobs",       PixelIcons.Mob),
-    SpyglassTab("Biomes",     PixelIcons.Biome),
-    SpyglassTab("Enchants",   PixelIcons.Enchant),
-    SpyglassTab("Potions",    PixelIcons.Potion),
-    SpyglassTab("Trades",     PixelIcons.Trade, untinted = true),
-    SpyglassTab("Structures", PixelIcons.Structure),
-    SpyglassTab("Items",      PixelIcons.Item),
+    SpyglassTab("Blocks",     PixelIcons.Blocks),      // 0
+    SpyglassTab("Items",      PixelIcons.Item),         // 1
+    SpyglassTab("Recipes",    PixelIcons.Crafting),     // 2
+    SpyglassTab("Mobs",       PixelIcons.Mob),          // 3
+    SpyglassTab("Trades",     PixelIcons.Trade, untinted = true), // 4
+    SpyglassTab("Biomes",     PixelIcons.Biome),        // 5
+    SpyglassTab("Structures", PixelIcons.Structure),    // 6
+    SpyglassTab("Enchants",   PixelIcons.Enchant),      // 7
+    SpyglassTab("Potions",    PixelIcons.Potion),       // 8
 )
 
 @Composable
@@ -54,11 +54,11 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
             targetProfession = null
             when (initialTarget.tab) {
                 0 -> targetBlockId = initialTarget.id
-                1 -> targetRecipeId = initialTarget.id
-                2 -> targetMobId = initialTarget.id
-                3 -> targetBiomeId = initialTarget.id
-                7 -> targetStructureId = initialTarget.id
-                8 -> targetItemId = initialTarget.id
+                1 -> targetItemId = initialTarget.id
+                2 -> targetRecipeId = initialTarget.id
+                3 -> targetMobId = initialTarget.id
+                5 -> targetBiomeId = initialTarget.id
+                6 -> targetStructureId = initialTarget.id
             }
         }
     }
@@ -71,88 +71,60 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
     val itemIds by repo.searchItems("").map { list -> list.map { it.id }.toSet() }
         .collectAsState(initial = emptySet())
 
-    // Cross-tab item navigation — 3-way routing: Blocks → Items → Recipes
-    val onItemTap: (String) -> Unit = { itemId ->
+    fun clearAllTargets() {
         targetMobId = null
         targetBiomeId = null
+        targetBlockId = null
+        targetRecipeId = null
         targetStructureId = null
+        targetItemId = null
         targetProfession = null
+    }
+
+    // Cross-tab item navigation — 3-way routing: Blocks → Items → Recipes
+    val onItemTap: (String) -> Unit = { itemId ->
+        clearAllTargets()
         if (itemId in blockIds) {
             targetBlockId = itemId
-            targetRecipeId = null
-            targetItemId = null
-            tab = 0  // Navigate to Blocks tab
+            tab = 0  // Blocks
         } else if (itemId in itemIds) {
             targetItemId = itemId
-            targetBlockId = null
-            targetRecipeId = null
-            tab = 8  // Navigate to Items tab
+            tab = 1  // Items
         } else {
             targetRecipeId = itemId
-            targetBlockId = null
-            targetItemId = null
-            tab = 1  // Navigate to Recipes tab
+            tab = 2  // Recipes
         }
     }
 
     val onMobTap: (String) -> Unit = { mobId ->
+        clearAllTargets()
         targetMobId = mobId
-        targetBiomeId = null
-        targetBlockId = null
-        targetRecipeId = null
-        targetStructureId = null
-        targetItemId = null
-        targetProfession = null
-        tab = 2  // Navigate to Mobs tab
+        tab = 3  // Mobs
     }
 
     val onBiomeTap: (String) -> Unit = { biomeId ->
+        clearAllTargets()
         targetBiomeId = biomeId
-        targetBlockId = null
-        targetRecipeId = null
-        targetMobId = null
-        targetStructureId = null
-        targetItemId = null
-        targetProfession = null
-        tab = 3  // Navigate to Biomes tab
+        tab = 5  // Biomes
     }
 
     val onStructureTap: (String) -> Unit = { structureId ->
+        clearAllTargets()
         targetStructureId = structureId
-        targetBlockId = null
-        targetRecipeId = null
-        targetMobId = null
-        targetBiomeId = null
-        targetItemId = null
-        targetProfession = null
-        tab = 7  // Navigate to Structures tab
+        tab = 6  // Structures
     }
 
     val onTradeTap: (String) -> Unit = { profession ->
+        clearAllTargets()
         targetProfession = profession
-        targetBlockId = null
-        targetRecipeId = null
-        targetMobId = null
-        targetBiomeId = null
-        targetStructureId = null
-        targetItemId = null
-        tab = 6  // Navigate to Trades tab
+        tab = 4  // Trades
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
         SpyglassTabRow(
             tabs          = BROWSE_TABS,
             selectedIndex = tab,
-            onSelect      = {
-                tab = it
-                targetMobId = null
-                targetBiomeId = null
-                targetBlockId = null
-                targetRecipeId = null
-                targetStructureId = null
-                targetItemId = null
-                targetProfession = null
-            },
+            onSelect      = { tab = it; clearAllTargets() },
         )
         HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp)
 
@@ -164,79 +136,47 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                 onTradeTap = onTradeTap,
                 onStructureTap = onStructureTap,
             )
-            1 -> CraftingScreen(
-                targetRecipeId = targetRecipeId,
-                onItemTap = onItemTap,
-                onBiomeTap = onBiomeTap,
-            )
-            2 -> MobsScreen(
-                targetMobId = targetMobId,
-                onNavigateToBiome = { biomeId ->
-                    targetBiomeId = biomeId
-                    targetMobId = null
-                    targetBlockId = null
-                    targetRecipeId = null
-                    targetStructureId = null
-                    targetItemId = null
-                    targetProfession = null
-                    tab = 3
-                },
-                onNavigateToStructure = onStructureTap,
-                onItemTap = onItemTap,
-            )
-            3 -> BiomesScreen(
-                targetBiomeId = targetBiomeId,
-                onNavigateToMob = { mobId ->
-                    targetMobId = mobId
-                    targetBiomeId = null
-                    targetBlockId = null
-                    targetRecipeId = null
-                    targetStructureId = null
-                    targetItemId = null
-                    targetProfession = null
-                    tab = 2
-                },
-                onNavigateToStructure = onStructureTap,
-                onItemTap = onItemTap,
-            )
-            4 -> EnchantsScreen()
-            5 -> PotionsScreen(onItemTap = onItemTap)
-            6 -> TradesScreen(
-                targetProfession = targetProfession,
-                onItemTap = onItemTap,
-            )
-            7 -> StructuresScreen(
-                targetStructureId = targetStructureId,
-                onNavigateToMob = { mobId ->
-                    targetMobId = mobId
-                    targetBiomeId = null
-                    targetBlockId = null
-                    targetRecipeId = null
-                    targetStructureId = null
-                    targetItemId = null
-                    targetProfession = null
-                    tab = 2
-                },
-                onNavigateToBiome = onBiomeTap,
-                onItemTap = onItemTap,
-            )
-            8 -> ItemsScreen(
+            1 -> ItemsScreen(
                 targetItemId = targetItemId,
                 onMobTap = onMobTap,
                 onBlockTap = { blockId ->
+                    clearAllTargets()
                     targetBlockId = blockId
-                    targetRecipeId = null
-                    targetMobId = null
-                    targetBiomeId = null
-                    targetStructureId = null
-                    targetItemId = null
-                    targetProfession = null
                     tab = 0
                 },
                 onItemTap = onItemTap,
                 onStructureTap = onStructureTap,
                 onBiomeTap = onBiomeTap,
             )
+            2 -> CraftingScreen(
+                targetRecipeId = targetRecipeId,
+                onItemTap = onItemTap,
+                onBiomeTap = onBiomeTap,
+            )
+            3 -> MobsScreen(
+                targetMobId = targetMobId,
+                onNavigateToBiome = onBiomeTap,
+                onNavigateToStructure = onStructureTap,
+                onItemTap = onItemTap,
+            )
+            4 -> TradesScreen(
+                targetProfession = targetProfession,
+                onItemTap = onItemTap,
+            )
+            5 -> BiomesScreen(
+                targetBiomeId = targetBiomeId,
+                onNavigateToMob = onMobTap,
+                onNavigateToStructure = onStructureTap,
+                onItemTap = onItemTap,
+            )
+            6 -> StructuresScreen(
+                targetStructureId = targetStructureId,
+                onNavigateToMob = onMobTap,
+                onNavigateToBiome = onBiomeTap,
+                onItemTap = onItemTap,
+            )
+            7 -> EnchantsScreen()
+            8 -> PotionsScreen(onItemTap = onItemTap)
         }
     }
 }

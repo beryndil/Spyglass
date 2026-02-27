@@ -75,14 +75,14 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
 /** Maps search result type -> browse tab index */
 fun browseTabForType(type: String): Int = when (type) {
     "Block"       -> 0
-    "Recipe"      -> 1
-    "Mob"         -> 2
-    "Biome"       -> 3
-    "Enchantment" -> 4
-    "Potion"      -> 5
-    "Trade"       -> 6
-    "Structure"   -> 7
-    "Item"        -> 8
+    "Item"        -> 1
+    "Recipe"      -> 2
+    "Mob"         -> 3
+    "Trade"       -> 4
+    "Biome"       -> 5
+    "Structure"   -> 6
+    "Enchantment" -> 7
+    "Potion"      -> 8
     else          -> 0
 }
 
