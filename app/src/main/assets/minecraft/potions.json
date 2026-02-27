@@ -25,10 +25,10 @@
   {"id":"harming","name":"Harming","effect":"Instant Damage","duration":0,"amplifier":1,"ingredientPath":"Healing + Fermented Spider Eye","category":"negative"},
   {"id":"harming_ii","name":"Harming II","effect":"Instant Damage","duration":0,"amplifier":2,"ingredientPath":"Harming + Glowstone Dust","category":"negative"},
   {"id":"poison","name":"Poison","effect":"Poison","duration":45,"amplifier":1,"ingredientPath":"Awkward Potion + Spider Eye","category":"negative"},
-  {"id":"poison_long","name":"Poison (Extended)","effect":"Poison","duration":120,"amplifier":1,"ingredientPath":"Poison + Redstone","category":"negative"},
-  {"id":"poison_ii","name":"Poison II","effect":"Poison","duration":22,"amplifier":2,"ingredientPath":"Poison + Glowstone Dust","category":"negative"},
+  {"id":"poison_long","name":"Poison (Extended)","effect":"Poison","duration":90,"amplifier":1,"ingredientPath":"Poison + Redstone","category":"negative"},
+  {"id":"poison_ii","name":"Poison II","effect":"Poison","duration":21,"amplifier":2,"ingredientPath":"Poison + Glowstone Dust","category":"negative"},
   {"id":"regeneration","name":"Regeneration","effect":"Regeneration","duration":45,"amplifier":1,"ingredientPath":"Awkward Potion + Ghast Tear","category":"positive"},
-  {"id":"regeneration_long","name":"Regeneration (Extended)","effect":"Regeneration","duration":120,"amplifier":1,"ingredientPath":"Regeneration + Redstone","category":"positive"},
+  {"id":"regeneration_long","name":"Regeneration (Extended)","effect":"Regeneration","duration":90,"amplifier":1,"ingredientPath":"Regeneration + Redstone","category":"positive"},
   {"id":"regeneration_ii","name":"Regeneration II","effect":"Regeneration","duration":22,"amplifier":2,"ingredientPath":"Regeneration + Glowstone Dust","category":"positive"},
   {"id":"strength","name":"Strength","effect":"Strength","duration":180,"amplifier":1,"ingredientPath":"Awkward Potion + Blaze Powder","category":"positive"},
   {"id":"strength_long","name":"Strength (Extended)","effect":"Strength","duration":480,"amplifier":1,"ingredientPath":"Strength + Redstone","category":"positive"},
@@ -41,8 +41,8 @@
   {"id":"turtle_master_ii","name":"Turtle Master II","effect":"Slowness VI + Resistance IV","duration":20,"amplifier":6,"ingredientPath":"Turtle Master + Glowstone Dust","category":"special"},
   {"id":"slow_falling","name":"Slow Falling","effect":"Slow Falling","duration":90,"amplifier":1,"ingredientPath":"Awkward Potion + Phantom Membrane","category":"positive"},
   {"id":"slow_falling_long","name":"Slow Falling (Extended)","effect":"Slow Falling","duration":240,"amplifier":1,"ingredientPath":"Slow Falling + Redstone","category":"positive"},
-  {"id":"oozing","name":"Oozing","effect":"Oozing","duration":0,"amplifier":1,"ingredientPath":"Awkward Potion + Slime Block (trial)","category":"negative"},
-  {"id":"weaving","name":"Weaving","effect":"Weaving","duration":0,"amplifier":1,"ingredientPath":"Awkward Potion + String (trial)","category":"negative"},
-  {"id":"infested","name":"Infested","effect":"Infested","duration":0,"amplifier":1,"ingredientPath":"Awkward Potion + Silverfish spawn (trial)","category":"negative"},
-  {"id":"wind_charged","name":"Wind Charged","effect":"Wind Charged","duration":0,"amplifier":1,"ingredientPath":"Awkward Potion + Breeze rod (trial)","category":"negative"}
+  {"id":"oozing","name":"Oozing","effect":"Oozing","duration":180,"amplifier":1,"ingredientPath":"Awkward Potion + Slime Block","category":"negative"},
+  {"id":"weaving","name":"Weaving","effect":"Weaving","duration":180,"amplifier":1,"ingredientPath":"Awkward Potion + Cobweb","category":"negative"},
+  {"id":"infested","name":"Infested","effect":"Infested","duration":180,"amplifier":1,"ingredientPath":"Awkward Potion + Stone","category":"negative"},
+  {"id":"wind_charged","name":"Wind Charged","effect":"Wind Charged","duration":180,"amplifier":1,"ingredientPath":"Awkward Potion + Breeze Rod","category":"negative"}
 ]
