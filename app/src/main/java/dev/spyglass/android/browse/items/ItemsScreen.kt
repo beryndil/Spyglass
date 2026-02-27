@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -22,6 +25,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.BiomeResourceMap
+import dev.spyglass.android.data.CompostData
+import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.ItemEntity
 import dev.spyglass.android.data.db.entities.MobEntity
 import dev.spyglass.android.data.db.entities.RecipeEntity
@@ -30,6 +35,7 @@ import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 // ── ViewModel ────────────────────────────────────────────────────────────────
 
@@ -69,6 +75,20 @@ class ItemsViewModel(app: Application) : AndroidViewModel(app) {
             map
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
+    val favoriteIds: StateFlow<Set<String>> = repo.allFavoriteIds()
+        .map { it.toSet() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
+
+    val favoriteItems: StateFlow<List<FavoriteEntity>> = repo.favoritesByType("item")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun toggleFavorite(id: String, displayName: String) {
+        viewModelScope.launch {
+            if (id in favoriteIds.value) repo.deleteFavorite(id)
+            else repo.insertFavorite(FavoriteEntity(id = id, type = "item", displayName = displayName))
+        }
+    }
 
     fun setQuery(q: String)    { _query.value = q }
     fun setCategory(c: String) { _category.value = c }
@@ -137,6 +157,8 @@ fun ItemsScreen(
     val allRecipes  by vm.allRecipes.collectAsState()
     val structures  by vm.structures.collectAsState()
     val breedingMap by vm.breedingMap.collectAsState()
+    val favoriteIds    by vm.favoriteIds.collectAsState()
+    val favoriteItems  by vm.favoriteItems.collectAsState()
     val listState   = rememberLazyListState()
 
     // Auto-expand and scroll to target item from cross-reference
@@ -163,6 +185,7 @@ fun ItemsScreen(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             items(ITEM_CATEGORIES) { c ->
+                val chipColor = if (c == "all") Gold else categoryColor(c)
                 FilterChip(
                     selected = category == c,
                     onClick = { vm.setCategory(c) },
@@ -170,8 +193,13 @@ fun ItemsScreen(
                         Text(
                             c.replace('_', ' ').replaceFirstChar { it.uppercase() },
                             style = MaterialTheme.typography.labelSmall,
+                            color = chipColor,
                         )
                     },
+                    colors = FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = chipColor.copy(alpha = 0.2f),
+                        selectedLabelColor = chipColor,
+                    ),
                 )
             }
         }
@@ -189,6 +217,31 @@ fun ItemsScreen(
                     stat = "${items.size} items",
                 )
             }
+            if (favoriteItems.isNotEmpty()) {
+                item(key = "fav_header") {
+                    SectionHeader("Favorites", icon = PixelIcons.Bookmark)
+                }
+                items(favoriteItems, key = { "fav_${it.id}" }) { fav ->
+                    val isFav = fav.id in favoriteIds
+                    BrowseListItem(
+                        headline = fav.displayName,
+                        supporting = fav.id,
+                        leadingIcon = ItemTextures.get(fav.id) ?: PixelIcons.Item,
+                        modifier = Modifier.clickable { vm.toggleExpanded(fav.id) },
+                        trailing = {
+                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                                Icon(
+                                    Icons.Filled.Star,
+                                    contentDescription = "Favorite",
+                                    tint = if (isFav) Gold else Stone700,
+                                    modifier = Modifier.size(20.dp),
+                                )
+                            }
+                        },
+                    )
+                }
+                item(key = "fav_divider") { SpyglassDivider() }
+            }
             items(items, key = { it.id }) { item ->
                 val isExpanded = item.id in expandedIds
                 Column {
@@ -199,17 +252,30 @@ fun ItemsScreen(
                         leadingIcon = texture ?: PixelIcons.Item,
                         modifier    = Modifier.clickable { vm.toggleExpanded(item.id) },
                         trailing    = {
-                            Column(horizontalAlignment = Alignment.End) {
-                                CategoryBadge(
-                                    label = item.category.replace('_', ' '),
-                                    color = categoryColor(item.category),
-                                )
-                                if (item.durability > 0) {
-                                    Spacer(Modifier.height(2.dp))
-                                    Text(
-                                        "\u2764 ${item.durability}",
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = Stone500,
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Column(horizontalAlignment = Alignment.End) {
+                                    CategoryBadge(
+                                        label = item.category.replace('_', ' '),
+                                        color = categoryColor(item.category),
+                                        modifier = Modifier.clickable { vm.setCategory(item.category) },
+                                    )
+                                    if (item.durability > 0) {
+                                        Spacer(Modifier.height(2.dp))
+                                        Text(
+                                            "\u2764 ${item.durability}",
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = Stone500,
+                                        )
+                                    }
+                                }
+                                Spacer(Modifier.width(6.dp))
+                                val isFav = item.id in favoriteIds
+                                IconButton(onClick = { vm.toggleFavorite(item.id, item.name) }, modifier = Modifier.size(32.dp)) {
+                                    Icon(
+                                        Icons.Filled.Star,
+                                        contentDescription = "Favorite",
+                                        tint = if (isFav) Gold else Stone700,
+                                        modifier = Modifier.size(20.dp),
                                     )
                                 }
                             }
@@ -290,6 +356,32 @@ private fun ItemDetailCard(
                         label = source.replace('_', ' ').replaceFirstChar { it.uppercase() },
                         color = obtainColor(source),
                     )
+                }
+            }
+        }
+
+        // 3b. Compostable
+        val compostChance = CompostData.chanceFor(item.id)
+        if (compostChance != null) {
+            SpyglassDivider()
+            Text("Uses", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Emerald.copy(alpha = 0.1f), androidx.compose.foundation.shape.RoundedCornerShape(6.dp))
+                    .border(0.5.dp, Emerald.copy(alpha = 0.3f), androidx.compose.foundation.shape.RoundedCornerShape(6.dp))
+                    .clickable { onBlockTap("composter") }
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                val composterIcon = BlockTextures.get("composter")
+                if (composterIcon != null) {
+                    SpyglassIconImage(composterIcon, contentDescription = null, modifier = Modifier.size(22.dp))
+                    Spacer(Modifier.width(8.dp))
+                }
+                Column(modifier = Modifier.weight(1f)) {
+                    Text("Compostable", style = MaterialTheme.typography.bodyMedium, color = Emerald)
+                    Text("$compostChance% chance per item", style = MaterialTheme.typography.bodySmall, color = Stone500)
                 }
             }
         }
@@ -453,5 +545,13 @@ private fun ItemDetailCard(
                 }
             }
         }
+
+        // 10. Add to todo list
+        SpyglassDivider()
+        AddToTodoSection(itemId = item.id, itemName = item.name)
+
+        // 11. Add to shopping list
+        SpyglassDivider()
+        AddToListSection(itemId = item.id, itemName = item.name)
     }
 }

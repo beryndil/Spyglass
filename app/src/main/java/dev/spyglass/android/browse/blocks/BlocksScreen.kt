@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -22,13 +23,16 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.data.CompostData
 import dev.spyglass.android.data.db.entities.BlockEntity
+import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.RecipeEntity
 import dev.spyglass.android.data.db.entities.StructureEntity
 import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 // ── Job block reverse-lookup: blockId → profession ──────────────────────────
 
@@ -70,7 +74,16 @@ private fun toolTextureId(toolRequired: String): String? {
 private fun formatId(id: String): String =
     id.split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
 
-private val BLOCK_CATEGORIES = listOf("all", "building", "natural", "decoration", "utility")
+private fun blockCategoryColor(cat: String) = when (cat) {
+    "building"   -> Stone300
+    "natural"    -> Emerald
+    "decoration" -> PotionBlue
+    "utility"    -> Gold
+    "redstone"   -> NetherRed
+    else         -> Stone500
+}
+
+private val BLOCK_CATEGORIES = listOf("all", "building", "natural", "decoration", "utility", "redstone")
 
 // ── ViewModel ───────────────────────────────────────────────────────────────
 
@@ -98,6 +111,20 @@ class BlocksViewModel(app: Application) : AndroidViewModel(app) {
     // Structures for reverse-lookup
     val structures: StateFlow<List<StructureEntity>> = repo.searchStructures("")
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    val favoriteIds: StateFlow<Set<String>> = repo.allFavoriteIds()
+        .map { it.toSet() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
+
+    val favoriteBlocks: StateFlow<List<FavoriteEntity>> = repo.favoritesByType("block")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun toggleFavorite(id: String, displayName: String) {
+        viewModelScope.launch {
+            if (id in favoriteIds.value) repo.deleteFavorite(id)
+            else repo.insertFavorite(FavoriteEntity(id = id, type = "block", displayName = displayName))
+        }
+    }
 
     fun setQuery(q: String) { _query.value = q }
     fun setCategory(c: String) { _category.value = c }
@@ -129,6 +156,8 @@ fun BlocksScreen(
     val expandedIds by vm.expandedIds.collectAsState()
     val allRecipes  by vm.allRecipes.collectAsState()
     val structures  by vm.structures.collectAsState()
+    val favoriteIds    by vm.favoriteIds.collectAsState()
+    val favoriteBlocks by vm.favoriteBlocks.collectAsState()
     val listState   = rememberLazyListState()
 
     // Auto-expand and scroll to target block from cross-reference
@@ -160,6 +189,7 @@ fun BlocksScreen(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             items(BLOCK_CATEGORIES) { c ->
+                val chipColor = if (c == "all") Gold else blockCategoryColor(c)
                 FilterChip(
                     selected = category == c,
                     onClick = { vm.setCategory(c) },
@@ -167,8 +197,13 @@ fun BlocksScreen(
                         Text(
                             c.replaceFirstChar { it.uppercase() },
                             style = MaterialTheme.typography.labelSmall,
+                            color = chipColor,
                         )
                     },
+                    colors = FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = chipColor.copy(alpha = 0.2f),
+                        selectedLabelColor = chipColor,
+                    ),
                 )
             }
         }
@@ -186,6 +221,31 @@ fun BlocksScreen(
                     stat = "${blocks.size} blocks",
                 )
             }
+            if (favoriteBlocks.isNotEmpty()) {
+                item(key = "fav_header") {
+                    SectionHeader("Favorites", icon = PixelIcons.Bookmark)
+                }
+                items(favoriteBlocks, key = { "fav_${it.id}" }) { fav ->
+                    val isFav = fav.id in favoriteIds
+                    BrowseListItem(
+                        headline = fav.displayName,
+                        supporting = fav.id,
+                        leadingIcon = ItemTextures.get(fav.id) ?: PixelIcons.Blocks,
+                        modifier = Modifier.clickable { vm.toggleExpanded(fav.id) },
+                        trailing = {
+                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                                Icon(
+                                    Icons.Filled.Star,
+                                    contentDescription = "Favorite",
+                                    tint = if (isFav) Gold else Stone700,
+                                    modifier = Modifier.size(20.dp),
+                                )
+                            }
+                        },
+                    )
+                }
+                item(key = "fav_divider") { SpyglassDivider() }
+            }
             items(blocks, key = { it.id }) { b ->
                 val isExpanded = b.id in expandedIds
                 Column {
@@ -195,19 +255,38 @@ fun BlocksScreen(
                         leadingIcon = ItemTextures.get(b.id) ?: PixelIcons.Blocks,
                         modifier    = Modifier.clickable { vm.toggleExpanded(b.id) },
                         trailing    = {
-                            Column(horizontalAlignment = Alignment.End) {
-                                // Tool icon instead of text
-                                val toolTexId = toolTextureId(b.toolRequired)
-                                val toolIcon = toolTexId?.let { ItemTextures.get(it) }
-                                if (toolIcon != null) {
-                                    SpyglassIconImage(
-                                        toolIcon, contentDescription = b.toolRequired,
-                                        modifier = Modifier.size(16.dp),
-                                    )
-                                } else if (b.toolRequired.isNotBlank() && b.toolRequired != "none") {
-                                    Text(b.toolRequired, style = MaterialTheme.typography.bodySmall, color = Stone300)
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Column(horizontalAlignment = Alignment.End) {
+                                    if (b.category.isNotBlank()) {
+                                        CategoryBadge(
+                                            label = b.category.replace('_', ' '),
+                                            color = blockCategoryColor(b.category),
+                                            modifier = Modifier.clickable { vm.setCategory(b.category) },
+                                        )
+                                        Spacer(Modifier.height(2.dp))
+                                    }
+                                    // Tool icon instead of text
+                                    val toolTexId = toolTextureId(b.toolRequired)
+                                    val toolIcon = toolTexId?.let { ItemTextures.get(it) }
+                                    if (toolIcon != null) {
+                                        SpyglassIconImage(
+                                            toolIcon, contentDescription = b.toolRequired,
+                                            modifier = Modifier.size(16.dp),
+                                        )
+                                    } else if (b.toolRequired.isNotBlank() && b.toolRequired != "none") {
+                                        Text(b.toolRequired, style = MaterialTheme.typography.bodySmall, color = Stone300)
+                                    }
                                 }
-                                Text("hardness ${b.hardness}", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                                Spacer(Modifier.width(6.dp))
+                                val isFav = b.id in favoriteIds
+                                IconButton(onClick = { vm.toggleFavorite(b.id, b.name) }, modifier = Modifier.size(32.dp)) {
+                                    Icon(
+                                        Icons.Filled.Star,
+                                        contentDescription = "Favorite",
+                                        tint = if (isFav) Gold else Stone700,
+                                        modifier = Modifier.size(20.dp),
+                                    )
+                                }
                             }
                         },
                     )
@@ -320,6 +399,35 @@ private fun BlockDetailContent(
             )
         }
 
+        // ── Compostable items (shown for composter block) ──
+        if (block.id == "composter") {
+            SpyglassDivider()
+            Text("Compostable Items", style = MaterialTheme.typography.labelSmall, color = Gold)
+            CompostData.byChance.forEach { (chance, items) ->
+                Text("$chance% chance", style = MaterialTheme.typography.bodySmall, color = Emerald)
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    items.sorted().forEach { itemId ->
+                        AssistChip(
+                            onClick = { onItemTap(itemId) },
+                            label = { Text(formatId(itemId), style = MaterialTheme.typography.labelSmall) },
+                            leadingIcon = {
+                                val tex = ItemTextures.get(itemId) ?: BlockTextures.get(itemId)
+                                if (tex != null) SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(16.dp))
+                            },
+                            colors = AssistChipDefaults.assistChipColors(
+                                labelColor = Emerald,
+                                containerColor = Emerald.copy(alpha = 0.12f),
+                            ),
+                            border = null,
+                        )
+                    }
+                }
+            }
+        }
+
         // ── Found in structures ──
         val matchingStructures = structures.filter { s ->
             s.uniqueBlocks.split(",").any { it.trim() == block.id }
@@ -355,5 +463,13 @@ private fun BlockDetailContent(
             onItemTap = onItemTap,
             onBiomeTap = onBiomeTap,
         )
+
+        // ── Add to todo list ──
+        SpyglassDivider()
+        AddToTodoSection(itemId = block.id, itemName = block.name)
+
+        // ── Add to shopping list ──
+        SpyglassDivider()
+        AddToListSection(itemId = block.id, itemName = block.name)
     }
 }
