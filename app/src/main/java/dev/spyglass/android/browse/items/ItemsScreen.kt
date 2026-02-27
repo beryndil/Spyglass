@@ -21,8 +21,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.data.BiomeResourceMap
 import dev.spyglass.android.data.db.entities.ItemEntity
 import dev.spyglass.android.data.db.entities.RecipeEntity
+import dev.spyglass.android.data.db.entities.StructureEntity
 import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -49,6 +51,9 @@ class ItemsViewModel(app: Application) : AndroidViewModel(app) {
     val allRecipes: StateFlow<Map<String, RecipeEntity>> = repo.searchRecipes("")
         .map { list -> list.associateBy { it.outputItem } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
+    val structures: StateFlow<List<StructureEntity>> = repo.searchStructures("")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun setQuery(q: String)    { _query.value = q }
     fun setCategory(c: String) { _category.value = c }
@@ -107,6 +112,7 @@ fun ItemsScreen(
     onBlockTap: (String) -> Unit = {},
     onItemTap: (String) -> Unit = {},
     onStructureTap: (String) -> Unit = {},
+    onBiomeTap: (String) -> Unit = {},
     vm: ItemsViewModel = viewModel(),
 ) {
     val query      by vm.query.collectAsState()
@@ -114,6 +120,7 @@ fun ItemsScreen(
     val items      by vm.items.collectAsState()
     val expandedIds by vm.expandedIds.collectAsState()
     val allRecipes by vm.allRecipes.collectAsState()
+    val structures by vm.structures.collectAsState()
     val listState  = rememberLazyListState()
 
     // Auto-expand and scroll to target item from cross-reference
@@ -200,10 +207,13 @@ fun ItemsScreen(
                         ItemDetailCard(
                             item = item,
                             allRecipes = allRecipes,
+                            structures = structures,
                             vm = vm,
                             onMobTap = onMobTap,
                             onBlockTap = onBlockTap,
                             onItemTap = onItemTap,
+                            onStructureTap = onStructureTap,
+                            onBiomeTap = onBiomeTap,
                         )
                     }
                 }
@@ -226,10 +236,13 @@ fun ItemsScreen(
 private fun ItemDetailCard(
     item: ItemEntity,
     allRecipes: Map<String, RecipeEntity>,
+    structures: List<StructureEntity>,
     vm: ItemsViewModel,
     onMobTap: (String) -> Unit,
     onBlockTap: (String) -> Unit,
     onItemTap: (String) -> Unit,
+    onStructureTap: (String) -> Unit,
+    onBiomeTap: (String) -> Unit,
 ) {
     val recipesFor  by vm.recipesForItem(item.id).collectAsState(initial = emptyList())
     val recipesUsing by vm.recipesUsingItem(item.id).collectAsState(initial = emptyList())
@@ -326,7 +339,55 @@ private fun ItemDetailCard(
             }
         }
 
-        // 7. Used in recipes
+        // 7. Found in biomes (from BiomeResourceMap)
+        val biomes = BiomeResourceMap.biomesForItem(item.id)
+        if (biomes.isNotEmpty()) {
+            SpyglassDivider()
+            Text("Found in Biomes", style = MaterialTheme.typography.labelSmall, color = Gold)
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                biomes.forEach { biomeId ->
+                    AssistChip(
+                        onClick = { onBiomeTap(biomeId) },
+                        label = { Text(formatId(biomeId), style = MaterialTheme.typography.labelSmall) },
+                        colors = AssistChipDefaults.assistChipColors(
+                            labelColor = Emerald,
+                            containerColor = Emerald.copy(alpha = 0.12f),
+                        ),
+                        border = null,
+                    )
+                }
+            }
+        }
+
+        // 8. Found in structures (reverse lookup)
+        val matchingStructures = structures.filter { s ->
+            s.loot.split(",").any { it.trim() == item.id }
+        }
+        if (matchingStructures.isNotEmpty()) {
+            SpyglassDivider()
+            Text("Found in Structures", style = MaterialTheme.typography.labelSmall, color = Gold)
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                matchingStructures.forEach { structure ->
+                    AssistChip(
+                        onClick = { onStructureTap(structure.id) },
+                        label = { Text(structure.name, style = MaterialTheme.typography.labelSmall) },
+                        colors = AssistChipDefaults.assistChipColors(
+                            labelColor = EnderPurple,
+                            containerColor = EnderPurple.copy(alpha = 0.12f),
+                        ),
+                        border = null,
+                    )
+                }
+            }
+        }
+
+        // 9. Used in recipes
         if (recipesUsing.isNotEmpty()) {
             SpyglassDivider()
             Text("Used in ${recipesUsing.size} recipe(s)", style = MaterialTheme.typography.labelSmall, color = Gold)

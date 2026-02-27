@@ -3,6 +3,7 @@ package dev.spyglass.android.browse.trades
 import android.app.Application
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -130,6 +131,7 @@ class TradesViewModel(app: Application) : AndroidViewModel(app) {
 @Composable
 fun TradesScreen(
     targetProfession: String? = null,
+    onItemTap: (String) -> Unit = {},
     vm: TradesViewModel = viewModel(),
 ) {
     val query      by vm.query.collectAsState()
@@ -186,7 +188,7 @@ fun TradesScreen(
             }
 
             items(trades, key = { it.rowId }) { t ->
-                TradeListItem(t)
+                TradeListItem(t, onItemTap)
             }
             if (trades.isEmpty()) item {
                 EmptyState(
@@ -253,7 +255,7 @@ private fun formatItemName(id: String): String =
     id.substringAfterLast(':').replace('_', ' ').replaceFirstChar { it.uppercase() }
 
 @Composable
-private fun TradeListItem(trade: TradeEntity) {
+private fun TradeListItem(trade: TradeEntity, onItemTap: (String) -> Unit) {
     val buy1Id = trade.buyItem1.substringAfterLast(':')
     val buy1Icon = ItemTextures.get(buy1Id)
     val buy2Id = if (trade.buyItem2.isNotBlank()) trade.buyItem2.substringAfterLast(':') else null
@@ -273,22 +275,25 @@ private fun TradeListItem(trade: TradeEntity) {
         Column(modifier = Modifier.weight(1f)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 // Buy item 1
-                TradeItemChip(buy1Icon, "${trade.buyItem1Count}× ${formatItemName(buy1Id)}")
+                TradeItemChip(buy1Icon, "${trade.buyItem1Count}\u00D7 ${formatItemName(buy1Id)}",
+                    onClick = { onItemTap(buy1Id) })
 
                 // Buy item 2 (if present)
                 if (buy2Id != null) {
                     Text(" + ", style = MaterialTheme.typography.bodySmall, color = Stone500)
-                    TradeItemChip(buy2Icon, "${trade.buyItem2Count}× ${formatItemName(buy2Id)}")
+                    TradeItemChip(buy2Icon, "${trade.buyItem2Count}\u00D7 ${formatItemName(buy2Id)}",
+                        onClick = { onItemTap(buy2Id) })
                 }
 
-                Text("  →  ", style = MaterialTheme.typography.bodyMedium, color = Gold)
+                Text("  \u2192  ", style = MaterialTheme.typography.bodyMedium, color = Gold)
 
                 // Sell item
-                TradeItemChip(sellIcon, "${trade.sellItemCount}× ${formatItemName(sellId)}")
+                TradeItemChip(sellIcon, "${trade.sellItemCount}\u00D7 ${formatItemName(sellId)}",
+                    onClick = { onItemTap(sellId) })
             }
             Spacer(Modifier.height(2.dp))
             Text(
-                "${trade.profession.replaceFirstChar { it.uppercase() }} · ${trade.levelName}",
+                "${trade.profession.replaceFirstChar { it.uppercase() }} \u00B7 ${trade.levelName}",
                 style = MaterialTheme.typography.bodySmall,
                 color = Stone500,
             )
@@ -299,8 +304,11 @@ private fun TradeListItem(trade: TradeEntity) {
 }
 
 @Composable
-private fun TradeItemChip(icon: SpyglassIcon?, label: String) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+private fun TradeItemChip(icon: SpyglassIcon?, label: String, onClick: () -> Unit = {}) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.clickable { onClick() },
+    ) {
         if (icon != null) {
             SpyglassIconImage(
                 icon, contentDescription = null,

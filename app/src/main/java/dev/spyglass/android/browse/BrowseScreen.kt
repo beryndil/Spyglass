@@ -197,10 +197,14 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                     tab = 2
                 },
                 onNavigateToStructure = onStructureTap,
+                onItemTap = onItemTap,
             )
             4 -> EnchantsScreen()
-            5 -> PotionsScreen()
-            6 -> TradesScreen(targetProfession = targetProfession)
+            5 -> PotionsScreen(onItemTap = onItemTap)
+            6 -> TradesScreen(
+                targetProfession = targetProfession,
+                onItemTap = onItemTap,
+            )
             7 -> StructuresScreen(
                 targetStructureId = targetStructureId,
                 onNavigateToMob = { mobId ->
@@ -231,6 +235,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                 },
                 onItemTap = onItemTap,
                 onStructureTap = onStructureTap,
+                onBiomeTap = onBiomeTap,
             )
         }
     }
