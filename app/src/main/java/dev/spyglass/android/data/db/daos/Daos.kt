@@ -23,6 +23,12 @@ interface BlockDao {
 
     @Query("SELECT COUNT(*) FROM blocks")
     suspend fun count(): Int
+
+    @Query("SELECT COUNT(*) FROM blocks")
+    fun countFlow(): Flow<Int>
+
+    @Query("DELETE FROM blocks")
+    suspend fun deleteAll()
 }
 
 @Dao
@@ -44,6 +50,9 @@ interface RecipeDao {
 
     @Query("SELECT * FROM recipes WHERE ingredientsJson LIKE '%\"' || :ingredient || '\"%' ORDER BY outputItem")
     fun recipesUsingIngredient(ingredient: String): Flow<List<RecipeEntity>>
+
+    @Query("DELETE FROM recipes")
+    suspend fun deleteAll()
 }
 
 @Dao
@@ -57,6 +66,9 @@ interface MobDao {
     @Query("SELECT * FROM mobs WHERE category = :cat ORDER BY name")
     fun byCategory(cat: String): Flow<List<MobEntity>>
 
+    @Query("SELECT * FROM mobs WHERE length(breeding) > 0 ORDER BY name")
+    fun breedable(): Flow<List<MobEntity>>
+
     @Query("SELECT * FROM mobs WHERE id = :id")
     suspend fun byId(id: String): MobEntity?
 
@@ -65,6 +77,9 @@ interface MobDao {
 
     @Query("SELECT COUNT(*) FROM mobs")
     suspend fun count(): Int
+
+    @Query("DELETE FROM mobs")
+    suspend fun deleteAll()
 }
 
 @Dao
@@ -83,6 +98,9 @@ interface BiomeDao {
 
     @Query("SELECT COUNT(*) FROM biomes")
     suspend fun count(): Int
+
+    @Query("DELETE FROM biomes")
+    suspend fun deleteAll()
 }
 
 @Dao
@@ -101,6 +119,9 @@ interface EnchantDao {
 
     @Query("SELECT COUNT(*) FROM enchants")
     suspend fun count(): Int
+
+    @Query("DELETE FROM enchants")
+    suspend fun deleteAll()
 }
 
 @Dao
@@ -116,6 +137,9 @@ interface PotionDao {
 
     @Query("SELECT COUNT(*) FROM potions")
     suspend fun count(): Int
+
+    @Query("DELETE FROM potions")
+    suspend fun deleteAll()
 }
 
 @Dao
@@ -134,6 +158,9 @@ interface TradeDao {
 
     @Query("SELECT COUNT(*) FROM trades")
     suspend fun count(): Int
+
+    @Query("DELETE FROM trades")
+    suspend fun deleteAll()
 }
 
 @Dao
@@ -149,6 +176,9 @@ interface StructureDao {
 
     @Query("SELECT COUNT(*) FROM structures")
     suspend fun count(): Int
+
+    @Query("DELETE FROM structures")
+    suspend fun deleteAll()
 }
 
 @Dao
@@ -170,4 +200,10 @@ interface ItemDao {
 
     @Query("SELECT COUNT(*) FROM items")
     suspend fun count(): Int
+
+    @Query("SELECT COUNT(*) FROM items")
+    fun countFlow(): Flow<Int>
+
+    @Query("DELETE FROM items")
+    suspend fun deleteAll()
 }

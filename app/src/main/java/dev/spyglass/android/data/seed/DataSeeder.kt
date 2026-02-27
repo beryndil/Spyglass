@@ -9,24 +9,50 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 /**
- * On first install, reads JSON files from assets/minecraft/ and inserts into Room.
- * Subsequent launches skip seeding (row count > 0).
+ * Reads JSON files from assets/minecraft/ and inserts into Room.
+ * Uses a version number to trigger full re-seeding when data changes.
+ * Favorites are preserved across re-seeds (separate table, not cleared).
  */
 object DataSeeder {
+
+    private const val CURRENT_DATA_VERSION = 4
+    private const val PREFS_NAME = "spyglass_seed"
+    private const val KEY_DATA_VERSION = "data_version"
 
     private val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
 
     suspend fun seedIfNeeded(context: Context) = withContext(Dispatchers.IO) {
         val db = SpyglassDatabase.get(context)
-        if (db.blockDao().count()   == 0) seedBlocks(context, db)
-        if (db.mobDao().count()     == 0) seedMobs(context, db)
-        if (db.biomeDao().count()   == 0) seedBiomes(context, db)
-        if (db.enchantDao().count() == 0) seedEnchants(context, db)
-        if (db.potionDao().count()  == 0) seedPotions(context, db)
-        if (db.tradeDao().count()   == 0) seedTrades(context, db)
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val storedVersion = prefs.getInt(KEY_DATA_VERSION, 0)
+
+        if (storedVersion < CURRENT_DATA_VERSION) {
+            // Clear game data tables (NOT favorites)
+            db.blockDao().deleteAll()
+            db.mobDao().deleteAll()
+            db.biomeDao().deleteAll()
+            db.enchantDao().deleteAll()
+            db.potionDao().deleteAll()
+            db.tradeDao().deleteAll()
+            db.recipeDao().deleteAll()
+            db.structureDao().deleteAll()
+            db.itemDao().deleteAll()
+        }
+
+        // Seed any empty tables
+        if (db.blockDao().count()     == 0) seedBlocks(context, db)
+        if (db.mobDao().count()       == 0) seedMobs(context, db)
+        if (db.biomeDao().count()     == 0) seedBiomes(context, db)
+        if (db.enchantDao().count()   == 0) seedEnchants(context, db)
+        if (db.potionDao().count()    == 0) seedPotions(context, db)
+        if (db.tradeDao().count()     == 0) seedTrades(context, db)
         if (db.recipeDao().count()    == 0) seedRecipes(context, db)
         if (db.structureDao().count() == 0) seedStructures(context, db)
         if (db.itemDao().count()      == 0) seedItems(context, db)
+
+        if (storedVersion < CURRENT_DATA_VERSION) {
+            prefs.edit().putInt(KEY_DATA_VERSION, CURRENT_DATA_VERSION).apply()
+        }
     }
 
     private fun readAsset(context: Context, path: String): String =

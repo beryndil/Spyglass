@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,6 +22,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.EnchantEntity
+import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -81,6 +83,20 @@ class EnchantsViewModel(app: Application) : AndroidViewModel(app) {
     fun expandEnchant(id: String) {
         _expandedIds.value = _expandedIds.value + id
     }
+
+    val favoriteIds: StateFlow<Set<String>> = repo.allFavoriteIds()
+        .map { it.toSet() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
+
+    val favoriteEnchants: StateFlow<List<FavoriteEntity>> = repo.favoritesByType("enchant")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun toggleFavorite(id: String, displayName: String) {
+        viewModelScope.launch {
+            if (id in favoriteIds.value) repo.deleteFavorite(id)
+            else repo.insertFavorite(FavoriteEntity(id = id, type = "enchant", displayName = displayName))
+        }
+    }
 }
 
 private fun formatTarget(target: String): String =
@@ -133,6 +149,8 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
     val enchants    by vm.enchants.collectAsState()
     val expandedIds by vm.expandedIds.collectAsState()
     val warning     by vm.warningMessage.collectAsState()
+    val favoriteIds by vm.favoriteIds.collectAsState()
+    val favoriteEnchants by vm.favoriteEnchants.collectAsState()
     val listState   = rememberLazyListState()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -183,6 +201,25 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
                     stat = "${enchants.size} enchantments",
                 )
             }
+            if (favoriteEnchants.isNotEmpty()) {
+                item(key = "fav_header") {
+                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = Gold,
+                        modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
+                }
+                items(favoriteEnchants, key = { "fav_${it.id}" }) { fav ->
+                    BrowseListItem(
+                        headline    = fav.displayName,
+                        supporting  = "",
+                        supportingMaxLines = 1,
+                        leadingIcon = EnchantTextures.get(fav.id) ?: PixelIcons.Enchant,
+                        trailing    = {
+                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = Gold, modifier = Modifier.size(20.dp))
+                            }
+                        },
+                    )
+                }
+            }
             items(enchants, key = { it.id }) { e ->
                 val isExpanded = e.id in expandedIds
                 Column {
@@ -192,27 +229,39 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
                             if (e.isTreasure && !e.isCurse) append("  \u2022 Anvil Only")
                             if (e.isCurse) append("  \u2022 Curse")
                         },
-                        supporting  = e.id,
+                        supporting  = "",
                         supportingMaxLines = 1,
                         leadingIcon = EnchantTextures.get(e.id) ?: PixelIcons.Enchant,
                         modifier    = Modifier.clickable { vm.toggleExpanded(e.id) },
                         trailing    = {
-                            Column(horizontalAlignment = Alignment.End) {
-                                Text("Max ${e.maxLevel}", style = MaterialTheme.typography.bodySmall, color = Gold)
-                                Spacer(Modifier.height(2.dp))
-                                val rarityColor = when (e.rarity.lowercase()) {
-                                    "common"   -> Emerald
-                                    "uncommon" -> PotionBlue
-                                    "rare"     -> EnderPurple
-                                    "very_rare", "very rare" -> Gold
-                                    else       -> Stone500
-                                }
-                                CategoryBadge(label = e.rarity.replace('_', ' '), color = rarityColor)
-                                if (e.isTreasure) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Column(horizontalAlignment = Alignment.End) {
+                                    Text("Max ${e.maxLevel}", style = MaterialTheme.typography.bodySmall, color = Gold)
                                     Spacer(Modifier.height(2.dp))
-                                    CategoryBadge(
-                                        label = if (e.isCurse) "Curse" else "Anvil",
-                                        color = if (e.isCurse) Red400 else NetherRed,
+                                    val rarityColor = when (e.rarity.lowercase()) {
+                                        "common"   -> Emerald
+                                        "uncommon" -> PotionBlue
+                                        "rare"     -> EnderPurple
+                                        "very_rare", "very rare" -> Gold
+                                        else       -> Stone500
+                                    }
+                                    CategoryBadge(label = e.rarity.replace('_', ' '), color = rarityColor)
+                                    if (e.isTreasure) {
+                                        Spacer(Modifier.height(2.dp))
+                                        CategoryBadge(
+                                            label = if (e.isCurse) "Curse" else "Anvil",
+                                            color = if (e.isCurse) Red400 else NetherRed,
+                                        )
+                                    }
+                                }
+                                Spacer(Modifier.width(4.dp))
+                                val isFav = e.id in favoriteIds
+                                IconButton(onClick = { vm.toggleFavorite(e.id, e.name) }, modifier = Modifier.size(32.dp)) {
+                                    Icon(
+                                        Icons.Filled.Star,
+                                        contentDescription = "Favorite",
+                                        tint = if (isFav) Gold else Stone700,
+                                        modifier = Modifier.size(20.dp),
                                     )
                                 }
                             }
@@ -255,6 +304,8 @@ private fun EnchantDetailCard(
     val incompatible = parseIncompatible(enchant.incompatibleJson)
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
+        MinecraftIdRow(enchant.id)
+
         // Description
         if (enchant.description.isNotEmpty()) {
             Text(enchant.description, style = MaterialTheme.typography.bodyMedium, color = Stone300)

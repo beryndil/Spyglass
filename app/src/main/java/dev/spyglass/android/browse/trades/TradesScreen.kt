@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,11 +21,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.data.ItemTags
+import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.TradeEntity
 import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 // ── Job block data ──────────────────────────────────────────────────────────
 
@@ -44,12 +48,12 @@ private val JOB_BLOCKS = mapOf(
     "butcher" to JobBlockInfo(
         "Smoker", "smoker",
         listOf(null,"oak_log",null, "oak_log","furnace","oak_log", null,"oak_log",null),
-        listOf("4× Oak Log", "1× Furnace"),
+        listOf("4× Any Log", "1× Furnace"),
     ),
     "cartographer" to JobBlockInfo(
         "Cartography Table", "cartography_table",
         listOf("paper","paper",null, "oak_planks","oak_planks",null, "oak_planks","oak_planks",null),
-        listOf("2× Paper", "4× Oak Planks"),
+        listOf("2× Paper", "4× Any Planks"),
     ),
     "cleric" to JobBlockInfo(
         "Brewing Stand", "brewing_stand",
@@ -59,17 +63,17 @@ private val JOB_BLOCKS = mapOf(
     "farmer" to JobBlockInfo(
         "Composter", "composter",
         listOf("oak_slab",null,"oak_slab", "oak_slab",null,"oak_slab", "oak_slab","oak_slab","oak_slab"),
-        listOf("7× Oak Slab"),
+        listOf("7× Any Wooden Slab"),
     ),
     "fisherman" to JobBlockInfo(
         "Barrel", "barrel",
         listOf("oak_planks","oak_slab","oak_planks", "oak_planks",null,"oak_planks", "oak_planks","oak_slab","oak_planks"),
-        listOf("6× Oak Planks", "2× Oak Slab"),
+        listOf("6× Any Planks", "2× Any Wooden Slab"),
     ),
     "fletcher" to JobBlockInfo(
         "Fletching Table", "fletching_table",
         listOf("flint","flint",null, "oak_planks","oak_planks",null, "oak_planks","oak_planks",null),
-        listOf("2× Flint", "4× Oak Planks"),
+        listOf("2× Flint", "4× Any Planks"),
     ),
     "leatherworker" to JobBlockInfo(
         "Cauldron", "cauldron",
@@ -79,7 +83,7 @@ private val JOB_BLOCKS = mapOf(
     "librarian" to JobBlockInfo(
         "Lectern", "lectern",
         listOf("oak_slab","oak_slab","oak_slab", null,"bookshelf",null, null,"oak_slab",null),
-        listOf("4× Oak Slab", "1× Bookshelf"),
+        listOf("4× Any Wooden Slab", "1× Bookshelf"),
     ),
     "mason" to JobBlockInfo(
         "Stonecutter", "stonecutter",
@@ -89,17 +93,17 @@ private val JOB_BLOCKS = mapOf(
     "shepherd" to JobBlockInfo(
         "Loom", "loom",
         listOf("string","string",null, "oak_planks","oak_planks",null, null,null,null),
-        listOf("2× String", "2× Oak Planks"),
+        listOf("2× String", "2× Any Planks"),
     ),
     "toolsmith" to JobBlockInfo(
         "Smithing Table", "smithing_table",
         listOf("iron_ingot","iron_ingot",null, "oak_planks","oak_planks",null, "oak_planks","oak_planks",null),
-        listOf("2× Iron Ingot", "4× Oak Planks"),
+        listOf("2× Iron Ingot", "4× Any Planks"),
     ),
     "weaponsmith" to JobBlockInfo(
         "Grindstone", "grindstone",
         listOf("stick","stone_slab","stick", "oak_planks",null,"oak_planks", null,null,null),
-        listOf("2× Stick", "1× Stone Slab", "2× Oak Planks"),
+        listOf("2× Stick", "1× Stone Slab", "2× Any Planks"),
     ),
 )
 
@@ -124,6 +128,20 @@ class TradesViewModel(app: Application) : AndroidViewModel(app) {
     val professions = listOf("all", "armorer", "butcher", "cartographer", "cleric",
         "farmer", "fisherman", "fletcher", "leatherworker", "librarian",
         "mason", "shepherd", "toolsmith", "weaponsmith")
+
+    val favoriteIds: StateFlow<Set<String>> = repo.allFavoriteIds()
+        .map { it.toSet() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
+
+    val favoriteTrades: StateFlow<List<FavoriteEntity>> = repo.favoritesByType("trade")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun toggleFavorite(id: String, displayName: String) {
+        viewModelScope.launch {
+            if (id in favoriteIds.value) repo.deleteFavorite(id)
+            else repo.insertFavorite(FavoriteEntity(id = id, type = "trade", displayName = displayName))
+        }
+    }
 }
 
 // ── Screen ──────────────────────────────────────────────────────────────────
@@ -137,6 +155,8 @@ fun TradesScreen(
     val query      by vm.query.collectAsState()
     val profession by vm.profession.collectAsState()
     val trades     by vm.trades.collectAsState()
+    val favoriteIds by vm.favoriteIds.collectAsState()
+    val favoriteTrades by vm.favoriteTrades.collectAsState()
 
     // Auto-select profession when navigated from a job block
     LaunchedEffect(targetProfession) {
@@ -187,8 +207,27 @@ fun TradesScreen(
                 }
             }
 
+            if (favoriteTrades.isNotEmpty()) {
+                item(key = "fav_header") {
+                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = Gold,
+                        modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
+                }
+                items(favoriteTrades, key = { "fav_${it.id}" }) { fav ->
+                    BrowseListItem(
+                        headline    = fav.displayName,
+                        supporting  = "",
+                        supportingMaxLines = 1,
+                        leadingIcon = PixelIcons.Trade,
+                        trailing    = {
+                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = Gold, modifier = Modifier.size(20.dp))
+                            }
+                        },
+                    )
+                }
+            }
             items(trades, key = { it.rowId }) { t ->
-                TradeListItem(t, onItemTap)
+                TradeListItem(t, onItemTap, favoriteIds, vm::toggleFavorite)
             }
             if (trades.isEmpty()) item {
                 EmptyState(
@@ -255,7 +294,7 @@ private fun formatItemName(id: String): String =
     id.substringAfterLast(':').replace('_', ' ').replaceFirstChar { it.uppercase() }
 
 @Composable
-private fun TradeListItem(trade: TradeEntity, onItemTap: (String) -> Unit) {
+private fun TradeListItem(trade: TradeEntity, onItemTap: (String) -> Unit, favoriteIds: Set<String>, onToggleFavorite: (String, String) -> Unit) {
     val buy1Id = trade.buyItem1.substringAfterLast(':')
     val buy1Icon = ItemTextures.get(buy1Id)
     val buy2Id = if (trade.buyItem2.isNotBlank()) trade.buyItem2.substringAfterLast(':') else null
@@ -300,6 +339,17 @@ private fun TradeListItem(trade: TradeEntity, onItemTap: (String) -> Unit) {
         }
         Spacer(Modifier.width(8.dp))
         CategoryBadge(label = "Lvl ${trade.level}", color = Gold)
+        Spacer(Modifier.width(4.dp))
+        val tradeKey = "trade_${trade.rowId}"
+        val isFav = tradeKey in favoriteIds
+        IconButton(onClick = { onToggleFavorite(tradeKey, "${formatItemName(trade.sellItem)} trade") }, modifier = Modifier.size(32.dp)) {
+            Icon(
+                Icons.Filled.Star,
+                contentDescription = "Favorite",
+                tint = if (isFav) Gold else Stone700,
+                modifier = Modifier.size(20.dp),
+            )
+        }
     }
 }
 
@@ -330,6 +380,7 @@ private fun CraftingGrid(cells: List<String?>) {
             Row {
                 for (col in 0..2) {
                     val itemId = cells.getOrNull(row * 3 + col)
+                    val tag = itemId?.let { ItemTags.tagForItem(it) }
                     val icon = itemId?.let { ItemTextures.get(it) }
                     Box(
                         contentAlignment = Alignment.Center,
@@ -341,7 +392,9 @@ private fun CraftingGrid(cells: List<String?>) {
                             )
                             .border(0.5.dp, Stone700, RoundedCornerShape(2.dp)),
                     ) {
-                        if (icon != null) {
+                        if (tag != null) {
+                            RotatingTagIcon(tag, modifier = Modifier.size(22.dp))
+                        } else if (icon != null) {
                             SpyglassIconImage(
                                 icon, contentDescription = itemId,
                                 modifier = Modifier.size(22.dp),

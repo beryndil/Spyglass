@@ -22,6 +22,8 @@ import dev.spyglass.android.browse.BrowseScreen
 import dev.spyglass.android.browse.search.SearchScreen
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.home.HomeScreen
+import dev.spyglass.android.changelog.ChangelogScreen
+import dev.spyglass.android.feedback.FeedbackScreen
 import dev.spyglass.android.settings.SettingsScreen
 
 sealed class TopDest(val route: String, val label: String, val icon: SpyglassIcon) {
@@ -33,7 +35,7 @@ sealed class TopDest(val route: String, val label: String, val icon: SpyglassIco
 
 val TOP_DESTINATIONS = listOf(TopDest.Home, TopDest.Browse, TopDest.Calculators, TopDest.Search)
 
-private val SUB_ROUTES = setOf("about", "settings")
+private val SUB_ROUTES = setOf("about", "settings", "changelog", "feedback")
 
 /** Pending navigation target from Search → Browse */
 data class BrowseTarget(val tab: Int, val id: String)
@@ -104,6 +106,8 @@ fun AppNavGraph() {
             }
             composable("about") { AboutScreen(onBack = { navController.popBackStack() }) }
             composable("settings") { SettingsScreen(onBack = { navController.popBackStack() }) }
+            composable("changelog") { ChangelogScreen(onBack = { navController.popBackStack() }) }
+            composable("feedback") { FeedbackScreen(onBack = { navController.popBackStack() }) }
         }
     }
 }
@@ -157,6 +161,24 @@ private fun SpyglassTopBar(navController: NavHostController) {
                     onClick = {
                         menuExpanded = false
                         navController.navigate("settings") {
+                            launchSingleTop = true
+                        }
+                    },
+                )
+                DropdownMenuItem(
+                    text = { Text("Changelog") },
+                    onClick = {
+                        menuExpanded = false
+                        navController.navigate("changelog") {
+                            launchSingleTop = true
+                        }
+                    },
+                )
+                DropdownMenuItem(
+                    text = { Text("Feedback") },
+                    onClick = {
+                        menuExpanded = false
+                        navController.navigate("feedback") {
                             launchSingleTop = true
                         }
                     },

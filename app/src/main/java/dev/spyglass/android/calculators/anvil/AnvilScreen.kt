@@ -1,6 +1,8 @@
 package dev.spyglass.android.calculators.anvil
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -50,7 +52,10 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
     }
 
     Box {
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
         SectionHeader("Enchanting", icon = PixelIcons.Anvil)
 
         InputCard {

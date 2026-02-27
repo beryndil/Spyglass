@@ -229,7 +229,7 @@ fun BlocksScreen(
                     val isFav = fav.id in favoriteIds
                     BrowseListItem(
                         headline = fav.displayName,
-                        supporting = fav.id,
+                        supporting = "",
                         leadingIcon = ItemTextures.get(fav.id) ?: PixelIcons.Blocks,
                         modifier = Modifier.clickable { vm.toggleExpanded(fav.id) },
                         trailing = {
@@ -251,7 +251,7 @@ fun BlocksScreen(
                 Column {
                     BrowseListItem(
                         headline    = b.name,
-                        supporting  = b.id,
+                        supporting  = "",
                         leadingIcon = ItemTextures.get(b.id) ?: PixelIcons.Blocks,
                         modifier    = Modifier.clickable { vm.toggleExpanded(b.id) },
                         trailing    = {
@@ -328,6 +328,9 @@ private fun BlockDetailContent(
     val recipesUsingItem by vm.recipesUsingItem(block.id).collectAsState(initial = emptyList())
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
+        // ── Minecraft ID ──
+        MinecraftIdRow(block.id)
+
         // ── Stats section ──
         if (block.stackSize != 64) StatRow("Stack Size", "${block.stackSize}")
         StatRow("Hardness", "${block.hardness}")

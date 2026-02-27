@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.spyglass.android.data.BiomeResourceMap
+import dev.spyglass.android.data.CompostData
 import dev.spyglass.android.data.ItemTags
 import dev.spyglass.android.data.db.entities.RecipeEntity
 import kotlinx.coroutines.launch
@@ -31,6 +32,7 @@ data class ChainStep(
     val craftsNeeded: Long,
     val recipe: RecipeEntity?,
     val biomes: List<String> = emptyList(),
+    val tagId: String? = null,
 )
 
 // ── Chain calculator algorithm ──────────────────────────────────────────────
@@ -45,18 +47,26 @@ fun calculateChain(
     val crafts = mutableMapOf<String, Long>()         // total crafts needed
     val recipeMap = mutableMapOf<String, RecipeEntity?>()
     val biomeMap = mutableMapOf<String, List<String>>()
+    val tagMap = mutableMapOf<String, String?>()       // key -> tagId if tag-collapsed
     val order = mutableListOf<String>()               // insertion order for display
 
-    fun trace(itemId: String, needed: Long, ancestors: Set<String>) {
+    fun trace(itemId: String, needed: Long, ancestors: Set<String>, outputContext: String?) {
         if (itemId in ancestors || needed <= 0) return // cycle detection only
+
+        // Tag collapsing: only treat as tag if the parent recipe is truly tag-based
+        val tag = if (outputContext != null) {
+            ItemTags.tagForIngredient(itemId, outputContext)
+        } else null
+        val key = tag ?: itemId
 
         val recipe = recipes[itemId]
         if (recipe == null || recipe.type == "found") {
-            quantities[itemId] = (quantities[itemId] ?: 0L) + needed
-            if (itemId !in recipeMap) {
-                recipeMap[itemId] = null
-                biomeMap[itemId] = BiomeResourceMap.biomesForItem(itemId)
-                order.add(itemId)
+            quantities[key] = (quantities[key] ?: 0L) + needed
+            if (key !in recipeMap) {
+                recipeMap[key] = null
+                biomeMap[key] = BiomeResourceMap.biomesForItem(itemId)
+                tagMap[key] = tag
+                order.add(key)
             }
             return
         }
@@ -64,33 +74,98 @@ fun calculateChain(
         val outputCount = recipe.outputCount.coerceAtLeast(1)
         val craftsNeeded = ceil(needed.toDouble() / outputCount).toLong()
 
-        quantities[itemId] = (quantities[itemId] ?: 0L) + needed
-        crafts[itemId] = (crafts[itemId] ?: 0L) + craftsNeeded
-        if (itemId !in recipeMap) {
-            recipeMap[itemId] = recipe
-            order.add(itemId)
+        quantities[key] = (quantities[key] ?: 0L) + needed
+        crafts[key] = (crafts[key] ?: 0L) + craftsNeeded
+        if (key !in recipeMap) {
+            recipeMap[key] = recipe
+            tagMap[key] = tag
+            order.add(key)
         }
 
         val ingredients = parseIngredientCounts(recipe)
         for ((ingredientId, countPerCraft) in ingredients) {
-            trace(ingredientId, craftsNeeded * countPerCraft, ancestors + itemId)
+            // If this item was tag-collapsed, propagate the grandparent context
+            // so sub-ingredients also resolve as tags (e.g. stick → any planks → any logs)
+            val nextContext = if (tag != null) outputContext else itemId
+            trace(ingredientId, craftsNeeded * countPerCraft, ancestors + itemId, nextContext)
         }
     }
 
-    trace(targetItem, targetCount, emptySet())
+    trace(targetItem, targetCount, emptySet(), null)
 
-    return order.map { itemId ->
+    return order.map { key ->
         ChainStep(
-            itemId = itemId,
-            quantity = quantities[itemId] ?: 0L,
-            craftsNeeded = crafts[itemId] ?: 0L,
-            recipe = recipeMap[itemId],
-            biomes = biomeMap[itemId] ?: emptyList(),
+            itemId = key,
+            quantity = quantities[key] ?: 0L,
+            craftsNeeded = crafts[key] ?: 0L,
+            recipe = recipeMap[key],
+            biomes = biomeMap[key] ?: emptyList(),
+            tagId = tagMap[key],
         )
     }
 }
 
-private fun parseIngredientCounts(recipe: RecipeEntity): Map<String, Int> {
+data class CraftingPlanStep(
+    val itemId: String,
+    val quantity: Long,
+    val craftsNeeded: Long,
+    val recipe: RecipeEntity?,
+    val depth: Int,
+    val tagId: String? = null,
+)
+
+fun consolidateCraftingPlan(
+    items: List<Pair<String, Int>>,
+    recipes: Map<String, RecipeEntity>,
+): List<CraftingPlanStep> {
+    val totals = mutableMapOf<String, Long>()
+    val craftTotals = mutableMapOf<String, Long>()
+    val recipeForItem = mutableMapOf<String, RecipeEntity?>()
+    val tagForKey = mutableMapOf<String, String?>()
+
+    for ((itemId, qty) in items) {
+        val chain = calculateChain(itemId, qty.toLong(), recipes)
+        for (step in chain) {
+            totals[step.itemId] = (totals[step.itemId] ?: 0L) + step.quantity
+            craftTotals[step.itemId] = (craftTotals[step.itemId] ?: 0L) + step.craftsNeeded
+            recipeForItem.putIfAbsent(step.itemId, step.recipe)
+            tagForKey.putIfAbsent(step.itemId, step.tagId)
+        }
+    }
+
+    val depthCache = mutableMapOf<String, Int>()
+    fun itemDepth(id: String, visiting: Set<String> = emptySet()): Int {
+        depthCache[id]?.let { return it }
+        if (id in visiting) return 0
+        // For tags, resolve to a representative member for depth calculation
+        val resolvedId = if (id.startsWith("#")) {
+            ItemTags.membersOfTag(id).firstOrNull { it in recipes } ?: id
+        } else id
+        val recipe = recipes[resolvedId]
+        if (recipe == null || recipe.type == "found") return 0.also { depthCache[id] = it }
+        val ingredients = parseIngredientCounts(recipe)
+        val maxChild = ingredients.keys.maxOfOrNull {
+            val childKey = ItemTags.tagForIngredient(it, resolvedId) ?: it
+            itemDepth(childKey, visiting + id)
+        } ?: 0
+        return (maxChild + 1).also { depthCache[id] = it }
+    }
+
+    return totals.entries
+        .map { (id, qty) ->
+            CraftingPlanStep(
+                itemId = id,
+                quantity = qty,
+                craftsNeeded = craftTotals[id] ?: 0L,
+                recipe = recipeForItem[id],
+                depth = itemDepth(id),
+                tagId = tagForKey[id],
+            )
+        }
+        .sortedWith(compareBy({ it.depth }, { -it.quantity }))
+}
+
+internal fun parseIngredientCounts(recipe: RecipeEntity): Map<String, Int> {
     val counts = mutableMapOf<String, Int>()
     runCatching {
         val json = Json.parseToJsonElement(recipe.ingredientsJson)
@@ -151,7 +226,8 @@ fun ItemDetailPager(
                 .background(SurfaceMid, RoundedCornerShape(6.dp))
                 .padding(2.dp),
         ) {
-            listOf("Recipe", "Uses (${recipesUsingItem.size})").forEachIndexed { i, label ->
+            val usesCount = recipesUsingItem.size + if (CompostData.chanceFor(itemId) != null) 1 else 0
+            listOf("Recipe", "Uses ($usesCount)").forEachIndexed { i, label ->
                 val isSelected = pagerState.currentPage == i
                 Box(
                     contentAlignment = Alignment.Center,
@@ -184,7 +260,7 @@ fun ItemDetailPager(
         HorizontalPager(state = pagerState) { page ->
             when (page) {
                 0 -> RecipePage(itemId, recipesForItem, allRecipes, onItemTap, onBiomeTap)
-                1 -> UsesPage(recipesUsingItem, onItemTap)
+                1 -> UsesPage(itemId, recipesUsingItem, onItemTap)
             }
         }
     }
@@ -226,7 +302,15 @@ private fun RecipePage(
                 }
             }
         } else {
-            recipes.forEach { recipe ->
+            // Deduplicate recipes that differ only by tag-member variants
+            // (e.g. 9 charcoal smelting recipes → 1 with rotating log icon)
+            val deduped = recipes.distinctBy { recipe ->
+                val normalized = parseIngredientCounts(recipe).map { (id, count) ->
+                    (ItemTags.tagForIngredient(id, recipe.outputItem) ?: id) to count
+                }.sortedBy { it.first }
+                recipe.type to normalized
+            }
+            deduped.forEach { recipe ->
                 // Crafting grid visualization
                 if (recipe.type.contains("shaped")) {
                     CraftingGridView(recipe, onItemTap)
@@ -235,16 +319,29 @@ private fun RecipePage(
                 // Ingredients list
                 val ingredients = parseIngredientCounts(recipe)
                 if (ingredients.isNotEmpty()) {
+                    // Merge tag members into single entries (only when recipe is tag-based)
+                    val merged = mutableMapOf<String, Int>()
+                    val tagIds = mutableMapOf<String, String?>()
+                    ingredients.forEach { (id, count) ->
+                        val tag = ItemTags.tagForIngredient(id, recipe.outputItem)
+                        val key = tag ?: id
+                        merged[key] = (merged[key] ?: 0) + count
+                        tagIds.putIfAbsent(key, tag)
+                    }
                     Text("Ingredients", style = MaterialTheme.typography.labelSmall, color = Gold)
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
-                        ingredients.forEach { (id, count) ->
-                            val label = "$count× ${formatItemName(id)}"
+                        merged.forEach { (key, count) ->
+                            val tag = tagIds[key]
+                            val name = if (tag != null) formatTagName(tag) else formatItemName(key)
                             AssistChip(
-                                onClick = { onItemTap(id) },
-                                label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                                onClick = { if (tag == null) onItemTap(key) },
+                                leadingIcon = if (tag != null) { {
+                                    RotatingTagIcon(tag, modifier = Modifier.size(16.dp))
+                                } } else null,
+                                label = { Text("$count× $name", style = MaterialTheme.typography.labelSmall) },
                                 colors = AssistChipDefaults.assistChipColors(
                                     labelColor = Stone100,
                                     containerColor = Stone700.copy(alpha = 0.5f),
@@ -282,52 +379,99 @@ private fun CraftingGridView(recipe: RecipeEntity, onItemTap: (String) -> Unit) 
 
 @Composable
 private fun UsesPage(
+    itemId: String,
     recipesUsingItem: List<RecipeEntity>,
     onItemTap: (String) -> Unit,
 ) {
+    val compostChance = CompostData.chanceFor(itemId)
+
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        if (recipesUsingItem.isEmpty()) {
+        // Composting info
+        if (compostChance != null) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Emerald.copy(alpha = 0.1f), RoundedCornerShape(6.dp))
+                    .border(0.5.dp, Emerald.copy(alpha = 0.3f), RoundedCornerShape(6.dp))
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                val composterIcon = BlockTextures.get("composter")
+                if (composterIcon != null) {
+                    SpyglassIconImage(composterIcon, contentDescription = null, modifier = Modifier.size(22.dp))
+                    Spacer(Modifier.width(8.dp))
+                }
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        "Compostable",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Emerald,
+                    )
+                    Text(
+                        "$compostChance% chance per item",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Stone500,
+                    )
+                }
+            }
+        }
+
+        // Recipe uses
+        if (recipesUsingItem.isEmpty() && compostChance == null) {
             Text(
-                "No known uses as ingredient",
+                "No known uses",
                 style = MaterialTheme.typography.bodyMedium,
                 color = Stone500,
             )
-        } else {
-            recipesUsingItem.forEach { recipe ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(SurfaceCard, RoundedCornerShape(6.dp))
-                        .border(0.5.dp, Stone700, RoundedCornerShape(6.dp))
-                        .clickable { onItemTap(recipe.outputItem) }
-                        .padding(horizontal = 12.dp, vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    // Output item icon
-                    val outputTexture = ItemTextures.get(recipe.outputItem)
-                    if (outputTexture != null) {
-                        SpyglassIconImage(
-                            outputTexture, contentDescription = null,
-                            modifier = Modifier.size(22.dp),
-                        )
-                        Spacer(Modifier.width(8.dp))
-                    }
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            "${recipe.outputCount}× ${formatItemName(recipe.outputItem)}",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Stone100,
-                        )
-                        Text(
-                            recipe.type.replace('_', ' '),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = Stone500,
-                        )
-                    }
-                    Text("→", color = Gold, style = MaterialTheme.typography.bodyLarge)
+        }
+        recipesUsingItem.forEach { recipe ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(SurfaceCard, RoundedCornerShape(6.dp))
+                    .border(0.5.dp, Stone700, RoundedCornerShape(6.dp))
+                    .clickable { onItemTap(recipe.outputItem) }
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                // Output item icon
+                val outputTexture = ItemTextures.get(recipe.outputItem)
+                if (outputTexture != null) {
+                    SpyglassIconImage(
+                        outputTexture, contentDescription = null,
+                        modifier = Modifier.size(22.dp),
+                    )
+                    Spacer(Modifier.width(8.dp))
                 }
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        "${recipe.outputCount}× ${formatItemName(recipe.outputItem)}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Stone100,
+                    )
+                    Text(
+                        recipe.type.replace('_', ' '),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Stone500,
+                    )
+                }
+                Text("→", color = Gold, style = MaterialTheme.typography.bodyLarge)
             }
+        }
+    }
+}
+
+// ── Chain step icon — rotating for tags, static for regular items ────
+
+@Composable
+private fun ChainStepIcon(step: ChainStep, modifier: Modifier = Modifier) {
+    if (step.tagId != null) {
+        RotatingTagIcon(step.tagId, modifier = modifier)
+    } else {
+        val tex = ItemTextures.get(step.itemId)
+        if (tex != null) {
+            SpyglassIconImage(tex, contentDescription = null, modifier = modifier)
         }
     }
 }
@@ -390,17 +534,15 @@ private fun ChainCalculatorSection(
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .clickable { onItemTap(step.itemId) },
+                                    .clickable { if (step.tagId == null) onItemTap(step.itemId) },
                                 horizontalArrangement = Arrangement.SpaceBetween,
                             ) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
-                                    val tex = ItemTextures.get(step.itemId)
-                                    if (tex != null) {
-                                        SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(16.dp))
-                                        Spacer(Modifier.width(4.dp))
-                                    }
+                                    ChainStepIcon(step, Modifier.size(16.dp))
+                                    Spacer(Modifier.width(4.dp))
+                                    val name = if (step.tagId != null) formatTagName(step.tagId) else formatItemName(step.itemId)
                                     Text(
-                                        "${formatItemName(step.itemId)} × ${step.quantity}",
+                                        "$name × ${step.quantity}",
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = Gold,
                                     )
@@ -422,18 +564,16 @@ private fun ChainCalculatorSection(
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .clickable { onItemTap(step.itemId) },
+                                    .clickable { if (step.tagId == null) onItemTap(step.itemId) },
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
-                                    val tex = ItemTextures.get(step.itemId)
-                                    if (tex != null) {
-                                        SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(16.dp))
-                                        Spacer(Modifier.width(4.dp))
-                                    }
+                                    ChainStepIcon(step, Modifier.size(16.dp))
+                                    Spacer(Modifier.width(4.dp))
+                                    val name = if (step.tagId != null) formatTagName(step.tagId) else formatItemName(step.itemId)
                                     Text(
-                                        "${formatItemName(step.itemId)} × ${step.quantity}",
+                                        "$name × ${step.quantity}",
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = Emerald,
                                     )

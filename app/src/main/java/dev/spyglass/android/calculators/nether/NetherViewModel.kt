@@ -52,14 +52,16 @@ class NetherViewModel : ViewModel() {
 
     private fun convert() {
         val s = _state.value
-        val x = s.xIn.toIntOrNull() ?: return
-        val y = s.yIn.toIntOrNull() ?: return
-        val z = s.zIn.toIntOrNull() ?: return
-        val (ox, oz) = when (s.dimension) {
-            NetherDimension.OVERWORLD -> Pair(x / 8, z / 8)
-            NetherDimension.NETHER    -> Pair(x * 8, z * 8)
-        }
-        _state.value = s.copy(xOut = ox.toString(), yOut = y.toString(), zOut = oz.toString())
+        val x = s.xIn.toIntOrNull()
+        val y = s.yIn.toIntOrNull()
+        val z = s.zIn.toIntOrNull()
+        val xOut = x?.let { if (s.dimension == NetherDimension.OVERWORLD) it / 8 else it * 8 }
+        val zOut = z?.let { if (s.dimension == NetherDimension.OVERWORLD) it / 8 else it * 8 }
+        _state.value = s.copy(
+            xOut = xOut?.toString() ?: "",
+            yOut = y?.toString() ?: "",
+            zOut = zOut?.toString() ?: "",
+        )
     }
 
     fun setObWidth(v: String)  { _state.value = _state.value.copy(obWidth = v);  calcObsidian() }

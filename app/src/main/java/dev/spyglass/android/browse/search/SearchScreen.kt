@@ -93,9 +93,9 @@ private fun typeIcon(type: String, id: String): SpyglassIcon = when (type) {
     "Mob"         -> MobTextures.get(id) ?: PixelIcons.Mob
     "Biome"       -> BiomeTextures.get(id) ?: PixelIcons.Biome
     "Enchantment" -> EnchantTextures.get(id) ?: PixelIcons.Enchant
-    "Potion"      -> PixelIcons.Potion
+    "Potion"      -> PotionTextures.get(id) ?: PixelIcons.Potion
     "Trade"       -> PixelIcons.Trade
-    "Structure"   -> PixelIcons.Structure
+    "Structure"   -> StructureTextures.get(id) ?: PixelIcons.Structure
     else          -> PixelIcons.Search
 }
 
@@ -145,7 +145,7 @@ fun SearchScreen(
                     val icon = typeIcon(r.type, r.id)
                     BrowseListItem(
                         headline    = r.name,
-                        supporting  = r.id,
+                        supporting  = "",
                         leadingIcon = icon,
                         leadingIconTint = if (icon is SpyglassIcon.Drawable) androidx.compose.ui.graphics.Color.Unspecified else typeColor(r.type),
                         modifier    = Modifier.clickable { onResultTap(browseTabForType(r.type), r.id) },

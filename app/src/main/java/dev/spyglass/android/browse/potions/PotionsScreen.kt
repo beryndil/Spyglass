@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,11 +21,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.PotionEntity
 import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 private val POTION_CATEGORIES = listOf("all", "positive", "negative", "special")
 
@@ -90,6 +93,20 @@ class PotionsViewModel(app: Application) : AndroidViewModel(app) {
     fun toggleExpanded(id: String) {
         _expandedIds.value = _expandedIds.value.let { if (id in it) it - id else it + id }
     }
+
+    val favoriteIds: StateFlow<Set<String>> = repo.allFavoriteIds()
+        .map { it.toSet() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
+
+    val favoritePotions: StateFlow<List<FavoriteEntity>> = repo.favoritesByType("potion")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun toggleFavorite(id: String, displayName: String) {
+        viewModelScope.launch {
+            if (id in favoriteIds.value) repo.deleteFavorite(id)
+            else repo.insertFavorite(FavoriteEntity(id = id, type = "potion", displayName = displayName))
+        }
+    }
 }
 
 /** Parse an ingredient path like "nether_wart → sugar → redstone" into clickable tokens. */
@@ -112,6 +129,8 @@ fun PotionsScreen(
     val category   by vm.category.collectAsState()
     val potions    by vm.potions.collectAsState()
     val expandedIds by vm.expandedIds.collectAsState()
+    val favoriteIds by vm.favoriteIds.collectAsState()
+    val favoritePotions by vm.favoritePotions.collectAsState()
 
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
@@ -154,6 +173,25 @@ fun PotionsScreen(
                     stat = "${potions.size} potions",
                 )
             }
+            if (favoritePotions.isNotEmpty()) {
+                item(key = "fav_header") {
+                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = Gold,
+                        modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
+                }
+                items(favoritePotions, key = { "fav_${it.id}" }) { fav ->
+                    BrowseListItem(
+                        headline    = fav.displayName,
+                        supporting  = "",
+                        supportingMaxLines = 1,
+                        leadingIcon = PotionTextures.get(fav.id) ?: PixelIcons.Potion,
+                        trailing    = {
+                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = Gold, modifier = Modifier.size(20.dp))
+                            }
+                        },
+                    )
+                }
+            }
             items(potions, key = { it.id }) { p ->
                 val catColor = when (p.category) {
                     "negative" -> NetherRed
@@ -164,19 +202,31 @@ fun PotionsScreen(
                 Column {
                     BrowseListItem(
                         headline    = p.name,
-                        supporting  = p.id,
+                        supporting  = "",
                         supportingMaxLines = 1,
                         leadingIcon = PotionTextures.get(p.id) ?: PixelIcons.Potion,
                         modifier    = Modifier.clickable { vm.toggleExpanded(p.id) },
                         trailing    = {
-                            Column(horizontalAlignment = Alignment.End) {
-                                if (p.durationSeconds > 0) {
-                                    val mins = p.durationSeconds / 60
-                                    val secs = p.durationSeconds % 60
-                                    Text("${mins}:%02d".format(secs), style = MaterialTheme.typography.bodySmall, color = Gold)
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Column(horizontalAlignment = Alignment.End) {
+                                    if (p.durationSeconds > 0) {
+                                        val mins = p.durationSeconds / 60
+                                        val secs = p.durationSeconds % 60
+                                        Text("${mins}:%02d".format(secs), style = MaterialTheme.typography.bodySmall, color = Gold)
+                                    }
+                                    Spacer(Modifier.height(2.dp))
+                                    CategoryBadge(label = p.category, color = catColor)
                                 }
-                                Spacer(Modifier.height(2.dp))
-                                CategoryBadge(label = p.category, color = catColor)
+                                Spacer(Modifier.width(4.dp))
+                                val isFav = p.id in favoriteIds
+                                IconButton(onClick = { vm.toggleFavorite(p.id, p.name) }, modifier = Modifier.size(32.dp)) {
+                                    Icon(
+                                        Icons.Filled.Star,
+                                        contentDescription = "Favorite",
+                                        tint = if (isFav) Gold else Stone700,
+                                        modifier = Modifier.size(20.dp),
+                                    )
+                                }
                             }
                         },
                     )
@@ -204,6 +254,8 @@ fun PotionsScreen(
 @Composable
 private fun PotionDetailCard(potion: PotionEntity, onItemTap: (String) -> Unit) {
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
+        MinecraftIdRow(potion.id)
+
         // Effect
         if (potion.effect.isNotBlank() && potion.effect != "none") {
             Text(potion.effect, style = MaterialTheme.typography.bodyMedium, color = Stone300)

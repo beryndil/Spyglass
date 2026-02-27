@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,10 +27,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.BiomeResourceMap
 import dev.spyglass.android.data.db.entities.BiomeEntity
+import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 // Mob IDs known to exist in the mobs table
 private val KNOWN_MOB_IDS = setOf(
@@ -74,6 +77,20 @@ class BiomesViewModel(app: Application) : AndroidViewModel(app) {
     fun expandBiome(id: String) {
         _expandedIds.value = _expandedIds.value + id
     }
+
+    val favoriteIds: StateFlow<Set<String>> = repo.allFavoriteIds()
+        .map { it.toSet() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
+
+    val favoriteBiomes: StateFlow<List<FavoriteEntity>> = repo.favoritesByType("biome")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun toggleFavorite(id: String, displayName: String) {
+        viewModelScope.launch {
+            if (id in favoriteIds.value) repo.deleteFavorite(id)
+            else repo.insertFavorite(FavoriteEntity(id = id, type = "biome", displayName = displayName))
+        }
+    }
 }
 
 private fun parseMobs(mobsJson: String): List<String> {
@@ -106,11 +123,13 @@ fun BiomesScreen(
     onItemTap: (String) -> Unit = {},
     vm: BiomesViewModel = viewModel(),
 ) {
-    val query       by vm.query.collectAsState()
-    val category    by vm.category.collectAsState()
-    val biomes      by vm.biomes.collectAsState()
-    val expandedIds by vm.expandedIds.collectAsState()
-    val listState   = rememberLazyListState()
+    val query        by vm.query.collectAsState()
+    val category     by vm.category.collectAsState()
+    val biomes       by vm.biomes.collectAsState()
+    val expandedIds  by vm.expandedIds.collectAsState()
+    val favoriteIds  by vm.favoriteIds.collectAsState()
+    val favoriteBiomes by vm.favoriteBiomes.collectAsState()
+    val listState    = rememberLazyListState()
 
     // Auto-expand and scroll to target biome from cross-reference
     LaunchedEffect(targetBiomeId, biomes) {
@@ -163,10 +182,35 @@ fun BiomesScreen(
                     stat = "${biomes.size} biomes",
                 )
             }
+            if (favoriteBiomes.isNotEmpty()) {
+                item(key = "fav_header") {
+                    SectionHeader("Favorites", icon = PixelIcons.Bookmark)
+                }
+                items(favoriteBiomes, key = { "fav_${it.id}" }) { fav ->
+                    val isFav = fav.id in favoriteIds
+                    BrowseListItem(
+                        headline = fav.displayName,
+                        supporting = "",
+                        leadingIcon = BiomeTextures.get(fav.id) ?: PixelIcons.Biome,
+                        modifier = Modifier.clickable { vm.toggleExpanded(fav.id) },
+                        trailing = {
+                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                                Icon(
+                                    Icons.Filled.Star,
+                                    contentDescription = "Favorite",
+                                    tint = if (isFav) Gold else Stone700,
+                                    modifier = Modifier.size(20.dp),
+                                )
+                            }
+                        },
+                    )
+                }
+                item(key = "fav_divider") { SpyglassDivider() }
+            }
             items(biomes, key = { it.id }) { b ->
                 val isExpanded = b.id in expandedIds
                 Column {
-                    BiomeListItem(b, onClick = { vm.toggleExpanded(b.id) })
+                    BiomeListItem(b, isFavorite = b.id in favoriteIds, onToggleFavorite = { vm.toggleFavorite(b.id, b.name) }, onClick = { vm.toggleExpanded(b.id) })
                     AnimatedVisibility(
                         visible = isExpanded,
                         enter = expandVertically(),
@@ -188,19 +232,30 @@ fun BiomesScreen(
 }
 
 @Composable
-private fun BiomeListItem(b: BiomeEntity, onClick: () -> Unit) {
+private fun BiomeListItem(b: BiomeEntity, isFavorite: Boolean, onToggleFavorite: () -> Unit, onClick: () -> Unit) {
     val biomeColor = parseBiomeColor(b.color)
 
     BrowseListItem(
         headline    = b.name,
-        supporting  = b.id,
+        supporting  = "",
         leadingIcon = BiomeTextures.get(b.id) ?: PixelIcons.Biome,
         modifier    = Modifier.clickable { onClick() },
         trailing    = {
-            Column(horizontalAlignment = Alignment.End) {
-                CategoryBadge(label = b.category.ifEmpty { "unknown" }, color = Emerald)
-                Spacer(Modifier.height(2.dp))
-                Text("${b.temperature}\u00B0  ${b.precipitation}", style = MaterialTheme.typography.bodySmall, color = Stone500)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(horizontalAlignment = Alignment.End) {
+                    CategoryBadge(label = b.category.ifEmpty { "unknown" }, color = Emerald)
+                    Spacer(Modifier.height(2.dp))
+                    Text("${b.temperature}\u00B0  ${b.precipitation}", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                }
+                Spacer(Modifier.width(6.dp))
+                IconButton(onClick = onToggleFavorite, modifier = Modifier.size(32.dp)) {
+                    Icon(
+                        Icons.Filled.Star,
+                        contentDescription = "Favorite",
+                        tint = if (isFavorite) Gold else Stone700,
+                        modifier = Modifier.size(20.dp),
+                    )
+                }
             }
         },
     )
@@ -232,6 +287,8 @@ private fun BiomeDetailCard(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
+        MinecraftIdRow(biome.id)
+
         // Stats
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text("Temperature", style = MaterialTheme.typography.bodyMedium, color = subtextColor)

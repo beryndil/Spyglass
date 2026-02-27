@@ -174,7 +174,7 @@ fun CraftingScreen(
                     val isFav = fav.id in favoriteIds
                     BrowseListItem(
                         headline = fav.displayName,
-                        supporting = fav.id,
+                        supporting = "",
                         leadingIcon = ItemTextures.get(fav.id) ?: PixelIcons.Crafting,
                         modifier = Modifier.clickable { vm.toggleExpanded(fav.id) },
                         trailing = {

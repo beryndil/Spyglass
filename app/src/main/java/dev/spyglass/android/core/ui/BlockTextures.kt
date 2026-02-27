@@ -28,6 +28,8 @@ object BlockTextures {
         "grass_block" to R.drawable.block_grass_block,
         "podzol" to R.drawable.block_podzol,
         "mycelium" to R.drawable.block_mycelium,
+        "brown_mushroom_block" to R.drawable.block_brown_mushroom_block,
+        "red_mushroom_block" to R.drawable.block_red_mushroom_block,
         "clay" to R.drawable.block_clay,
         "terracotta" to R.drawable.block_terracotta,
         "glazed_terracotta" to R.drawable.block_glazed_terracotta,

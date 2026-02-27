@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,11 +21,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.MobEntity
 import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 // Non-biome, non-structure spawn locations shown as plain badges
 private val SPECIAL_LOCATIONS = setOf(
@@ -44,7 +47,11 @@ class MobsViewModel(app: Application) : AndroidViewModel(app) {
     val expandedIds: StateFlow<Set<String>> = _expandedIds.asStateFlow()
 
     val mobs: StateFlow<List<MobEntity>> = combine(_query.debounce(200), _category) { q, cat ->
-        if (cat == "all") repo.searchMobs(q) else repo.mobsByCategory(cat)
+        when (cat) {
+            "all" -> repo.searchMobs(q)
+            "breedable" -> repo.breedableMobs()
+            else -> repo.mobsByCategory(cat)
+        }
     }.flatMapLatest { it }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -55,6 +62,20 @@ class MobsViewModel(app: Application) : AndroidViewModel(app) {
     }
     fun expandMob(id: String) {
         _expandedIds.value = _expandedIds.value + id
+    }
+
+    val favoriteIds: StateFlow<Set<String>> = repo.allFavoriteIds()
+        .map { it.toSet() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
+
+    val favoriteMobs: StateFlow<List<FavoriteEntity>> = repo.favoritesByType("mob")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun toggleFavorite(id: String, displayName: String) {
+        viewModelScope.launch {
+            if (id in favoriteIds.value) repo.deleteFavorite(id)
+            else repo.insertFavorite(FavoriteEntity(id = id, type = "mob", displayName = displayName))
+        }
     }
 }
 
@@ -97,13 +118,15 @@ fun MobsScreen(
     onItemTap: (String) -> Unit = {},
     vm: MobsViewModel = viewModel(),
 ) {
-    val query      by vm.query.collectAsState()
-    val category   by vm.category.collectAsState()
-    val mobs       by vm.mobs.collectAsState()
+    val query       by vm.query.collectAsState()
+    val category    by vm.category.collectAsState()
+    val mobs        by vm.mobs.collectAsState()
     val expandedIds by vm.expandedIds.collectAsState()
-    val listState  = rememberLazyListState()
+    val favoriteIds by vm.favoriteIds.collectAsState()
+    val favoriteMobs by vm.favoriteMobs.collectAsState()
+    val listState   = rememberLazyListState()
 
-    val categories = listOf("all", "hostile", "neutral", "passive", "boss")
+    val categories = listOf("all", "hostile", "neutral", "passive", "boss", "breedable")
 
     // Auto-expand and scroll to target mob from cross-reference
     LaunchedEffect(targetMobId, mobs) {
@@ -123,9 +146,12 @@ fun MobsScreen(
             colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
-        Row(modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            categories.forEach { c ->
+        androidx.compose.foundation.lazy.LazyRow(
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            modifier = Modifier.padding(bottom = 8.dp),
+        ) {
+            items(categories) { c ->
                 FilterChip(selected = category == c, onClick = { vm.setCategory(c) },
                     label = { Text(c.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) })
             }
@@ -143,6 +169,31 @@ fun MobsScreen(
                     stat = "${mobs.size} mobs",
                 )
             }
+            if (favoriteMobs.isNotEmpty()) {
+                item(key = "fav_header") {
+                    SectionHeader("Favorites", icon = PixelIcons.Bookmark)
+                }
+                items(favoriteMobs, key = { "fav_${it.id}" }) { fav ->
+                    val isFav = fav.id in favoriteIds
+                    BrowseListItem(
+                        headline = fav.displayName,
+                        supporting = "",
+                        leadingIcon = MobTextures.get(fav.id) ?: PixelIcons.Mob,
+                        modifier = Modifier.clickable { vm.toggleExpanded(fav.id) },
+                        trailing = {
+                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                                Icon(
+                                    Icons.Filled.Star,
+                                    contentDescription = "Favorite",
+                                    tint = if (isFav) Gold else Stone700,
+                                    modifier = Modifier.size(20.dp),
+                                )
+                            }
+                        },
+                    )
+                }
+                item(key = "fav_divider") { SpyglassDivider() }
+            }
             items(mobs, key = { it.id }) { m ->
                 val isExpanded = m.id in expandedIds
                 val categoryColor = when (m.category) {
@@ -155,14 +206,26 @@ fun MobsScreen(
                 Column {
                     BrowseListItem(
                         headline    = m.name,
-                        supporting  = m.id,
+                        supporting  = "",
                         leadingIcon = MobTextures.get(m.id) ?: PixelIcons.Mob,
                         modifier    = Modifier.clickable { vm.toggleExpanded(m.id) },
                         trailing    = {
-                            Column(horizontalAlignment = Alignment.End) {
-                                CategoryBadge(label = m.category, color = categoryColor)
-                                Spacer(Modifier.height(2.dp))
-                                Text("HP ${m.health}", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Column(horizontalAlignment = Alignment.End) {
+                                    CategoryBadge(label = m.category, color = categoryColor)
+                                    Spacer(Modifier.height(2.dp))
+                                    Text("HP ${m.health}", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                                }
+                                Spacer(Modifier.width(6.dp))
+                                val isFav = m.id in favoriteIds
+                                IconButton(onClick = { vm.toggleFavorite(m.id, m.name) }, modifier = Modifier.size(32.dp)) {
+                                    Icon(
+                                        Icons.Filled.Star,
+                                        contentDescription = "Favorite",
+                                        tint = if (isFav) Gold else Stone700,
+                                        modifier = Modifier.size(20.dp),
+                                    )
+                                }
                             }
                         },
                     )
@@ -193,6 +256,8 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
     val biomes = parseBiomes(mob.spawnBiomesJson)
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
+        MinecraftIdRow(mob.id)
+
         // Description
         if (mob.description.isNotEmpty()) {
             Text(mob.description, style = MaterialTheme.typography.bodyMedium, color = Stone300)

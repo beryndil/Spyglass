@@ -1,6 +1,8 @@
 package dev.spyglass.android.calculators.storage
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -15,7 +17,10 @@ fun StorageScreen(vm: StorageViewModel = viewModel()) {
     var expanded by remember { mutableStateOf(false) }
     val selectedItem = vm.items[s.selectedItemIndex]
 
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
         SectionHeader("Storage Calculator", icon = PixelIcons.Storage)
 
         InputCard {

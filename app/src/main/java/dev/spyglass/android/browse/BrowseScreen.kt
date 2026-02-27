@@ -6,6 +6,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import dev.spyglass.android.settings.PreferenceKeys
+import dev.spyglass.android.settings.dataStore
 import dev.spyglass.android.browse.biomes.BiomesScreen
 import dev.spyglass.android.browse.blocks.BlocksScreen
 import dev.spyglass.android.browse.crafting.CraftingScreen
@@ -36,7 +38,22 @@ private val BROWSE_TABS = listOf(
 
 @Composable
 fun BrowseScreen(initialTarget: BrowseTarget? = null) {
+    val context = LocalContext.current
+    val defaultTab by remember {
+        context.dataStore.data.map { it[PreferenceKeys.DEFAULT_BROWSE_TAB] ?: 0 }
+    }.collectAsState(initial = 0)
+
     var tab by remember { mutableIntStateOf(initialTarget?.tab ?: 0) }
+
+    // Apply default from prefs only once on first composition when no explicit initialTarget
+    var defaultApplied by remember { mutableStateOf(false) }
+    LaunchedEffect(defaultTab) {
+        if (!defaultApplied && initialTarget == null) {
+            tab = defaultTab
+            defaultApplied = true
+        }
+    }
+
     var targetMobId by remember { mutableStateOf<String?>(null) }
     var targetBiomeId by remember { mutableStateOf<String?>(null) }
     var targetBlockId by remember { mutableStateOf<String?>(null) }
@@ -64,7 +81,6 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
     }
 
     // Collect block IDs and item IDs so we can route taps to the correct tab
-    val context = LocalContext.current
     val repo = remember { GameDataRepository.get(context) }
     val blockIdsFlow = remember { repo.searchBlocks("").map { list -> list.map { it.id }.toSet() } }
     val blockIds by blockIdsFlow.collectAsState(initial = emptySet())

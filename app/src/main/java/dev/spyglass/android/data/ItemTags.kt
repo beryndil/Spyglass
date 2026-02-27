@@ -49,7 +49,33 @@ object ItemTags {
         result
     }
 
+    /** Variant prefixes for each tag — if a recipe output starts with one of these,
+     *  the ingredient is variant-specific, not tag-based. */
+    private val tagVariants: Map<String, Set<String>> = mapOf(
+        "#planks" to setOf("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"),
+        "#logs" to setOf("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry"),
+        "#wooden_slabs" to setOf("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"),
+        "#wooden_stairs" to setOf("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"),
+        "#wooden_fences" to setOf("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"),
+        "#wooden_doors" to setOf("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"),
+        "#wool" to setOf("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black"),
+    )
+
     fun tagForItem(itemId: String): String? = itemToTag[itemId]
+
+    /**
+     * Returns the tag for an ingredient ONLY if the recipe is truly tag-based.
+     * If the recipe output is variant-specific (e.g. acacia_door → acacia_planks),
+     * returns null so the specific item is shown instead of a rotating tag icon.
+     */
+    fun tagForIngredient(ingredientId: String, outputItem: String): String? {
+        val tag = itemToTag[ingredientId] ?: return null
+        val variants = tagVariants[tag] ?: return tag
+        for (variant in variants) {
+            if (outputItem.startsWith("${variant}_")) return null
+        }
+        return tag
+    }
 
     fun membersOfTag(tag: String): List<String> = tagMembers[tag] ?: emptyList()
 }

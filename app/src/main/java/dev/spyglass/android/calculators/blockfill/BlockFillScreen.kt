@@ -1,6 +1,8 @@
 package dev.spyglass.android.calculators.blockfill
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -13,7 +15,10 @@ import dev.spyglass.android.core.ui.*
 fun BlockFillScreen(vm: BlockFillViewModel = viewModel()) {
     val s by vm.state.collectAsState()
 
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
 
         SectionHeader("Block Fill Calculator", icon = PixelIcons.Fill)
 

@@ -225,7 +225,7 @@ fun ItemsScreen(
                     val isFav = fav.id in favoriteIds
                     BrowseListItem(
                         headline = fav.displayName,
-                        supporting = fav.id,
+                        supporting = "",
                         leadingIcon = ItemTextures.get(fav.id) ?: PixelIcons.Item,
                         modifier = Modifier.clickable { vm.toggleExpanded(fav.id) },
                         trailing = {
@@ -248,7 +248,7 @@ fun ItemsScreen(
                     val texture = ItemTextures.get(item.id)
                     BrowseListItem(
                         headline    = item.name,
-                        supporting  = item.id,
+                        supporting  = "",
                         leadingIcon = texture ?: PixelIcons.Item,
                         modifier    = Modifier.clickable { vm.toggleExpanded(item.id) },
                         trailing    = {
@@ -332,6 +332,9 @@ private fun ItemDetailCard(
     val recipesUsing by vm.recipesUsingItem(item.id).collectAsState(initial = emptyList())
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
+        // 0. Minecraft ID
+        MinecraftIdRow(item.id)
+
         // 1. Description
         if (item.description.isNotEmpty()) {
             Text(item.description, style = MaterialTheme.typography.bodyMedium, color = Stone300)

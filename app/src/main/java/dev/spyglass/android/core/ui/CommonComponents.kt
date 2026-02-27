@@ -7,10 +7,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import dev.spyglass.android.data.ItemTags
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -284,6 +288,48 @@ fun CategoryBadge(label: String, color: Color, modifier: Modifier = Modifier) {
     )
 }
 
+// ── Minecraft ID row — tap to copy ──────────────────────────────────────────
+
+@Composable
+fun MinecraftIdRow(id: String) {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val fullId = if (id.contains(':')) id else "minecraft:$id"
+    var copied by remember { mutableStateOf(false) }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                clipboard.setPrimaryClip(android.content.ClipData.newPlainText("Minecraft ID", fullId))
+                copied = true
+            }
+            .background(Stone700.copy(alpha = 0.3f), RoundedCornerShape(6.dp))
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Text(
+            fullId,
+            style = MaterialTheme.typography.bodySmall,
+            color = Stone300,
+            fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
+        )
+        Text(
+            if (copied) "Copied!" else "Tap to copy",
+            style = MaterialTheme.typography.labelSmall,
+            color = if (copied) Gold else Stone500,
+        )
+    }
+
+    LaunchedEffect(copied) {
+        if (copied) {
+            kotlinx.coroutines.delay(1500)
+            copied = false
+        }
+    }
+}
+
 // ── Tab row — reusable icon+text tabs for Calculators and Browse ────────────
 
 // ── Texture-based crafting grid ──────────────────────────────────────────────
@@ -340,11 +386,13 @@ fun TextureCraftingGrid(
                     val texture = if (!cell.isNullOrBlank()) ItemTextures.get(cell) else null
 
                     if (!cell.isNullOrBlank()) {
+                        val tag = ItemTags.tagForIngredient(cell, recipe.outputItem)
                         val tooltipState = remember { TooltipState() }
+                        val displayName = if (tag != null) formatTagName(tag) else formatCellName(cell)
                         TooltipBox(
                             positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
                             tooltip = {
-                                PlainTooltip { Text(formatCellName(cell)) }
+                                PlainTooltip { Text(displayName) }
                             },
                             state = tooltipState,
                             enableUserInput = true,
@@ -357,7 +405,9 @@ fun TextureCraftingGrid(
                                     .border(0.5.dp, Stone700, RoundedCornerShape(2.dp))
                                     .clickable { onItemTap(cell) },
                             ) {
-                                if (texture != null) {
+                                if (tag != null) {
+                                    RotatingTagIcon(tag, modifier = Modifier.size(22.dp))
+                                } else if (texture != null) {
                                     SpyglassIconImage(
                                         texture, contentDescription = cell,
                                         modifier = Modifier.size(22.dp),
@@ -431,3 +481,38 @@ fun SpyglassTabRow(
         }
     }
 }
+
+// ── Rotating tag icon — cycles through all item textures in a tag ────────────
+
+@Composable
+fun RotatingTagIcon(
+    tagId: String,
+    modifier: Modifier = Modifier,
+    intervalMs: Long = 1200,
+) {
+    val members = remember(tagId) { ItemTags.membersOfTag(tagId) }
+    if (members.isEmpty()) return
+
+    var index by remember { mutableIntStateOf(0) }
+    LaunchedEffect(tagId) {
+        while (true) {
+            delay(intervalMs)
+            index = (index + 1) % members.size
+        }
+    }
+
+    Crossfade(
+        targetState = index,
+        animationSpec = tween(400),
+        modifier = modifier,
+        label = "tag_icon",
+    ) { i ->
+        val tex = ItemTextures.get(members[i])
+        if (tex != null) {
+            SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.fillMaxSize())
+        }
+    }
+}
+
+fun formatTagName(tagId: String): String =
+    "Any " + tagId.removePrefix("#").split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }

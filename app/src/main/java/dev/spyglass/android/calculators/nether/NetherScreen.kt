@@ -1,6 +1,8 @@
 package dev.spyglass.android.calculators.nether
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
@@ -16,7 +18,10 @@ fun NetherScreen(vm: NetherViewModel = viewModel()) {
     val s by vm.state.collectAsState()
     var subTab by remember { mutableIntStateOf(0) }
 
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
         SectionHeader("Nether Tools", icon = PixelIcons.Nether)
 
         TabRow(selectedTabIndex = subTab, containerColor = SurfaceMid) {
@@ -54,12 +59,12 @@ private fun ConvertTab(s: NetherState, vm: NetherViewModel) {
             }
         }
 
-        if (s.xOut.isNotEmpty()) {
+        if (s.xOut.isNotEmpty() || s.yOut.isNotEmpty() || s.zOut.isNotEmpty()) {
             ResultCard {
                 val outDim = if (s.dimension == NetherDimension.OVERWORLD) "Nether" else "Overworld"
-                StatRow("$outDim X", s.xOut)
-                StatRow("Y (unchanged)", s.yOut)
-                StatRow("$outDim Z", s.zOut)
+                if (s.xOut.isNotEmpty()) StatRow("$outDim X", s.xOut)
+                if (s.yOut.isNotEmpty()) StatRow("Y (unchanged)", s.yOut)
+                if (s.zOut.isNotEmpty()) StatRow("$outDim Z", s.zOut)
                 if (s.facing.isNotEmpty()) StatRow("Facing", s.facing)
             }
         }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,11 +21,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.StructureEntity
 import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 private fun formatId(id: String): String =
     id.split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
@@ -62,6 +65,20 @@ class StructuresViewModel(app: Application) : AndroidViewModel(app) {
     fun expandStructure(id: String) {
         _expandedIds.value = _expandedIds.value + id
     }
+
+    val favoriteIds: StateFlow<Set<String>> = repo.allFavoriteIds()
+        .map { it.toSet() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
+
+    val favoriteStructures: StateFlow<List<FavoriteEntity>> = repo.favoritesByType("structure")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun toggleFavorite(id: String, displayName: String) {
+        viewModelScope.launch {
+            if (id in favoriteIds.value) repo.deleteFavorite(id)
+            else repo.insertFavorite(FavoriteEntity(id = id, type = "structure", displayName = displayName))
+        }
+    }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -77,6 +94,8 @@ fun StructuresScreen(
     val dimension    by vm.dimension.collectAsState()
     val structures   by vm.structures.collectAsState()
     val expandedIds  by vm.expandedIds.collectAsState()
+    val favoriteIds  by vm.favoriteIds.collectAsState()
+    val favoriteStructures by vm.favoriteStructures.collectAsState()
     val listState    = rememberLazyListState()
 
     val dimensions = listOf("all", "overworld", "nether", "end")
@@ -119,10 +138,35 @@ fun StructuresScreen(
                     stat = "${structures.size} structures",
                 )
             }
+            if (favoriteStructures.isNotEmpty()) {
+                item(key = "fav_header") {
+                    SectionHeader("Favorites", icon = PixelIcons.Bookmark)
+                }
+                items(favoriteStructures, key = { "fav_${it.id}" }) { fav ->
+                    val isFav = fav.id in favoriteIds
+                    BrowseListItem(
+                        headline = fav.displayName,
+                        supporting = "",
+                        leadingIcon = StructureTextures.get(fav.id) ?: PixelIcons.Structure,
+                        modifier = Modifier.clickable { vm.toggleExpanded(fav.id) },
+                        trailing = {
+                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                                Icon(
+                                    Icons.Filled.Star,
+                                    contentDescription = "Favorite",
+                                    tint = if (isFav) Gold else Stone700,
+                                    modifier = Modifier.size(20.dp),
+                                )
+                            }
+                        },
+                    )
+                }
+                item(key = "fav_divider") { SpyglassDivider() }
+            }
             items(structures, key = { it.id }) { s ->
                 val isExpanded = s.id in expandedIds
                 Column {
-                    StructureListItem(s, onClick = { vm.toggleExpanded(s.id) })
+                    StructureListItem(s, isFavorite = s.id in favoriteIds, onToggleFavorite = { vm.toggleFavorite(s.id, s.name) }, onClick = { vm.toggleExpanded(s.id) })
                     AnimatedVisibility(
                         visible = isExpanded,
                         enter = expandVertically(),
@@ -144,7 +188,7 @@ fun StructuresScreen(
 }
 
 @Composable
-private fun StructureListItem(s: StructureEntity, onClick: () -> Unit) {
+private fun StructureListItem(s: StructureEntity, isFavorite: Boolean, onToggleFavorite: () -> Unit, onClick: () -> Unit) {
     val dimensionColor = when (s.dimension) {
         "nether" -> NetherRed
         "end"    -> EnderPurple
@@ -158,15 +202,26 @@ private fun StructureListItem(s: StructureEntity, onClick: () -> Unit) {
 
     BrowseListItem(
         headline    = s.name,
-        supporting  = s.id,
+        supporting  = "",
         leadingIcon = StructureTextures.get(s.id) ?: PixelIcons.Structure,
         modifier    = Modifier.clickable { onClick() },
         trailing    = {
-            Column(horizontalAlignment = Alignment.End) {
-                CategoryBadge(label = s.dimension, color = dimensionColor)
-                if (s.difficulty.isNotEmpty()) {
-                    Spacer(Modifier.height(2.dp))
-                    CategoryBadge(label = s.difficulty, color = difficultyColor)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(horizontalAlignment = Alignment.End) {
+                    CategoryBadge(label = s.dimension, color = dimensionColor)
+                    if (s.difficulty.isNotEmpty()) {
+                        Spacer(Modifier.height(2.dp))
+                        CategoryBadge(label = s.difficulty, color = difficultyColor)
+                    }
+                }
+                Spacer(Modifier.width(6.dp))
+                IconButton(onClick = onToggleFavorite, modifier = Modifier.size(32.dp)) {
+                    Icon(
+                        Icons.Filled.Star,
+                        contentDescription = "Favorite",
+                        tint = if (isFavorite) Gold else Stone700,
+                        modifier = Modifier.size(20.dp),
+                    )
                 }
             }
         },
@@ -187,6 +242,8 @@ private fun StructureDetailCard(
     val uniqueBlocks = parseCommaSeparated(structure.uniqueBlocks)
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
+        MinecraftIdRow(structure.id)
+
         // Description
         if (structure.description.isNotEmpty()) {
             Text(structure.description, style = MaterialTheme.typography.bodyMedium, color = Stone300)

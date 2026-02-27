@@ -57,6 +57,7 @@ object ItemTextures {
         "bucket" to R.drawable.item_bucket,
         "cactus" to R.drawable.item_cactus,
         "cake" to R.drawable.item_cake,
+        "candle" to R.drawable.block_torch,
         "carrot" to R.drawable.item_carrot,
         "carrot_on_a_stick" to R.drawable.item_carrot_on_a_stick,
         "cauldron" to R.drawable.item_cauldron,
@@ -101,6 +102,7 @@ object ItemTextures {
         "crossbow" to R.drawable.item_crossbow,
         "cyan_dye" to R.drawable.item_cyan_dye,
         "dandelion" to R.drawable.item_dandelion,
+        "dead_bush" to R.drawable.item_stick,
         "dark_oak_boat" to R.drawable.item_dark_oak_boat,
         "dark_oak_button" to R.drawable.item_dark_oak_button,
         "dark_oak_fence_gate" to R.drawable.item_dark_oak_fence_gate,
@@ -129,16 +131,20 @@ object ItemTextures {
         "empty_map" to R.drawable.item_map,
         "ender_eye" to R.drawable.item_ender_eye,
         "enchanted_book" to R.drawable.item_enchanted_book,
+        "end_gateway" to R.drawable.block_end_stone,
         "enchanted_golden_apple" to R.drawable.item_enchanted_golden_apple,
         "end_crystal" to R.drawable.item_end_crystal,
         "ender_pearl" to R.drawable.item_ender_pearl,
         "experience_bottle" to R.drawable.item_experience_bottle,
         "feather" to R.drawable.item_feather,
+        "fern" to R.drawable.block_grass_block,
         "fermented_spider_eye" to R.drawable.item_fermented_spider_eye,
         "fire_charge" to R.drawable.item_fire_charge,
         "firework_rocket" to R.drawable.item_firework_rocket,
         "fishing_rod" to R.drawable.item_fishing_rod,
         "flint" to R.drawable.item_flint,
+        "flower_pot" to R.drawable.item_brick,
+        "frogspawn" to R.drawable.item_egg,
         "flint_and_steel" to R.drawable.item_flint_and_steel,
         "ghast_tear" to R.drawable.item_ghast_tear,
         "glass_bottle" to R.drawable.item_glass_bottle,
@@ -191,6 +197,8 @@ object ItemTextures {
         "jungle_sign" to R.drawable.item_jungle_sign,
         "kelp" to R.drawable.item_kelp,
         "ladder" to R.drawable.item_ladder,
+        "lapis_block" to R.drawable.item_lapis_lazuli,
+        "large_fern" to R.drawable.block_grass_block,
         "lava_bucket" to R.drawable.item_lava_bucket,
         "lapis_lazuli" to R.drawable.item_lapis_lazuli,
         "lead" to R.drawable.item_lead,
@@ -224,11 +232,16 @@ object ItemTextures {
         "melon_slice" to R.drawable.item_melon_slice,
         "milk_bucket" to R.drawable.item_milk_bucket,
         "minecart" to R.drawable.item_minecart,
+        "brown_mushroom" to R.drawable.item_brown_mushroom,
+        "red_mushroom" to R.drawable.item_red_mushroom,
+        "mushroom_stem" to R.drawable.block_birch_log,
         "mushroom_stew" to R.drawable.item_mushroom_stew,
         "music_disc_13" to R.drawable.item_music_disc_13,
         "name_tag" to R.drawable.item_name_tag,
         "nautilus_shell" to R.drawable.item_nautilus_shell,
         "nether_brick" to R.drawable.item_nether_brick,
+        "nether_sprouts" to R.drawable.block_warped_stem,
+        "nether_wart_block" to R.drawable.block_netherrack,
         "nether_star" to R.drawable.item_nether_star,
         "netherite_axe" to R.drawable.item_netherite_axe,
         "netherite_boots" to R.drawable.item_netherite_boots,
@@ -252,6 +265,7 @@ object ItemTextures {
         "oak_sign" to R.drawable.item_oak_sign,
         "ocean_map" to R.drawable.item_map,
         "painting" to R.drawable.item_painting,
+        "poisonous_potato" to R.drawable.item_potato,
         "paper" to R.drawable.item_paper,
         "phantom_membrane" to R.drawable.item_phantom_membrane,
         "pink_dye" to R.drawable.item_pink_dye,
@@ -289,7 +303,9 @@ object ItemTextures {
         "rotten_flesh" to R.drawable.item_rotten_flesh,
         "saddle" to R.drawable.item_saddle,
         "scute" to R.drawable.item_scute,
+        "seagrass" to R.drawable.block_prismarine,
         "shears" to R.drawable.item_shears,
+        "short_grass" to R.drawable.block_grass_block,
         "shield" to R.drawable.item_shield,
         "shulker_shell" to R.drawable.item_shulker_shell,
         "slime_ball" to R.drawable.item_slime_ball,
@@ -315,6 +331,10 @@ object ItemTextures {
         "string" to R.drawable.item_string,
         "suspicious_stew" to R.drawable.item_suspicious_stew,
         "sweet_berries" to R.drawable.item_sweet_berries,
+        "sweet_berry_bush" to R.drawable.item_sweet_berries,
+        "tall_grass" to R.drawable.block_grass_block,
+        "turtle_egg" to R.drawable.item_egg,
+        "twisting_vines" to R.drawable.block_warped_stem,
         "tipped_arrow" to R.drawable.item_arrow,
         "tipped_arrow_poison" to R.drawable.item_tipped_arrow_poison,
         "tipped_arrow_slowness" to R.drawable.item_tipped_arrow_slowness,
@@ -327,6 +347,7 @@ object ItemTextures {
         "turtle_scute" to R.drawable.item_turtle_scute,
         "sugar" to R.drawable.item_sugar,
         "sugar_cane" to R.drawable.item_sugar_cane,
+        "warped_wart_block" to R.drawable.block_warped_stem,
         "warped_button" to R.drawable.item_warped_button,
         "warped_fence_gate" to R.drawable.item_warped_fence_gate,
         "warped_planks" to R.drawable.item_warped_planks,
@@ -335,6 +356,7 @@ object ItemTextures {
         "warped_slab" to R.drawable.item_warped_slab,
         "warped_stairs" to R.drawable.item_warped_stairs,
         "water_bucket" to R.drawable.item_water_bucket,
+        "weeping_vines" to R.drawable.block_crimson_stem,
         "wheat" to R.drawable.item_wheat,
         "wheat_seeds" to R.drawable.item_wheat_seeds,
         "white_banner" to R.drawable.item_white_wool,
@@ -354,10 +376,221 @@ object ItemTextures {
         "yellow_dye" to R.drawable.item_yellow_dye,
     )
 
-    /** Look up a texture for any item ID. Checks BlockTextures first, then item textures. */
+    // ── Smart variant resolution constants ───────────────────────────────────
+
+    private val COLORS = listOf(
+        "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink",
+        "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black",
+    )
+
+    private val WOOD_TYPES = listOf(
+        "oak", "spruce", "birch", "jungle", "acacia", "dark_oak",
+        "mangrove", "cherry", "bamboo", "pale_oak",
+    )
+
+    private val NETHER_WOOD = listOf("crimson", "warped")
+
+    private val resolveCache = mutableMapOf<String, SpyglassIcon?>()
+
+    /** Look up a texture for any item ID. Checks block textures, item textures, then smart fallback. */
     fun get(itemId: String): SpyglassIcon? {
         BlockTextures.get(itemId)?.let { return it }
-        val resId = items[itemId] ?: return null
-        return SpyglassIcon.Drawable(resId)
+        items[itemId]?.let { return SpyglassIcon.Drawable(it) }
+        return resolveCache.getOrPut(itemId) { resolveVariant(itemId) }
+    }
+
+    /** Check both maps for a derived ID. */
+    private fun lookup(id: String): SpyglassIcon? {
+        BlockTextures.get(id)?.let { return it }
+        items[id]?.let { return SpyglassIcon.Drawable(it) }
+        return null
+    }
+
+    // ── Smart variant resolution ─────────────────────────────────────────────
+
+    private fun resolveVariant(itemId: String): SpyglassIcon? {
+        // Copper oxidation / waxed / cut variants
+        if (itemId.startsWith("waxed_") || itemId.startsWith("exposed_") ||
+            itemId.startsWith("weathered_") || itemId.startsWith("oxidized_") ||
+            itemId.startsWith("cut_copper"))
+            return lookup("copper_block")
+
+        // Infested → normal block
+        if (itemId.startsWith("infested_"))
+            return lookup(itemId.removePrefix("infested_")) ?: lookup("stone")
+
+        // Known color variants (carpet, bed, stained glass, etc.)
+        resolveColorVariant(itemId)?.let { return it }
+
+        // Wood type variants (stairs, slab, sign, hanging_sign, etc.)
+        resolveWoodVariant(itemId)?.let { return it }
+
+        // General material suffix (stairs, slab, wall, fence, etc.)
+        resolveSuffix(itemId)?.let { return it }
+
+        // Prefix variants (cracked, chiseled, smooth)
+        resolvePrefixVariant(itemId)?.let { return it }
+
+        // Deepslate ores
+        if (itemId.startsWith("deepslate_") && itemId.endsWith("_ore"))
+            return lookup("deepslate")
+
+        // Coral → prismarine
+        if (itemId.contains("coral")) return lookup("prismarine")
+
+        // Skulls/heads
+        if (itemId.endsWith("_head") || itemId.endsWith("_skull") ||
+            itemId.endsWith("_wall_head") || itemId.endsWith("_wall_skull"))
+            return lookup("soul_sand")
+
+        // Pottery sherds → clay ball
+        if (itemId.endsWith("_pottery_sherd")) return lookup("clay_ball")
+
+        // Music discs → disc_13
+        if (itemId.startsWith("music_disc_")) return lookup("music_disc_13")
+
+        // Smithing templates → netherite upgrade template
+        if (itemId.endsWith("_smithing_template")) return lookup("netherite_upgrade_template")
+
+        // Banner patterns → paper
+        if (itemId.startsWith("banner_pattern_")) return lookup("paper")
+
+        // Mob buckets → bucket
+        if (itemId.startsWith("bucket_of_")) return lookup("bucket")
+
+        // Minecart variants → minecart
+        if (itemId.endsWith("_minecart")) return lookup("minecart")
+
+        // Hanging signs → sign of same wood
+        if (itemId.endsWith("_hanging_sign")) {
+            val wood = itemId.removeSuffix("_hanging_sign")
+            return lookup("${wood}_sign") ?: lookup("oak_sign")
+        }
+
+        // Boat/raft variants
+        if (itemId.endsWith("_boat") || itemId.endsWith("_raft"))
+            return lookup("oak_boat")
+
+        // Potion items
+        if (itemId == "potion" || itemId == "splash_potion" || itemId == "lingering_potion")
+            return SpyglassIcon.Drawable(R.drawable.item_potion)
+
+        // Flowers and small plants → poppy/dandelion fallback
+        if (itemId in setOf(
+                "allium", "azure_bluet", "oxeye_daisy", "cornflower",
+                "lily_of_the_valley", "wither_rose", "torchflower", "pitcher_plant",
+                "spore_blossom", "lilac", "rose_bush", "peony", "sunflower",
+            ))
+            return lookup("poppy") ?: lookup("dandelion")
+
+        return null
+    }
+
+    private fun resolveColorVariant(itemId: String): SpyglassIcon? {
+        for (color in COLORS) {
+            if (!itemId.startsWith("${color}_")) continue
+            return when (itemId.removePrefix("${color}_")) {
+                "carpet", "bed", "banner" -> lookup("${color}_wool") ?: lookup("wool")
+                "stained_glass" -> lookup("glass")
+                "stained_glass_pane" -> lookup("glass_pane")
+                "concrete_powder" -> lookup("${color}_concrete")
+                "glazed_terracotta" -> lookup("terracotta")
+                "terracotta" -> lookup("terracotta")
+                "shulker_box" -> lookup("shulker_box")
+                "candle" -> lookup("torch")
+                "tulip", "orchid" -> lookup("poppy")
+                "petals" -> lookup("poppy")
+                else -> null
+            }
+        }
+        return null
+    }
+
+    private fun resolveWoodVariant(itemId: String): SpyglassIcon? {
+        for (wood in WOOD_TYPES + NETHER_WOOD) {
+            val isNether = wood in NETHER_WOOD
+            val isMatch = itemId.startsWith("${wood}_") || itemId == wood
+            val isStripped = itemId.startsWith("stripped_${wood}_")
+            if (!isMatch && !isStripped) continue
+
+            val planks = lookup("${wood}_planks")
+            val log = if (isNether) lookup("${wood}_stem") else lookup("${wood}_log")
+            val strippedLog = if (isNether) lookup("stripped_${wood}_stem") else lookup("stripped_${wood}_log")
+
+            val result = when {
+                isStripped -> strippedLog ?: log
+                itemId.endsWith("_wood") || itemId.endsWith("_hyphae") -> log
+                itemId.endsWith("_mosaic") -> planks
+                itemId.endsWith("_stairs") -> lookup("${wood}_stairs") ?: planks
+                itemId.endsWith("_slab") -> lookup("${wood}_slab") ?: planks
+                itemId.endsWith("_fence_gate") -> lookup("${wood}_fence_gate") ?: lookup("${wood}_fence") ?: planks
+                itemId.endsWith("_fence") -> lookup("${wood}_fence") ?: planks
+                itemId.endsWith("_door") -> lookup("${wood}_door") ?: planks
+                itemId.endsWith("_trapdoor") -> lookup("${wood}_trapdoor") ?: planks
+                itemId.endsWith("_sign") || itemId.endsWith("_hanging_sign") -> lookup("${wood}_sign") ?: planks
+                itemId.endsWith("_button") -> lookup("${wood}_button") ?: planks
+                itemId.endsWith("_pressure_plate") -> lookup("${wood}_pressure_plate") ?: planks
+                itemId.endsWith("_leaves") -> lookup("${wood}_leaves") ?: lookup("oak_leaves")
+                itemId.endsWith("_sapling") || itemId.endsWith("_propagule") -> lookup("${wood}_leaves") ?: lookup("oak_leaves")
+                itemId.endsWith("_roots") -> log ?: lookup("netherrack")
+                itemId.endsWith("_nylium") -> lookup("netherrack")
+                itemId.endsWith("_log") || itemId.endsWith("_stem") -> log
+                itemId.endsWith("_planks") -> planks
+                else -> null
+            }
+            if (result != null) return result
+        }
+        return null
+    }
+
+    private fun resolveSuffix(itemId: String): SpyglassIcon? {
+        for (suffix in listOf("_stairs", "_slab", "_wall", "_fence", "_fence_gate", "_button", "_pressure_plate")) {
+            if (!itemId.endsWith(suffix)) continue
+            val base = itemId.removeSuffix(suffix)
+
+            lookup(base)?.let { return it }
+            lookup("${base}s")?.let { return it }
+            lookup("${base}_block")?.let { return it }
+
+            // Try parent material (strip last segment)
+            val lastUnderscore = base.lastIndexOf('_')
+            if (lastUnderscore > 0) {
+                val parent = base.substring(0, lastUnderscore)
+                lookup(parent)?.let { return it }
+                lookup("${parent}s")?.let { return it }
+            }
+
+            // Try stripping known prefixes
+            for (prefix in listOf("dark_", "smooth_", "polished_", "mossy_", "chiseled_", "cracked_", "red_")) {
+                if (base.startsWith(prefix)) {
+                    val stripped = base.removePrefix(prefix)
+                    lookup(stripped)?.let { return it }
+                    lookup("${stripped}s")?.let { return it }
+                }
+            }
+
+            return null
+        }
+        return null
+    }
+
+    private fun resolvePrefixVariant(itemId: String): SpyglassIcon? {
+        for (prefix in listOf("cracked_", "chiseled_", "smooth_")) {
+            if (!itemId.startsWith(prefix)) continue
+            val base = itemId.removePrefix(prefix)
+
+            lookup(base)?.let { return it }
+            lookup("${base}s")?.let { return it }
+
+            val lastUnderscore = base.lastIndexOf('_')
+            if (lastUnderscore > 0) {
+                val parent = base.substring(0, lastUnderscore)
+                lookup(parent)?.let { return it }
+                lookup("${parent}s")?.let { return it }
+            }
+
+            return null
+        }
+        return null
     }
 }

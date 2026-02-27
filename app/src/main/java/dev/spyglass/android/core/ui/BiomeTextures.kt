@@ -94,6 +94,16 @@ object BiomeTextures {
         "lush_caves" to R.drawable.block_azalea_leaves,
         "deep_dark" to R.drawable.block_sculk,
         "dripstone_caves" to R.drawable.block_dripstone_block,
+
+        // Windswept
+        "windswept_hills" to R.drawable.block_stone,
+        "windswept_forest" to R.drawable.block_oak_leaves,
+        "windswept_gravelly_hills" to R.drawable.block_gravel,
+
+        // Deep ocean variants
+        "deep_lukewarm_ocean" to R.drawable.block_prismarine,
+        "deep_cold_ocean" to R.drawable.block_blue_ice,
+        "deep_frozen_ocean" to R.drawable.block_packed_ice,
     )
 
     fun get(biomeId: String): SpyglassIcon? {
