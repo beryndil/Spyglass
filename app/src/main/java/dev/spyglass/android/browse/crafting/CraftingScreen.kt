@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -27,11 +28,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.data.ItemTags
+import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.RecipeEntity
 import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.*
 
 private val RECIPE_TYPES = listOf("all", "shaped", "shapeless", "smelting", "smithing")
@@ -58,6 +62,20 @@ class CraftingViewModel(app: Application) : AndroidViewModel(app) {
         .map { list -> list.associateBy { it.outputItem } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
+    val favoriteIds: StateFlow<Set<String>> = repo.allFavoriteIds()
+        .map { it.toSet() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
+
+    val favoriteRecipes: StateFlow<List<FavoriteEntity>> = repo.favoritesByType("recipe")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun toggleFavorite(id: String, displayName: String) {
+        viewModelScope.launch {
+            if (id in favoriteIds.value) repo.deleteFavorite(id)
+            else repo.insertFavorite(FavoriteEntity(id = id, type = "recipe", displayName = displayName))
+        }
+    }
+
     fun setQuery(q: String) { _query.value = q }
     fun setType(t: String) { _type.value = t }
     fun toggleExpanded(id: String) {
@@ -83,13 +101,25 @@ fun CraftingScreen(
     val recipes     by vm.recipes.collectAsState()
     val expandedIds by vm.expandedIds.collectAsState()
     val allRecipes  by vm.allRecipes.collectAsState()
+    val favoriteIds     by vm.favoriteIds.collectAsState()
+    val favoriteRecipes by vm.favoriteRecipes.collectAsState()
     val listState   = rememberLazyListState()
 
+    // Deduplicate recipes that differ only by tag-member variants
+    val dedupedRecipes = remember(recipes) {
+        recipes.distinctBy { r ->
+            val normalized = parseIngredientCounts(r).map { (id, count) ->
+                (ItemTags.tagForIngredient(id, r.outputItem) ?: id) to count
+            }.sortedBy { it.first }
+            Triple(r.outputItem, r.type, normalized)
+        }
+    }
+
     // Auto-expand and scroll to target recipe from cross-reference
-    LaunchedEffect(targetRecipeId, recipes) {
-        if (targetRecipeId != null && recipes.isNotEmpty()) {
+    LaunchedEffect(targetRecipeId, dedupedRecipes) {
+        if (targetRecipeId != null && dedupedRecipes.isNotEmpty()) {
             vm.expandRecipe(targetRecipeId)
-            val idx = recipes.indexOfFirst { it.id == targetRecipeId || it.outputItem == targetRecipeId }
+            val idx = dedupedRecipes.indexOfFirst { it.id == targetRecipeId || it.outputItem == targetRecipeId }
             if (idx >= 0) listState.animateScrollToItem(idx + 1)
         }
     }
@@ -133,10 +163,35 @@ fun CraftingScreen(
                     icon = PixelIcons.Crafting,
                     title = "Recipes",
                     description = "Crafting recipes for every craftable item",
-                    stat = "${recipes.size} recipes",
+                    stat = "${dedupedRecipes.size} recipes",
                 )
             }
-            items(recipes, key = { it.id }) { r ->
+            if (favoriteRecipes.isNotEmpty()) {
+                item(key = "fav_header") {
+                    SectionHeader("Favorites", icon = PixelIcons.Bookmark)
+                }
+                items(favoriteRecipes, key = { "fav_${it.id}" }) { fav ->
+                    val isFav = fav.id in favoriteIds
+                    BrowseListItem(
+                        headline = fav.displayName,
+                        supporting = fav.id,
+                        leadingIcon = ItemTextures.get(fav.id) ?: PixelIcons.Crafting,
+                        modifier = Modifier.clickable { vm.toggleExpanded(fav.id) },
+                        trailing = {
+                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                                Icon(
+                                    Icons.Filled.Star,
+                                    contentDescription = "Favorite",
+                                    tint = if (isFav) Gold else Stone700,
+                                    modifier = Modifier.size(20.dp),
+                                )
+                            }
+                        },
+                    )
+                }
+                item(key = "fav_divider") { SpyglassDivider() }
+            }
+            items(dedupedRecipes, key = { it.id }) { r ->
                 val isExpanded = r.id in expandedIds
                 Column {
                     BrowseListItem(
@@ -145,7 +200,15 @@ fun CraftingScreen(
                         leadingIcon = ItemTextures.get(r.outputItem) ?: PixelIcons.Crafting,
                         modifier    = Modifier.clickable { vm.toggleExpanded(r.id) },
                         trailing    = {
-                            RecipeGridPreview(r)
+                            val isFav = r.id in favoriteIds
+                            IconButton(onClick = { vm.toggleFavorite(r.id, r.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { it.uppercase() }) }, modifier = Modifier.size(32.dp)) {
+                                Icon(
+                                    Icons.Filled.Star,
+                                    contentDescription = "Favorite",
+                                    tint = if (isFav) Gold else Stone700,
+                                    modifier = Modifier.size(20.dp),
+                                )
+                            }
                         },
                     )
                     AnimatedVisibility(
@@ -189,122 +252,3 @@ private fun RecipeDetailContent(
     )
 }
 
-@Composable
-private fun RecipeGridPreview(r: RecipeEntity) {
-    if (r.type.contains("shaped") && r.ingredientsJson.isNotBlank()) {
-        // Parse 2D array for shaped recipes — keep full item IDs for texture lookup
-        val parsed = runCatching {
-            Json.parseToJsonElement(r.ingredientsJson).jsonArray
-        }.getOrElse { return }
-
-        val origRows = parsed.size
-        val origCols = runCatching {
-            val first = parsed.firstOrNull()
-            if (first is JsonArray) first.size else 1
-        }.getOrDefault(1)
-
-        val origCells = parsed.flatMap { row ->
-            if (row is JsonArray) row.map { it.jsonPrimitive.contentOrNull }
-            else listOf(row.jsonPrimitive.contentOrNull)
-        }
-
-        // Always render as 3×3 grid for shaped recipes
-        val cells = (0 until 9).map { idx ->
-            val r2 = idx / 3
-            val c2 = idx % 3
-            if (r2 < origRows && c2 < origCols) origCells.getOrNull(r2 * origCols + c2) else null
-        }
-
-        Column(modifier = Modifier.size(72.dp)) {
-            for (row in 0..2) {
-                Row {
-                    for (col in 0..2) {
-                        val cell = cells.getOrNull(row * 3 + col)
-                        val texture = if (!cell.isNullOrBlank()) ItemTextures.get(cell) else null
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier.size(24.dp)
-                                .background(if (!cell.isNullOrBlank()) SurfaceMid else Background, RoundedCornerShape(2.dp))
-                                .border(0.5.dp, Stone700, RoundedCornerShape(2.dp)),
-                        ) {
-                            if (texture != null) {
-                                SpyglassIconImage(texture, contentDescription = null, modifier = Modifier.size(18.dp))
-                            } else if (!cell.isNullOrBlank()) {
-                                Text(cell.take(2).uppercase(), fontSize = 7.sp, color = Stone300, textAlign = TextAlign.Center)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    } else if (r.type.contains("smelting") && r.ingredientsJson.isNotBlank()) {
-        // Smelting preview: input → output
-        val inputId = runCatching {
-            val arr = Json.parseToJsonElement(r.ingredientsJson).jsonArray
-            arr.firstOrNull()?.jsonPrimitive?.contentOrNull
-        }.getOrNull()
-        val inputTexture = inputId?.let { ItemTextures.get(it) }
-        val outputTexture = ItemTextures.get(r.outputItem)
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.size(24.dp)
-                    .background(SurfaceMid, RoundedCornerShape(2.dp))
-                    .border(0.5.dp, Stone700, RoundedCornerShape(2.dp)),
-            ) {
-                if (inputTexture != null) {
-                    SpyglassIconImage(inputTexture, contentDescription = null, modifier = Modifier.size(18.dp))
-                } else if (inputId != null) {
-                    Text(inputId.take(2).uppercase(), fontSize = 7.sp, color = Stone300, textAlign = TextAlign.Center)
-                }
-            }
-            Text("\u2192", color = Gold, style = MaterialTheme.typography.bodySmall)
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.size(24.dp)
-                    .background(SurfaceMid, RoundedCornerShape(2.dp))
-                    .border(0.5.dp, Stone700, RoundedCornerShape(2.dp)),
-            ) {
-                if (outputTexture != null) {
-                    SpyglassIconImage(outputTexture, contentDescription = null, modifier = Modifier.size(18.dp))
-                } else {
-                    Text(r.outputItem.take(2).uppercase(), fontSize = 7.sp, color = Stone300, textAlign = TextAlign.Center)
-                }
-            }
-        }
-    } else if (r.type.contains("shapeless") && r.ingredientsJson.isNotBlank()) {
-        // Shapeless: show ingredients with textures
-        val cellIds = runCatching {
-            Json.parseToJsonElement(r.ingredientsJson).jsonArray.map {
-                it.jsonPrimitive.contentOrNull
-            }
-        }.getOrElse { emptyList() }
-
-        if (cellIds.isNotEmpty()) {
-            Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-                cellIds.take(4).forEach { cellId ->
-                    val texture = cellId?.let { ItemTextures.get(it) }
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.size(24.dp)
-                            .background(if (cellId != null) SurfaceMid else Background, RoundedCornerShape(2.dp))
-                            .border(0.5.dp, Stone700, RoundedCornerShape(2.dp)),
-                    ) {
-                        if (texture != null) {
-                            SpyglassIconImage(texture, contentDescription = null, modifier = Modifier.size(18.dp))
-                        } else if (cellId != null) {
-                            Text(cellId.take(2).uppercase(), fontSize = 7.sp, color = Stone300, textAlign = TextAlign.Center)
-                        }
-                    }
-                }
-                if (cellIds.size > 4) {
-                    Text("+${cellIds.size - 4}", fontSize = 7.sp, color = Stone500)
-                }
-            }
-        }
-    }
-}
