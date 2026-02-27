@@ -159,6 +159,12 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                 StatRow("Total XP", "${s.totalCost} levels")
             }
         }
+
+        Text(
+            "Pick an item and select the enchantments you want. This tool calculates the cheapest XP order to combine them on an anvil, avoiding the \"Too Expensive\" cap. Tap enchantment levels (I\u2013V) to adjust.",
+            style = MaterialTheme.typography.bodySmall,
+            color = Stone500,
+        )
     }
     SnackbarHost(
         hostState = snackbarHostState,

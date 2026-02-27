@@ -40,6 +40,12 @@ fun SmeltingScreen(vm: SmeltingViewModel = viewModel()) {
                 }
             }
         }
+
+        Text(
+            "Enter how many items you need to smelt and see exactly how much of each fuel type you'll need. Green dots mean high efficiency, gold is mid, gray is low. Type amounts like \"14 stacks\", \"5k\", or \"2 chests\".",
+            style = MaterialTheme.typography.bodySmall,
+            color = Stone500,
+        )
     }
 }
 

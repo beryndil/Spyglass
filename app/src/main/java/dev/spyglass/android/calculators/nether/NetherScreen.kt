@@ -30,6 +30,12 @@ fun NetherScreen(vm: NetherViewModel = viewModel()) {
             1 -> ObsidianTab(s, vm)
             2 -> PortalsTab(s, vm)
         }
+
+        Text(
+            "Convert coordinates between the Overworld and Nether (8:1 ratio), calculate how much obsidian you need for a custom-sized portal, or save portal locations to keep track of your network.",
+            style = MaterialTheme.typography.bodySmall,
+            color = Stone500,
+        )
     }
 }
 

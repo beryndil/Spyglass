@@ -15,6 +15,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.spyglass.android.core.ui.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PriorityHigh
 import java.util.Calendar
 
 // ── Minecraft tips / Did You Know ───────────────────────────────────────────
@@ -111,7 +113,7 @@ fun HomeScreen(
         // ── B. Tip of the Day ──
         ResultCard {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                SpyglassIconImage(PixelIcons.Bookmark, contentDescription = null, tint = Gold, modifier = Modifier.size(18.dp))
+                Icon(Icons.Filled.PriorityHigh, contentDescription = null, tint = Gold, modifier = Modifier.size(20.dp))
                 Spacer(Modifier.width(8.dp))
                 Text("DID YOU KNOW?", style = MaterialTheme.typography.labelSmall, color = Gold)
             }
@@ -127,14 +129,14 @@ fun HomeScreen(
         SectionHeader("Browse", icon = PixelIcons.Browse)
         QuickLinkGrid(BROWSE_LINKS) { index -> onBrowseTab(index) }
 
-        // ── D. Quick Access — Calculators ──
-        SectionHeader("Calculators", icon = PixelIcons.Calculator)
+        // ── D. Quick Access — Tools ──
+        SectionHeader("Tools", icon = SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.item_diamond_pickaxe))
         QuickLinkGrid(CALC_LINKS) { index -> onCalcTab(index) }
 
         // ── E. What's New ──
         SectionHeader("What's New")
         ResultCard {
-            WhatsNewItem("260+ items", "Full item database with categories, durability, and recipes")
+            WhatsNewItem("598 blocks & 352 items", "Full database with categories, durability, and recipes")
             SpyglassDivider()
             WhatsNewItem("Enchant optimizer", "Calculate the cheapest XP order for combining books on the anvil")
             SpyglassDivider()

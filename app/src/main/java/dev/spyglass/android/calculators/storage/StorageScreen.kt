@@ -64,5 +64,11 @@ fun StorageScreen(vm: StorageViewModel = viewModel()) {
                 }
             }
         }
+
+        Text(
+            "Figure out how many chests and shulker boxes you need for a given quantity of items. Pick an item from the dropdown to also see block compression (e.g. how many iron blocks you can make from your iron ingots).",
+            style = MaterialTheme.typography.bodySmall,
+            color = Stone500,
+        )
     }
 }

@@ -66,6 +66,12 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
             val layer = s.layers[s.currentLayer] ?: emptySet()
             LayerGrid(blocks = layer)
         }
+
+        Text(
+            "Build perfect spheres, cylinders, cones, and tori in Minecraft. Set a radius, then use the Y-layer slider to see exactly which blocks to place on each layer. Great for domes, towers, and circular builds.",
+            style = MaterialTheme.typography.bodySmall,
+            color = Stone500,
+        )
     }
 }
 

@@ -53,5 +53,11 @@ fun BlockFillScreen(vm: BlockFillViewModel = viewModel()) {
                 StatRow("Shulker boxes",     "${"%,d".format(r.shulker)} + ${r.shulkerRem} left")
             }
         }
+
+        Text(
+            "Enter the width, length, and height of an area to calculate how many blocks you need to fill it. Toggle between blocks and chunks for large builds. Results show storage needed in stacks, chests, and shulker boxes.",
+            style = MaterialTheme.typography.bodySmall,
+            color = Stone500,
+        )
     }
 }

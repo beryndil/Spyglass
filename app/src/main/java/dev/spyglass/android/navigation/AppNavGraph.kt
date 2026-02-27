@@ -25,9 +25,9 @@ import dev.spyglass.android.home.HomeScreen
 import dev.spyglass.android.settings.SettingsScreen
 
 sealed class TopDest(val route: String, val label: String, val icon: SpyglassIcon) {
-    data object Home        : TopDest("home",        "Home",        PixelIcons.Bookmark)
+    data object Home        : TopDest("home",        "Home",        SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.item_compass))
     data object Browse      : TopDest("browse",      "Browse",      PixelIcons.Browse)
-    data object Calculators : TopDest("calculators", "Calculators", PixelIcons.Calculator)
+    data object Calculators : TopDest("calculators", "Tools", SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.item_diamond_pickaxe))
     data object Search      : TopDest("search",      "Search",      PixelIcons.Search)
 }
 
@@ -193,7 +193,7 @@ fun BottomNavBar(navController: NavHostController) {
                         restoreState    = true
                     }
                 },
-                icon  = { SpyglassIconImage(dest.icon, contentDescription = dest.label) },
+                icon  = { SpyglassIconImage(dest.icon, contentDescription = dest.label, modifier = Modifier.size(24.dp)) },
                 label = { Text(dest.label) },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor   = Gold,
