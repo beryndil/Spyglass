@@ -377,5 +377,6 @@
   {"id":"sponge_from_wet","outputItem":"sponge","outputCount":1,"type":"smelting","ingredientsJson":"[\"wet_sponge\"]"},
   {"id":"nether_brick_from_netherrack","outputItem":"nether_brick","outputCount":1,"type":"smelting","ingredientsJson":"[\"netherrack\"]"},
   {"id":"glass_from_red_sand","outputItem":"glass","outputCount":1,"type":"smelting","ingredientsJson":"[\"red_sand\"]"},
-  {"id":"deepslate_from_cobbled","outputItem":"deepslate","outputCount":1,"type":"smelting","ingredientsJson":"[\"cobbled_deepslate\"]"}
+  {"id":"deepslate_from_cobbled","outputItem":"deepslate","outputCount":1,"type":"smelting","ingredientsJson":"[\"cobbled_deepslate\"]"},
+  {"id":"wolf_armor","outputItem":"wolf_armor","outputCount":1,"type":"crafting_shaped","ingredientsJson":"[[\"armadillo_scute\",\"\",\"armadillo_scute\"],[\"armadillo_scute\",\"armadillo_scute\",\"armadillo_scute\"],[\"armadillo_scute\",\"\",\"armadillo_scute\"]]"}
 ]
