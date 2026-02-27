@@ -262,5 +262,9 @@
   {"id":"brown_wool","name":"Brown Wool","hardness":0.8,"toolRequired":"shears","drops":"brown_wool","stackSize":64,"isFlammable":true,"category":"building"},
   {"id":"green_wool","name":"Green Wool","hardness":0.8,"toolRequired":"shears","drops":"green_wool","stackSize":64,"isFlammable":true,"category":"building"},
   {"id":"red_wool","name":"Red Wool","hardness":0.8,"toolRequired":"shears","drops":"red_wool","stackSize":64,"isFlammable":true,"category":"building"},
-  {"id":"black_wool","name":"Black Wool","hardness":0.8,"toolRequired":"shears","drops":"black_wool","stackSize":64,"isFlammable":true,"category":"building"}
+  {"id":"black_wool","name":"Black Wool","hardness":0.8,"toolRequired":"shears","drops":"black_wool","stackSize":64,"isFlammable":true,"category":"building"},
+  {"id":"pale_oak_log","name":"Pale Oak Log","hardness":2.0,"toolRequired":"axe","drops":"pale_oak_log","stackSize":64,"isFlammable":true,"category":"building"},
+  {"id":"creaking_heart","name":"Creaking Heart","hardness":1.5,"toolRequired":"axe","drops":"creaking_heart","stackSize":64,"isFlammable":false,"category":"natural"},
+  {"id":"stone_bricks","name":"Stone Bricks","hardness":1.5,"toolRequired":"pickaxe","drops":"stone_bricks","stackSize":64,"isFlammable":false,"category":"building"},
+  {"id":"smooth_stone","name":"Smooth Stone","hardness":2.0,"toolRequired":"pickaxe","drops":"smooth_stone","stackSize":64,"isFlammable":false,"category":"building"}
 ]

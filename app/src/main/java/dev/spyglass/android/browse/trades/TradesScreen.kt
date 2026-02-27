@@ -128,10 +128,20 @@ class TradesViewModel(app: Application) : AndroidViewModel(app) {
 // ── Screen ──────────────────────────────────────────────────────────────────
 
 @Composable
-fun TradesScreen(vm: TradesViewModel = viewModel()) {
+fun TradesScreen(
+    targetProfession: String? = null,
+    vm: TradesViewModel = viewModel(),
+) {
     val query      by vm.query.collectAsState()
     val profession by vm.profession.collectAsState()
     val trades     by vm.trades.collectAsState()
+
+    // Auto-select profession when navigated from a job block
+    LaunchedEffect(targetProfession) {
+        if (targetProfession != null) {
+            vm.setProfession(targetProfession)
+        }
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(

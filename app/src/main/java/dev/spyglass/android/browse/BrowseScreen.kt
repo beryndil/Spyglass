@@ -43,6 +43,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
     var targetRecipeId by remember { mutableStateOf<String?>(null) }
     var targetStructureId by remember { mutableStateOf<String?>(null) }
     var targetItemId by remember { mutableStateOf<String?>(null) }
+    var targetProfession by remember { mutableStateOf<String?>(null) }
 
     // Handle incoming navigation from Search
     LaunchedEffect(initialTarget) {
@@ -50,6 +51,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
             tab = initialTarget.tab
             targetMobId = null; targetBiomeId = null; targetBlockId = null
             targetRecipeId = null; targetStructureId = null; targetItemId = null
+            targetProfession = null
             when (initialTarget.tab) {
                 0 -> targetBlockId = initialTarget.id
                 1 -> targetRecipeId = initialTarget.id
@@ -74,6 +76,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
         targetMobId = null
         targetBiomeId = null
         targetStructureId = null
+        targetProfession = null
         if (itemId in blockIds) {
             targetBlockId = itemId
             targetRecipeId = null
@@ -99,6 +102,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
         targetRecipeId = null
         targetStructureId = null
         targetItemId = null
+        targetProfession = null
         tab = 2  // Navigate to Mobs tab
     }
 
@@ -109,6 +113,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
         targetMobId = null
         targetStructureId = null
         targetItemId = null
+        targetProfession = null
         tab = 3  // Navigate to Biomes tab
     }
 
@@ -119,7 +124,19 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
         targetMobId = null
         targetBiomeId = null
         targetItemId = null
+        targetProfession = null
         tab = 7  // Navigate to Structures tab
+    }
+
+    val onTradeTap: (String) -> Unit = { profession ->
+        targetProfession = profession
+        targetBlockId = null
+        targetRecipeId = null
+        targetMobId = null
+        targetBiomeId = null
+        targetStructureId = null
+        targetItemId = null
+        tab = 6  // Navigate to Trades tab
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -134,6 +151,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                 targetRecipeId = null
                 targetStructureId = null
                 targetItemId = null
+                targetProfession = null
             },
         )
         HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp)
@@ -143,6 +161,8 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                 targetBlockId = targetBlockId,
                 onItemTap = onItemTap,
                 onBiomeTap = onBiomeTap,
+                onTradeTap = onTradeTap,
+                onStructureTap = onStructureTap,
             )
             1 -> CraftingScreen(
                 targetRecipeId = targetRecipeId,
@@ -158,9 +178,11 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                     targetRecipeId = null
                     targetStructureId = null
                     targetItemId = null
+                    targetProfession = null
                     tab = 3
                 },
                 onNavigateToStructure = onStructureTap,
+                onItemTap = onItemTap,
             )
             3 -> BiomesScreen(
                 targetBiomeId = targetBiomeId,
@@ -171,13 +193,14 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                     targetRecipeId = null
                     targetStructureId = null
                     targetItemId = null
+                    targetProfession = null
                     tab = 2
                 },
                 onNavigateToStructure = onStructureTap,
             )
             4 -> EnchantsScreen()
             5 -> PotionsScreen()
-            6 -> TradesScreen()
+            6 -> TradesScreen(targetProfession = targetProfession)
             7 -> StructuresScreen(
                 targetStructureId = targetStructureId,
                 onNavigateToMob = { mobId ->
@@ -187,6 +210,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                     targetRecipeId = null
                     targetStructureId = null
                     targetItemId = null
+                    targetProfession = null
                     tab = 2
                 },
                 onNavigateToBiome = onBiomeTap,
@@ -202,6 +226,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                     targetBiomeId = null
                     targetStructureId = null
                     targetItemId = null
+                    targetProfession = null
                     tab = 0
                 },
                 onItemTap = onItemTap,

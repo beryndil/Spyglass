@@ -62,6 +62,8 @@ object BiomeResourceMap {
         "glowstone" to listOf("nether_wastes"),
         "nether_upgrade_template" to listOf("bastion_remnant"),
         "flint" to listOf("all_overworld"),
+        "resin_clump" to listOf("pale_garden"),
+        "pale_oak_log" to listOf("pale_garden"),
     )
 
     private val biomeToItems: Map<String, List<String>> by lazy {

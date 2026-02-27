@@ -57,6 +57,7 @@
 
   {"id":"apple","name":"Apple","stackSize":64,"category":"food","durability":0,"description":"Restores 4 hunger points. Found by breaking oak and dark oak leaves.","obtainedFrom":"farming,structure_loot","droppedBy":"","minedFrom":"oak_leaves,dark_oak_leaves"},
   {"id":"bread","name":"Bread","stackSize":64,"category":"food","durability":0,"description":"Restores 5 hunger points. One of the easiest foods to mass-produce via wheat farming.","obtainedFrom":"crafting,trading","droppedBy":"","minedFrom":""},
+  {"id":"resin_clump","name":"Resin Clump","stackSize":64,"category":"materials","durability":0,"description":"Dropped by creaking hearts. Used to craft resin blocks.","obtainedFrom":"mining","droppedBy":"","minedFrom":"creaking_heart"},
   {"id":"raw_beef","name":"Raw Beef","stackSize":64,"category":"food","durability":0,"description":"Restores 3 hunger when eaten raw. Cook in a furnace for steak.","obtainedFrom":"mob_drop","droppedBy":"cow,mooshroom","minedFrom":""},
   {"id":"cooked_beef","name":"Steak","stackSize":64,"category":"food","durability":0,"description":"Restores 8 hunger points. One of the best food sources in the game.","obtainedFrom":"smelting","droppedBy":"","minedFrom":""},
   {"id":"raw_porkchop","name":"Raw Porkchop","stackSize":64,"category":"food","durability":0,"description":"Restores 3 hunger when eaten raw. Cook for a cooked porkchop.","obtainedFrom":"mob_drop","droppedBy":"pig,hoglin","minedFrom":""},

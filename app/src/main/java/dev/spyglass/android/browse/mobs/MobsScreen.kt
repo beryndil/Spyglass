@@ -94,6 +94,7 @@ fun MobsScreen(
     targetMobId: String? = null,
     onNavigateToBiome: (biomeId: String) -> Unit = {},
     onNavigateToStructure: (structureId: String) -> Unit = {},
+    onItemTap: (String) -> Unit = {},
     vm: MobsViewModel = viewModel(),
 ) {
     val query      by vm.query.collectAsState()
@@ -170,7 +171,7 @@ fun MobsScreen(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
                     ) {
-                        MobDetailCard(m, onNavigateToBiome, onNavigateToStructure)
+                        MobDetailCard(m, onNavigateToBiome, onNavigateToStructure, onItemTap)
                     }
                 }
             }
@@ -187,7 +188,7 @@ fun MobsScreen(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit) {
+private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onItemTap: (String) -> Unit) {
     val drops  = parseDrops(mob.dropsJson)
     val biomes = parseBiomes(mob.spawnBiomesJson)
 
@@ -208,7 +209,15 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
             Text("Drops", style = MaterialTheme.typography.labelSmall, color = Gold)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 drops.forEach { drop ->
-                    CategoryBadge(label = formatId(drop), color = Stone300)
+                    AssistChip(
+                        onClick = { onItemTap(drop) },
+                        label = { Text(formatId(drop), style = MaterialTheme.typography.labelSmall) },
+                        colors = AssistChipDefaults.assistChipColors(
+                            labelColor = Stone300,
+                            containerColor = Stone300.copy(alpha = 0.12f),
+                        ),
+                        border = null,
+                    )
                 }
             }
         }

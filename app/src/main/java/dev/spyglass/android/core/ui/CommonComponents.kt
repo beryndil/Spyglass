@@ -1,14 +1,17 @@
 package dev.spyglass.android.core.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -283,60 +286,99 @@ fun CategoryBadge(label: String, color: Color, modifier: Modifier = Modifier) {
 
 // ── Texture-based crafting grid ──────────────────────────────────────────────
 
+private fun formatCellName(id: String): String =
+    id.replace('_', ' ').replaceFirstChar { it.uppercase() }
+
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun TextureCraftingGrid(
     recipe: RecipeEntity,
     onItemTap: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val cells = runCatching {
-        Json.parseToJsonElement(recipe.ingredientsJson).jsonArray.flatMap { row ->
-            if (row is JsonArray) row.map { it.jsonPrimitive.contentOrNull }
-            else listOf(row.jsonPrimitive.contentOrNull)
-        }
-    }.getOrElse { emptyList() }
+    // Parse the original grid from the recipe
+    val parsed = runCatching {
+        Json.parseToJsonElement(recipe.ingredientsJson).jsonArray
+    }.getOrElse { return }
 
-    val rows = runCatching {
-        Json.parseToJsonElement(recipe.ingredientsJson).jsonArray.size
-    }.getOrDefault(3)
-    val cols = runCatching {
-        val first = Json.parseToJsonElement(recipe.ingredientsJson).jsonArray.firstOrNull()
+    val origRows = parsed.size
+    val origCols = runCatching {
+        val first = parsed.firstOrNull()
         if (first is JsonArray) first.size else 1
-    }.getOrDefault(3)
+    }.getOrDefault(1)
+
+    // Build a flat list from the original grid
+    val origCells = parsed.flatMap { row ->
+        if (row is JsonArray) row.map { it.jsonPrimitive.contentOrNull }
+        else listOf(row.jsonPrimitive.contentOrNull)
+    }
+
+    // For crafting_shaped, always render as 3×3 grid (pad top-left)
+    val isShaped = recipe.type.contains("shaped") && !recipe.type.contains("shapeless")
+    val gridRows = if (isShaped) 3 else origRows
+    val gridCols = if (isShaped) 3 else origCols
+
+    // Build the padded 3×3 grid
+    val cells = if (isShaped) {
+        (0 until 9).map { idx ->
+            val r = idx / 3
+            val c = idx % 3
+            if (r < origRows && c < origCols) origCells.getOrNull(r * origCols + c)
+            else null
+        }
+    } else {
+        origCells
+    }
 
     Column(modifier = modifier) {
-        for (row in 0 until rows) {
+        for (row in 0 until gridRows) {
             Row {
-                for (col in 0 until cols) {
-                    val cell = cells.getOrNull(row * cols + col)
+                for (col in 0 until gridCols) {
+                    val cell = cells.getOrNull(row * gridCols + col)
                     val texture = if (!cell.isNullOrBlank()) ItemTextures.get(cell) else null
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .size(30.dp)
-                            .background(
-                                if (!cell.isNullOrBlank()) SurfaceMid else Background,
-                                RoundedCornerShape(2.dp),
-                            )
-                            .border(0.5.dp, Stone700, RoundedCornerShape(2.dp))
-                            .then(
-                                if (!cell.isNullOrBlank()) Modifier.clickable { onItemTap(cell) }
-                                else Modifier
-                            ),
-                    ) {
-                        if (texture != null) {
-                            SpyglassIconImage(
-                                texture, contentDescription = cell,
-                                modifier = Modifier.size(22.dp),
-                            )
-                        } else if (!cell.isNullOrBlank()) {
-                            Text(
-                                cell.take(2).uppercase(),
-                                fontSize = 7.sp,
-                                color = Stone300,
-                                textAlign = TextAlign.Center,
-                            )
+
+                    if (!cell.isNullOrBlank()) {
+                        val tooltipState = remember { TooltipState() }
+                        TooltipBox(
+                            positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                            tooltip = {
+                                PlainTooltip { Text(formatCellName(cell)) }
+                            },
+                            state = tooltipState,
+                            enableUserInput = true,
+                        ) {
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .size(30.dp)
+                                    .background(SurfaceMid, RoundedCornerShape(2.dp))
+                                    .border(0.5.dp, Stone700, RoundedCornerShape(2.dp))
+                                    .clickable { onItemTap(cell) },
+                            ) {
+                                if (texture != null) {
+                                    SpyglassIconImage(
+                                        texture, contentDescription = cell,
+                                        modifier = Modifier.size(22.dp),
+                                    )
+                                } else {
+                                    Text(
+                                        cell.take(2).uppercase(),
+                                        fontSize = 7.sp,
+                                        color = Stone300,
+                                        textAlign = TextAlign.Center,
+                                    )
+                                }
+                            }
                         }
+                    } else {
+                        // Empty cell — no tooltip needed
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .size(30.dp)
+                                .background(Background, RoundedCornerShape(2.dp))
+                                .border(0.5.dp, Stone700, RoundedCornerShape(2.dp)),
+                        ) {}
                     }
                 }
             }

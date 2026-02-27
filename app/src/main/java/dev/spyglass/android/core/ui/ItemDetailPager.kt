@@ -2,6 +2,7 @@ package dev.spyglass.android.core.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -240,8 +241,7 @@ private fun RecipePage(
                         verticalArrangement = Arrangement.spacedBy(4.dp),
                     ) {
                         ingredients.forEach { (id, count) ->
-                            val tag = ItemTags.tagForItem(id)
-                            val label = if (tag != null) "$count× ${formatItemName(id)} (${tag})" else "$count× ${formatItemName(id)}"
+                            val label = "$count× ${formatItemName(id)}"
                             AssistChip(
                                 onClick = { onItemTap(id) },
                                 label = { Text(label, style = MaterialTheme.typography.labelSmall) },
@@ -265,7 +265,7 @@ private fun RecipePage(
                 SpyglassDivider()
 
                 // Chain calculator
-                ChainCalculatorSection(itemId, allRecipes)
+                ChainCalculatorSection(itemId, allRecipes, onItemTap, onBiomeTap)
             }
         }
     }
@@ -299,10 +299,20 @@ private fun UsesPage(
                         .fillMaxWidth()
                         .background(SurfaceCard, RoundedCornerShape(6.dp))
                         .border(0.5.dp, Stone700, RoundedCornerShape(6.dp))
+                        .clickable { onItemTap(recipe.outputItem) }
                         .padding(horizontal = 12.dp, vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
+                    // Output item icon
+                    val outputTexture = ItemTextures.get(recipe.outputItem)
+                    if (outputTexture != null) {
+                        SpyglassIconImage(
+                            outputTexture, contentDescription = null,
+                            modifier = Modifier.size(22.dp),
+                        )
+                        Spacer(Modifier.width(8.dp))
+                    }
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             "${recipe.outputCount}× ${formatItemName(recipe.outputItem)}",
@@ -315,9 +325,7 @@ private fun UsesPage(
                             color = Stone500,
                         )
                     }
-                    TextButton(onClick = { onItemTap(recipe.outputItem) }) {
-                        Text("View", color = Gold, style = MaterialTheme.typography.labelSmall)
-                    }
+                    Text("→", color = Gold, style = MaterialTheme.typography.bodyLarge)
                 }
             }
         }
@@ -331,6 +339,8 @@ private fun UsesPage(
 private fun ChainCalculatorSection(
     itemId: String,
     allRecipes: Map<String, RecipeEntity>,
+    onItemTap: (String) -> Unit,
+    onBiomeTap: (String) -> Unit,
 ) {
     var quantityInput by remember { mutableStateOf("") }
     val quantity = quantityInput.toLongOrNull() ?: 0L
@@ -361,6 +371,10 @@ private fun ChainCalculatorSection(
             }
 
             if (chain.isNotEmpty()) {
+                // Split into two tiers: crafted ingredients vs raw materials
+                val craftedSteps = chain.filter { it.recipe != null }
+                val rawSteps = chain.filter { it.recipe == null }
+
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -369,35 +383,74 @@ private fun ChainCalculatorSection(
                         .padding(10.dp),
                     verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
-                    chain.forEach { step ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                        ) {
-                            val name = formatItemName(step.itemId)
-                            if (step.recipe != null) {
-                                Text(
-                                    "$name × ${step.quantity}",
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = Stone100,
-                                )
+                    // Top tier — crafted ingredients
+                    if (craftedSteps.isNotEmpty()) {
+                        Text("Craft", style = MaterialTheme.typography.labelSmall, color = Gold)
+                        craftedSteps.forEach { step ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { onItemTap(step.itemId) },
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                            ) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    val tex = ItemTextures.get(step.itemId)
+                                    if (tex != null) {
+                                        SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(16.dp))
+                                        Spacer(Modifier.width(4.dp))
+                                    }
+                                    Text(
+                                        "${formatItemName(step.itemId)} × ${step.quantity}",
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = Gold,
+                                    )
+                                }
                                 Text(
                                     "${step.craftsNeeded} crafts",
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = Gold,
+                                    color = Stone500,
                                 )
-                            } else {
-                                Text(
-                                    "$name × ${step.quantity}",
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = Emerald,
-                                )
-                                if (step.biomes.isNotEmpty()) {
+                            }
+                        }
+                    }
+
+                    // Bottom tier — raw materials
+                    if (rawSteps.isNotEmpty()) {
+                        if (craftedSteps.isNotEmpty()) SpyglassDivider()
+                        Text("Gather", style = MaterialTheme.typography.labelSmall, color = Emerald)
+                        rawSteps.forEach { step ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { onItemTap(step.itemId) },
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    val tex = ItemTextures.get(step.itemId)
+                                    if (tex != null) {
+                                        SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(16.dp))
+                                        Spacer(Modifier.width(4.dp))
+                                    }
                                     Text(
-                                        step.biomes.first().let { formatItemName(it) },
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = Stone500,
+                                        "${formatItemName(step.itemId)} × ${step.quantity}",
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = Emerald,
                                     )
+                                }
+                                if (step.biomes.isNotEmpty()) {
+                                    FlowRow(
+                                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                    ) {
+                                        step.biomes.forEach { biomeId ->
+                                            Text(
+                                                formatItemName(biomeId),
+                                                style = MaterialTheme.typography.bodySmall,
+                                                color = Stone500,
+                                                modifier = Modifier.clickable { onBiomeTap(biomeId) },
+                                            )
+                                        }
+                                    }
                                 }
                             }
                         }

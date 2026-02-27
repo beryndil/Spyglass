@@ -14,6 +14,7 @@ class GameDataRepository(context: Context) {
 
     // Blocks
     fun searchBlocks(q: String): Flow<List<BlockEntity>>  = if (q.isBlank()) db.blockDao().all() else db.blockDao().search(q)
+    fun blocksByCategory(cat: String): Flow<List<BlockEntity>> = db.blockDao().byCategory(cat)
     suspend fun blockById(id: String): BlockEntity?        = db.blockDao().byId(id)
 
     // Recipes
