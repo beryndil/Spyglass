@@ -51,6 +51,9 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes WHERE ingredientsJson LIKE '%\"' || :ingredient || '\"%' ORDER BY outputItem")
     fun recipesUsingIngredient(ingredient: String): Flow<List<RecipeEntity>>
 
+    @Query("SELECT r.* FROM recipes r INNER JOIN items i ON r.outputItem = i.id WHERE i.category = :category ORDER BY r.outputItem")
+    fun byItemCategory(category: String): Flow<List<RecipeEntity>>
+
     @Query("DELETE FROM recipes")
     suspend fun deleteAll()
 }

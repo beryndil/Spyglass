@@ -82,7 +82,7 @@ private val BROWSE_LINKS = listOf(
     QuickLink(PixelIcons.Trade,     "Trades",       Emerald),
     QuickLink(PixelIcons.Biome,     "Biomes",       Emerald),
     QuickLink(PixelIcons.Structure, "Structures",   Gold),
-    QuickLink(PixelIcons.Enchant,   "Enchantments", EnderPurple),
+    QuickLink(PixelIcons.Enchant,   "Enchants",     EnderPurple),
     QuickLink(PixelIcons.Potion,    "Potions",      PotionBlue),
 )
 

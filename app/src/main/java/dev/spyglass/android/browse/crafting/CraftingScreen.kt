@@ -38,7 +38,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.*
 
-private val RECIPE_TYPES = listOf("all", "shaped", "shapeless", "smelting", "smithing")
+private val RECIPE_TYPES = listOf("all", "shaped", "shapeless", "smelting", "food", "smithing")
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class CraftingViewModel(app: Application) : AndroidViewModel(app) {
@@ -52,8 +52,18 @@ class CraftingViewModel(app: Application) : AndroidViewModel(app) {
     val expandedIds: StateFlow<Set<String>> = _expandedIds.asStateFlow()
 
     val recipes: StateFlow<List<RecipeEntity>> = combine(_query.debounce(200), _type) { q, t ->
-        repo.searchRecipes(q).map { list ->
-            if (t == "all") list else list.filter { it.type.contains(t) }
+        when (t) {
+            "food" -> repo.recipesByItemCategory("food").map { list ->
+                if (q.isBlank()) list else list.filter { it.outputItem.contains(q, ignoreCase = true) }
+            }
+            "smelting" -> {
+                val foodIds = repo.recipesByItemCategory("food").map { list -> list.map { it.outputItem }.toSet() }
+                combine(repo.searchRecipes(q), foodIds) { list, foods ->
+                    list.filter { it.type.contains("smelting") && it.outputItem !in foods }
+                }
+            }
+            "all" -> repo.searchRecipes(q)
+            else -> repo.searchRecipes(q).map { list -> list.filter { it.type.contains(t) } }
         }
     }.flatMapLatest { it }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
