@@ -61,7 +61,9 @@ fun StatRow(label: String, value: String, modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment   = Alignment.CenterVertically,
     ) {
-        Text(text = label, style = MaterialTheme.typography.bodyMedium, color = Stone500)
+        Text(text = label, style = MaterialTheme.typography.bodyMedium, color = Stone500,
+            modifier = Modifier.weight(1f, fill = false))
+        Spacer(Modifier.width(12.dp))
         Text(text = value, style = MaterialTheme.typography.bodyLarge,  color = Stone100)
     }
 }
@@ -204,7 +206,7 @@ fun BrowseListItem(
         }
         Column(modifier = Modifier.weight(1f)) {
             Text(headline, style = MaterialTheme.typography.bodyLarge, color = Stone100,
-                maxLines = 1, overflow = TextOverflow.Ellipsis)
+                maxLines = 2, overflow = TextOverflow.Ellipsis)
             if (supporting.isNotEmpty()) {
                 Text(supporting, style = MaterialTheme.typography.bodySmall, color = Stone500,
                     maxLines = supportingMaxLines, overflow = TextOverflow.Ellipsis)

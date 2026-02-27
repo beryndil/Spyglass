@@ -76,10 +76,18 @@ private fun FuelRow(r: FuelResult) {
         Text(r.fuel.name, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
 
         Column(horizontalAlignment = Alignment.End) {
-            val stacks = if (r.fuel.stackSize > 1) " (${r.units / r.fuel.stackSize} stacks + ${r.units % r.fuel.stackSize})" else ""
-            Text("%,d%s".format(r.units, stacks), style = MaterialTheme.typography.bodyLarge, color = Stone100)
-            if (r.unused > 0) {
-                Text("%.1f unused".format(r.unused), style = MaterialTheme.typography.bodySmall, color = Stone500)
+            val qty = if (r.fuel.stackSize <= 1 || r.units < r.fuel.stackSize) {
+                "%,d".format(r.units)
+            } else {
+                val stacks = r.units / r.fuel.stackSize
+                val remainder = r.units % r.fuel.stackSize
+                if (remainder == 0L) "$stacks stack${if (stacks > 1) "s" else ""}"
+                else "$stacks stack${if (stacks > 1) "s" else ""} + $remainder"
+            }
+            Text(qty, style = MaterialTheme.typography.bodyLarge, color = Stone100)
+            val wasted = r.unused.toLong()
+            if (wasted > 0) {
+                Text("$wasted wasted", style = MaterialTheme.typography.bodySmall, color = Stone500)
             }
         }
     }
