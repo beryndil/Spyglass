@@ -11,6 +11,7 @@ data class BlockFillState(
     val heightInput: String = "",
     val widthChunks:  Boolean = false,
     val lengthChunks: Boolean = false,
+    val hollow: Boolean = false,
     val result: BlockFillResult? = null,
 )
 
@@ -31,6 +32,7 @@ class BlockFillViewModel : ViewModel() {
     fun setHeight(v: String) { _state.value = _state.value.copy(heightInput = v); recalc() }
     fun toggleWidthChunks()  { _state.value = _state.value.copy(widthChunks  = !_state.value.widthChunks);  recalc() }
     fun toggleLengthChunks() { _state.value = _state.value.copy(lengthChunks = !_state.value.lengthChunks); recalc() }
+    fun toggleHollow() { _state.value = _state.value.copy(hollow = !_state.value.hollow); recalc() }
 
     private fun recalc() {
         val s = _state.value
@@ -41,7 +43,11 @@ class BlockFillViewModel : ViewModel() {
         val h = s.heightInput.toLongOrNull()  ?: return let { _state.value = s.copy(result = null) }
         if (w <= 0 || l <= 0 || h <= 0) { _state.value = s.copy(result = null); return }
 
-        val total = w * l * h
+        val total = if (s.hollow && w >= 3 && l >= 3 && h >= 3) {
+            w * l * h - (w - 2) * (l - 2) * (h - 2)
+        } else {
+            w * l * h
+        }
         _state.value = s.copy(result = BlockFillResult(
             totalBlocks = total,
             stacks      = total / 64,       stackRem   = total % 64,

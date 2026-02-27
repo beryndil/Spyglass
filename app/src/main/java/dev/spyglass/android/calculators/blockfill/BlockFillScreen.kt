@@ -46,6 +46,18 @@ fun BlockFillScreen(vm: BlockFillViewModel = viewModel()) {
             }
 
             SpyglassTextField(value = s.heightInput, onValueChange = vm::setHeight, label = "Height (blocks)")
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(top = 4.dp),
+            ) {
+                Checkbox(
+                    checked = s.hollow,
+                    onCheckedChange = { vm.toggleHollow() },
+                    colors = CheckboxDefaults.colors(checkedColor = Gold, uncheckedColor = Stone500, checkmarkColor = Background),
+                )
+                Text("Hollow (shell only)", style = MaterialTheme.typography.bodyMedium, color = Stone100)
+            }
         }
 
         s.result?.let { r ->
