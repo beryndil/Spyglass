@@ -84,11 +84,11 @@ object MobTextures {
         "witch" to R.drawable.mob_witch,
         "wither" to R.drawable.mob_wither,
         "wither_skeleton" to R.drawable.mob_wither_skeleton,
-        "wither_skeleton_horse" to R.drawable.mob_wither_skeleton_horse,
+        "zombie_horse" to R.drawable.mob_wither_skeleton_horse,
         "wolf" to R.drawable.mob_wolf,
         "zombie" to R.drawable.mob_zombie,
         "zombie_villager" to R.drawable.mob_zombie_villager,
-        "zombie_pigman" to R.drawable.mob_zombie_pigman,
+        "zombified_piglin" to R.drawable.mob_zombie_pigman,
         "zoglin" to R.drawable.mob_zoglin,
     )
 

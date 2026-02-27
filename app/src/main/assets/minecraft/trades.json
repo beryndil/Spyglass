@@ -6,11 +6,11 @@
   {"id":"farmer_1_5","profession":"farmer","level":1,"buyItem1":"emerald","buyItem1Count":1,"buyItem2":"","buyItem2Count":0,"sellItem":"bread","sellCount":6,"quantity":16},
   {"id":"farmer_2_1","profession":"farmer","level":2,"buyItem1":"pumpkin","buyItem1Count":6,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
   {"id":"farmer_2_2","profession":"farmer","level":2,"buyItem1":"emerald","buyItem1Count":1,"buyItem2":"","buyItem2Count":0,"sellItem":"pumpkin_pie","sellCount":4,"quantity":12},
-  {"id":"farmer_3_1","profession":"farmer","level":3,"buyItem1":"melon","buyItem1Count":4,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
+  {"id":"farmer_3_1","profession":"farmer","level":3,"buyItem1":"melon_slice","buyItem1Count":4,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
   {"id":"farmer_3_2","profession":"farmer","level":3,"buyItem1":"emerald","buyItem1Count":1,"buyItem2":"","buyItem2Count":0,"sellItem":"apple","sellCount":4,"quantity":16},
   {"id":"farmer_4_1","profession":"farmer","level":4,"buyItem1":"emerald","buyItem1Count":3,"buyItem2":"","buyItem2Count":0,"sellItem":"cookie","sellCount":18,"quantity":12},
   {"id":"farmer_5_1","profession":"farmer","level":5,"buyItem1":"emerald","buyItem1Count":4,"buyItem2":"","buyItem2Count":0,"sellItem":"golden_carrot","sellCount":3,"quantity":12},
-  {"id":"farmer_5_2","profession":"farmer","level":5,"buyItem1":"emerald","buyItem1Count":5,"buyItem2":"","buyItem2Count":0,"sellItem":"glistering_melon","sellCount":3,"quantity":12},
+  {"id":"farmer_5_2","profession":"farmer","level":5,"buyItem1":"emerald","buyItem1Count":5,"buyItem2":"","buyItem2Count":0,"sellItem":"glistering_melon_slice","sellCount":3,"quantity":12},
 
   {"id":"fisherman_1_1","profession":"fisherman","level":1,"buyItem1":"string","buyItem1Count":20,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":16},
   {"id":"fisherman_1_2","profession":"fisherman","level":1,"buyItem1":"coal","buyItem1Count":10,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":16},
@@ -21,7 +21,7 @@
   {"id":"fisherman_4_1","profession":"fisherman","level":4,"buyItem1":"tropical_fish","buyItem1Count":6,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
   {"id":"fisherman_5_1","profession":"fisherman","level":5,"buyItem1":"emerald","buyItem1Count":8,"buyItem2":"","buyItem2Count":0,"sellItem":"fishing_rod","sellCount":1,"quantity":3},
 
-  {"id":"shepherd_1_1","profession":"shepherd","level":1,"buyItem1":"white_wool","buyItem1Count":18,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":16},
+  {"id":"shepherd_1_1","profession":"shepherd","level":1,"buyItem1":"wool","buyItem1Count":18,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":16},
   {"id":"shepherd_1_2","profession":"shepherd","level":1,"buyItem1":"emerald","buyItem1Count":2,"buyItem2":"","buyItem2Count":0,"sellItem":"shears","sellCount":1,"quantity":12},
   {"id":"shepherd_2_1","profession":"shepherd","level":2,"buyItem1":"emerald","buyItem1Count":1,"buyItem2":"","buyItem2Count":0,"sellItem":"white_dye","sellCount":12,"quantity":12},
   {"id":"shepherd_3_1","profession":"shepherd","level":3,"buyItem1":"emerald","buyItem1Count":3,"buyItem2":"","buyItem2Count":0,"sellItem":"painting","sellCount":1,"quantity":12},
@@ -41,15 +41,15 @@
   {"id":"librarian_1_3","profession":"librarian","level":1,"buyItem1":"emerald","buyItem1Count":1,"buyItem2":"","buyItem2Count":0,"sellItem":"bookshelf","sellCount":1,"quantity":12},
   {"id":"librarian_2_1","profession":"librarian","level":2,"buyItem1":"book","buyItem1Count":4,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
   {"id":"librarian_3_1","profession":"librarian","level":3,"buyItem1":"ink_sac","buyItem1Count":5,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
-  {"id":"librarian_4_1","profession":"librarian","level":4,"buyItem1":"book_and_quill","buyItem1Count":2,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
+  {"id":"librarian_4_1","profession":"librarian","level":4,"buyItem1":"writable_book","buyItem1Count":2,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
   {"id":"librarian_5_1","profession":"librarian","level":5,"buyItem1":"emerald","buyItem1Count":20,"buyItem2":"","buyItem2Count":0,"sellItem":"name_tag","sellCount":1,"quantity":12},
 
   {"id":"cartographer_1_1","profession":"cartographer","level":1,"buyItem1":"paper","buyItem1Count":24,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":16},
-  {"id":"cartographer_1_2","profession":"cartographer","level":1,"buyItem1":"emerald","buyItem1Count":7,"buyItem2":"","buyItem2Count":0,"sellItem":"empty_map","sellCount":1,"quantity":12},
+  {"id":"cartographer_1_2","profession":"cartographer","level":1,"buyItem1":"emerald","buyItem1Count":7,"buyItem2":"","buyItem2Count":0,"sellItem":"map","sellCount":1,"quantity":12},
   {"id":"cartographer_2_1","profession":"cartographer","level":2,"buyItem1":"glass_pane","buyItem1Count":11,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":16},
   {"id":"cartographer_3_1","profession":"cartographer","level":3,"buyItem1":"compass","buyItem1Count":1,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
-  {"id":"cartographer_4_1","profession":"cartographer","level":4,"buyItem1":"emerald","buyItem1Count":14,"buyItem2":"compass","buyItem2Count":1,"sellItem":"ocean_map","sellCount":1,"quantity":12},
-  {"id":"cartographer_5_1","profession":"cartographer","level":5,"buyItem1":"emerald","buyItem1Count":14,"buyItem2":"compass","buyItem2Count":1,"sellItem":"woodland_map","sellCount":1,"quantity":12},
+  {"id":"cartographer_4_1","profession":"cartographer","level":4,"buyItem1":"emerald","buyItem1Count":14,"buyItem2":"compass","buyItem2Count":1,"sellItem":"ocean_explorer_map","sellCount":1,"quantity":12},
+  {"id":"cartographer_5_1","profession":"cartographer","level":5,"buyItem1":"emerald","buyItem1Count":14,"buyItem2":"compass","buyItem2Count":1,"sellItem":"woodland_explorer_map","sellCount":1,"quantity":12},
 
   {"id":"armorer_1_1","profession":"armorer","level":1,"buyItem1":"coal","buyItem1Count":15,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":16},
   {"id":"armorer_1_2","profession":"armorer","level":1,"buyItem1":"emerald","buyItem1Count":5,"buyItem2":"","buyItem2Count":0,"sellItem":"iron_leggings","sellCount":1,"quantity":12},
@@ -80,7 +80,7 @@
   {"id":"butcher_5_1","profession":"butcher","level":5,"buyItem1":"emerald","buyItem1Count":1,"buyItem2":"","buyItem2Count":0,"sellItem":"cooked_chicken","sellCount":8,"quantity":12},
 
   {"id":"leatherworker_1_1","profession":"leatherworker","level":1,"buyItem1":"leather","buyItem1Count":6,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":16},
-  {"id":"leatherworker_1_2","profession":"leatherworker","level":1,"buyItem1":"emerald","buyItem1Count":3,"buyItem2":"","buyItem2Count":0,"sellItem":"leather_pants","sellCount":1,"quantity":12},
+  {"id":"leatherworker_1_2","profession":"leatherworker","level":1,"buyItem1":"emerald","buyItem1Count":3,"buyItem2":"","buyItem2Count":0,"sellItem":"leather_leggings","sellCount":1,"quantity":12},
   {"id":"leatherworker_2_1","profession":"leatherworker","level":2,"buyItem1":"flint","buyItem1Count":26,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
   {"id":"leatherworker_3_1","profession":"leatherworker","level":3,"buyItem1":"rabbit_hide","buyItem1Count":9,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
   {"id":"leatherworker_4_1","profession":"leatherworker","level":4,"buyItem1":"scute","buyItem1Count":4,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
@@ -97,6 +97,6 @@
   {"id":"cleric_1_2","profession":"cleric","level":1,"buyItem1":"emerald","buyItem1Count":1,"buyItem2":"","buyItem2Count":0,"sellItem":"redstone","sellCount":2,"quantity":12},
   {"id":"cleric_2_1","profession":"cleric","level":2,"buyItem1":"gold_ingot","buyItem1Count":3,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
   {"id":"cleric_3_1","profession":"cleric","level":3,"buyItem1":"rabbit_foot","buyItem1Count":2,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
-  {"id":"cleric_4_1","profession":"cleric","level":4,"buyItem1":"turtle_scute","buyItem1Count":4,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
-  {"id":"cleric_5_1","profession":"cleric","level":5,"buyItem1":"emerald","buyItem1Count":5,"buyItem2":"","buyItem2Count":0,"sellItem":"bottle_enchanting","sellCount":1,"quantity":12}
+  {"id":"cleric_4_1","profession":"cleric","level":4,"buyItem1":"scute","buyItem1Count":4,"buyItem2":"","buyItem2Count":0,"sellItem":"emerald","sellCount":1,"quantity":12},
+  {"id":"cleric_5_1","profession":"cleric","level":5,"buyItem1":"emerald","buyItem1Count":5,"buyItem2":"","buyItem2Count":0,"sellItem":"experience_bottle","sellCount":1,"quantity":12}
 ]
