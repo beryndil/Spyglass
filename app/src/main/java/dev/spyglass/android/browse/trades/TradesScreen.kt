@@ -162,6 +162,7 @@ fun TradesScreen(vm: TradesViewModel = viewModel()) {
                     title = "Trades",
                     description = "Villager trades by profession and level",
                     stat = "${trades.size} trades",
+                    iconTint = Color.Unspecified,
                 )
             }
 
@@ -175,17 +176,7 @@ fun TradesScreen(vm: TradesViewModel = viewModel()) {
             }
 
             items(trades, key = { it.rowId }) { t ->
-                val sellId = t.sellItem.substringAfterLast(':')
-                val sellIcon = ItemTextures.get(sellId)
-                BrowseListItem(
-                    headline    = "${t.buyItem1Count}× ${t.buyItem1.substringAfterLast(':')}${if (t.buyItem2.isNotBlank()) " + ${t.buyItem2Count}× ${t.buyItem2.substringAfterLast(':')}" else ""} → ${t.sellItemCount}× $sellId",
-                    supporting  = "${t.profession.replaceFirstChar { it.uppercase() }} · ${t.levelName}",
-                    leadingIcon = sellIcon ?: PixelIcons.Trade,
-                    leadingIconTint = if (sellIcon != null) Color.Unspecified else Emerald,
-                    trailing    = {
-                        CategoryBadge(label = "Lvl ${t.level}", color = Gold)
-                    },
-                )
+                TradeListItem(t)
             }
             if (trades.isEmpty()) item {
                 EmptyState(
@@ -243,6 +234,72 @@ private fun JobBlockCard(info: JobBlockInfo) {
                 }
             }
         }
+    }
+}
+
+// ── Trade list item with inline item icons ──────────────────────────────────
+
+private fun formatItemName(id: String): String =
+    id.substringAfterLast(':').replace('_', ' ').replaceFirstChar { it.uppercase() }
+
+@Composable
+private fun TradeListItem(trade: TradeEntity) {
+    val buy1Id = trade.buyItem1.substringAfterLast(':')
+    val buy1Icon = ItemTextures.get(buy1Id)
+    val buy2Id = if (trade.buyItem2.isNotBlank()) trade.buyItem2.substringAfterLast(':') else null
+    val buy2Icon = buy2Id?.let { ItemTextures.get(it) }
+    val sellId = trade.sellItem.substringAfterLast(':')
+    val sellIcon = ItemTextures.get(sellId)
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(SurfaceCard, RoundedCornerShape(10.dp))
+            .border(1.dp, Stone700, RoundedCornerShape(10.dp))
+            .padding(horizontal = 14.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        // Buy + Sell items with icons
+        Column(modifier = Modifier.weight(1f)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                // Buy item 1
+                TradeItemChip(buy1Icon, "${trade.buyItem1Count}× ${formatItemName(buy1Id)}")
+
+                // Buy item 2 (if present)
+                if (buy2Id != null) {
+                    Text(" + ", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                    TradeItemChip(buy2Icon, "${trade.buyItem2Count}× ${formatItemName(buy2Id)}")
+                }
+
+                Text("  →  ", style = MaterialTheme.typography.bodyMedium, color = Gold)
+
+                // Sell item
+                TradeItemChip(sellIcon, "${trade.sellItemCount}× ${formatItemName(sellId)}")
+            }
+            Spacer(Modifier.height(2.dp))
+            Text(
+                "${trade.profession.replaceFirstChar { it.uppercase() }} · ${trade.levelName}",
+                style = MaterialTheme.typography.bodySmall,
+                color = Stone500,
+            )
+        }
+        Spacer(Modifier.width(8.dp))
+        CategoryBadge(label = "Lvl ${trade.level}", color = Gold)
+    }
+}
+
+@Composable
+private fun TradeItemChip(icon: SpyglassIcon?, label: String) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        if (icon != null) {
+            SpyglassIconImage(
+                icon, contentDescription = null,
+                modifier = Modifier.size(18.dp),
+                tint = Color.Unspecified,
+            )
+            Spacer(Modifier.width(3.dp))
+        }
+        Text(label, style = MaterialTheme.typography.bodySmall, color = Stone100)
     }
 }
 

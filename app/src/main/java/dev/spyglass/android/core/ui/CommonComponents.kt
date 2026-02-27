@@ -235,13 +235,14 @@ fun TabIntroHeader(
     title: String,
     description: String,
     stat: String = "",
+    iconTint: Color = Gold,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxWidth().padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        SpyglassIconImage(icon, contentDescription = null, tint = Gold, modifier = Modifier.size(36.dp))
+        SpyglassIconImage(icon, contentDescription = null, tint = iconTint, modifier = Modifier.size(36.dp))
         Spacer(Modifier.height(8.dp))
         Text(title, style = MaterialTheme.typography.headlineSmall, color = Stone100)
         Spacer(Modifier.height(4.dp))
@@ -275,7 +276,7 @@ fun CategoryBadge(label: String, color: Color, modifier: Modifier = Modifier) {
 
 // ── Tab row — reusable icon+text tabs for Calculators and Browse ────────────
 
-data class SpyglassTab(val label: String, val icon: SpyglassIcon)
+data class SpyglassTab(val label: String, val icon: SpyglassIcon, val untinted: Boolean = false)
 
 @Composable
 fun SpyglassTabRow(
@@ -302,7 +303,7 @@ fun SpyglassTabRow(
                         SpyglassIconImage(
                             tab.icon, contentDescription = null,
                             modifier = Modifier.size(16.dp),
-                            tint = if (selected) Gold else Stone500,
+                            tint = if (tab.untinted) Color.Unspecified else if (selected) Gold else Stone500,
                         )
                         Spacer(Modifier.width(5.dp))
                         Text(

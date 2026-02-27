@@ -28,7 +28,7 @@ private val BROWSE_TABS = listOf(
     SpyglassTab("Biomes",     PixelIcons.Biome),
     SpyglassTab("Enchants",   PixelIcons.Enchant),
     SpyglassTab("Potions",    PixelIcons.Potion),
-    SpyglassTab("Trades",     PixelIcons.Trade),
+    SpyglassTab("Trades",     PixelIcons.Trade, untinted = true),
     SpyglassTab("Structures", PixelIcons.Structure),
 )
 
