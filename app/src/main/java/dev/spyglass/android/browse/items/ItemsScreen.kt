@@ -71,7 +71,7 @@ class ItemsViewModel(app: Application) : AndroidViewModel(app) {
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 private fun formatId(id: String): String =
-    id.replace('_', ' ').replaceFirstChar { it.uppercase() }
+    id.split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
 
 private fun categoryColor(cat: String) = when (cat) {
     "tools"     -> Gold

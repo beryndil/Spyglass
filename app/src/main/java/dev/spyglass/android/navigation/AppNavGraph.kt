@@ -19,15 +19,17 @@ import dev.spyglass.android.calculators.CalculatorsScreen
 import dev.spyglass.android.browse.BrowseScreen
 import dev.spyglass.android.browse.search.SearchScreen
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.home.HomeScreen
 import dev.spyglass.android.settings.SettingsScreen
 
 sealed class TopDest(val route: String, val label: String, val icon: SpyglassIcon) {
-    data object Calculators : TopDest("calculators", "Calculators", PixelIcons.Calculator)
+    data object Home        : TopDest("home",        "Home",        PixelIcons.Bookmark)
     data object Browse      : TopDest("browse",      "Browse",      PixelIcons.Browse)
+    data object Calculators : TopDest("calculators", "Calculators", PixelIcons.Calculator)
     data object Search      : TopDest("search",      "Search",      PixelIcons.Search)
 }
 
-val TOP_DESTINATIONS = listOf(TopDest.Calculators, TopDest.Browse, TopDest.Search)
+val TOP_DESTINATIONS = listOf(TopDest.Home, TopDest.Browse, TopDest.Calculators, TopDest.Search)
 
 private val SUB_ROUTES = setOf("about", "settings")
 
@@ -38,10 +40,18 @@ data class BrowseTarget(val tab: Int, val id: String)
 fun AppNavGraph() {
     val navController: NavHostController = rememberNavController()
     var pendingTarget by remember { mutableStateOf<BrowseTarget?>(null) }
+    var pendingCalcTab by remember { mutableStateOf<Int?>(null) }
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
     val showBars = currentRoute !in SUB_ROUTES
+
+    fun navigateTo(route: String) {
+        navController.navigate(route) {
+            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+            launchSingleTop = true
+        }
+    }
 
     Scaffold(
         topBar    = { SpyglassTopBar(navController) },
@@ -49,10 +59,27 @@ fun AppNavGraph() {
     ) { innerPadding ->
         NavHost(
             navController    = navController,
-            startDestination = TopDest.Calculators.route,
+            startDestination = TopDest.Home.route,
             modifier         = Modifier.padding(innerPadding),
         ) {
-            composable(TopDest.Calculators.route) { CalculatorsScreen() }
+            composable(TopDest.Home.route) {
+                HomeScreen(
+                    onBrowseTab = { tab ->
+                        pendingTarget = BrowseTarget(tab, "")
+                        navigateTo(TopDest.Browse.route)
+                    },
+                    onCalcTab = { tab ->
+                        pendingCalcTab = tab
+                        navigateTo(TopDest.Calculators.route)
+                    },
+                    onSearch = { navigateTo(TopDest.Search.route) },
+                )
+            }
+            composable(TopDest.Calculators.route) {
+                val calcTab = pendingCalcTab
+                pendingCalcTab = null
+                CalculatorsScreen(initialTab = calcTab)
+            }
             composable(TopDest.Browse.route) {
                 val target = pendingTarget
                 pendingTarget = null

@@ -65,7 +65,7 @@ private val BREWING_ITEM_IDS = mapOf(
 )
 
 private fun formatId(id: String): String =
-    id.replace('_', ' ').replaceFirstChar { it.uppercase() }
+    id.split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class PotionsViewModel(app: Application) : AndroidViewModel(app) {

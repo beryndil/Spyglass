@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
+import androidx.compose.ui.graphics.Color
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class EnchantsViewModel(app: Application) : AndroidViewModel(app) {
@@ -47,11 +48,36 @@ class EnchantsViewModel(app: Application) : AndroidViewModel(app) {
     }.flatMapLatest { it }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    private val _warningMessage = MutableStateFlow<String?>(null)
+    val warningMessage: StateFlow<String?> = _warningMessage.asStateFlow()
+
     fun setQuery(q: String)  { _query.value = q }
     fun setTarget(t: String) { _target.value = t }
+    fun clearWarning() { _warningMessage.value = null }
+
     fun toggleExpanded(id: String) {
-        _expandedIds.value = _expandedIds.value.let { if (id in it) it - id else it + id }
+        val current = _expandedIds.value
+        if (id in current) {
+            _expandedIds.value = current - id
+            return
+        }
+        // Check incompatibilities with already-expanded enchants
+        val allEnchants = enchants.value
+        val newEnchant = allEnchants.find { it.id == id }
+        if (newEnchant != null) {
+            val newIncompat = parseIncompatible(newEnchant.incompatibleJson)
+            for (expandedId in current) {
+                val expandedEnchant = allEnchants.find { it.id == expandedId } ?: continue
+                val expandedIncompat = parseIncompatible(expandedEnchant.incompatibleJson)
+                if (expandedId in newIncompat || id in expandedIncompat) {
+                    _warningMessage.value = "${newEnchant.name} is incompatible with ${expandedEnchant.name}"
+                    return
+                }
+            }
+        }
+        _expandedIds.value = current + id
     }
+
     fun expandEnchant(id: String) {
         _expandedIds.value = _expandedIds.value + id
     }
@@ -63,7 +89,7 @@ private fun formatTarget(target: String): String =
     }
 
 private fun formatId(id: String): String =
-    id.replace('_', ' ').replaceFirstChar { it.uppercase() }
+    id.split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
 
 private fun parseIncompatible(json: String): List<String> {
     val trimmed = json.trim()
@@ -82,6 +108,23 @@ private fun parseIncompatible(json: String): List<String> {
     }
 }
 
+private fun targetIcon(target: String): SpyglassIcon? = when (target) {
+    "armor"       -> ItemTextures.get("diamond_chestplate")
+    "helmet"      -> ItemTextures.get("diamond_helmet")
+    "chestplate"  -> ItemTextures.get("diamond_chestplate")
+    "leggings"    -> ItemTextures.get("diamond_leggings")
+    "boots"       -> ItemTextures.get("diamond_boots")
+    "sword"       -> ItemTextures.get("diamond_sword")
+    "axe"         -> ItemTextures.get("diamond_axe")
+    "pickaxe"     -> ItemTextures.get("diamond_pickaxe")
+    "bow"         -> ItemTextures.get("bow")
+    "crossbow"    -> ItemTextures.get("crossbow")
+    "trident"     -> ItemTextures.get("trident")
+    "mace"        -> ItemTextures.get("mace")
+    "fishing_rod" -> ItemTextures.get("fishing_rod")
+    else          -> null
+}
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
@@ -89,11 +132,22 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
     val target      by vm.target.collectAsState()
     val enchants    by vm.enchants.collectAsState()
     val expandedIds by vm.expandedIds.collectAsState()
+    val warning     by vm.warningMessage.collectAsState()
     val listState   = rememberLazyListState()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    // Show snackbar when incompatible enchant warning fires
+    LaunchedEffect(warning) {
+        if (warning != null) {
+            snackbarHostState.showSnackbar(warning!!, duration = SnackbarDuration.Short)
+            vm.clearWarning()
+        }
+    }
 
     // Build a map for quick lookup by ID for scrolling to incompatible enchants
     val enchantIndex = remember(enchants) { enchants.mapIndexed { i, e -> e.id to i }.toMap() }
 
+    Box(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = vm::setQuery,
@@ -109,8 +163,11 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             listOf("all", "armor", "sword", "bow", "crossbow", "trident", "mace", "fishing_rod").forEach { t ->
+                val icon = targetIcon(t)
                 FilterChip(selected = target == t, onClick = { vm.setTarget(t) },
-                    label = { Text(t.replace('_', ' ').replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) })
+                    label = { Text(t.replace('_', ' ').replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) },
+                    leadingIcon = if (icon != null) { { SpyglassIconImage(icon, contentDescription = null, modifier = Modifier.size(16.dp)) } } else null,
+                )
             }
         }
         LazyColumn(
@@ -178,6 +235,11 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
                 )
             }
         }
+    }
+    SnackbarHost(
+        hostState = snackbarHostState,
+        modifier = Modifier.align(Alignment.BottomCenter).padding(16.dp),
+    )
     }
 }
 

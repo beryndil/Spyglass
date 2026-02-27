@@ -66,10 +66,10 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
     // Collect block IDs and item IDs so we can route taps to the correct tab
     val context = LocalContext.current
     val repo = remember { GameDataRepository.get(context) }
-    val blockIds by repo.searchBlocks("").map { list -> list.map { it.id }.toSet() }
-        .collectAsState(initial = emptySet())
-    val itemIds by repo.searchItems("").map { list -> list.map { it.id }.toSet() }
-        .collectAsState(initial = emptySet())
+    val blockIdsFlow = remember { repo.searchBlocks("").map { list -> list.map { it.id }.toSet() } }
+    val blockIds by blockIdsFlow.collectAsState(initial = emptySet())
+    val itemIdsFlow = remember { repo.searchItems("").map { list -> list.map { it.id }.toSet() } }
+    val itemIds by itemIdsFlow.collectAsState(initial = emptySet())
 
     fun clearAllTargets() {
         targetMobId = null

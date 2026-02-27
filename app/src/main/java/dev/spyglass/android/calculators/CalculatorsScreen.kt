@@ -27,8 +27,12 @@ private val CALC_TABS = listOf(
 )
 
 @Composable
-fun CalculatorsScreen() {
-    var selectedTab by remember { mutableIntStateOf(0) }
+fun CalculatorsScreen(initialTab: Int? = null) {
+    var selectedTab by remember { mutableIntStateOf(initialTab ?: 0) }
+
+    LaunchedEffect(initialTab) {
+        if (initialTab != null) selectedTab = initialTab
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         SpyglassTabRow(

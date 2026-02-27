@@ -86,16 +86,16 @@ fun browseTabForType(type: String): Int = when (type) {
     else          -> 0
 }
 
-private fun typeIcon(type: String): SpyglassIcon = when (type) {
-    "Block"       -> PixelIcons.Blocks
-    "Recipe"      -> PixelIcons.Crafting
-    "Mob"         -> PixelIcons.Mob
-    "Biome"       -> PixelIcons.Biome
-    "Enchantment" -> PixelIcons.Enchant
+private fun typeIcon(type: String, id: String): SpyglassIcon = when (type) {
+    "Block"       -> ItemTextures.get(id) ?: PixelIcons.Blocks
+    "Item"        -> ItemTextures.get(id) ?: PixelIcons.Item
+    "Recipe"      -> ItemTextures.get(id) ?: PixelIcons.Crafting
+    "Mob"         -> MobTextures.get(id) ?: PixelIcons.Mob
+    "Biome"       -> BiomeTextures.get(id) ?: PixelIcons.Biome
+    "Enchantment" -> EnchantTextures.get(id) ?: PixelIcons.Enchant
     "Potion"      -> PixelIcons.Potion
     "Trade"       -> PixelIcons.Trade
     "Structure"   -> PixelIcons.Structure
-    "Item"        -> PixelIcons.Item
     else          -> PixelIcons.Search
 }
 
@@ -142,11 +142,12 @@ fun SearchScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 items(results) { r ->
+                    val icon = typeIcon(r.type, r.id)
                     BrowseListItem(
                         headline    = r.name,
                         supporting  = r.id,
-                        leadingIcon = typeIcon(r.type),
-                        leadingIconTint = typeColor(r.type),
+                        leadingIcon = icon,
+                        leadingIconTint = if (icon is SpyglassIcon.Drawable) androidx.compose.ui.graphics.Color.Unspecified else typeColor(r.type),
                         modifier    = Modifier.clickable { onResultTap(browseTabForType(r.type), r.id) },
                         trailing    = {
                             Column(horizontalAlignment = androidx.compose.ui.Alignment.End) {

@@ -27,7 +27,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 
 private fun formatId(id: String): String =
-    id.replace('_', ' ').replaceFirstChar { it.uppercase() }
+    id.split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
 
 private fun parseCommaSeparated(csv: String): List<String> {
     if (csv.isBlank()) return emptyList()

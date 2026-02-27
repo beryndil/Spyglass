@@ -115,13 +115,36 @@ class AnvilViewModel : ViewModel() {
         _state.value = AnvilState(selectedItem = t)
     }
 
+    private val _warningMessage = MutableStateFlow<String?>(null)
+    val warningMessage: StateFlow<String?> = _warningMessage.asStateFlow()
+    fun clearWarning() { _warningMessage.value = null }
+
     fun toggleEnchant(e: Enchantment, level: Int = e.maxLevel) {
         val current = _state.value.pickedEnchants
         val existing = current.indexOfFirst { it.enchant.id == e.id }
-        val updated = if (existing >= 0) current.toMutableList().also { it.removeAt(existing) }
-                      else current + SelectedEnchant(e, level)
-        _state.value = _state.value.copy(pickedEnchants = updated)
+        if (existing >= 0) {
+            // Deselecting — always allowed
+            val updated = current.toMutableList().also { it.removeAt(existing) }
+            _state.value = _state.value.copy(pickedEnchants = updated)
+            recalc()
+            return
+        }
+        // Check incompatibility before selecting
+        val pickedIds = current.map { it.enchant.id }.toSet()
+        for (incompId in e.incompatible) {
+            if (incompId in pickedIds) {
+                val conflict = current.first { it.enchant.id == incompId }
+                _warningMessage.value = "${e.name} is incompatible with ${conflict.enchant.name}"
+                return
+            }
+        }
+        _state.value = _state.value.copy(pickedEnchants = current + SelectedEnchant(e, level))
         recalc()
+    }
+
+    fun isIncompatible(e: Enchantment): Boolean {
+        val pickedIds = _state.value.pickedEnchants.map { it.enchant.id }.toSet()
+        return e.incompatible.any { it in pickedIds }
     }
 
     fun setEnchantLevel(id: String, level: Int) {
@@ -131,6 +154,19 @@ class AnvilViewModel : ViewModel() {
         recalc()
     }
 
+    /**
+     * Optimal enchanting order using binary tree combining with prior work penalties.
+     *
+     * Minecraft anvil mechanics:
+     * - Each item/book tracks "anvil uses" (starts at 0 for fresh items)
+     * - Prior work penalty = 2^uses - 1 (0, 1, 3, 7, 15, 31...)
+     * - Anvil cost per operation = enchant costs from sacrifice + target penalty + sacrifice penalty
+     * - Output uses = max(target_uses, sacrifice_uses) + 1
+     * - "Too Expensive" if a single operation costs >= 40 levels
+     *
+     * Optimal strategy: sort books by cost ascending, combine in balanced binary tree
+     * so cheapest books accumulate more prior work (their base cost is small).
+     */
     private fun recalc() {
         val enchants = _state.value.pickedEnchants
         if (enchants.isEmpty()) {
@@ -138,62 +174,70 @@ class AnvilViewModel : ViewModel() {
             return
         }
 
-        // Check incompatibilities
-        val warnings = mutableListOf<String>()
-        val pickedIds = enchants.map { it.enchant.id }.toSet()
-        for (se in enchants) {
-            for (incompId in se.enchant.incompatible) {
-                if (incompId in pickedIds) {
-                    val other = enchants.first { it.enchant.id == incompId }
-                    val msg = "${se.enchant.name} conflicts with ${other.enchant.name}"
-                    if (warnings.none { it == msg || it == "${other.enchant.name} conflicts with ${se.enchant.name}" }) {
-                        warnings.add(msg)
-                    }
-                }
-            }
+        // Each node in the combining tree
+        data class BookNode(
+            val label: String,
+            val enchantCost: Int,   // sum of enchant level costs on this combined book
+            val anvilUses: Int,     // number of times combined
+        ) {
+            val priorWork get() = (1 shl anvilUses) - 1   // 2^uses - 1
         }
 
-        // Compute individual book costs, sort descending
-        val books = enchants.map { se ->
-            val cost = se.enchant.bookCost * se.level
-            Pair(se, cost)
-        }.sortedByDescending { it.second }
+        // Sort books by cost ascending — cheapest combined first
+        val sortedBooks = enchants
+            .map { se -> BookNode(se.enchant.name, se.enchant.bookCost * se.level, 0) }
+            .sortedBy { it.enchantCost }
 
         val steps = mutableListOf<AnvilStep>()
         var total = 0
 
-        if (books.size == 1) {
-            val cost = books[0].second + books[0].second
-            steps.add(AnvilStep("Apply ${books[0].first.enchant.name} to item", cost, cost >= 40))
+        if (sortedBooks.size == 1) {
+            // Single enchant: apply book directly to item
+            val book = sortedBooks[0]
+            // Item has 0 prior work; book has 0 prior work
+            val cost = book.enchantCost + 0 + 0
+            steps.add(AnvilStep("Apply ${book.label} to item", cost, cost >= 40))
             total = cost
         } else {
-            // Combine books in pairs (highest + lowest), then apply final merged book
-            val combined = combinePairs(books.map { it.first.enchant.name to it.second })
-            combined.forEachIndexed { i, (desc, cost) ->
-                steps.add(AnvilStep(desc, cost, cost >= 40))
-                total += cost
+            // Build balanced binary tree: combine adjacent pairs each round
+            var queue = sortedBooks.toMutableList()
+
+            // Phase 1: Combine books into one merged book
+            while (queue.size > 1) {
+                val nextQueue = mutableListOf<BookNode>()
+                var i = 0
+                while (i < queue.size) {
+                    if (i + 1 < queue.size) {
+                        val target = queue[i]
+                        val sacrifice = queue[i + 1]
+                        val cost = sacrifice.enchantCost + target.priorWork + sacrifice.priorWork
+                        val merged = BookNode(
+                            label = "${target.label} + ${sacrifice.label}",
+                            enchantCost = target.enchantCost + sacrifice.enchantCost,
+                            anvilUses = maxOf(target.anvilUses, sacrifice.anvilUses) + 1,
+                        )
+                        steps.add(AnvilStep("Combine ${target.label} + ${sacrifice.label}", cost, cost >= 40))
+                        total += cost
+                        nextQueue.add(merged)
+                        i += 2
+                    } else {
+                        // Odd one out — carry forward
+                        nextQueue.add(queue[i])
+                        i++
+                    }
+                }
+                queue = nextQueue
             }
+
+            // Phase 2: Apply final merged book to the item
+            val finalBook = queue[0]
+            // Item starts with 0 prior work, 0 anvil uses
+            val applyCost = finalBook.enchantCost + 0 + finalBook.priorWork
+            steps.add(AnvilStep("Apply ${finalBook.label} to item", applyCost, applyCost >= 40))
+            total += applyCost
         }
 
-        _state.value = _state.value.copy(steps = steps, totalCost = total, warnings = warnings)
-    }
-
-    private fun combinePairs(items: List<Pair<String, Int>>): List<Pair<String, Int>> {
-        if (items.size == 1) return listOf("Apply ${items[0].first} to item" to items[0].second * 2)
-        val result = mutableListOf<Pair<String, Int>>()
-        val queue = items.toMutableList()
-        while (queue.size > 1) {
-            val a = queue.removeFirst()
-            val b = queue.removeLast()
-            val cost = a.second + b.second
-            val merged = "${a.first} + ${b.first}"
-            result.add("Combine $merged" to cost)
-            queue.add(0, merged to cost)
-        }
-        // Final application to item
-        val last = queue[0]
-        result.add("Apply ${last.first} to item" to last.second)
-        return result
+        _state.value = _state.value.copy(steps = steps, totalCost = total, warnings = emptyList())
     }
 
     fun enchantsForCurrentItem(): List<Enchantment> {

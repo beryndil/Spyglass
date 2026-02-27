@@ -92,7 +92,7 @@ private fun parseStructures(structures: String): List<String> {
 }
 
 private fun formatId(id: String): String =
-    id.replace('_', ' ').replaceFirstChar { it.uppercase() }
+    id.split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
 
 private fun parseBiomeColor(hex: String): Color? =
     if (hex.isNotEmpty()) runCatching { Color(android.graphics.Color.parseColor(hex)) }.getOrNull() else null

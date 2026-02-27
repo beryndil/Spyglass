@@ -119,7 +119,7 @@ private fun parseIngredientCounts(recipe: RecipeEntity): Map<String, Int> {
 }
 
 private fun formatItemName(id: String): String =
-    id.substringAfterLast(':').replace('_', ' ').replaceFirstChar { it.uppercase() }
+    id.substringAfterLast(':').split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
 
 // ── Main pager composable ────────────────────────────────────────────────
 

@@ -79,7 +79,7 @@ private fun parseBiomes(biomesJson: String): List<String> {
 }
 
 private fun formatId(id: String): String =
-    id.replace('_', ' ').replaceFirstChar { it.uppercase() }
+    id.split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
 
 // Structure IDs that should be clickable in mob spawn locations
 private val STRUCTURE_IDS = setOf(

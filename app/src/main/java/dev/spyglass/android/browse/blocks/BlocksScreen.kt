@@ -68,7 +68,7 @@ private fun toolTextureId(toolRequired: String): String? {
 }
 
 private fun formatId(id: String): String =
-    id.replace('_', ' ').replaceFirstChar { it.uppercase() }
+    id.split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
 
 private val BLOCK_CATEGORIES = listOf("all", "building", "natural", "decoration", "utility")
 
