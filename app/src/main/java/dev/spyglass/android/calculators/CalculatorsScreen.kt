@@ -23,15 +23,15 @@ import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.flow.map
 
 private val CALC_TABS = listOf(
-    SpyglassTab("Fill",        PixelIcons.Fill),
-    SpyglassTab("Smelt",       PixelIcons.Smelt),
-    SpyglassTab("Storage",     PixelIcons.Storage),
-    SpyglassTab("Nether",      PixelIcons.Nether),
-    SpyglassTab("Shapes",      PixelIcons.Shapes),
-    SpyglassTab("Enchanting",  PixelIcons.Anvil),
-    SpyglassTab("Reference",   PixelIcons.Bookmark),
-    SpyglassTab("Shopping",    PixelIcons.Storage),
-    SpyglassTab("Todo",        PixelIcons.Todo),
+    SpyglassTab("Todo",        PixelIcons.Todo),        // 0 — daily planning
+    SpyglassTab("Shopping",    PixelIcons.Storage),      // 1 — list management
+    SpyglassTab("Enchanting",  PixelIcons.Anvil),        // 2 — optimizer
+    SpyglassTab("Fill",        PixelIcons.Fill),         // 3 — building
+    SpyglassTab("Shapes",      PixelIcons.Shapes),       // 4 — building
+    SpyglassTab("Storage",     PixelIcons.Storage),      // 5 — building
+    SpyglassTab("Smelt",       PixelIcons.Smelt),        // 6 — resources
+    SpyglassTab("Nether",      PixelIcons.Nether),       // 7 — travel
+    SpyglassTab("Reference",   PixelIcons.Bookmark),     // 8 — lookup
 )
 
 @Composable
@@ -69,15 +69,15 @@ fun CalculatorsScreen(initialTab: Int? = null) {
             .padding(16.dp)
         ) {
             when (selectedTab) {
-                0 -> BlockFillScreen()
-                1 -> SmeltingScreen()
-                2 -> StorageScreen()
-                3 -> NetherScreen()
+                0 -> TodoScreen()
+                1 -> ShoppingScreen()
+                2 -> AnvilScreen()
+                3 -> BlockFillScreen()
                 4 -> ShapesScreen()
-                5 -> AnvilScreen()
-                6 -> ReferenceScreen()
-                7 -> ShoppingScreen()
-                8 -> TodoScreen()
+                5 -> StorageScreen()
+                6 -> SmeltingScreen()
+                7 -> NetherScreen()
+                8 -> ReferenceScreen()
             }
         }
     }

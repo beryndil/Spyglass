@@ -19,7 +19,7 @@ private val BROWSE_TAB_NAMES = listOf(
 )
 
 private val TOOL_TAB_NAMES = listOf(
-    "Fill", "Smelt", "Storage", "Nether", "Shapes", "Enchanting", "Reference", "Shopping", "Todo",
+    "Todo", "Shopping", "Enchanting", "Fill", "Shapes", "Storage", "Smelt", "Nether", "Reference",
 )
 
 @OptIn(ExperimentalLayoutApi::class)

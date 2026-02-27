@@ -87,15 +87,15 @@ private val BROWSE_LINKS = listOf(
 )
 
 private val CALC_LINKS = listOf(
-    QuickLink(PixelIcons.Fill,    "Block Fill"),
-    QuickLink(PixelIcons.Smelt,   "Smelting"),
-    QuickLink(PixelIcons.Storage, "Storage"),
-    QuickLink(PixelIcons.Nether,  "Nether Portal"),
-    QuickLink(PixelIcons.Shapes,  "Shapes"),
-    QuickLink(PixelIcons.Anvil,   "Enchanting"),
-    QuickLink(PixelIcons.Bookmark, "Reference"),
-    QuickLink(PixelIcons.Storage,  "Shopping Lists"),
     QuickLink(PixelIcons.Todo,     "Todo List"),
+    QuickLink(PixelIcons.Storage,  "Shopping Lists"),
+    QuickLink(PixelIcons.Anvil,    "Enchanting"),
+    QuickLink(PixelIcons.Fill,     "Block Fill"),
+    QuickLink(PixelIcons.Shapes,   "Shapes"),
+    QuickLink(PixelIcons.Storage,  "Storage"),
+    QuickLink(PixelIcons.Smelt,    "Smelting"),
+    QuickLink(PixelIcons.Nether,   "Nether Portal"),
+    QuickLink(PixelIcons.Bookmark, "Reference"),
 )
 
 // ── Browse tab index for favorite types ─────────────────────────────────────
@@ -219,7 +219,7 @@ fun HomeScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { onCalcTab(8) }
+                        .clickable { onCalcTab(0) }
                         .padding(vertical = 4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
@@ -235,7 +235,7 @@ fun HomeScreen(
         } else {
             SectionHeader("Todo", icon = PixelIcons.Todo)
             ResultCard(
-                modifier = Modifier.clickable { onCalcTab(8) },
+                modifier = Modifier.clickable { onCalcTab(0) },
             ) {
                 Text(
                     "What do you have planned for today?",
