@@ -203,6 +203,29 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
         StatRow("XP Drop", mob.xpDrop)
         if (mob.isFireImmune) StatRow("Fire Immune", "Yes")
 
+        // Breeding
+        if (mob.breeding.isNotEmpty()) {
+            SpyglassDivider()
+            Text("Breeding", style = MaterialTheme.typography.labelSmall, color = Gold)
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                mob.breeding.split(",").map { it.trim() }.filter { it.isNotEmpty() }.forEach { food ->
+                    AssistChip(
+                        onClick = { onItemTap(food) },
+                        label = { Text(formatId(food), style = MaterialTheme.typography.labelSmall) },
+                        leadingIcon = {
+                            val icon = ItemTextures.get(food)
+                            if (icon != null) SpyglassIconImage(icon, contentDescription = null, modifier = Modifier.size(16.dp), tint = androidx.compose.ui.graphics.Color.Unspecified)
+                        },
+                        colors = AssistChipDefaults.assistChipColors(
+                            labelColor = Emerald,
+                            containerColor = Emerald.copy(alpha = 0.12f),
+                        ),
+                        border = null,
+                    )
+                }
+            }
+        }
+
         // Drops
         if (drops.isNotEmpty()) {
             SpyglassDivider()

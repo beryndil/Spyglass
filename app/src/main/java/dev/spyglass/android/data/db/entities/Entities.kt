@@ -38,6 +38,7 @@ data class MobEntity(
     val xpDrop: String = "0",       // "5" or "1-4" for size-based mobs
     val isFireImmune: Boolean = false,
     val description: String = "",
+    val breeding: String = "",      // e.g. "wheat" or "carrots,potatoes,beetroot" or ""
 )
 
 @Entity(tableName = "biomes")

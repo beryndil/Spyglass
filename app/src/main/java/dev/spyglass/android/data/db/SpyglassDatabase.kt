@@ -19,7 +19,7 @@ import dev.spyglass.android.data.db.entities.*
         StructureEntity::class,
         ItemEntity::class,
     ],
-    version = 9,
+    version = 10,
     exportSchema = false,
 )
 abstract class SpyglassDatabase : RoomDatabase() {

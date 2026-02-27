@@ -23,6 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.BiomeResourceMap
 import dev.spyglass.android.data.db.entities.ItemEntity
+import dev.spyglass.android.data.db.entities.MobEntity
 import dev.spyglass.android.data.db.entities.RecipeEntity
 import dev.spyglass.android.data.db.entities.StructureEntity
 import dev.spyglass.android.data.repository.GameDataRepository
@@ -54,6 +55,20 @@ class ItemsViewModel(app: Application) : AndroidViewModel(app) {
 
     val structures: StateFlow<List<StructureEntity>> = repo.searchStructures("")
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    val breedingMap: StateFlow<Map<String, List<String>>> = repo.searchMobs("")
+        .map { mobs ->
+            val map = mutableMapOf<String, MutableList<String>>()
+            mobs.forEach { mob ->
+                if (mob.breeding.isNotEmpty()) {
+                    mob.breeding.split(",").map { it.trim() }.filter { it.isNotEmpty() }.forEach { food ->
+                        map.getOrPut(food) { mutableListOf() }.add(mob.id)
+                    }
+                }
+            }
+            map
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
     fun setQuery(q: String)    { _query.value = q }
     fun setCategory(c: String) { _category.value = c }
@@ -119,9 +134,10 @@ fun ItemsScreen(
     val category   by vm.category.collectAsState()
     val items      by vm.items.collectAsState()
     val expandedIds by vm.expandedIds.collectAsState()
-    val allRecipes by vm.allRecipes.collectAsState()
-    val structures by vm.structures.collectAsState()
-    val listState  = rememberLazyListState()
+    val allRecipes  by vm.allRecipes.collectAsState()
+    val structures  by vm.structures.collectAsState()
+    val breedingMap by vm.breedingMap.collectAsState()
+    val listState   = rememberLazyListState()
 
     // Auto-expand and scroll to target item from cross-reference
     LaunchedEffect(targetItemId, items) {
@@ -208,6 +224,7 @@ fun ItemsScreen(
                             item = item,
                             allRecipes = allRecipes,
                             structures = structures,
+                            breedingMap = breedingMap,
                             vm = vm,
                             onMobTap = onMobTap,
                             onBlockTap = onBlockTap,
@@ -237,6 +254,7 @@ private fun ItemDetailCard(
     item: ItemEntity,
     allRecipes: Map<String, RecipeEntity>,
     structures: List<StructureEntity>,
+    breedingMap: Map<String, List<String>>,
     vm: ItemsViewModel,
     onMobTap: (String) -> Unit,
     onBlockTap: (String) -> Unit,
@@ -316,7 +334,34 @@ private fun ItemDetailCard(
             }
         }
 
-        // 6. Mined from (block chips)
+        // 6. Used to breed (reverse lookup from breeding map)
+        val breedableMobs = breedingMap[item.id].orEmpty()
+        if (breedableMobs.isNotEmpty()) {
+            SpyglassDivider()
+            Text("Used to Breed", style = MaterialTheme.typography.labelSmall, color = Gold)
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                breedableMobs.forEach { mobId ->
+                    val mobIcon = MobTextures.get(mobId)
+                    AssistChip(
+                        onClick = { onMobTap(mobId) },
+                        label = { Text(formatId(mobId), style = MaterialTheme.typography.labelSmall) },
+                        leadingIcon = if (mobIcon != null) { {
+                            SpyglassIconImage(mobIcon, contentDescription = null, modifier = Modifier.size(16.dp), tint = androidx.compose.ui.graphics.Color.Unspecified)
+                        } } else null,
+                        colors = AssistChipDefaults.assistChipColors(
+                            labelColor = Emerald,
+                            containerColor = Emerald.copy(alpha = 0.12f),
+                        ),
+                        border = null,
+                    )
+                }
+            }
+        }
+
+        // 7. Mined from (block chips)
         val minedFrom = item.minedFrom.split(",").map { it.trim() }.filter { it.isNotEmpty() }
         if (minedFrom.isNotEmpty()) {
             SpyglassDivider()

@@ -50,6 +50,7 @@ object DataSeeder {
         val drops: String = "",
         val xp: kotlinx.serialization.json.JsonElement = kotlinx.serialization.json.JsonPrimitive(0),
         val isFireImmune: Boolean = false, val description: String = "",
+        val breeding: String = "",
     )
 
     @Serializable data class BiomeJson(
@@ -121,7 +122,7 @@ object DataSeeder {
             val biomesList = if (it.spawnBiomes.isBlank()) "[]"
                 else "[${it.spawnBiomes.split(",").joinToString(",") { s -> "\"${s.trim()}\""}}]"
             MobEntity(it.id, it.name, healthStr, it.hostility.ifEmpty { it.category },
-                biomesList, it.drops, xpStr, it.isFireImmune, it.description)
+                biomesList, it.drops, xpStr, it.isFireImmune, it.description, it.breeding)
         })
     }
 
