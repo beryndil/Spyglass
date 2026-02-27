@@ -32,7 +32,6 @@ object StructureTextures {
         "end_gateway" to R.drawable.block_obsidian,
         "fossil" to R.drawable.block_stone,
         "desert_well" to R.drawable.block_sandstone,
-        "monument" to R.drawable.block_netherrack,
     )
 
     fun get(structureId: String): SpyglassIcon? {

@@ -38,7 +38,7 @@ private val KNOWN_MOB_IDS = setOf(
     "phantom", "piglin", "hoglin", "zoglin", "piglin_brute", "strider",
     "cow", "pig", "sheep", "chicken", "rabbit", "fox", "wolf", "ocelot", "cat",
     "parrot", "horse", "donkey", "mule", "llama", "polar_bear", "panda", "bee",
-    "goat", "axolotl", "glow_squid", "squid", "dolphin", "pufferfish", "turtle",
+    "goat", "axolotl", "glow_squid", "squid", "dolphin", "pufferfish", "turtle", "tropical_fish",
     "mooshroom", "frog", "allay", "sniffer", "camel", "armadillo", "breeze",
     "bogged", "creaking", "warden", "ender_dragon", "wither", "villager",
     "wandering_trader", "bat", "iron_golem", "snow_golem",

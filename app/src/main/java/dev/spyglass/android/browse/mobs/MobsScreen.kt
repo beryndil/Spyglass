@@ -26,13 +26,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 
+// Non-biome, non-structure spawn locations shown as plain badges
 private val SPECIAL_LOCATIONS = setOf(
-    "all_overworld", "slime_chunks", "nether_fortress", "caves", "mineshaft",
-    "stronghold", "ocean_monument", "woodland_mansion", "pillager_outpost",
-    "raid", "bred", "summoned", "village", "swamp_hut", "desert_village",
-    "bastion_remnant", "trial_chamber", "deep_dark", "pale_garden",
-    "lush_caves", "underground_ocean", "nether_overworld", "breeds_only",
-    "extreme_hills",
+    "all_overworld", "slime_chunks", "caves", "raid", "bred", "summoned",
+    "underground_ocean", "nether_overworld", "breeds_only", "extreme_hills",
 )
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
@@ -87,8 +84,8 @@ private fun formatId(id: String): String =
 // Structure IDs that should be clickable in mob spawn locations
 private val STRUCTURE_IDS = setOf(
     "nether_fortress", "ocean_monument", "woodland_mansion", "pillager_outpost",
-    "stronghold", "village", "swamp_hut", "bastion_remnant", "trial_chamber",
-    "mineshaft", "desert_village",
+    "stronghold", "village", "swamp_hut", "bastion_remnant", "trial_chambers",
+    "mineshaft", "dungeon", "ancient_city", "end_city",
 )
 
 @OptIn(ExperimentalLayoutApi::class)
