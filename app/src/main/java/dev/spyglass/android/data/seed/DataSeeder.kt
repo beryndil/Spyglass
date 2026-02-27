@@ -26,6 +26,7 @@ object DataSeeder {
         if (db.tradeDao().count()   == 0) seedTrades(context, db)
         if (db.recipeDao().count()    == 0) seedRecipes(context, db)
         if (db.structureDao().count() == 0) seedStructures(context, db)
+        if (db.itemDao().count()      == 0) seedItems(context, db)
     }
 
     private fun readAsset(context: Context, path: String): String =
@@ -91,6 +92,13 @@ object DataSeeder {
         val difficulty: String = "", val description: String = "",
         val biomes: String = "", val mobs: String = "", val loot: String = "",
         val uniqueBlocks: String = "", val findMethod: String = "",
+    )
+
+    @Serializable data class ItemJson(
+        val id: String, val name: String, val stackSize: Int = 64,
+        val category: String = "", val durability: Int = 0,
+        val description: String = "", val obtainedFrom: String = "",
+        val droppedBy: String = "", val minedFrom: String = "",
     )
 
     // ── Seed helpers ──────────────────────────────────────────────────────────
@@ -172,6 +180,15 @@ object DataSeeder {
         db.structureDao().insertAll(items.map {
             StructureEntity(it.id, it.name, it.dimension, it.difficulty,
                 it.description, it.biomes, it.mobs, it.loot, it.uniqueBlocks, it.findMethod)
+        })
+    }
+
+    private suspend fun seedItems(context: Context, db: SpyglassDatabase) {
+        val raw = runCatching { readAsset(context, "minecraft/items.json") }.getOrNull() ?: return
+        val items = json.decodeFromString<List<ItemJson>>(raw)
+        db.itemDao().insertAll(items.map {
+            ItemEntity(it.id, it.name, it.stackSize, it.category, it.durability,
+                it.description, it.obtainedFrom, it.droppedBy, it.minedFrom)
         })
     }
 }

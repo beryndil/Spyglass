@@ -2,6 +2,7 @@ package dev.spyglass.android.core.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -14,8 +15,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import dev.spyglass.android.data.db.entities.RecipeEntity
+import kotlinx.serialization.json.*
 
 // ── Section header ────────────────────────────────────────────────────────────
 
@@ -272,6 +277,71 @@ fun CategoryBadge(label: String, color: Color, modifier: Modifier = Modifier) {
             .background(color.copy(alpha = 0.12f), RoundedCornerShape(4.dp))
             .padding(horizontal = 8.dp, vertical = 2.dp),
     )
+}
+
+// ── Tab row — reusable icon+text tabs for Calculators and Browse ────────────
+
+// ── Texture-based crafting grid ──────────────────────────────────────────────
+
+@Composable
+fun TextureCraftingGrid(
+    recipe: RecipeEntity,
+    onItemTap: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val cells = runCatching {
+        Json.parseToJsonElement(recipe.ingredientsJson).jsonArray.flatMap { row ->
+            if (row is JsonArray) row.map { it.jsonPrimitive.contentOrNull }
+            else listOf(row.jsonPrimitive.contentOrNull)
+        }
+    }.getOrElse { emptyList() }
+
+    val rows = runCatching {
+        Json.parseToJsonElement(recipe.ingredientsJson).jsonArray.size
+    }.getOrDefault(3)
+    val cols = runCatching {
+        val first = Json.parseToJsonElement(recipe.ingredientsJson).jsonArray.firstOrNull()
+        if (first is JsonArray) first.size else 1
+    }.getOrDefault(3)
+
+    Column(modifier = modifier) {
+        for (row in 0 until rows) {
+            Row {
+                for (col in 0 until cols) {
+                    val cell = cells.getOrNull(row * cols + col)
+                    val texture = if (!cell.isNullOrBlank()) ItemTextures.get(cell) else null
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .size(30.dp)
+                            .background(
+                                if (!cell.isNullOrBlank()) SurfaceMid else Background,
+                                RoundedCornerShape(2.dp),
+                            )
+                            .border(0.5.dp, Stone700, RoundedCornerShape(2.dp))
+                            .then(
+                                if (!cell.isNullOrBlank()) Modifier.clickable { onItemTap(cell) }
+                                else Modifier
+                            ),
+                    ) {
+                        if (texture != null) {
+                            SpyglassIconImage(
+                                texture, contentDescription = cell,
+                                modifier = Modifier.size(22.dp),
+                            )
+                        } else if (!cell.isNullOrBlank()) {
+                            Text(
+                                cell.take(2).uppercase(),
+                                fontSize = 7.sp,
+                                color = Stone300,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 // ── Tab row — reusable icon+text tabs for Calculators and Browse ────────────

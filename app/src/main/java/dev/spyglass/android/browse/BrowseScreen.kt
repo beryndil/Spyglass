@@ -10,6 +10,7 @@ import dev.spyglass.android.browse.biomes.BiomesScreen
 import dev.spyglass.android.browse.blocks.BlocksScreen
 import dev.spyglass.android.browse.crafting.CraftingScreen
 import dev.spyglass.android.browse.enchants.EnchantsScreen
+import dev.spyglass.android.browse.items.ItemsScreen
 import dev.spyglass.android.browse.mobs.MobsScreen
 import dev.spyglass.android.browse.potions.PotionsScreen
 import dev.spyglass.android.browse.structures.StructuresScreen
@@ -30,6 +31,7 @@ private val BROWSE_TABS = listOf(
     SpyglassTab("Potions",    PixelIcons.Potion),
     SpyglassTab("Trades",     PixelIcons.Trade, untinted = true),
     SpyglassTab("Structures", PixelIcons.Structure),
+    SpyglassTab("Items",      PixelIcons.Item),
 )
 
 @Composable
@@ -40,30 +42,34 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
     var targetBlockId by remember { mutableStateOf<String?>(null) }
     var targetRecipeId by remember { mutableStateOf<String?>(null) }
     var targetStructureId by remember { mutableStateOf<String?>(null) }
+    var targetItemId by remember { mutableStateOf<String?>(null) }
 
     // Handle incoming navigation from Search
     LaunchedEffect(initialTarget) {
         if (initialTarget != null) {
             tab = initialTarget.tab
-            targetMobId = null; targetBiomeId = null; targetBlockId = null; targetRecipeId = null; targetStructureId = null
+            targetMobId = null; targetBiomeId = null; targetBlockId = null
+            targetRecipeId = null; targetStructureId = null; targetItemId = null
             when (initialTarget.tab) {
                 0 -> targetBlockId = initialTarget.id
                 1 -> targetRecipeId = initialTarget.id
                 2 -> targetMobId = initialTarget.id
                 3 -> targetBiomeId = initialTarget.id
                 7 -> targetStructureId = initialTarget.id
-                // Tabs 4-6 (enchants, potions, trades) just switch to the tab
+                8 -> targetItemId = initialTarget.id
             }
         }
     }
 
-    // Collect block IDs so we can route item taps to the correct tab
+    // Collect block IDs and item IDs so we can route taps to the correct tab
     val context = LocalContext.current
     val repo = remember { GameDataRepository.get(context) }
     val blockIds by repo.searchBlocks("").map { list -> list.map { it.id }.toSet() }
         .collectAsState(initial = emptySet())
+    val itemIds by repo.searchItems("").map { list -> list.map { it.id }.toSet() }
+        .collectAsState(initial = emptySet())
 
-    // Cross-tab item navigation — route to Blocks if item is a block, else Recipes
+    // Cross-tab item navigation — 3-way routing: Blocks → Items → Recipes
     val onItemTap: (String) -> Unit = { itemId ->
         targetMobId = null
         targetBiomeId = null
@@ -71,12 +77,29 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
         if (itemId in blockIds) {
             targetBlockId = itemId
             targetRecipeId = null
+            targetItemId = null
             tab = 0  // Navigate to Blocks tab
+        } else if (itemId in itemIds) {
+            targetItemId = itemId
+            targetBlockId = null
+            targetRecipeId = null
+            tab = 8  // Navigate to Items tab
         } else {
             targetRecipeId = itemId
             targetBlockId = null
+            targetItemId = null
             tab = 1  // Navigate to Recipes tab
         }
+    }
+
+    val onMobTap: (String) -> Unit = { mobId ->
+        targetMobId = mobId
+        targetBiomeId = null
+        targetBlockId = null
+        targetRecipeId = null
+        targetStructureId = null
+        targetItemId = null
+        tab = 2  // Navigate to Mobs tab
     }
 
     val onBiomeTap: (String) -> Unit = { biomeId ->
@@ -85,6 +108,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
         targetRecipeId = null
         targetMobId = null
         targetStructureId = null
+        targetItemId = null
         tab = 3  // Navigate to Biomes tab
     }
 
@@ -94,6 +118,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
         targetRecipeId = null
         targetMobId = null
         targetBiomeId = null
+        targetItemId = null
         tab = 7  // Navigate to Structures tab
     }
 
@@ -108,6 +133,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                 targetBlockId = null
                 targetRecipeId = null
                 targetStructureId = null
+                targetItemId = null
             },
         )
         HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp)
@@ -131,6 +157,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                     targetBlockId = null
                     targetRecipeId = null
                     targetStructureId = null
+                    targetItemId = null
                     tab = 3
                 },
                 onNavigateToStructure = onStructureTap,
@@ -143,6 +170,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                     targetBlockId = null
                     targetRecipeId = null
                     targetStructureId = null
+                    targetItemId = null
                     tab = 2
                 },
                 onNavigateToStructure = onStructureTap,
@@ -158,10 +186,26 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                     targetBlockId = null
                     targetRecipeId = null
                     targetStructureId = null
+                    targetItemId = null
                     tab = 2
                 },
                 onNavigateToBiome = onBiomeTap,
                 onItemTap = onItemTap,
+            )
+            8 -> ItemsScreen(
+                targetItemId = targetItemId,
+                onMobTap = onMobTap,
+                onBlockTap = { blockId ->
+                    targetBlockId = blockId
+                    targetRecipeId = null
+                    targetMobId = null
+                    targetBiomeId = null
+                    targetStructureId = null
+                    targetItemId = null
+                    tab = 0
+                },
+                onItemTap = onItemTap,
+                onStructureTap = onStructureTap,
             )
         }
     }

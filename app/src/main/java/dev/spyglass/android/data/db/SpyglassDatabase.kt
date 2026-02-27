@@ -17,8 +17,9 @@ import dev.spyglass.android.data.db.entities.*
         PotionEntity::class,
         TradeEntity::class,
         StructureEntity::class,
+        ItemEntity::class,
     ],
-    version = 8,
+    version = 9,
     exportSchema = false,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
@@ -30,6 +31,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
     abstract fun potionDao():    PotionDao
     abstract fun tradeDao():     TradeDao
     abstract fun structureDao(): StructureDao
+    abstract fun itemDao():      ItemDao
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null

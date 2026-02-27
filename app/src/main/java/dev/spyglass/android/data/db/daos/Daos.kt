@@ -150,3 +150,24 @@ interface StructureDao {
     @Query("SELECT COUNT(*) FROM structures")
     suspend fun count(): Int
 }
+
+@Dao
+interface ItemDao {
+    @Query("SELECT * FROM items WHERE name LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name")
+    fun search(q: String): Flow<List<ItemEntity>>
+
+    @Query("SELECT * FROM items ORDER BY name")
+    fun all(): Flow<List<ItemEntity>>
+
+    @Query("SELECT * FROM items WHERE id = :id")
+    suspend fun byId(id: String): ItemEntity?
+
+    @Query("SELECT * FROM items WHERE category = :cat ORDER BY name")
+    fun byCategory(cat: String): Flow<List<ItemEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(items: List<ItemEntity>)
+
+    @Query("SELECT COUNT(*) FROM items")
+    suspend fun count(): Int
+}

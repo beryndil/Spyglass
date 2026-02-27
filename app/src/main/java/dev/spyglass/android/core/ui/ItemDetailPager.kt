@@ -271,49 +271,11 @@ private fun RecipePage(
     }
 }
 
-// ── Crafting grid visualization ───────────────────────────────────────
+// ── Crafting grid visualization (delegates to shared TextureCraftingGrid) ───
 
 @Composable
 private fun CraftingGridView(recipe: RecipeEntity, onItemTap: (String) -> Unit) {
-    val cells = runCatching {
-        Json.parseToJsonElement(recipe.ingredientsJson).jsonArray.flatMap { row ->
-            if (row is JsonArray) row.map { it.jsonPrimitive.contentOrNull }
-            else listOf(row.jsonPrimitive.contentOrNull)
-        }
-    }.getOrElse { emptyList() }
-
-    // Determine grid size
-    val rows = runCatching {
-        Json.parseToJsonElement(recipe.ingredientsJson).jsonArray.size
-    }.getOrDefault(3)
-    val cols = runCatching {
-        val first = Json.parseToJsonElement(recipe.ingredientsJson).jsonArray.firstOrNull()
-        if (first is JsonArray) first.size else 1
-    }.getOrDefault(3)
-
-    Column {
-        for (row in 0 until rows) {
-            Row {
-                for (col in 0 until cols) {
-                    val cell = cells.getOrNull(row * cols + col)
-                    val abbrev = cell?.substringAfterLast(':')?.take(2)?.uppercase()
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .size(28.dp)
-                            .background(
-                                if (!cell.isNullOrBlank()) SurfaceMid else Background,
-                                RoundedCornerShape(2.dp),
-                            )
-                            .border(0.5.dp, Stone700, RoundedCornerShape(2.dp)),
-                    ) {
-                        if (abbrev != null)
-                            Text(abbrev, fontSize = 7.sp, color = Stone300, textAlign = TextAlign.Center)
-                    }
-                }
-            }
-        }
-    }
+    TextureCraftingGrid(recipe = recipe, onItemTap = onItemTap)
 }
 
 // ── Uses page ────────────────────────────────────────────────────────

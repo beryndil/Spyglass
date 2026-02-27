@@ -12,6 +12,7 @@ object PixelIcons {
     val Potion    = SpyglassIcon.Drawable(R.drawable.ic_pixel_potion)
     val Trade     = SpyglassIcon.Drawable(R.drawable.item_emerald)
     val Structure = SpyglassIcon.Drawable(R.drawable.ic_pixel_structure)
+    val Item      = SpyglassIcon.Drawable(R.drawable.ic_pixel_items)
     val Fill      = SpyglassIcon.Drawable(R.drawable.ic_pixel_fill)
     val Smelt     = SpyglassIcon.Drawable(R.drawable.ic_pixel_smelt)
     val Storage   = SpyglassIcon.Drawable(R.drawable.ic_pixel_storage)

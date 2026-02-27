@@ -33,14 +33,17 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
         .flatMapLatest { q ->
             if (q.length < 2) return@flatMapLatest flowOf(emptyList())
             combine(
-                repo.searchBlocks(q),
-                repo.searchRecipes(q),
-                repo.searchMobs(q),
-                repo.searchBiomes(q),
-                repo.searchEnchants(q),
-                repo.searchPotions(q),
-                repo.searchTrades(q),
-                repo.searchStructures(q),
+                listOf(
+                    repo.searchBlocks(q),
+                    repo.searchRecipes(q),
+                    repo.searchMobs(q),
+                    repo.searchBiomes(q),
+                    repo.searchEnchants(q),
+                    repo.searchPotions(q),
+                    repo.searchTrades(q),
+                    repo.searchStructures(q),
+                    repo.searchItems(q),
+                )
             ) { results ->
                 val blocks     = (results[0] as List<*>)
                 val recipes    = (results[1] as List<*>)
@@ -50,6 +53,7 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
                 val potions    = (results[5] as List<*>)
                 val trades     = (results[6] as List<*>)
                 val structures = (results[7] as List<*>)
+                val items      = (results[8] as List<*>)
                 buildList {
                     addAll(blocks.take(5).map   { it as dev.spyglass.android.data.db.entities.BlockEntity;     SearchResult("Block",       it.id, it.name, it.category) })
                     addAll(recipes.take(5).map  { it as dev.spyglass.android.data.db.entities.RecipeEntity;    SearchResult("Recipe",      it.outputItem, it.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { c -> c.uppercase() }, it.type.replace('_', ' ')) })
@@ -59,6 +63,7 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
                     addAll(potions.take(5).map  { it as dev.spyglass.android.data.db.entities.PotionEntity;    SearchResult("Potion",      it.id, it.name, it.category) })
                     addAll(trades.take(5).map   { it as dev.spyglass.android.data.db.entities.TradeEntity;     SearchResult("Trade",       it.profession, "${it.sellItem.replace('_', ' ')} (${it.levelName})", it.profession) })
                     addAll(structures.take(5).map { it as dev.spyglass.android.data.db.entities.StructureEntity; SearchResult("Structure",  it.id, it.name, it.dimension) })
+                    addAll(items.take(5).map    { it as dev.spyglass.android.data.db.entities.ItemEntity;      SearchResult("Item",        it.id, it.name, it.category) })
                 }
             }
         }
@@ -77,6 +82,7 @@ fun browseTabForType(type: String): Int = when (type) {
     "Potion"      -> 5
     "Trade"       -> 6
     "Structure"   -> 7
+    "Item"        -> 8
     else          -> 0
 }
 
@@ -89,6 +95,7 @@ private fun typeIcon(type: String): SpyglassIcon = when (type) {
     "Potion"      -> PixelIcons.Potion
     "Trade"       -> PixelIcons.Trade
     "Structure"   -> PixelIcons.Structure
+    "Item"        -> PixelIcons.Item
     else          -> PixelIcons.Search
 }
 
@@ -101,6 +108,7 @@ private fun typeColor(type: String) = when (type) {
     "Potion"      -> PotionBlue
     "Trade"       -> Emerald
     "Structure"   -> Gold
+    "Item"        -> Gold
     else          -> Stone500
 }
 
@@ -126,7 +134,7 @@ fun SearchScreen(
             EmptyState(
                 icon     = PixelIcons.Search,
                 title    = "Search everything",
-                subtitle = "Type at least 2 characters to search blocks, mobs, biomes, structures, recipes, trades, and more.",
+                subtitle = "Type at least 2 characters to search blocks, mobs, biomes, structures, items, recipes, trades, and more.",
             )
         } else {
             LazyColumn(

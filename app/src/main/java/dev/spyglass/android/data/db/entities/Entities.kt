@@ -105,3 +105,16 @@ data class StructureEntity(
     val uniqueBlocks: String = "",  // comma-separated block IDs
     val findMethod: String = "",
 )
+
+@Entity(tableName = "items")
+data class ItemEntity(
+    @PrimaryKey val id: String,
+    val name: String,
+    val stackSize: Int = 64,
+    val category: String = "",      // tools, weapons, armor, food, materials, mob_drops, brewing, misc
+    val durability: Int = 0,
+    val description: String = "",
+    val obtainedFrom: String = "",  // comma-sep: crafting, mob_drop, mining, trading, fishing, structure_loot, farming, smelting, bartering, found
+    val droppedBy: String = "",     // comma-sep mob IDs
+    val minedFrom: String = "",     // comma-sep block IDs
+)
