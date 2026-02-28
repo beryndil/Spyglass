@@ -15,6 +15,8 @@ import dev.spyglass.android.calculators.shapes.ShapesScreen
 import dev.spyglass.android.calculators.smelting.SmeltingScreen
 import dev.spyglass.android.calculators.shopping.ShoppingScreen
 import dev.spyglass.android.calculators.storage.StorageScreen
+import dev.spyglass.android.calculators.clock.ClockScreen
+import dev.spyglass.android.calculators.light.LightScreen
 import dev.spyglass.android.calculators.todo.TodoScreen
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassTab
@@ -34,6 +36,8 @@ private val CALC_TABS = listOf(
     SpyglassTab("Smelt",       PixelIcons.Smelt),        // 7 — resources
     SpyglassTab("Nether",      PixelIcons.Nether),       // 8 — travel
     SpyglassTab("Reference",   PixelIcons.Bookmark),     // 9 — lookup
+    SpyglassTab("Game Clock", PixelIcons.Clock),         // 10 — day/night cycle
+    SpyglassTab("Light",      PixelIcons.Blocks),        // 11 — light spacing
 )
 
 @Composable
@@ -81,6 +85,8 @@ fun CalculatorsScreen(initialTab: Int? = null) {
                 7 -> SmeltingScreen()
                 8 -> NetherScreen()
                 9 -> ReferenceScreen()
+                10 -> ClockScreen()
+                11 -> LightScreen()
             }
         }
     }
