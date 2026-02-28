@@ -87,8 +87,8 @@ private fun browseLinks() = listOf(
     QuickLink(PixelIcons.Structure, "Structures",   MaterialTheme.colorScheme.primary),
     QuickLink(PixelIcons.Enchant,   "Enchants",     EnderPurple),
     QuickLink(PixelIcons.Potion,    "Potions",      PotionBlue),
-    QuickLink(PixelIcons.Enchant,   "Advances",     Emerald),
-    QuickLink(PixelIcons.Blocks,    "Commands",     PotionBlue),
+    QuickLink(PixelIcons.Advancement, "Advancements", Emerald),
+    QuickLink(PixelIcons.Command,   "Commands",     PotionBlue),
     QuickLink(PixelIcons.Bookmark,  "Reference",    MaterialTheme.colorScheme.primary),
 )
 
@@ -325,15 +325,11 @@ fun HomeScreen(
             }
         }
 
-        // ── C. Quick Access — Browse ──
-        SectionHeader("Browse", icon = PixelIcons.Browse)
-        QuickLinkGrid(browseLinks()) { index -> onBrowseTab(index) }
-
-        // ── D. Quick Access — Tools ──
+        // ── C. Quick Access — Tools ──
         SectionHeader("Tools", icon = SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.item_diamond_pickaxe))
         QuickLinkGrid(CALC_LINKS) { index -> onCalcTab(index) }
 
-        // ── E. Tip of the Day ──
+        // ── D. Tip of the Day ──
         if (showTipOfDay) {
             ResultCard {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -349,6 +345,10 @@ fun HomeScreen(
                 )
             }
         }
+
+        // ── E. Quick Access — Browse ──
+        SectionHeader("Browse", icon = PixelIcons.Browse)
+        QuickLinkGrid(browseLinks()) { index -> onBrowseTab(index) }
 
         // ── F. What's New ──
         SectionHeader("What's New")

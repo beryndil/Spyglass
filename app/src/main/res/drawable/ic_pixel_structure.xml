@@ -3,35 +3,44 @@
     android:height="24dp"
     android:viewportWidth="16"
     android:viewportHeight="16">
-    <!-- Castle/tower pixel art icon -->
-    <!-- Base fill -->
+    <!-- Castle/fortress pixel art icon -->
+    <!-- Central keep (tallest element) -->
     <path android:fillColor="#888888"
-        android:pathData="M1,15h14v-1h-14z"/>
+        android:pathData="M6,8h4v-6h-4z"/>
+    <!-- Central crenellations -->
+    <path android:fillColor="#888888"
+        android:pathData="M6,2h1v-1h-1z M9,2h1v-1h-1z"/>
+    <!-- Left tower (shorter) -->
+    <path android:fillColor="#888888"
+        android:pathData="M1,8h3v-3h-3z"/>
+    <!-- Left tower crenellations -->
+    <path android:fillColor="#888888"
+        android:pathData="M1,5h1v-1h-1z M3,5h1v-1h-1z"/>
+    <!-- Right tower (shorter) -->
+    <path android:fillColor="#888888"
+        android:pathData="M12,8h3v-3h-3z"/>
+    <!-- Right tower crenellations -->
+    <path android:fillColor="#888888"
+        android:pathData="M12,5h1v-1h-1z M14,5h1v-1h-1z"/>
+    <!-- Wall crenellations -->
+    <path android:fillColor="#888888"
+        android:pathData="M4,8h1v-1h-1z M11,8h1v-1h-1z"/>
     <!-- Main wall -->
     <path android:fillColor="#888888"
-        android:pathData="M2,14h12v-7h-12z"/>
-    <!-- Left tower -->
+        android:pathData="M1,14h14v-6h-14z"/>
+    <!-- Base -->
     <path android:fillColor="#888888"
-        android:pathData="M1,7h4v-4h-4z"/>
-    <!-- Right tower -->
-    <path android:fillColor="#888888"
-        android:pathData="M11,7h4v-4h-4z"/>
-    <!-- Crenellations left tower -->
-    <path android:fillColor="#888888"
-        android:pathData="M1,3h1v-2h-1z M3,3h1v-2h-1z"/>
-    <!-- Crenellations right tower -->
-    <path android:fillColor="#888888"
-        android:pathData="M12,3h1v-2h-1z M14,3h1v-2h-1z"/>
-    <!-- Crenellations main wall -->
-    <path android:fillColor="#888888"
-        android:pathData="M5,7h1v-1h-1z M7,7h2v-1h-2z M10,7h1v-1h-1z"/>
-    <!-- Door -->
+        android:pathData="M1,15h14v-1h-14z"/>
+    <!-- Gate -->
     <path android:fillColor="#444444"
         android:pathData="M7,14h2v-3h-2z"/>
     <!-- Windows -->
     <path android:fillColor="#444444"
-        android:pathData="M4,11h2v-2h-2z M10,11h2v-2h-2z"/>
+        android:pathData="M3,12h2v-1h-2z M11,12h2v-1h-2z"/>
+    <!-- Central keep window -->
+    <path android:fillColor="#444444"
+        android:pathData="M7,5h2v-1h-2z"/>
     <!-- Tower windows -->
     <path android:fillColor="#444444"
-        android:pathData="M2,5h2v-1h-2z M12,5h2v-1h-2z"/>
+        android:pathData="M2,7h1v-1h-1z M13,7h1v-1h-1z"/>
 </vector>

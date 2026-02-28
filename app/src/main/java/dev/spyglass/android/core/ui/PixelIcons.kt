@@ -8,7 +8,7 @@ object PixelIcons {
     val Mob       = SpyglassIcon.Drawable(R.drawable.mob_zombie)
     val Allay     = SpyglassIcon.Drawable(R.drawable.ic_pixel_allay)
     val Biome     = SpyglassIcon.Drawable(R.drawable.ic_pixel_biome)
-    val Enchant   = SpyglassIcon.Drawable(R.drawable.ic_pixel_enchant)
+    val Enchant   = SpyglassIcon.Drawable(R.drawable.item_enchanted_book)
     val Potion    = SpyglassIcon.Drawable(R.drawable.ic_pixel_potion)
     val Trade     = SpyglassIcon.Drawable(R.drawable.item_emerald)
     val Structure = SpyglassIcon.Drawable(R.drawable.ic_pixel_structure)
@@ -28,4 +28,6 @@ object PixelIcons {
     val Todo      = SpyglassIcon.Drawable(R.drawable.ic_pixel_todo)
     val Maze      = SpyglassIcon.Drawable(R.drawable.ic_pixel_maze)
     val Clock     = SpyglassIcon.Drawable(R.drawable.ic_pixel_clock)
+    val Advancement = SpyglassIcon.Drawable(R.drawable.ic_pixel_advancement)
+    val Command   = SpyglassIcon.Drawable(R.drawable.ic_pixel_command)
 }

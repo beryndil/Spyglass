@@ -1,0 +1,22 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Terminal/command prompt icon -->
+    <!-- Frame -->
+    <path android:fillColor="#555555"
+        android:pathData="M0,0h16v16h-16z"/>
+    <!-- Screen background -->
+    <path android:fillColor="#1E1E1E"
+        android:pathData="M1,2h14v13h-14z"/>
+    <!-- Title bar -->
+    <path android:fillColor="#444444"
+        android:pathData="M1,1h14v1h-14z"/>
+    <!-- > prompt arrow -->
+    <path android:fillColor="#55CC55"
+        android:pathData="M3,5h1v1h-1z M4,6h1v1h-1z M5,7h1v1h-1z M4,8h1v1h-1z M3,9h1v1h-1z"/>
+    <!-- Cursor underscore -->
+    <path android:fillColor="#55CC55"
+        android:pathData="M7,11h5v1h-5z"/>
+</vector>
