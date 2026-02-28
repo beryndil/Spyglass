@@ -33,6 +33,10 @@ object MojangApi {
     fun skinUrl(uuid: String): String =
         "https://starlightskins.lunareclipse.studio/render/reading/$uuid/full"
 
+    /** Cheering pose render (starlightskins). */
+    fun cheerUrl(uuid: String): String =
+        "https://starlightskins.lunareclipse.studio/render/crossed/$uuid/full"
+
     /** Face avatar URL (mc-heads.net). */
     fun avatarUrl(uuid: String): String =
         "https://mc-heads.net/avatar/$uuid/128"

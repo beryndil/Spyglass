@@ -79,9 +79,9 @@ fun AboutScreen(onBack: () -> Unit = {}) {
             )
             Spacer(Modifier.height(8.dp))
             SpyglassIconImage(
-                icon = SpyglassIcon.Drawable(R.drawable.skin_beryndil),
+                icon = SpyglassIcon.Drawable(R.drawable.about_beryndil),
                 contentDescription = "Beryndil",
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier.height(140.dp),
                 tint = Color.Unspecified,
             )
             Spacer(Modifier.height(12.dp))
