@@ -43,6 +43,7 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
                     repo.searchTrades(q),
                     repo.searchStructures(q),
                     repo.searchItems(q),
+                    repo.searchAdvancements(q),
                 )
             ) { results ->
                 val blocks     = (results[0] as List<*>)
@@ -53,7 +54,8 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
                 val potions    = (results[5] as List<*>)
                 val trades     = (results[6] as List<*>)
                 val structures = (results[7] as List<*>)
-                val items      = (results[8] as List<*>)
+                val items        = (results[8] as List<*>)
+                val advancements = (results[9] as List<*>)
                 buildList {
                     addAll(blocks.take(5).map   { it as dev.spyglass.android.data.db.entities.BlockEntity;     SearchResult("Block",       it.id, it.name, it.category) })
                     addAll(recipes.take(5).map  { it as dev.spyglass.android.data.db.entities.RecipeEntity;    SearchResult("Recipe",      it.outputItem, it.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { c -> c.uppercase() }, it.type.replace('_', ' ')) })
@@ -64,6 +66,7 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
                     addAll(trades.take(5).map   { it as dev.spyglass.android.data.db.entities.TradeEntity;     SearchResult("Trade",       it.profession, "${it.sellItem.replace('_', ' ')} (${it.levelName})", it.profession) })
                     addAll(structures.take(5).map { it as dev.spyglass.android.data.db.entities.StructureEntity; SearchResult("Structure",  it.id, it.name, it.dimension) })
                     addAll(items.take(5).map    { it as dev.spyglass.android.data.db.entities.ItemEntity;      SearchResult("Item",        it.id, it.name, it.category) })
+                    addAll(advancements.take(5).map { it as dev.spyglass.android.data.db.entities.AdvancementEntity; SearchResult("Advancement", it.id, it.name, it.category) })
                 }
             }
         }
@@ -83,6 +86,7 @@ fun browseTabForType(type: String): Int = when (type) {
     "Structure"   -> 6
     "Enchantment" -> 7
     "Potion"      -> 8
+    "Advancement" -> 9
     else          -> 0
 }
 
@@ -96,6 +100,7 @@ private fun typeIcon(type: String, id: String): SpyglassIcon = when (type) {
     "Potion"      -> PotionTextures.get(id) ?: PixelIcons.Potion
     "Trade"       -> PixelIcons.Trade
     "Structure"   -> StructureTextures.get(id) ?: PixelIcons.Structure
+    "Advancement" -> PixelIcons.Enchant
     else          -> PixelIcons.Search
 }
 
@@ -109,6 +114,7 @@ private fun typeColor(type: String) = when (type) {
     "Trade"       -> Emerald
     "Structure"   -> Gold
     "Item"        -> Gold
+    "Advancement" -> Emerald
     else          -> Stone500
 }
 

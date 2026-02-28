@@ -99,6 +99,7 @@ private val CALC_LINKS = listOf(
     QuickLink(PixelIcons.Smelt,    "Smelting"),
     QuickLink(PixelIcons.Nether,   "Nether Portal"),
     QuickLink(PixelIcons.Bookmark, "Reference"),
+    QuickLink(PixelIcons.Clock,    "Game Clock"),
 )
 
 // ── Browse tab index for favorite types ─────────────────────────────────────
@@ -112,8 +113,9 @@ private fun browseTabForType(type: String): Int = when (type) {
     "biome"     -> 5
     "structure" -> 6
     "enchant"   -> 7
-    "potion"    -> 8
-    else        -> 0
+    "potion"      -> 8
+    "advancement" -> 9
+    else          -> 0
 }
 
 private fun iconForFavorite(type: String, id: String): SpyglassIcon = when (type) {
@@ -221,9 +223,10 @@ fun HomeScreen(
             modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            if (playerUuid.isNotBlank()) {
+            val skinModel = if (playerUuid.isNotBlank()) MojangApi.skinUrl(playerUuid) else null
+            if (skinModel != null) {
                 AsyncImage(
-                    model = MojangApi.skinUrl(playerUuid),
+                    model = skinModel,
                     contentDescription = "$playerUsername skin",
                     modifier = Modifier.height(140.dp),
                 )

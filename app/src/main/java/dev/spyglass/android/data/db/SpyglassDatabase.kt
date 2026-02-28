@@ -20,12 +20,13 @@ import dev.spyglass.android.data.db.entities.*
         TradeEntity::class,
         StructureEntity::class,
         ItemEntity::class,
+        AdvancementEntity::class,
         FavoriteEntity::class,
         ShoppingListEntity::class,
         ShoppingListItemEntity::class,
         TodoEntity::class,
     ],
-    version = 16,
+    version = 17,
     exportSchema = false,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
@@ -37,13 +38,29 @@ abstract class SpyglassDatabase : RoomDatabase() {
     abstract fun potionDao():       PotionDao
     abstract fun tradeDao():        TradeDao
     abstract fun structureDao():    StructureDao
-    abstract fun itemDao():         ItemDao
+    abstract fun itemDao():          ItemDao
+    abstract fun advancementDao():  AdvancementDao
     abstract fun favoriteDao():     FavoriteDao
     abstract fun shoppingListDao(): ShoppingListDao
     abstract fun todoDao():         TodoDao
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null
+
+        private val MIGRATION_16_17 = object : Migration(16, 17) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS advancements (
+                        id TEXT NOT NULL PRIMARY KEY,
+                        name TEXT NOT NULL,
+                        description TEXT NOT NULL DEFAULT '',
+                        category TEXT NOT NULL DEFAULT '',
+                        type TEXT NOT NULL DEFAULT 'task',
+                        parent TEXT NOT NULL DEFAULT ''
+                    )
+                """.trimIndent())
+            }
+        }
 
         private val MIGRATION_15_16 = object : Migration(15, 16) {
             override fun migrate(db: SupportSQLiteDatabase) {
@@ -95,7 +112,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
                     SpyglassDatabase::class.java,
                     "spyglass.db",
                 )
-                    .addMigrations(MIGRATION_14_15, MIGRATION_15_16)
+                    .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17)
                     .fallbackToDestructiveMigration()
                     .build()
                     .also { INSTANCE = it }

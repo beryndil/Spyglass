@@ -16,6 +16,7 @@ import dev.spyglass.android.browse.items.ItemsScreen
 import dev.spyglass.android.browse.mobs.MobsScreen
 import dev.spyglass.android.browse.potions.PotionsScreen
 import dev.spyglass.android.browse.structures.StructuresScreen
+import dev.spyglass.android.browse.advancements.AdvancementsScreen
 import dev.spyglass.android.browse.trades.TradesScreen
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassTab
@@ -34,6 +35,7 @@ private val BROWSE_TABS = listOf(
     SpyglassTab("Structures", PixelIcons.Structure),    // 6
     SpyglassTab("Enchants",   PixelIcons.Enchant),      // 7
     SpyglassTab("Potions",    PixelIcons.Potion),       // 8
+    SpyglassTab("Advances",  PixelIcons.Enchant),      // 9
 )
 
 @Composable
@@ -61,6 +63,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
     var targetStructureId by remember { mutableStateOf<String?>(null) }
     var targetItemId by remember { mutableStateOf<String?>(null) }
     var targetProfession by remember { mutableStateOf<String?>(null) }
+    var targetAdvancementId by remember { mutableStateOf<String?>(null) }
 
     // Handle incoming navigation from Search
     LaunchedEffect(initialTarget) {
@@ -68,7 +71,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
             tab = initialTarget.tab
             targetMobId = null; targetBiomeId = null; targetBlockId = null
             targetRecipeId = null; targetStructureId = null; targetItemId = null
-            targetProfession = null
+            targetProfession = null; targetAdvancementId = null
             when (initialTarget.tab) {
                 0 -> targetBlockId = initialTarget.id
                 1 -> targetItemId = initialTarget.id
@@ -76,6 +79,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                 3 -> targetMobId = initialTarget.id
                 5 -> targetBiomeId = initialTarget.id
                 6 -> targetStructureId = initialTarget.id
+                9 -> targetAdvancementId = initialTarget.id
             }
         }
     }
@@ -95,6 +99,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
         targetStructureId = null
         targetItemId = null
         targetProfession = null
+        targetAdvancementId = null
     }
 
     // Cross-tab item navigation — 3-way routing: Blocks → Items → Recipes
@@ -193,6 +198,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
             )
             7 -> EnchantsScreen()
             8 -> PotionsScreen(onItemTap = onItemTap)
+            9 -> AdvancementsScreen(targetAdvancementId = targetAdvancementId)
         }
     }
 }

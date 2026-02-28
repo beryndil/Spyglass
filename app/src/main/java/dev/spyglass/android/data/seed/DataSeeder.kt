@@ -15,7 +15,7 @@ import kotlinx.serialization.json.Json
  */
 object DataSeeder {
 
-    private const val CURRENT_DATA_VERSION = 4
+    private const val CURRENT_DATA_VERSION = 5
     private const val PREFS_NAME = "spyglass_seed"
     private const val KEY_DATA_VERSION = "data_version"
 
@@ -37,18 +37,20 @@ object DataSeeder {
             db.recipeDao().deleteAll()
             db.structureDao().deleteAll()
             db.itemDao().deleteAll()
+            db.advancementDao().deleteAll()
         }
 
         // Seed any empty tables
-        if (db.blockDao().count()     == 0) seedBlocks(context, db)
-        if (db.mobDao().count()       == 0) seedMobs(context, db)
-        if (db.biomeDao().count()     == 0) seedBiomes(context, db)
-        if (db.enchantDao().count()   == 0) seedEnchants(context, db)
-        if (db.potionDao().count()    == 0) seedPotions(context, db)
-        if (db.tradeDao().count()     == 0) seedTrades(context, db)
-        if (db.recipeDao().count()    == 0) seedRecipes(context, db)
-        if (db.structureDao().count() == 0) seedStructures(context, db)
-        if (db.itemDao().count()      == 0) seedItems(context, db)
+        if (db.blockDao().count()       == 0) seedBlocks(context, db)
+        if (db.mobDao().count()         == 0) seedMobs(context, db)
+        if (db.biomeDao().count()       == 0) seedBiomes(context, db)
+        if (db.enchantDao().count()     == 0) seedEnchants(context, db)
+        if (db.potionDao().count()      == 0) seedPotions(context, db)
+        if (db.tradeDao().count()       == 0) seedTrades(context, db)
+        if (db.recipeDao().count()      == 0) seedRecipes(context, db)
+        if (db.structureDao().count()   == 0) seedStructures(context, db)
+        if (db.itemDao().count()        == 0) seedItems(context, db)
+        if (db.advancementDao().count() == 0) seedAdvancements(context, db)
 
         if (storedVersion < CURRENT_DATA_VERSION) {
             prefs.edit().putInt(KEY_DATA_VERSION, CURRENT_DATA_VERSION).apply()
@@ -126,6 +128,12 @@ object DataSeeder {
         val category: String = "", val durability: Int = 0,
         val description: String = "", val obtainedFrom: String = "",
         val droppedBy: String = "", val minedFrom: String = "",
+    )
+
+    @Serializable data class AdvancementJson(
+        val id: String, val name: String, val description: String = "",
+        val category: String = "", val type: String = "task",
+        val parent: String = "",
     )
 
     // ── Seed helpers ──────────────────────────────────────────────────────────
@@ -216,6 +224,14 @@ object DataSeeder {
         db.itemDao().insertAll(items.map {
             ItemEntity(it.id, it.name, it.stackSize, it.category, it.durability,
                 it.description, it.obtainedFrom, it.droppedBy, it.minedFrom)
+        })
+    }
+
+    private suspend fun seedAdvancements(context: Context, db: SpyglassDatabase) {
+        val raw = runCatching { readAsset(context, "minecraft/advancements.json") }.getOrNull() ?: return
+        val items = json.decodeFromString<List<AdvancementJson>>(raw)
+        db.advancementDao().insertAll(items.map {
+            AdvancementEntity(it.id, it.name, it.description, it.category, it.type, it.parent)
         })
     }
 }

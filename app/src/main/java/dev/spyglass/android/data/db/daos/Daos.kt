@@ -185,6 +185,30 @@ interface StructureDao {
 }
 
 @Dao
+interface AdvancementDao {
+    @Query("SELECT * FROM advancements WHERE name LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' OR description LIKE '%' || :q || '%' ORDER BY name")
+    fun search(q: String): Flow<List<AdvancementEntity>>
+
+    @Query("SELECT * FROM advancements ORDER BY name")
+    fun all(): Flow<List<AdvancementEntity>>
+
+    @Query("SELECT * FROM advancements WHERE id = :id")
+    suspend fun byId(id: String): AdvancementEntity?
+
+    @Query("SELECT * FROM advancements WHERE category = :cat ORDER BY name")
+    fun byCategory(cat: String): Flow<List<AdvancementEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(items: List<AdvancementEntity>)
+
+    @Query("SELECT COUNT(*) FROM advancements")
+    suspend fun count(): Int
+
+    @Query("DELETE FROM advancements")
+    suspend fun deleteAll()
+}
+
+@Dao
 interface ItemDao {
     @Query("SELECT * FROM items WHERE name LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name")
     fun search(q: String): Flow<List<ItemEntity>>

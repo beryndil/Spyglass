@@ -107,6 +107,16 @@ data class StructureEntity(
     val findMethod: String = "",
 )
 
+@Entity(tableName = "advancements")
+data class AdvancementEntity(
+    @PrimaryKey val id: String,
+    val name: String,
+    val description: String = "",
+    val category: String = "",      // "minecraft", "nether", "end", "adventure", "husbandry"
+    val type: String = "task",      // "task", "goal", "challenge"
+    val parent: String = "",
+)
+
 @Entity(tableName = "items")
 data class ItemEntity(
     @PrimaryKey val id: String,

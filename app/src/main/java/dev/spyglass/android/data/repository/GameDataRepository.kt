@@ -48,6 +48,11 @@ class GameDataRepository(context: Context) {
     // Structures
     fun searchStructures(q: String): Flow<List<StructureEntity>> = if (q.isBlank()) db.structureDao().all() else db.structureDao().search(q)
 
+    // Advancements
+    fun searchAdvancements(q: String): Flow<List<AdvancementEntity>> = if (q.isBlank()) db.advancementDao().all() else db.advancementDao().search(q)
+    fun advancementsByCategory(cat: String): Flow<List<AdvancementEntity>> = db.advancementDao().byCategory(cat)
+    suspend fun advancementById(id: String): AdvancementEntity? = db.advancementDao().byId(id)
+
     // Items
     fun searchItems(q: String): Flow<List<ItemEntity>>       = if (q.isBlank()) db.itemDao().all() else db.itemDao().search(q)
     fun itemsByCategory(cat: String): Flow<List<ItemEntity>> = db.itemDao().byCategory(cat)
