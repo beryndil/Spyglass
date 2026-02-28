@@ -18,13 +18,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import dev.spyglass.android.about.AboutScreen
 import dev.spyglass.android.calculators.CalculatorsScreen
+import dev.spyglass.android.calculators.clock.ClockEngine
+import dev.spyglass.android.calculators.clock.eventColor
 import dev.spyglass.android.browse.BrowseScreen
 import dev.spyglass.android.browse.search.SearchScreen
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.home.HomeScreen
 import dev.spyglass.android.changelog.ChangelogScreen
 import dev.spyglass.android.feedback.FeedbackScreen
+import dev.spyglass.android.license.LicenseScreen
+import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.SettingsScreen
+import dev.spyglass.android.settings.dataStore
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.map
 
 sealed class TopDest(val route: String, val label: String, val icon: SpyglassIcon) {
     data object Home        : TopDest("home",        "Home",        SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.item_compass))
@@ -35,9 +42,9 @@ sealed class TopDest(val route: String, val label: String, val icon: SpyglassIco
 
 val TOP_DESTINATIONS = listOf(TopDest.Home, TopDest.Browse, TopDest.Calculators, TopDest.Search)
 
-private val SUB_ROUTES = setOf("about", "settings", "changelog", "feedback")
+private val SUB_ROUTES = setOf("about", "settings", "changelog", "feedback", "license")
 
-/** Pending navigation target from Search → Browse */
+/** Pending navigation target from Search -> Browse */
 data class BrowseTarget(val tab: Int, val id: String)
 
 @Composable
@@ -104,15 +111,32 @@ fun AppNavGraph() {
                     }
                 })
             }
-            composable("about") { AboutScreen(onBack = { navController.popBackStack() }) }
-            composable("settings") { SettingsScreen(onBack = { navController.popBackStack() }) }
+            composable("about") {
+                AboutScreen(
+                    onBack = { navController.popBackStack() },
+                    onLicense = {
+                        navController.navigate("license") { launchSingleTop = true }
+                    },
+                )
+            }
+            composable("license") { LicenseScreen(onBack = { navController.popBackStack() }) }
+            composable("settings") {
+                SettingsScreen(
+                    onBack = { navController.popBackStack() },
+                    onCalcTab = { tab ->
+                        pendingCalcTab = tab
+                        navController.popBackStack()
+                        navigateTo(TopDest.Calculators.route)
+                    },
+                )
+            }
             composable("changelog") { ChangelogScreen(onBack = { navController.popBackStack() }) }
             composable("feedback") { FeedbackScreen(onBack = { navController.popBackStack() }) }
         }
     }
 }
 
-// ── Top bar ──────────────────────────────────────────────────────────────────
+// -- Top bar --
 
 @Composable
 private fun SpyglassTopBar(navController: NavHostController) {
@@ -143,6 +167,9 @@ private fun SpyglassTopBar(navController: NavHostController) {
                 tint = Color.Unspecified,
             )
         }
+
+        MiniGameClock()
+        Spacer(Modifier.width(8.dp))
 
         Box {
             IconButton(onClick = { menuExpanded = true }) {
@@ -197,7 +224,7 @@ private fun SpyglassTopBar(navController: NavHostController) {
     }
 }
 
-// ── Bottom nav ───────────────────────────────────────────────────────────────
+// -- Bottom nav --
 
 @Composable
 fun BottomNavBar(navController: NavHostController) {
@@ -227,4 +254,65 @@ fun BottomNavBar(navController: NavHostController) {
             )
         }
     }
+}
+
+// -- Mini game clock --
+
+@Composable
+private fun MiniGameClock() {
+    val context = LocalContext.current
+    val store = context.dataStore
+
+    val enabled by store.data.map { it[PreferenceKeys.GAME_CLOCK_ENABLED] ?: false }
+        .collectAsState(initial = false)
+    val syncTick by store.data.map { it[PreferenceKeys.CLOCK_TICK_OFFSET] ?: -1L }
+        .collectAsState(initial = -1L)
+    val syncTimeMs by store.data.map { it[PreferenceKeys.CLOCK_SYNC_TIME_MS] ?: 0L }
+        .collectAsState(initial = 0L)
+    val eventsJson by store.data.map { it[PreferenceKeys.CLOCK_ACTIVE_EVENTS] }
+        .collectAsState(initial = null)
+
+    if (!enabled || syncTick < 0) return
+
+    val events = remember(eventsJson) {
+        if (eventsJson != null) {
+            ClockEngine.deserializeEvents(eventsJson!!).sortedBy { it.tick }
+        } else {
+            ClockEngine.PREDEFINED_EVENTS
+                .filter { it.predefinedId in ClockEngine.DEFAULT_EVENT_IDS }
+                .sortedBy { it.tick }
+        }
+    }
+
+    if (events.isEmpty()) return
+
+    var tick by remember { mutableLongStateOf(0L) }
+    LaunchedEffect(syncTick, syncTimeMs) {
+        while (true) {
+            tick = ClockEngine.currentTick(syncTick, syncTimeMs)
+            delay(1000)
+        }
+    }
+
+    val currentEvt = ClockEngine.currentEvent(tick, events)
+    val nextPair = ClockEngine.nextEvent(tick, events)
+
+    if (currentEvt == null || nextPair == null) return
+
+    val (nextEvt, ticksAway) = nextPair
+    val timeColor = if (ticksAway <= ClockEngine.COUNTDOWN_PREVIEW_TICKS) {
+        eventColor(nextEvt.color)
+    } else {
+        eventColor(currentEvt.color)
+    }
+
+    val time = ClockEngine.formatTime(tick)
+    val countdown = ClockEngine.formatCountdown(ticksAway)
+
+    Text(
+        text = "$time \u2022 $countdown",
+        style = MaterialTheme.typography.labelSmall,
+        color = timeColor,
+        maxLines = 1,
+    )
 }

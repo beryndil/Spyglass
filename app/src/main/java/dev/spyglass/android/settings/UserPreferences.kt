@@ -15,4 +15,9 @@ object PreferenceKeys {
     val PLAYER_USERNAME         = stringPreferencesKey("player_username")
     val PLAYER_UUID             = stringPreferencesKey("player_uuid")
     val DISMISS_USERNAME_DIALOG = booleanPreferencesKey("dismiss_username_dialog")
+    val GAME_CLOCK_ENABLED      = booleanPreferencesKey("game_clock_enabled")
+    val CLOCK_TICK_OFFSET       = longPreferencesKey("clock_tick_offset")
+    val CLOCK_SYNC_TIME_MS      = longPreferencesKey("clock_sync_time_ms")
+    val CLOCK_SYNC_METHOD       = stringPreferencesKey("clock_sync_method")
+    val CLOCK_ACTIVE_EVENTS     = stringPreferencesKey("clock_active_events")
 }
