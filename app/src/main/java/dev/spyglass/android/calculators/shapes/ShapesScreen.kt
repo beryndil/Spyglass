@@ -20,6 +20,11 @@ private val SHAPE_LABELS = mapOf(
     ShapeType.CONE     to "Cone",
     ShapeType.PYRAMID  to "Pyramid",
     ShapeType.TORUS    to "Torus",
+    ShapeType.WALL     to "Wall",
+    ShapeType.ARCH     to "Arch",
+    ShapeType.ELLIPSOID to "Ellipsoid",
+    ShapeType.ARC_WALL to "Arc Wall",
+    ShapeType.SPIRAL   to "Spiral",
 )
 
 @Composable
@@ -51,31 +56,79 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                 }
             }
 
-            // Radius slider
-            val radiusVal = s.radiusInput.toIntOrNull() ?: 10
-            val radiusLabel = if (s.shapeType == ShapeType.PYRAMID) "Half-width" else "Radius"
-            LabeledSlider(radiusLabel, radiusVal, 1, 100) { vm.setRadius(it.toString()) }
+            // Radius slider (not shown for Wall)
+            if (s.shapeType != ShapeType.WALL) {
+                val radiusVal = s.radiusInput.toIntOrNull() ?: 10
+                val radiusLabel = when (s.shapeType) {
+                    ShapeType.PYRAMID -> "Half-width"
+                    ShapeType.ELLIPSOID -> "Radius X"
+                    else -> "Radius"
+                }
+                LabeledSlider(radiusLabel, radiusVal, 1, 100) { vm.setRadius(it.toString()) }
+            }
 
-            // Height slider for cylinder / cone / pyramid
-            if (s.shapeType in setOf(ShapeType.CYLINDER, ShapeType.CONE, ShapeType.PYRAMID)) {
+            // Height slider for cylinder / cone / pyramid / wall / arc wall / spiral
+            if (s.shapeType in setOf(ShapeType.CYLINDER, ShapeType.CONE, ShapeType.PYRAMID, ShapeType.WALL, ShapeType.ARC_WALL, ShapeType.SPIRAL)) {
                 val heightVal = s.heightInput.toIntOrNull() ?: 10
                 LabeledSlider("Height", heightVal, 1, 256) { vm.setHeight(it.toString()) }
             }
 
             // Tube radius slider for torus
             if (s.shapeType == ShapeType.TORUS) {
+                val radiusVal = s.radiusInput.toIntOrNull() ?: 10
                 val tubeVal = s.tubeInput.toIntOrNull() ?: 3
                 val maxTube = radiusVal.coerceAtLeast(1)
                 LabeledSlider("Tube radius", tubeVal, 1, maxTube) { vm.setTube(it.toString()) }
             }
 
-            // Thickness slider for sphere, dome, torus
-            if (s.shapeType in setOf(ShapeType.SPHERE, ShapeType.DOME, ShapeType.TORUS)) {
+            // Thickness slider for sphere, dome, torus, arch, ellipsoid, arc wall
+            if (s.shapeType in setOf(ShapeType.SPHERE, ShapeType.DOME, ShapeType.TORUS, ShapeType.ARCH, ShapeType.ELLIPSOID, ShapeType.ARC_WALL)) {
                 val maxThick = when (s.shapeType) {
                     ShapeType.TORUS -> (s.tubeInput.toIntOrNull() ?: 3).coerceAtLeast(1)
+                    ShapeType.ARC_WALL -> 5
                     else -> 3
                 }
                 LabeledSlider("Thickness", s.thickness.coerceIn(1, maxThick), 1, maxThick) { vm.setThickness(it) }
+            }
+
+            // Wall-specific: X/Z offset sliders
+            if (s.shapeType == ShapeType.WALL) {
+                val dxVal = s.wallDxInput.toIntOrNull() ?: 20
+                LabeledSlider("X Offset", dxVal, -100, 100) { vm.setWallDx(it.toString()) }
+                val dzVal = s.wallDzInput.toIntOrNull() ?: 10
+                LabeledSlider("Z Offset", dzVal, -100, 100) { vm.setWallDz(it.toString()) }
+            }
+
+            // Width slider for wall / spiral
+            if (s.shapeType in setOf(ShapeType.WALL, ShapeType.SPIRAL)) {
+                val widthVal = s.widthInput.toIntOrNull() ?: 2
+                LabeledSlider("Width", widthVal, 1, 5) { vm.setWidth(it.toString()) }
+            }
+
+            // Ellipsoid-specific: Radius Y and Radius Z
+            if (s.shapeType == ShapeType.ELLIPSOID) {
+                val ryVal = s.radiusYInput.toIntOrNull() ?: 10
+                LabeledSlider("Radius Y", ryVal, 1, 100) { vm.setRadiusY(it.toString()) }
+                val rzVal = s.radiusZInput.toIntOrNull() ?: 10
+                LabeledSlider("Radius Z", rzVal, 1, 100) { vm.setRadiusZ(it.toString()) }
+            }
+
+            // Arch-specific: Length slider
+            if (s.shapeType == ShapeType.ARCH) {
+                val lenVal = s.lengthInput.toIntOrNull() ?: 10
+                LabeledSlider("Length", lenVal, 1, 100) { vm.setLength(it.toString()) }
+            }
+
+            // Arc wall-specific: Angle slider
+            if (s.shapeType == ShapeType.ARC_WALL) {
+                val angleVal = s.angleInput.toIntOrNull() ?: 180
+                LabeledSlider("Angle", angleVal, 10, 360) { vm.setAngle(it.toString()) }
+            }
+
+            // Spiral-specific: Step height slider
+            if (s.shapeType == ShapeType.SPIRAL) {
+                val stepVal = s.stepInput.toIntOrNull() ?: 1
+                LabeledSlider("Step Height", stepVal, 1, 5) { vm.setStep(it.toString()) }
             }
 
             // Hollow toggle for cylinder

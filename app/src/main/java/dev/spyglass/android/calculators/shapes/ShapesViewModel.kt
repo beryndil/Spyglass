@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlin.math.*
 
-enum class ShapeType { CIRCLE, SPHERE, DOME, CYLINDER, CONE, PYRAMID, TORUS }
+enum class ShapeType { CIRCLE, SPHERE, DOME, CYLINDER, CONE, PYRAMID, TORUS, WALL, ARCH, ELLIPSOID, ARC_WALL, SPIRAL }
 
 data class ShapesState(
     val shapeType:    ShapeType = ShapeType.CIRCLE,
@@ -16,6 +16,14 @@ data class ShapesState(
     val thickness:    Int       = 1,         // wall/border thickness (circle, cone, pyramid, torus)
     val flipped:      Boolean   = false,     // flip cone/pyramid upside down
     val hollow:       Boolean   = false,     // hollow cylinder (no top/bottom caps)
+    val radiusYInput: String    = "10",      // ellipsoid Y radius
+    val radiusZInput: String    = "10",      // ellipsoid Z radius
+    val lengthInput:  String    = "10",      // arch/tunnel depth
+    val angleInput:   String    = "180",     // arc wall angle span (degrees)
+    val wallDxInput:  String    = "20",      // diagonal wall X offset
+    val wallDzInput:  String    = "10",      // diagonal wall Z offset
+    val stepInput:    String    = "1",       // spiral staircase step height
+    val widthInput:   String    = "2",       // spiral/wall width
     val currentLayer: Int       = 0,
     val layers:       Map<Int, Set<Pair<Int, Int>>> = emptyMap(),  // y → set of (x,z) offsets
     val totalBlocks:  Int       = 0,
@@ -34,6 +42,14 @@ class ShapesViewModel : ViewModel() {
     fun setThickness(v: Int)   { _state.value = _state.value.copy(thickness = v); recalc() }
     fun setFlipped(v: Boolean) { _state.value = _state.value.copy(flipped = v); recalc() }
     fun setHollow(v: Boolean)  { _state.value = _state.value.copy(hollow = v); recalc() }
+    fun setRadiusY(v: String)  { _state.value = _state.value.copy(radiusYInput = v); recalc() }
+    fun setRadiusZ(v: String)  { _state.value = _state.value.copy(radiusZInput = v); recalc() }
+    fun setLength(v: String)   { _state.value = _state.value.copy(lengthInput = v); recalc() }
+    fun setAngle(v: String)    { _state.value = _state.value.copy(angleInput = v); recalc() }
+    fun setWallDx(v: String)   { _state.value = _state.value.copy(wallDxInput = v); recalc() }
+    fun setWallDz(v: String)   { _state.value = _state.value.copy(wallDzInput = v); recalc() }
+    fun setStep(v: String)     { _state.value = _state.value.copy(stepInput = v); recalc() }
+    fun setWidth(v: String)    { _state.value = _state.value.copy(widthInput = v); recalc() }
     fun setLayer(y: Int)       { _state.value = _state.value.copy(currentLayer = y) }
 
     private fun recalc() {
@@ -59,6 +75,34 @@ class ShapesViewModel : ViewModel() {
             ShapeType.TORUS    -> {
                 val tube = s.tubeInput.toIntOrNull()?.takeIf { it in 1..r } ?: return
                 torusLayers(r, tube, s.thickness.coerceIn(1, tube))
+            }
+            ShapeType.WALL     -> {
+                val dx = s.wallDxInput.toIntOrNull()?.takeIf { it in -100..100 } ?: return
+                val dz = s.wallDzInput.toIntOrNull()?.takeIf { it in -100..100 } ?: return
+                val h  = s.heightInput.toIntOrNull()?.takeIf { it in 1..256 } ?: return
+                val w  = s.widthInput.toIntOrNull()?.takeIf { it in 1..5 } ?: return
+                wallLayers(dx, dz, h, w)
+            }
+            ShapeType.ARCH     -> {
+                val len = s.lengthInput.toIntOrNull()?.takeIf { it in 1..100 } ?: return
+                archLayers(r, len, thick)
+            }
+            ShapeType.ELLIPSOID -> {
+                val ry = s.radiusYInput.toIntOrNull()?.takeIf { it in 1..100 } ?: return
+                val rz = s.radiusZInput.toIntOrNull()?.takeIf { it in 1..100 } ?: return
+                ellipsoidLayers(r, ry, rz, thick)
+            }
+            ShapeType.ARC_WALL -> {
+                val angle = s.angleInput.toIntOrNull()?.takeIf { it in 10..360 } ?: return
+                val h = s.heightInput.toIntOrNull()?.takeIf { it in 1..256 } ?: return
+                val t = s.thickness.coerceIn(1, 5)
+                arcWallLayers(r, angle, h, t)
+            }
+            ShapeType.SPIRAL   -> {
+                val h    = s.heightInput.toIntOrNull()?.takeIf { it in 1..256 } ?: return
+                val step = s.stepInput.toIntOrNull()?.takeIf { it in 1..5 } ?: return
+                val w    = s.widthInput.toIntOrNull()?.takeIf { it in 1..5 } ?: return
+                spiralLayers(r, h, step, w)
             }
         }
         val yMin = layers.keys.minOrNull() ?: 0
@@ -229,6 +273,155 @@ class ShapesViewModel : ViewModel() {
                 }
             }
             if (set.isNotEmpty()) layers.getOrPut(y) { mutableSetOf() }.addAll(set)
+        }
+        return layers
+    }
+
+    // ── New shapes ──────────────────────────────────────────────────────────
+
+    /** Diagonal wall using Bresenham's line from (0,0) to (dx,dz), thickened and extruded to height. */
+    private fun wallLayers(dx: Int, dz: Int, height: Int, width: Int): Map<Int, Set<Pair<Int, Int>>> {
+        val line = bresenhamLine(0, 0, dx, dz)
+        // Compute perpendicular direction for thickening
+        val len = sqrt((dx.toDouble() * dx + dz.toDouble() * dz)).coerceAtLeast(1.0)
+        val px = -dz.toDouble() / len
+        val pz = dx.toDouble() / len
+        val footprint = mutableSetOf<Pair<Int, Int>>()
+        for ((lx, lz) in line) {
+            for (w in 0 until width) {
+                val offset = w - (width - 1) / 2.0
+                val bx = (lx + px * offset).roundToInt()
+                val bz = (lz + pz * offset).roundToInt()
+                footprint.add(bx to bz)
+            }
+        }
+        val layers = mutableMapOf<Int, Set<Pair<Int, Int>>>()
+        for (y in 0 until height) {
+            layers[y] = footprint
+        }
+        return layers
+    }
+
+    /** Bresenham's line algorithm from (x0,z0) to (x1,z1). */
+    private fun bresenhamLine(x0: Int, z0: Int, x1: Int, z1: Int): List<Pair<Int, Int>> {
+        val points = mutableListOf<Pair<Int, Int>>()
+        var cx = x0; var cz = z0
+        val adx = abs(x1 - x0); val adz = abs(z1 - z0)
+        val sx = if (x0 < x1) 1 else -1
+        val sz = if (z0 < z1) 1 else -1
+        var err = adx - adz
+        while (true) {
+            points.add(cx to cz)
+            if (cx == x1 && cz == z1) break
+            val e2 = 2 * err
+            if (e2 > -adz) { err -= adz; cx += sx }
+            if (e2 < adx) { err += adx; cz += sz }
+        }
+        return points
+    }
+
+    /** Arch/tunnel — upper half of a cylinder shell, extruded along Z for [length] blocks. */
+    private fun archLayers(radius: Int, length: Int, thickness: Int): Map<Int, Set<Pair<Int, Int>>> {
+        val rSq = (radius + 0.5) * (radius + 0.5)
+        val t = thickness.toLong()
+        val layers = mutableMapOf<Int, MutableSet<Pair<Int, Int>>>()
+        for (y in 0..radius) {
+            val yy = y.toLong() * y
+            val set = mutableSetOf<Pair<Int, Int>>()
+            for (x in -radius..radius) {
+                val distSq = x.toLong() * x + yy
+                if (distSq > rSq) continue
+                val isShell =
+                    (x + t) * (x + t) + yy > rSq ||
+                    (x - t) * (x - t) + yy > rSq ||
+                    x.toLong() * x + (y + t) * (y + t) > rSq ||
+                    (y - t < 0) ||
+                    x.toLong() * x + (y - t) * (y - t) > rSq
+                if (isShell) {
+                    for (z in 0 until length) {
+                        set.add(x to z)
+                    }
+                }
+            }
+            if (set.isNotEmpty()) layers[y] = set
+        }
+        return layers
+    }
+
+    /** Ellipsoid shell with independent X/Y/Z radii. */
+    private fun ellipsoidLayers(rx: Int, ry: Int, rz: Int, thickness: Int): Map<Int, Set<Pair<Int, Int>>> {
+        val layers = mutableMapOf<Int, MutableSet<Pair<Int, Int>>>()
+        val t = thickness.toDouble()
+        for (y in -ry..ry) {
+            val set = mutableSetOf<Pair<Int, Int>>()
+            for (x in -rx..rx) {
+                for (z in -rz..rz) {
+                    val d = (x.toDouble() / rx).let { it * it } +
+                            (y.toDouble() / ry).let { it * it } +
+                            (z.toDouble() / rz).let { it * it }
+                    if (d > 1.0) continue
+                    // Shell check: at least one neighbor at thickness steps is outside
+                    val isShell =
+                        ((x + t) / rx).let { it * it } + (y.toDouble() / ry).let { it * it } + (z.toDouble() / rz).let { it * it } > 1.0 ||
+                        ((x - t) / rx).let { it * it } + (y.toDouble() / ry).let { it * it } + (z.toDouble() / rz).let { it * it } > 1.0 ||
+                        (x.toDouble() / rx).let { it * it } + ((y + t) / ry).let { it * it } + (z.toDouble() / rz).let { it * it } > 1.0 ||
+                        (x.toDouble() / rx).let { it * it } + ((y - t) / ry).let { it * it } + (z.toDouble() / rz).let { it * it } > 1.0 ||
+                        (x.toDouble() / rx).let { it * it } + (y.toDouble() / ry).let { it * it } + ((z + t) / rz).let { it * it } > 1.0 ||
+                        (x.toDouble() / rx).let { it * it } + (y.toDouble() / ry).let { it * it } + ((z - t) / rz).let { it * it } > 1.0
+                    if (isShell) set.add(x to z)
+                }
+            }
+            if (set.isNotEmpty()) layers[y] = set
+        }
+        return layers
+    }
+
+    /** Arc wall — a curved wall segment spanning [angle] degrees, extruded to [height]. */
+    private fun arcWallLayers(radius: Int, angle: Int, height: Int, thickness: Int): Map<Int, Set<Pair<Int, Int>>> {
+        val angleRad = Math.toRadians(angle.toDouble())
+        val rOuter = radius + thickness / 2.0
+        val rInner = radius - thickness / 2.0
+        val outerSq = (rOuter + 0.5) * (rOuter + 0.5)
+        val innerSq = if (rInner > 0) (rInner - 0.5).let { it * it } else 0.0
+        val scan = rOuter.toInt() + 1
+        val footprint = mutableSetOf<Pair<Int, Int>>()
+        for (x in -scan..scan) {
+            for (z in -scan..scan) {
+                val distSq = x.toLong() * x + z.toLong() * z
+                if (distSq > outerSq || distSq < innerSq) continue
+                var a = atan2(z.toDouble(), x.toDouble())
+                if (a < 0) a += 2.0 * PI
+                if (a <= angleRad) footprint.add(x to z)
+            }
+        }
+        val layers = mutableMapOf<Int, Set<Pair<Int, Int>>>()
+        for (y in 0 until height) {
+            layers[y] = footprint
+        }
+        return layers
+    }
+
+    /** Spiral staircase — blocks rotate around the center as Y increases. */
+    private fun spiralLayers(radius: Int, height: Int, stepHeight: Int, width: Int): Map<Int, Set<Pair<Int, Int>>> {
+        val layers = mutableMapOf<Int, MutableSet<Pair<Int, Int>>>()
+        val rOuter = radius + 0.5
+        val rInner = (radius - width).coerceAtLeast(0) + 0.5
+        val wedge = PI / 4.0  // 45-degree wedge per step
+        for (y in 0 until height) {
+            val centerAngle = 2.0 * PI * y / height
+            val set = mutableSetOf<Pair<Int, Int>>()
+            for (x in -radius..radius) {
+                for (z in -radius..radius) {
+                    val distSq = x.toLong() * x + z.toLong() * z
+                    if (distSq > rOuter * rOuter) continue
+                    if (distSq < rInner * rInner) continue
+                    var a = atan2(z.toDouble(), x.toDouble()) - centerAngle
+                    // Normalize to -PI..PI
+                    a = a - 2.0 * PI * floor((a + PI) / (2.0 * PI))
+                    if (abs(a) <= wedge / 2.0) set.add(x to z)
+                }
+            }
+            if (set.isNotEmpty()) layers[y] = set
         }
         return layers
     }
