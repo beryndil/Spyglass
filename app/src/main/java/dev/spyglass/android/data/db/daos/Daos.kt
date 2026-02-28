@@ -234,3 +234,81 @@ interface ItemDao {
     @Query("DELETE FROM items")
     suspend fun deleteAll()
 }
+
+@Dao
+interface NoteDao {
+    @Query("SELECT * FROM notes ORDER BY updatedAt DESC")
+    fun all(): Flow<List<NoteEntity>>
+
+    @Query("SELECT * FROM notes WHERE title LIKE '%' || :q || '%' OR content LIKE '%' || :q || '%' OR label LIKE '%' || :q || '%' ORDER BY updatedAt DESC")
+    fun search(q: String): Flow<List<NoteEntity>>
+
+    @Query("SELECT * FROM notes WHERE label = :label ORDER BY updatedAt DESC")
+    fun byLabel(label: String): Flow<List<NoteEntity>>
+
+    @Query("SELECT DISTINCT label FROM notes WHERE label != '' ORDER BY label")
+    fun allLabels(): Flow<List<String>>
+
+    @Query("SELECT * FROM notes WHERE id = :id")
+    suspend fun byId(id: Long): NoteEntity?
+
+    @Insert
+    suspend fun insert(note: NoteEntity): Long
+
+    @Query("UPDATE notes SET title = :title, label = :label, content = :content, updatedAt = :updatedAt WHERE id = :id")
+    suspend fun update(id: Long, title: String, label: String, content: String, updatedAt: Long)
+
+    @Query("DELETE FROM notes WHERE id = :id")
+    suspend fun delete(id: Long)
+}
+
+@Dao
+interface WaypointDao {
+    @Query("SELECT * FROM waypoints ORDER BY createdAt DESC")
+    fun all(): Flow<List<WaypointEntity>>
+
+    @Query("SELECT * FROM waypoints WHERE name LIKE '%' || :q || '%' OR notes LIKE '%' || :q || '%' ORDER BY createdAt DESC")
+    fun search(q: String): Flow<List<WaypointEntity>>
+
+    @Query("SELECT * FROM waypoints WHERE category = :cat ORDER BY createdAt DESC")
+    fun byCategory(cat: String): Flow<List<WaypointEntity>>
+
+    @Query("SELECT * FROM waypoints WHERE dimension = :dim ORDER BY createdAt DESC")
+    fun byDimension(dim: String): Flow<List<WaypointEntity>>
+
+    @Query("SELECT * FROM waypoints WHERE id = :id")
+    suspend fun byId(id: Long): WaypointEntity?
+
+    @Insert
+    suspend fun insert(waypoint: WaypointEntity): Long
+
+    @Query("UPDATE waypoints SET name = :name, x = :x, y = :y, z = :z, dimension = :dimension, category = :category, color = :color, notes = :notes WHERE id = :id")
+    suspend fun update(id: Long, name: String, x: Int, y: Int, z: Int, dimension: String, category: String, color: String, notes: String)
+
+    @Query("DELETE FROM waypoints WHERE id = :id")
+    suspend fun delete(id: Long)
+}
+
+@Dao
+interface CommandDao {
+    @Query("SELECT * FROM commands WHERE name LIKE '%' || :q || '%' OR description LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name")
+    fun search(q: String): Flow<List<CommandEntity>>
+
+    @Query("SELECT * FROM commands ORDER BY name")
+    fun all(): Flow<List<CommandEntity>>
+
+    @Query("SELECT * FROM commands WHERE id = :id")
+    suspend fun byId(id: String): CommandEntity?
+
+    @Query("SELECT * FROM commands WHERE category = :cat ORDER BY name")
+    fun byCategory(cat: String): Flow<List<CommandEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(items: List<CommandEntity>)
+
+    @Query("SELECT COUNT(*) FROM commands")
+    suspend fun count(): Int
+
+    @Query("DELETE FROM commands")
+    suspend fun deleteAll()
+}

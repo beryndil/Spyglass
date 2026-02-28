@@ -1,5 +1,6 @@
 package dev.spyglass.android.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,13 +20,14 @@ private val BROWSE_TAB_NAMES = listOf(
 )
 
 private val TOOL_TAB_NAMES = listOf(
-    "Todo", "Shopping", "Enchanting", "Fill", "Shapes", "Maze", "Storage", "Smelt", "Nether", "Reference",
+    "Todo", "Shopping", "Enchanting", "Fill", "Shapes", "Maze", "Storage", "Smelt", "Nether", "Reference", "Game Clock",
 )
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SettingsScreen(
     onBack: () -> Unit = {},
+    onCalcTab: (Int) -> Unit = {},
     vm: SettingsViewModel = viewModel(),
 ) {
     val defaultBrowseTab    by vm.defaultBrowseTab.collectAsState()
@@ -34,6 +36,7 @@ fun SettingsScreen(
     val showFavoritesOnHome by vm.showFavoritesOnHome.collectAsState()
     val playerUsername      by vm.playerUsername.collectAsState()
     val playerUuid          by vm.playerUuid.collectAsState()
+    val gameClockEnabled    by vm.gameClockEnabled.collectAsState()
     val allFavorites        by vm.allFavorites.collectAsState()
 
     Column(
@@ -175,6 +178,38 @@ fun SettingsScreen(
                     ),
                 )
             }
+        }
+
+        // ── Game Clock ─────────────────────────────────────────────────────
+        SectionHeader("Game Clock")
+        ResultCard {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text("Game Clock", style = MaterialTheme.typography.bodyLarge, color = Stone100)
+                    Text("Show mini clock in the top bar", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                }
+                Switch(
+                    checked = gameClockEnabled,
+                    onCheckedChange = vm::setGameClockEnabled,
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = Gold,
+                        checkedTrackColor = GoldDim,
+                        uncheckedThumbColor = Stone500,
+                        uncheckedTrackColor = Stone700,
+                    ),
+                )
+            }
+            SpyglassDivider()
+            Text(
+                "Configure Game Clock \u2192",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Gold,
+                modifier = Modifier.clickable { onCalcTab(10) },
+            )
         }
 
         // ── Favorites Management ────────────────────────────────────────

@@ -75,7 +75,7 @@ class NetherViewModel : ViewModel() {
         _state.value = s.copy(obNoCorners = 2 * w + 2 * h, obWithCorners = 2 * w + 2 * h + 4)
     }
 
-    fun setNewPortalName(v: String) { _state.value = _state.value.copy(newPortalName = v) }
+    fun setNewPortalName(v: String) { if (v.length <= 50) _state.value = _state.value.copy(newPortalName = v) }
 
     fun savePortal() {
         val s = _state.value

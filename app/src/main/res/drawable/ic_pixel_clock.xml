@@ -1,0 +1,30 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Clock face background (dark) -->
+    <path android:fillColor="#1C1A17"
+        android:pathData="M5,1h6v1h2v1h1v2h1v6h-1v2h-1v1h-2v1h-6v-1h-2v-1h-1v-2h-1v-6h1v-2h1v-1h2z"/>
+    <!-- Clock face rim (gold) -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M5,1h6v1h-6z M11,2h2v1h-2z M13,3h1v2h-1z M14,5h1v6h-1z M13,11h1v2h-1z M11,13h2v1h-2z M5,13h6v1h-6z M3,11h1v2h-1z M2,5h1v6h-1z M3,3h1v2h-1z M5,2h-2v1h2z"/>
+    <!-- Clock face inner (dark stone) -->
+    <path android:fillColor="#2A2720"
+        android:pathData="M5,3h6v1h1v1h1v6h-1v1h-1v1h-6v-1h-1v-1h-1v-6h1v-1h1z"/>
+    <!-- Hour marks (gold) - 12, 3, 6, 9 -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M8,3h1v1h-1z M12,7h1v1h-1z M8,12h1v1h-1z M4,7h1v1h-1z"/>
+    <!-- Hour marks (dim gold) - 1,2,4,5,7,8,10,11 -->
+    <path android:fillColor="#9E7A2A"
+        android:pathData="M10,3h1v1h-1z M11,4h1v1h-1z M12,5h1v1h-1z M12,9h1v1h-1z M11,10h1v1h-1z M10,11h1v1h-1z M6,11h1v1h-1z M5,10h1v1h-1z M4,9h1v1h-1z M4,5h1v1h-1z M5,4h1v1h-1z M6,3h1v1h-1z"/>
+    <!-- Hour hand (gold, pointing ~2 o'clock) -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M8,8h1v-4h-1z"/>
+    <!-- Minute hand (stone100, pointing ~10) -->
+    <path android:fillColor="#D4D1CA"
+        android:pathData="M8,8h-3v-1h3z"/>
+    <!-- Center dot -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M8,7h1v1h-1z"/>
+</vector>

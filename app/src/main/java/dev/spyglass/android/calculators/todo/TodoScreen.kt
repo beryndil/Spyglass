@@ -81,7 +81,7 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                     ) {
                         OutlinedTextField(
                             value = freeformInput,
-                            onValueChange = { freeformInput = it },
+                            onValueChange = { if (it.length <= 200) freeformInput = it },
                             placeholder = { Text("Build the east bridge\u2026", color = Stone500) },
                             singleLine = true,
                             colors = OutlinedTextFieldDefaults.colors(
@@ -148,7 +148,7 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                             IconButton(
                                 onClick = {
                                     val qty = quantityInput.toIntOrNull() ?: 1
-                                    if (qty > 0) {
+                                    if (qty in 1..10_000_000) {
                                         vm.createItemTodo(
                                             selectedId!!, selectedName, qty,
                                             linkedType = createLinkedList?.let { "shopping_list" },
@@ -365,7 +365,7 @@ private fun EditTodoDialog(
         text = {
             OutlinedTextField(
                 value = text,
-                onValueChange = { text = it },
+                onValueChange = { if (it.length <= 200) text = it },
                 singleLine = false,
                 maxLines = 3,
                 colors = OutlinedTextFieldDefaults.colors(

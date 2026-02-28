@@ -20,7 +20,7 @@ fun UsernameDialog(
         text = {
             OutlinedTextField(
                 value = username,
-                onValueChange = { username = it },
+                onValueChange = { if (it.length <= 16) username = it },
                 placeholder = { Text("Minecraft username", color = Stone500) },
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(

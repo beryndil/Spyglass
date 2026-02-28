@@ -59,6 +59,35 @@ class GameDataRepository(context: Context) {
     suspend fun itemById(id: String): ItemEntity?            = db.itemDao().byId(id)
     fun itemCountFlow(): Flow<Int> = db.itemDao().countFlow()
 
+    // Notes
+    fun allNotes(): Flow<List<NoteEntity>>                   = db.noteDao().all()
+    fun searchNotes(q: String): Flow<List<NoteEntity>>       = if (q.isBlank()) db.noteDao().all() else db.noteDao().search(q)
+    fun notesByLabel(label: String): Flow<List<NoteEntity>>  = db.noteDao().byLabel(label)
+    fun allNoteLabels(): Flow<List<String>>                  = db.noteDao().allLabels()
+    suspend fun noteById(id: Long): NoteEntity?              = db.noteDao().byId(id)
+    suspend fun createNote(note: NoteEntity): Long           = db.noteDao().insert(note)
+    suspend fun updateNote(id: Long, title: String, label: String, content: String) {
+        db.noteDao().update(id, title, label, content, System.currentTimeMillis())
+    }
+    suspend fun deleteNote(id: Long)                         { db.noteDao().delete(id) }
+
+    // Waypoints
+    fun allWaypoints(): Flow<List<WaypointEntity>>                     = db.waypointDao().all()
+    fun searchWaypoints(q: String): Flow<List<WaypointEntity>>         = if (q.isBlank()) db.waypointDao().all() else db.waypointDao().search(q)
+    fun waypointsByCategory(cat: String): Flow<List<WaypointEntity>>   = db.waypointDao().byCategory(cat)
+    fun waypointsByDimension(dim: String): Flow<List<WaypointEntity>>  = db.waypointDao().byDimension(dim)
+    suspend fun waypointById(id: Long): WaypointEntity?                = db.waypointDao().byId(id)
+    suspend fun createWaypoint(waypoint: WaypointEntity): Long         = db.waypointDao().insert(waypoint)
+    suspend fun updateWaypoint(id: Long, name: String, x: Int, y: Int, z: Int, dimension: String, category: String, color: String, notes: String) {
+        db.waypointDao().update(id, name, x, y, z, dimension, category, color, notes)
+    }
+    suspend fun deleteWaypoint(id: Long)                               { db.waypointDao().delete(id) }
+
+    // Commands
+    fun searchCommands(q: String): Flow<List<CommandEntity>> = if (q.isBlank()) db.commandDao().all() else db.commandDao().search(q)
+    fun commandsByCategory(cat: String): Flow<List<CommandEntity>> = db.commandDao().byCategory(cat)
+    suspend fun commandById(id: String): CommandEntity?      = db.commandDao().byId(id)
+
     // Favorites
     fun allFavorites(): Flow<List<FavoriteEntity>>            = db.favoriteDao().all()
     fun favoritesByType(type: String): Flow<List<FavoriteEntity>> = db.favoriteDao().byType(type)

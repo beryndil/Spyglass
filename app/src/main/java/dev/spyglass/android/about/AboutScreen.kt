@@ -24,7 +24,7 @@ import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 @Composable
-fun AboutScreen(onBack: () -> Unit = {}) {
+fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
     val uriHandler = LocalUriHandler.current
 
     Column(
@@ -125,6 +125,18 @@ fun AboutScreen(onBack: () -> Unit = {}) {
         // ── Credits & Licenses ───────────────────────────────────────────────
         SectionHeader("Credits & Licenses")
         ResultCard {
+            // Spyglass license
+            Text("Spyglass", style = MaterialTheme.typography.bodyLarge, color = Stone100)
+            Text("by Beryndil", style = MaterialTheme.typography.bodyMedium, color = Stone500)
+            Text(
+                text = "CC BY-NC-SA 4.0 \u2014 View License",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Gold,
+                modifier = Modifier.clickable { onLicense() },
+            )
+
+            SpyglassDivider()
+
             // Pixel Perfection
             Text("Pixel Perfection", style = MaterialTheme.typography.bodyLarge, color = Stone100)
             Text("by XSSheep", style = MaterialTheme.typography.bodyMedium, color = Stone500)
@@ -173,7 +185,7 @@ fun AboutScreen(onBack: () -> Unit = {}) {
 
         // ── App License ──────────────────────────────────────────────────────
         Text(
-            text = "\u00A9 2026 Beryndil. All Rights Reserved except where noted above.",
+            text = "\u00A9 2026 Beryndil. Licensed under CC BY-NC-SA 4.0.",
             style = MaterialTheme.typography.bodySmall,
             color = Stone500,
             modifier = Modifier.fillMaxWidth(),
@@ -183,7 +195,7 @@ fun AboutScreen(onBack: () -> Unit = {}) {
         SectionHeader("Privacy")
         ResultCard {
             Text(
-                text = "Spyglass does not collect, store, or transmit any personal data. All game data is stored locally on your device.",
+                text = "All game data is stored locally on your device. If you provide your Minecraft username, it is sent to Mojang (api.mojang.com) to look up your player UUID. Your UUID is then used to load your skin from third-party rendering services (starlightskins.lunareclipse.studio, mc-heads.net). No other personal data is collected or shared.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = Stone300,
             )

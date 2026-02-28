@@ -15,7 +15,7 @@ import kotlinx.serialization.json.Json
  */
 object DataSeeder {
 
-    private const val CURRENT_DATA_VERSION = 5
+    private const val CURRENT_DATA_VERSION = 6
     private const val PREFS_NAME = "spyglass_seed"
     private const val KEY_DATA_VERSION = "data_version"
 
@@ -38,6 +38,7 @@ object DataSeeder {
             db.structureDao().deleteAll()
             db.itemDao().deleteAll()
             db.advancementDao().deleteAll()
+            db.commandDao().deleteAll()
         }
 
         // Seed any empty tables
@@ -51,6 +52,7 @@ object DataSeeder {
         if (db.structureDao().count()   == 0) seedStructures(context, db)
         if (db.itemDao().count()        == 0) seedItems(context, db)
         if (db.advancementDao().count() == 0) seedAdvancements(context, db)
+        if (db.commandDao().count()     == 0) seedCommands(context, db)
 
         if (storedVersion < CURRENT_DATA_VERSION) {
             prefs.edit().putInt(KEY_DATA_VERSION, CURRENT_DATA_VERSION).apply()
@@ -134,6 +136,12 @@ object DataSeeder {
         val id: String, val name: String, val description: String = "",
         val category: String = "", val type: String = "task",
         val parent: String = "",
+    )
+
+    @Serializable data class CommandJson(
+        val id: String, val name: String, val syntax: String = "",
+        val description: String = "", val category: String = "",
+        val permissionLevel: Int = 2,
     )
 
     // ── Seed helpers ──────────────────────────────────────────────────────────
@@ -232,6 +240,14 @@ object DataSeeder {
         val items = json.decodeFromString<List<AdvancementJson>>(raw)
         db.advancementDao().insertAll(items.map {
             AdvancementEntity(it.id, it.name, it.description, it.category, it.type, it.parent)
+        })
+    }
+
+    private suspend fun seedCommands(context: Context, db: SpyglassDatabase) {
+        val raw = runCatching { readAsset(context, "minecraft/commands.json") }.getOrNull() ?: return
+        val items = json.decodeFromString<List<CommandJson>>(raw)
+        db.commandDao().insertAll(items.map {
+            CommandEntity(it.id, it.name, it.syntax, it.description, it.category, it.permissionLevel)
         })
     }
 }

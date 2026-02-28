@@ -70,7 +70,7 @@ fun AddToTodoSection(
             IconButton(
                 onClick = {
                     val q = quantityInput.toIntOrNull() ?: return@IconButton
-                    if (q <= 0) return@IconButton
+                    if (q !in 1..10_000_000) return@IconButton
                     scope.launch {
                         repo.createTodo(
                             TodoEntity(

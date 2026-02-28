@@ -21,12 +21,15 @@ import dev.spyglass.android.data.db.entities.*
         StructureEntity::class,
         ItemEntity::class,
         AdvancementEntity::class,
+        NoteEntity::class,
+        WaypointEntity::class,
+        CommandEntity::class,
         FavoriteEntity::class,
         ShoppingListEntity::class,
         ShoppingListItemEntity::class,
         TodoEntity::class,
     ],
-    version = 17,
+    version = 18,
     exportSchema = false,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
@@ -40,12 +43,54 @@ abstract class SpyglassDatabase : RoomDatabase() {
     abstract fun structureDao():    StructureDao
     abstract fun itemDao():          ItemDao
     abstract fun advancementDao():  AdvancementDao
+    abstract fun noteDao():         NoteDao
+    abstract fun waypointDao():     WaypointDao
+    abstract fun commandDao():      CommandDao
     abstract fun favoriteDao():     FavoriteDao
     abstract fun shoppingListDao(): ShoppingListDao
     abstract fun todoDao():         TodoDao
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null
+
+        private val MIGRATION_17_18 = object : Migration(17, 18) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS notes (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        title TEXT NOT NULL,
+                        label TEXT NOT NULL DEFAULT '',
+                        content TEXT NOT NULL DEFAULT '',
+                        createdAt INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL
+                    )
+                """.trimIndent())
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS waypoints (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        name TEXT NOT NULL,
+                        x INTEGER NOT NULL,
+                        y INTEGER NOT NULL,
+                        z INTEGER NOT NULL,
+                        dimension TEXT NOT NULL DEFAULT 'overworld',
+                        category TEXT NOT NULL DEFAULT 'base',
+                        color TEXT NOT NULL DEFAULT 'gold',
+                        notes TEXT NOT NULL DEFAULT '',
+                        createdAt INTEGER NOT NULL
+                    )
+                """.trimIndent())
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS commands (
+                        id TEXT NOT NULL PRIMARY KEY,
+                        name TEXT NOT NULL,
+                        syntax TEXT NOT NULL DEFAULT '',
+                        description TEXT NOT NULL DEFAULT '',
+                        category TEXT NOT NULL DEFAULT '',
+                        permissionLevel INTEGER NOT NULL DEFAULT 2
+                    )
+                """.trimIndent())
+            }
+        }
 
         private val MIGRATION_16_17 = object : Migration(16, 17) {
             override fun migrate(db: SupportSQLiteDatabase) {
@@ -112,7 +157,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
                     SpyglassDatabase::class.java,
                     "spyglass.db",
                 )
-                    .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17)
+                    .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18)
                     .fallbackToDestructiveMigration()
                     .build()
                     .also { INSTANCE = it }

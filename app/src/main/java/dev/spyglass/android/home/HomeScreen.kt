@@ -86,6 +86,8 @@ private val BROWSE_LINKS = listOf(
     QuickLink(PixelIcons.Structure, "Structures",   Gold),
     QuickLink(PixelIcons.Enchant,   "Enchants",     EnderPurple),
     QuickLink(PixelIcons.Potion,    "Potions",      PotionBlue),
+    QuickLink(PixelIcons.Enchant,   "Advances",     Emerald),
+    QuickLink(PixelIcons.Blocks,    "Commands",     PotionBlue),
 )
 
 private val CALC_LINKS = listOf(
@@ -100,6 +102,9 @@ private val CALC_LINKS = listOf(
     QuickLink(PixelIcons.Nether,   "Nether Portal"),
     QuickLink(PixelIcons.Bookmark, "Reference"),
     QuickLink(PixelIcons.Clock,    "Game Clock"),
+    QuickLink(PixelIcons.Blocks,   "Light Spacing"),
+    QuickLink(PixelIcons.Bookmark, "Notes"),
+    QuickLink(PixelIcons.Biome,    "Waypoints",    Emerald),
 )
 
 // ── Browse tab index for favorite types ─────────────────────────────────────
@@ -115,6 +120,7 @@ private fun browseTabForType(type: String): Int = when (type) {
     "enchant"   -> 7
     "potion"      -> 8
     "advancement" -> 9
+    "command"     -> 10
     else          -> 0
 }
 

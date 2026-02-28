@@ -129,3 +129,37 @@ data class ItemEntity(
     val droppedBy: String = "",     // comma-sep mob IDs
     val minedFrom: String = "",     // comma-sep block IDs
 )
+
+@Entity(tableName = "notes")
+data class NoteEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val title: String,
+    val label: String = "",         // user-defined label/tag
+    val content: String = "",
+    val createdAt: Long,
+    val updatedAt: Long,
+)
+
+@Entity(tableName = "waypoints")
+data class WaypointEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val name: String,
+    val x: Int,
+    val y: Int,
+    val z: Int,
+    val dimension: String = "overworld", // overworld, nether, end
+    val category: String = "base",       // base, farm, portal, spawner, village, monument, other
+    val color: String = "gold",          // gold, green, red, blue, purple
+    val notes: String = "",
+    val createdAt: Long,
+)
+
+@Entity(tableName = "commands")
+data class CommandEntity(
+    @PrimaryKey val id: String,
+    val name: String,
+    val syntax: String = "",
+    val description: String = "",
+    val category: String = "",      // chat, player, entity, world, server, operator, debug
+    val permissionLevel: Int = 2,
+)

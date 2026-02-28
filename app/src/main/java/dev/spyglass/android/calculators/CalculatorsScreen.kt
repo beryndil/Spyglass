@@ -17,6 +17,14 @@ import dev.spyglass.android.calculators.shopping.ShoppingScreen
 import dev.spyglass.android.calculators.storage.StorageScreen
 import dev.spyglass.android.calculators.clock.ClockScreen
 import dev.spyglass.android.calculators.light.LightScreen
+import dev.spyglass.android.calculators.banners.BannerScreen
+import dev.spyglass.android.calculators.food.FoodScreen
+import dev.spyglass.android.calculators.trims.TrimScreen
+import dev.spyglass.android.calculators.librarian.LibrarianScreen
+import dev.spyglass.android.calculators.loot.LootScreen
+import dev.spyglass.android.calculators.notes.NotesScreen
+import dev.spyglass.android.calculators.redstone.RedstoneScreen
+import dev.spyglass.android.calculators.waypoints.WaypointsScreen
 import dev.spyglass.android.calculators.todo.TodoScreen
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassTab
@@ -38,6 +46,14 @@ private val CALC_TABS = listOf(
     SpyglassTab("Reference",   PixelIcons.Bookmark),     // 9 — lookup
     SpyglassTab("Game Clock", PixelIcons.Clock),         // 10 — day/night cycle
     SpyglassTab("Light",      PixelIcons.Blocks),        // 11 — light spacing
+    SpyglassTab("Notes",      PixelIcons.Bookmark),      // 12 — user notes
+    SpyglassTab("Waypoints",  PixelIcons.Biome),         // 13 — coordinate saver
+    SpyglassTab("Redstone",   PixelIcons.Blocks),        // 14 — signal strength
+    SpyglassTab("Librarian",  PixelIcons.Enchant),       // 15 — biome enchantments
+    SpyglassTab("Food",       PixelIcons.Item),          // 16 — food & saturation
+    SpyglassTab("Banners",    PixelIcons.Blocks),        // 17 — banner patterns
+    SpyglassTab("Trims",      PixelIcons.Item),          // 18 — armor trims
+    SpyglassTab("Loot",       PixelIcons.Structure),     // 19 — structure loot
 )
 
 @Composable
@@ -87,6 +103,14 @@ fun CalculatorsScreen(initialTab: Int? = null) {
                 9 -> ReferenceScreen()
                 10 -> ClockScreen()
                 11 -> LightScreen()
+                12 -> NotesScreen()
+                13 -> WaypointsScreen()
+                14 -> RedstoneScreen()
+                15 -> LibrarianScreen()
+                16 -> FoodScreen()
+                17 -> BannerScreen()
+                18 -> TrimScreen()
+                19 -> LootScreen()
             }
         }
     }

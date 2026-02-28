@@ -1,0 +1,674 @@
+[
+  {
+    "id": "advancement",
+    "name": "/advancement",
+    "syntax": "/advancement <grant|revoke> <targets> <everything|only|from|through|until> [<advancement>] [<criterion>]",
+    "description": "Gives, removes, or checks player advancements and their criteria.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "attribute",
+    "name": "/attribute",
+    "syntax": "/attribute <target> <attribute> <get|base|modifier> ...",
+    "description": "Queries, adds, removes, or sets an entity attribute or its modifiers.",
+    "category": "entity",
+    "permissionLevel": 2
+  },
+  {
+    "id": "ban",
+    "name": "/ban",
+    "syntax": "/ban <targets> [<reason>]",
+    "description": "Adds a player to the server banlist, preventing them from connecting. Multiplayer only.",
+    "category": "server",
+    "permissionLevel": 3
+  },
+  {
+    "id": "ban-ip",
+    "name": "/ban-ip",
+    "syntax": "/ban-ip <target> [<reason>]",
+    "description": "Adds an IP address to the server banlist. Multiplayer only.",
+    "category": "server",
+    "permissionLevel": 3
+  },
+  {
+    "id": "banlist",
+    "name": "/banlist",
+    "syntax": "/banlist [ips|players]",
+    "description": "Displays the server's ban list of players or IP addresses. Multiplayer only.",
+    "category": "server",
+    "permissionLevel": 3
+  },
+  {
+    "id": "bossbar",
+    "name": "/bossbar",
+    "syntax": "/bossbar <add|get|list|remove|set> ...",
+    "description": "Creates and modifies boss bars displayed at the top of the screen.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "clear",
+    "name": "/clear",
+    "syntax": "/clear [<targets>] [<item>] [<maxCount>]",
+    "description": "Clears items from a player's inventory, optionally filtering by item type and count.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "clone",
+    "name": "/clone",
+    "syntax": "/clone [from <dimension>] <begin> <end> [to <dimension>] <destination> [replace|masked|filtered] [force|move|normal]",
+    "description": "Copies blocks from one region to another, with options for filtering and placement mode.",
+    "category": "operator",
+    "permissionLevel": 2
+  },
+  {
+    "id": "damage",
+    "name": "/damage",
+    "syntax": "/damage <target> <amount> [<damageType>] [at <location>|by <entity> [from <cause>]]",
+    "description": "Applies a specified amount and type of damage to the target entities.",
+    "category": "entity",
+    "permissionLevel": 2
+  },
+  {
+    "id": "data",
+    "name": "/data",
+    "syntax": "/data <get|merge|modify|remove> <block|entity|storage> <target> [<path>] ...",
+    "description": "Gets, merges, modifies, and removes NBT data of block entities, entities, or command storage.",
+    "category": "debug",
+    "permissionLevel": 2
+  },
+  {
+    "id": "datapack",
+    "name": "/datapack",
+    "syntax": "/datapack <disable|enable|list> [<name>] ...",
+    "description": "Controls the loading and ordering of data packs.",
+    "category": "server",
+    "permissionLevel": 2
+  },
+  {
+    "id": "debug",
+    "name": "/debug",
+    "syntax": "/debug <start|stop|function> ...",
+    "description": "Starts or stops a debugging session, recording tick timing and profiling data.",
+    "category": "debug",
+    "permissionLevel": 3
+  },
+  {
+    "id": "defaultgamemode",
+    "name": "/defaultgamemode",
+    "syntax": "/defaultgamemode <survival|creative|adventure|spectator>",
+    "description": "Sets the default game mode for new players joining the world.",
+    "category": "server",
+    "permissionLevel": 2
+  },
+  {
+    "id": "deop",
+    "name": "/deop",
+    "syntax": "/deop <targets>",
+    "description": "Revokes operator status from a player on the server. Multiplayer only.",
+    "category": "server",
+    "permissionLevel": 3
+  },
+  {
+    "id": "difficulty",
+    "name": "/difficulty",
+    "syntax": "/difficulty [peaceful|easy|normal|hard]",
+    "description": "Sets or queries the current difficulty level of the world.",
+    "category": "world",
+    "permissionLevel": 2
+  },
+  {
+    "id": "effect",
+    "name": "/effect",
+    "syntax": "/effect <give|clear> <targets> [<effect>] [<seconds>] [<amplifier>] [<hideParticles>]",
+    "description": "Gives or removes status effects (potion effects) on players or entities.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "enchant",
+    "name": "/enchant",
+    "syntax": "/enchant <targets> <enchantment> [<level>]",
+    "description": "Adds an enchantment to the selected item held by the target player.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "execute",
+    "name": "/execute",
+    "syntax": "/execute <as|at|positioned|rotated|facing|in|on|store|if|unless|run|align|anchored|summon> ...",
+    "description": "Executes a command with modified context such as changed executor, position, dimension, or conditional checks.",
+    "category": "debug",
+    "permissionLevel": 2
+  },
+  {
+    "id": "experience",
+    "name": "/experience",
+    "syntax": "/experience <add|set|query> <targets> <amount> [points|levels]",
+    "description": "Adds, sets, or queries player experience points or levels.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "fill",
+    "name": "/fill",
+    "syntax": "/fill <from> <to> <block> [destroy|hollow|keep|outline|replace]",
+    "description": "Fills a region between two positions with a specified block, with optional fill modes.",
+    "category": "operator",
+    "permissionLevel": 2
+  },
+  {
+    "id": "fillbiome",
+    "name": "/fillbiome",
+    "syntax": "/fillbiome <from> <to> <biome> [replace <filter>]",
+    "description": "Fills a region between two positions with a specified biome.",
+    "category": "operator",
+    "permissionLevel": 2
+  },
+  {
+    "id": "forceload",
+    "name": "/forceload",
+    "syntax": "/forceload <add|remove|query> [<from>] [<to>]",
+    "description": "Forces specified chunks to remain constantly loaded or removes forced loading.",
+    "category": "world",
+    "permissionLevel": 2
+  },
+  {
+    "id": "function",
+    "name": "/function",
+    "syntax": "/function <name> [<arguments>|with <source> ...]",
+    "description": "Runs a data pack function or all functions tagged with a specified function tag.",
+    "category": "debug",
+    "permissionLevel": 2
+  },
+  {
+    "id": "gamemode",
+    "name": "/gamemode",
+    "syntax": "/gamemode <survival|creative|adventure|spectator> [<target>]",
+    "description": "Sets the game mode of a player (survival, creative, adventure, or spectator).",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "gamerule",
+    "name": "/gamerule",
+    "syntax": "/gamerule [<rule>] [<value>]",
+    "description": "Sets or queries a game rule value that controls various world behaviors.",
+    "category": "world",
+    "permissionLevel": 2
+  },
+  {
+    "id": "give",
+    "name": "/give",
+    "syntax": "/give <targets> <item> [<count>]",
+    "description": "Gives a specified item to one or more players, with an optional count.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "help",
+    "name": "/help",
+    "syntax": "/help [<command>]",
+    "description": "Provides help and usage information for commands. Available to all players.",
+    "category": "chat",
+    "permissionLevel": 0
+  },
+  {
+    "id": "item",
+    "name": "/item",
+    "syntax": "/item <modify|replace> <block|entity> <target> <slot> ...",
+    "description": "Manipulates or replaces items in the inventory slots of blocks or entities.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "jfr",
+    "name": "/jfr",
+    "syntax": "/jfr <start|stop>",
+    "description": "Starts or stops a Java Flight Recorder profiling session for performance analysis.",
+    "category": "debug",
+    "permissionLevel": 4
+  },
+  {
+    "id": "kick",
+    "name": "/kick",
+    "syntax": "/kick <targets> [<reason>]",
+    "description": "Forcibly disconnects a player from the server with an optional reason message.",
+    "category": "server",
+    "permissionLevel": 3
+  },
+  {
+    "id": "kill",
+    "name": "/kill",
+    "syntax": "/kill [<targets>]",
+    "description": "Kills entities including players, mobs, and items. Defaults to the command executor.",
+    "category": "entity",
+    "permissionLevel": 2
+  },
+  {
+    "id": "list",
+    "name": "/list",
+    "syntax": "/list [uuids]",
+    "description": "Lists all players currently connected to the server, optionally showing their UUIDs.",
+    "category": "chat",
+    "permissionLevel": 0
+  },
+  {
+    "id": "locate",
+    "name": "/locate",
+    "syntax": "/locate <structure|biome|poi> <target>",
+    "description": "Locates the closest structure, biome, or point of interest and displays its coordinates.",
+    "category": "world",
+    "permissionLevel": 2
+  },
+  {
+    "id": "loot",
+    "name": "/loot",
+    "syntax": "/loot <give|insert|replace|spawn> <target> <fish|kill|loot|mine> <source> ...",
+    "description": "Generates and distributes items from loot tables to players, containers, or the world.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "me",
+    "name": "/me",
+    "syntax": "/me <action>",
+    "description": "Displays an action message about the sender in chat (e.g., '* Player waves').",
+    "category": "chat",
+    "permissionLevel": 0
+  },
+  {
+    "id": "msg",
+    "name": "/msg",
+    "syntax": "/msg <targets> <message>",
+    "description": "Sends a private message to one or more players that only they can see. Aliases: /tell, /w.",
+    "category": "chat",
+    "permissionLevel": 0
+  },
+  {
+    "id": "op",
+    "name": "/op",
+    "syntax": "/op <targets>",
+    "description": "Grants operator status to a player on the server. Multiplayer only.",
+    "category": "server",
+    "permissionLevel": 3
+  },
+  {
+    "id": "pardon",
+    "name": "/pardon",
+    "syntax": "/pardon <targets>",
+    "description": "Removes a player from the server banlist, allowing them to connect again. Multiplayer only.",
+    "category": "server",
+    "permissionLevel": 3
+  },
+  {
+    "id": "pardon-ip",
+    "name": "/pardon-ip",
+    "syntax": "/pardon-ip <target>",
+    "description": "Removes an IP address from the server banlist. Multiplayer only.",
+    "category": "server",
+    "permissionLevel": 3
+  },
+  {
+    "id": "particle",
+    "name": "/particle",
+    "syntax": "/particle <name> [<pos>] [<delta> <speed> <count>] [force|normal] [<viewers>]",
+    "description": "Creates particle effects at a specified location with configurable spread, speed, and count.",
+    "category": "world",
+    "permissionLevel": 2
+  },
+  {
+    "id": "perf",
+    "name": "/perf",
+    "syntax": "/perf <start|stop>",
+    "description": "Captures game performance metrics and tick timing data for 10 seconds. Multiplayer only.",
+    "category": "debug",
+    "permissionLevel": 4
+  },
+  {
+    "id": "place",
+    "name": "/place",
+    "syntax": "/place <feature|jigsaw|structure|template> <id> [<pos>] ...",
+    "description": "Places a configured feature, structure, jigsaw, or structure template at a position.",
+    "category": "operator",
+    "permissionLevel": 2
+  },
+  {
+    "id": "playsound",
+    "name": "/playsound",
+    "syntax": "/playsound <sound> <source> <targets> [<pos>] [<volume>] [<pitch>] [<minVolume>]",
+    "description": "Plays a specified sound effect to one or more players at a location.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "publish",
+    "name": "/publish",
+    "syntax": "/publish [<allowCommands>] [<gamemode>] [<port>]",
+    "description": "Opens a singleplayer world to the local network for other players to join. Singleplayer only.",
+    "category": "server",
+    "permissionLevel": 4
+  },
+  {
+    "id": "random",
+    "name": "/random",
+    "syntax": "/random <value|roll|reset> <range> [<sequenceId>] ...",
+    "description": "Draws a random integer from a range, or resets/controls a named random number sequence.",
+    "category": "debug",
+    "permissionLevel": 0
+  },
+  {
+    "id": "recipe",
+    "name": "/recipe",
+    "syntax": "/recipe <give|take> <targets> <recipe|*>",
+    "description": "Gives or takes (unlocks or locks) crafting recipes for the specified players.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "reload",
+    "name": "/reload",
+    "syntax": "/reload",
+    "description": "Reloads all data packs including loot tables, advancements, recipes, tags, and functions from disk.",
+    "category": "server",
+    "permissionLevel": 2
+  },
+  {
+    "id": "return",
+    "name": "/return",
+    "syntax": "/return <value>|fail|run <command>",
+    "description": "Controls execution flow inside functions by setting the return value and halting the function.",
+    "category": "debug",
+    "permissionLevel": 2
+  },
+  {
+    "id": "ride",
+    "name": "/ride",
+    "syntax": "/ride <target> mount <vehicle>|dismount",
+    "description": "Makes an entity mount another entity as a passenger, or dismounts it from its current vehicle.",
+    "category": "entity",
+    "permissionLevel": 2
+  },
+  {
+    "id": "rotate",
+    "name": "/rotate",
+    "syntax": "/rotate <target> <yaw> <pitch>|facing <pos>|facing entity <entity> [<anchor>]",
+    "description": "Changes the rotation of an entity to face a direction, position, or another entity.",
+    "category": "entity",
+    "permissionLevel": 2
+  },
+  {
+    "id": "save-all",
+    "name": "/save-all",
+    "syntax": "/save-all [flush]",
+    "description": "Saves the server world data to disk. Use 'flush' to force immediate write. Multiplayer only.",
+    "category": "server",
+    "permissionLevel": 4
+  },
+  {
+    "id": "save-off",
+    "name": "/save-off",
+    "syntax": "/save-off",
+    "description": "Disables automatic saving of world data. Use before backups. Multiplayer only.",
+    "category": "server",
+    "permissionLevel": 4
+  },
+  {
+    "id": "save-on",
+    "name": "/save-on",
+    "syntax": "/save-on",
+    "description": "Re-enables automatic saving of world data after it has been disabled. Multiplayer only.",
+    "category": "server",
+    "permissionLevel": 4
+  },
+  {
+    "id": "say",
+    "name": "/say",
+    "syntax": "/say <message>",
+    "description": "Broadcasts a message to all players in the chat, shown as '[Player] message'.",
+    "category": "chat",
+    "permissionLevel": 2
+  },
+  {
+    "id": "schedule",
+    "name": "/schedule",
+    "syntax": "/schedule function <function> <time> [append|replace]|clear <function>",
+    "description": "Schedules a function to run after a specified delay in ticks, seconds, or days.",
+    "category": "debug",
+    "permissionLevel": 2
+  },
+  {
+    "id": "scoreboard",
+    "name": "/scoreboard",
+    "syntax": "/scoreboard <objectives|players> <add|list|modify|remove|set|reset|operation|display> ...",
+    "description": "Manages scoreboard objectives, player scores, display slots, and team-based tracking.",
+    "category": "debug",
+    "permissionLevel": 2
+  },
+  {
+    "id": "seed",
+    "name": "/seed",
+    "syntax": "/seed",
+    "description": "Displays the world seed value used for terrain generation.",
+    "category": "world",
+    "permissionLevel": 0
+  },
+  {
+    "id": "setblock",
+    "name": "/setblock",
+    "syntax": "/setblock <pos> <block> [destroy|keep|replace]",
+    "description": "Places or replaces a block at a specified position with optional handling mode.",
+    "category": "operator",
+    "permissionLevel": 2
+  },
+  {
+    "id": "setidletimeout",
+    "name": "/setidletimeout",
+    "syntax": "/setidletimeout <minutes>",
+    "description": "Sets the time in minutes before idle players are automatically kicked. Multiplayer only.",
+    "category": "server",
+    "permissionLevel": 3
+  },
+  {
+    "id": "setworldspawn",
+    "name": "/setworldspawn",
+    "syntax": "/setworldspawn [<pos>] [<angle>]",
+    "description": "Sets the world's default spawn point and optional spawn angle for new or respawning players.",
+    "category": "world",
+    "permissionLevel": 2
+  },
+  {
+    "id": "spawnpoint",
+    "name": "/spawnpoint",
+    "syntax": "/spawnpoint [<targets>] [<pos>] [<angle>]",
+    "description": "Sets the individual spawn point for specified players, overriding the world spawn.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "spectate",
+    "name": "/spectate",
+    "syntax": "/spectate [<target>] [<player>]",
+    "description": "Makes a player in spectator mode spectate (follow the camera of) a specified entity.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "spreadplayers",
+    "name": "/spreadplayers",
+    "syntax": "/spreadplayers <center> <spreadDistance> <maxRange> [under <maxHeight>] <respectTeams> <targets>",
+    "description": "Teleports entities to random surface locations spread out within a specified area.",
+    "category": "entity",
+    "permissionLevel": 2
+  },
+  {
+    "id": "stop",
+    "name": "/stop",
+    "syntax": "/stop",
+    "description": "Gracefully shuts down the server, saving all data before stopping. Multiplayer only.",
+    "category": "server",
+    "permissionLevel": 4
+  },
+  {
+    "id": "stopsound",
+    "name": "/stopsound",
+    "syntax": "/stopsound <targets> [<source>] [<sound>]",
+    "description": "Stops currently playing sounds for the specified players, optionally filtering by source or sound.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "summon",
+    "name": "/summon",
+    "syntax": "/summon <entity> [<pos>] [<nbt>]",
+    "description": "Spawns an entity at a specified location with optional NBT data for customization.",
+    "category": "entity",
+    "permissionLevel": 2
+  },
+  {
+    "id": "tag",
+    "name": "/tag",
+    "syntax": "/tag <targets> <add|remove|list> [<name>]",
+    "description": "Manages custom tags on entities used for identification and targeting in commands.",
+    "category": "entity",
+    "permissionLevel": 2
+  },
+  {
+    "id": "team",
+    "name": "/team",
+    "syntax": "/team <add|empty|join|leave|list|modify|remove> [<team>] ...",
+    "description": "Creates, modifies, and manages teams for controlling PvP, name colors, and collision.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "teammsg",
+    "name": "/teammsg",
+    "syntax": "/teammsg <message>",
+    "description": "Sends a message only to members of the sender's team. Alias: /tm.",
+    "category": "chat",
+    "permissionLevel": 0
+  },
+  {
+    "id": "teleport",
+    "name": "/teleport",
+    "syntax": "/teleport <targets> <location>|<destination>|<targets> <location> facing <facingPos>|facing entity <facingEntity>",
+    "description": "Teleports entities to a specified location, entity, or coordinates with optional facing direction. Alias: /tp.",
+    "category": "entity",
+    "permissionLevel": 2
+  },
+  {
+    "id": "tell",
+    "name": "/tell",
+    "syntax": "/tell <targets> <message>",
+    "description": "Sends a private message to one or more players. Alias for /msg and /w.",
+    "category": "chat",
+    "permissionLevel": 0
+  },
+  {
+    "id": "tellraw",
+    "name": "/tellraw",
+    "syntax": "/tellraw <targets> <message>",
+    "description": "Displays a rich JSON text message to specified players with formatting, colors, and click events.",
+    "category": "chat",
+    "permissionLevel": 2
+  },
+  {
+    "id": "tick",
+    "name": "/tick",
+    "syntax": "/tick <query|rate <rate>|freeze|unfreeze|step <steps>|step stop|sprint <ticks>|sprint stop>",
+    "description": "Controls the game's tick rate for debugging, including freezing, stepping, and changing tick speed.",
+    "category": "debug",
+    "permissionLevel": 3
+  },
+  {
+    "id": "time",
+    "name": "/time",
+    "syntax": "/time <add|query|set> <value>",
+    "description": "Sets, adds to, or queries the world's current game time, day count, or day/night cycle.",
+    "category": "world",
+    "permissionLevel": 2
+  },
+  {
+    "id": "title",
+    "name": "/title",
+    "syntax": "/title <targets> <clear|reset|title|subtitle|actionbar|times> ...",
+    "description": "Manages large screen titles, subtitles, and action bar text displayed to players.",
+    "category": "player",
+    "permissionLevel": 2
+  },
+  {
+    "id": "tm",
+    "name": "/tm",
+    "syntax": "/tm <message>",
+    "description": "Shorthand alias for /teammsg. Sends a message only to members of the sender's team.",
+    "category": "chat",
+    "permissionLevel": 0
+  },
+  {
+    "id": "tp",
+    "name": "/tp",
+    "syntax": "/tp <targets> <location>|<destination>",
+    "description": "Shorthand alias for /teleport. Teleports entities to a location or another entity.",
+    "category": "entity",
+    "permissionLevel": 2
+  },
+  {
+    "id": "transfer",
+    "name": "/transfer",
+    "syntax": "/transfer <hostname> [<port>] [<players>]",
+    "description": "Triggers a transfer of players to another server by hostname and port. Dedicated server only.",
+    "category": "server",
+    "permissionLevel": 3
+  },
+  {
+    "id": "trigger",
+    "name": "/trigger",
+    "syntax": "/trigger <objective> [add|set <value>]",
+    "description": "Sets or increments a trigger-type scoreboard objective. Available to all players without op.",
+    "category": "player",
+    "permissionLevel": 0
+  },
+  {
+    "id": "w",
+    "name": "/w",
+    "syntax": "/w <targets> <message>",
+    "description": "Shorthand alias for /msg. Sends a private whisper message to specified players.",
+    "category": "chat",
+    "permissionLevel": 0
+  },
+  {
+    "id": "weather",
+    "name": "/weather",
+    "syntax": "/weather <clear|rain|thunder> [<duration>]",
+    "description": "Sets the weather to clear, rain, or thunder for an optional duration in seconds.",
+    "category": "world",
+    "permissionLevel": 2
+  },
+  {
+    "id": "whitelist",
+    "name": "/whitelist",
+    "syntax": "/whitelist <add|remove|list|on|off|reload> [<targets>]",
+    "description": "Manages the server whitelist, controlling which players can connect. Multiplayer only.",
+    "category": "server",
+    "permissionLevel": 3
+  },
+  {
+    "id": "worldborder",
+    "name": "/worldborder",
+    "syntax": "/worldborder <add|center|damage|get|set|warning> ...",
+    "description": "Manages the world border size, center, damage, warning distance, and shrink/expand timing.",
+    "category": "world",
+    "permissionLevel": 2
+  },
+  {
+    "id": "xp",
+    "name": "/xp",
+    "syntax": "/xp <add|set|query> <targets> <amount> [points|levels]",
+    "description": "Shorthand alias for /experience. Adds, sets, or queries player experience points or levels.",
+    "category": "player",
+    "permissionLevel": 2
+  }
+]

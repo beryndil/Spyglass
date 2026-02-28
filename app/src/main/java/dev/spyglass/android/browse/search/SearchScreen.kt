@@ -44,6 +44,7 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
                     repo.searchStructures(q),
                     repo.searchItems(q),
                     repo.searchAdvancements(q),
+                    repo.searchCommands(q),
                 )
             ) { results ->
                 val blocks     = (results[0] as List<*>)
@@ -56,6 +57,7 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
                 val structures = (results[7] as List<*>)
                 val items        = (results[8] as List<*>)
                 val advancements = (results[9] as List<*>)
+                val commands    = (results[10] as List<*>)
                 buildList {
                     addAll(blocks.take(5).map   { it as dev.spyglass.android.data.db.entities.BlockEntity;     SearchResult("Block",       it.id, it.name, it.category) })
                     addAll(recipes.take(5).map  { it as dev.spyglass.android.data.db.entities.RecipeEntity;    SearchResult("Recipe",      it.outputItem, it.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { c -> c.uppercase() }, it.type.replace('_', ' ')) })
@@ -67,6 +69,7 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
                     addAll(structures.take(5).map { it as dev.spyglass.android.data.db.entities.StructureEntity; SearchResult("Structure",  it.id, it.name, it.dimension) })
                     addAll(items.take(5).map    { it as dev.spyglass.android.data.db.entities.ItemEntity;      SearchResult("Item",        it.id, it.name, it.category) })
                     addAll(advancements.take(5).map { it as dev.spyglass.android.data.db.entities.AdvancementEntity; SearchResult("Advancement", it.id, it.name, it.category) })
+                    addAll(commands.take(5).map { it as dev.spyglass.android.data.db.entities.CommandEntity; SearchResult("Command", it.id, it.name, it.category) })
                 }
             }
         }
@@ -87,6 +90,7 @@ fun browseTabForType(type: String): Int = when (type) {
     "Enchantment" -> 7
     "Potion"      -> 8
     "Advancement" -> 9
+    "Command"     -> 10
     else          -> 0
 }
 
@@ -101,6 +105,7 @@ private fun typeIcon(type: String, id: String): SpyglassIcon = when (type) {
     "Trade"       -> PixelIcons.Trade
     "Structure"   -> StructureTextures.get(id) ?: PixelIcons.Structure
     "Advancement" -> PixelIcons.Enchant
+    "Command"     -> PixelIcons.Blocks
     else          -> PixelIcons.Search
 }
 
@@ -115,6 +120,7 @@ private fun typeColor(type: String) = when (type) {
     "Structure"   -> Gold
     "Item"        -> Gold
     "Advancement" -> Emerald
+    "Command"     -> PotionBlue
     else          -> Stone500
 }
 

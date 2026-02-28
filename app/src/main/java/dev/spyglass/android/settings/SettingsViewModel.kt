@@ -68,6 +68,14 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    val gameClockEnabled: StateFlow<Boolean> = store.data
+        .map { it[PreferenceKeys.GAME_CLOCK_ENABLED] ?: false }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    fun setGameClockEnabled(enabled: Boolean) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.GAME_CLOCK_ENABLED] = enabled }
+    }
+
     fun clearAllFavorites() = viewModelScope.launch {
         repo.deleteAllFavorites()
     }

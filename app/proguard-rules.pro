@@ -13,12 +13,14 @@
     kotlinx.serialization.KSerializer serializer(...);
 }
 
-# Keep Room entities
--keep class dev.spyglass.android.data.db.entities.** { *; }
+# Keep Room entities (only @Entity-annotated classes)
+-keep @androidx.room.Entity class dev.spyglass.android.data.db.entities.** { *; }
+-keep @androidx.room.Dao class * { *; }
 
-# Keep ViewModels
--keep class dev.spyglass.android.** extends androidx.lifecycle.ViewModel { *; }
+# Keep ViewModel constructors for reflection-based instantiation
+-keep class dev.spyglass.android.** extends androidx.lifecycle.ViewModel {
+    <init>(...);
+}
 
 # Kotlin
 -dontwarn kotlin.**
--keep class kotlin.Metadata { *; }

@@ -230,7 +230,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
                         IconButton(
                             onClick = {
                                 val qty = quantityInput.toIntOrNull() ?: 1
-                                if (qty > 0) {
+                                if (qty in 1..10_000_000) {
                                     vm.addItem(selectedId!!, selectedName, qty)
                                     selectedId = null
                                     selectedName = ""
@@ -451,7 +451,7 @@ private fun ShoppingItemRow(
             )
             TextButton(onClick = {
                 val qty = qtyInput.toIntOrNull()
-                if (qty != null && qty > 0) onQuantityChange(qty)
+                if (qty != null && qty in 1..10_000_000) onQuantityChange(qty)
                 editingQty = false
             }) {
                 Text("OK", color = Gold, style = MaterialTheme.typography.labelSmall)
@@ -563,7 +563,7 @@ private fun NewListDialog(onConfirm: (String) -> Unit, onDismiss: () -> Unit) {
         text = {
             OutlinedTextField(
                 value = name,
-                onValueChange = { name = it },
+                onValueChange = { if (it.length <= 100) name = it },
                 placeholder = { Text("List name", color = Stone500) },
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
@@ -596,7 +596,7 @@ private fun RenameDialog(currentName: String, onConfirm: (String) -> Unit, onDis
         text = {
             OutlinedTextField(
                 value = name,
-                onValueChange = { name = it },
+                onValueChange = { if (it.length <= 100) name = it },
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold,

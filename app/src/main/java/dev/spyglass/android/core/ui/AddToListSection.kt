@@ -110,7 +110,7 @@ fun AddToListSection(
                 onClick = {
                     val list = selectedList ?: return@IconButton
                     val qty = quantityInput.toIntOrNull() ?: return@IconButton
-                    if (qty <= 0) return@IconButton
+                    if (qty !in 1..10_000_000) return@IconButton
                     scope.launch {
                         repo.addToShoppingList(list.id, itemId, itemName, qty)
                         feedback = "Added!"
