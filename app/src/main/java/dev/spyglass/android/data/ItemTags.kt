@@ -6,12 +6,12 @@ object ItemTags {
         "#planks" to listOf(
             "oak_planks", "spruce_planks", "birch_planks", "jungle_planks",
             "acacia_planks", "dark_oak_planks", "mangrove_planks", "cherry_planks",
-            "bamboo_planks", "crimson_planks", "warped_planks",
+            "bamboo_planks", "crimson_planks", "warped_planks", "pale_oak_planks",
         ),
         "#logs" to listOf(
             "oak_log", "spruce_log", "birch_log", "jungle_log",
             "acacia_log", "dark_oak_log", "mangrove_log", "cherry_log",
-            "bamboo_block", "crimson_stem", "warped_stem",
+            "pale_oak_log",
         ),
         "#wooden_slabs" to listOf(
             "oak_slab", "spruce_slab", "birch_slab", "jungle_slab",
@@ -52,8 +52,8 @@ object ItemTags {
     /** Variant prefixes for each tag — if a recipe output starts with one of these,
      *  the ingredient is variant-specific, not tag-based. */
     private val tagVariants: Map<String, Set<String>> = mapOf(
-        "#planks" to setOf("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"),
-        "#logs" to setOf("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry"),
+        "#planks" to setOf("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped", "pale_oak"),
+        "#logs" to setOf("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "pale_oak"),
         "#wooden_slabs" to setOf("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"),
         "#wooden_stairs" to setOf("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"),
         "#wooden_fences" to setOf("oak", "spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry", "bamboo", "crimson", "warped"),

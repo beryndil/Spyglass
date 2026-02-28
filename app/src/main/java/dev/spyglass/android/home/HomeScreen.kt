@@ -38,7 +38,7 @@ import java.util.Calendar
 private val TIPS = listOf(
     "Foxes can pick up items with their mouths. Breed two foxes and the baby will trust you and bring you whatever it picks up.",
     "You can place torches on furnaces and crafting tables to save wall space in tight builds.",
-    "Holding a shield while crouching blocks 100% of damage from explosions, including Creepers.",
+    "Holding a shield blocks melee attacks and projectiles. It also reduces explosion damage and knockback from Creepers and TNT.",
     "Piglins will trade you items for gold ingots, but they attack immediately if you open a chest in the Nether near them.",
     "A single water source placed at the center of a 9x9 farm hydrates every block in range.",
     "Putting a campfire under a beehive lets you harvest honey without angering the bees.",
@@ -63,7 +63,7 @@ private val TIPS = listOf(
     "You can put banners on shields at a crafting table to display your custom design.",
     "Mending repairs your gear using XP orbs, making it the most valuable enchantment for tools.",
     "Respawn anchors work in the Nether like beds work in the Overworld. Beds explode in the Nether.",
-    "Placing a block of ice under soul soil creates a 'blue ice highway' for ultra-fast boat travel.",
+    "Place blue ice blocks in a long track and ride a boat on top for ultra-fast travel - faster than minecarts or sprinting.",
     "A Looting III sword gives more drops from mobs, including rare drops like Wither Skeleton skulls.",
     "Copper blocks oxidize over time, changing color from orange to teal. Wax them with honeycomb to freeze the look.",
 )

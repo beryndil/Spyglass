@@ -47,7 +47,7 @@ fun ChangelogScreen(onBack: () -> Unit = {}) {
             version = "v1.0-alpha.1",
             date = "February 2026",
             highlights = listOf(
-                "598 blocks and 352 items with full detail cards",
+                "930+ blocks and 360 items with full detail cards",
                 "9 Browse tabs: Blocks, Items, Recipes, Mobs, Trades, Biomes, Structures, Enchantments, Potions",
                 "7 Tools: Block Fill, Smelting, Storage, Nether Portal, Shapes, Enchanting, Quick Reference",
                 "Enchant optimizer — cheapest XP order for combining books on the anvil",
