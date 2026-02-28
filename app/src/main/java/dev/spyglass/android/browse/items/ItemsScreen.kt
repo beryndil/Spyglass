@@ -163,7 +163,7 @@ private fun obtainColor(method: String) = when (method) {
     else             -> MaterialTheme.colorScheme.secondary
 }
 
-private val ITEM_CATEGORIES = listOf("all", "tools", "weapons", "armor", "food", "materials", "mob_drops", "brewing", "misc")
+private val ITEM_CATEGORIES = listOf("all", "tools", "weapons", "armor", "food", "materials", "mob_drops", "misc")
 
 // ── Screen ───────────────────────────────────────────────────────────────────
 
@@ -389,7 +389,7 @@ private fun ItemDetailCard(
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
                     CategoryBadge(
-                        label = item.category.replace('_', ' '),
+                        label = item.category.replace('_', ' ').replaceFirstChar { it.uppercase() },
                         color = categoryColor(item.category),
                     )
                     if (item.stackSize != 64) {
@@ -548,7 +548,8 @@ private fun ItemDetailCard(
                     TextureCraftingGrid(recipe = recipe, onItemTap = onItemTap)
                 }
                 Text(
-                    recipe.type.replace('_', ' ').replaceFirstChar { it.uppercase() },
+                    if (recipe.type.contains("crafting")) "Crafting"
+                    else recipe.type.replace('_', ' ').replaceFirstChar { it.uppercase() },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )

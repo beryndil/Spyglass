@@ -357,14 +357,14 @@ private fun StructureDetailCard(
                     style = MaterialTheme.typography.labelSmall,
                     color = PotionBlue,
                     textDecoration = TextDecoration.Underline,
-                    modifier = Modifier.clickable { onCalcTab(19) },
+                    modifier = Modifier.clickable { onCalcTab(18) },
                 )
                 Text(
                     "Armor Trims \u2192",
                     style = MaterialTheme.typography.labelSmall,
                     color = PotionBlue,
                     textDecoration = TextDecoration.Underline,
-                    modifier = Modifier.clickable { onCalcTab(18) },
+                    modifier = Modifier.clickable { onCalcTab(17) },
                 )
             }
         }

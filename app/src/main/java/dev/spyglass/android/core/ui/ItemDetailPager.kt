@@ -354,7 +354,8 @@ private fun RecipePage(
 
                 // Recipe type badge
                 Text(
-                    recipe.type.replace('_', ' ').replaceFirstChar { it.uppercase() },
+                    if (recipe.type.contains("crafting")) "Crafting"
+                    else recipe.type.replace('_', ' ').replaceFirstChar { it.uppercase() },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -451,7 +452,8 @@ private fun UsesPage(
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
-                        recipe.type.replace('_', ' '),
+                        if (recipe.type.contains("crafting")) "Crafting"
+                        else recipe.type.replace('_', ' ').replaceFirstChar { it.uppercase() },
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.secondary,
                     )

@@ -19,6 +19,7 @@ import dev.spyglass.android.browse.structures.StructuresScreen
 import dev.spyglass.android.browse.advancements.AdvancementsScreen
 import dev.spyglass.android.browse.commands.CommandsScreen
 import dev.spyglass.android.browse.trades.TradesScreen
+import dev.spyglass.android.calculators.reference.ReferenceScreen
 import dev.spyglass.android.core.ui.EntityLink
 import dev.spyglass.android.core.ui.EntityLinkIndex
 import dev.spyglass.android.core.ui.EntityType
@@ -42,6 +43,7 @@ private val BROWSE_TABS = listOf(
     SpyglassTab("Potions",    PixelIcons.Potion),       // 8
     SpyglassTab("Planner",   PixelIcons.Enchant),       // 9
     SpyglassTab("Commands",  PixelIcons.Blocks),       // 10
+    SpyglassTab("Reference", PixelIcons.Bookmark),     // 11
 )
 
 @Composable
@@ -274,6 +276,7 @@ fun BrowseScreen(
                 onEnchantTap = onEnchantTap,
                 entityLinkIndex = entityLinkIndex,
             )
+            11 -> ReferenceScreen()
         }
     }
 }

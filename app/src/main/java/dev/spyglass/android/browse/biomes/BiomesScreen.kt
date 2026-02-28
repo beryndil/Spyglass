@@ -394,7 +394,7 @@ private fun BiomeDetailCard(
                         style = MaterialTheme.typography.labelSmall,
                         color = if (isLight) MaterialTheme.colorScheme.onPrimary else PotionBlue,
                         textDecoration = TextDecoration.Underline,
-                        modifier = Modifier.clickable { onCalcTab(15) },
+                        modifier = Modifier.clickable { onCalcTab(14) },
                     )
                 }
                 if (hasStructures) {
@@ -403,7 +403,7 @@ private fun BiomeDetailCard(
                         style = MaterialTheme.typography.labelSmall,
                         color = if (isLight) MaterialTheme.colorScheme.onPrimary else PotionBlue,
                         textDecoration = TextDecoration.Underline,
-                        modifier = Modifier.clickable { onCalcTab(19) },
+                        modifier = Modifier.clickable { onCalcTab(18) },
                     )
                 }
             }

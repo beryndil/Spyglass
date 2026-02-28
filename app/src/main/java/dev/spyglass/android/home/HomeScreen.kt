@@ -89,6 +89,7 @@ private fun browseLinks() = listOf(
     QuickLink(PixelIcons.Potion,    "Potions",      PotionBlue),
     QuickLink(PixelIcons.Enchant,   "Advances",     Emerald),
     QuickLink(PixelIcons.Blocks,    "Commands",     PotionBlue),
+    QuickLink(PixelIcons.Bookmark,  "Reference",    MaterialTheme.colorScheme.primary),
 )
 
 private val CALC_LINKS = listOf(
@@ -101,7 +102,6 @@ private val CALC_LINKS = listOf(
     QuickLink(PixelIcons.Storage,  "Storage"),
     QuickLink(PixelIcons.Smelt,    "Smelting"),
     QuickLink(PixelIcons.Nether,   "Nether Portal"),
-    QuickLink(PixelIcons.Bookmark, "Reference"),
     QuickLink(PixelIcons.Clock,    "Game Clock"),
     QuickLink(PixelIcons.Blocks,   "Light Spacing"),
     QuickLink(PixelIcons.Bookmark, "Notes"),

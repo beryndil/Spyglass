@@ -9,7 +9,6 @@ import androidx.compose.ui.unit.dp
 import dev.spyglass.android.calculators.anvil.AnvilScreen
 import dev.spyglass.android.calculators.blockfill.BlockFillScreen
 import dev.spyglass.android.calculators.nether.NetherScreen
-import dev.spyglass.android.calculators.reference.ReferenceScreen
 import dev.spyglass.android.calculators.maze.MazeScreen
 import dev.spyglass.android.calculators.shapes.ShapesScreen
 import dev.spyglass.android.calculators.smelting.SmeltingScreen
@@ -44,17 +43,16 @@ private val CALC_TABS = listOf(
     SpyglassTab("Storage",     PixelIcons.Storage),      // 6 — building
     SpyglassTab("Smelt",       PixelIcons.Smelt),        // 7 — resources
     SpyglassTab("Nether",      PixelIcons.Nether),       // 8 — travel
-    SpyglassTab("Reference",   PixelIcons.Bookmark),     // 9 — lookup
-    SpyglassTab("Game Clock", PixelIcons.Clock),         // 10 — day/night cycle
-    SpyglassTab("Light",      PixelIcons.Blocks),        // 11 — light spacing
-    SpyglassTab("Notes",      PixelIcons.Bookmark),      // 12 — user notes
-    SpyglassTab("Waypoints",  PixelIcons.Biome),         // 13 — coordinate saver
-    SpyglassTab("Redstone",   PixelIcons.Blocks),        // 14 — signal strength
-    SpyglassTab("Librarian",  PixelIcons.Enchant),       // 15 — biome enchantments
-    SpyglassTab("Food",       PixelIcons.Item),          // 16 — food & saturation
-    SpyglassTab("Banners",    PixelIcons.Blocks),        // 17 — banner patterns
-    SpyglassTab("Trims",      PixelIcons.Item),          // 18 — armor trims
-    SpyglassTab("Loot",       PixelIcons.Structure),     // 19 — structure loot
+    SpyglassTab("Game Clock", PixelIcons.Clock),         // 9 — day/night cycle
+    SpyglassTab("Light",      PixelIcons.Blocks),        // 10 — light spacing
+    SpyglassTab("Notes",      PixelIcons.Bookmark),      // 11 — user notes
+    SpyglassTab("Waypoints",  PixelIcons.Biome),         // 12 — coordinate saver
+    SpyglassTab("Redstone",   PixelIcons.Blocks),        // 13 — signal strength
+    SpyglassTab("Librarian",  PixelIcons.Enchant),       // 14 — biome enchantments
+    SpyglassTab("Food",       PixelIcons.Item),          // 15 — food & saturation
+    SpyglassTab("Banners",    PixelIcons.Blocks),        // 16 — banner patterns
+    SpyglassTab("Trims",      PixelIcons.Item),          // 17 — armor trims
+    SpyglassTab("Loot",       PixelIcons.Structure),     // 18 — structure loot
 )
 
 @Composable
@@ -107,17 +105,16 @@ fun CalculatorsScreen(
                 6 -> StorageScreen()
                 7 -> SmeltingScreen()
                 8 -> NetherScreen()
-                9 -> ReferenceScreen()
-                10 -> ClockScreen()
-                11 -> LightScreen()
-                12 -> NotesScreen()
-                13 -> WaypointsScreen()
-                14 -> RedstoneScreen()
-                15 -> LibrarianScreen()
-                16 -> FoodScreen()
-                17 -> BannerScreen()
-                18 -> TrimScreen(onStructureTap = onStructureTap)
-                19 -> LootScreen(onStructureTap = onStructureTap)
+                9 -> ClockScreen()
+                10 -> LightScreen()
+                11 -> NotesScreen()
+                12 -> WaypointsScreen()
+                13 -> RedstoneScreen()
+                14 -> LibrarianScreen()
+                15 -> FoodScreen()
+                16 -> BannerScreen()
+                17 -> TrimScreen(onStructureTap = onStructureTap)
+                18 -> LootScreen(onStructureTap = onStructureTap)
             }
         }
     }

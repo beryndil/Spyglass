@@ -239,7 +239,7 @@ fun SettingsScreen(
                 "Configure Game Clock \u2192",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable { onCalcTab(10) },
+                modifier = Modifier.clickable { onCalcTab(9) },
             )
         }
 

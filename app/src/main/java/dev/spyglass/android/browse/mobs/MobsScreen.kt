@@ -367,7 +367,7 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
                         style = MaterialTheme.typography.labelSmall,
                         color = PotionBlue,
                         textDecoration = TextDecoration.Underline,
-                        modifier = Modifier.clickable { onCalcTab(16) },
+                        modifier = Modifier.clickable { onCalcTab(15) },
                     )
                 }
                 if (isHostile) {
@@ -376,7 +376,7 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
                         style = MaterialTheme.typography.labelSmall,
                         color = PotionBlue,
                         textDecoration = TextDecoration.Underline,
-                        modifier = Modifier.clickable { onCalcTab(11) },
+                        modifier = Modifier.clickable { onCalcTab(10) },
                     )
                 }
             }

@@ -228,7 +228,7 @@ fun EnchantsScreen(
                     color = PotionBlue,
                     textDecoration = TextDecoration.Underline,
                     modifier = Modifier
-                        .clickable { onCalcTab(15) }
+                        .clickable { onCalcTab(14) }
                         .padding(top = 4.dp),
                 )
             }

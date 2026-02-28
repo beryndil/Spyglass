@@ -73,7 +73,7 @@ fun AppNavGraph() {
 
     Scaffold(
         topBar    = { SpyglassTopBar(navController, onClockTap = {
-            pendingCalcTab = 10
+            pendingCalcTab = 9
             navigateTo(TopDest.Calculators.route)
         }) },
         bottomBar = { if (showBars) BottomNavBar(navController) },
