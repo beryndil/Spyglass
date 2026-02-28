@@ -33,7 +33,18 @@ fun ChangelogScreen(onBack: () -> Unit = {}) {
         SectionHeader("Changelog")
 
         VersionEntry(
-            version = "v1.0",
+            version = "v1.0-alpha.2",
+            date = "February 2026",
+            highlights = listOf(
+                "15 background color themes — dark, mid-tone, and light options",
+                "Theme picker in Settings with tappable color swatches",
+                "Improved contrast for gold accent and muted text on light themes",
+                "Expanded item data with armor stats, food stats, and attack info",
+            ),
+        )
+
+        VersionEntry(
+            version = "v1.0-alpha.1",
             date = "February 2026",
             highlights = listOf(
                 "598 blocks and 352 items with full detail cards",

@@ -8,7 +8,9 @@
     "description": "Used to shear sheep for wool and harvest leaves, cobwebs, and vines.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 15,
+    "enchantTarget": "shears"
   },
   {
     "id": "flint_and_steel",
@@ -30,7 +32,9 @@
     "description": "Used to catch fish, treasure, and junk from water. Can also hook entities.",
     "obtainedFrom": "crafting,fishing,mob_drop",
     "droppedBy": "drowned",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 1,
+    "enchantTarget": "fishing_rod"
   },
   {
     "id": "compass",
@@ -102,7 +106,7 @@
     "id": "lead",
     "name": "Lead",
     "stackSize": 64,
-    "category": "tools",
+    "category": "misc",
     "durability": 0,
     "description": "Used to leash and lead passive mobs. Can be tied to fences.",
     "obtainedFrom": "crafting",
@@ -113,18 +117,19 @@
     "id": "name_tag",
     "name": "Name Tag",
     "stackSize": 64,
-    "category": "tools",
+    "category": "misc",
     "durability": 0,
     "description": "Rename at an anvil and use on a mob to give it a permanent name and prevent despawning.",
     "obtainedFrom": "fishing,structure_loot,trading",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "fire_charge",
     "name": "Fire Charge",
     "stackSize": 64,
-    "category": "tools",
+    "category": "misc",
     "durability": 0,
     "description": "Places fire when used. Can be fired from dispensers as a projectile.",
     "obtainedFrom": "crafting,bartering,structure_loot",
@@ -135,7 +140,7 @@
     "id": "map",
     "name": "Map",
     "stackSize": 64,
-    "category": "tools",
+    "category": "misc",
     "durability": 0,
     "description": "Records terrain as you explore. Combine with a compass for a locator map.",
     "obtainedFrom": "crafting,trading",
@@ -146,23 +151,25 @@
     "id": "saddle",
     "name": "Saddle",
     "stackSize": 1,
-    "category": "tools",
+    "category": "misc",
     "durability": 0,
     "description": "Place on a horse, pig, or strider to ride them. Cannot be crafted.",
     "obtainedFrom": "fishing,structure_loot,trading,mob_drop",
     "droppedBy": "ravager",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "carrot_on_a_stick",
     "name": "Carrot on a Stick",
     "stackSize": 1,
-    "category": "tools",
+    "category": "misc",
     "durability": 25,
     "description": "Used to control saddled pigs. Combine a fishing rod with a carrot.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantTarget": "fishing_rod"
   },
   {
     "id": "brush",
@@ -184,7 +191,11 @@
     "description": "The basic pickaxe. Mines stone and coal ore.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "2",
+    "attackSpeed": "1.2",
+    "enchantability": 15,
+    "enchantTarget": "pickaxe"
   },
   {
     "id": "stone_pickaxe",
@@ -195,7 +206,11 @@
     "description": "Mines iron ore and lapis ore.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "3",
+    "attackSpeed": "1.2",
+    "enchantability": 5,
+    "enchantTarget": "pickaxe"
   },
   {
     "id": "iron_pickaxe",
@@ -206,7 +221,11 @@
     "description": "Mines diamonds, gold, emeralds, and redstone. The workhorse pickaxe.",
     "obtainedFrom": "crafting,structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "4",
+    "attackSpeed": "1.2",
+    "enchantability": 14,
+    "enchantTarget": "pickaxe"
   },
   {
     "id": "golden_pickaxe",
@@ -217,7 +236,11 @@
     "description": "Fastest mining speed but lowest durability. High enchantability.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "2",
+    "attackSpeed": "1.2",
+    "enchantability": 22,
+    "enchantTarget": "pickaxe"
   },
   {
     "id": "diamond_pickaxe",
@@ -228,7 +251,11 @@
     "description": "Mines obsidian and ancient debris. Top-tier before netherite.",
     "obtainedFrom": "crafting,trading",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "5",
+    "attackSpeed": "1.2",
+    "enchantability": 10,
+    "enchantTarget": "pickaxe"
   },
   {
     "id": "netherite_pickaxe",
@@ -239,7 +266,12 @@
     "description": "The best pickaxe. Fire-resistant. Mines everything.",
     "obtainedFrom": "smithing",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "6",
+    "attackSpeed": "1.2",
+    "enchantability": 15,
+    "enchantTarget": "pickaxe",
+    "isRenewable": false
   },
   {
     "id": "wooden_axe",
@@ -250,7 +282,11 @@
     "description": "Basic axe for chopping wood. Also a slow but powerful melee weapon.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "7",
+    "attackSpeed": "0.8",
+    "enchantability": 15,
+    "enchantTarget": "axe"
   },
   {
     "id": "stone_axe",
@@ -261,7 +297,11 @@
     "description": "Stone-tier axe. Deals 9 attack damage but swings slowly.",
     "obtainedFrom": "crafting,trading",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "9",
+    "attackSpeed": "0.8",
+    "enchantability": 5,
+    "enchantTarget": "axe"
   },
   {
     "id": "iron_axe",
@@ -272,7 +312,11 @@
     "description": "Reliable mid-tier axe. Deals 9 attack damage. Dropped by vindicators.",
     "obtainedFrom": "crafting",
     "droppedBy": "vindicator",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "9",
+    "attackSpeed": "0.9",
+    "enchantability": 14,
+    "enchantTarget": "axe"
   },
   {
     "id": "golden_axe",
@@ -283,7 +327,11 @@
     "description": "Fastest chopping speed but lowest durability.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "7",
+    "attackSpeed": "1.0",
+    "enchantability": 22,
+    "enchantTarget": "axe"
   },
   {
     "id": "diamond_axe",
@@ -294,7 +342,11 @@
     "description": "High-tier axe with excellent durability. Deals 9 attack damage.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "9",
+    "attackSpeed": "1.0",
+    "enchantability": 10,
+    "enchantTarget": "axe"
   },
   {
     "id": "netherite_axe",
@@ -305,7 +357,12 @@
     "description": "The strongest axe. Fire-resistant. Deals 10 attack damage.",
     "obtainedFrom": "smithing",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "10",
+    "attackSpeed": "1.0",
+    "enchantability": 15,
+    "enchantTarget": "axe",
+    "isRenewable": false
   },
   {
     "id": "wooden_shovel",
@@ -316,7 +373,11 @@
     "description": "Basic shovel for digging dirt, sand, and gravel. Makes paths.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "2.5",
+    "attackSpeed": "1.0",
+    "enchantability": 15,
+    "enchantTarget": "shovel"
   },
   {
     "id": "stone_shovel",
@@ -327,7 +388,11 @@
     "description": "Stone-tier shovel for faster digging.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "3.5",
+    "attackSpeed": "1.0",
+    "enchantability": 5,
+    "enchantTarget": "shovel"
   },
   {
     "id": "iron_shovel",
@@ -338,7 +403,11 @@
     "description": "Mid-tier shovel. Good balance of speed and durability.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "4.5",
+    "attackSpeed": "1.0",
+    "enchantability": 14,
+    "enchantTarget": "shovel"
   },
   {
     "id": "golden_shovel",
@@ -349,7 +418,11 @@
     "description": "Fastest digging but lowest durability.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "2.5",
+    "attackSpeed": "1.0",
+    "enchantability": 22,
+    "enchantTarget": "shovel"
   },
   {
     "id": "diamond_shovel",
@@ -360,7 +433,11 @@
     "description": "High-tier shovel with excellent durability.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "5.5",
+    "attackSpeed": "1.0",
+    "enchantability": 10,
+    "enchantTarget": "shovel"
   },
   {
     "id": "netherite_shovel",
@@ -371,7 +448,12 @@
     "description": "The best shovel. Fire-resistant.",
     "obtainedFrom": "smithing",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "6.5",
+    "attackSpeed": "1.0",
+    "enchantability": 15,
+    "enchantTarget": "shovel",
+    "isRenewable": false
   },
   {
     "id": "wooden_hoe",
@@ -382,7 +464,11 @@
     "description": "Tills dirt into farmland for planting crops.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "1",
+    "attackSpeed": "1.0",
+    "enchantability": 15,
+    "enchantTarget": "hoe"
   },
   {
     "id": "stone_hoe",
@@ -393,7 +479,11 @@
     "description": "Stone-tier hoe. Faster tilling than wood.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "1",
+    "attackSpeed": "2.0",
+    "enchantability": 5,
+    "enchantTarget": "hoe"
   },
   {
     "id": "iron_hoe",
@@ -404,7 +494,11 @@
     "description": "Mid-tier hoe for farming.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "1",
+    "attackSpeed": "3.0",
+    "enchantability": 14,
+    "enchantTarget": "hoe"
   },
   {
     "id": "golden_hoe",
@@ -415,7 +509,11 @@
     "description": "Fastest hoe but barely lasts.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "1",
+    "attackSpeed": "1.0",
+    "enchantability": 22,
+    "enchantTarget": "hoe"
   },
   {
     "id": "diamond_hoe",
@@ -426,7 +524,11 @@
     "description": "High-tier hoe. Found as loot in woodland mansions.",
     "obtainedFrom": "crafting,structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "1",
+    "attackSpeed": "4.0",
+    "enchantability": 10,
+    "enchantTarget": "hoe"
   },
   {
     "id": "netherite_hoe",
@@ -437,7 +539,12 @@
     "description": "The best hoe. Fire-resistant.",
     "obtainedFrom": "smithing",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "1",
+    "attackSpeed": "4.0",
+    "enchantability": 15,
+    "enchantTarget": "hoe",
+    "isRenewable": false
   },
   {
     "id": "wooden_sword",
@@ -448,7 +555,11 @@
     "description": "The weakest sword tier. Deals 4 attack damage.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "4",
+    "attackSpeed": "1.6",
+    "enchantability": 15,
+    "enchantTarget": "sword"
   },
   {
     "id": "stone_sword",
@@ -459,7 +570,11 @@
     "description": "A basic stone-tier sword. Deals 5 attack damage.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "5",
+    "attackSpeed": "1.6",
+    "enchantability": 5,
+    "enchantTarget": "sword"
   },
   {
     "id": "iron_sword",
@@ -470,7 +585,11 @@
     "description": "A reliable mid-tier sword. Deals 6 attack damage.",
     "obtainedFrom": "crafting,mob_drop",
     "droppedBy": "vex",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "6",
+    "attackSpeed": "1.6",
+    "enchantability": 14,
+    "enchantTarget": "sword"
   },
   {
     "id": "golden_sword",
@@ -481,7 +600,11 @@
     "description": "Low durability but high enchantability. Deals 4 attack damage.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "4",
+    "attackSpeed": "1.6",
+    "enchantability": 22,
+    "enchantTarget": "sword"
   },
   {
     "id": "diamond_sword",
@@ -492,7 +615,11 @@
     "description": "High-tier sword with excellent durability. Deals 7 attack damage.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "7",
+    "attackSpeed": "1.6",
+    "enchantability": 10,
+    "enchantTarget": "sword"
   },
   {
     "id": "netherite_sword",
@@ -503,7 +630,12 @@
     "description": "The strongest sword. Fire-resistant and deals 8 attack damage.",
     "obtainedFrom": "smithing",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "8",
+    "attackSpeed": "1.6",
+    "enchantability": 15,
+    "enchantTarget": "sword",
+    "isRenewable": false
   },
   {
     "id": "bow",
@@ -514,7 +646,9 @@
     "description": "Ranged weapon that fires arrows. Charge longer for more damage.",
     "obtainedFrom": "crafting",
     "droppedBy": "skeleton",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 1,
+    "enchantTarget": "bow"
   },
   {
     "id": "crossbow",
@@ -525,18 +659,25 @@
     "description": "Ranged weapon with longer range. Can be loaded with arrows or fireworks.",
     "obtainedFrom": "crafting",
     "droppedBy": "pillager",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 1,
+    "enchantTarget": "crossbow"
   },
   {
     "id": "trident",
     "name": "Trident",
     "stackSize": 1,
-    "category": "weapons",
+    "category": "mob_drops",
     "durability": 250,
     "description": "Melee and ranged weapon. Can be enchanted with Riptide, Loyalty, or Channeling.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "drowned",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "9",
+    "attackSpeed": "1.1",
+    "enchantability": 1,
+    "enchantTarget": "trident",
+    "isRenewable": false
   },
   {
     "id": "mace",
@@ -547,7 +688,11 @@
     "description": "A heavy melee weapon that deals bonus damage based on fall distance.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "attackDamage": "6",
+    "attackSpeed": "0.6",
+    "enchantability": 15,
+    "enchantTarget": "mace"
   },
   {
     "id": "arrow",
@@ -580,7 +725,8 @@
     "description": "Blocks melee and ranged attacks when held. Can be decorated with banners.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantTarget": "wearable"
   },
   {
     "id": "leather_helmet",
@@ -591,7 +737,12 @@
     "description": "Basic headgear providing 1 armor point. Can be dyed any color.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 15,
+    "defensePoints": 1,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,helmet"
   },
   {
     "id": "leather_chestplate",
@@ -602,7 +753,12 @@
     "description": "Basic chestpiece providing 3 armor points. Can be dyed any color.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 15,
+    "defensePoints": 3,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor"
   },
   {
     "id": "leather_leggings",
@@ -613,7 +769,12 @@
     "description": "Basic leg armor providing 2 armor points. Can be dyed any color.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 15,
+    "defensePoints": 2,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,leggings"
   },
   {
     "id": "leather_boots",
@@ -624,7 +785,12 @@
     "description": "Basic footwear providing 1 armor point. Can be dyed any color.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 15,
+    "defensePoints": 1,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,boots"
   },
   {
     "id": "chainmail_helmet",
@@ -635,7 +801,13 @@
     "description": "Mid-tier helmet providing 2 armor. Cannot be crafted, obtained from mobs or trading.",
     "obtainedFrom": "mob_drop,trading",
     "droppedBy": "zombie,skeleton",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 12,
+    "defensePoints": 2,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,helmet",
+    "isRenewable": false
   },
   {
     "id": "chainmail_chestplate",
@@ -646,7 +818,13 @@
     "description": "Mid-tier chestpiece providing 5 armor. Cannot be crafted.",
     "obtainedFrom": "mob_drop,trading",
     "droppedBy": "zombie,skeleton",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 12,
+    "defensePoints": 5,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor",
+    "isRenewable": false
   },
   {
     "id": "chainmail_leggings",
@@ -657,7 +835,13 @@
     "description": "Mid-tier leg armor providing 4 armor. Cannot be crafted.",
     "obtainedFrom": "mob_drop,trading",
     "droppedBy": "zombie,skeleton",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 12,
+    "defensePoints": 4,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,leggings",
+    "isRenewable": false
   },
   {
     "id": "chainmail_boots",
@@ -668,7 +852,13 @@
     "description": "Mid-tier footwear providing 1 armor. Cannot be crafted.",
     "obtainedFrom": "mob_drop,trading",
     "droppedBy": "zombie,skeleton",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 12,
+    "defensePoints": 1,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,boots",
+    "isRenewable": false
   },
   {
     "id": "iron_helmet",
@@ -679,7 +869,12 @@
     "description": "Solid helmet providing 2 armor points and 0 toughness.",
     "obtainedFrom": "crafting",
     "droppedBy": "zombie,skeleton",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 14,
+    "defensePoints": 2,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,helmet"
   },
   {
     "id": "iron_chestplate",
@@ -690,7 +885,12 @@
     "description": "Reliable chestpiece providing 6 armor points.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 14,
+    "defensePoints": 6,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor"
   },
   {
     "id": "iron_leggings",
@@ -701,7 +901,12 @@
     "description": "Solid leg armor providing 5 armor points.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 14,
+    "defensePoints": 5,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,leggings"
   },
   {
     "id": "iron_boots",
@@ -712,7 +917,12 @@
     "description": "Reliable footwear providing 2 armor points.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 14,
+    "defensePoints": 2,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,boots"
   },
   {
     "id": "golden_helmet",
@@ -723,7 +933,12 @@
     "description": "Low durability helmet with high enchantability. Provides 2 armor.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 22,
+    "defensePoints": 2,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,helmet"
   },
   {
     "id": "golden_chestplate",
@@ -734,7 +949,12 @@
     "description": "Low durability chestpiece with high enchantability. Provides 5 armor.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 22,
+    "defensePoints": 5,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor"
   },
   {
     "id": "golden_leggings",
@@ -745,7 +965,12 @@
     "description": "Low durability leg armor with high enchantability. Provides 3 armor.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 22,
+    "defensePoints": 3,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,leggings"
   },
   {
     "id": "golden_boots",
@@ -756,7 +981,12 @@
     "description": "Low durability footwear with high enchantability. Provides 1 armor. Piglins won't attack you.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 22,
+    "defensePoints": 1,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,boots"
   },
   {
     "id": "diamond_helmet",
@@ -767,7 +997,12 @@
     "description": "High-tier helmet providing 3 armor and 2 toughness.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 10,
+    "defensePoints": 3,
+    "armorToughness": 2.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,helmet"
   },
   {
     "id": "diamond_chestplate",
@@ -778,7 +1013,12 @@
     "description": "High-tier chestpiece providing 8 armor and 2 toughness.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 10,
+    "defensePoints": 8,
+    "armorToughness": 2.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor"
   },
   {
     "id": "diamond_leggings",
@@ -789,7 +1029,12 @@
     "description": "High-tier leg armor providing 6 armor and 2 toughness.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 10,
+    "defensePoints": 6,
+    "armorToughness": 2.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,leggings"
   },
   {
     "id": "diamond_boots",
@@ -800,7 +1045,12 @@
     "description": "High-tier footwear providing 3 armor and 2 toughness.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 10,
+    "defensePoints": 3,
+    "armorToughness": 2.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,boots"
   },
   {
     "id": "netherite_helmet",
@@ -811,7 +1061,13 @@
     "description": "The best helmet. Fire-resistant, 3 armor, 3 toughness, +1 knockback resistance.",
     "obtainedFrom": "smithing",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 15,
+    "defensePoints": 3,
+    "armorToughness": 3.0,
+    "knockbackResistance": 0.1,
+    "enchantTarget": "armor,helmet",
+    "isRenewable": false
   },
   {
     "id": "netherite_chestplate",
@@ -822,7 +1078,13 @@
     "description": "The best chestpiece. Fire-resistant, 8 armor, 3 toughness, +1 knockback resistance.",
     "obtainedFrom": "smithing",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 15,
+    "defensePoints": 8,
+    "armorToughness": 3.0,
+    "knockbackResistance": 0.1,
+    "enchantTarget": "armor",
+    "isRenewable": false
   },
   {
     "id": "netherite_leggings",
@@ -833,7 +1095,13 @@
     "description": "The best leggings. Fire-resistant, 6 armor, 3 toughness, +1 knockback resistance.",
     "obtainedFrom": "smithing",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 15,
+    "defensePoints": 6,
+    "armorToughness": 3.0,
+    "knockbackResistance": 0.1,
+    "enchantTarget": "armor,leggings",
+    "isRenewable": false
   },
   {
     "id": "netherite_boots",
@@ -844,7 +1112,13 @@
     "description": "The best boots. Fire-resistant, 3 armor, 3 toughness, +1 knockback resistance.",
     "obtainedFrom": "smithing",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 15,
+    "defensePoints": 3,
+    "armorToughness": 3.0,
+    "knockbackResistance": 0.1,
+    "enchantTarget": "armor,boots",
+    "isRenewable": false
   },
   {
     "id": "turtle_helmet",
@@ -855,7 +1129,12 @@
     "description": "Provides 2 armor and 10 seconds of Water Breathing when entering water. Crafted from scutes.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 9,
+    "defensePoints": 2,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,helmet"
   },
   {
     "id": "leather_horse_armor",
@@ -866,7 +1145,8 @@
     "description": "Provides 3 armor to horses. The only craftable horse armor. Can be dyed.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 15
   },
   {
     "id": "iron_horse_armor",
@@ -877,7 +1157,9 @@
     "description": "Provides 5 armor to horses. Found in dungeon, temple, and fortress chests.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 14,
+    "isRenewable": false
   },
   {
     "id": "golden_horse_armor",
@@ -888,7 +1170,9 @@
     "description": "Provides 7 armor to horses. Found in dungeon, temple, and fortress chests.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 22,
+    "isRenewable": false
   },
   {
     "id": "diamond_horse_armor",
@@ -899,7 +1183,9 @@
     "description": "Provides 11 armor to horses. The strongest horse armor. Found in structure chests.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 10,
+    "isRenewable": false
   },
   {
     "id": "apple",
@@ -910,7 +1196,9 @@
     "description": "Restores 4 hunger points. Found by breaking oak and dark oak leaves.",
     "obtainedFrom": "farming,structure_loot",
     "droppedBy": "",
-    "minedFrom": "oak_leaves,dark_oak_leaves"
+    "minedFrom": "oak_leaves,dark_oak_leaves",
+    "hunger": 4,
+    "saturation": 2.4
   },
   {
     "id": "bread",
@@ -921,7 +1209,9 @@
     "description": "Restores 5 hunger points. One of the easiest foods to mass-produce via wheat farming.",
     "obtainedFrom": "crafting,trading",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 5,
+    "saturation": 6.0
   },
   {
     "id": "resin_brick",
@@ -943,7 +1233,9 @@
     "description": "Restores 3 hunger when eaten raw. Cook in a furnace for steak.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "cow,mooshroom",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 3,
+    "saturation": 1.8
   },
   {
     "id": "cooked_beef",
@@ -954,7 +1246,9 @@
     "description": "Restores 8 hunger points. One of the best food sources in the game.",
     "obtainedFrom": "smelting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 8,
+    "saturation": 12.8
   },
   {
     "id": "raw_porkchop",
@@ -965,7 +1259,9 @@
     "description": "Restores 3 hunger when eaten raw. Cook for a cooked porkchop.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "pig,hoglin",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 3,
+    "saturation": 1.8
   },
   {
     "id": "cooked_porkchop",
@@ -976,7 +1272,9 @@
     "description": "Restores 8 hunger points. Equivalent to steak in nutrition.",
     "obtainedFrom": "smelting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 8,
+    "saturation": 12.8
   },
   {
     "id": "raw_chicken",
@@ -987,7 +1285,10 @@
     "description": "Restores 2 hunger with 30% chance of food poisoning. Cook to remove the risk.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "chicken,chicken_jockey",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 2,
+    "saturation": 1.2,
+    "foodEffect": "Hunger (0:30) 30%"
   },
   {
     "id": "cooked_chicken",
@@ -998,7 +1299,9 @@
     "description": "Restores 6 hunger points. Safe to eat with no side effects.",
     "obtainedFrom": "smelting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 6,
+    "saturation": 7.2
   },
   {
     "id": "raw_mutton",
@@ -1009,7 +1312,9 @@
     "description": "Restores 2 hunger when eaten raw. Cook for better saturation.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "sheep",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 2,
+    "saturation": 1.2
   },
   {
     "id": "cooked_mutton",
@@ -1020,7 +1325,9 @@
     "description": "Restores 6 hunger points when eaten.",
     "obtainedFrom": "smelting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 6,
+    "saturation": 9.6
   },
   {
     "id": "raw_cod",
@@ -1031,7 +1338,9 @@
     "description": "Restores 2 hunger. Can be cooked or used to tame cats.",
     "obtainedFrom": "fishing,mob_drop",
     "droppedBy": "cod,guardian,elder_guardian,polar_bear,dolphin",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 2,
+    "saturation": 0.4
   },
   {
     "id": "cooked_cod",
@@ -1042,7 +1351,9 @@
     "description": "Restores 5 hunger points when eaten.",
     "obtainedFrom": "smelting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 5,
+    "saturation": 6.0
   },
   {
     "id": "raw_salmon",
@@ -1053,7 +1364,9 @@
     "description": "Restores 2 hunger. Can be cooked or fed to dolphins and cats.",
     "obtainedFrom": "fishing,mob_drop",
     "droppedBy": "salmon,polar_bear",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 2,
+    "saturation": 0.4
   },
   {
     "id": "cooked_salmon",
@@ -1064,7 +1377,9 @@
     "description": "Restores 6 hunger points when eaten.",
     "obtainedFrom": "smelting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 6,
+    "saturation": 9.6
   },
   {
     "id": "cookie",
@@ -1075,18 +1390,9 @@
     "description": "Restores 2 hunger points. Crafted from wheat and cocoa beans.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "cake",
-    "name": "Cake",
-    "stackSize": 1,
-    "category": "food",
-    "durability": 0,
-    "description": "A placeable food block with 7 slices, each restoring 2 hunger. Cannot be eaten from inventory.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 2,
+    "saturation": 0.4
   },
   {
     "id": "pumpkin_pie",
@@ -1097,7 +1403,9 @@
     "description": "Restores 8 hunger points. Crafted from pumpkin, sugar, and egg.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 8,
+    "saturation": 4.8
   },
   {
     "id": "baked_potato",
@@ -1108,7 +1416,9 @@
     "description": "Restores 5 hunger points. Smelt a potato in a furnace.",
     "obtainedFrom": "smelting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 5,
+    "saturation": 6.0
   },
   {
     "id": "golden_apple",
@@ -1119,7 +1429,10 @@
     "description": "Restores 4 hunger and grants Absorption I and Regeneration II for a short time.",
     "obtainedFrom": "crafting,structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 4,
+    "saturation": 9.6,
+    "foodEffect": "Absorption I (2:00), Regeneration II (0:05)"
   },
   {
     "id": "golden_carrot",
@@ -1127,10 +1440,12 @@
     "stackSize": 64,
     "category": "food",
     "durability": 0,
-    "description": "Restores 6 hunger with 14.4 saturation — the highest saturation food. Used in brewing.",
+    "description": "Restores 6 hunger with 14.4 saturation \u2014 the highest saturation food. Used in brewing.",
     "obtainedFrom": "crafting,trading",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 6,
+    "saturation": 14.4
   },
   {
     "id": "melon_slice",
@@ -1141,7 +1456,9 @@
     "description": "Restores 2 hunger points. Obtained by breaking melon blocks.",
     "obtainedFrom": "farming",
     "droppedBy": "",
-    "minedFrom": "melon"
+    "minedFrom": "melon",
+    "hunger": 2,
+    "saturation": 1.2
   },
   {
     "id": "dried_kelp",
@@ -1152,7 +1469,9 @@
     "description": "Restores 1 hunger. Fast to eat, making it useful for quick snacking.",
     "obtainedFrom": "smelting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 1,
+    "saturation": 0.6
   },
   {
     "id": "honey_bottle",
@@ -1163,7 +1482,10 @@
     "description": "Restores 6 hunger and removes Poison effect. Harvested from full bee nests.",
     "obtainedFrom": "farming",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 6,
+    "saturation": 1.2,
+    "foodEffect": "Clears Poison"
   },
   {
     "id": "chorus_fruit",
@@ -1174,7 +1496,10 @@
     "description": "Restores 4 hunger and randomly teleports the player. Found in the End.",
     "obtainedFrom": "farming",
     "droppedBy": "",
-    "minedFrom": "chorus_plant"
+    "minedFrom": "chorus_plant",
+    "hunger": 4,
+    "saturation": 2.4,
+    "foodEffect": "Random teleport"
   },
   {
     "id": "sweet_berries",
@@ -1185,7 +1510,9 @@
     "description": "Restores 2 hunger. Grows on sweet berry bushes in taiga biomes.",
     "obtainedFrom": "farming",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 2,
+    "saturation": 0.4
   },
   {
     "id": "glow_berries",
@@ -1196,7 +1523,9 @@
     "description": "Restores 2 hunger. Grows on cave vines in lush caves. Emits light when placed.",
     "obtainedFrom": "farming",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 2,
+    "saturation": 0.4
   },
   {
     "id": "carrot",
@@ -1207,7 +1536,9 @@
     "description": "Restores 3 hunger. Planted on farmland to grow more carrots. Used in golden carrots and rabbit stew.",
     "obtainedFrom": "farming,mob_drop,structure_loot",
     "droppedBy": "zombie",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 3,
+    "saturation": 3.6
   },
   {
     "id": "potato",
@@ -1218,7 +1549,9 @@
     "description": "Restores 1 hunger raw. Plant on farmland or smelt into baked potatoes. Zombies rarely drop them.",
     "obtainedFrom": "farming,mob_drop",
     "droppedBy": "zombie",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 1,
+    "saturation": 0.6
   },
   {
     "id": "beetroot",
@@ -1229,7 +1562,9 @@
     "description": "Restores 1 hunger. Grown from beetroot seeds. Used to craft beetroot soup and red dye.",
     "obtainedFrom": "farming",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 1,
+    "saturation": 1.2
   },
   {
     "id": "mushroom_stew",
@@ -1240,7 +1575,9 @@
     "description": "Restores 6 hunger. Crafted from a red mushroom, brown mushroom, and a bowl.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 6,
+    "saturation": 7.2
   },
   {
     "id": "raw_rabbit",
@@ -1251,7 +1588,9 @@
     "description": "Restores 3 hunger when eaten raw. Cook for better nutrition.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "rabbit",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 3,
+    "saturation": 1.8
   },
   {
     "id": "cooked_rabbit",
@@ -1262,7 +1601,9 @@
     "description": "Restores 5 hunger points when eaten.",
     "obtainedFrom": "smelting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 5,
+    "saturation": 6.0
   },
   {
     "id": "milk_bucket",
@@ -1273,7 +1614,10 @@
     "description": "Clears all status effects when consumed. Obtained by using a bucket on a cow or mooshroom.",
     "obtainedFrom": "mob_interaction",
     "droppedBy": "cow,mooshroom,wandering_trader",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 0,
+    "saturation": 0.0,
+    "foodEffect": "Clears all effects"
   },
   {
     "id": "suspicious_stew",
@@ -1284,7 +1628,10 @@
     "description": "Restores 6 hunger and applies a random status effect depending on the flower used to craft it.",
     "obtainedFrom": "crafting,trading",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 6,
+    "saturation": 7.2,
+    "foodEffect": "Varies by flower"
   },
   {
     "id": "iron_ingot",
@@ -1389,7 +1736,7 @@
     "id": "leather",
     "name": "Leather",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Used to craft leather armor, books, and item frames. Dropped by cows and horses.",
     "obtainedFrom": "mob_drop",
@@ -1400,7 +1747,7 @@
     "id": "string",
     "name": "String",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Used for bows, fishing rods, wool, and tripwire. Dropped by spiders.",
     "obtainedFrom": "mob_drop,mining",
@@ -1411,7 +1758,7 @@
     "id": "feather",
     "name": "Feather",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Used to craft arrows and book and quills. Dropped by chickens.",
     "obtainedFrom": "mob_drop",
@@ -1515,7 +1862,8 @@
     "description": "Obtained by smelting ancient debris. Four scraps + four gold ingots make one netherite ingot.",
     "obtainedFrom": "smelting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "netherite_ingot",
@@ -1526,13 +1874,14 @@
     "description": "The rarest ingot. Used to upgrade diamond gear at a smithing table.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "prismarine_shard",
     "name": "Prismarine Shard",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Dropped by guardians and elder guardians. Used to craft prismarine blocks and sea lanterns.",
     "obtainedFrom": "mob_drop",
@@ -1543,18 +1892,19 @@
     "id": "nether_star",
     "name": "Nether Star",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Dropped by the Wither boss. Used to craft beacons.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "wither",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "phantom_membrane",
     "name": "Phantom Membrane",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Dropped by phantoms. Used to repair elytra and brew Slow Falling potions.",
     "obtainedFrom": "mob_drop",
@@ -1565,7 +1915,7 @@
     "id": "armadillo_scute",
     "name": "Armadillo Scute",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Dropped by armadillos when they brush or naturally shed. Used to craft wolf armor.",
     "obtainedFrom": "mob_drop",
@@ -1628,17 +1978,6 @@
     "minedFrom": ""
   },
   {
-    "id": "wheat",
-    "name": "Wheat",
-    "stackSize": 64,
-    "category": "materials",
-    "durability": 0,
-    "description": "Grown from wheat seeds on farmland. Used to craft bread, cake, and cookies. Also breeds cows and sheep.",
-    "obtainedFrom": "farming",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
     "id": "wheat_seeds",
     "name": "Wheat Seeds",
     "stackSize": 64,
@@ -1683,87 +2022,10 @@
     "minedFrom": ""
   },
   {
-    "id": "pumpkin",
-    "name": "Pumpkin",
-    "stackSize": 64,
-    "category": "materials",
-    "durability": 0,
-    "description": "Grows on stems from pumpkin seeds. Used to craft jack o'lanterns, pumpkin pie, and iron/snow golems.",
-    "obtainedFrom": "farming",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "sugar_cane",
-    "name": "Sugar Cane",
-    "stackSize": 64,
-    "category": "materials",
-    "durability": 0,
-    "description": "Grows beside water. Crafts into sugar and paper. Essential for books and maps.",
-    "obtainedFrom": "farming",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "bamboo",
-    "name": "Bamboo",
-    "stackSize": 64,
-    "category": "materials",
-    "durability": 0,
-    "description": "Grows in jungle biomes. Used as furnace fuel, to craft scaffolding, and for bamboo wood blocks.",
-    "obtainedFrom": "farming,fishing",
-    "droppedBy": "panda",
-    "minedFrom": ""
-  },
-  {
-    "id": "kelp",
-    "name": "Kelp",
-    "stackSize": 64,
-    "category": "materials",
-    "durability": 0,
-    "description": "Underwater plant found in oceans. Smelt into dried kelp. Can be used to create a kelp farm for fuel.",
-    "obtainedFrom": "farming",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "cactus",
-    "name": "Cactus",
-    "stackSize": 64,
-    "category": "materials",
-    "durability": 0,
-    "description": "Grows on sand in deserts. Damages entities on contact. Smelts into green dye. Used in trash disposal.",
-    "obtainedFrom": "farming",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "poppy",
-    "name": "Poppy",
-    "stackSize": 64,
-    "category": "materials",
-    "durability": 0,
-    "description": "Red flower found in most biomes. Crafts into red dye. Dropped by iron golems.",
-    "obtainedFrom": "farming,mob_drop",
-    "droppedBy": "iron_golem",
-    "minedFrom": ""
-  },
-  {
-    "id": "dandelion",
-    "name": "Dandelion",
-    "stackSize": 64,
-    "category": "materials",
-    "durability": 0,
-    "description": "Yellow flower found in most biomes. Crafts into yellow dye. Used in suspicious stew.",
-    "obtainedFrom": "farming",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
     "id": "gunpowder",
     "name": "Gunpowder",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Used to craft TNT, fire charges, and firework rockets. Dropped by creepers and witches.",
     "obtainedFrom": "mob_drop",
@@ -1774,7 +2036,7 @@
     "id": "ender_pearl",
     "name": "Ender Pearl",
     "stackSize": 16,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Throw to teleport. Used to craft Eyes of Ender for locating strongholds.",
     "obtainedFrom": "mob_drop,trading,bartering",
@@ -1785,7 +2047,7 @@
     "id": "blaze_rod",
     "name": "Blaze Rod",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Dropped by blazes. Crafts into blaze powder for brewing and Eyes of Ender.",
     "obtainedFrom": "mob_drop",
@@ -1796,7 +2058,7 @@
     "id": "ghast_tear",
     "name": "Ghast Tear",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Dropped by ghasts. Used to brew Regeneration potions and craft end crystals.",
     "obtainedFrom": "mob_drop",
@@ -1807,7 +2069,7 @@
     "id": "bone",
     "name": "Bone",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Crafts into bone meal for dye and plant growth. Also used to tame wolves.",
     "obtainedFrom": "mob_drop,fishing",
@@ -1818,7 +2080,7 @@
     "id": "rotten_flesh",
     "name": "Rotten Flesh",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Restores 4 hunger but has 80% chance of Hunger effect. Can be traded to clerics.",
     "obtainedFrom": "mob_drop",
@@ -1829,7 +2091,7 @@
     "id": "spider_eye",
     "name": "Spider Eye",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Restores 2 hunger but inflicts Poison. Used to brew Poison potions and fermented spider eyes.",
     "obtainedFrom": "mob_drop",
@@ -1851,7 +2113,7 @@
     "id": "magma_cream",
     "name": "Magma Cream",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Dropped by magma cubes. Also crafted from blaze powder + slimeball. Brews Fire Resistance.",
     "obtainedFrom": "mob_drop,crafting",
@@ -1862,7 +2124,7 @@
     "id": "shulker_shell",
     "name": "Shulker Shell",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Dropped by shulkers in End cities. Two shells + a chest craft a shulker box.",
     "obtainedFrom": "mob_drop",
@@ -1873,7 +2135,7 @@
     "id": "ink_sac",
     "name": "Ink Sac",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Used as black dye. Dropped by squids.",
     "obtainedFrom": "mob_drop",
@@ -1884,7 +2146,7 @@
     "id": "glow_ink_sac",
     "name": "Glow Ink Sac",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Dropped by glow squids. Used to make glowing signs and glow item frames.",
     "obtainedFrom": "mob_drop",
@@ -1895,7 +2157,7 @@
     "id": "prismarine_crystals",
     "name": "Prismarine Crystals",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Dropped by guardians and elder guardians. Used to craft sea lanterns.",
     "obtainedFrom": "mob_drop",
@@ -1906,7 +2168,7 @@
     "id": "rabbit_foot",
     "name": "Rabbit Foot",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Rare drop from rabbits. Used to brew Leaping potions.",
     "obtainedFrom": "mob_drop",
@@ -1917,7 +2179,7 @@
     "id": "rabbit_hide",
     "name": "Rabbit Hide",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Dropped by rabbits. Four rabbit hides craft one leather.",
     "obtainedFrom": "mob_drop",
@@ -1928,23 +2190,13 @@
     "id": "totem_of_undying",
     "name": "Totem of Undying",
     "stackSize": 1,
-    "category": "misc",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Hold in either hand to cheat death once. Dropped by evokers in woodland mansions and raids.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "evoker",
-    "minedFrom": ""
-  },
-  {
-    "id": "wither_skeleton_skull",
-    "name": "Wither Skeleton Skull",
-    "stackSize": 64,
-    "category": "materials",
-    "durability": 0,
-    "description": "Rare drop from wither skeletons. Three skulls on soul sand summon the Wither boss.",
-    "obtainedFrom": "mob_drop",
-    "droppedBy": "wither_skeleton",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "nether_wart",
@@ -1972,7 +2224,7 @@
     "id": "blaze_powder",
     "name": "Blaze Powder",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Fuel for the brewing stand. Also used to craft Eyes of Ender and fire charges.",
     "obtainedFrom": "crafting",
@@ -1983,7 +2235,7 @@
     "id": "fermented_spider_eye",
     "name": "Fermented Spider Eye",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Corrupts potions to create negative or inverted effects. Crafted from spider eye, sugar, and brown mushroom.",
     "obtainedFrom": "crafting",
@@ -2027,12 +2279,13 @@
     "id": "dragon_breath",
     "name": "Dragon's Breath",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Collected with glass bottles from the Ender Dragon's breath attack. Makes lingering potions.",
     "obtainedFrom": "found",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "rabbit_stew",
@@ -2043,7 +2296,9 @@
     "description": "Restores 10 hunger. Crafted from cooked rabbit, carrot, baked potato, mushroom, and bowl.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 10,
+    "saturation": 12.0
   },
   {
     "id": "snowball",
@@ -2142,7 +2397,13 @@
     "description": "Wings that allow gliding flight. Found in End ships. Repaired with phantom membranes.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "enchantability": 1,
+    "defensePoints": 0,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "wearable",
+    "isRenewable": false
   },
   {
     "id": "experience_bottle",
@@ -2164,7 +2425,8 @@
     "description": "Play in a jukebox. This eerie disc is found in dungeon chests or dropped when a skeleton kills a creeper.",
     "obtainedFrom": "mob_drop,structure_loot",
     "droppedBy": "creeper",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "trial_key",
@@ -2189,21 +2451,10 @@
     "minedFrom": ""
   },
   {
-    "id": "heavy_core",
-    "name": "Heavy Core",
-    "stackSize": 64,
-    "category": "materials",
-    "durability": 0,
-    "description": "A dense block found in trial vaults. Combined with a breeze rod to craft a mace.",
-    "obtainedFrom": "structure_loot",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
     "id": "breeze_rod",
     "name": "Breeze Rod",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Dropped by breezes. Used to craft wind charges and the mace.",
     "obtainedFrom": "mob_drop",
@@ -2219,7 +2470,10 @@
     "description": "Armor for tamed wolves. Crafted from armadillo scutes. Protects wolves from damage.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "defensePoints": 11,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0
   },
   {
     "id": "sniffer_egg",
@@ -2230,18 +2484,8 @@
     "description": "Hatches into a sniffer when placed on a block. Sniffer eggs can be found by sniffers or in warm ocean ruins.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "dragon_egg",
-    "name": "Dragon Egg",
-    "stackSize": 64,
-    "category": "misc",
-    "durability": 0,
-    "description": "A decorative trophy dropped by the Ender Dragon on first defeat. Teleports when clicked directly.",
-    "obtainedFrom": "mob_drop",
-    "droppedBy": "ender_dragon",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "resin_clump",
@@ -2623,10 +2867,14 @@
     "stackSize": 64,
     "category": "food",
     "durability": 0,
-    "description": "Grants Absorption IV, Regeneration II, Resistance, and Fire Resistance. Cannot be crafted — structure loot only.",
+    "description": "Grants Absorption IV, Regeneration II, Resistance, and Fire Resistance. Cannot be crafted \u2014 structure loot only.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 4,
+    "saturation": 9.6,
+    "foodEffect": "Absorption IV (2:00), Regeneration II (0:20), Resistance (5:00), Fire Resistance (5:00)",
+    "isRenewable": false
   },
   {
     "id": "firework_rocket",
@@ -2670,7 +2918,8 @@
     "description": "Rare item found exclusively in buried treasure chests. Used to craft a conduit.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "echo_shard",
@@ -2681,7 +2930,8 @@
     "description": "Found in ancient city chests. Eight echo shards plus a compass craft a recovery compass.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "disc_fragment_5",
@@ -2692,7 +2942,8 @@
     "description": "Found in ancient city chests. Nine fragments craft Music Disc 5.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "nautilus_shell",
@@ -2725,7 +2976,9 @@
     "description": "A raw tropical fish. Restores 1 hunger. Can be cooked or used for breeding cats.",
     "obtainedFrom": "mob_drop,fishing",
     "droppedBy": "tropical_fish",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 1,
+    "saturation": 0.2
   },
   {
     "id": "pufferfish",
@@ -2736,7 +2989,10 @@
     "description": "Poisonous fish that inflicts Hunger, Nausea, and Poison when eaten. Used in brewing Water Breathing potions.",
     "obtainedFrom": "mob_drop,fishing",
     "droppedBy": "pufferfish",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 1,
+    "saturation": 0.2,
+    "foodEffect": "Hunger III (0:15), Nausea II (0:15), Poison IV (1:00)"
   },
   {
     "id": "writable_book",
@@ -2745,28 +3001,6 @@
     "category": "misc",
     "durability": 0,
     "description": "A book and quill that can be written in and signed to create a written book.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "white_banner",
-    "name": "White Banner",
-    "stackSize": 16,
-    "category": "misc",
-    "durability": 0,
-    "description": "A tall decorative block that can be dyed with patterns. Placed on floors or walls.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "white_bed",
-    "name": "White Bed",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "Sets your spawn point and lets you sleep through the night. Explodes in the Nether and End.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
@@ -2835,7 +3069,9 @@
     "description": "A soup made from beetroots. Restores 6 hunger points and provides decent saturation.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 6,
+    "saturation": 7.2
   },
   {
     "id": "written_book",
@@ -2956,7 +3192,8 @@
     "description": "Smithing template used to apply the Rib armor trim pattern at a smithing table.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "sentry_armor_trim_smithing_template",
@@ -2989,7 +3226,8 @@
     "description": "Smithing template used to apply the Silence armor trim pattern at a smithing table.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "snout_armor_trim_smithing_template",
@@ -3000,7 +3238,8 @@
     "description": "Smithing template used to apply the Snout armor trim pattern at a smithing table.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "spire_armor_trim_smithing_template",
@@ -3011,7 +3250,8 @@
     "description": "Smithing template used to apply the Spire armor trim pattern at a smithing table.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "tide_armor_trim_smithing_template",
@@ -3033,7 +3273,8 @@
     "description": "Smithing template used to apply the Vex armor trim pattern at a smithing table.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "ward_armor_trim_smithing_template",
@@ -3044,7 +3285,8 @@
     "description": "Smithing template used to apply the Ward armor trim pattern at a smithing table.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "wayfinder_armor_trim_smithing_template",
@@ -3077,7 +3319,8 @@
     "description": "A music disc by C418 with a mellow, upbeat tune. Found in dungeon and woodland mansion chests.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_blocks",
@@ -3088,7 +3331,8 @@
     "description": "A music disc by C418 with an electronic beat. Dropped when a skeleton kills a creeper.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_chirp",
@@ -3099,7 +3343,8 @@
     "description": "A music disc by C418 with a retro chiptune style. Dropped when a skeleton kills a creeper.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_far",
@@ -3110,7 +3355,8 @@
     "description": "A music disc by C418 with a calm, ambient melody. Dropped when a skeleton kills a creeper.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_mall",
@@ -3121,7 +3367,8 @@
     "description": "A music disc by C418 with a relaxing, lounge-like track. Dropped when a skeleton kills a creeper.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_mellohi",
@@ -3132,7 +3379,8 @@
     "description": "A music disc by C418 with a short, eerie waltz. Dropped when a skeleton kills a creeper.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_stal",
@@ -3143,7 +3391,8 @@
     "description": "A music disc by C418 with a jazzy piano tune. Dropped when a skeleton kills a creeper.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_strad",
@@ -3154,7 +3403,8 @@
     "description": "A music disc by C418 with a tropical, uplifting melody. Dropped when a skeleton kills a creeper.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_ward",
@@ -3165,7 +3415,8 @@
     "description": "A music disc by C418 that starts with a record scratch and builds into an orchestral piece. Dropped when a skeleton kills a creeper.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_wait",
@@ -3176,7 +3427,8 @@
     "description": "A music disc by C418 with an electronic, upbeat feel. Dropped when a skeleton kills a creeper.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_11",
@@ -3187,7 +3439,8 @@
     "description": "A broken, eerie music disc by C418. Found in dungeon and woodland mansion chests.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_pigstep",
@@ -3198,7 +3451,8 @@
     "description": "A music disc by Lena Raine with an intense beat. Found rarely in bastion remnant chests.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_otherside",
@@ -3209,7 +3463,8 @@
     "description": "A music disc by Lena Raine with a retro electronic track. Found in dungeon and stronghold chests.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_5",
@@ -3220,7 +3475,8 @@
     "description": "A music disc crafted from 9 disc fragments. Features an eerie, unsettling track by Samuel Aberg.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_relic",
@@ -3231,7 +3487,8 @@
     "description": "A music disc by Aaron Cherof found in trail ruins. Has an ancient, mysterious tune.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_creator",
@@ -3633,18 +3890,19 @@
     "id": "recovery_compass",
     "name": "Recovery Compass",
     "stackSize": 64,
-    "category": "tools",
+    "category": "misc",
     "durability": 0,
     "description": "Points toward the location of the player's last death. Crafted from echo shards and a compass.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "bundle",
     "name": "Bundle",
     "stackSize": 1,
-    "category": "tools",
+    "category": "misc",
     "durability": 0,
     "description": "A storage item that can hold up to one stack of mixed items in a single inventory slot. Crafted from string and leather.",
     "obtainedFrom": "crafting",
@@ -3663,21 +3921,10 @@
     "minedFrom": ""
   },
   {
-    "id": "decorated_pot",
-    "name": "Decorated Pot",
-    "stackSize": 64,
-    "category": "misc",
-    "durability": 0,
-    "description": "A decorative pot crafted from bricks or pottery sherds. Can store a single stack of items. Each face can display a unique sherd pattern.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
     "id": "bucket_of_cod",
     "name": "Bucket of Cod",
     "stackSize": 1,
-    "category": "tools",
+    "category": "misc",
     "durability": 0,
     "description": "A water bucket containing a cod. Place to release the fish.",
     "obtainedFrom": "crafting",
@@ -3688,7 +3935,7 @@
     "id": "bucket_of_salmon",
     "name": "Bucket of Salmon",
     "stackSize": 1,
-    "category": "tools",
+    "category": "misc",
     "durability": 0,
     "description": "A water bucket containing a salmon. Place to release the fish.",
     "obtainedFrom": "crafting",
@@ -3699,7 +3946,7 @@
     "id": "bucket_of_pufferfish",
     "name": "Bucket of Pufferfish",
     "stackSize": 1,
-    "category": "tools",
+    "category": "misc",
     "durability": 0,
     "description": "A water bucket containing a pufferfish. Place to release the fish.",
     "obtainedFrom": "crafting",
@@ -3710,7 +3957,7 @@
     "id": "bucket_of_axolotl",
     "name": "Bucket of Axolotl",
     "stackSize": 1,
-    "category": "tools",
+    "category": "misc",
     "durability": 0,
     "description": "A water bucket containing an axolotl. Place to release the mob.",
     "obtainedFrom": "crafting",
@@ -3721,7 +3968,7 @@
     "id": "bucket_of_tadpole",
     "name": "Bucket of Tadpole",
     "stackSize": 1,
-    "category": "tools",
+    "category": "misc",
     "durability": 0,
     "description": "A water bucket containing a tadpole. Place to release the mob.",
     "obtainedFrom": "crafting",
@@ -3732,7 +3979,7 @@
     "id": "powder_snow_bucket",
     "name": "Powder Snow Bucket",
     "stackSize": 1,
-    "category": "tools",
+    "category": "misc",
     "durability": 0,
     "description": "A bucket containing powder snow. Place to create a powder snow block.",
     "obtainedFrom": "crafting",
@@ -3798,7 +4045,7 @@
     "id": "turtle_scute",
     "name": "Turtle Scute",
     "stackSize": 64,
-    "category": "materials",
+    "category": "mob_drops",
     "durability": 0,
     "description": "Dropped by baby turtles when they grow up. Used to craft turtle helmets.",
     "obtainedFrom": "mob_drop",
@@ -3846,17 +4093,6 @@
     "durability": 0,
     "description": "A throwable potion that creates an area effect cloud on the ground.",
     "obtainedFrom": "brewing",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "armor_stand",
-    "name": "Armor Stand",
-    "stackSize": 16,
-    "category": "misc",
-    "durability": 0,
-    "description": "A decorative entity that displays armor and held items. Crafted from sticks and a stone slab.",
-    "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -3982,622 +4218,6 @@
     "minedFrom": ""
   },
   {
-    "id": "blue_orchid",
-    "name": "Blue Orchid",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Blue flower found exclusively in swamp biomes.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "allium",
-    "name": "Allium",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Purple flower found in flower forest biomes.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "azure_bluet",
-    "name": "Azure Bluet",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Small white flower found in plains and flower forests.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "red_tulip",
-    "name": "Red Tulip",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Red tulip found in plains and flower forests.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "orange_tulip",
-    "name": "Orange Tulip",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Orange tulip found in plains and flower forests.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "white_tulip",
-    "name": "White Tulip",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "White tulip found in plains and flower forests.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "pink_tulip",
-    "name": "Pink Tulip",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Pink tulip found in plains and flower forests.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "oxeye_daisy",
-    "name": "Oxeye Daisy",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "White daisy found in plains and flower forests.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "cornflower",
-    "name": "Cornflower",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Blue flower found in plains and flower forests.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "lily_of_the_valley",
-    "name": "Lily of the Valley",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "White flower found in forest and flower forest biomes.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "wither_rose",
-    "name": "Wither Rose",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Dark flower that damages entities standing in it. Dropped when a mob is killed by the Wither.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "torchflower",
-    "name": "Torchflower",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Rare flower grown from torchflower seeds found by sniffers.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "pitcher_plant",
-    "name": "Pitcher Plant",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Tall decorative plant grown from pitcher pods found by sniffers.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "sunflower",
-    "name": "Sunflower",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Tall yellow flower that always faces east. Found in sunflower plains.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "lilac",
-    "name": "Lilac",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Tall purple flower found in forests and flower forests.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "rose_bush",
-    "name": "Rose Bush",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Tall red flower found in forests and flower forests.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "peony",
-    "name": "Peony",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Tall pink flower found in forests and flower forests.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "pink_petals",
-    "name": "Pink Petals",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Low ground cover flower found in cherry grove biomes.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "spore_blossom",
-    "name": "Spore Blossom",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Ceiling-hanging plant found in lush caves. Emits green particles.",
-    "obtainedFrom": "natural",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "oak_sign",
-    "name": "Oak Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Oak sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "spruce_sign",
-    "name": "Spruce Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Spruce sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "birch_sign",
-    "name": "Birch Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Birch sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "jungle_sign",
-    "name": "Jungle Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Jungle sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "acacia_sign",
-    "name": "Acacia Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Acacia sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "dark_oak_sign",
-    "name": "Dark Oak Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Dark Oak sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "cherry_sign",
-    "name": "Cherry Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Cherry sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "mangrove_sign",
-    "name": "Mangrove Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Mangrove sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "bamboo_sign",
-    "name": "Bamboo Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Bamboo sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "crimson_sign",
-    "name": "Crimson Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Crimson sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "warped_sign",
-    "name": "Warped Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Warped sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "pale_oak_sign",
-    "name": "Pale Oak Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Pale Oak sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "oak_hanging_sign",
-    "name": "Oak Hanging Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Oak hanging sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "spruce_hanging_sign",
-    "name": "Spruce Hanging Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Spruce hanging sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "birch_hanging_sign",
-    "name": "Birch Hanging Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Birch hanging sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "jungle_hanging_sign",
-    "name": "Jungle Hanging Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Jungle hanging sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "acacia_hanging_sign",
-    "name": "Acacia Hanging Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Acacia hanging sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "dark_oak_hanging_sign",
-    "name": "Dark Oak Hanging Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Dark Oak hanging sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "cherry_hanging_sign",
-    "name": "Cherry Hanging Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Cherry hanging sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "mangrove_hanging_sign",
-    "name": "Mangrove Hanging Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Mangrove hanging sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "bamboo_hanging_sign",
-    "name": "Bamboo Hanging Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Bamboo hanging sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "crimson_hanging_sign",
-    "name": "Crimson Hanging Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Crimson hanging sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "warped_hanging_sign",
-    "name": "Warped Hanging Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Warped hanging sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "pale_oak_hanging_sign",
-    "name": "Pale Oak Hanging Sign",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Pale Oak hanging sign for displaying text.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "oak_door",
-    "name": "Oak Door",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Oak door for entrances and redstone circuits.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "spruce_door",
-    "name": "Spruce Door",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Spruce door for entrances and redstone circuits.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "birch_door",
-    "name": "Birch Door",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Birch door for entrances and redstone circuits.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "jungle_door",
-    "name": "Jungle Door",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Jungle door for entrances and redstone circuits.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "acacia_door",
-    "name": "Acacia Door",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Acacia door for entrances and redstone circuits.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "dark_oak_door",
-    "name": "Dark Oak Door",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Dark Oak door for entrances and redstone circuits.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "cherry_door",
-    "name": "Cherry Door",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Cherry door for entrances and redstone circuits.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "mangrove_door",
-    "name": "Mangrove Door",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Mangrove door for entrances and redstone circuits.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "bamboo_door",
-    "name": "Bamboo Door",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Bamboo door for entrances and redstone circuits.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "crimson_door",
-    "name": "Crimson Door",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Crimson door for entrances and redstone circuits.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "warped_door",
-    "name": "Warped Door",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Warped door for entrances and redstone circuits.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "pale_oak_door",
-    "name": "Pale Oak Door",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Pale Oak door for entrances and redstone circuits.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "iron_door",
-    "name": "Iron Door",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Iron door that can only be opened with redstone or a button.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
     "id": "oak_chest_boat",
     "name": "Oak Chest Boat",
     "stackSize": 1,
@@ -4708,776 +4328,6 @@
     "minedFrom": ""
   },
   {
-    "id": "orange_bed",
-    "name": "Orange Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Orange colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "magenta_bed",
-    "name": "Magenta Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Magenta colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "light_blue_bed",
-    "name": "Light Blue Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Light Blue colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "yellow_bed",
-    "name": "Yellow Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Yellow colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "lime_bed",
-    "name": "Lime Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Lime colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "pink_bed",
-    "name": "Pink Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Pink colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "gray_bed",
-    "name": "Gray Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Gray colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "light_gray_bed",
-    "name": "Light Gray Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Light Gray colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "cyan_bed",
-    "name": "Cyan Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Cyan colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "purple_bed",
-    "name": "Purple Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Purple colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "blue_bed",
-    "name": "Blue Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Blue colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "brown_bed",
-    "name": "Brown Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Brown colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "green_bed",
-    "name": "Green Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Green colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "red_bed",
-    "name": "Red Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Red colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "black_bed",
-    "name": "Black Bed",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Black colored bed for setting spawn point.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "orange_banner",
-    "name": "Orange Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Orange decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "magenta_banner",
-    "name": "Magenta Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Magenta decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "light_blue_banner",
-    "name": "Light Blue Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Light Blue decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "yellow_banner",
-    "name": "Yellow Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Yellow decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "lime_banner",
-    "name": "Lime Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Lime decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "pink_banner",
-    "name": "Pink Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Pink decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "gray_banner",
-    "name": "Gray Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Gray decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "light_gray_banner",
-    "name": "Light Gray Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Light Gray decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "cyan_banner",
-    "name": "Cyan Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Cyan decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "purple_banner",
-    "name": "Purple Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Purple decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "blue_banner",
-    "name": "Blue Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Blue decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "brown_banner",
-    "name": "Brown Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Brown decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "green_banner",
-    "name": "Green Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Green decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "red_banner",
-    "name": "Red Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Red decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "black_banner",
-    "name": "Black Banner",
-    "stackSize": 16,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Black decorative banner.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "candle",
-    "name": "Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Plain candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "white_candle",
-    "name": "White Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "White colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "orange_candle",
-    "name": "Orange Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Orange colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "magenta_candle",
-    "name": "Magenta Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Magenta colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "light_blue_candle",
-    "name": "Light Blue Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Light Blue colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "yellow_candle",
-    "name": "Yellow Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Yellow colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "lime_candle",
-    "name": "Lime Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Lime colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "pink_candle",
-    "name": "Pink Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Pink colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "gray_candle",
-    "name": "Gray Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Gray colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "light_gray_candle",
-    "name": "Light Gray Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Light Gray colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "cyan_candle",
-    "name": "Cyan Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Cyan colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "purple_candle",
-    "name": "Purple Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Purple colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "blue_candle",
-    "name": "Blue Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Blue colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "brown_candle",
-    "name": "Brown Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Brown colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "green_candle",
-    "name": "Green Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Green colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "red_candle",
-    "name": "Red Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Red colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "black_candle",
-    "name": "Black Candle",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Black colored candle that provides light when lit.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "shulker_box",
-    "name": "Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "white_shulker_box",
-    "name": "White Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "White portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "orange_shulker_box",
-    "name": "Orange Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Orange portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "magenta_shulker_box",
-    "name": "Magenta Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Magenta portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "light_blue_shulker_box",
-    "name": "Light Blue Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Light Blue portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "yellow_shulker_box",
-    "name": "Yellow Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Yellow portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "lime_shulker_box",
-    "name": "Lime Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Lime portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "pink_shulker_box",
-    "name": "Pink Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Pink portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "gray_shulker_box",
-    "name": "Gray Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Gray portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "light_gray_shulker_box",
-    "name": "Light Gray Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Light Gray portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "cyan_shulker_box",
-    "name": "Cyan Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Cyan portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "purple_shulker_box",
-    "name": "Purple Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Purple portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "blue_shulker_box",
-    "name": "Blue Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Blue portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "brown_shulker_box",
-    "name": "Brown Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Brown portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "green_shulker_box",
-    "name": "Green Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Green portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "red_shulker_box",
-    "name": "Red Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Red portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "black_shulker_box",
-    "name": "Black Shulker Box",
-    "stackSize": 1,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Black portable storage container that retains items when broken.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "skeleton_skull",
-    "name": "Skeleton Skull",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Decorative skull dropped by skeletons killed by charged creepers.",
-    "obtainedFrom": "",
-    "droppedBy": "skeleton",
-    "minedFrom": ""
-  },
-  {
-    "id": "zombie_head",
-    "name": "Zombie Head",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Decorative head dropped by zombies killed by charged creepers.",
-    "obtainedFrom": "",
-    "droppedBy": "zombie",
-    "minedFrom": ""
-  },
-  {
-    "id": "creeper_head",
-    "name": "Creeper Head",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Decorative head dropped by creepers killed by charged creepers.",
-    "obtainedFrom": "",
-    "droppedBy": "creeper",
-    "minedFrom": ""
-  },
-  {
-    "id": "piglin_head",
-    "name": "Piglin Head",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Decorative head dropped by piglins killed by charged creepers.",
-    "obtainedFrom": "",
-    "droppedBy": "piglin",
-    "minedFrom": ""
-  },
-  {
-    "id": "player_head",
-    "name": "Player Head",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Decorative player head obtainable through commands.",
-    "obtainedFrom": "commands",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "dragon_head",
-    "name": "Dragon Head",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Decorative dragon head found on end ships.",
-    "obtainedFrom": "end_ship",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
     "id": "poisonous_potato",
     "name": "Poisonous Potato",
     "stackSize": 64,
@@ -5486,17 +4336,9 @@
     "description": "Rarely dropped when harvesting potatoes. Inflicts Poison when eaten.",
     "obtainedFrom": "farming",
     "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "flower_pot",
-    "name": "Flower Pot",
-    "stackSize": 64,
-    "category": "decoration",
-    "durability": 0,
-    "description": "Decorative container for plants, saplings, and flowers.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "hunger": 2,
+    "saturation": 1.2,
+    "foodEffect": "Poison (0:05) 60%"
   }
 ]

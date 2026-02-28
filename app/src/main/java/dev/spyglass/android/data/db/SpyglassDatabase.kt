@@ -30,7 +30,7 @@ import dev.spyglass.android.data.db.entities.*
         ShoppingListItemEntity::class,
         TodoEntity::class,
     ],
-    version = 19,
+    version = 20,
     exportSchema = false,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
@@ -54,6 +54,28 @@ abstract class SpyglassDatabase : RoomDatabase() {
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null
+
+        private val MIGRATION_19_20 = object : Migration(19, 20) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // Items: 11 new columns
+                db.execSQL("ALTER TABLE items ADD COLUMN attackDamage TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE items ADD COLUMN attackSpeed TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE items ADD COLUMN enchantability INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE items ADD COLUMN hunger INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE items ADD COLUMN saturation REAL NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE items ADD COLUMN foodEffect TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE items ADD COLUMN defensePoints INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE items ADD COLUMN armorToughness REAL NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE items ADD COLUMN knockbackResistance REAL NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE items ADD COLUMN isRenewable INTEGER NOT NULL DEFAULT 1")
+                db.execSQL("ALTER TABLE items ADD COLUMN enchantTarget TEXT NOT NULL DEFAULT ''")
+                // Blocks: 4 new columns
+                db.execSQL("ALTER TABLE blocks ADD COLUMN blastResistance REAL NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE blocks ADD COLUMN lightLevel INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE blocks ADD COLUMN hasGravity INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE blocks ADD COLUMN isWaterloggable INTEGER NOT NULL DEFAULT 0")
+            }
+        }
 
         private val MIGRATION_18_19 = object : Migration(18, 19) {
             override fun migrate(db: SupportSQLiteDatabase) {
@@ -179,7 +201,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
                     SpyglassDatabase::class.java,
                     "spyglass.db",
                 )
-                    .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19)
+                    .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20)
                     .fallbackToDestructiveMigration()
                     .build()
                     .also { INSTANCE = it }

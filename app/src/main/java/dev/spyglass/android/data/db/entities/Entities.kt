@@ -15,6 +15,10 @@ data class BlockEntity(
     val isTransparent: Boolean = false,
     val drops: String       = "",        // comma-separated item IDs
     val category: String    = "",        // "building", "natural", "redstone", etc.
+    val blastResistance: Float = 0f,
+    val lightLevel: Int = 0,
+    val hasGravity: Boolean = false,
+    val isWaterloggable: Boolean = false,
 )
 
 @Entity(tableName = "recipes")
@@ -143,6 +147,17 @@ data class ItemEntity(
     val obtainedFrom: String = "",  // comma-sep: crafting, mob_drop, mining, trading, fishing, structure_loot, farming, smelting, bartering, found
     val droppedBy: String = "",     // comma-sep mob IDs
     val minedFrom: String = "",     // comma-sep block IDs
+    val attackDamage: String = "",       // "7" for diamond sword
+    val attackSpeed: String = "",        // "1.6" for swords
+    val enchantability: Int = 0,         // enchanting quality
+    val hunger: Int = 0,                 // half-shanks (food only)
+    val saturation: Float = 0f,          // saturation points (food only)
+    val foodEffect: String = "",         // "Poison (0:05)"
+    val defensePoints: Int = 0,          // armor points
+    val armorToughness: Float = 0f,      // 2.0 for diamond
+    val knockbackResistance: Float = 0f, // 0.1 for netherite
+    val isRenewable: Boolean = true,     // most items are renewable
+    val enchantTarget: String = "",      // "sword", "armor,boots" — matches enchant target field
 )
 
 @Entity(tableName = "notes")

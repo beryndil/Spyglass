@@ -15,7 +15,7 @@ import kotlinx.serialization.json.Json
  */
 object DataSeeder {
 
-    private const val CURRENT_DATA_VERSION = 7
+    private const val CURRENT_DATA_VERSION = 11
     private const val PREFS_NAME = "spyglass_seed"
     private const val KEY_DATA_VERSION = "data_version"
 
@@ -70,6 +70,8 @@ object DataSeeder {
         val toolLevel: String = "", val isFlammable: Boolean = false,
         val isTransparent: Boolean = false, val drops: String = "",
         val category: String = "",
+        val blastResistance: Float = 0f, val lightLevel: Int = 0,
+        val hasGravity: Boolean = false, val isWaterloggable: Boolean = false,
     )
 
     @Serializable data class MobJson(
@@ -130,6 +132,12 @@ object DataSeeder {
         val category: String = "", val durability: Int = 0,
         val description: String = "", val obtainedFrom: String = "",
         val droppedBy: String = "", val minedFrom: String = "",
+        val attackDamage: String = "", val attackSpeed: String = "",
+        val enchantability: Int = 0, val hunger: Int = 0,
+        val saturation: Float = 0f, val foodEffect: String = "",
+        val defensePoints: Int = 0, val armorToughness: Float = 0f,
+        val knockbackResistance: Float = 0f, val isRenewable: Boolean = true,
+        val enchantTarget: String = "",
     )
 
     @Serializable data class AdvancementJson(
@@ -155,7 +163,8 @@ object DataSeeder {
         val items = json.decodeFromString<List<BlockJson>>(raw)
         db.blockDao().insertAll(items.map {
             BlockEntity(it.id, it.name, it.stackSize, it.hardness, it.toolRequired,
-                it.toolLevel, it.isFlammable, it.isTransparent, it.drops, it.category)
+                it.toolLevel, it.isFlammable, it.isTransparent, it.drops, it.category,
+                it.blastResistance, it.lightLevel, it.hasGravity, it.isWaterloggable)
         })
     }
 
@@ -235,7 +244,10 @@ object DataSeeder {
         val items = json.decodeFromString<List<ItemJson>>(raw)
         db.itemDao().insertAll(items.map {
             ItemEntity(it.id, it.name, it.stackSize, it.category, it.durability,
-                it.description, it.obtainedFrom, it.droppedBy, it.minedFrom)
+                it.description, it.obtainedFrom, it.droppedBy, it.minedFrom,
+                it.attackDamage, it.attackSpeed, it.enchantability, it.hunger,
+                it.saturation, it.foodEffect, it.defensePoints, it.armorToughness,
+                it.knockbackResistance, it.isRenewable, it.enchantTarget)
         })
     }
 
