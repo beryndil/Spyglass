@@ -24,7 +24,7 @@ fun NetherScreen(vm: NetherViewModel = viewModel()) {
     ) {
         SectionHeader("Nether Tools", icon = PixelIcons.Nether)
 
-        TabRow(selectedTabIndex = subTab, containerColor = SurfaceMid) {
+        TabRow(selectedTabIndex = subTab, containerColor = MaterialTheme.colorScheme.surfaceVariant) {
             listOf("Convert", "Obsidian", "Portals").forEachIndexed { i, t ->
                 Tab(selected = subTab == i, onClick = { subTab = i }, text = { Text(t) })
             }
@@ -39,7 +39,7 @@ fun NetherScreen(vm: NetherViewModel = viewModel()) {
         Text(
             "Convert coordinates between the Overworld and Nether (8:1 ratio), calculate how much obsidian you need for a custom-sized portal, or save portal locations to keep track of your network.",
             style = MaterialTheme.typography.bodySmall,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
         )
     }
 }
@@ -51,7 +51,7 @@ private fun ConvertTab(s: NetherState, vm: NetherViewModel) {
             { vm.setDimension(if (it == 0) NetherDimension.OVERWORLD else NetherDimension.NETHER) })
 
         InputCard {
-            Text("Input coordinates", style = MaterialTheme.typography.bodySmall, color = Stone500)
+            Text("Input coordinates", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 SpyglassTextField(s.xIn, vm::setX, "X", Modifier.weight(1f))
                 SpyglassTextField(s.yIn, vm::setY, "Y", Modifier.weight(1f))
@@ -76,7 +76,7 @@ private fun ConvertTab(s: NetherState, vm: NetherViewModel) {
 private fun ObsidianTab(s: NetherState, vm: NetherViewModel) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         InputCard {
-            Text("Portal interior dimensions", style = MaterialTheme.typography.bodySmall, color = Stone500)
+            Text("Portal interior dimensions", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 SpyglassTextField(s.obWidth, vm::setObWidth, "Width (min 2)", Modifier.weight(1f))
                 SpyglassTextField(s.obHeight, vm::setObHeight, "Height (min 3)", Modifier.weight(1f))
@@ -113,7 +113,7 @@ private fun PortalsTab(s: NetherState, vm: NetherViewModel) {
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                         Text(p.name, style = MaterialTheme.typography.titleMedium)
                         IconButton(onClick = { vm.deletePortal(p) }) {
-                            Icon(Icons.Default.Delete, "Delete", tint = Stone500)
+                            Icon(Icons.Default.Delete, "Delete", tint = MaterialTheme.colorScheme.secondary)
                         }
                     }
                     StatRow("Overworld", "${p.owX}, ${p.owZ}")

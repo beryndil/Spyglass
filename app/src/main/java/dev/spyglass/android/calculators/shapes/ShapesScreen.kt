@@ -84,12 +84,12 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text("Hollow", style = MaterialTheme.typography.bodyMedium, color = Stone300)
+                    Text("Hollow", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Spacer(Modifier.weight(1f))
                     Switch(
                         checked = s.hollow,
                         onCheckedChange = { vm.setHollow(it) },
-                        colors = SwitchDefaults.colors(checkedTrackColor = Gold),
+                        colors = SwitchDefaults.colors(checkedTrackColor = MaterialTheme.colorScheme.primary),
                     )
                 }
             }
@@ -100,12 +100,12 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text("Flipped", style = MaterialTheme.typography.bodyMedium, color = Stone300)
+                    Text("Flipped", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Spacer(Modifier.weight(1f))
                     Switch(
                         checked = s.flipped,
                         onCheckedChange = { vm.setFlipped(it) },
-                        colors = SwitchDefaults.colors(checkedTrackColor = Gold),
+                        colors = SwitchDefaults.colors(checkedTrackColor = MaterialTheme.colorScheme.primary),
                     )
                 }
             }
@@ -152,7 +152,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                         onValueChange = { vm.setLayer(it.toInt()) },
                         valueRange    = s.layerMin.toFloat()..s.layerMax.toFloat(),
                         steps         = (s.layerMax - s.layerMin - 1).coerceAtLeast(0),
-                        colors        = SliderDefaults.colors(thumbColor = Gold, activeTrackColor = Gold),
+                        colors        = SliderDefaults.colors(thumbColor = MaterialTheme.colorScheme.primary, activeTrackColor = MaterialTheme.colorScheme.primary),
                     )
                 }
 
@@ -165,7 +165,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
         Text(
             "Build perfect shapes in Minecraft. Set a radius and height, then use the Y-layer slider to see exactly which blocks to place on each layer, or switch to 3D for an isometric preview.",
             style = MaterialTheme.typography.bodySmall,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
         )
     }
 }

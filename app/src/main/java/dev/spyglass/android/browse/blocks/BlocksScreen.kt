@@ -74,13 +74,14 @@ private fun toolTextureId(toolRequired: String): String? {
 private fun formatId(id: String): String =
     id.split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
 
+@Composable
 private fun blockCategoryColor(cat: String) = when (cat) {
-    "building"   -> Stone300
+    "building"   -> MaterialTheme.colorScheme.onSurfaceVariant
     "natural"    -> Emerald
     "decoration" -> PotionBlue
-    "utility"    -> Gold
+    "utility"    -> MaterialTheme.colorScheme.primary
     "redstone"   -> NetherRed
-    else         -> Stone500
+    else         -> MaterialTheme.colorScheme.secondary
 }
 
 private val BLOCK_CATEGORIES = listOf("all", "building", "natural", "decoration", "utility", "redstone")
@@ -173,12 +174,12 @@ fun BlocksScreen(
         OutlinedTextField(
             value         = query,
             onValueChange = vm::setQuery,
-            placeholder   = { Text("Search blocks\u2026", color = Stone500) },
-            leadingIcon   = { Icon(Icons.Default.Search, null, tint = Stone500) },
+            placeholder   = { Text("Search blocks\u2026", color = MaterialTheme.colorScheme.secondary) },
+            leadingIcon   = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine    = true,
             colors        = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Gold, unfocusedBorderColor = Stone700,
-                cursorColor = Gold,
+                focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                cursorColor = MaterialTheme.colorScheme.primary,
             ),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
@@ -189,7 +190,7 @@ fun BlocksScreen(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             items(BLOCK_CATEGORIES) { c ->
-                val chipColor = if (c == "all") Gold else blockCategoryColor(c)
+                val chipColor = if (c == "all") MaterialTheme.colorScheme.primary else blockCategoryColor(c)
                 FilterChip(
                     selected = category == c,
                     onClick = { vm.setCategory(c) },
@@ -237,7 +238,7 @@ fun BlocksScreen(
                                 Icon(
                                     Icons.Filled.Star,
                                     contentDescription = "Favorite",
-                                    tint = if (isFav) Gold else Stone700,
+                                    tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                     modifier = Modifier.size(20.dp),
                                 )
                             }
@@ -274,7 +275,7 @@ fun BlocksScreen(
                                             modifier = Modifier.size(16.dp),
                                         )
                                     } else if (b.toolRequired.isNotBlank() && b.toolRequired != "none") {
-                                        Text(b.toolRequired, style = MaterialTheme.typography.bodySmall, color = Stone300)
+                                        Text(b.toolRequired, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                     }
                                 }
                                 Spacer(Modifier.width(6.dp))
@@ -283,7 +284,7 @@ fun BlocksScreen(
                                     Icon(
                                         Icons.Filled.Star,
                                         contentDescription = "Favorite",
-                                        tint = if (isFav) Gold else Stone700,
+                                        tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                         modifier = Modifier.size(20.dp),
                                     )
                                 }
@@ -343,13 +344,13 @@ private fun BlockDetailContent(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("Tool Required", style = MaterialTheme.typography.bodyMedium, color = Stone500)
+                Text("Tool Required", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     if (toolIcon != null) {
                         SpyglassIconImage(toolIcon, contentDescription = null, modifier = Modifier.size(16.dp))
                         Spacer(Modifier.width(4.dp))
                     }
-                    Text(formatId(block.toolRequired), style = MaterialTheme.typography.bodyLarge, color = Stone100)
+                    Text(formatId(block.toolRequired), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                 }
             }
         }
@@ -361,11 +362,11 @@ private fun BlockDetailContent(
         if (drops.isNotEmpty()) {
             SpyglassDivider()
             if (drops.size == 1 && drops[0] == "none") {
-                Text("Drops nothing", style = MaterialTheme.typography.bodyMedium, color = Stone500)
+                Text("Drops nothing", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
             } else {
                 val isSelfDrop = drops.size == 1 && drops[0] == block.id
                 if (!isSelfDrop) {
-                    Text("Drops", style = MaterialTheme.typography.labelSmall, color = Gold)
+                    Text("Drops", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -375,8 +376,8 @@ private fun BlockDetailContent(
                                 onClick = { onItemTap(dropId) },
                                 label = { Text(formatId(dropId), style = MaterialTheme.typography.labelSmall) },
                                 colors = AssistChipDefaults.assistChipColors(
-                                    labelColor = Stone300,
-                                    containerColor = Stone300.copy(alpha = 0.12f),
+                                    labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    containerColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f),
                                 ),
                                 border = null,
                             )
@@ -390,13 +391,13 @@ private fun BlockDetailContent(
         val profession = BLOCK_TO_PROFESSION[block.id]
         if (profession != null) {
             SpyglassDivider()
-            Text("Job Block", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Job Block", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             AssistChip(
                 onClick = { onTradeTap(profession.lowercase()) },
                 label = { Text("Job block for: $profession", style = MaterialTheme.typography.labelSmall) },
                 colors = AssistChipDefaults.assistChipColors(
-                    labelColor = Gold,
-                    containerColor = Gold.copy(alpha = 0.12f),
+                    labelColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
                 ),
                 border = null,
             )
@@ -405,7 +406,7 @@ private fun BlockDetailContent(
         // ── Compostable items (shown for composter block) ──
         if (block.id == "composter") {
             SpyglassDivider()
-            Text("Compostable Items", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Compostable Items", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             CompostData.byChance.forEach { (chance, items) ->
                 Text("$chance% chance", style = MaterialTheme.typography.bodySmall, color = Emerald)
                 FlowRow(
@@ -437,7 +438,7 @@ private fun BlockDetailContent(
         }
         if (matchingStructures.isNotEmpty()) {
             SpyglassDivider()
-            Text("Found in Structures", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Found in Structures", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),

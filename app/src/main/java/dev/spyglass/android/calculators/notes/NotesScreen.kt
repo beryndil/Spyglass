@@ -95,16 +95,16 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
         ) {
             OutlinedTextField(
                 value = query, onValueChange = vm::setQuery,
-                placeholder = { Text("Search notes\u2026", color = Stone500) },
-                leadingIcon = { Icon(Icons.Default.Search, null, tint = Stone500) },
+                placeholder = { Text("Search notes\u2026", color = MaterialTheme.colorScheme.secondary) },
+                leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
                 singleLine = true,
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
                 modifier = Modifier.weight(1f),
             )
             Spacer(Modifier.width(8.dp))
             FilledTonalButton(
                 onClick = { showCreateDialog = true },
-                colors = ButtonDefaults.filledTonalButtonColors(containerColor = Gold.copy(alpha = 0.15f), contentColor = Gold),
+                colors = ButtonDefaults.filledTonalButtonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f), contentColor = MaterialTheme.colorScheme.primary),
             ) {
                 Icon(Icons.Default.Add, contentDescription = "New note", modifier = Modifier.size(18.dp))
             }
@@ -166,7 +166,7 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
                         modifier = Modifier.clickable { vm.toggleExpanded(note.id) },
                         trailing = {
                             if (note.label.isNotBlank()) {
-                                CategoryBadge(label = note.label, color = Gold)
+                                CategoryBadge(label = note.label, color = MaterialTheme.colorScheme.primary)
                             }
                         },
                     )
@@ -226,7 +226,7 @@ private fun NoteDetailCard(
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         if (note.content.isNotBlank()) {
-            Text(note.content, style = MaterialTheme.typography.bodyMedium, color = Stone300)
+            Text(note.content, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             SpyglassDivider()
         }
         if (note.label.isNotBlank()) {
@@ -284,7 +284,7 @@ private fun NoteDialog(
                     onValueChange = { noteTitle = it },
                     label = { Text("Title") },
                     singleLine = true,
-                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, cursorColor = Gold),
+                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.fillMaxWidth(),
                 )
                 OutlinedTextField(
@@ -292,7 +292,7 @@ private fun NoteDialog(
                     onValueChange = { noteLabel = it },
                     label = { Text("Label (optional)") },
                     singleLine = true,
-                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, cursorColor = Gold),
+                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.fillMaxWidth(),
                 )
                 if (existingLabels.isNotEmpty()) {
@@ -315,7 +315,7 @@ private fun NoteDialog(
                     label = { Text("Content") },
                     minLines = 4,
                     maxLines = 8,
-                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, cursorColor = Gold),
+                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
@@ -324,7 +324,7 @@ private fun NoteDialog(
             TextButton(
                 onClick = { onSave(noteTitle.trim(), noteLabel.trim(), noteContent.trim()) },
                 enabled = noteTitle.isNotBlank(),
-            ) { Text("Save", color = Gold) }
+            ) { Text("Save", color = MaterialTheme.colorScheme.primary) }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) { Text("Cancel") }

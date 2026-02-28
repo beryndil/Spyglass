@@ -67,7 +67,7 @@ private fun ListPicker(vm: ShoppingViewModel) {
         item {
             Button(
                 onClick = { showDialog = true },
-                colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = Background),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary),
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(18.dp))
@@ -97,7 +97,7 @@ private fun ListPicker(vm: ShoppingViewModel) {
                         onClick = { listToDelete = list.id },
                         modifier = Modifier.size(32.dp),
                     ) {
-                        Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Stone500, modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(18.dp))
                     }
                 },
             )
@@ -119,8 +119,8 @@ private fun ListPicker(vm: ShoppingViewModel) {
     listToDelete?.let { id ->
         AlertDialog(
             onDismissRequest = { listToDelete = null },
-            title = { Text("Delete list?", color = Stone100) },
-            text = { Text("This will permanently remove this list and all its items.", color = Stone300) },
+            title = { Text("Delete list?", color = MaterialTheme.colorScheme.onSurface) },
+            text = { Text("This will permanently remove this list and all its items.", color = MaterialTheme.colorScheme.onSurfaceVariant) },
             confirmButton = {
                 TextButton(onClick = { vm.deleteList(id); listToDelete = null }) {
                     Text("Delete", color = NetherRed)
@@ -128,10 +128,10 @@ private fun ListPicker(vm: ShoppingViewModel) {
             },
             dismissButton = {
                 TextButton(onClick = { listToDelete = null }) {
-                    Text("Cancel", color = Stone300)
+                    Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             },
-            containerColor = SurfaceDark,
+            containerColor = MaterialTheme.colorScheme.surface,
         )
     }
 }
@@ -166,24 +166,24 @@ private fun ListDetail(vm: ShoppingViewModel) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(onClick = { vm.selectList(null) }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Gold)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = MaterialTheme.colorScheme.primary)
                 }
                 Text(
                     currentList?.name ?: "List",
                     style = MaterialTheme.typography.headlineSmall,
-                    color = Stone100,
+                    color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.weight(1f),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
                 IconButton(onClick = { showRenameDialog = true }, modifier = Modifier.size(32.dp)) {
-                    Icon(Icons.Default.Edit, contentDescription = "Rename list", tint = Stone500, modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.Edit, contentDescription = "Rename list", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(18.dp))
                 }
                 Spacer(Modifier.width(4.dp))
                 Text(
                     "${items.size} items",
                     style = MaterialTheme.typography.labelSmall,
-                    color = Stone500,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
             }
         }
@@ -191,7 +191,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
         // ── Add item section ──
         item(key = "add_section") {
             InputCard {
-                Text("Add Item", style = MaterialTheme.typography.labelSmall, color = Gold)
+                Text("Add Item", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -205,12 +205,12 @@ private fun ListDetail(vm: ShoppingViewModel) {
                                 selectedName = ""
                             }
                         },
-                        placeholder = { Text("Search\u2026", color = Stone500) },
+                        placeholder = { Text("Search\u2026", color = MaterialTheme.colorScheme.secondary) },
                         singleLine = true,
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = if (selectedId != null) Emerald else Gold,
-                            unfocusedBorderColor = if (selectedId != null) Emerald else Stone700,
-                            cursorColor = Gold,
+                            focusedBorderColor = if (selectedId != null) Emerald else MaterialTheme.colorScheme.primary,
+                            unfocusedBorderColor = if (selectedId != null) Emerald else MaterialTheme.colorScheme.outline,
+                            cursorColor = MaterialTheme.colorScheme.primary,
                         ),
                         modifier = Modifier.weight(1f),
                     )
@@ -221,8 +221,8 @@ private fun ListDetail(vm: ShoppingViewModel) {
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Gold, unfocusedBorderColor = Stone700,
-                            focusedLabelColor = Gold, unfocusedLabelColor = Stone500, cursorColor = Gold,
+                            focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                            focusedLabelColor = MaterialTheme.colorScheme.primary, unfocusedLabelColor = MaterialTheme.colorScheme.secondary, cursorColor = MaterialTheme.colorScheme.primary,
                         ),
                         modifier = Modifier.width(72.dp),
                     )
@@ -237,10 +237,10 @@ private fun ListDetail(vm: ShoppingViewModel) {
                                     quantityInput = "1"
                                 }
                             },
-                            colors = IconButtonDefaults.iconButtonColors(containerColor = Gold),
+                            colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.primary),
                             modifier = Modifier.size(40.dp),
                         ) {
-                            Icon(Icons.Default.Add, contentDescription = "Add to list", tint = Background, modifier = Modifier.size(20.dp))
+                            Icon(Icons.Default.Add, contentDescription = "Add to list", tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
                         }
                     }
                 }
@@ -248,8 +248,8 @@ private fun ListDetail(vm: ShoppingViewModel) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(SurfaceMid, RoundedCornerShape(6.dp))
-                            .border(0.5.dp, Stone700, RoundedCornerShape(6.dp)),
+                            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(6.dp))
+                            .border(0.5.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(6.dp)),
                     ) {
                         searchResults.forEach { (id, name) ->
                             Row(
@@ -269,8 +269,8 @@ private fun ListDetail(vm: ShoppingViewModel) {
                                     Spacer(Modifier.width(8.dp))
                                 }
                                 Column(modifier = Modifier.weight(1f)) {
-                                    Text(name, style = MaterialTheme.typography.bodyMedium, color = Stone100)
-                                    Text(id, style = MaterialTheme.typography.bodySmall, color = Stone500)
+                                    Text(name, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                                    Text(id, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                                 }
                             }
                         }
@@ -336,7 +336,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
                             Text(
                                 "Step $depth \u2014 ${stepGroupLabel(steps)}",
                                 style = MaterialTheme.typography.labelSmall,
-                                color = Gold,
+                                color = MaterialTheme.colorScheme.primary,
                             )
                             steps.forEach { step ->
                                 Row(
@@ -350,13 +350,13 @@ private fun ListDetail(vm: ShoppingViewModel) {
                                         Text(
                                             "${step.quantity}\u00d7 ${planStepName(step)}",
                                             style = MaterialTheme.typography.bodyMedium,
-                                            color = Gold,
+                                            color = MaterialTheme.colorScheme.primary,
                                         )
                                     }
                                     Text(
                                         "${step.craftsNeeded} ${actionVerb(step.recipe?.type)}",
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = Stone500,
+                                        color = MaterialTheme.colorScheme.secondary,
                                     )
                                 }
                             }
@@ -398,8 +398,8 @@ private fun ShoppingItemRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(SurfaceCard, RoundedCornerShape(10.dp))
-            .border(1.dp, Stone700, RoundedCornerShape(10.dp))
+            .background(LocalSurfaceCard.current, RoundedCornerShape(10.dp))
+            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(10.dp))
             .clickable { onTap() }
             .padding(horizontal = 10.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -408,9 +408,9 @@ private fun ShoppingItemRow(
             checked = item.checked,
             onCheckedChange = { onCheckedChange() },
             colors = CheckboxDefaults.colors(
-                checkedColor = Gold,
-                uncheckedColor = Stone500,
-                checkmarkColor = Background,
+                checkedColor = MaterialTheme.colorScheme.primary,
+                uncheckedColor = MaterialTheme.colorScheme.secondary,
+                checkmarkColor = MaterialTheme.colorScheme.onPrimary,
             ),
             modifier = Modifier.size(24.dp),
         )
@@ -424,12 +424,12 @@ private fun ShoppingItemRow(
             Text(
                 item.itemName,
                 style = MaterialTheme.typography.bodyMedium,
-                color = if (item.checked) Stone500 else Stone100,
+                color = if (item.checked) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface,
                 textDecoration = if (item.checked) TextDecoration.LineThrough else null,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
-            Text(item.itemId, style = MaterialTheme.typography.bodySmall, color = Stone500, maxLines = 1)
+            Text(item.itemId, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary, maxLines = 1)
         }
         // Quantity stepper
         if (editingQty) {
@@ -439,14 +439,14 @@ private fun ShoppingItemRow(
                 singleLine = true,
                 textStyle = MaterialTheme.typography.titleMedium.copy(
                     textAlign = TextAlign.Center,
-                    color = Gold,
+                    color = MaterialTheme.colorScheme.primary,
                 ),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                cursorBrush = androidx.compose.ui.graphics.SolidColor(Gold),
+                cursorBrush = androidx.compose.ui.graphics.SolidColor(MaterialTheme.colorScheme.primary),
                 modifier = Modifier
                     .width(56.dp)
-                    .background(SurfaceMid, RoundedCornerShape(6.dp))
-                    .border(1.dp, Gold, RoundedCornerShape(6.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(6.dp))
+                    .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(6.dp))
                     .padding(horizontal = 4.dp, vertical = 8.dp),
             )
             TextButton(onClick = {
@@ -454,26 +454,26 @@ private fun ShoppingItemRow(
                 if (qty != null && qty in 1..10_000_000) onQuantityChange(qty)
                 editingQty = false
             }) {
-                Text("OK", color = Gold, style = MaterialTheme.typography.labelSmall)
+                Text("OK", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.labelSmall)
             }
         } else {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .background(SurfaceMid, RoundedCornerShape(6.dp))
-                    .border(0.5.dp, Stone700, RoundedCornerShape(6.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(6.dp))
+                    .border(0.5.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(6.dp))
                     .padding(horizontal = 2.dp),
             ) {
                 IconButton(
                     onClick = { if (item.quantity > 1) onQuantityChange(item.quantity - 1) },
                     modifier = Modifier.size(28.dp),
                 ) {
-                    Text("\u2212", color = if (item.quantity > 1) Gold else Stone700, style = MaterialTheme.typography.titleMedium)
+                    Text("\u2212", color = if (item.quantity > 1) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline, style = MaterialTheme.typography.titleMedium)
                 }
                 Text(
                     "${item.quantity}",
                     style = MaterialTheme.typography.titleMedium,
-                    color = if (item.checked) Stone500 else Gold,
+                    color = if (item.checked) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .clickable { editingQty = true }
                         .padding(horizontal = 6.dp),
@@ -482,12 +482,12 @@ private fun ShoppingItemRow(
                     onClick = { onQuantityChange(item.quantity + 1) },
                     modifier = Modifier.size(28.dp),
                 ) {
-                    Text("+", color = Gold, style = MaterialTheme.typography.titleMedium)
+                    Text("+", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleMedium)
                 }
             }
         }
         IconButton(onClick = onDelete, modifier = Modifier.size(28.dp)) {
-            Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Stone500, modifier = Modifier.size(16.dp))
+            Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
         }
     }
 }
@@ -511,7 +511,7 @@ private fun ItemBreakdown(
 
     ResultCard(modifier = Modifier.padding(start = 32.dp, top = 4.dp)) {
         if (craftedSteps.isNotEmpty()) {
-            Text("Craft", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Craft", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             craftedSteps.forEach { step ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -523,13 +523,13 @@ private fun ItemBreakdown(
                         Text(
                             "${breakdownStepName(step)} \u00d7 ${step.quantity}",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = Gold,
+                            color = MaterialTheme.colorScheme.primary,
                         )
                     }
                     Text(
                         "${step.craftsNeeded} crafts",
                         style = MaterialTheme.typography.bodySmall,
-                        color = Stone500,
+                        color = MaterialTheme.colorScheme.secondary,
                     )
                 }
             }
@@ -559,15 +559,15 @@ private fun NewListDialog(onConfirm: (String) -> Unit, onDismiss: () -> Unit) {
     var name by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("New Shopping List", color = Stone100) },
+        title = { Text("New Shopping List", color = MaterialTheme.colorScheme.onSurface) },
         text = {
             OutlinedTextField(
                 value = name,
                 onValueChange = { if (it.length <= 100) name = it },
-                placeholder = { Text("List name", color = Stone500) },
+                placeholder = { Text("List name", color = MaterialTheme.colorScheme.secondary) },
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary,
                 ),
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -577,13 +577,13 @@ private fun NewListDialog(onConfirm: (String) -> Unit, onDismiss: () -> Unit) {
                 onClick = { if (name.isNotBlank()) onConfirm(name.trim()) },
                 enabled = name.isNotBlank(),
             ) {
-                Text("Create", color = if (name.isNotBlank()) Gold else Stone500)
+                Text("Create", color = if (name.isNotBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel", color = Stone300) }
+            TextButton(onClick = onDismiss) { Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant) }
         },
-        containerColor = SurfaceDark,
+        containerColor = MaterialTheme.colorScheme.surface,
     )
 }
 
@@ -592,14 +592,14 @@ private fun RenameDialog(currentName: String, onConfirm: (String) -> Unit, onDis
     var name by remember { mutableStateOf(currentName) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Rename List", color = Stone100) },
+        title = { Text("Rename List", color = MaterialTheme.colorScheme.onSurface) },
         text = {
             OutlinedTextField(
                 value = name,
                 onValueChange = { if (it.length <= 100) name = it },
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary,
                 ),
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -609,13 +609,13 @@ private fun RenameDialog(currentName: String, onConfirm: (String) -> Unit, onDis
                 onClick = { if (name.isNotBlank()) onConfirm(name.trim()) },
                 enabled = name.isNotBlank(),
             ) {
-                Text("Rename", color = if (name.isNotBlank()) Gold else Stone500)
+                Text("Rename", color = if (name.isNotBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel", color = Stone300) }
+            TextButton(onClick = onDismiss) { Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant) }
         },
-        containerColor = SurfaceDark,
+        containerColor = MaterialTheme.colorScheme.surface,
     )
 }
 

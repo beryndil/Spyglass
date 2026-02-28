@@ -168,10 +168,10 @@ fun TradesScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search trades…", color = Stone500) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = Stone500) },
+            placeholder = { Text("Search trades…", color = MaterialTheme.colorScheme.secondary) },
+            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
         androidx.compose.foundation.lazy.LazyRow(
@@ -209,7 +209,7 @@ fun TradesScreen(
 
             if (favoriteTrades.isNotEmpty()) {
                 item(key = "fav_header") {
-                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = Gold,
+                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
                 }
                 items(favoriteTrades, key = { "fav_${it.id}" }) { fav ->
@@ -220,7 +220,7 @@ fun TradesScreen(
                         leadingIcon = PixelIcons.Trade,
                         trailing    = {
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
-                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = Gold, modifier = Modifier.size(20.dp))
+                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             }
                         },
                     )
@@ -257,8 +257,8 @@ private fun JobBlockCard(info: JobBlockInfo) {
                 Spacer(Modifier.width(10.dp))
             }
             Column {
-                Text("Job Block", style = MaterialTheme.typography.labelSmall, color = Stone500)
-                Text(info.blockName, style = MaterialTheme.typography.titleMedium, color = Gold)
+                Text("Job Block", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary)
+                Text(info.blockName, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
             }
         }
 
@@ -279,9 +279,9 @@ private fun JobBlockCard(info: JobBlockInfo) {
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                Text("Ingredients", style = MaterialTheme.typography.labelSmall, color = Stone500)
+                Text("Ingredients", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary)
                 info.ingredients.forEach { line ->
-                    Text(line, style = MaterialTheme.typography.bodySmall, color = Stone300)
+                    Text(line, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
@@ -305,8 +305,8 @@ private fun TradeListItem(trade: TradeEntity, onItemTap: (String) -> Unit, favor
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(SurfaceCard, RoundedCornerShape(10.dp))
-            .border(1.dp, Stone700, RoundedCornerShape(10.dp))
+            .background(LocalSurfaceCard.current, RoundedCornerShape(10.dp))
+            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(10.dp))
             .padding(horizontal = 14.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -319,12 +319,12 @@ private fun TradeListItem(trade: TradeEntity, onItemTap: (String) -> Unit, favor
 
                 // Buy item 2 (if present)
                 if (buy2Id != null) {
-                    Text(" + ", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                    Text(" + ", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                     TradeItemChip(buy2Icon, "${trade.buyItem2Count}\u00D7 ${formatItemName(buy2Id)}",
                         onClick = { onItemTap(buy2Id) })
                 }
 
-                Text("  \u2192  ", style = MaterialTheme.typography.bodyMedium, color = Gold)
+                Text("  \u2192  ", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary)
 
                 // Sell item
                 TradeItemChip(sellIcon, "${trade.sellItemCount}\u00D7 ${formatItemName(sellId)}",
@@ -334,11 +334,11 @@ private fun TradeListItem(trade: TradeEntity, onItemTap: (String) -> Unit, favor
             Text(
                 "${trade.profession.replaceFirstChar { it.uppercase() }} \u00B7 ${trade.levelName}",
                 style = MaterialTheme.typography.bodySmall,
-                color = Stone500,
+                color = MaterialTheme.colorScheme.secondary,
             )
         }
         Spacer(Modifier.width(8.dp))
-        CategoryBadge(label = "Lvl ${trade.level}", color = Gold)
+        CategoryBadge(label = "Lvl ${trade.level}", color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.width(4.dp))
         val tradeKey = "trade_${trade.rowId}"
         val isFav = tradeKey in favoriteIds
@@ -346,7 +346,7 @@ private fun TradeListItem(trade: TradeEntity, onItemTap: (String) -> Unit, favor
             Icon(
                 Icons.Filled.Star,
                 contentDescription = "Favorite",
-                tint = if (isFav) Gold else Stone700,
+                tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                 modifier = Modifier.size(20.dp),
             )
         }
@@ -367,7 +367,7 @@ private fun TradeItemChip(icon: SpyglassIcon?, label: String, onClick: () -> Uni
             )
             Spacer(Modifier.width(3.dp))
         }
-        Text(label, style = MaterialTheme.typography.bodySmall, color = Stone100)
+        Text(label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurface)
     }
 }
 
@@ -387,10 +387,10 @@ private fun CraftingGrid(cells: List<String?>) {
                         modifier = Modifier
                             .size(30.dp)
                             .background(
-                                if (itemId != null) SurfaceMid else Background,
+                                if (itemId != null) MaterialTheme.colorScheme.surfaceVariant else MaterialTheme.colorScheme.background,
                                 RoundedCornerShape(2.dp),
                             )
-                            .border(0.5.dp, Stone700, RoundedCornerShape(2.dp)),
+                            .border(0.5.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(2.dp)),
                     ) {
                         if (tag != null) {
                             RotatingTagIcon(tag, modifier = Modifier.size(22.dp))

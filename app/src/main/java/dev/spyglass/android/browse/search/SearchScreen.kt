@@ -109,19 +109,20 @@ private fun typeIcon(type: String, id: String): SpyglassIcon = when (type) {
     else          -> PixelIcons.Search
 }
 
+@Composable
 private fun typeColor(type: String) = when (type) {
-    "Block"       -> Stone300
-    "Recipe"      -> Gold
+    "Block"       -> MaterialTheme.colorScheme.onSurfaceVariant
+    "Recipe"      -> MaterialTheme.colorScheme.primary
     "Mob"         -> NetherRed
     "Biome"       -> Emerald
     "Enchantment" -> EnderPurple
     "Potion"      -> PotionBlue
     "Trade"       -> Emerald
-    "Structure"   -> Gold
-    "Item"        -> Gold
+    "Structure"   -> MaterialTheme.colorScheme.primary
+    "Item"        -> MaterialTheme.colorScheme.primary
     "Advancement" -> Emerald
     "Command"     -> PotionBlue
-    else          -> Stone500
+    else          -> MaterialTheme.colorScheme.secondary
 }
 
 @Composable
@@ -135,10 +136,10 @@ fun SearchScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search all Minecraft data\u2026", color = Stone500) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = Stone500) },
+            placeholder = { Text("Search all Minecraft data\u2026", color = MaterialTheme.colorScheme.secondary) },
+            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
 
@@ -166,7 +167,7 @@ fun SearchScreen(
                                 CategoryBadge(label = r.type, color = typeColor(r.type))
                                 if (r.detail.isNotBlank()) {
                                     Spacer(Modifier.height(2.dp))
-                                    Text(r.detail, style = MaterialTheme.typography.bodySmall, color = Stone500)
+                                    Text(r.detail, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                                 }
                             }
                         },

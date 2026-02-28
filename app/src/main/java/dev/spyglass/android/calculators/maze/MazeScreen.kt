@@ -56,14 +56,14 @@ fun MazeScreen(vm: MazeViewModel = viewModel()) {
             ) {
                 Button(
                     onClick = { vm.generate() },
-                    colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = Background),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary),
                     modifier = Modifier.weight(1f),
                 ) {
                     Text("Generate")
                 }
                 OutlinedButton(
                     onClick = { vm.shuffle() },
-                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Gold),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.weight(1f),
                 ) {
                     Text("Shuffle")
@@ -115,7 +115,7 @@ fun MazeScreen(vm: MazeViewModel = viewModel()) {
                         onValueChange = { vm.setLayer(it.toInt()) },
                         valueRange    = s.layerMin.toFloat()..s.layerMax.toFloat(),
                         steps         = (s.layerMax - s.layerMin - 1).coerceAtLeast(0),
-                        colors        = SliderDefaults.colors(thumbColor = Gold, activeTrackColor = Gold),
+                        colors        = SliderDefaults.colors(thumbColor = MaterialTheme.colorScheme.primary, activeTrackColor = MaterialTheme.colorScheme.primary),
                     )
                 }
 
@@ -128,7 +128,7 @@ fun MazeScreen(vm: MazeViewModel = viewModel()) {
         Text(
             "Generate mazes for Minecraft. Choose rectangular for classic hedge mazes, circular for concentric ring mazes, or multi-floor for stacked mazes connected by staircases. Use the layer slider to build layer by layer, or switch to 3D for an isometric preview.",
             style = MaterialTheme.typography.bodySmall,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
         )
     }
 }

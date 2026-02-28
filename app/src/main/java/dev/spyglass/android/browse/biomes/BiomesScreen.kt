@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.text.style.TextDecoration
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.BiomeResourceMap
 import dev.spyglass.android.data.db.entities.BiomeEntity
@@ -121,6 +122,7 @@ fun BiomesScreen(
     onNavigateToMob: (mobId: String) -> Unit = {},
     onNavigateToStructure: (structureId: String) -> Unit = {},
     onItemTap: (String) -> Unit = {},
+    onCalcTab: (Int) -> Unit = {},
     vm: BiomesViewModel = viewModel(),
 ) {
     val query        by vm.query.collectAsState()
@@ -143,10 +145,10 @@ fun BiomesScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search biomes\u2026", color = Stone500) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = Stone500) },
+            placeholder = { Text("Search biomes\u2026", color = MaterialTheme.colorScheme.secondary) },
+            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
 
@@ -198,7 +200,7 @@ fun BiomesScreen(
                                 Icon(
                                     Icons.Filled.Star,
                                     contentDescription = "Favorite",
-                                    tint = if (isFav) Gold else Stone700,
+                                    tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                     modifier = Modifier.size(20.dp),
                                 )
                             }
@@ -216,7 +218,7 @@ fun BiomesScreen(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
                     ) {
-                        BiomeDetailCard(b, onNavigateToMob, onNavigateToStructure, onItemTap)
+                        BiomeDetailCard(b, onNavigateToMob, onNavigateToStructure, onItemTap, onCalcTab)
                     }
                 }
             }
@@ -245,14 +247,14 @@ private fun BiomeListItem(b: BiomeEntity, isFavorite: Boolean, onToggleFavorite:
                 Column(horizontalAlignment = Alignment.End) {
                     CategoryBadge(label = b.category.ifEmpty { "unknown" }, color = Emerald)
                     Spacer(Modifier.height(2.dp))
-                    Text("${b.temperature}\u00B0  ${b.precipitation}", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                    Text("${b.temperature}\u00B0  ${b.precipitation}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                 }
                 Spacer(Modifier.width(6.dp))
                 IconButton(onClick = onToggleFavorite, modifier = Modifier.size(32.dp)) {
                     Icon(
                         Icons.Filled.Star,
                         contentDescription = "Favorite",
-                        tint = if (isFavorite) Gold else Stone700,
+                        tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                         modifier = Modifier.size(20.dp),
                     )
                 }
@@ -268,12 +270,13 @@ private fun BiomeDetailCard(
     onMobTap: (String) -> Unit,
     onStructureTap: (String) -> Unit,
     onItemTap: (String) -> Unit,
+    onCalcTab: (Int) -> Unit,
 ) {
-    val bgColor   = parseBiomeColor(biome.color) ?: SurfaceDark
+    val bgColor   = parseBiomeColor(biome.color) ?: MaterialTheme.colorScheme.surface
     val isLight   = (0.299 * bgColor.red + 0.587 * bgColor.green + 0.114 * bgColor.blue) > 0.5
-    val textColor    = if (isLight) Background else Stone100
-    val subtextColor = if (isLight) Stone700 else Stone300
-    val labelColor   = if (isLight) Background.copy(alpha = 0.7f) else Gold
+    val textColor    = if (isLight) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
+    val subtextColor = if (isLight) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.onSurfaceVariant
+    val labelColor   = if (isLight) MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f) else MaterialTheme.colorScheme.primary
 
     val mobs       = parseMobs(biome.mobsJson)
     val structures = parseStructures(biome.structures)
@@ -378,5 +381,42 @@ private fun BiomeDetailCard(
                 }
             }
         }
+
+        // Cross-links to tool tabs
+        val isLibrarianBiome = biome.id in LIBRARIAN_BIOME_IDS
+        val hasStructures = structures.isNotEmpty()
+        if (isLibrarianBiome || hasStructures) {
+            HorizontalDivider(color = textColor.copy(alpha = 0.2f), thickness = 0.5.dp)
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                if (isLibrarianBiome) {
+                    Text(
+                        "Librarian Guide \u2192",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (isLight) MaterialTheme.colorScheme.onPrimary else PotionBlue,
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier.clickable { onCalcTab(15) },
+                    )
+                }
+                if (hasStructures) {
+                    Text(
+                        "Structure Loot \u2192",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (isLight) MaterialTheme.colorScheme.onPrimary else PotionBlue,
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier.clickable { onCalcTab(19) },
+                    )
+                }
+            }
+        }
     }
 }
+
+private val LIBRARIAN_BIOME_IDS = setOf(
+    "plains", "sunflower_plains", "meadow",
+    "desert",
+    "savanna", "savanna_plateau", "windswept_savanna",
+    "snowy_plains", "snowy_taiga", "ice_spikes", "frozen_river", "snowy_slopes",
+    "taiga", "old_growth_pine_taiga", "old_growth_spruce_taiga",
+    "jungle", "sparse_jungle", "bamboo_jungle",
+    "swamp", "mangrove_swamp",
+)

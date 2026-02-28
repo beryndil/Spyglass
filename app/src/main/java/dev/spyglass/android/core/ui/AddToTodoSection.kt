@@ -32,7 +32,7 @@ fun AddToTodoSection(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text("Add to Todo List", style = MaterialTheme.typography.labelSmall, color = Gold)
+        Text("Add to Todo List", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -46,8 +46,8 @@ fun AddToTodoSection(
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Gold, unfocusedBorderColor = Stone700,
-                    focusedLabelColor = Gold, unfocusedLabelColor = Stone500, cursorColor = Gold,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    focusedLabelColor = MaterialTheme.colorScheme.primary, unfocusedLabelColor = MaterialTheme.colorScheme.secondary, cursorColor = MaterialTheme.colorScheme.primary,
                 ),
                 modifier = Modifier.width(80.dp),
             )
@@ -59,7 +59,7 @@ fun AddToTodoSection(
                 Text(
                     formatForDisplay(qty, itemName),
                     style = MaterialTheme.typography.bodySmall,
-                    color = Stone300,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1f),
                 )
             } else {
@@ -83,10 +83,10 @@ fun AddToTodoSection(
                         feedback = "Added!"
                     }
                 },
-                colors = IconButtonDefaults.iconButtonColors(containerColor = Gold),
+                colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.primary),
                 modifier = Modifier.size(40.dp),
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add to todo", tint = Background, modifier = Modifier.size(20.dp))
+                Icon(Icons.Default.Add, contentDescription = "Add to todo", tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
             }
         }
 

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.text.style.TextDecoration
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.MobEntity
@@ -116,6 +117,7 @@ fun MobsScreen(
     onNavigateToBiome: (biomeId: String) -> Unit = {},
     onNavigateToStructure: (structureId: String) -> Unit = {},
     onItemTap: (String) -> Unit = {},
+    onCalcTab: (Int) -> Unit = {},
     vm: MobsViewModel = viewModel(),
 ) {
     val query       by vm.query.collectAsState()
@@ -140,10 +142,10 @@ fun MobsScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search mobs…", color = Stone500) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = Stone500) },
+            placeholder = { Text("Search mobs…", color = MaterialTheme.colorScheme.secondary) },
+            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
         androidx.compose.foundation.lazy.LazyRow(
@@ -185,7 +187,7 @@ fun MobsScreen(
                                 Icon(
                                     Icons.Filled.Star,
                                     contentDescription = "Favorite",
-                                    tint = if (isFav) Gold else Stone700,
+                                    tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                     modifier = Modifier.size(20.dp),
                                 )
                             }
@@ -198,10 +200,10 @@ fun MobsScreen(
                 val isExpanded = m.id in expandedIds
                 val categoryColor = when (m.category) {
                     "hostile"  -> NetherRed
-                    "neutral"  -> Gold
+                    "neutral"  -> MaterialTheme.colorScheme.primary
                     "passive"  -> Emerald
                     "boss"     -> EnderPurple
-                    else       -> Stone500
+                    else       -> MaterialTheme.colorScheme.secondary
                 }
                 Column {
                     BrowseListItem(
@@ -214,7 +216,7 @@ fun MobsScreen(
                                 Column(horizontalAlignment = Alignment.End) {
                                     CategoryBadge(label = m.category, color = categoryColor)
                                     Spacer(Modifier.height(2.dp))
-                                    Text("HP ${m.health}", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                                    Text("HP ${m.health}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                                 }
                                 Spacer(Modifier.width(6.dp))
                                 val isFav = m.id in favoriteIds
@@ -222,7 +224,7 @@ fun MobsScreen(
                                     Icon(
                                         Icons.Filled.Star,
                                         contentDescription = "Favorite",
-                                        tint = if (isFav) Gold else Stone700,
+                                        tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                         modifier = Modifier.size(20.dp),
                                     )
                                 }
@@ -234,7 +236,7 @@ fun MobsScreen(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
                     ) {
-                        MobDetailCard(m, onNavigateToBiome, onNavigateToStructure, onItemTap)
+                        MobDetailCard(m, onNavigateToBiome, onNavigateToStructure, onItemTap, onCalcTab)
                     }
                 }
             }
@@ -251,7 +253,7 @@ fun MobsScreen(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onItemTap: (String) -> Unit) {
+private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onItemTap: (String) -> Unit, onCalcTab: (Int) -> Unit) {
     val drops  = parseDrops(mob.dropsJson)
     val biomes = parseBiomes(mob.spawnBiomesJson)
 
@@ -260,7 +262,7 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
 
         // Description
         if (mob.description.isNotEmpty()) {
-            Text(mob.description, style = MaterialTheme.typography.bodyMedium, color = Stone300)
+            Text(mob.description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
         // Stats
@@ -271,7 +273,7 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
         // Breeding
         if (mob.breeding.isNotEmpty()) {
             SpyglassDivider()
-            Text("Breeding", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Breeding", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 mob.breeding.split(",").map { it.trim() }.filter { it.isNotEmpty() }.forEach { food ->
                     AssistChip(
@@ -294,15 +296,15 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
         // Drops
         if (drops.isNotEmpty()) {
             SpyglassDivider()
-            Text("Drops", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Drops", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 drops.forEach { drop ->
                     AssistChip(
                         onClick = { onItemTap(drop) },
                         label = { Text(formatId(drop), style = MaterialTheme.typography.labelSmall) },
                         colors = AssistChipDefaults.assistChipColors(
-                            labelColor = Stone300,
-                            containerColor = Stone300.copy(alpha = 0.12f),
+                            labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            containerColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f),
                         ),
                         border = null,
                     )
@@ -313,7 +315,7 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
         // Spawn biomes
         if (biomes.isNotEmpty()) {
             SpyglassDivider()
-            Text("Found in", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Found in", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 biomes.forEach { biomeId ->
                     if (biomeId in STRUCTURE_IDS) {
@@ -321,13 +323,13 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
                             onClick = { onStructureTap(biomeId) },
                             label = { Text(formatId(biomeId), style = MaterialTheme.typography.labelSmall) },
                             colors = AssistChipDefaults.assistChipColors(
-                                labelColor = Gold,
-                                containerColor = Gold.copy(alpha = 0.12f),
+                                labelColor = MaterialTheme.colorScheme.primary,
+                                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
                             ),
                             border = null,
                         )
                     } else if (biomeId in SPECIAL_LOCATIONS) {
-                        CategoryBadge(label = formatId(biomeId), color = Stone500)
+                        CategoryBadge(label = formatId(biomeId), color = MaterialTheme.colorScheme.secondary)
                     } else {
                         AssistChip(
                             onClick = { onBiomeTap(biomeId) },
@@ -342,5 +344,39 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
                 }
             }
         }
+
+        // Cross-links to tool tabs
+        val hasFoodDrops = drops.any { it in FOOD_DROP_IDS }
+        val isHostile = mob.category == "hostile" || mob.category == "boss"
+        if (hasFoodDrops || isHostile) {
+            SpyglassDivider()
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                if (hasFoodDrops) {
+                    Text(
+                        "Food Guide \u2192",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = PotionBlue,
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier.clickable { onCalcTab(16) },
+                    )
+                }
+                if (isHostile) {
+                    Text(
+                        "Light Spacing \u2192",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = PotionBlue,
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier.clickable { onCalcTab(11) },
+                    )
+                }
+            }
+        }
     }
 }
+
+private val FOOD_DROP_IDS = setOf(
+    "beef", "raw_beef", "cooked_beef", "porkchop", "raw_porkchop", "cooked_porkchop",
+    "chicken", "raw_chicken", "cooked_chicken", "mutton", "raw_mutton", "cooked_mutton",
+    "rabbit", "raw_rabbit", "cooked_rabbit", "cod", "raw_cod", "cooked_cod",
+    "salmon", "raw_salmon", "cooked_salmon", "rotten_flesh", "spider_eye",
+)

@@ -40,10 +40,10 @@ fun StorageScreen(vm: StorageViewModel = viewModel()) {
                     label    = { Text("Item (for block compression)") },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                     colors   = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor   = Gold,
-                        unfocusedBorderColor = Stone700,
-                        focusedLabelColor    = Gold,
-                        unfocusedLabelColor  = Stone500,
+                        focusedBorderColor   = MaterialTheme.colorScheme.primary,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        focusedLabelColor    = MaterialTheme.colorScheme.primary,
+                        unfocusedLabelColor  = MaterialTheme.colorScheme.secondary,
                     ),
                     modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
                 )
@@ -73,7 +73,7 @@ fun StorageScreen(vm: StorageViewModel = viewModel()) {
         Text(
             "Figure out how many chests and shulker boxes you need for a given quantity of items. Pick an item from the dropdown to also see block compression (e.g. how many iron blocks you can make from your iron ingots).",
             style = MaterialTheme.typography.bodySmall,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
         )
     }
 }

@@ -39,16 +39,16 @@ fun SectionHeader(title: String, modifier: Modifier = Modifier, icon: SpyglassIc
         modifier = modifier.fillMaxWidth().padding(bottom = 8.dp),
     ) {
         if (icon != null) {
-            SpyglassIconImage(icon, contentDescription = null, tint = Gold, modifier = Modifier.size(18.dp))
+            SpyglassIconImage(icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(18.dp))
             Spacer(Modifier.width(6.dp))
         }
         Text(
             text  = title.uppercase(),
             style = MaterialTheme.typography.labelSmall,
-            color = Gold,
+            color = MaterialTheme.colorScheme.primary,
         )
         Spacer(Modifier.width(10.dp))
-        HorizontalDivider(color = Stone700, thickness = 0.5.dp, modifier = Modifier.weight(1f))
+        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp, modifier = Modifier.weight(1f))
     }
 }
 
@@ -61,10 +61,10 @@ fun StatRow(label: String, value: String, modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment   = Alignment.CenterVertically,
     ) {
-        Text(text = label, style = MaterialTheme.typography.bodyMedium, color = Stone500,
+        Text(text = label, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier.weight(1f, fill = false))
         Spacer(Modifier.width(12.dp))
-        Text(text = value, style = MaterialTheme.typography.bodyLarge,  color = Stone100)
+        Text(text = value, style = MaterialTheme.typography.bodyLarge,  color = MaterialTheme.colorScheme.onSurface)
     }
 }
 
@@ -85,16 +85,16 @@ fun SpyglassTextField(
         value         = value,
         onValueChange = onValueChange,
         label         = { Text(label) },
-        placeholder   = if (placeholder.isNotEmpty()) ({ Text(placeholder, color = Stone500) }) else null,
+        placeholder   = if (placeholder.isNotEmpty()) ({ Text(placeholder, color = MaterialTheme.colorScheme.secondary) }) else null,
         singleLine    = true,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = KeyboardActions(onDone = { onDone?.invoke() }),
         colors        = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor   = Gold,
-            unfocusedBorderColor = Stone700,
-            focusedLabelColor    = Gold,
-            unfocusedLabelColor  = Stone500,
-            cursorColor          = Gold,
+            focusedBorderColor   = MaterialTheme.colorScheme.primary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+            focusedLabelColor    = MaterialTheme.colorScheme.primary,
+            unfocusedLabelColor  = MaterialTheme.colorScheme.secondary,
+            cursorColor          = MaterialTheme.colorScheme.primary,
         ),
         modifier = modifier.fillMaxWidth(),
     )
@@ -107,8 +107,8 @@ fun ResultCard(modifier: Modifier = Modifier, content: @Composable ColumnScope.(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(SurfaceDark, RoundedCornerShape(8.dp))
-            .border(1.dp, Stone700, RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp))
+            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         content = content,
@@ -126,8 +126,8 @@ fun TogglePill(
 ) {
     Row(
         modifier = modifier
-            .background(SurfaceMid, RoundedCornerShape(6.dp))
-            .border(1.dp, Stone700, RoundedCornerShape(6.dp))
+            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(6.dp))
+            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(6.dp))
             .padding(2.dp),
     ) {
         options.forEachIndexed { i, label ->
@@ -137,7 +137,7 @@ fun TogglePill(
                 modifier = Modifier
                     .weight(1f)
                     .background(
-                        if (isSelected) Gold else Color.Transparent,
+                        if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
                         RoundedCornerShape(4.dp),
                     )
                     .height(32.dp),
@@ -150,7 +150,7 @@ fun TogglePill(
                     Text(
                         text  = label,
                         style = MaterialTheme.typography.labelSmall,
-                        color = if (isSelected) Background else Stone300,
+                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
@@ -162,7 +162,7 @@ fun TogglePill(
 
 @Composable
 fun SpyglassDivider(modifier: Modifier = Modifier) {
-    HorizontalDivider(modifier = modifier, color = Stone700, thickness = 0.5.dp)
+    HorizontalDivider(modifier = modifier, color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp)
 }
 
 // ── Input card — wraps calculator inputs to break up the black void ──────────
@@ -172,8 +172,8 @@ fun InputCard(modifier: Modifier = Modifier, content: @Composable ColumnScope.()
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(SurfaceCard, RoundedCornerShape(12.dp))
-            .border(1.dp, Stone700, RoundedCornerShape(12.dp))
+            .background(LocalSurfaceCard.current, RoundedCornerShape(12.dp))
+            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(12.dp))
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         content = content,
@@ -188,15 +188,15 @@ fun BrowseListItem(
     modifier: Modifier = Modifier,
     supporting: String = "",
     leadingIcon: SpyglassIcon? = null,
-    leadingIconTint: Color = Stone300,
+    leadingIconTint: Color = MaterialTheme.colorScheme.onSurfaceVariant,
     supportingMaxLines: Int = 1,
     trailing: @Composable (() -> Unit)? = null,
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(SurfaceCard, RoundedCornerShape(10.dp))
-            .border(1.dp, Stone700, RoundedCornerShape(10.dp))
+            .background(LocalSurfaceCard.current, RoundedCornerShape(10.dp))
+            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(10.dp))
             .padding(horizontal = 14.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -205,10 +205,10 @@ fun BrowseListItem(
             Spacer(Modifier.width(12.dp))
         }
         Column(modifier = Modifier.weight(1f)) {
-            Text(headline, style = MaterialTheme.typography.bodyLarge, color = Stone100,
+            Text(headline, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 2, overflow = TextOverflow.Ellipsis)
             if (supporting.isNotEmpty()) {
-                Text(supporting, style = MaterialTheme.typography.bodySmall, color = Stone500,
+                Text(supporting, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
                     maxLines = supportingMaxLines, overflow = TextOverflow.Ellipsis)
             }
         }
@@ -232,12 +232,12 @@ fun EmptyState(
         modifier = modifier.fillMaxWidth().padding(vertical = 48.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        SpyglassIconImage(icon, contentDescription = null, tint = Stone700, modifier = Modifier.size(56.dp))
+        SpyglassIconImage(icon, contentDescription = null, tint = MaterialTheme.colorScheme.outline, modifier = Modifier.size(56.dp))
         Spacer(Modifier.height(12.dp))
-        Text(title, style = MaterialTheme.typography.titleLarge, color = Stone300)
+        Text(title, style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
         if (subtitle.isNotEmpty()) {
             Spacer(Modifier.height(4.dp))
-            Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = Stone500)
+            Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
         }
     }
 }
@@ -250,7 +250,7 @@ fun TabIntroHeader(
     title: String,
     description: String,
     stat: String = "",
-    iconTint: Color = Gold,
+    iconTint: Color = MaterialTheme.colorScheme.primary,
     iconSize: Dp = 36.dp,
     modifier: Modifier = Modifier,
 ) {
@@ -260,18 +260,18 @@ fun TabIntroHeader(
     ) {
         SpyglassIconImage(icon, contentDescription = null, tint = iconTint, modifier = Modifier.size(iconSize))
         Spacer(Modifier.height(8.dp))
-        Text(title, style = MaterialTheme.typography.headlineSmall, color = Stone100)
+        Text(title, style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSurface)
         Spacer(Modifier.height(4.dp))
         Text(
             description,
             style = MaterialTheme.typography.bodyMedium,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier.padding(horizontal = 24.dp),
             textAlign = androidx.compose.ui.text.style.TextAlign.Center,
         )
         if (stat.isNotEmpty()) {
             Spacer(Modifier.height(6.dp))
-            Text(stat, style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text(stat, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         }
     }
 }
@@ -306,7 +306,7 @@ fun MinecraftIdRow(id: String) {
                 clipboard.setPrimaryClip(android.content.ClipData.newPlainText("Minecraft ID", fullId))
                 copied = true
             }
-            .background(Stone700.copy(alpha = 0.3f), RoundedCornerShape(6.dp))
+            .background(MaterialTheme.colorScheme.outline.copy(alpha = 0.3f), RoundedCornerShape(6.dp))
             .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -314,13 +314,13 @@ fun MinecraftIdRow(id: String) {
         Text(
             fullId,
             style = MaterialTheme.typography.bodySmall,
-            color = Stone300,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
         )
         Text(
             if (copied) "Copied!" else "Tap to copy",
             style = MaterialTheme.typography.labelSmall,
-            color = if (copied) Gold else Stone500,
+            color = if (copied) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
         )
     }
 
@@ -403,8 +403,8 @@ fun TextureCraftingGrid(
                                 contentAlignment = Alignment.Center,
                                 modifier = Modifier
                                     .size(30.dp)
-                                    .background(SurfaceMid, RoundedCornerShape(2.dp))
-                                    .border(0.5.dp, Stone700, RoundedCornerShape(2.dp))
+                                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(2.dp))
+                                    .border(0.5.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(2.dp))
                                     .clickable { onItemTap(cell) },
                             ) {
                                 if (tag != null) {
@@ -418,7 +418,7 @@ fun TextureCraftingGrid(
                                     Text(
                                         cell.take(2).uppercase(),
                                         fontSize = 7.sp,
-                                        color = Stone300,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         textAlign = TextAlign.Center,
                                     )
                                 }
@@ -430,8 +430,8 @@ fun TextureCraftingGrid(
                             contentAlignment = Alignment.Center,
                             modifier = Modifier
                                 .size(30.dp)
-                                .background(Background, RoundedCornerShape(2.dp))
-                                .border(0.5.dp, Stone700, RoundedCornerShape(2.dp)),
+                                .background(MaterialTheme.colorScheme.background, RoundedCornerShape(2.dp))
+                                .border(0.5.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(2.dp)),
                         ) {}
                     }
                 }
@@ -455,7 +455,7 @@ fun SpyglassTabRow(
         selectedTabIndex = selectedIndex,
         edgePadding      = 12.dp,
         containerColor   = MaterialTheme.colorScheme.surface,
-        contentColor     = Gold,
+        contentColor     = MaterialTheme.colorScheme.primary,
         divider          = {},
         modifier         = modifier,
     ) {
@@ -469,13 +469,13 @@ fun SpyglassTabRow(
                         SpyglassIconImage(
                             tab.icon, contentDescription = null,
                             modifier = Modifier.size(16.dp),
-                            tint = if (tab.untinted) Color.Unspecified else if (selected) Gold else Stone500,
+                            tint = if (tab.untinted) Color.Unspecified else if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
                         )
                         Spacer(Modifier.width(5.dp))
                         Text(
                             tab.label,
                             style = MaterialTheme.typography.labelSmall,
-                            color = if (selected) Gold else Stone500,
+                            color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
                         )
                     }
                 },

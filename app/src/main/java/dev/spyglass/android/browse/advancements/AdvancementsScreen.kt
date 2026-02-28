@@ -251,8 +251,8 @@ fun AdvancementsScreen(
     if (showResetDialog) {
         AlertDialog(
             onDismissRequest = { showResetDialog = false },
-            title = { Text("Reset Progress", color = Stone100) },
-            text = { Text("Clear all advancement checkmarks? This cannot be undone.", color = Stone300) },
+            title = { Text("Reset Progress", color = MaterialTheme.colorScheme.onSurface) },
+            text = { Text("Clear all advancement checkmarks? This cannot be undone.", color = MaterialTheme.colorScheme.onSurfaceVariant) },
             confirmButton = {
                 TextButton(onClick = { vm.resetAllProgress(); showResetDialog = false }) {
                     Text("Reset", color = Red400)
@@ -260,20 +260,20 @@ fun AdvancementsScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showResetDialog = false }) {
-                    Text("Cancel", color = Stone500)
+                    Text("Cancel", color = MaterialTheme.colorScheme.secondary)
                 }
             },
-            containerColor = SurfaceDark,
+            containerColor = MaterialTheme.colorScheme.surface,
         )
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search advancements\u2026", color = Stone500) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = Stone500) },
+            placeholder = { Text("Search advancements\u2026", color = MaterialTheme.colorScheme.secondary) },
+            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
         FlowRow(
@@ -314,7 +314,7 @@ fun AdvancementsScreen(
                         progress = { progress },
                         modifier = Modifier.fillMaxWidth().height(6.dp),
                         color = Emerald,
-                        trackColor = Stone700,
+                        trackColor = MaterialTheme.colorScheme.outline,
                         strokeCap = androidx.compose.ui.graphics.StrokeCap.Round,
                     )
                     Spacer(Modifier.height(4.dp))
@@ -323,7 +323,7 @@ fun AdvancementsScreen(
                         Text(
                             "Reset Progress",
                             style = MaterialTheme.typography.labelSmall,
-                            color = Stone500,
+                            color = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.clickable { showResetDialog = true },
                         )
                     }
@@ -332,7 +332,7 @@ fun AdvancementsScreen(
             // Favorites section
             if (favoriteAdvancements.isNotEmpty()) {
                 item(key = "fav_header") {
-                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = Gold,
+                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
                 }
                 items(favoriteAdvancements, key = { "fav_${it.id}" }) { fav ->
@@ -342,10 +342,10 @@ fun AdvancementsScreen(
                         supporting = "",
                         supportingMaxLines = 1,
                         leadingIcon = PixelIcons.Enchant,
-                        leadingIconTint = if (isComplete) Emerald else Stone300,
+                        leadingIconTint = if (isComplete) Emerald else MaterialTheme.colorScheme.onSurfaceVariant,
                         trailing = {
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
-                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = Gold, modifier = Modifier.size(20.dp))
+                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             }
                         },
                     )
@@ -363,7 +363,7 @@ fun AdvancementsScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = (depth * 24).dp)
-                            .background(SurfaceCard, RoundedCornerShape(10.dp))
+                            .background(LocalSurfaceCard.current, RoundedCornerShape(10.dp))
                             .clickable { vm.toggleExpanded(adv.id) }
                             .padding(horizontal = 10.dp, vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically,
@@ -374,8 +374,8 @@ fun AdvancementsScreen(
                             onCheckedChange = { vm.toggleCompleted(adv.id) },
                             colors = CheckboxDefaults.colors(
                                 checkedColor = Emerald,
-                                uncheckedColor = Stone500,
-                                checkmarkColor = Background,
+                                uncheckedColor = MaterialTheme.colorScheme.secondary,
+                                checkmarkColor = MaterialTheme.colorScheme.onPrimary,
                             ),
                             modifier = Modifier.size(24.dp),
                         )
@@ -389,7 +389,7 @@ fun AdvancementsScreen(
                                 Icon(
                                     if (isTreeExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
                                     contentDescription = "Toggle children",
-                                    tint = Stone500,
+                                    tint = MaterialTheme.colorScheme.secondary,
                                     modifier = Modifier.size(18.dp),
                                 )
                             }
@@ -400,7 +400,7 @@ fun AdvancementsScreen(
                             Text(
                                 adv.name,
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = if (isComplete) Stone500 else Stone100,
+                                color = if (isComplete) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface,
                                 textDecoration = if (isComplete) TextDecoration.LineThrough else TextDecoration.None,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
@@ -410,7 +410,7 @@ fun AdvancementsScreen(
                         // Badges
                         Column(horizontalAlignment = Alignment.End) {
                             val typeColor = when (adv.type) {
-                                "challenge" -> Gold
+                                "challenge" -> MaterialTheme.colorScheme.primary
                                 "goal" -> PotionBlue
                                 else -> Emerald
                             }
@@ -418,7 +418,7 @@ fun AdvancementsScreen(
                             if (hasChildren) {
                                 Spacer(Modifier.height(2.dp))
                                 val childCount = advancements.count { it.parent == adv.id }
-                                CategoryBadge(label = "$childCount children", color = Stone500)
+                                CategoryBadge(label = "$childCount children", color = MaterialTheme.colorScheme.secondary)
                             }
                         }
                         Spacer(Modifier.width(4.dp))
@@ -428,7 +428,7 @@ fun AdvancementsScreen(
                             Icon(
                                 Icons.Filled.Star,
                                 contentDescription = "Favorite",
-                                tint = if (isFav) Gold else Stone700,
+                                tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                 modifier = Modifier.size(18.dp),
                             )
                         }
@@ -493,13 +493,13 @@ private fun AdvancementDetailCard(
     ResultCard(modifier = modifier) {
         MinecraftIdRow(adv.id)
         if (adv.description.isNotEmpty()) {
-            Text(adv.description, style = MaterialTheme.typography.bodyMedium, color = Stone300)
+            Text(adv.description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
         // Requirements section
         if (adv.requirements.isNotEmpty()) {
             SectionHeader(title = "Requirements")
-            Text(adv.requirements, style = MaterialTheme.typography.bodyMedium, color = Stone100)
+            Text(adv.requirements, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
         }
 
         // How to get this section
@@ -547,8 +547,8 @@ private fun AdvancementDetailCard(
                         onClick = { onItemTap(itemId) },
                         label = { Text(formatId(itemId), style = MaterialTheme.typography.labelSmall) },
                         colors = AssistChipDefaults.assistChipColors(
-                            labelColor = Gold,
-                            containerColor = Gold.copy(alpha = 0.12f),
+                            labelColor = MaterialTheme.colorScheme.primary,
+                            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
                         ),
                         border = null,
                     )
@@ -623,13 +623,13 @@ private fun AdvancementDetailCard(
                 Icon(
                     Icons.Default.Check,
                     contentDescription = null,
-                    tint = if (isComplete) Emerald else Stone500,
+                    tint = if (isComplete) Emerald else MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.size(18.dp),
                 )
                 Spacer(Modifier.width(6.dp))
                 Text(
                     if (isComplete) "Completed" else "Mark Complete",
-                    color = if (isComplete) Emerald else Stone500,
+                    color = if (isComplete) Emerald else MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.labelSmall,
                 )
             }

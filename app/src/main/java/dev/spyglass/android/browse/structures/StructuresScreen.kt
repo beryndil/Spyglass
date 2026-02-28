@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.text.style.TextDecoration
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.StructureEntity
@@ -88,6 +89,7 @@ fun StructuresScreen(
     onNavigateToMob: (mobId: String) -> Unit = {},
     onNavigateToBiome: (biomeId: String) -> Unit = {},
     onItemTap: (itemId: String) -> Unit = {},
+    onCalcTab: (Int) -> Unit = {},
     vm: StructuresViewModel = viewModel(),
 ) {
     val query        by vm.query.collectAsState()
@@ -112,10 +114,10 @@ fun StructuresScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search structures\u2026", color = Stone500) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = Stone500) },
+            placeholder = { Text("Search structures\u2026", color = MaterialTheme.colorScheme.secondary) },
+            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
         Row(modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
@@ -154,7 +156,7 @@ fun StructuresScreen(
                                 Icon(
                                     Icons.Filled.Star,
                                     contentDescription = "Favorite",
-                                    tint = if (isFav) Gold else Stone700,
+                                    tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                     modifier = Modifier.size(20.dp),
                                 )
                             }
@@ -172,7 +174,7 @@ fun StructuresScreen(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
                     ) {
-                        StructureDetailCard(s, onNavigateToMob, onNavigateToBiome, onItemTap)
+                        StructureDetailCard(s, onNavigateToMob, onNavigateToBiome, onItemTap, onCalcTab)
                     }
                 }
             }
@@ -196,7 +198,7 @@ private fun StructureListItem(s: StructureEntity, isFavorite: Boolean, onToggleF
     }
     val difficultyColor = when (s.difficulty) {
         "hard"   -> NetherRed
-        "medium" -> Gold
+        "medium" -> MaterialTheme.colorScheme.primary
         else     -> Emerald
     }
 
@@ -219,7 +221,7 @@ private fun StructureListItem(s: StructureEntity, isFavorite: Boolean, onToggleF
                     Icon(
                         Icons.Filled.Star,
                         contentDescription = "Favorite",
-                        tint = if (isFavorite) Gold else Stone700,
+                        tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                         modifier = Modifier.size(20.dp),
                     )
                 }
@@ -235,6 +237,7 @@ private fun StructureDetailCard(
     onMobTap: (String) -> Unit,
     onBiomeTap: (String) -> Unit,
     onItemTap: (String) -> Unit,
+    onCalcTab: (Int) -> Unit,
 ) {
     val biomes      = parseCommaSeparated(structure.biomes)
     val mobs        = parseCommaSeparated(structure.mobs)
@@ -246,20 +249,20 @@ private fun StructureDetailCard(
 
         // Description
         if (structure.description.isNotEmpty()) {
-            Text(structure.description, style = MaterialTheme.typography.bodyMedium, color = Stone300)
+            Text(structure.description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
         // How to Find
         if (structure.findMethod.isNotEmpty()) {
             SpyglassDivider()
-            Text("How to Find", style = MaterialTheme.typography.labelSmall, color = Gold)
-            Text(structure.findMethod, style = MaterialTheme.typography.bodyMedium, color = Stone300)
+            Text("How to Find", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(structure.findMethod, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
         // Biomes
         if (biomes.isNotEmpty()) {
             SpyglassDivider()
-            Text("Biomes", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Biomes", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 biomes.forEach { biomeId ->
                     AssistChip(
@@ -278,7 +281,7 @@ private fun StructureDetailCard(
         // Mobs
         if (mobs.isNotEmpty()) {
             SpyglassDivider()
-            Text("Mobs", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Mobs", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 mobs.forEach { mobId ->
                     AssistChip(
@@ -297,15 +300,15 @@ private fun StructureDetailCard(
         // Loot
         if (loot.isNotEmpty()) {
             SpyglassDivider()
-            Text("Loot", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Loot", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 loot.forEach { itemId ->
                     AssistChip(
                         onClick = { onItemTap(itemId) },
                         label = { Text(formatId(itemId), style = MaterialTheme.typography.labelSmall) },
                         colors = AssistChipDefaults.assistChipColors(
-                            labelColor = Gold,
-                            containerColor = Gold.copy(alpha = 0.12f),
+                            labelColor = MaterialTheme.colorScheme.primary,
+                            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
                         ),
                         border = null,
                     )
@@ -316,19 +319,40 @@ private fun StructureDetailCard(
         // Unique Blocks
         if (uniqueBlocks.isNotEmpty()) {
             SpyglassDivider()
-            Text("Unique Blocks", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Unique Blocks", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 uniqueBlocks.forEach { blockId ->
                     AssistChip(
                         onClick = { onItemTap(blockId) },
                         label = { Text(formatId(blockId), style = MaterialTheme.typography.labelSmall) },
                         colors = AssistChipDefaults.assistChipColors(
-                            labelColor = Stone300,
-                            containerColor = Stone300.copy(alpha = 0.12f),
+                            labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            containerColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f),
                         ),
                         border = null,
                     )
                 }
+            }
+        }
+
+        // Cross-links to tool tabs
+        if (loot.isNotEmpty()) {
+            SpyglassDivider()
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Text(
+                    "Loot Guide \u2192",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = PotionBlue,
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier.clickable { onCalcTab(19) },
+                )
+                Text(
+                    "Armor Trims \u2192",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = PotionBlue,
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier.clickable { onCalcTab(18) },
+                )
             }
         }
     }

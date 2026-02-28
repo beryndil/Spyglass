@@ -73,17 +73,18 @@ private val TIPS = listOf(
 private data class QuickLink(
     val icon: SpyglassIcon,
     val label: String,
-    val iconTint: Color = Gold,
+    val iconTint: Color = Color.Unspecified,
 )
 
-private val BROWSE_LINKS = listOf(
-    QuickLink(PixelIcons.Blocks,    "Blocks",       Stone300),
-    QuickLink(PixelIcons.Item,      "Items",        Gold),
-    QuickLink(PixelIcons.Crafting,  "Recipes",      Gold),
+@Composable
+private fun browseLinks() = listOf(
+    QuickLink(PixelIcons.Blocks,    "Blocks",       MaterialTheme.colorScheme.onSurfaceVariant),
+    QuickLink(PixelIcons.Item,      "Items",        MaterialTheme.colorScheme.primary),
+    QuickLink(PixelIcons.Crafting,  "Recipes",      MaterialTheme.colorScheme.primary),
     QuickLink(PixelIcons.Mob,       "Mobs",         NetherRed),
     QuickLink(PixelIcons.Trade,     "Trades",       Emerald),
     QuickLink(PixelIcons.Biome,     "Biomes",       Emerald),
-    QuickLink(PixelIcons.Structure, "Structures",   Gold),
+    QuickLink(PixelIcons.Structure, "Structures",   MaterialTheme.colorScheme.primary),
     QuickLink(PixelIcons.Enchant,   "Enchants",     EnderPurple),
     QuickLink(PixelIcons.Potion,    "Potions",      PotionBlue),
     QuickLink(PixelIcons.Enchant,   "Advances",     Emerald),
@@ -248,18 +249,18 @@ fun HomeScreen(
             Text(
                 if (playerUsername.isNotBlank()) "Welcome $playerUsername to Spyglass" else "Welcome to Spyglass",
                 style = MaterialTheme.typography.headlineSmall,
-                color = Stone100,
+                color = MaterialTheme.colorScheme.onSurface,
             )
             Spacer(Modifier.height(4.dp))
             Text(
                 "Your Minecraft companion for crafting, building, and exploring",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Stone500,
+                color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.padding(horizontal = 24.dp),
                 textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(6.dp))
-            Text("Minecraft Java 1.21.4", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Minecraft Java 1.21.4", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         }
 
         // ── B. Todo list ──
@@ -286,9 +287,9 @@ fun HomeScreen(
                     Text(
                         if (todoCount > 3) "View all $todoCount tasks" else "Edit Todo List",
                         style = MaterialTheme.typography.bodySmall,
-                        color = Gold,
+                        color = MaterialTheme.colorScheme.primary,
                     )
-                    Icon(Icons.Default.Edit, contentDescription = null, tint = Gold, modifier = Modifier.size(14.dp))
+                    Icon(Icons.Default.Edit, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(14.dp))
                 }
             }
         } else {
@@ -299,12 +300,12 @@ fun HomeScreen(
                 Text(
                     "What do you have planned for today?",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Stone300,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Text(
                     "Tap to open your Todo list \u2192",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Gold,
+                    color = MaterialTheme.colorScheme.primary,
                 )
             }
         }
@@ -326,7 +327,7 @@ fun HomeScreen(
 
         // ── C. Quick Access — Browse ──
         SectionHeader("Browse", icon = PixelIcons.Browse)
-        QuickLinkGrid(BROWSE_LINKS) { index -> onBrowseTab(index) }
+        QuickLinkGrid(browseLinks()) { index -> onBrowseTab(index) }
 
         // ── D. Quick Access — Tools ──
         SectionHeader("Tools", icon = SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.item_diamond_pickaxe))
@@ -336,15 +337,15 @@ fun HomeScreen(
         if (showTipOfDay) {
             ResultCard {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Filled.PriorityHigh, contentDescription = null, tint = Gold, modifier = Modifier.size(20.dp))
+                    Icon(Icons.Filled.PriorityHigh, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text("DID YOU KNOW?", style = MaterialTheme.typography.labelSmall, color = Gold)
+                    Text("DID YOU KNOW?", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 }
                 Spacer(Modifier.height(8.dp))
                 Text(
                     TIPS[tipIndex],
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Stone300,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }
@@ -365,16 +366,16 @@ fun HomeScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(SurfaceDark, RoundedCornerShape(8.dp))
-                .border(1.dp, Gold.copy(alpha = 0.4f), RoundedCornerShape(8.dp))
+                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp))
+                .border(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.4f), RoundedCornerShape(8.dp))
                 .clickable { onSearch() }
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
-            SpyglassIconImage(PixelIcons.Search, contentDescription = null, tint = Gold, modifier = Modifier.size(20.dp))
+            SpyglassIconImage(PixelIcons.Search, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
             Spacer(Modifier.width(10.dp))
-            Text("Search everything", style = MaterialTheme.typography.titleMedium, color = Gold)
+            Text("Search everything", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
         }
 
         Spacer(Modifier.height(8.dp))
@@ -396,15 +397,15 @@ private fun QuickLinkGrid(links: List<QuickLink>, onTap: (Int) -> Unit) {
             Row(
                 modifier = Modifier
                     .weight(1f)
-                    .background(SurfaceCard, RoundedCornerShape(8.dp))
-                    .border(1.dp, Stone700, RoundedCornerShape(8.dp))
+                    .background(LocalSurfaceCard.current, RoundedCornerShape(8.dp))
+                    .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
                     .clickable { onTap(index) }
                     .padding(horizontal = 12.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                SpyglassIconImage(link.icon, contentDescription = null, tint = link.iconTint, modifier = Modifier.size(22.dp))
+                SpyglassIconImage(link.icon, contentDescription = null, tint = if (link.iconTint == Color.Unspecified) MaterialTheme.colorScheme.primary else link.iconTint, modifier = Modifier.size(22.dp))
                 Spacer(Modifier.width(10.dp))
-                Text(link.label, style = MaterialTheme.typography.bodyMedium, color = Stone100)
+                Text(link.label, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
             }
         }
         // If odd number of links, add spacer to fill the last row
@@ -429,9 +430,9 @@ private fun HomeTodoRow(todo: TodoEntity, onToggle: () -> Unit) {
             checked = todo.completed,
             onCheckedChange = { onToggle() },
             colors = CheckboxDefaults.colors(
-                checkedColor = Gold,
-                uncheckedColor = Stone500,
-                checkmarkColor = Background,
+                checkedColor = MaterialTheme.colorScheme.primary,
+                uncheckedColor = MaterialTheme.colorScheme.secondary,
+                checkmarkColor = MaterialTheme.colorScheme.onPrimary,
             ),
             modifier = Modifier.size(20.dp),
         )
@@ -446,7 +447,7 @@ private fun HomeTodoRow(todo: TodoEntity, onToggle: () -> Unit) {
         Text(
             todo.title,
             style = MaterialTheme.typography.bodyMedium,
-            color = if (todo.completed) Stone500 else Stone100,
+            color = if (todo.completed) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface,
             textDecoration = if (todo.completed) TextDecoration.LineThrough else null,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -457,8 +458,8 @@ private fun HomeTodoRow(todo: TodoEntity, onToggle: () -> Unit) {
 @Composable
 private fun WhatsNewItem(title: String, desc: String) {
     Column {
-        Text(title, style = MaterialTheme.typography.titleMedium, color = Stone100)
+        Text(title, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
         Spacer(Modifier.height(2.dp))
-        Text(desc, style = MaterialTheme.typography.bodySmall, color = Stone500)
+        Text(desc, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
     }
 }

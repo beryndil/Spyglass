@@ -117,15 +117,15 @@ private fun PatternItemsSection() {
     ResultCard {
         Text(
             "These items unlock special patterns in the Loom. They are not consumed when used.",
-            style = MaterialTheme.typography.bodySmall, color = Stone500,
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
         )
     }
 
     PATTERN_ITEMS.forEach { item ->
         val rarityColor = when (item.rarity) {
-            "Rare" -> Gold
+            "Rare" -> MaterialTheme.colorScheme.primary
             "Uncommon" -> PotionBlue
-            else -> Stone300
+            else -> MaterialTheme.colorScheme.onSurfaceVariant
         }
         ResultCard {
             Row(
@@ -133,7 +133,7 @@ private fun PatternItemsSection() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
             ) {
-                Text(item.name, style = MaterialTheme.typography.titleMedium, color = Stone100)
+                Text(item.name, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
                 CategoryBadge(label = item.rarity, color = rarityColor)
             }
             Spacer(Modifier.height(4.dp))
@@ -150,7 +150,7 @@ private fun LoomPatternsSection() {
     ResultCard {
         Text(
             "These patterns are available in the Loom without any special banner pattern item. Select a dye color and apply to any banner.",
-            style = MaterialTheme.typography.bodySmall, color = Stone500,
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
         )
     }
 
@@ -163,14 +163,14 @@ private fun LoomPatternsSection() {
             Text(
                 group.uppercase(),
                 style = MaterialTheme.typography.labelSmall,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.height(4.dp))
             patterns.forEach { (name, _) ->
                 Text(
                     "\u2022 $name",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Stone300,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }
@@ -184,7 +184,7 @@ private fun DyeColorsSection() {
     ResultCard {
         Text(
             "Any of these colors can be used in the Loom to apply patterns to banners.",
-            style = MaterialTheme.typography.bodySmall, color = Stone500,
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
         )
         SpyglassDivider()
         FlowRow(
@@ -192,22 +192,22 @@ private fun DyeColorsSection() {
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             DYE_COLORS.forEach { color ->
-                CategoryBadge(label = color, color = Stone300)
+                CategoryBadge(label = color, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
         SpyglassDivider()
-        Text("HOW TO USE THE LOOM", style = MaterialTheme.typography.labelSmall, color = Gold)
+        Text("HOW TO USE THE LOOM", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(4.dp))
         Text(
             "1. Place a banner in the top-left slot\n2. Place a dye in the top-right slot\n3. Optionally place a pattern item in the middle slot\n4. Select a pattern from the list\n5. Take the result from the output slot",
-            style = MaterialTheme.typography.bodySmall, color = Stone300,
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         SpyglassDivider()
-        Text("TIPS", style = MaterialTheme.typography.labelSmall, color = Gold)
+        Text("TIPS", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(4.dp))
         Text(
             "\u2022 Banners can have up to 6 pattern layers\n\u2022 Pattern items are NOT consumed when used\n\u2022 You can copy a banner by placing it + blank banner in a crafting grid\n\u2022 Banners can be placed on shields at a crafting table",
-            style = MaterialTheme.typography.bodySmall, color = Stone300,
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }

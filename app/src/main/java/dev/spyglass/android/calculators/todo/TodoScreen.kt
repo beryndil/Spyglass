@@ -82,10 +82,10 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                         OutlinedTextField(
                             value = freeformInput,
                             onValueChange = { if (it.length <= 200) freeformInput = it },
-                            placeholder = { Text("Build the east bridge\u2026", color = Stone500) },
+                            placeholder = { Text("Build the east bridge\u2026", color = MaterialTheme.colorScheme.secondary) },
                             singleLine = true,
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold,
+                                focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary,
                             ),
                             modifier = Modifier.weight(1f),
                         )
@@ -101,11 +101,11 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                             },
                             enabled = freeformInput.isNotBlank(),
                             colors = IconButtonDefaults.iconButtonColors(
-                                containerColor = if (freeformInput.isNotBlank()) Gold else Stone700,
+                                containerColor = if (freeformInput.isNotBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                             ),
                             modifier = Modifier.size(40.dp),
                         ) {
-                            Icon(Icons.Default.Add, contentDescription = "Add", tint = Background, modifier = Modifier.size(20.dp))
+                            Icon(Icons.Default.Add, contentDescription = "Add", tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
                         }
                     }
                 } else {
@@ -123,12 +123,12 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                                     selectedName = ""
                                 }
                             },
-                            placeholder = { Text("Search items\u2026", color = Stone500) },
+                            placeholder = { Text("Search items\u2026", color = MaterialTheme.colorScheme.secondary) },
                             singleLine = true,
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = if (selectedId != null) Emerald else Gold,
-                                unfocusedBorderColor = if (selectedId != null) Emerald else Stone700,
-                                cursorColor = Gold,
+                                focusedBorderColor = if (selectedId != null) Emerald else MaterialTheme.colorScheme.primary,
+                                unfocusedBorderColor = if (selectedId != null) Emerald else MaterialTheme.colorScheme.outline,
+                                cursorColor = MaterialTheme.colorScheme.primary,
                             ),
                             modifier = Modifier.weight(1f),
                         )
@@ -139,8 +139,8 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = Gold, unfocusedBorderColor = Stone700,
-                                focusedLabelColor = Gold, unfocusedLabelColor = Stone500, cursorColor = Gold,
+                                focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                                focusedLabelColor = MaterialTheme.colorScheme.primary, unfocusedLabelColor = MaterialTheme.colorScheme.secondary, cursorColor = MaterialTheme.colorScheme.primary,
                             ),
                             modifier = Modifier.width(80.dp),
                         )
@@ -160,10 +160,10 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                                         createLinkedList = null
                                     }
                                 },
-                                colors = IconButtonDefaults.iconButtonColors(containerColor = Gold),
+                                colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.primary),
                                 modifier = Modifier.size(40.dp),
                             ) {
-                                Icon(Icons.Default.Add, contentDescription = "Add", tint = Background, modifier = Modifier.size(20.dp))
+                                Icon(Icons.Default.Add, contentDescription = "Add", tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
                             }
                         }
                     }
@@ -173,8 +173,8 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(SurfaceMid, RoundedCornerShape(6.dp))
-                                .border(0.5.dp, Stone700, RoundedCornerShape(6.dp)),
+                                .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(6.dp))
+                                .border(0.5.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(6.dp)),
                         ) {
                             searchResults.forEach { (id, name) ->
                                 Row(
@@ -194,8 +194,8 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                                         Spacer(Modifier.width(8.dp))
                                     }
                                     Column(modifier = Modifier.weight(1f)) {
-                                        Text(name, style = MaterialTheme.typography.bodyMedium, color = Stone100)
-                                        Text(id, style = MaterialTheme.typography.bodySmall, color = Stone500)
+                                        Text(name, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                                        Text(id, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                                     }
                                 }
                             }
@@ -277,8 +277,8 @@ private fun TodoRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(SurfaceCard, RoundedCornerShape(10.dp))
-            .border(1.dp, Stone700, RoundedCornerShape(10.dp))
+            .background(LocalSurfaceCard.current, RoundedCornerShape(10.dp))
+            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(10.dp))
             .padding(horizontal = 10.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -286,9 +286,9 @@ private fun TodoRow(
             checked = todo.completed,
             onCheckedChange = { onToggle() },
             colors = CheckboxDefaults.colors(
-                checkedColor = Gold,
-                uncheckedColor = Stone500,
-                checkmarkColor = Background,
+                checkedColor = MaterialTheme.colorScheme.primary,
+                uncheckedColor = MaterialTheme.colorScheme.secondary,
+                checkmarkColor = MaterialTheme.colorScheme.onPrimary,
             ),
             modifier = Modifier.size(24.dp),
         )
@@ -311,7 +311,7 @@ private fun TodoRow(
             Text(
                 todo.title,
                 style = MaterialTheme.typography.bodyMedium,
-                color = if (todo.completed) Stone500 else Stone100,
+                color = if (todo.completed) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface,
                 textDecoration = if (todo.completed) TextDecoration.LineThrough else null,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
@@ -321,7 +321,7 @@ private fun TodoRow(
                 if (todo.quantity != null) {
                     CategoryBadge(
                         label = formatQuantity(todo.quantity),
-                        color = Gold,
+                        color = MaterialTheme.colorScheme.primary,
                     )
                 }
                 // Linked tool badge
@@ -336,15 +336,15 @@ private fun TodoRow(
 
         // Edit button
         IconButton(onClick = onEdit, modifier = Modifier.size(28.dp)) {
-            Icon(Icons.Default.Edit, contentDescription = "Edit", tint = Stone500, modifier = Modifier.size(16.dp))
+            Icon(Icons.Default.Edit, contentDescription = "Edit", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
         }
         // Link button
         IconButton(onClick = onLinkTap, modifier = Modifier.size(28.dp)) {
-            Icon(Icons.Default.Link, contentDescription = "Link", tint = Stone500, modifier = Modifier.size(16.dp))
+            Icon(Icons.Default.Link, contentDescription = "Link", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
         }
         // Delete button
         IconButton(onClick = onDelete, modifier = Modifier.size(28.dp)) {
-            Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Stone500, modifier = Modifier.size(16.dp))
+            Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
         }
     }
 }
@@ -361,7 +361,7 @@ private fun EditTodoDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Edit Task", color = Stone100) },
+        title = { Text("Edit Task", color = MaterialTheme.colorScheme.onSurface) },
         text = {
             OutlinedTextField(
                 value = text,
@@ -369,7 +369,7 @@ private fun EditTodoDialog(
                 singleLine = false,
                 maxLines = 3,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary,
                 ),
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -379,13 +379,13 @@ private fun EditTodoDialog(
                 onClick = { onSave(text) },
                 enabled = text.isNotBlank() && text != todo.title,
             ) {
-                Text("Save", color = if (text.isNotBlank() && text != todo.title) Gold else Stone500)
+                Text("Save", color = if (text.isNotBlank() && text != todo.title) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel", color = Stone300) }
+            TextButton(onClick = onDismiss) { Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant) }
         },
-        containerColor = SurfaceDark,
+        containerColor = MaterialTheme.colorScheme.surface,
     )
 }
 
@@ -404,13 +404,13 @@ private fun LinkDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Link to Tool", color = Stone100) },
+        title = { Text("Link to Tool", color = MaterialTheme.colorScheme.onSurface) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Link \"${todo.title}\" to a shopping list", style = MaterialTheme.typography.bodySmall, color = Stone300)
+                Text("Link \"${todo.title}\" to a shopping list", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
                 if (shoppingLists.isEmpty()) {
-                    Text("No shopping lists yet", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                    Text("No shopping lists yet", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                 } else {
                     ExposedDropdownMenuBox(
                         expanded = expanded,
@@ -423,7 +423,7 @@ private fun LinkDialog(
                             singleLine = true,
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = Gold, unfocusedBorderColor = Stone700,
+                                focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline,
                             ),
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -432,11 +432,11 @@ private fun LinkDialog(
                         ExposedDropdownMenu(
                             expanded = expanded,
                             onDismissRequest = { expanded = false },
-                            containerColor = SurfaceDark,
+                            containerColor = MaterialTheme.colorScheme.surface,
                         ) {
                             shoppingLists.forEach { list ->
                                 DropdownMenuItem(
-                                    text = { Text(list.name, color = Stone100) },
+                                    text = { Text(list.name, color = MaterialTheme.colorScheme.onSurface) },
                                     onClick = {
                                         selectedList = list
                                         expanded = false
@@ -458,7 +458,7 @@ private fun LinkDialog(
                 },
                 enabled = selectedList != null,
             ) {
-                Text("Link", color = if (selectedList != null) Gold else Stone500)
+                Text("Link", color = if (selectedList != null) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
             }
         },
         dismissButton = {
@@ -467,9 +467,9 @@ private fun LinkDialog(
                     Text("Unlink", color = Red400)
                 }
             }
-            TextButton(onClick = onDismiss) { Text("Cancel", color = Stone300) }
+            TextButton(onClick = onDismiss) { Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant) }
         },
-        containerColor = SurfaceDark,
+        containerColor = MaterialTheme.colorScheme.surface,
     )
 }
 
@@ -488,7 +488,7 @@ private fun ShoppingListLinkPicker(
         Text(
             "Link to shopping list (optional)",
             style = MaterialTheme.typography.labelSmall,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
         )
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -511,7 +511,7 @@ private fun ShoppingListLinkPicker(
             }
             if (selected != null) {
                 IconButton(onClick = { onSelect(null) }, modifier = Modifier.size(28.dp)) {
-                    Icon(Icons.Default.LinkOff, contentDescription = "Clear link", tint = Stone500, modifier = Modifier.size(16.dp))
+                    Icon(Icons.Default.LinkOff, contentDescription = "Clear link", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
                 }
             }
         }

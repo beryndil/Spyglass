@@ -31,7 +31,7 @@ fun LicenseScreen(onBack: () -> Unit = {}) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
-                tint = Stone300,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
@@ -41,19 +41,19 @@ fun LicenseScreen(onBack: () -> Unit = {}) {
             Text(
                 text = "Spyglass",
                 style = MaterialTheme.typography.headlineSmall,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.height(4.dp))
             Text(
                 text = "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)",
                 style = MaterialTheme.typography.titleSmall,
-                color = Stone100,
+                color = MaterialTheme.colorScheme.onSurface,
             )
             Spacer(Modifier.height(8.dp))
             Text(
                 text = "\u00A9 2026 Beryndil. Some rights reserved.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
@@ -62,13 +62,13 @@ fun LicenseScreen(onBack: () -> Unit = {}) {
             Text(
                 text = "Share \u2014 copy and redistribute the material in any medium or format.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
             Text(
                 text = "Adapt \u2014 remix, transform, and build upon the material.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
@@ -77,34 +77,34 @@ fun LicenseScreen(onBack: () -> Unit = {}) {
             Text(
                 text = "Attribution",
                 style = MaterialTheme.typography.bodyLarge,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
             )
             Text(
                 text = "You must give appropriate credit to Beryndil, provide a link to this license, and indicate if changes were made.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
             Text(
                 text = "NonCommercial",
                 style = MaterialTheme.typography.bodyLarge,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
             )
             Text(
                 text = "You may not use the material for commercial purposes. You may not sell, monetize, or profit from this work or any derivative of it.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
             Text(
                 text = "ShareAlike",
                 style = MaterialTheme.typography.bodyLarge,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
             )
             Text(
                 text = "If you remix, transform, or build upon the material, you must distribute your contributions under the same license.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
@@ -113,14 +113,14 @@ fun LicenseScreen(onBack: () -> Unit = {}) {
             Text(
                 text = "You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
         Text(
             text = "View full legal text at creativecommons.org",
             style = MaterialTheme.typography.bodyMedium,
-            color = Gold,
+            color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.clickable {
                 uriHandler.openUri("https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode")
             },
@@ -129,7 +129,7 @@ fun LicenseScreen(onBack: () -> Unit = {}) {
         Text(
             text = "This license applies to the Spyglass application source code and original assets. Third-party assets (Pixel Perfection, Entity-Icons) retain their own licenses as noted on the About page.",
             style = MaterialTheme.typography.bodySmall,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
         )
 
         Spacer(Modifier.height(8.dp))

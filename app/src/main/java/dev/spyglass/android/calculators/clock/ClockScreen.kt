@@ -45,19 +45,19 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                 Text(
                     "Not synced \u2014 choose a method below",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Stone300,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
                 // F3 Sync
                 Text(
                     "F3 SYNC (MOST ACCURATE)",
                     style = MaterialTheme.typography.labelSmall,
-                    color = Gold,
+                    color = MaterialTheme.colorScheme.primary,
                 )
                 Text(
                     "Enter the tick value from the F3 debug screen",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Stone500,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -75,8 +75,8 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                             tickInput = ""
                         },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Gold,
-                            contentColor = Background,
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary,
                         ),
                         enabled = tickInput.isNotBlank(),
                     ) {
@@ -90,18 +90,18 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                 Text(
                     "QUICK SYNC",
                     style = MaterialTheme.typography.labelSmall,
-                    color = Gold,
+                    color = MaterialTheme.colorScheme.primary,
                 )
                 Text(
                     "Tap when you see the event in-game:",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Stone500,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     listOf("Sunrise", "Noon", "Sunset").forEach { event ->
                         OutlinedButton(
                             onClick = { vm.syncManual(event) },
-                            colors = ButtonDefaults.outlinedButtonColors(contentColor = Stone100),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.onSurface),
                             modifier = Modifier.weight(1f),
                         ) {
                             Text(event, style = MaterialTheme.typography.labelSmall)
@@ -128,7 +128,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                 Text(
                     state.timeString,
                     style = MaterialTheme.typography.headlineLarge,
-                    color = Gold,
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                 )
                 Spacer(Modifier.height(4.dp))
@@ -138,21 +138,21 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                         .fillMaxWidth()
                         .height(8.dp)
                         .clip(RoundedCornerShape(4.dp))
-                        .background(Stone700),
+                        .background(MaterialTheme.colorScheme.outline),
                 ) {
                     Box(
                         modifier = Modifier
                             .fillMaxHeight()
                             .fillMaxWidth(state.dayProgress)
                             .clip(RoundedCornerShape(4.dp))
-                            .background(Gold),
+                            .background(MaterialTheme.colorScheme.primary),
                     )
                 }
                 Spacer(Modifier.height(2.dp))
                 Text(
                     "Day ${state.currentTick / ClockEngine.TICKS_PER_DAY}  \u2022  Tick ${state.currentTick}",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Stone500,
+                    color = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                 )
             }
@@ -164,7 +164,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                     Text(
                         "No events configured. Tap below to add events.",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = Stone500,
+                        color = MaterialTheme.colorScheme.secondary,
                     )
                 } else {
                     state.activeEvents.forEachIndexed { index, event ->
@@ -189,7 +189,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                                 Text(
                                     event.name,
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = Stone100,
+                                    color = MaterialTheme.colorScheme.onSurface,
                                 )
                             }
                             Row(
@@ -199,12 +199,12 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                                 Text(
                                     ClockEngine.formatTime(event.tick),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = Stone500,
+                                    color = MaterialTheme.colorScheme.secondary,
                                 )
                                 Text(
                                     "\u2715",
                                     style = MaterialTheme.typography.labelSmall,
-                                    color = Stone500,
+                                    color = MaterialTheme.colorScheme.secondary,
                                     modifier = Modifier
                                         .clip(CircleShape)
                                         .clickable { vm.removeEvent(event) }
@@ -222,7 +222,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                     onClick = { showAddDialog = true },
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text("Add Event \u2192", color = Gold)
+                    Text("Add Event \u2192", color = MaterialTheme.colorScheme.primary)
                 }
             }
 
@@ -233,7 +233,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                     Text(
                         "No events configured.",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = Stone500,
+                        color = MaterialTheme.colorScheme.secondary,
                     )
                 } else {
                     state.events.forEach { event ->
@@ -258,7 +258,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                                 Text(
                                     event.name,
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = Stone100,
+                                    color = MaterialTheme.colorScheme.onSurface,
                                 )
                             }
                             Spacer(Modifier.width(12.dp))
@@ -284,10 +284,10 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                 expanded = showF3Help,
                 onToggle = { showF3Help = !showF3Help },
             ) {
-                Text("1. Press F3 in Minecraft to open the debug screen", style = MaterialTheme.typography.bodySmall, color = Stone300)
-                Text("2. Find the \u201cDay Time\u201d value on the left side", style = MaterialTheme.typography.bodySmall, color = Stone300)
-                Text("3. Enter the tick number (0\u201323999) in the field above", style = MaterialTheme.typography.bodySmall, color = Stone300)
-                Text("4. Tap \u201cSync\u201d \u2014 the clock will track from that point", style = MaterialTheme.typography.bodySmall, color = Stone300)
+                Text("1. Press F3 in Minecraft to open the debug screen", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("2. Find the \u201cDay Time\u201d value on the left side", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("3. Enter the tick number (0\u201323999) in the field above", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("4. Tap \u201cSync\u201d \u2014 the clock will track from that point", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             SpyglassDivider()
             ExpandableHelp(
@@ -295,11 +295,11 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                 expanded = showQuickHelp,
                 onToggle = { showQuickHelp = !showQuickHelp },
             ) {
-                Text("Tap the Sunrise, Noon, or Sunset button the moment you see that event happen in-game.", style = MaterialTheme.typography.bodySmall, color = Stone300)
+                Text("Tap the Sunrise, Noon, or Sunset button the moment you see that event happen in-game.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(4.dp))
-                Text("\u2022 Sunrise \u2014 when the sun first appears on the horizon", style = MaterialTheme.typography.bodySmall, color = Stone300)
-                Text("\u2022 Noon \u2014 when the sun is directly overhead", style = MaterialTheme.typography.bodySmall, color = Stone300)
-                Text("\u2022 Sunset \u2014 when the sun starts to dip below the horizon", style = MaterialTheme.typography.bodySmall, color = Stone300)
+                Text("\u2022 Sunrise \u2014 when the sun first appears on the horizon", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("\u2022 Noon \u2014 when the sun is directly overhead", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("\u2022 Sunset \u2014 when the sun starts to dip below the horizon", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             SpyglassDivider()
             ExpandableHelp(
@@ -307,12 +307,12 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                 expanded = showCountdownHelp,
                 onToggle = { showCountdownHelp = !showCountdownHelp },
             ) {
-                Text("The event timeline shows how long until each event occurs.", style = MaterialTheme.typography.bodySmall, color = Stone300)
+                Text("The event timeline shows how long until each event occurs.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(4.dp))
-                Text("1 Minecraft day = 20 real minutes", style = MaterialTheme.typography.bodySmall, color = Stone300)
-                Text("1 Minecraft hour \u2248 50 real seconds", style = MaterialTheme.typography.bodySmall, color = Stone300)
+                Text("1 Minecraft day = 20 real minutes", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("1 Minecraft hour \u2248 50 real seconds", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(4.dp))
-                Text("Events are color-coded: green (safe), gold (warning), red (danger).", style = MaterialTheme.typography.bodySmall, color = Stone300)
+                Text("Events are color-coded: green (safe), gold (warning), red (danger).", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
 
@@ -347,9 +347,9 @@ private fun AddEventDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        containerColor = SurfaceDark,
+        containerColor = MaterialTheme.colorScheme.surface,
         title = {
-            Text("Add Event", color = Gold)
+            Text("Add Event", color = MaterialTheme.colorScheme.primary)
         },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -360,9 +360,9 @@ private fun AddEventDialog(
                         onClick = { selectedTab = 0 },
                         label = { Text("Predefined") },
                         colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = Gold.copy(alpha = 0.2f),
-                            selectedLabelColor = Gold,
-                            labelColor = Stone300,
+                            selectedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                            selectedLabelColor = MaterialTheme.colorScheme.primary,
+                            labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
                         ),
                     )
                     FilterChip(
@@ -370,9 +370,9 @@ private fun AddEventDialog(
                         onClick = { selectedTab = 1 },
                         label = { Text("Custom") },
                         colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = Gold.copy(alpha = 0.2f),
-                            selectedLabelColor = Gold,
-                            labelColor = Stone300,
+                            selectedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
+                            selectedLabelColor = MaterialTheme.colorScheme.primary,
+                            labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
                         ),
                     )
                 }
@@ -383,7 +383,7 @@ private fun AddEventDialog(
                         Text(
                             "All predefined events are already added.",
                             style = MaterialTheme.typography.bodySmall,
-                            color = Stone500,
+                            color = MaterialTheme.colorScheme.secondary,
                         )
                     } else {
                         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
@@ -413,7 +413,7 @@ private fun AddEventDialog(
                                         Text(
                                             event.name,
                                             style = MaterialTheme.typography.bodyMedium,
-                                            color = Stone100,
+                                            color = MaterialTheme.colorScheme.onSurface,
                                         )
                                     }
                                     Row(
@@ -423,12 +423,12 @@ private fun AddEventDialog(
                                         Text(
                                             ClockEngine.formatTime(event.tick),
                                             style = MaterialTheme.typography.bodySmall,
-                                            color = Stone500,
+                                            color = MaterialTheme.colorScheme.secondary,
                                         )
                                         Text(
                                             "+",
                                             style = MaterialTheme.typography.titleMedium,
-                                            color = Gold,
+                                            color = MaterialTheme.colorScheme.primary,
                                         )
                                     }
                                 }
@@ -452,7 +452,7 @@ private fun AddEventDialog(
                     Text(
                         "COLOR",
                         style = MaterialTheme.typography.labelSmall,
-                        color = Stone500,
+                        color = MaterialTheme.colorScheme.secondary,
                     )
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         listOf("green" to "Green", "gold" to "Gold", "red" to "Red").forEach { (value, label) ->
@@ -471,7 +471,7 @@ private fun AddEventDialog(
                                 colors = FilterChipDefaults.filterChipColors(
                                     selectedContainerColor = eventColor(value).copy(alpha = 0.2f),
                                     selectedLabelColor = eventColor(value),
-                                    labelColor = Stone300,
+                                    labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
                                 ),
                             )
                         }
@@ -485,8 +485,8 @@ private fun AddEventDialog(
                             customColor = "green"
                         },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Gold,
-                            contentColor = Background,
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary,
                         ),
                         enabled = customName.isNotBlank() && customTick.isNotBlank() &&
                             (customTick.toLongOrNull() ?: -1L) in 0 until ClockEngine.TICKS_PER_DAY,
@@ -499,7 +499,7 @@ private fun AddEventDialog(
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text("Done", color = Gold)
+                Text("Done", color = MaterialTheme.colorScheme.primary)
             }
         },
     )
@@ -521,11 +521,11 @@ private fun ExpandableHelp(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(title, style = MaterialTheme.typography.bodyLarge, color = Stone100)
+            Text(title, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
             Text(
                 if (expanded) "\u25B2" else "\u25BC",
                 style = MaterialTheme.typography.labelSmall,
-                color = Stone500,
+                color = MaterialTheme.colorScheme.secondary,
             )
         }
         AnimatedVisibility(visible = expanded) {
@@ -538,9 +538,10 @@ private fun ExpandableHelp(
     }
 }
 
+@Composable
 internal fun eventColor(color: String) = when (color) {
     "green" -> Green400
-    "gold" -> Gold
+    "gold" -> MaterialTheme.colorScheme.primary
     "red" -> Red400
-    else -> Stone500
+    else -> MaterialTheme.colorScheme.secondary
 }

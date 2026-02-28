@@ -87,15 +87,16 @@ private fun categoryLabel(cat: String): String = when (cat) {
     else -> cat.replaceFirstChar { it.uppercase() }
 }
 
+@Composable
 private fun categoryColor(cat: String) = when (cat) {
     "chat" -> Emerald
     "player" -> PotionBlue
     "entity" -> NetherRed
     "world" -> Emerald
-    "server" -> Gold
+    "server" -> MaterialTheme.colorScheme.primary
     "operator" -> EnderPurple
-    "debug" -> Stone500
-    else -> Stone500
+    "debug" -> MaterialTheme.colorScheme.secondary
+    else -> MaterialTheme.colorScheme.secondary
 }
 
 private fun permissionLabel(level: Int): String = when (level) {
@@ -128,10 +129,10 @@ fun CommandsScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search commands\u2026", color = Stone500) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = Stone500) },
+            placeholder = { Text("Search commands\u2026", color = MaterialTheme.colorScheme.secondary) },
+            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
         FlowRow(
@@ -161,7 +162,7 @@ fun CommandsScreen(
             }
             if (favoriteCommands.isNotEmpty()) {
                 item(key = "fav_header") {
-                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = Gold,
+                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
                 }
                 items(favoriteCommands, key = { "fav_${it.id}" }) { fav ->
@@ -172,7 +173,7 @@ fun CommandsScreen(
                         leadingIcon = PixelIcons.Blocks,
                         trailing = {
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
-                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = Gold, modifier = Modifier.size(20.dp))
+                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             }
                         },
                     )
@@ -196,7 +197,7 @@ fun CommandsScreen(
                                     Icon(
                                         Icons.Filled.Star,
                                         contentDescription = "Favorite",
-                                        tint = if (isFav) Gold else Stone700,
+                                        tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                         modifier = Modifier.size(20.dp),
                                     )
                                 }
@@ -229,7 +230,7 @@ private fun CommandDetailCard(cmd: CommandEntity) {
         Text(
             "SYNTAX",
             style = MaterialTheme.typography.labelSmall,
-            color = Gold,
+            color = MaterialTheme.colorScheme.primary,
         )
         Spacer(Modifier.height(4.dp))
         Row(modifier = Modifier.horizontalScroll(rememberScrollState())) {
@@ -240,7 +241,7 @@ private fun CommandDetailCard(cmd: CommandEntity) {
             )
         }
         SpyglassDivider()
-        Text(cmd.description, style = MaterialTheme.typography.bodyMedium, color = Stone300)
+        Text(cmd.description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         SpyglassDivider()
         StatRow("Category", categoryLabel(cmd.category))
         StatRow("Permission", permissionLabel(cmd.permissionLevel))

@@ -119,10 +119,10 @@ fun FoodScreen() {
         // Search
         OutlinedTextField(
             value = query, onValueChange = { query = it },
-            placeholder = { Text("Search food\u2026", color = Stone500) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = Stone500) },
+            placeholder = { Text("Search food\u2026", color = MaterialTheme.colorScheme.secondary) },
+            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
 
@@ -147,7 +147,7 @@ fun FoodScreen() {
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
-            Text("Sort:", style = MaterialTheme.typography.labelSmall, color = Stone500, modifier = Modifier.align(Alignment.CenterVertically))
+            Text("Sort:", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary, modifier = Modifier.align(Alignment.CenterVertically))
             SortMode.entries.forEach { mode ->
                 FilterChip(
                     selected = sortMode == mode,
@@ -177,14 +177,14 @@ fun FoodScreen() {
             item {
                 Spacer(Modifier.height(4.dp))
                 ResultCard {
-                    Text("HOW SATURATION WORKS", style = MaterialTheme.typography.labelSmall, color = Gold)
+                    Text("HOW SATURATION WORKS", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                     Spacer(Modifier.height(4.dp))
                     Text(
                         "Saturation is a hidden stat that determines how long before hunger starts decreasing. Higher saturation = longer before you get hungry again. Your saturation cannot exceed your current hunger level.",
-                        style = MaterialTheme.typography.bodySmall, color = Stone300,
+                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     SpyglassDivider()
-                    Text("BEST FOODS BY CATEGORY", style = MaterialTheme.typography.labelSmall, color = Gold)
+                    Text("BEST FOODS BY CATEGORY", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                     Spacer(Modifier.height(4.dp))
                     StatRow("Best Overall", "Golden Carrot (14.4 sat)")
                     StatRow("Best Cooked Meat", "Steak / Porkchop (12.8 sat)")
@@ -202,9 +202,9 @@ fun FoodScreen() {
 private fun FoodItemCard(food: FoodItem) {
     val satColor = when {
         food.saturation >= 10f -> Emerald
-        food.saturation >= 5f -> Gold
-        food.saturation >= 2f -> Stone300
-        else -> Stone500
+        food.saturation >= 5f -> MaterialTheme.colorScheme.primary
+        food.saturation >= 2f -> MaterialTheme.colorScheme.onSurfaceVariant
+        else -> MaterialTheme.colorScheme.secondary
     }
 
     BrowseListItem(
@@ -225,7 +225,7 @@ private fun FoodItemCard(food: FoodItem) {
                 Text(
                     "saturation",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Stone500,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
             }
         },

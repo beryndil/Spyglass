@@ -38,7 +38,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
-                tint = Stone300,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
@@ -57,25 +57,25 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
             Text(
                 text = "Spyglass",
                 style = MaterialTheme.typography.headlineMedium,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.height(4.dp))
             Text(
                 text = "v${BuildConfig.VERSION_NAME}",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Spacer(Modifier.height(4.dp))
             Text(
                 text = "A Minecraft companion tool.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Spacer(Modifier.height(2.dp))
             Text(
                 text = "by Beryndil",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Stone500,
+                color = MaterialTheme.colorScheme.secondary,
             )
             Spacer(Modifier.height(8.dp))
             SpyglassIconImage(
@@ -89,7 +89,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
             val coffeeUrl = "https://buymeacoffee.com/TODO"
             Column(
                 modifier = Modifier
-                    .background(Gold, RoundedCornerShape(8.dp))
+                    .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(8.dp))
                     .clickable { uriHandler.openUri(coffeeUrl) }
                     .padding(horizontal = 20.dp, vertical = 10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -97,12 +97,12 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
                 Text(
                     text = "Enjoy SpyGlass?",
                     style = MaterialTheme.typography.bodySmall,
-                    color = SurfaceMid,
+                    color = MaterialTheme.colorScheme.surfaceVariant,
                 )
                 Text(
                     text = "Buy Me a Cup of Coffee",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Background,
+                    color = MaterialTheme.colorScheme.onPrimary,
                 )
             }
         }
@@ -111,7 +111,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
         Text(
             text = "Not affiliated with Mojang Studios or Microsoft.",
             style = MaterialTheme.typography.bodySmall,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
         )
@@ -126,25 +126,25 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
         SectionHeader("Credits & Licenses")
         ResultCard {
             // Spyglass license
-            Text("Spyglass", style = MaterialTheme.typography.bodyLarge, color = Stone100)
-            Text("by Beryndil", style = MaterialTheme.typography.bodyMedium, color = Stone500)
+            Text("Spyglass", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+            Text("by Beryndil", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
             Text(
                 text = "CC BY-NC-SA 4.0 \u2014 View License",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.clickable { onLicense() },
             )
 
             SpyglassDivider()
 
             // Pixel Perfection
-            Text("Pixel Perfection", style = MaterialTheme.typography.bodyLarge, color = Stone100)
-            Text("by XSSheep", style = MaterialTheme.typography.bodyMedium, color = Stone500)
+            Text("Pixel Perfection", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+            Text("by XSSheep", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
                     text = "CC-BY-SA 4.0",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Gold,
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
                         uriHandler.openUri("https://creativecommons.org/licenses/by-sa/4.0/")
                     },
@@ -152,7 +152,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
                 Text(
                     text = "Project Page",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Gold,
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
                         uriHandler.openUri("https://www.curseforge.com/minecraft/texture-packs/pixel-perfection")
                     },
@@ -162,12 +162,12 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
             SpyglassDivider()
 
             // Entity-Icons
-            Text("Entity-Icons", style = MaterialTheme.typography.bodyLarge, color = Stone100)
+            Text("Entity-Icons", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
                     text = "CC0 1.0",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Gold,
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
                         uriHandler.openUri("https://creativecommons.org/publicdomain/zero/1.0/")
                     },
@@ -175,7 +175,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
                 Text(
                     text = "GitHub",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Gold,
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
                         uriHandler.openUri("https://github.com/Simplexity-Development/Entity-Icons")
                     },
@@ -187,7 +187,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
         Text(
             text = "\u00A9 2026 Beryndil. Licensed under CC BY-NC-SA 4.0.",
             style = MaterialTheme.typography.bodySmall,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier.fillMaxWidth(),
         )
 
@@ -197,7 +197,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
             Text(
                 text = "All game data is stored locally on your device. If you provide your Minecraft username, it is sent to Mojang (api.mojang.com) to look up your player UUID. Your UUID is then used to load your skin from third-party rendering services (starlightskins.lunareclipse.studio, mc-heads.net). No other personal data is collected or shared.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
@@ -208,7 +208,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
             Text(
                 text = "Report a Bug",
                 style = MaterialTheme.typography.bodyLarge,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { uriHandler.openUri(issuesUrl) }
@@ -218,7 +218,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
             Text(
                 text = "Request a Feature",
                 style = MaterialTheme.typography.bodyLarge,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { uriHandler.openUri(issuesUrl) }

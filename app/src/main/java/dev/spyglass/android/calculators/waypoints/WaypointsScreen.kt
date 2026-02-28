@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
@@ -38,13 +39,14 @@ private val CATEGORIES = listOf("base", "farm", "portal", "spawner", "village", 
 private val DIMENSIONS = listOf("overworld", "nether", "end")
 private val COLORS = listOf("gold", "green", "red", "blue", "purple")
 
+@Composable
 internal fun waypointColor(color: String): Color = when (color) {
-    "gold" -> Gold
+    "gold" -> MaterialTheme.colorScheme.primary
     "green" -> Emerald
     "red" -> NetherRed
     "blue" -> PotionBlue
     "purple" -> EnderPurple
-    else -> Gold
+    else -> MaterialTheme.colorScheme.primary
 }
 
 private fun categoryLabel(cat: String): String = cat.replaceFirstChar { it.uppercase() }
@@ -119,16 +121,16 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
         ) {
             OutlinedTextField(
                 value = query, onValueChange = vm::setQuery,
-                placeholder = { Text("Search waypoints\u2026", color = Stone500) },
-                leadingIcon = { Icon(Icons.Default.Search, null, tint = Stone500) },
+                placeholder = { Text("Search waypoints\u2026", color = MaterialTheme.colorScheme.secondary) },
+                leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
                 singleLine = true,
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
                 modifier = Modifier.weight(1f),
             )
             Spacer(Modifier.width(8.dp))
             FilledTonalButton(
                 onClick = { showCreateDialog = true },
-                colors = ButtonDefaults.filledTonalButtonColors(containerColor = Gold.copy(alpha = 0.15f), contentColor = Gold),
+                colors = ButtonDefaults.filledTonalButtonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f), contentColor = MaterialTheme.colorScheme.primary),
             ) {
                 Icon(Icons.Default.Add, contentDescription = "New waypoint", modifier = Modifier.size(18.dp))
             }
@@ -194,7 +196,7 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
                                 Text(
                                     dimensionLabel(wp.dimension),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = Stone500,
+                                    color = MaterialTheme.colorScheme.secondary,
                                 )
                             }
                         },
@@ -208,6 +210,9 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
                             wp = wp,
                             onEdit = { editingWaypoint = wp },
                             onDelete = { vm.deleteWaypoint(wp.id) },
+                            onCreateLinkedWaypoint = { name, x, y, z, dim, cat, color, notes ->
+                                vm.createWaypoint(name, x, y, z, dim, cat, color, notes)
+                            },
                         )
                     }
                 }
@@ -253,32 +258,102 @@ private fun WaypointDetailCard(
     wp: WaypointEntity,
     onEdit: () -> Unit,
     onDelete: () -> Unit,
+    onCreateLinkedWaypoint: (name: String, x: Int, y: Int, z: Int, dimension: String, category: String, color: String, notes: String) -> Unit,
 ) {
     var confirmDelete by remember { mutableStateOf(false) }
+    var copied by remember { mutableStateOf(false) }
     val wpColor = waypointColor(wp.color)
+    val context = LocalContext.current
+
+    // Nether coordinate conversion
+    val hasConversion = wp.dimension == "overworld" || wp.dimension == "nether"
+    val convertedDim = if (wp.dimension == "overworld") "nether" else "overworld"
+    val convertedX = if (wp.dimension == "overworld") wp.x / 8 else wp.x * 8
+    val convertedZ = if (wp.dimension == "overworld") wp.z / 8 else wp.z * 8
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         Text(
             "COORDINATES",
             style = MaterialTheme.typography.labelSmall,
-            color = Gold,
+            color = MaterialTheme.colorScheme.primary,
         )
         Text(
             "X: ${wp.x}   Y: ${wp.y}   Z: ${wp.z}",
             style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
             color = wpColor,
         )
+
+        // Copy /tp command
+        Spacer(Modifier.height(4.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    val cmd = "/tp @s ${wp.x} ${wp.y} ${wp.z}"
+                    val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                    clipboard.setPrimaryClip(android.content.ClipData.newPlainText("TP Command", cmd))
+                    copied = true
+                }
+                .background(MaterialTheme.colorScheme.outline.copy(alpha = 0.3f), androidx.compose.foundation.shape.RoundedCornerShape(6.dp))
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                "/tp @s ${wp.x} ${wp.y} ${wp.z}",
+                style = MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                if (copied) "Copied!" else "Tap to copy",
+                style = MaterialTheme.typography.labelSmall,
+                color = if (copied) Emerald else MaterialTheme.colorScheme.secondary,
+            )
+        }
+
         SpyglassDivider()
         StatRow("Dimension", dimensionLabel(wp.dimension))
         StatRow("Category", categoryLabel(wp.category))
+
+        // Nether/Overworld coordinate conversion
+        if (hasConversion) {
+            SpyglassDivider()
+            Text(
+                "${dimensionLabel(convertedDim).uppercase()} COORDS",
+                style = MaterialTheme.typography.labelSmall,
+                color = if (convertedDim == "nether") NetherRed else Emerald,
+            )
+            Text(
+                "X: $convertedX   Y: ${wp.y}   Z: $convertedZ",
+                style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+                color = if (convertedDim == "nether") NetherRed else Emerald,
+            )
+            Spacer(Modifier.height(4.dp))
+            TextButton(
+                onClick = {
+                    onCreateLinkedWaypoint(
+                        "${wp.name} (${dimensionLabel(convertedDim)})",
+                        convertedX, wp.y, convertedZ,
+                        convertedDim, wp.category, wp.color,
+                        "Converted from ${dimensionLabel(wp.dimension)}: ${wp.x}, ${wp.y}, ${wp.z}",
+                    )
+                },
+                colors = ButtonDefaults.textButtonColors(contentColor = if (convertedDim == "nether") NetherRed else Emerald),
+            ) {
+                Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(16.dp))
+                Spacer(Modifier.width(4.dp))
+                Text("Save as ${dimensionLabel(convertedDim)} waypoint")
+            }
+        }
+
         if (wp.notes.isNotBlank()) {
             SpyglassDivider()
             Text(
                 "NOTES",
                 style = MaterialTheme.typography.labelSmall,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
             )
-            Text(wp.notes, style = MaterialTheme.typography.bodySmall, color = Stone300)
+            Text(wp.notes, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         SpyglassDivider()
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -343,7 +418,7 @@ private fun WaypointDialog(
                     value = name, onValueChange = { name = it },
                     label = { Text("Name") },
                     singleLine = true,
-                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, cursorColor = Gold),
+                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.fillMaxWidth(),
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -351,26 +426,26 @@ private fun WaypointDialog(
                         value = x, onValueChange = { x = it },
                         label = { Text("X") },
                         singleLine = true,
-                        colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, cursorColor = Gold),
+                        colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                         modifier = Modifier.weight(1f),
                     )
                     OutlinedTextField(
                         value = y, onValueChange = { y = it },
                         label = { Text("Y") },
                         singleLine = true,
-                        colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, cursorColor = Gold),
+                        colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                         modifier = Modifier.weight(1f),
                     )
                     OutlinedTextField(
                         value = z, onValueChange = { z = it },
                         label = { Text("Z") },
                         singleLine = true,
-                        colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, cursorColor = Gold),
+                        colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                         modifier = Modifier.weight(1f),
                     )
                 }
 
-                Text("Dimension", style = MaterialTheme.typography.labelSmall, color = Gold)
+                Text("Dimension", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     DIMENSIONS.forEach { dim ->
                         FilterChip(
@@ -381,7 +456,7 @@ private fun WaypointDialog(
                     }
                 }
 
-                Text("Category", style = MaterialTheme.typography.labelSmall, color = Gold)
+                Text("Category", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -395,7 +470,7 @@ private fun WaypointDialog(
                     }
                 }
 
-                Text("Color", style = MaterialTheme.typography.labelSmall, color = Gold)
+                Text("Color", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     COLORS.forEach { c ->
                         Box(
@@ -422,7 +497,7 @@ private fun WaypointDialog(
                     value = notes, onValueChange = { notes = it },
                     label = { Text("Notes (optional)") },
                     maxLines = 3,
-                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, cursorColor = Gold),
+                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
@@ -431,7 +506,7 @@ private fun WaypointDialog(
             TextButton(
                 onClick = { onSave(name.trim(), x.toInt(), y.toInt(), z.toInt(), dimension, category, color, notes.trim()) },
                 enabled = canSave,
-            ) { Text("Save", color = if (canSave) Gold else Stone500) }
+            ) { Text("Save", color = if (canSave) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary) }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) { Text("Cancel") }

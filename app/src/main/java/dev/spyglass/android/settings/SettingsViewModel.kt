@@ -3,6 +3,7 @@ package dev.spyglass.android.settings
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import dev.spyglass.android.core.ui.DEFAULT_THEME
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.repository.GameDataRepository
 import androidx.datastore.preferences.core.edit
@@ -74,6 +75,14 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setGameClockEnabled(enabled: Boolean) = viewModelScope.launch {
         store.edit { it[PreferenceKeys.GAME_CLOCK_ENABLED] = enabled }
+    }
+
+    val backgroundTheme: StateFlow<String> = store.data
+        .map { it[PreferenceKeys.BACKGROUND_THEME] ?: DEFAULT_THEME }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), DEFAULT_THEME)
+
+    fun setBackgroundTheme(theme: String) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.BACKGROUND_THEME] = theme }
     }
 
     fun clearAllFavorites() = viewModelScope.launch {

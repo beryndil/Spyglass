@@ -20,4 +20,5 @@ object PreferenceKeys {
     val CLOCK_SYNC_TIME_MS      = longPreferencesKey("clock_sync_time_ms")
     val CLOCK_SYNC_METHOD       = stringPreferencesKey("clock_sync_method")
     val CLOCK_ACTIVE_EVENTS     = stringPreferencesKey("clock_active_events")
+    val BACKGROUND_THEME        = stringPreferencesKey("background_theme")
 }

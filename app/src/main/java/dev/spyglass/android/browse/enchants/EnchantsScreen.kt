@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.text.style.TextDecoration
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.EnchantEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
@@ -143,7 +144,7 @@ private fun targetIcon(target: String): SpyglassIcon? = when (target) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
+fun EnchantsScreen(targetEnchantId: String? = null, onCalcTab: (Int) -> Unit = {}, vm: EnchantsViewModel = viewModel()) {
     val query       by vm.query.collectAsState()
     val target      by vm.target.collectAsState()
     val enchants    by vm.enchants.collectAsState()
@@ -165,14 +166,25 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
     // Build a map for quick lookup by ID for scrolling to incompatible enchants
     val enchantIndex = remember(enchants) { enchants.mapIndexed { i, e -> e.id to i }.toMap() }
 
+    // Auto-expand and scroll to target enchant from cross-reference
+    LaunchedEffect(targetEnchantId, enchants) {
+        if (targetEnchantId != null && enchants.isNotEmpty()) {
+            vm.expandEnchant(targetEnchantId)
+            val idx = enchantIndex[targetEnchantId]
+            if (idx != null) {
+                listState.animateScrollToItem(idx + 1) // +1 for intro header
+            }
+        }
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search enchantments\u2026", color = Stone500) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = Stone500) },
+            placeholder = { Text("Search enchantments\u2026", color = MaterialTheme.colorScheme.secondary) },
+            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
         FlowRow(
@@ -200,10 +212,19 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
                     description = "All enchantments by target, rarity, and compatibility",
                     stat = "${enchants.size} enchantments",
                 )
+                Text(
+                    "Open Librarian Guide \u2192",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = PotionBlue,
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier
+                        .clickable { onCalcTab(15) }
+                        .padding(top = 4.dp),
+                )
             }
             if (favoriteEnchants.isNotEmpty()) {
                 item(key = "fav_header") {
-                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = Gold,
+                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
                 }
                 items(favoriteEnchants, key = { "fav_${it.id}" }) { fav ->
@@ -214,7 +235,7 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
                         leadingIcon = EnchantTextures.get(fav.id) ?: PixelIcons.Enchant,
                         trailing    = {
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
-                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = Gold, modifier = Modifier.size(20.dp))
+                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             }
                         },
                     )
@@ -236,14 +257,14 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
                         trailing    = {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(horizontalAlignment = Alignment.End) {
-                                    Text("Max ${e.maxLevel}", style = MaterialTheme.typography.bodySmall, color = Gold)
+                                    Text("Max ${e.maxLevel}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
                                     Spacer(Modifier.height(2.dp))
                                     val rarityColor = when (e.rarity.lowercase()) {
                                         "common"   -> Emerald
                                         "uncommon" -> PotionBlue
                                         "rare"     -> EnderPurple
-                                        "very_rare", "very rare" -> Gold
-                                        else       -> Stone500
+                                        "very_rare", "very rare" -> MaterialTheme.colorScheme.primary
+                                        else       -> MaterialTheme.colorScheme.secondary
                                     }
                                     CategoryBadge(label = e.rarity.replace('_', ' '), color = rarityColor)
                                     if (e.isTreasure) {
@@ -260,7 +281,7 @@ fun EnchantsScreen(vm: EnchantsViewModel = viewModel()) {
                                     Icon(
                                         Icons.Filled.Star,
                                         contentDescription = "Favorite",
-                                        tint = if (isFav) Gold else Stone700,
+                                        tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                         modifier = Modifier.size(20.dp),
                                     )
                                 }
@@ -308,7 +329,7 @@ private fun EnchantDetailCard(
 
         // Description
         if (enchant.description.isNotEmpty()) {
-            Text(enchant.description, style = MaterialTheme.typography.bodyMedium, color = Stone300)
+            Text(enchant.description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
         // Stats
@@ -321,7 +342,7 @@ private fun EnchantDetailCard(
         // Incompatible enchantments
         if (incompatible.isNotEmpty()) {
             SpyglassDivider()
-            Text("Incompatible with", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Incompatible with", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),

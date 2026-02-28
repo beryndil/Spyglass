@@ -102,10 +102,10 @@ fun RedstoneScreen() {
         // ── Container Selector ──
         SectionHeader("Container")
         InputCard {
-            Text("SELECT CONTAINER", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("SELECT CONTAINER", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             OutlinedButton(
                 onClick = { showContainerPicker = !showContainerPicker },
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = Stone100),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.onSurface),
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text("${selectedContainer.name} (${selectedContainer.slots} slots)")
@@ -123,13 +123,13 @@ fun RedstoneScreen() {
                         }) {
                             Text(
                                 container.name,
-                                color = if (container == selectedContainer) Gold else Stone300,
+                                color = if (container == selectedContainer) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
                         Text(
                             "${container.slots} slots",
                             style = MaterialTheme.typography.bodySmall,
-                            color = Stone500,
+                            color = MaterialTheme.colorScheme.secondary,
                         )
                     }
                 }
@@ -146,7 +146,7 @@ fun RedstoneScreen() {
                     label = { Text("Item Count") },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, cursorColor = Gold),
+                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.weight(1f),
                 )
                 OutlinedTextField(
@@ -155,13 +155,13 @@ fun RedstoneScreen() {
                     label = { Text("Stack Size") },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, cursorColor = Gold),
+                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.weight(1f),
                 )
             }
             Spacer(Modifier.height(4.dp))
             Text("Common: 64 (most items), 16 (eggs, ender pearls, snowballs), 1 (tools, armor)",
-                style = MaterialTheme.typography.bodySmall, color = Stone500)
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
         }
 
         ResultCard {
@@ -182,7 +182,7 @@ fun RedstoneScreen() {
                 label = { Text("Target Signal (0-15)") },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, cursorColor = Gold),
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                 modifier = Modifier.fillMaxWidth(),
             )
         }
@@ -205,7 +205,7 @@ fun RedstoneScreen() {
         SectionHeader("Signal Reference")
         ResultCard {
             Text("SIGNAL TABLE FOR ${selectedContainer.name.uppercase()}",
-                style = MaterialTheme.typography.labelSmall, color = Gold)
+                style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             for (sig in 0..15) {
                 val items = itemsForSignal(sig, selectedContainer.slots, stackSize)
@@ -222,7 +222,7 @@ fun RedstoneScreen() {
         // ── Special Blocks ──
         SectionHeader("Special Comparator Sources")
         ResultCard {
-            Text("NON-CONTAINER SOURCES", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("NON-CONTAINER SOURCES", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             StatRow("Cake", "Signal = 14 - (2 * slices eaten), max 14")
             StatRow("Composter", "Signal = compost level (0-8)")
@@ -236,7 +236,7 @@ fun RedstoneScreen() {
             StatRow("Command Block", "Signal = success count")
             StatRow("Item Frame", "Signal = rotation step (0-8)")
             SpyglassDivider()
-            Text("JUKEBOX DISC SIGNALS", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("JUKEBOX DISC SIGNALS", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             StatRow("13", "Signal 1")
             StatRow("Cat", "Signal 2")
@@ -258,32 +258,32 @@ fun RedstoneScreen() {
         // ── Comparator Tips ──
         SectionHeader("Comparator Tips")
         ResultCard {
-            Text("HOW COMPARATORS WORK", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("HOW COMPARATORS WORK", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             Text(
                 "A Redstone Comparator reads the fill level of a container behind it and outputs a signal strength from 0-15.",
-                style = MaterialTheme.typography.bodySmall, color = Stone300,
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
-            Text("COMPARE MODE (front torch off)", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("COMPARE MODE (front torch off)", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             Text(
                 "Output = rear signal if rear >= side signal, otherwise 0.",
-                style = MaterialTheme.typography.bodySmall, color = Stone300,
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
-            Text("SUBTRACT MODE (front torch on)", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("SUBTRACT MODE (front torch on)", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             Text(
                 "Output = rear signal - side signal (minimum 0). Useful for arithmetic circuits.",
-                style = MaterialTheme.typography.bodySmall, color = Stone300,
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
-            Text("SIGNAL FORMULA", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("SIGNAL FORMULA", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             Text(
                 "signal = floor(1 + (sum of item fractions / total slots) * 14)\nwhere item fraction = count / max_stack_size for each slot\nSignal is 0 when empty, 15 when completely full.",
-                style = MaterialTheme.typography.bodySmall, color = Stone300,
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 

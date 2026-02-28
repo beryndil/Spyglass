@@ -27,7 +27,7 @@ fun ChangelogScreen(onBack: () -> Unit = {}) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
-                tint = Stone300,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
         SectionHeader("Changelog")
@@ -59,14 +59,14 @@ private fun VersionEntry(
     highlights: List<String>,
 ) {
     ResultCard {
-        Text(version, style = MaterialTheme.typography.headlineSmall, color = Gold)
-        Text(date, style = MaterialTheme.typography.bodySmall, color = Stone500)
+        Text(version, style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.primary)
+        Text(date, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
         Spacer(Modifier.height(4.dp))
         highlights.forEach { item ->
             Text(
                 text = "\u2022  $item",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }

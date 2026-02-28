@@ -1,11 +1,13 @@
 package dev.spyglass.android.calculators.trims
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import dev.spyglass.android.core.ui.*
 
@@ -13,30 +15,31 @@ private data class TrimTemplate(
     val name: String,
     val location: String,
     val structure: String,
+    val structureId: String,
     val chance: String,
     val duplicationMaterial: String,
     val notes: String = "",
 )
 
 private val TRIM_TEMPLATES = listOf(
-    TrimTemplate("Sentry", "Overworld", "Pillager Outpost", "~20%", "Cobblestone"),
-    TrimTemplate("Dune", "Overworld", "Desert Pyramid", "Standard", "Sandstone"),
-    TrimTemplate("Coast", "Overworld", "Shipwreck", "Standard", "Cobblestone"),
-    TrimTemplate("Wild", "Overworld", "Jungle Pyramid", "Standard", "Mossy Cobblestone"),
-    TrimTemplate("Vex", "Overworld", "Woodland Mansion", "~4.8%", "Cobblestone"),
-    TrimTemplate("Eye", "Overworld", "Stronghold Library", "Standard", "End Stone"),
-    TrimTemplate("Ward", "Deep Dark", "Ancient City", "Rare", "Cobbled Deepslate"),
-    TrimTemplate("Silence", "Deep Dark", "Ancient City", "1.2%", "Cobbled Deepslate", "Rarest trim template"),
-    TrimTemplate("Snout", "Nether", "Bastion Remnant", "~4.8%", "Blackstone"),
-    TrimTemplate("Rib", "Nether", "Nether Fortress", "Standard", "Netherrack"),
-    TrimTemplate("Spire", "The End", "End City", "Standard", "Purpur Block"),
-    TrimTemplate("Tide", "Ocean", "Elder Guardian Drop", "20%", "Prismarine", "Only trim from mob drop"),
-    TrimTemplate("Wayfinder", "Overworld", "Trail Ruins", "~8.3%", "Terracotta", "Requires brushing"),
-    TrimTemplate("Raiser", "Overworld", "Trail Ruins", "~8.3%", "Terracotta", "Requires brushing"),
-    TrimTemplate("Shaper", "Overworld", "Trail Ruins", "~8.3%", "Terracotta", "Requires brushing"),
-    TrimTemplate("Host", "Overworld", "Trail Ruins", "~8.3%", "Terracotta", "Requires brushing"),
-    TrimTemplate("Bolt", "Overworld", "Trial Chambers Vault", "~6.3%", "Copper Block"),
-    TrimTemplate("Flow", "Overworld", "Trial Chambers Ominous Vault", "22.5%", "Breeze Rod", "Ominous vault exclusive"),
+    TrimTemplate("Sentry", "Overworld", "Pillager Outpost", "pillager_outpost", "~20%", "Cobblestone"),
+    TrimTemplate("Dune", "Overworld", "Desert Pyramid", "desert_pyramid", "Standard", "Sandstone"),
+    TrimTemplate("Coast", "Overworld", "Shipwreck", "shipwreck", "Standard", "Cobblestone"),
+    TrimTemplate("Wild", "Overworld", "Jungle Pyramid", "jungle_pyramid", "Standard", "Mossy Cobblestone"),
+    TrimTemplate("Vex", "Overworld", "Woodland Mansion", "woodland_mansion", "~4.8%", "Cobblestone"),
+    TrimTemplate("Eye", "Overworld", "Stronghold Library", "stronghold", "Standard", "End Stone"),
+    TrimTemplate("Ward", "Deep Dark", "Ancient City", "ancient_city", "Rare", "Cobbled Deepslate"),
+    TrimTemplate("Silence", "Deep Dark", "Ancient City", "ancient_city", "1.2%", "Cobbled Deepslate", "Rarest trim template"),
+    TrimTemplate("Snout", "Nether", "Bastion Remnant", "bastion_remnant", "~4.8%", "Blackstone"),
+    TrimTemplate("Rib", "Nether", "Nether Fortress", "nether_fortress", "Standard", "Netherrack"),
+    TrimTemplate("Spire", "The End", "End City", "end_city", "Standard", "Purpur Block"),
+    TrimTemplate("Tide", "Ocean", "Elder Guardian Drop", "ocean_monument", "20%", "Prismarine", "Only trim from mob drop"),
+    TrimTemplate("Wayfinder", "Overworld", "Trail Ruins", "trail_ruins", "~8.3%", "Terracotta", "Requires brushing"),
+    TrimTemplate("Raiser", "Overworld", "Trail Ruins", "trail_ruins", "~8.3%", "Terracotta", "Requires brushing"),
+    TrimTemplate("Shaper", "Overworld", "Trail Ruins", "trail_ruins", "~8.3%", "Terracotta", "Requires brushing"),
+    TrimTemplate("Host", "Overworld", "Trail Ruins", "trail_ruins", "~8.3%", "Terracotta", "Requires brushing"),
+    TrimTemplate("Bolt", "Overworld", "Trial Chambers Vault", "trial_chambers", "~6.3%", "Copper Block"),
+    TrimTemplate("Flow", "Overworld", "Trial Chambers Ominous Vault", "trial_chambers", "22.5%", "Breeze Rod", "Ominous vault exclusive"),
 )
 
 private data class TrimMaterial(
@@ -61,7 +64,7 @@ private val TRIM_MATERIALS = listOf(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun TrimScreen() {
+fun TrimScreen(onStructureTap: (String) -> Unit = {}) {
     var selectedSection by remember { mutableStateOf("templates") }
 
     Column(
@@ -90,7 +93,7 @@ fun TrimScreen() {
         }
 
         when (selectedSection) {
-            "templates" -> TemplatesSection()
+            "templates" -> TemplatesSection(onStructureTap = onStructureTap)
             "materials" -> MaterialsSection()
             "howto" -> HowToSection()
         }
@@ -100,7 +103,7 @@ fun TrimScreen() {
 }
 
 @Composable
-private fun TemplatesSection() {
+private fun TemplatesSection(onStructureTap: (String) -> Unit = {}) {
     SectionHeader("Trim Templates (18)")
 
     TRIM_TEMPLATES.forEach { template ->
@@ -117,15 +120,24 @@ private fun TemplatesSection() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
             ) {
-                Text(template.name, style = MaterialTheme.typography.titleMedium, color = Stone100)
+                Text(template.name, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
                 CategoryBadge(label = template.location, color = locationColor)
             }
             Spacer(Modifier.height(4.dp))
-            StatRow("Structure", template.structure)
+            Row {
+                Text("Structure  ", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                Text(
+                    template.structure,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = PotionBlue,
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier.clickable { onStructureTap(template.structureId) },
+                )
+            }
             StatRow("Drop Chance", template.chance)
             StatRow("Duplicate With", "7 Diamonds + ${template.duplicationMaterial}")
             if (template.notes.isNotBlank()) {
-                Text(template.notes, style = MaterialTheme.typography.bodySmall, color = Gold)
+                Text(template.notes, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
             }
         }
     }
@@ -137,7 +149,7 @@ private fun MaterialsSection() {
     ResultCard {
         Text(
             "Each material changes the color of the trim pattern on the armor.",
-            style = MaterialTheme.typography.bodySmall, color = Stone500,
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
         )
         SpyglassDivider()
         TRIM_MATERIALS.forEach { mat ->
@@ -146,7 +158,7 @@ private fun MaterialsSection() {
         SpyglassDivider()
         Text(
             "If the trim material matches the armor material (e.g., Diamond trim on Diamond armor), the pattern uses a darker color palette.",
-            style = MaterialTheme.typography.bodySmall, color = Gold,
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary,
         )
     }
 
@@ -165,25 +177,25 @@ private fun MaterialsSection() {
 private fun HowToSection() {
     SectionHeader("How to Trim Armor")
     ResultCard {
-        Text("SMITHING TABLE RECIPE", style = MaterialTheme.typography.labelSmall, color = Gold)
+        Text("SMITHING TABLE RECIPE", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(4.dp))
         Text(
             "1. Open the Smithing Table\n2. Place a Trim Template in the left slot\n3. Place the armor piece in the middle slot\n4. Place the trim material in the right slot\n5. Take the trimmed armor from the output",
-            style = MaterialTheme.typography.bodyMedium, color = Stone300,
+            style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         SpyglassDivider()
-        Text("KEY NOTES", style = MaterialTheme.typography.labelSmall, color = Gold)
+        Text("KEY NOTES", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(4.dp))
         Text(
             "\u2022 Templates are consumed during trimming\n\u2022 Trims are purely cosmetic (no gameplay effect)\n\u2022 You can re-trim armor (overwrites the previous pattern)\n\u2022 Enchantments are preserved when trimming\n\u2022 Works on all armor materials",
-            style = MaterialTheme.typography.bodySmall, color = Stone300,
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         SpyglassDivider()
-        Text("DUPLICATING TEMPLATES", style = MaterialTheme.typography.labelSmall, color = Gold)
+        Text("DUPLICATING TEMPLATES", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(4.dp))
         Text(
             "In a crafting table:\n1 Template + 7 Diamonds + 1 Duplication Material = 2 Templates\n\nEach template has a specific duplication material (see the Templates tab). This makes rare templates renewable after finding the first one.",
-            style = MaterialTheme.typography.bodySmall, color = Stone300,
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }

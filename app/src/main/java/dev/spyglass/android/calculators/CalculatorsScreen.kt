@@ -29,6 +29,7 @@ import dev.spyglass.android.calculators.todo.TodoScreen
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassTab
 import dev.spyglass.android.core.ui.SpyglassTabRow
+import dev.spyglass.android.navigation.BrowseTarget
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.flow.map
@@ -57,7 +58,10 @@ private val CALC_TABS = listOf(
 )
 
 @Composable
-fun CalculatorsScreen(initialTab: Int? = null) {
+fun CalculatorsScreen(
+    initialTab: Int? = null,
+    onBrowseTarget: (BrowseTarget) -> Unit = {},
+) {
     val context = LocalContext.current
     val defaultTab by remember {
         context.dataStore.data.map { it[PreferenceKeys.DEFAULT_TOOL_TAB] ?: 0 }
@@ -90,6 +94,9 @@ fun CalculatorsScreen(initialTab: Int? = null) {
             .fillMaxSize()
             .padding(16.dp)
         ) {
+            val onStructureTap: (String) -> Unit = { structureId ->
+                onBrowseTarget(BrowseTarget(6, structureId))
+            }
             when (selectedTab) {
                 0 -> TodoScreen()
                 1 -> ShoppingScreen()
@@ -109,8 +116,8 @@ fun CalculatorsScreen(initialTab: Int? = null) {
                 15 -> LibrarianScreen()
                 16 -> FoodScreen()
                 17 -> BannerScreen()
-                18 -> TrimScreen()
-                19 -> LootScreen()
+                18 -> TrimScreen(onStructureTap = onStructureTap)
+                19 -> LootScreen(onStructureTap = onStructureTap)
             }
         }
     }

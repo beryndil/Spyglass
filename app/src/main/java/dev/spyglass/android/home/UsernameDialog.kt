@@ -16,15 +16,15 @@ fun UsernameDialog(
 
     AlertDialog(
         onDismissRequest = onLater,
-        title = { Text("What's your player name?", color = Stone100) },
+        title = { Text("What's your player name?", color = MaterialTheme.colorScheme.onSurface) },
         text = {
             OutlinedTextField(
                 value = username,
                 onValueChange = { if (it.length <= 16) username = it },
-                placeholder = { Text("Minecraft username", color = Stone500) },
+                placeholder = { Text("Minecraft username", color = MaterialTheme.colorScheme.secondary) },
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary,
                 ),
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -34,13 +34,13 @@ fun UsernameDialog(
                 onClick = { if (username.isNotBlank()) onSave(username.trim()) },
                 enabled = username.isNotBlank(),
             ) {
-                Text("Save", color = if (username.isNotBlank()) Gold else Stone500)
+                Text("Save", color = if (username.isNotBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
             }
         },
         dismissButton = {
-            TextButton(onClick = onLater) { Text("Later", color = Stone300) }
-            TextButton(onClick = onDontAskAgain) { Text("Don't ask again", color = Stone500) }
+            TextButton(onClick = onLater) { Text("Later", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            TextButton(onClick = onDontAskAgain) { Text("Don't ask again", color = MaterialTheme.colorScheme.secondary) }
         },
-        containerColor = SurfaceDark,
+        containerColor = MaterialTheme.colorScheme.surface,
     )
 }

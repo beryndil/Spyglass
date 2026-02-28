@@ -26,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.BiomeResourceMap
 import dev.spyglass.android.data.CompostData
+import dev.spyglass.android.data.db.entities.EnchantEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.ItemEntity
 import dev.spyglass.android.data.db.entities.MobEntity
@@ -36,6 +37,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 
 // ── ViewModel ────────────────────────────────────────────────────────────────
 
@@ -101,6 +104,18 @@ class ItemsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun recipesForItem(itemId: String): Flow<List<RecipeEntity>> = repo.recipesForItem(itemId)
     fun recipesUsingItem(itemId: String): Flow<List<RecipeEntity>> = repo.recipesUsingIngredient(itemId)
+
+    fun enchantsForItem(enchantTarget: String): Flow<List<EnchantEntity>> {
+        if (enchantTarget.isBlank()) return flowOf(emptyList())
+        val targets = enchantTarget.split(",").map { it.trim() }.filter { it.isNotEmpty() }
+        if (targets.isEmpty()) return flowOf(emptyList())
+        val flows = targets.map { repo.enchantsForTarget(it) }
+        return combine(flows) { arrays ->
+            arrays.flatMap { it.toList() }
+                .distinctBy { it.id }
+                .sortedBy { it.name }
+        }
+    }
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -108,31 +123,44 @@ class ItemsViewModel(app: Application) : AndroidViewModel(app) {
 private fun formatId(id: String): String =
     id.split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
 
+@Composable
 private fun categoryColor(cat: String) = when (cat) {
-    "tools"     -> Gold
-    "weapons"   -> NetherRed
-    "armor"     -> PotionBlue
-    "food"      -> Emerald
-    "materials" -> Stone300
-    "mob_drops" -> NetherRed
-    "brewing"   -> EnderPurple
-    "misc"      -> Stone500
-    else        -> Stone500
+    "tools"          -> Color(0xFF00897B)  // Teal
+    "weapons"        -> Color(0xFFC62828)  // Red
+    "armor"          -> Color(0xFF1565C0)  // Blue
+    "food"           -> Color(0xFF558B2F)  // Green
+    "materials"      -> Color(0xFFFF8F00)  // Amber
+    "mob_drops"      -> NetherRed
+    "brewing"        -> Color(0xFF7B1FA2)  // Purple
+    "misc"           -> Color(0xFF546E7A)  // Blue-grey
+    "decoration"     -> Color(0xFF546E7A)
+    "transportation" -> Color(0xFF546E7A)
+    else             -> MaterialTheme.colorScheme.secondary
 }
 
+@Composable
+private fun rarityColor(rarity: String) = when (rarity) {
+    "common"    -> MaterialTheme.colorScheme.onSurfaceVariant
+    "uncommon"  -> Emerald
+    "rare"      -> PotionBlue
+    "very_rare" -> EnderPurple
+    else        -> MaterialTheme.colorScheme.onSurfaceVariant
+}
+
+@Composable
 private fun obtainColor(method: String) = when (method) {
-    "crafting"       -> Gold
+    "crafting"       -> MaterialTheme.colorScheme.primary
     "mob_drop"       -> NetherRed
-    "mining"         -> Stone300
+    "mining"         -> MaterialTheme.colorScheme.onSurfaceVariant
     "trading"        -> Emerald
     "fishing"        -> PotionBlue
     "structure_loot" -> EnderPurple
     "farming"        -> Emerald
-    "smelting"       -> Gold
-    "bartering"      -> Gold
-    "found"          -> Stone500
+    "smelting"       -> MaterialTheme.colorScheme.primary
+    "bartering"      -> MaterialTheme.colorScheme.primary
+    "found"          -> MaterialTheme.colorScheme.secondary
     "composting"     -> Emerald
-    else             -> Stone500
+    else             -> MaterialTheme.colorScheme.secondary
 }
 
 private val ITEM_CATEGORIES = listOf("all", "tools", "weapons", "armor", "food", "materials", "mob_drops", "brewing", "misc")
@@ -148,6 +176,7 @@ fun ItemsScreen(
     onItemTap: (String) -> Unit = {},
     onStructureTap: (String) -> Unit = {},
     onBiomeTap: (String) -> Unit = {},
+    onEnchantTap: (String) -> Unit = {},
     vm: ItemsViewModel = viewModel(),
 ) {
     val query      by vm.query.collectAsState()
@@ -173,10 +202,10 @@ fun ItemsScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search items\u2026", color = Stone500) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = Stone500) },
+            placeholder = { Text("Search items\u2026", color = MaterialTheme.colorScheme.secondary) },
+            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
 
@@ -185,7 +214,7 @@ fun ItemsScreen(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             items(ITEM_CATEGORIES) { c ->
-                val chipColor = if (c == "all") Gold else categoryColor(c)
+                val chipColor = if (c == "all") MaterialTheme.colorScheme.primary else categoryColor(c)
                 FilterChip(
                     selected = category == c,
                     onClick = { vm.setCategory(c) },
@@ -233,7 +262,7 @@ fun ItemsScreen(
                                 Icon(
                                     Icons.Filled.Star,
                                     contentDescription = "Favorite",
-                                    tint = if (isFav) Gold else Stone700,
+                                    tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                     modifier = Modifier.size(20.dp),
                                 )
                             }
@@ -246,6 +275,13 @@ fun ItemsScreen(
                 val isExpanded = item.id in expandedIds
                 Column {
                     val texture = ItemTextures.get(item.id)
+                    val glanceText = when (item.category) {
+                        "weapons" -> if (item.attackDamage.isNotBlank()) "${item.attackDamage} dmg" else null
+                        "armor"   -> if (item.defensePoints > 0) "${item.defensePoints} def" else null
+                        "food"    -> if (item.saturation > 0f) "${"%.1f".format(item.saturation)} sat" else null
+                        "tools"   -> if (item.durability > 0) "\u2764 ${item.durability}" else null
+                        else      -> if (item.durability > 0) "\u2764 ${item.durability}" else null
+                    }
                     BrowseListItem(
                         headline    = item.name,
                         supporting  = "",
@@ -259,12 +295,12 @@ fun ItemsScreen(
                                         color = categoryColor(item.category),
                                         modifier = Modifier.clickable { vm.setCategory(item.category) },
                                     )
-                                    if (item.durability > 0) {
+                                    if (glanceText != null) {
                                         Spacer(Modifier.height(2.dp))
                                         Text(
-                                            "\u2764 ${item.durability}",
+                                            glanceText,
                                             style = MaterialTheme.typography.bodySmall,
-                                            color = Stone500,
+                                            color = MaterialTheme.colorScheme.secondary,
                                         )
                                     }
                                 }
@@ -274,7 +310,7 @@ fun ItemsScreen(
                                     Icon(
                                         Icons.Filled.Star,
                                         contentDescription = "Favorite",
-                                        tint = if (isFav) Gold else Stone700,
+                                        tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                         modifier = Modifier.size(20.dp),
                                     )
                                 }
@@ -297,6 +333,7 @@ fun ItemsScreen(
                             onItemTap = onItemTap,
                             onStructureTap = onStructureTap,
                             onBiomeTap = onBiomeTap,
+                            onEnchantTap = onEnchantTap,
                         )
                     }
                 }
@@ -327,29 +364,56 @@ private fun ItemDetailCard(
     onItemTap: (String) -> Unit,
     onStructureTap: (String) -> Unit,
     onBiomeTap: (String) -> Unit,
+    onEnchantTap: (String) -> Unit,
 ) {
     val recipesFor  by vm.recipesForItem(item.id).collectAsState(initial = emptyList())
     val recipesUsing by vm.recipesUsingItem(item.id).collectAsState(initial = emptyList())
+    val enchants    by vm.enchantsForItem(item.enchantTarget).collectAsState(initial = emptyList())
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
-        // 0. Minecraft ID
-        MinecraftIdRow(item.id)
-
-        // 1. Description
-        if (item.description.isNotEmpty()) {
-            Text(item.description, style = MaterialTheme.typography.bodyMedium, color = Stone300)
+        // ── Enhanced Header ──────────────────────────────────────────────
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            val texture = ItemTextures.get(item.id)
+            if (texture != null) {
+                SpyglassIconImage(texture, contentDescription = item.name, modifier = Modifier.size(48.dp), tint = Color.Unspecified)
+                Spacer(Modifier.width(12.dp))
+            }
+            Column(modifier = Modifier.weight(1f)) {
+                Text(item.name, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                // Badges row
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    CategoryBadge(
+                        label = item.category.replace('_', ' '),
+                        color = categoryColor(item.category),
+                    )
+                    if (item.stackSize != 64) {
+                        CategoryBadge(label = "Stack: ${item.stackSize}", color = MaterialTheme.colorScheme.secondary)
+                    }
+                    if (item.isRenewable) {
+                        CategoryBadge(label = "Renewable", color = Emerald)
+                    } else {
+                        CategoryBadge(label = "Non-renewable", color = NetherRed)
+                    }
+                }
+            }
         }
 
-        // 2. Stats
-        StatRow("Stack Size", "${item.stackSize}")
-        if (item.durability > 0) StatRow("Durability", "${item.durability}")
-        StatRow("Category", item.category.replace('_', ' ').replaceFirstChar { it.uppercase() })
+        // Minecraft ID
+        MinecraftIdRow(item.id)
 
-        // 3. How to Obtain
+        // Description
+        if (item.description.isNotEmpty()) {
+            Text(item.description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+
+        // How to Obtain
         val sources = item.obtainedFrom.split(",").map { it.trim() }.filter { it.isNotEmpty() }
         if (sources.isNotEmpty()) {
             SpyglassDivider()
-            Text("How to Obtain", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("How to Obtain", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -363,11 +427,57 @@ private fun ItemDetailCard(
             }
         }
 
-        // 3b. Compostable
+        // ── Conditional: Tools & Weapons Combat Stats ────────────────────
+        if (item.category in listOf("tools", "weapons") && (item.durability > 0 || item.attackDamage.isNotBlank())) {
+            SpyglassDivider()
+            Text("Combat Stats", style = MaterialTheme.typography.labelSmall, color = categoryColor(item.category))
+            if (item.durability > 0) StatRow("Durability", "${item.durability}")
+            if (item.attackDamage.isNotBlank()) {
+                StatRow("Attack Damage", item.attackDamage)
+            }
+            if (item.attackSpeed.isNotBlank()) {
+                StatRow("Attack Speed", item.attackSpeed)
+                // DPS calculation
+                val dmg = item.attackDamage.toFloatOrNull()
+                val spd = item.attackSpeed.toFloatOrNull()
+                if (dmg != null && spd != null) {
+                    StatRow("DPS", "${"%.1f".format(dmg * spd)}")
+                }
+            }
+            if (item.enchantability > 0) StatRow("Enchantability", "${item.enchantability}")
+        }
+
+        // ── Conditional: Armor Stats ─────────────────────────────────────
+        if (item.category == "armor" && (item.defensePoints > 0 || item.durability > 0)) {
+            SpyglassDivider()
+            Text("Armor Stats", style = MaterialTheme.typography.labelSmall, color = categoryColor("armor"))
+            if (item.defensePoints > 0) StatRow("Defense Points", "${item.defensePoints}")
+            if (item.armorToughness > 0f) StatRow("Armor Toughness", "${"%.1f".format(item.armorToughness)}")
+            if (item.knockbackResistance > 0f) StatRow("Knockback Resistance", "${"%.1f".format(item.knockbackResistance)}")
+            if (item.durability > 0) StatRow("Durability", "${item.durability}")
+            if (item.enchantability > 0) StatRow("Enchantability", "${item.enchantability}")
+        }
+
+        // ── Conditional: Food Stats ──────────────────────────────────────
+        if (item.category == "food" && item.hunger > 0) {
+            SpyglassDivider()
+            Text("Food Stats", style = MaterialTheme.typography.labelSmall, color = categoryColor("food"))
+            StatRow("Hunger", "${item.hunger}")
+            StatRow("Saturation", "${"%.1f".format(item.saturation)}")
+            if (item.hunger > 0) {
+                val efficiency = item.saturation / item.hunger
+                StatRow("Efficiency", "${"%.2f".format(efficiency)}")
+            }
+            if (item.foodEffect.isNotBlank()) {
+                StatRow("Effects", item.foodEffect)
+            }
+        }
+
+        // ── Compostable ──────────────────────────────────────────────────
         val compostChance = CompostData.chanceFor(item.id)
         if (compostChance != null) {
             SpyglassDivider()
-            Text("Uses", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Uses", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -384,33 +494,60 @@ private fun ItemDetailCard(
                 }
                 Column(modifier = Modifier.weight(1f)) {
                     Text("Compostable", style = MaterialTheme.typography.bodyMedium, color = Emerald)
-                    Text("$compostChance% chance per item", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                    Text("$compostChance% chance per item", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                 }
             }
         }
 
-        // 4. Recipe (if craftable)
+        // ── Applicable Enchantments ──────────────────────────────────────
+        if (enchants.isNotEmpty()) {
+            SpyglassDivider()
+            Text("Applicable Enchantments", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                enchants.forEach { enchant ->
+                    val rColor = rarityColor(enchant.rarity)
+                    AssistChip(
+                        onClick = { onEnchantTap(enchant.id) },
+                        label = {
+                            Text(
+                                "${enchant.name} ${enchant.maxLevel}",
+                                style = MaterialTheme.typography.labelSmall,
+                            )
+                        },
+                        colors = AssistChipDefaults.assistChipColors(
+                            labelColor = rColor,
+                            containerColor = rColor.copy(alpha = 0.12f),
+                        ),
+                        border = null,
+                    )
+                }
+            }
+        }
+
+        // ── Recipe (if craftable) ────────────────────────────────────────
         if (recipesFor.isNotEmpty()) {
             SpyglassDivider()
-            Text("Recipe", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Recipe", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             recipesFor.forEach { recipe ->
                 if (recipe.type.contains("shaped")) {
                     TextureCraftingGrid(recipe = recipe, onItemTap = onItemTap)
                 }
-                // Recipe type badge
                 Text(
                     recipe.type.replace('_', ' ').replaceFirstChar { it.uppercase() },
                     style = MaterialTheme.typography.bodySmall,
-                    color = Stone500,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
             }
         }
 
-        // 5. Dropped by (mob chips)
+        // ── Dropped by (mob chips) ───────────────────────────────────────
         val droppedBy = item.droppedBy.split(",").map { it.trim() }.filter { it.isNotEmpty() }
         if (droppedBy.isNotEmpty()) {
             SpyglassDivider()
-            Text("Dropped by", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Dropped by", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -429,11 +566,11 @@ private fun ItemDetailCard(
             }
         }
 
-        // 6. Used to breed (reverse lookup from breeding map)
+        // ── Used to breed ────────────────────────────────────────────────
         val breedableMobs = breedingMap[item.id].orEmpty()
         if (breedableMobs.isNotEmpty()) {
             SpyglassDivider()
-            Text("Used to Breed", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Used to Breed", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -444,7 +581,7 @@ private fun ItemDetailCard(
                         onClick = { onMobTap(mobId) },
                         label = { Text(formatId(mobId), style = MaterialTheme.typography.labelSmall) },
                         leadingIcon = if (mobIcon != null) { {
-                            SpyglassIconImage(mobIcon, contentDescription = null, modifier = Modifier.size(16.dp), tint = androidx.compose.ui.graphics.Color.Unspecified)
+                            SpyglassIconImage(mobIcon, contentDescription = null, modifier = Modifier.size(16.dp), tint = Color.Unspecified)
                         } } else null,
                         colors = AssistChipDefaults.assistChipColors(
                             labelColor = Emerald,
@@ -456,11 +593,11 @@ private fun ItemDetailCard(
             }
         }
 
-        // 7. Mined from (block chips)
+        // ── Mined from (block chips) ─────────────────────────────────────
         val minedFrom = item.minedFrom.split(",").map { it.trim() }.filter { it.isNotEmpty() }
         if (minedFrom.isNotEmpty()) {
             SpyglassDivider()
-            Text("Mined from", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Mined from", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -470,8 +607,8 @@ private fun ItemDetailCard(
                         onClick = { onBlockTap(blockId) },
                         label = { Text(formatId(blockId), style = MaterialTheme.typography.labelSmall) },
                         colors = AssistChipDefaults.assistChipColors(
-                            labelColor = Stone300,
-                            containerColor = Stone300.copy(alpha = 0.12f),
+                            labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            containerColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f),
                         ),
                         border = null,
                     )
@@ -479,11 +616,11 @@ private fun ItemDetailCard(
             }
         }
 
-        // 7. Found in biomes (from BiomeResourceMap)
+        // ── Found in biomes ──────────────────────────────────────────────
         val biomes = BiomeResourceMap.biomesForItem(item.id)
         if (biomes.isNotEmpty()) {
             SpyglassDivider()
-            Text("Found in Biomes", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Found in Biomes", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -502,13 +639,13 @@ private fun ItemDetailCard(
             }
         }
 
-        // 8. Found in structures (reverse lookup)
+        // ── Found in structures ──────────────────────────────────────────
         val matchingStructures = structures.filter { s ->
             s.loot.split(",").any { it.trim() == item.id }
         }
         if (matchingStructures.isNotEmpty()) {
             SpyglassDivider()
-            Text("Found in Structures", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Found in Structures", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -527,21 +664,32 @@ private fun ItemDetailCard(
             }
         }
 
-        // 9. Used in recipes
+        // ── Used in recipes (max 8 + overflow) ──────────────────────────
         if (recipesUsing.isNotEmpty()) {
             SpyglassDivider()
-            Text("Used in ${recipesUsing.size} recipe(s)", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Used in ${recipesUsing.size} recipe(s)", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                recipesUsing.take(10).forEach { recipe ->
+                recipesUsing.take(8).forEach { recipe ->
                     AssistChip(
                         onClick = { onItemTap(recipe.outputItem) },
                         label = { Text(formatId(recipe.outputItem), style = MaterialTheme.typography.labelSmall) },
                         colors = AssistChipDefaults.assistChipColors(
-                            labelColor = Gold,
-                            containerColor = Gold.copy(alpha = 0.12f),
+                            labelColor = MaterialTheme.colorScheme.primary,
+                            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
+                        ),
+                        border = null,
+                    )
+                }
+                if (recipesUsing.size > 8) {
+                    AssistChip(
+                        onClick = { },
+                        label = { Text("See all (${recipesUsing.size})", style = MaterialTheme.typography.labelSmall) },
+                        colors = AssistChipDefaults.assistChipColors(
+                            labelColor = MaterialTheme.colorScheme.secondary,
+                            containerColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.12f),
                         ),
                         border = null,
                     )
@@ -549,11 +697,11 @@ private fun ItemDetailCard(
             }
         }
 
-        // 10. Add to todo list
+        // ── Add to todo list ─────────────────────────────────────────────
         SpyglassDivider()
         AddToTodoSection(itemId = item.id, itemName = item.name)
 
-        // 11. Add to shopping list
+        // ── Add to shopping list ─────────────────────────────────────────
         SpyglassDivider()
         AddToListSection(itemId = item.id, itemName = item.name)
     }

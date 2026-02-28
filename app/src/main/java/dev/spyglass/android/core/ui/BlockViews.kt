@@ -22,13 +22,13 @@ import kotlin.math.min
 @Composable
 fun LabeledSlider(label: String, value: Int, min: Int, max: Int, onChange: (Int) -> Unit) {
     Column {
-        Text("$label: $value", style = MaterialTheme.typography.bodyMedium, color = Stone300)
+        Text("$label: $value", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Slider(
             value         = value.toFloat(),
             onValueChange = { onChange(it.toInt()) },
             valueRange    = min.toFloat()..max.toFloat(),
             steps         = (max - min - 1).coerceAtLeast(0),
-            colors        = SliderDefaults.colors(thumbColor = Gold, activeTrackColor = Gold),
+            colors        = SliderDefaults.colors(thumbColor = MaterialTheme.colorScheme.primary, activeTrackColor = MaterialTheme.colorScheme.primary),
         )
     }
 }
@@ -51,8 +51,9 @@ fun LayerGrid(blocks: Set<Pair<Int, Int>>) {
                 .fillMaxWidth()
                 .aspectRatio(rangeX.toFloat() / rangeZ.toFloat())
                 .background(Color(0xFF0A0907), RoundedCornerShape(4.dp))
-                .border(1.dp, Stone700, RoundedCornerShape(4.dp)),
+                .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(4.dp)),
         ) {
+            val blockColor = MaterialTheme.colorScheme.primary
             Canvas(modifier = Modifier.fillMaxSize()) {
                 val cellW = size.width  / rangeX
                 val cellH = size.height / rangeZ
@@ -60,7 +61,7 @@ fun LayerGrid(blocks: Set<Pair<Int, Int>>) {
                     val px = (x - minX) * cellW
                     val pz = (z - minZ) * cellH
                     drawRect(
-                        color   = Gold,
+                        color   = blockColor,
                         topLeft = Offset(px, pz),
                         size    = Size(cellW - 0.5f, cellH - 0.5f),
                     )
@@ -70,7 +71,7 @@ fun LayerGrid(blocks: Set<Pair<Int, Int>>) {
         Text(
             "${blocks.size} blocks in this layer  \u2022  X ${minX}\u2013${maxX}  Z ${minZ}\u2013${maxZ}",
             style = MaterialTheme.typography.bodySmall,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
         )
     }
 }
@@ -140,7 +141,7 @@ fun IsometricView(layers: Map<Int, Set<Pair<Int, Int>>>) {
                 .fillMaxWidth()
                 .aspectRatio(aspect.coerceIn(0.3f, 3f))
                 .background(Color(0xFF0A0907), RoundedCornerShape(4.dp))
-                .border(1.dp, Stone700, RoundedCornerShape(4.dp)),
+                .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(4.dp)),
         ) {
             Canvas(modifier = Modifier.fillMaxSize().padding(8.dp)) {
                 val drawW = size.width
@@ -217,7 +218,7 @@ fun IsometricView(layers: Map<Int, Set<Pair<Int, Int>>>) {
         Text(
             "${allBlocks.size} total blocks",
             style = MaterialTheme.typography.bodySmall,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
         )
     }
 }

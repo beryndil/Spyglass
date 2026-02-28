@@ -70,6 +70,7 @@ fun BrowseScreen(
     var targetProfession by remember { mutableStateOf<String?>(null) }
     var targetAdvancementId by remember { mutableStateOf<String?>(null) }
     var targetCommandId by remember { mutableStateOf<String?>(null) }
+    var targetEnchantId by remember { mutableStateOf<String?>(null) }
 
     // Handle incoming navigation from Search
     LaunchedEffect(initialTarget) {
@@ -78,6 +79,7 @@ fun BrowseScreen(
             targetMobId = null; targetBiomeId = null; targetBlockId = null
             targetRecipeId = null; targetStructureId = null; targetItemId = null
             targetProfession = null; targetAdvancementId = null; targetCommandId = null
+            targetEnchantId = null
             when (initialTarget.tab) {
                 0 -> targetBlockId = initialTarget.id
                 1 -> targetItemId = initialTarget.id
@@ -85,6 +87,7 @@ fun BrowseScreen(
                 3 -> targetMobId = initialTarget.id
                 5 -> targetBiomeId = initialTarget.id
                 6 -> targetStructureId = initialTarget.id
+                7 -> targetEnchantId = initialTarget.id
                 9 -> targetAdvancementId = initialTarget.id
                 10 -> targetCommandId = initialTarget.id
             }
@@ -108,6 +111,7 @@ fun BrowseScreen(
         targetProfession = null
         targetAdvancementId = null
         targetCommandId = null
+        targetEnchantId = null
     }
 
     // Cross-tab item navigation — 3-way routing: Blocks → Items → Recipes
@@ -149,6 +153,12 @@ fun BrowseScreen(
         tab = 4  // Trades
     }
 
+    val onEnchantTap: (String) -> Unit = { enchantId ->
+        clearAllTargets()
+        targetEnchantId = enchantId
+        tab = 7  // Enchants
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         SpyglassTabRow(
             tabs          = BROWSE_TABS,
@@ -176,6 +186,7 @@ fun BrowseScreen(
                 onItemTap = onItemTap,
                 onStructureTap = onStructureTap,
                 onBiomeTap = onBiomeTap,
+                onEnchantTap = onEnchantTap,
             )
             2 -> CraftingScreen(
                 targetRecipeId = targetRecipeId,
@@ -207,7 +218,7 @@ fun BrowseScreen(
                 onItemTap = onItemTap,
                 onCalcTab = onCalcTab,
             )
-            7 -> EnchantsScreen(onCalcTab = onCalcTab)
+            7 -> EnchantsScreen(targetEnchantId = targetEnchantId, onCalcTab = onCalcTab)
             8 -> PotionsScreen(onItemTap = onItemTap)
             9 -> AdvancementsScreen(
                 targetAdvancementId = targetAdvancementId,

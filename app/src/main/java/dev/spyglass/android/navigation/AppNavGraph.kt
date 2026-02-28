@@ -95,12 +95,24 @@ fun AppNavGraph() {
             composable(TopDest.Calculators.route) {
                 val calcTab = pendingCalcTab
                 pendingCalcTab = null
-                CalculatorsScreen(initialTab = calcTab)
+                CalculatorsScreen(
+                    initialTab = calcTab,
+                    onBrowseTarget = { target ->
+                        pendingTarget = target
+                        navigateTo(TopDest.Browse.route)
+                    },
+                )
             }
             composable(TopDest.Browse.route) {
                 val target = pendingTarget
                 pendingTarget = null
-                BrowseScreen(initialTarget = target)
+                BrowseScreen(
+                    initialTarget = target,
+                    onCalcTab = { tab ->
+                        pendingCalcTab = tab
+                        navigateTo(TopDest.Calculators.route)
+                    },
+                )
             }
             composable(TopDest.Search.route) {
                 SearchScreen(onResultTap = { tab, id ->
@@ -157,7 +169,7 @@ private fun SpyglassTopBar(navController: NavHostController) {
             Text(
                 text  = "SPYGLASS",
                 style = MaterialTheme.typography.labelSmall,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.width(6.dp))
             SpyglassIconImage(
@@ -176,6 +188,7 @@ private fun SpyglassTopBar(navController: NavHostController) {
                 SpyglassIconImage(
                     icon = PixelIcons.Menu,
                     contentDescription = "Menu",
+                    tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.size(20.dp),
                 )
             }
@@ -231,7 +244,7 @@ fun BottomNavBar(navController: NavHostController) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDest   = backStackEntry?.destination
 
-    NavigationBar(containerColor = Background) {
+    NavigationBar(containerColor = MaterialTheme.colorScheme.background) {
         TOP_DESTINATIONS.forEach { dest ->
             NavigationBarItem(
                 selected = currentDest?.hierarchy?.any { it.route == dest.route } == true,
@@ -245,11 +258,11 @@ fun BottomNavBar(navController: NavHostController) {
                 icon  = { SpyglassIconImage(dest.icon, contentDescription = dest.label, modifier = Modifier.size(24.dp)) },
                 label = { Text(dest.label) },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor   = Gold,
-                    selectedTextColor   = Gold,
-                    unselectedIconColor = Stone500,
-                    unselectedTextColor = Stone500,
-                    indicatorColor      = GoldDim.copy(alpha = 0.15f),
+                    selectedIconColor   = MaterialTheme.colorScheme.primary,
+                    selectedTextColor   = MaterialTheme.colorScheme.primary,
+                    unselectedIconColor = MaterialTheme.colorScheme.secondary,
+                    unselectedTextColor = MaterialTheme.colorScheme.secondary,
+                    indicatorColor      = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.15f),
                 ),
             )
         }

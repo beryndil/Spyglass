@@ -1,8 +1,11 @@
 package dev.spyglass.android.settings
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -10,6 +13,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
@@ -38,6 +42,7 @@ fun SettingsScreen(
     val playerUuid          by vm.playerUuid.collectAsState()
     val gameClockEnabled    by vm.gameClockEnabled.collectAsState()
     val allFavorites        by vm.allFavorites.collectAsState()
+    val backgroundTheme     by vm.backgroundTheme.collectAsState()
 
     Column(
         modifier = Modifier
@@ -50,7 +55,7 @@ fun SettingsScreen(
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
-                tint = Stone300,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
         SectionHeader("Settings")
@@ -58,11 +63,37 @@ fun SettingsScreen(
         // ── Theme ───────────────────────────────────────────────────────
         SectionHeader("Theme")
         ResultCard {
-            StatRow("Color Theme", "Dark")
             Text(
-                "Dark mode only for now. More themes coming soon.",
+                "Background",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                ThemeOrder.forEach { key ->
+                    val info = ThemeInfoMap[key] ?: return@forEach
+                    val isSelected = backgroundTheme == key
+                    val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+                    Box(
+                        modifier = Modifier
+                            .size(34.dp)
+                            .clip(CircleShape)
+                            .background(info.background, CircleShape)
+                            .border(
+                                width = if (isSelected) 2.5.dp else 1.dp,
+                                color = borderColor,
+                                shape = CircleShape,
+                            )
+                            .clickable { vm.setBackgroundTheme(key) },
+                    )
+                }
+            }
+            Text(
+                ThemeInfoMap[backgroundTheme]?.label ?: "Obsidian",
                 style = MaterialTheme.typography.bodySmall,
-                color = Stone500,
+                color = MaterialTheme.colorScheme.secondary,
             )
         }
 
@@ -79,13 +110,13 @@ fun SettingsScreen(
                     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
                     modifier = Modifier.height(32.dp),
                 ) {
-                    Text("Clear Username", color = Stone500, style = MaterialTheme.typography.labelSmall)
+                    Text("Clear Username", color = MaterialTheme.colorScheme.secondary, style = MaterialTheme.typography.labelSmall)
                 }
             } else {
                 Text(
                     "No username set. You\u2019ll be asked on next launch.",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Stone500,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
             }
         }
@@ -96,7 +127,7 @@ fun SettingsScreen(
             Text(
                 "Which tab opens first when you tap Browse",
                 style = MaterialTheme.typography.bodySmall,
-                color = Stone500,
+                color = MaterialTheme.colorScheme.secondary,
             )
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -118,7 +149,7 @@ fun SettingsScreen(
             Text(
                 "Which tab opens first when you tap Tools",
                 style = MaterialTheme.typography.bodySmall,
-                color = Stone500,
+                color = MaterialTheme.colorScheme.secondary,
             )
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -143,17 +174,17 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Show Tip of the Day", style = MaterialTheme.typography.bodyLarge, color = Stone100)
-                    Text("Daily Minecraft tip on the Home screen", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                    Text("Show Tip of the Day", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                    Text("Daily Minecraft tip on the Home screen", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                 }
                 Switch(
                     checked = showTipOfDay,
                     onCheckedChange = vm::setShowTipOfDay,
                     colors = SwitchDefaults.colors(
-                        checkedThumbColor = Gold,
-                        checkedTrackColor = GoldDim,
-                        uncheckedThumbColor = Stone500,
-                        uncheckedTrackColor = Stone700,
+                        checkedThumbColor = MaterialTheme.colorScheme.primary,
+                        checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                        uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                        uncheckedTrackColor = MaterialTheme.colorScheme.outline,
                     ),
                 )
             }
@@ -164,17 +195,17 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Show Favorites on Home", style = MaterialTheme.typography.bodyLarge, color = Stone100)
-                    Text("Display your favorited items on the Home page", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                    Text("Show Favorites on Home", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                    Text("Display your favorited items on the Home page", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                 }
                 Switch(
                     checked = showFavoritesOnHome,
                     onCheckedChange = vm::setShowFavoritesOnHome,
                     colors = SwitchDefaults.colors(
-                        checkedThumbColor = Gold,
-                        checkedTrackColor = GoldDim,
-                        uncheckedThumbColor = Stone500,
-                        uncheckedTrackColor = Stone700,
+                        checkedThumbColor = MaterialTheme.colorScheme.primary,
+                        checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                        uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                        uncheckedTrackColor = MaterialTheme.colorScheme.outline,
                     ),
                 )
             }
@@ -189,17 +220,17 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Game Clock", style = MaterialTheme.typography.bodyLarge, color = Stone100)
-                    Text("Show mini clock in the top bar", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                    Text("Game Clock", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                    Text("Show mini clock in the top bar", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                 }
                 Switch(
                     checked = gameClockEnabled,
                     onCheckedChange = vm::setGameClockEnabled,
                     colors = SwitchDefaults.colors(
-                        checkedThumbColor = Gold,
-                        checkedTrackColor = GoldDim,
-                        uncheckedThumbColor = Stone500,
-                        uncheckedTrackColor = Stone700,
+                        checkedThumbColor = MaterialTheme.colorScheme.primary,
+                        checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                        uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                        uncheckedTrackColor = MaterialTheme.colorScheme.outline,
                     ),
                 )
             }
@@ -207,7 +238,7 @@ fun SettingsScreen(
             Text(
                 "Configure Game Clock \u2192",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.clickable { onCalcTab(10) },
             )
         }
@@ -219,19 +250,19 @@ fun SettingsScreen(
                 Text(
                     "No favorites yet. Star items in the Browse tabs to add them here.",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Stone500,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
             } else {
                 Text(
                     "${allFavorites.size} favorite(s)",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Stone300,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 allFavorites.forEach { fav ->
                     Text(
                         "\u2605  ${fav.displayName}",
                         style = MaterialTheme.typography.bodySmall,
-                        color = Stone300,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
                 SpyglassDivider()

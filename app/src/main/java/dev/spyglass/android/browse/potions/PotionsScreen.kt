@@ -135,10 +135,10 @@ fun PotionsScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search potions\u2026", color = Stone500) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = Stone500) },
+            placeholder = { Text("Search potions\u2026", color = MaterialTheme.colorScheme.secondary) },
+            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = Gold, unfocusedBorderColor = Stone700, cursorColor = Gold),
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
 
@@ -175,7 +175,7 @@ fun PotionsScreen(
             }
             if (favoritePotions.isNotEmpty()) {
                 item(key = "fav_header") {
-                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = Gold,
+                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
                 }
                 items(favoritePotions, key = { "fav_${it.id}" }) { fav ->
@@ -186,7 +186,7 @@ fun PotionsScreen(
                         leadingIcon = PotionTextures.get(fav.id) ?: PixelIcons.Potion,
                         trailing    = {
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
-                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = Gold, modifier = Modifier.size(20.dp))
+                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             }
                         },
                     )
@@ -196,7 +196,7 @@ fun PotionsScreen(
                 val catColor = when (p.category) {
                     "negative" -> NetherRed
                     "positive" -> Emerald
-                    else       -> Stone500
+                    else       -> MaterialTheme.colorScheme.secondary
                 }
                 val isExpanded = p.id in expandedIds
                 Column {
@@ -212,7 +212,7 @@ fun PotionsScreen(
                                     if (p.durationSeconds > 0) {
                                         val mins = p.durationSeconds / 60
                                         val secs = p.durationSeconds % 60
-                                        Text("${mins}:%02d".format(secs), style = MaterialTheme.typography.bodySmall, color = Gold)
+                                        Text("${mins}:%02d".format(secs), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
                                     }
                                     Spacer(Modifier.height(2.dp))
                                     CategoryBadge(label = p.category, color = catColor)
@@ -223,7 +223,7 @@ fun PotionsScreen(
                                     Icon(
                                         Icons.Filled.Star,
                                         contentDescription = "Favorite",
-                                        tint = if (isFav) Gold else Stone700,
+                                        tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                         modifier = Modifier.size(20.dp),
                                     )
                                 }
@@ -258,7 +258,7 @@ private fun PotionDetailCard(potion: PotionEntity, onItemTap: (String) -> Unit) 
 
         // Effect
         if (potion.effect.isNotBlank() && potion.effect != "none") {
-            Text(potion.effect, style = MaterialTheme.typography.bodyMedium, color = Stone300)
+            Text(potion.effect, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
         // Stats
@@ -275,7 +275,7 @@ private fun PotionDetailCard(potion: PotionEntity, onItemTap: (String) -> Unit) 
         // Brewing path with clickable ingredients
         if (potion.ingredientPath.isNotBlank()) {
             SpyglassDivider()
-            Text("Brewing Path", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("Brewing Path", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             val steps = parseIngredientPath(potion.ingredientPath)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -283,7 +283,7 @@ private fun PotionDetailCard(potion: PotionEntity, onItemTap: (String) -> Unit) 
             ) {
                 steps.forEachIndexed { i, (name, itemId) ->
                     if (i > 0) {
-                        Text("\u2192", style = MaterialTheme.typography.bodySmall, color = Stone500,
+                        Text("\u2192", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.padding(horizontal = 2.dp).align(Alignment.CenterVertically))
                     }
                     if (itemId != null) {
@@ -307,7 +307,7 @@ private fun PotionDetailCard(potion: PotionEntity, onItemTap: (String) -> Unit) 
                         )
                     } else {
                         // Non-linkable step (e.g. "base", "awkward potion")
-                        CategoryBadge(label = name, color = Stone500)
+                        CategoryBadge(label = name, color = MaterialTheme.colorScheme.secondary)
                     }
                 }
             }

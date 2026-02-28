@@ -215,15 +215,15 @@ fun ItemDetailPager(
         modifier = modifier
             .fillMaxWidth()
             .padding(top = 4.dp)
-            .background(SurfaceDark, RoundedCornerShape(8.dp))
-            .border(1.dp, Stone700, RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp))
+            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
             .padding(12.dp),
     ) {
         // Tab indicator
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(SurfaceMid, RoundedCornerShape(6.dp))
+                .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(6.dp))
                 .padding(2.dp),
         ) {
             val usesCount = recipesUsingItem.size + if (CompostData.chanceFor(itemId) != null) 1 else 0
@@ -234,7 +234,7 @@ fun ItemDetailPager(
                     modifier = Modifier
                         .weight(1f)
                         .background(
-                            if (isSelected) Gold else androidx.compose.ui.graphics.Color.Transparent,
+                            if (isSelected) MaterialTheme.colorScheme.primary else androidx.compose.ui.graphics.Color.Transparent,
                             RoundedCornerShape(4.dp),
                         )
                         .height(32.dp),
@@ -247,7 +247,7 @@ fun ItemDetailPager(
                         Text(
                             text = label,
                             style = MaterialTheme.typography.labelSmall,
-                            color = if (isSelected) Background else Stone300,
+                            color = if (isSelected) Background else MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                 }
@@ -281,9 +281,9 @@ private fun RecipePage(
         if (recipes.isEmpty()) {
             // No recipe — show biome sources
             val biomes = BiomeResourceMap.biomesForItem(itemId)
-            Text("No crafting recipe", style = MaterialTheme.typography.bodyMedium, color = Stone500)
+            Text("No crafting recipe", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
             if (biomes.isNotEmpty()) {
-                Text("Found in", style = MaterialTheme.typography.labelSmall, color = Gold)
+                Text("Found in", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -328,7 +328,7 @@ private fun RecipePage(
                         merged[key] = (merged[key] ?: 0) + count
                         tagIds.putIfAbsent(key, tag)
                     }
-                    Text("Ingredients", style = MaterialTheme.typography.labelSmall, color = Gold)
+                    Text("Ingredients", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -343,8 +343,8 @@ private fun RecipePage(
                                 } } else null,
                                 label = { Text("$count× $name", style = MaterialTheme.typography.labelSmall) },
                                 colors = AssistChipDefaults.assistChipColors(
-                                    labelColor = Stone100,
-                                    containerColor = Stone700.copy(alpha = 0.5f),
+                                    labelColor = MaterialTheme.colorScheme.onSurface,
+                                    containerColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
                                 ),
                                 border = null,
                             )
@@ -356,7 +356,7 @@ private fun RecipePage(
                 Text(
                     recipe.type.replace('_', ' ').replaceFirstChar { it.uppercase() },
                     style = MaterialTheme.typography.bodySmall,
-                    color = Stone500,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
 
                 SpyglassDivider()
@@ -410,7 +410,7 @@ private fun UsesPage(
                     Text(
                         "$compostChance% chance per item",
                         style = MaterialTheme.typography.bodySmall,
-                        color = Stone500,
+                        color = MaterialTheme.colorScheme.secondary,
                     )
                 }
             }
@@ -421,15 +421,15 @@ private fun UsesPage(
             Text(
                 "No known uses",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Stone500,
+                color = MaterialTheme.colorScheme.secondary,
             )
         }
         recipesUsingItem.forEach { recipe ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(SurfaceCard, RoundedCornerShape(6.dp))
-                    .border(0.5.dp, Stone700, RoundedCornerShape(6.dp))
+                    .background(LocalSurfaceCard.current, RoundedCornerShape(6.dp))
+                    .border(0.5.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(6.dp))
                     .clickable { onItemTap(recipe.outputItem) }
                     .padding(horizontal = 12.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -448,15 +448,15 @@ private fun UsesPage(
                     Text(
                         "${recipe.outputCount}× ${formatItemName(recipe.outputItem)}",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = Stone100,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
                         recipe.type.replace('_', ' '),
                         style = MaterialTheme.typography.bodySmall,
-                        color = Stone500,
+                        color = MaterialTheme.colorScheme.secondary,
                     )
                 }
-                Text("→", color = Gold, style = MaterialTheme.typography.bodyLarge)
+                Text("→", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.bodyLarge)
             }
         }
     }
@@ -490,21 +490,21 @@ private fun ChainCalculatorSection(
     val quantity = quantityInput.toLongOrNull() ?: 0L
 
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text("Chain Calculator", style = MaterialTheme.typography.labelSmall, color = Gold)
+        Text("Chain Calculator", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
 
         OutlinedTextField(
             value = quantityInput,
             onValueChange = { quantityInput = it.filter { c -> c.isDigit() } },
             label = { Text("How many?") },
-            placeholder = { Text("e.g. 55", color = Stone500) },
+            placeholder = { Text("e.g. 55", color = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Gold,
-                unfocusedBorderColor = Stone700,
-                focusedLabelColor = Gold,
-                unfocusedLabelColor = Stone500,
-                cursorColor = Gold,
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                focusedLabelColor = MaterialTheme.colorScheme.primary,
+                unfocusedLabelColor = MaterialTheme.colorScheme.secondary,
+                cursorColor = MaterialTheme.colorScheme.primary,
             ),
             modifier = Modifier.fillMaxWidth(),
         )
@@ -522,14 +522,14 @@ private fun ChainCalculatorSection(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Background, RoundedCornerShape(6.dp))
-                        .border(0.5.dp, Stone700, RoundedCornerShape(6.dp))
+                        .background(MaterialTheme.colorScheme.background, RoundedCornerShape(6.dp))
+                        .border(0.5.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(6.dp))
                         .padding(10.dp),
                     verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     // Top tier — crafted ingredients
                     if (craftedSteps.isNotEmpty()) {
-                        Text("Craft", style = MaterialTheme.typography.labelSmall, color = Gold)
+                        Text("Craft", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                         craftedSteps.forEach { step ->
                             Row(
                                 modifier = Modifier
@@ -544,13 +544,13 @@ private fun ChainCalculatorSection(
                                     Text(
                                         "$name × ${step.quantity}",
                                         style = MaterialTheme.typography.bodyMedium,
-                                        color = Gold,
+                                        color = MaterialTheme.colorScheme.primary,
                                     )
                                 }
                                 Text(
                                     "${step.craftsNeeded} crafts",
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = Stone500,
+                                    color = MaterialTheme.colorScheme.secondary,
                                 )
                             }
                         }
@@ -586,7 +586,7 @@ private fun ChainCalculatorSection(
                                             Text(
                                                 formatItemName(biomeId),
                                                 style = MaterialTheme.typography.bodySmall,
-                                                color = Stone500,
+                                                color = MaterialTheme.colorScheme.secondary,
                                                 modifier = Modifier.clickable { onBiomeTap(biomeId) },
                                             )
                                         }

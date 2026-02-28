@@ -60,7 +60,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
 
         InputCard {
             // Item selector — grouped by category
-            Text("Weapons", style = MaterialTheme.typography.bodySmall, color = Stone500)
+            Text("Weapons", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 WEAPONS.forEach { t ->
                     val icon = ItemTextures.get(t.textureId())
@@ -73,7 +73,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                 }
             }
             Spacer(Modifier.height(4.dp))
-            Text("Tools", style = MaterialTheme.typography.bodySmall, color = Stone500)
+            Text("Tools", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 TOOL_TYPES.forEach { t ->
                     val icon = ItemTextures.get(t.textureId())
@@ -86,7 +86,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                 }
             }
             Spacer(Modifier.height(4.dp))
-            Text("Armor", style = MaterialTheme.typography.bodySmall, color = Stone500)
+            Text("Armor", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 ARMOR_TYPES.forEach { t ->
                     val icon = ItemTextures.get(t.textureId())
@@ -102,7 +102,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
 
         // Enchantment picker
         InputCard {
-            Text("Enchantments", style = MaterialTheme.typography.bodySmall, color = Stone500)
+            Text("Enchantments", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             available.forEach { e ->
                 val picked = s.pickedEnchants.find { it.enchant.id == e.id }
                 val incompatible = picked == null && vm.isIncompatible(e)
@@ -118,7 +118,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                         label    = {
                             Text(
                                 e.name,
-                                color = if (incompatible) Stone700 else Color.Unspecified,
+                                color = if (incompatible) MaterialTheme.colorScheme.outline else Color.Unspecified,
                             )
                         },
                         modifier = Modifier.weight(1f),
@@ -130,7 +130,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                                 IconButton(onClick = { vm.setEnchantLevel(e.id, lvl) }, modifier = Modifier.size(32.dp)) {
                                     val numeral = listOf("I","II","III","IV","V")[lvl - 1]
                                     Text(numeral, style = MaterialTheme.typography.labelSmall,
-                                        color = if (picked.level == lvl) Gold else Stone500)
+                                        color = if (picked.level == lvl) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
                                 }
                             }
                         }
@@ -142,7 +142,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
         // Results
         if (s.steps.isNotEmpty()) {
             ResultCard {
-                Text("Optimal Order", style = MaterialTheme.typography.labelSmall, color = Gold)
+                Text("Optimal Order", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.height(4.dp))
                 s.steps.forEachIndexed { i, step ->
                     if (i > 0) SpyglassDivider()
@@ -155,7 +155,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                         Text(
                             "${step.cost} lvl",
                             style = MaterialTheme.typography.bodyLarge,
-                            color = if (step.tooExpensive) Red400 else Gold,
+                            color = if (step.tooExpensive) Red400 else MaterialTheme.colorScheme.primary,
                         )
                     }
                     if (step.tooExpensive) Text("Too Expensive!", style = MaterialTheme.typography.bodySmall, color = Red400)
@@ -168,7 +168,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
         Text(
             "Pick an item and select the enchantments you want. This tool calculates the cheapest XP order to combine them on an anvil, avoiding the \"Too Expensive\" cap. Tap enchantment levels (I\u2013V) to adjust.",
             style = MaterialTheme.typography.bodySmall,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
         )
     }
     SnackbarHost(

@@ -32,7 +32,7 @@ fun FeedbackScreen(onBack: () -> Unit = {}) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
-                tint = Stone300,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
         SectionHeader("Feedback")
@@ -40,7 +40,7 @@ fun FeedbackScreen(onBack: () -> Unit = {}) {
             Text(
                 text = "Report a Bug",
                 style = MaterialTheme.typography.bodyLarge,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { uriHandler.openUri("$issuesUrl/new?labels=bug") }
@@ -50,7 +50,7 @@ fun FeedbackScreen(onBack: () -> Unit = {}) {
             Text(
                 text = "Request a Feature",
                 style = MaterialTheme.typography.bodyLarge,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { uriHandler.openUri("$issuesUrl/new?labels=enhancement") }
@@ -60,7 +60,7 @@ fun FeedbackScreen(onBack: () -> Unit = {}) {
             Text(
                 text = "Rate on Play Store",
                 style = MaterialTheme.typography.bodyLarge,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { uriHandler.openUri("https://play.google.com/store/apps/details?id=dev.spyglass.android") }
@@ -71,7 +71,7 @@ fun FeedbackScreen(onBack: () -> Unit = {}) {
         Text(
             "Your feedback helps make Spyglass better for everyone. Thank you!",
             style = MaterialTheme.typography.bodyMedium,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
         )
 
         Spacer(Modifier.height(8.dp))

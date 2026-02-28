@@ -63,11 +63,11 @@ fun LightScreen() {
             Text(
                 "SELECT LIGHT SOURCE",
                 style = MaterialTheme.typography.labelSmall,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
             )
             OutlinedButton(
                 onClick = { showSourcePicker = !showSourcePicker },
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = Stone100),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.onSurface),
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text("${selectedSource.name} (Level ${selectedSource.level})")
@@ -89,13 +89,13 @@ fun LightScreen() {
                         ) {
                             Text(
                                 source.name,
-                                color = if (source == selectedSource) Gold else Stone300,
+                                color = if (source == selectedSource) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
                         Text(
                             "Level ${source.level}",
                             style = MaterialTheme.typography.bodySmall,
-                            color = Stone500,
+                            color = MaterialTheme.colorScheme.secondary,
                         )
                     }
                 }
@@ -114,7 +114,7 @@ fun LightScreen() {
             Text(
                 "Place ${selectedSource.name} every $lineSpacing blocks along a line (hallway, tunnel).",
                 style = MaterialTheme.typography.bodySmall,
-                color = Stone500,
+                color = MaterialTheme.colorScheme.secondary,
             )
 
             SpyglassDivider()
@@ -124,7 +124,7 @@ fun LightScreen() {
                 Text(
                     "Place ${selectedSource.name} in a grid pattern every ${selectedSource.gridSpacing} blocks in both X and Z directions to fully prevent mob spawning on a flat surface.",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Stone500,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
             } else {
                 StatRow("Grid Spacing", "Not practical")
@@ -142,34 +142,34 @@ fun LightScreen() {
             Text(
                 "OVERWORLD (1.18+)",
                 style = MaterialTheme.typography.labelSmall,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
             )
             Text(
                 "Hostile mobs spawn at block light level 0 only. Any light level 1 or above prevents spawning.",
                 style = MaterialTheme.typography.bodySmall,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
             Text(
                 "NETHER",
                 style = MaterialTheme.typography.labelSmall,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
             )
             Text(
                 "Most hostile mobs spawn at light level 11 or lower. Blazes and Wither Skeletons spawn in fortresses at light level 11 or lower.",
                 style = MaterialTheme.typography.bodySmall,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
             Text(
                 "MOB SPAWNERS",
                 style = MaterialTheme.typography.labelSmall,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
             )
             Text(
                 "Spawner blocks activate when light level is 11 or lower. Place light sources within 4 blocks to disable them.",
                 style = MaterialTheme.typography.bodySmall,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
@@ -179,7 +179,7 @@ fun LightScreen() {
             Text(
                 "COMMON SPACINGS",
                 style = MaterialTheme.typography.labelSmall,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.height(4.dp))
             StatRow("Torch (14)", "12 block grid / 27 block line")
@@ -189,13 +189,13 @@ fun LightScreen() {
             Text(
                 "HOW LIGHT SPREADS",
                 style = MaterialTheme.typography.labelSmall,
-                color = Gold,
+                color = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.height(4.dp))
             Text(
                 "Light decreases by 1 for each block of distance (Manhattan distance). A torch at level 14 reaches level 1 at 13 blocks away, and level 0 at 14 blocks.",
                 style = MaterialTheme.typography.bodySmall,
-                color = Stone300,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 

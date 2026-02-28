@@ -99,26 +99,26 @@ fun LibrarianScreen() {
         displayed.forEach { be ->
             SectionHeader(be.biome)
             ResultCard {
-                Text("MASTER LEVEL EXCLUSIVE", style = MaterialTheme.typography.labelSmall, color = Gold)
+                Text("MASTER LEVEL EXCLUSIVE", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.height(4.dp))
                 Text(be.masterExclusive, style = MaterialTheme.typography.titleMedium, color = EnderPurple)
                 Text(
                     "Guaranteed enchanted book trade at Master level.",
-                    style = MaterialTheme.typography.bodySmall, color = Stone500,
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
                 )
                 SpyglassDivider()
-                Text("COMMON POOL", style = MaterialTheme.typography.labelSmall, color = Gold)
+                Text("COMMON POOL", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.height(4.dp))
                 be.commonPool.forEach { enchant ->
                     Text(
                         "\u2022 $enchant",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = Stone300,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
                 Text(
                     "Available at Novice through Expert levels.",
-                    style = MaterialTheme.typography.bodySmall, color = Stone500,
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
                 )
             }
         }
@@ -126,25 +126,25 @@ fun LibrarianScreen() {
         // ── Key Info ──
         SectionHeader("How It Works")
         ResultCard {
-            Text("BIOME DETERMINATION", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("BIOME DETERMINATION", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             Text(
                 "A librarian's available enchantments are determined by the biome they first claimed a lectern in. Moving them to a different biome does NOT change their enchantment pool.",
-                style = MaterialTheme.typography.bodySmall, color = Stone300,
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
-            Text("ENCHANTMENT LEVEL CAPS", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("ENCHANTMENT LEVEL CAPS", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             Text(
                 "Some enchantments are capped below their maximum level from librarians:\n\u2022 Protection III (max IV requires anvil combining)\n\u2022 Fortune II (max III requires anvil combining)\n\u2022 Unbreaking II (max III requires anvil combining)",
-                style = MaterialTheme.typography.bodySmall, color = Stone300,
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
-            Text("STRATEGY TIPS", style = MaterialTheme.typography.labelSmall, color = Gold)
+            Text("STRATEGY TIPS", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             Text(
                 "\u2022 For Mending, breed villagers in a Swamp biome\n\u2022 For Silk Touch, use a Snowy biome\n\u2022 Combine capped enchantments via anvil for max level\n\u2022 Break and replace the lectern to reroll trades",
-                style = MaterialTheme.typography.bodySmall, color = Stone300,
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
@@ -155,12 +155,12 @@ fun LibrarianScreen() {
             Spacer(Modifier.height(4.dp))
             Text(
                 "\u2022 Trident: Channeling, Loyalty, Riptide, Impaling\n\u2022 Crossbow: Multishot, Piercing, Quick Charge\n\u2022 Fishing Rod: Luck of the Sea, Lure\n\u2022 Treasure Only: Soul Speed, Swift Sneak, Wind Burst\n\u2022 1.21+ Only: Breach, Density (Mace enchantments)",
-                style = MaterialTheme.typography.bodySmall, color = Stone300,
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
             Text(
                 "These must be found from loot chests, fishing, mob drops, or enchanting tables.",
-                style = MaterialTheme.typography.bodySmall, color = Stone500,
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
             )
         }
 

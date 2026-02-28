@@ -54,9 +54,9 @@ fun BlockFillScreen(vm: BlockFillViewModel = viewModel()) {
                 Checkbox(
                     checked = s.hollow,
                     onCheckedChange = { vm.toggleHollow() },
-                    colors = CheckboxDefaults.colors(checkedColor = Gold, uncheckedColor = Stone500, checkmarkColor = Background),
+                    colors = CheckboxDefaults.colors(checkedColor = MaterialTheme.colorScheme.primary, uncheckedColor = MaterialTheme.colorScheme.secondary, checkmarkColor = MaterialTheme.colorScheme.onPrimary),
                 )
-                Text("Hollow (shell only)", style = MaterialTheme.typography.bodyMedium, color = Stone100)
+                Text("Hollow (shell only)", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
             }
         }
 
@@ -74,7 +74,7 @@ fun BlockFillScreen(vm: BlockFillViewModel = viewModel()) {
         Text(
             "Enter the width, length, and height of an area to calculate how many blocks you need to fill it. Toggle between blocks and chunks for large builds. Results show storage needed in stacks, chests, and shulker boxes.",
             style = MaterialTheme.typography.bodySmall,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
         )
     }
 }

@@ -49,7 +49,7 @@ fun SmeltingScreen(vm: SmeltingViewModel = viewModel()) {
         Text(
             "Enter how many items you need to smelt and see exactly how much of each fuel type you'll need. Green dots mean high efficiency, gold is mid, gray is low. Type amounts like \"14 stacks\", \"5k\", or \"2 chests\".",
             style = MaterialTheme.typography.bodySmall,
-            color = Stone500,
+            color = MaterialTheme.colorScheme.secondary,
         )
     }
 }
@@ -64,8 +64,8 @@ private fun FuelRow(r: FuelResult) {
         // Efficiency dot
         val dotColor = when (r.efficiency) {
             Efficiency.HIGH -> Green400
-            Efficiency.MID  -> Gold
-            Efficiency.LOW  -> Stone500
+            Efficiency.MID  -> MaterialTheme.colorScheme.primary
+            Efficiency.LOW  -> MaterialTheme.colorScheme.secondary
         }
         Box(
             modifier = Modifier
@@ -84,10 +84,10 @@ private fun FuelRow(r: FuelResult) {
                 if (remainder == 0L) "$stacks stack${if (stacks > 1) "s" else ""}"
                 else "$stacks stack${if (stacks > 1) "s" else ""} + $remainder"
             }
-            Text(qty, style = MaterialTheme.typography.bodyLarge, color = Stone100)
+            Text(qty, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
             val wasted = r.unused.toLong()
             if (wasted > 0) {
-                Text("$wasted wasted", style = MaterialTheme.typography.bodySmall, color = Stone500)
+                Text("$wasted wasted", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             }
         }
     }

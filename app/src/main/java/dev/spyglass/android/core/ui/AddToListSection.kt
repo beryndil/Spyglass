@@ -41,13 +41,13 @@ fun AddToListSection(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text("Add to Shopping List", style = MaterialTheme.typography.labelSmall, color = Gold)
+        Text("Add to Shopping List", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
 
         if (lists.isEmpty()) {
             Text(
                 "No shopping lists yet \u2014 create one in the Shopping tab",
                 style = MaterialTheme.typography.bodySmall,
-                color = Stone500,
+                color = MaterialTheme.colorScheme.secondary,
             )
             return@Column
         }
@@ -69,19 +69,19 @@ fun AddToListSection(
                     singleLine = true,
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = dropdownExpanded) },
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Gold, unfocusedBorderColor = Stone700,
-                        focusedLabelColor = Gold, unfocusedLabelColor = Stone500,
+                        focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        focusedLabelColor = MaterialTheme.colorScheme.primary, unfocusedLabelColor = MaterialTheme.colorScheme.secondary,
                     ),
                     modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable),
                 )
                 ExposedDropdownMenu(
                     expanded = dropdownExpanded,
                     onDismissRequest = { dropdownExpanded = false },
-                    containerColor = SurfaceDark,
+                    containerColor = MaterialTheme.colorScheme.surface,
                 ) {
                     lists.forEach { list ->
                         DropdownMenuItem(
-                            text = { Text(list.name, color = Stone100) },
+                            text = { Text(list.name, color = MaterialTheme.colorScheme.onSurface) },
                             onClick = {
                                 selectedList = list
                                 dropdownExpanded = false
@@ -99,8 +99,8 @@ fun AddToListSection(
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Gold, unfocusedBorderColor = Stone700,
-                    focusedLabelColor = Gold, unfocusedLabelColor = Stone500, cursorColor = Gold,
+                    focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    focusedLabelColor = MaterialTheme.colorScheme.primary, unfocusedLabelColor = MaterialTheme.colorScheme.secondary, cursorColor = MaterialTheme.colorScheme.primary,
                 ),
                 modifier = Modifier.width(72.dp),
             )
@@ -116,10 +116,10 @@ fun AddToListSection(
                         feedback = "Added!"
                     }
                 },
-                colors = IconButtonDefaults.iconButtonColors(containerColor = Gold),
+                colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.primary),
                 modifier = Modifier.size(40.dp),
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add to list", tint = Background, modifier = Modifier.size(20.dp))
+                Icon(Icons.Default.Add, contentDescription = "Add to list", tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
             }
         }
 
