@@ -104,8 +104,8 @@ private fun typeIcon(type: String, id: String): SpyglassIcon = when (type) {
     "Potion"      -> PotionTextures.get(id) ?: PixelIcons.Potion
     "Trade"       -> PixelIcons.Trade
     "Structure"   -> StructureTextures.get(id) ?: PixelIcons.Structure
-    "Advancement" -> PixelIcons.Enchant
-    "Command"     -> PixelIcons.Blocks
+    "Advancement" -> PixelIcons.Advancement
+    "Command"     -> PixelIcons.Command
     else          -> PixelIcons.Search
 }
 

@@ -218,7 +218,7 @@ private fun FoodItemCard(food: FoodItem) {
         trailing = {
             Column(horizontalAlignment = Alignment.End) {
                 Text(
-                    "${food.saturation}",
+                    "${"%.1f".format(food.saturation)}",
                     style = MaterialTheme.typography.titleMedium,
                     color = satColor,
                 )

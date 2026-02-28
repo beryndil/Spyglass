@@ -52,7 +52,7 @@ fun LightScreen() {
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         TabIntroHeader(
-            icon = PixelIcons.Blocks,
+            icon = PixelIcons.Torch,
             title = "Light Spacing",
             description = "Calculate torch and light source spacing to prevent hostile mob spawning.",
         )

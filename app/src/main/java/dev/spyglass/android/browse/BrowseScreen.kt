@@ -91,6 +91,7 @@ fun BrowseScreen(
                 1 -> targetItemId = initialTarget.id
                 2 -> targetRecipeId = initialTarget.id
                 3 -> targetMobId = initialTarget.id
+                4 -> targetProfession = initialTarget.id
                 5 -> targetBiomeId = initialTarget.id
                 6 -> targetStructureId = initialTarget.id
                 7 -> targetEnchantId = initialTarget.id

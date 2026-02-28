@@ -21,10 +21,13 @@ import dev.spyglass.android.core.ui.*
 private val BROWSE_TAB_NAMES = listOf(
     "Blocks", "Items", "Recipes", "Mobs", "Trades",
     "Biomes", "Structures", "Enchants", "Potions",
+    "Advancements", "Commands", "Reference",
 )
 
 private val TOOL_TAB_NAMES = listOf(
-    "Todo", "Shopping", "Enchanting", "Fill", "Shapes", "Maze", "Storage", "Smelt", "Nether", "Reference", "Game Clock",
+    "Todo", "Shopping", "Enchanting", "Fill", "Shapes", "Maze", "Storage",
+    "Smelt", "Nether", "Game Clock", "Light", "Notes", "Waypoints",
+    "Redstone", "Librarian", "Food", "Banners", "Trims", "Loot",
 )
 
 @OptIn(ExperimentalLayoutApi::class)

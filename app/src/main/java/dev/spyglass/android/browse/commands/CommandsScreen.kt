@@ -160,7 +160,7 @@ fun CommandsScreen(
         ) {
             item {
                 TabIntroHeader(
-                    icon = PixelIcons.Blocks,
+                    icon = PixelIcons.Command,
                     title = "Commands",
                     description = "All Minecraft Java 1.21.4 commands with syntax, descriptions, and permission levels.",
                     stat = "${commands.size} commands",
@@ -176,7 +176,7 @@ fun CommandsScreen(
                         headline = fav.displayName,
                         supporting = "",
                         supportingMaxLines = 1,
-                        leadingIcon = PixelIcons.Blocks,
+                        leadingIcon = PixelIcons.Command,
                         trailing = {
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
@@ -192,7 +192,7 @@ fun CommandsScreen(
                         headline = cmd.name,
                         supporting = cmd.description.take(60),
                         supportingMaxLines = 1,
-                        leadingIcon = PixelIcons.Blocks,
+                        leadingIcon = PixelIcons.Command,
                         modifier = Modifier.clickable { vm.toggleExpanded(cmd.id) },
                         trailing = {
                             Row(verticalAlignment = Alignment.CenterVertically) {

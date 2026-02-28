@@ -302,7 +302,7 @@ fun AdvancementsScreen(
         ) {
             item {
                 TabIntroHeader(
-                    icon = PixelIcons.Enchant,
+                    icon = PixelIcons.Advancement,
                     title = "Advancement Planner",
                     description = "Track your progress through all Minecraft advancements with practical guides",
                     stat = "$completedCount / ${advancements.size} completed",
@@ -343,7 +343,7 @@ fun AdvancementsScreen(
                         headline = fav.displayName,
                         supporting = "",
                         supportingMaxLines = 1,
-                        leadingIcon = PixelIcons.Enchant,
+                        leadingIcon = PixelIcons.Advancement,
                         leadingIconTint = if (isComplete) Emerald else MaterialTheme.colorScheme.onSurfaceVariant,
                         trailing = {
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {

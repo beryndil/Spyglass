@@ -85,8 +85,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
                 tint = Color.Unspecified,
             )
             Spacer(Modifier.height(12.dp))
-            // TODO: Replace with actual Buy Me a Coffee / Ko-fi URL
-            val coffeeUrl = "https://buymeacoffee.com/TODO"
+            val coffeeUrl = "https://buymeacoffee.com/beryndil"
             Column(
                 modifier = Modifier
                     .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(8.dp))
@@ -204,7 +203,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
         // ── Feedback ─────────────────────────────────────────────────────────
         SectionHeader("Feedback")
         ResultCard {
-            val issuesUrl = "https://github.com/user/spyglass-android/issues"
+            val issuesUrl = "https://github.com/beryndil/spyglass-android/issues"
             Text(
                 text = "Report a Bug",
                 style = MaterialTheme.typography.bodyLarge,

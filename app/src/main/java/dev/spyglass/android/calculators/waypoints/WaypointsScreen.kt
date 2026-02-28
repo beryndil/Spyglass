@@ -161,7 +161,7 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
         ) {
             item {
                 TabIntroHeader(
-                    icon = PixelIcons.Biome,
+                    icon = PixelIcons.Waypoints,
                     title = "Waypoints",
                     description = "Save and organize coordinates for your important Minecraft locations.",
                     stat = "${waypoints.size} waypoints",
@@ -171,7 +171,7 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
             if (waypoints.isEmpty()) {
                 item {
                     EmptyState(
-                        icon = PixelIcons.Biome,
+                        icon = PixelIcons.Waypoints,
                         title = if (query.isNotBlank() || categoryFilter != "all") "No waypoints found" else "No waypoints saved",
                         subtitle = if (query.isNotBlank() || categoryFilter != "all") "Try a different search or filter" else "Tap + to save your first location",
                     )
@@ -186,7 +186,7 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
                         headline = wp.name,
                         supporting = "${wp.x}, ${wp.y}, ${wp.z}",
                         supportingMaxLines = 1,
-                        leadingIcon = PixelIcons.Biome,
+                        leadingIcon = PixelIcons.Waypoints,
                         leadingIconTint = wpColor,
                         modifier = Modifier.clickable { vm.toggleExpanded(wp.id) },
                         trailing = {

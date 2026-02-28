@@ -685,24 +685,13 @@ private fun ItemDetailCard(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                recipesUsing.take(8).forEach { recipe ->
+                recipesUsing.forEach { recipe ->
                     AssistChip(
                         onClick = { onItemTap(recipe.outputItem) },
                         label = { Text(formatId(recipe.outputItem), style = MaterialTheme.typography.labelSmall) },
                         colors = AssistChipDefaults.assistChipColors(
                             labelColor = MaterialTheme.colorScheme.primary,
                             containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
-                        ),
-                        border = null,
-                    )
-                }
-                if (recipesUsing.size > 8) {
-                    AssistChip(
-                        onClick = { },
-                        label = { Text("See all (${recipesUsing.size})", style = MaterialTheme.typography.labelSmall) },
-                        colors = AssistChipDefaults.assistChipColors(
-                            labelColor = MaterialTheme.colorScheme.secondary,
-                            containerColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.12f),
                         ),
                         border = null,
                     )
