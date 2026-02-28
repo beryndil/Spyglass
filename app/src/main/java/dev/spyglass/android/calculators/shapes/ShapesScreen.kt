@@ -6,6 +6,7 @@ import androidx.compose.foundation.verticalScroll
 import dev.spyglass.android.core.ui.PixelIcons
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -66,6 +67,47 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                 val tubeVal = s.tubeInput.toIntOrNull() ?: 3
                 val maxTube = radiusVal.coerceAtLeast(1)
                 LabeledSlider("Tube radius", tubeVal, 1, maxTube) { vm.setTube(it.toString()) }
+            }
+
+            // Thickness slider for sphere, dome, torus
+            if (s.shapeType in setOf(ShapeType.SPHERE, ShapeType.DOME, ShapeType.TORUS)) {
+                val maxThick = when (s.shapeType) {
+                    ShapeType.TORUS -> (s.tubeInput.toIntOrNull() ?: 3).coerceAtLeast(1)
+                    else -> 3
+                }
+                LabeledSlider("Thickness", s.thickness.coerceIn(1, maxThick), 1, maxThick) { vm.setThickness(it) }
+            }
+
+            // Hollow toggle for cylinder
+            if (s.shapeType == ShapeType.CYLINDER) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text("Hollow", style = MaterialTheme.typography.bodyMedium, color = Stone300)
+                    Spacer(Modifier.weight(1f))
+                    Switch(
+                        checked = s.hollow,
+                        onCheckedChange = { vm.setHollow(it) },
+                        colors = SwitchDefaults.colors(checkedTrackColor = Gold),
+                    )
+                }
+            }
+
+            // Flip toggle for cone and pyramid
+            if (s.shapeType in setOf(ShapeType.CONE, ShapeType.PYRAMID)) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text("Flipped", style = MaterialTheme.typography.bodyMedium, color = Stone300)
+                    Spacer(Modifier.weight(1f))
+                    Switch(
+                        checked = s.flipped,
+                        onCheckedChange = { vm.setFlipped(it) },
+                        colors = SwitchDefaults.colors(checkedTrackColor = Gold),
+                    )
+                }
             }
         }
 
