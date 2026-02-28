@@ -28,6 +28,8 @@ data class ClockState(
     val dayProgress: Float = 0f,
     val events: List<EventDisplay> = emptyList(),
     val activeEvents: List<ClockEngine.GameEvent> = emptyList(),
+    val dayOffset: Long = 0,
+    val displayedDay: Long = 0,
 )
 
 class ClockViewModel(app: Application) : AndroidViewModel(app) {
@@ -50,7 +52,8 @@ class ClockViewModel(app: Application) : AndroidViewModel(app) {
                         .sortedBy { it.tick }
                 }
 
-                _state.update { it.copy(activeEvents = activeEvents) }
+                val dayOffset = prefs[PreferenceKeys.CLOCK_DAY_OFFSET] ?: 0L
+                _state.update { it.copy(activeEvents = activeEvents, dayOffset = dayOffset) }
 
                 // Restore sync
                 val tick = prefs[PreferenceKeys.CLOCK_TICK_OFFSET] ?: -1L
@@ -100,6 +103,17 @@ class ClockViewModel(app: Application) : AndroidViewModel(app) {
                 it.remove(PreferenceKeys.CLOCK_SYNC_TIME_MS)
                 it.remove(PreferenceKeys.CLOCK_SYNC_METHOD)
             }
+        }
+    }
+
+    fun setDay(day: Long) {
+        val s = _state.value
+        if (!s.synced) return
+        val daysSinceSync = ClockEngine.elapsedDays(s.syncTimeMs)
+        val offset = day - daysSinceSync
+        _state.update { it.copy(dayOffset = offset, displayedDay = day) }
+        viewModelScope.launch {
+            store.edit { it[PreferenceKeys.CLOCK_DAY_OFFSET] = offset }
         }
     }
 
@@ -161,6 +175,7 @@ class ClockViewModel(app: Application) : AndroidViewModel(app) {
                 val current = ClockEngine.currentTick(s.syncTick, s.syncTimeMs)
                 val timeStr = ClockEngine.formatTime(current)
                 val progress = current.toFloat() / ClockEngine.TICKS_PER_DAY
+                val displayedDay = s.dayOffset + ClockEngine.elapsedDays(s.syncTimeMs)
                 val events = s.activeEvents
                     .map { evt ->
                         val away = ClockEngine.ticksUntil(current, evt.tick)
@@ -180,6 +195,7 @@ class ClockViewModel(app: Application) : AndroidViewModel(app) {
                         timeString = timeStr,
                         dayProgress = progress,
                         events = events,
+                        displayedDay = displayedDay,
                     )
                 }
                 delay(1000)

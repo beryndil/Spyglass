@@ -14,6 +14,12 @@ object ClockEngine {
         return ((syncTick + ticksElapsed) % TICKS_PER_DAY + TICKS_PER_DAY) % TICKS_PER_DAY
     }
 
+    fun elapsedDays(syncTimeMs: Long): Long {
+        val elapsed = System.currentTimeMillis() - syncTimeMs
+        val ticksElapsed = elapsed / 50
+        return ticksElapsed / TICKS_PER_DAY
+    }
+
     fun tickToHours(tick: Long): Int = ((tick / 1000 + 6) % 24).toInt()
     fun tickToMinutes(tick: Long): Int = ((tick % 1000) * 60 / 1000).toInt()
 
@@ -71,7 +77,7 @@ object ClockEngine {
     fun currentEvent(currentTick: Long, events: List<GameEvent>): GameEvent? {
         if (events.isEmpty()) return null
         // The current event is the most recent one that has passed (largest ticksUntil from the "behind" perspective)
-        return events.maxByOrNull { (currentTick - it.tick + TICKS_PER_DAY) % TICKS_PER_DAY }
+        return events.minByOrNull { (currentTick - it.tick + TICKS_PER_DAY) % TICKS_PER_DAY }
     }
 
     fun serializeEvents(events: List<GameEvent>): String = Json.encodeToString(events)

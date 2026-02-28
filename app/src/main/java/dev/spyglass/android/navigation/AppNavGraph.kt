@@ -30,6 +30,7 @@ import dev.spyglass.android.license.LicenseScreen
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.SettingsScreen
 import dev.spyglass.android.settings.dataStore
+import androidx.compose.foundation.clickable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 
@@ -71,7 +72,10 @@ fun AppNavGraph() {
     }
 
     Scaffold(
-        topBar    = { SpyglassTopBar(navController) },
+        topBar    = { SpyglassTopBar(navController, onClockTap = {
+            pendingCalcTab = 10
+            navigateTo(TopDest.Calculators.route)
+        }) },
         bottomBar = { if (showBars) BottomNavBar(navController) },
     ) { innerPadding ->
         NavHost(
@@ -151,7 +155,7 @@ fun AppNavGraph() {
 // -- Top bar --
 
 @Composable
-private fun SpyglassTopBar(navController: NavHostController) {
+private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> Unit = {}) {
     var menuExpanded by remember { mutableStateOf(false) }
 
     Row(
@@ -180,7 +184,7 @@ private fun SpyglassTopBar(navController: NavHostController) {
             )
         }
 
-        MiniGameClock()
+        MiniGameClock(onTap = onClockTap)
         Spacer(Modifier.width(8.dp))
 
         Box {
@@ -272,7 +276,7 @@ fun BottomNavBar(navController: NavHostController) {
 // -- Mini game clock --
 
 @Composable
-private fun MiniGameClock() {
+private fun MiniGameClock(onTap: () -> Unit = {}) {
     val context = LocalContext.current
     val store = context.dataStore
 
@@ -327,5 +331,6 @@ private fun MiniGameClock() {
         style = MaterialTheme.typography.labelSmall,
         color = timeColor,
         maxLines = 1,
+        modifier = Modifier.clickable { onTap() },
     )
 }

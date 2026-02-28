@@ -25,6 +25,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
     var showQuickHelp by remember { mutableStateOf(false) }
     var showCountdownHelp by remember { mutableStateOf(false) }
     var showAddDialog by remember { mutableStateOf(false) }
+    var showDayDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -116,7 +117,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
                     modifier = Modifier.height(32.dp),
                 ) {
-                    Text("Reset Sync", color = Red400, style = MaterialTheme.typography.labelSmall)
+                    Text("Stop Clock", color = Red400, style = MaterialTheme.typography.labelSmall)
                 }
             }
         }
@@ -149,12 +150,30 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                     )
                 }
                 Spacer(Modifier.height(2.dp))
-                Text(
-                    "Day ${state.currentTick / ClockEngine.TICKS_PER_DAY}  \u2022  Tick ${state.currentTick}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
+                Row(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
-                )
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        "Day ",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                    Text(
+                        "${state.displayedDay}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(4.dp))
+                            .clickable { showDayDialog = true }
+                            .padding(horizontal = 4.dp),
+                    )
+                    Text(
+                        "  \u2022  Tick ${state.currentTick}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                }
             }
 
             // ── Your Events ──
@@ -326,6 +345,15 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
             onAddPredefined = { vm.addPredefinedEvent(it) },
             onAddCustom = { name, tick, color -> vm.addCustomEvent(name, tick, color) },
             onDismiss = { showAddDialog = false },
+        )
+    }
+
+    // ── Set Day Dialog ──
+    if (showDayDialog) {
+        SetDayDialog(
+            currentDay = state.displayedDay,
+            onSetDay = { vm.setDay(it); showDayDialog = false },
+            onDismiss = { showDayDialog = false },
         )
     }
 }
@@ -500,6 +528,52 @@ private fun AddEventDialog(
         confirmButton = {
             TextButton(onClick = onDismiss) {
                 Text("Done", color = MaterialTheme.colorScheme.primary)
+            }
+        },
+    )
+}
+
+@Composable
+private fun SetDayDialog(
+    currentDay: Long,
+    onSetDay: (Long) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    var dayInput by remember { mutableStateOf(currentDay.toString()) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.surface,
+        title = { Text("Set Day", color = MaterialTheme.colorScheme.primary) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    "Enter the current in-game day from the F3 debug screen (Day line). You can update this any time after a server restart or crash.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                SpyglassTextField(
+                    value = dayInput,
+                    onValueChange = { dayInput = it.filter { c -> c.isDigit() } },
+                    label = "Day number",
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    val day = dayInput.toLongOrNull() ?: return@TextButton
+                    onSetDay(day)
+                },
+                enabled = dayInput.isNotBlank() && dayInput.toLongOrNull() != null,
+            ) {
+                Text("Set", color = MaterialTheme.colorScheme.primary)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel", color = MaterialTheme.colorScheme.secondary)
             }
         },
     )
