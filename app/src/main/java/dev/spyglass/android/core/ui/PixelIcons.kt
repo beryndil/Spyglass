@@ -26,4 +26,5 @@ object PixelIcons {
     val Bookmark  = SpyglassIcon.Drawable(R.drawable.ic_pixel_bookmark)
     val Menu      = SpyglassIcon.Drawable(R.drawable.ic_pixel_menu)
     val Todo      = SpyglassIcon.Drawable(R.drawable.ic_pixel_todo)
+    val Maze      = SpyglassIcon.Drawable(R.drawable.ic_pixel_maze)
 }

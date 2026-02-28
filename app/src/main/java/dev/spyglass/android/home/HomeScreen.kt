@@ -92,6 +92,7 @@ private val CALC_LINKS = listOf(
     QuickLink(PixelIcons.Anvil,    "Enchanting"),
     QuickLink(PixelIcons.Fill,     "Block Fill"),
     QuickLink(PixelIcons.Shapes,   "Shapes"),
+    QuickLink(PixelIcons.Maze,     "Maze Maker"),
     QuickLink(PixelIcons.Storage,  "Storage"),
     QuickLink(PixelIcons.Smelt,    "Smelting"),
     QuickLink(PixelIcons.Nether,   "Nether Portal"),

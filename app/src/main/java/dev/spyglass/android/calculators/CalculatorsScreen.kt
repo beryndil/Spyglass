@@ -10,6 +10,7 @@ import dev.spyglass.android.calculators.anvil.AnvilScreen
 import dev.spyglass.android.calculators.blockfill.BlockFillScreen
 import dev.spyglass.android.calculators.nether.NetherScreen
 import dev.spyglass.android.calculators.reference.ReferenceScreen
+import dev.spyglass.android.calculators.maze.MazeScreen
 import dev.spyglass.android.calculators.shapes.ShapesScreen
 import dev.spyglass.android.calculators.smelting.SmeltingScreen
 import dev.spyglass.android.calculators.shopping.ShoppingScreen
@@ -28,10 +29,11 @@ private val CALC_TABS = listOf(
     SpyglassTab("Enchanting",  PixelIcons.Anvil),        // 2 — optimizer
     SpyglassTab("Fill",        PixelIcons.Fill),         // 3 — building
     SpyglassTab("Shapes",      PixelIcons.Shapes),       // 4 — building
-    SpyglassTab("Storage",     PixelIcons.Storage),      // 5 — building
-    SpyglassTab("Smelt",       PixelIcons.Smelt),        // 6 — resources
-    SpyglassTab("Nether",      PixelIcons.Nether),       // 7 — travel
-    SpyglassTab("Reference",   PixelIcons.Bookmark),     // 8 — lookup
+    SpyglassTab("Maze",        PixelIcons.Maze),          // 5 — building
+    SpyglassTab("Storage",     PixelIcons.Storage),      // 6 — building
+    SpyglassTab("Smelt",       PixelIcons.Smelt),        // 7 — resources
+    SpyglassTab("Nether",      PixelIcons.Nether),       // 8 — travel
+    SpyglassTab("Reference",   PixelIcons.Bookmark),     // 9 — lookup
 )
 
 @Composable
@@ -74,10 +76,11 @@ fun CalculatorsScreen(initialTab: Int? = null) {
                 2 -> AnvilScreen()
                 3 -> BlockFillScreen()
                 4 -> ShapesScreen()
-                5 -> StorageScreen()
-                6 -> SmeltingScreen()
-                7 -> NetherScreen()
-                8 -> ReferenceScreen()
+                5 -> MazeScreen()
+                6 -> StorageScreen()
+                7 -> SmeltingScreen()
+                8 -> NetherScreen()
+                9 -> ReferenceScreen()
             }
         }
     }

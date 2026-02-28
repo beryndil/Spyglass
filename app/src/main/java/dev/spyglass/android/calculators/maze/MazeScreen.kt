@@ -1,9 +1,8 @@
-package dev.spyglass.android.calculators.shapes
+package dev.spyglass.android.calculators.maze
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import dev.spyglass.android.core.ui.PixelIcons
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -11,18 +10,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
 
-private val SHAPE_LABELS = mapOf(
-    ShapeType.CIRCLE   to "Circle",
-    ShapeType.SPHERE   to "Sphere",
-    ShapeType.DOME     to "Dome",
-    ShapeType.CYLINDER to "Cylinder",
-    ShapeType.CONE     to "Cone",
-    ShapeType.PYRAMID  to "Pyramid",
-    ShapeType.TORUS    to "Torus",
-)
+private val MAZE_TYPE_LABELS = listOf("Rect", "Circle", "Floors")
 
 @Composable
-fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
+fun MazeScreen(vm: MazeViewModel = viewModel()) {
     val s by vm.state.collectAsState()
     var view3D by remember { mutableStateOf(false) }
 
@@ -30,42 +21,53 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        SectionHeader("Shape Designer", icon = PixelIcons.Shapes)
+        SectionHeader("Maze Maker", icon = PixelIcons.Maze)
 
         InputCard {
-            // Shape type selector — two rows of chips
-            @OptIn(ExperimentalLayoutApi::class)
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement   = Arrangement.spacedBy(4.dp),
-                modifier              = Modifier.fillMaxWidth(),
+            // Maze type selector
+            TogglePill(
+                options  = MAZE_TYPE_LABELS,
+                selected = s.mazeType.ordinal,
+                onSelect = { vm.setMazeType(MazeType.entries[it]) },
+            )
+
+            // Conditional sliders
+            if (s.mazeType == MazeType.RECT || s.mazeType == MazeType.FLOORS) {
+                LabeledSlider("Width (cells)", s.widthCells, 3, 30) { vm.setWidthCells(it) }
+                LabeledSlider("Length (cells)", s.lengthCells, 3, 30) { vm.setLengthCells(it) }
+            }
+
+            if (s.mazeType == MazeType.CIRCLE) {
+                LabeledSlider("Rings", s.rings, 2, 10) { vm.setRings(it) }
+            }
+
+            if (s.mazeType == MazeType.FLOORS) {
+                LabeledSlider("Floors", s.floors, 2, 6) { vm.setFloors(it) }
+            }
+
+            // All types
+            LabeledSlider("Path width", s.pathWidth, 1, 3) { vm.setPathWidth(it) }
+            LabeledSlider("Wall height", s.wallHeight, 1, 10) { vm.setWallHeight(it) }
+
+            // Generate / Shuffle buttons
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                ShapeType.entries.forEach { type ->
-                    val selected = s.shapeType == type
-                    FilterChip(
-                        selected = selected,
-                        onClick  = { vm.setShape(type) },
-                        label    = { Text(SHAPE_LABELS[type] ?: type.name) },
-                    )
+                Button(
+                    onClick = { vm.generate() },
+                    colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = Background),
+                    modifier = Modifier.weight(1f),
+                ) {
+                    Text("Generate")
                 }
-            }
-
-            // Radius slider
-            val radiusVal = s.radiusInput.toIntOrNull() ?: 10
-            val radiusLabel = if (s.shapeType == ShapeType.PYRAMID) "Half-width" else "Radius"
-            LabeledSlider(radiusLabel, radiusVal, 1, 100) { vm.setRadius(it.toString()) }
-
-            // Height slider for cylinder / cone / pyramid
-            if (s.shapeType in setOf(ShapeType.CYLINDER, ShapeType.CONE, ShapeType.PYRAMID)) {
-                val heightVal = s.heightInput.toIntOrNull() ?: 10
-                LabeledSlider("Height", heightVal, 1, 256) { vm.setHeight(it.toString()) }
-            }
-
-            // Tube radius slider for torus
-            if (s.shapeType == ShapeType.TORUS) {
-                val tubeVal = s.tubeInput.toIntOrNull() ?: 3
-                val maxTube = radiusVal.coerceAtLeast(1)
-                LabeledSlider("Tube radius", tubeVal, 1, maxTube) { vm.setTube(it.toString()) }
+                OutlinedButton(
+                    onClick = { vm.shuffle() },
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Gold),
+                    modifier = Modifier.weight(1f),
+                ) {
+                    Text("Shuffle")
+                }
             }
         }
 
@@ -97,6 +99,9 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                 StatRow("Height (Y)", fmt(height))
             }
 
+            StatRow("Dead ends", "${s.deadEnds}")
+            StatRow("Longest path", "${s.longestPath} cells")
+
             SpyglassDivider()
 
             if (view3D) {
@@ -121,7 +126,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
         }
 
         Text(
-            "Build perfect shapes in Minecraft. Set a radius and height, then use the Y-layer slider to see exactly which blocks to place on each layer, or switch to 3D for an isometric preview.",
+            "Generate mazes for Minecraft. Choose rectangular for classic hedge mazes, circular for concentric ring mazes, or multi-floor for stacked mazes connected by staircases. Use the layer slider to build layer by layer, or switch to 3D for an isometric preview.",
             style = MaterialTheme.typography.bodySmall,
             color = Stone500,
         )
