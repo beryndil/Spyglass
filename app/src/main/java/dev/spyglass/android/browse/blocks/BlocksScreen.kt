@@ -164,9 +164,13 @@ fun BlocksScreen(
     // Auto-expand and scroll to target block from cross-reference
     LaunchedEffect(targetBlockId, blocks) {
         if (targetBlockId != null && blocks.isNotEmpty()) {
-            vm.expandBlock(targetBlockId)
+            vm.setQuery("")
+            vm.setCategory("all")
             val idx = blocks.indexOfFirst { it.id == targetBlockId }
-            if (idx >= 0) listState.animateScrollToItem(idx + 1) // +1 for intro header
+            if (idx >= 0) {
+                listState.scrollToItem(idx + 1) // +1 for intro header
+                vm.expandBlock(targetBlockId)
+            }
         }
     }
 

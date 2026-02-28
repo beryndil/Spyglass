@@ -135,9 +135,13 @@ fun MobsScreen(
     // Auto-expand and scroll to target mob from cross-reference
     LaunchedEffect(targetMobId, mobs) {
         if (targetMobId != null && mobs.isNotEmpty()) {
-            vm.expandMob(targetMobId)
+            vm.setQuery("")
+            vm.setCategory("all")
             val idx = mobs.indexOfFirst { it.id == targetMobId }
-            if (idx >= 0) listState.animateScrollToItem(idx + 1) // +1 for intro header
+            if (idx >= 0) {
+                listState.scrollToItem(idx + 1) // +1 for intro header
+                vm.expandMob(targetMobId)
+            }
         }
     }
 

@@ -136,9 +136,13 @@ fun BiomesScreen(
     // Auto-expand and scroll to target biome from cross-reference
     LaunchedEffect(targetBiomeId, biomes) {
         if (targetBiomeId != null && biomes.isNotEmpty()) {
-            vm.expandBiome(targetBiomeId)
+            vm.setQuery("")
+            vm.setCategory("all")
             val idx = biomes.indexOfFirst { it.id == targetBiomeId }
-            if (idx >= 0) listState.animateScrollToItem(idx + 1) // +1 for intro header
+            if (idx >= 0) {
+                listState.scrollToItem(idx + 1) // +1 for intro header
+                vm.expandBiome(targetBiomeId)
+            }
         }
     }
 

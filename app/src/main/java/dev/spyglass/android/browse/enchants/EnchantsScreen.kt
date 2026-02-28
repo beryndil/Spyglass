@@ -179,10 +179,12 @@ fun EnchantsScreen(
     // Auto-expand and scroll to target enchant from cross-reference
     LaunchedEffect(targetEnchantId, enchants) {
         if (targetEnchantId != null && enchants.isNotEmpty()) {
-            vm.expandEnchant(targetEnchantId)
+            vm.setQuery("")
+            vm.setTarget("all")
             val idx = enchantIndex[targetEnchantId]
             if (idx != null) {
-                listState.animateScrollToItem(idx + 1) // +1 for intro header
+                listState.scrollToItem(idx + 1) // +1 for intro header
+                vm.expandEnchant(targetEnchantId)
             }
         }
     }

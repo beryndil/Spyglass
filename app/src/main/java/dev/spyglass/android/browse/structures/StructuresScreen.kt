@@ -107,9 +107,13 @@ fun StructuresScreen(
     // Auto-expand and scroll to target structure from cross-reference
     LaunchedEffect(targetStructureId, structures) {
         if (targetStructureId != null && structures.isNotEmpty()) {
-            vm.expandStructure(targetStructureId)
+            vm.setQuery("")
+            vm.setDimension("all")
             val idx = structures.indexOfFirst { it.id == targetStructureId }
-            if (idx >= 0) listState.animateScrollToItem(idx + 1) // +1 for intro header
+            if (idx >= 0) {
+                listState.scrollToItem(idx + 1) // +1 for intro header
+                vm.expandStructure(targetStructureId)
+            }
         }
     }
 
