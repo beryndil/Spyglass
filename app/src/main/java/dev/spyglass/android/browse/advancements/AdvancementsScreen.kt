@@ -223,6 +223,8 @@ fun AdvancementsScreen(
     onStructureTap: (String) -> Unit = {},
     onBiomeTap: (String) -> Unit = {},
     onCalcTab: (Int) -> Unit = {},
+    onEnchantTap: (String) -> Unit = {},
+    entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
     vm: AdvancementsViewModel = viewModel(),
 ) {
     val query by vm.query.collectAsState()
@@ -448,6 +450,8 @@ fun AdvancementsScreen(
                             onMobTap = onMobTap,
                             onStructureTap = onStructureTap,
                             onBiomeTap = onBiomeTap,
+                            onEnchantTap = onEnchantTap,
+                            entityLinkIndex = entityLinkIndex,
                             onAdvancementTap = { parentId ->
                                 vm.navigateToAdvancement(parentId, advancements)
                                 // Scroll to it
@@ -487,13 +491,24 @@ private fun AdvancementDetailCard(
     onMobTap: (String) -> Unit,
     onStructureTap: (String) -> Unit,
     onBiomeTap: (String) -> Unit,
+    onEnchantTap: (String) -> Unit,
+    entityLinkIndex: EntityLinkIndex,
     onAdvancementTap: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ResultCard(modifier = modifier) {
         MinecraftIdRow(adv.id)
         if (adv.description.isNotEmpty()) {
-            Text(adv.description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            LinkedDescription(
+                description = adv.description,
+                linkIndex = entityLinkIndex,
+                selfId = adv.id,
+                onItemTap = onItemTap,
+                onMobTap = onMobTap,
+                onBiomeTap = onBiomeTap,
+                onStructureTap = onStructureTap,
+                onEnchantTap = onEnchantTap,
+            )
         }
 
         // Requirements section

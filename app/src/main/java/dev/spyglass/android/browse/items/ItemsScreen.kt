@@ -177,6 +177,7 @@ fun ItemsScreen(
     onStructureTap: (String) -> Unit = {},
     onBiomeTap: (String) -> Unit = {},
     onEnchantTap: (String) -> Unit = {},
+    entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
     vm: ItemsViewModel = viewModel(),
 ) {
     val query      by vm.query.collectAsState()
@@ -334,6 +335,7 @@ fun ItemsScreen(
                             onStructureTap = onStructureTap,
                             onBiomeTap = onBiomeTap,
                             onEnchantTap = onEnchantTap,
+                            entityLinkIndex = entityLinkIndex,
                         )
                     }
                 }
@@ -365,6 +367,7 @@ private fun ItemDetailCard(
     onStructureTap: (String) -> Unit,
     onBiomeTap: (String) -> Unit,
     onEnchantTap: (String) -> Unit,
+    entityLinkIndex: EntityLinkIndex,
 ) {
     val recipesFor  by vm.recipesForItem(item.id).collectAsState(initial = emptyList())
     val recipesUsing by vm.recipesUsingItem(item.id).collectAsState(initial = emptyList())
@@ -406,7 +409,16 @@ private fun ItemDetailCard(
 
         // Description
         if (item.description.isNotEmpty()) {
-            Text(item.description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            LinkedDescription(
+                description = item.description,
+                linkIndex = entityLinkIndex,
+                selfId = item.id,
+                onItemTap = onItemTap,
+                onMobTap = onMobTap,
+                onBiomeTap = onBiomeTap,
+                onStructureTap = onStructureTap,
+                onEnchantTap = onEnchantTap,
+            )
         }
 
         // How to Obtain

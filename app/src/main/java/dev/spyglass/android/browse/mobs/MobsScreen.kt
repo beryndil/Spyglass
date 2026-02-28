@@ -117,7 +117,9 @@ fun MobsScreen(
     onNavigateToBiome: (biomeId: String) -> Unit = {},
     onNavigateToStructure: (structureId: String) -> Unit = {},
     onItemTap: (String) -> Unit = {},
+    onMobTap: (String) -> Unit = {},
     onCalcTab: (Int) -> Unit = {},
+    entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
     vm: MobsViewModel = viewModel(),
 ) {
     val query       by vm.query.collectAsState()
@@ -236,7 +238,7 @@ fun MobsScreen(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
                     ) {
-                        MobDetailCard(m, onNavigateToBiome, onNavigateToStructure, onItemTap, onCalcTab)
+                        MobDetailCard(m, onNavigateToBiome, onNavigateToStructure, onItemTap, onMobTap, onCalcTab, entityLinkIndex)
                     }
                 }
             }
@@ -253,7 +255,7 @@ fun MobsScreen(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onItemTap: (String) -> Unit, onCalcTab: (Int) -> Unit) {
+private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onItemTap: (String) -> Unit, onMobTap: (String) -> Unit, onCalcTab: (Int) -> Unit, entityLinkIndex: EntityLinkIndex) {
     val drops  = parseDrops(mob.dropsJson)
     val biomes = parseBiomes(mob.spawnBiomesJson)
 
@@ -262,7 +264,15 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
 
         // Description
         if (mob.description.isNotEmpty()) {
-            Text(mob.description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            LinkedDescription(
+                description = mob.description,
+                linkIndex = entityLinkIndex,
+                selfId = mob.id,
+                onItemTap = onItemTap,
+                onMobTap = onMobTap,
+                onBiomeTap = onBiomeTap,
+                onStructureTap = onStructureTap,
+            )
         }
 
         // Stats

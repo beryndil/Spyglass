@@ -144,7 +144,17 @@ private fun targetIcon(target: String): SpyglassIcon? = when (target) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun EnchantsScreen(targetEnchantId: String? = null, onCalcTab: (Int) -> Unit = {}, vm: EnchantsViewModel = viewModel()) {
+fun EnchantsScreen(
+    targetEnchantId: String? = null,
+    onCalcTab: (Int) -> Unit = {},
+    onItemTap: (String) -> Unit = {},
+    onMobTap: (String) -> Unit = {},
+    onBiomeTap: (String) -> Unit = {},
+    onStructureTap: (String) -> Unit = {},
+    onEnchantTap: (String) -> Unit = {},
+    entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
+    vm: EnchantsViewModel = viewModel(),
+) {
     val query       by vm.query.collectAsState()
     val target      by vm.target.collectAsState()
     val enchants    by vm.enchants.collectAsState()
@@ -293,7 +303,7 @@ fun EnchantsScreen(targetEnchantId: String? = null, onCalcTab: (Int) -> Unit = {
                         enter = expandVertically(),
                         exit = shrinkVertically(),
                     ) {
-                        EnchantDetailCard(e, enchantIndex, listState, vm)
+                        EnchantDetailCard(e, enchantIndex, listState, vm, entityLinkIndex, onItemTap, onMobTap, onBiomeTap, onStructureTap, onEnchantTap)
                     }
                 }
             }
@@ -320,6 +330,12 @@ private fun EnchantDetailCard(
     enchantIndex: Map<String, Int>,
     listState: androidx.compose.foundation.lazy.LazyListState,
     vm: EnchantsViewModel,
+    entityLinkIndex: EntityLinkIndex,
+    onItemTap: (String) -> Unit,
+    onMobTap: (String) -> Unit,
+    onBiomeTap: (String) -> Unit,
+    onStructureTap: (String) -> Unit,
+    onEnchantTap: (String) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val incompatible = parseIncompatible(enchant.incompatibleJson)
@@ -329,7 +345,16 @@ private fun EnchantDetailCard(
 
         // Description
         if (enchant.description.isNotEmpty()) {
-            Text(enchant.description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            LinkedDescription(
+                description = enchant.description,
+                linkIndex = entityLinkIndex,
+                selfId = enchant.id,
+                onItemTap = onItemTap,
+                onMobTap = onMobTap,
+                onBiomeTap = onBiomeTap,
+                onStructureTap = onStructureTap,
+                onEnchantTap = onEnchantTap,
+            )
         }
 
         // Stats

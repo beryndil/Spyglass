@@ -19,11 +19,15 @@ import dev.spyglass.android.browse.structures.StructuresScreen
 import dev.spyglass.android.browse.advancements.AdvancementsScreen
 import dev.spyglass.android.browse.commands.CommandsScreen
 import dev.spyglass.android.browse.trades.TradesScreen
+import dev.spyglass.android.core.ui.EntityLink
+import dev.spyglass.android.core.ui.EntityLinkIndex
+import dev.spyglass.android.core.ui.EntityType
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassTab
 import dev.spyglass.android.core.ui.SpyglassTabRow
 import dev.spyglass.android.data.repository.GameDataRepository
 import dev.spyglass.android.navigation.BrowseTarget
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 
 private val BROWSE_TABS = listOf(
@@ -100,6 +104,23 @@ fun BrowseScreen(
     val blockIds by blockIdsFlow.collectAsState(initial = emptySet())
     val itemIdsFlow = remember { repo.searchItems("").map { list -> list.map { it.id }.toSet() } }
     val itemIds by itemIdsFlow.collectAsState(initial = emptySet())
+
+    // Build EntityLinkIndex from all entity names for linkified descriptions
+    val entityLinkIndex by remember {
+        combine(
+            repo.searchBlocks("").map { list -> list.map { EntityLink(EntityType.BLOCK, it.id, it.name) } },
+            repo.searchItems("").map { list -> list.map { EntityLink(EntityType.ITEM, it.id, it.name) } },
+            repo.searchMobs("").map { list -> list.map { EntityLink(EntityType.MOB, it.id, it.name) } },
+            repo.searchBiomes("").map { list -> list.map { EntityLink(EntityType.BIOME, it.id, it.name) } },
+            repo.searchStructures("").map { list -> list.map { EntityLink(EntityType.STRUCTURE, it.id, it.name) } },
+        ) { blocks, items, mobs, biomes, structures ->
+            blocks + items + mobs + biomes + structures
+        }.combine(
+            repo.searchEnchants("").map { list -> list.map { EntityLink(EntityType.ENCHANT, it.id, it.name) } },
+        ) { combined, enchants ->
+            EntityLinkIndex(combined + enchants)
+        }
+    }.collectAsState(initial = EntityLinkIndex(emptyList()))
 
     fun clearAllTargets() {
         targetMobId = null
@@ -187,6 +208,7 @@ fun BrowseScreen(
                 onStructureTap = onStructureTap,
                 onBiomeTap = onBiomeTap,
                 onEnchantTap = onEnchantTap,
+                entityLinkIndex = entityLinkIndex,
             )
             2 -> CraftingScreen(
                 targetRecipeId = targetRecipeId,
@@ -198,7 +220,9 @@ fun BrowseScreen(
                 onNavigateToBiome = onBiomeTap,
                 onNavigateToStructure = onStructureTap,
                 onItemTap = onItemTap,
+                onMobTap = onMobTap,
                 onCalcTab = onCalcTab,
+                entityLinkIndex = entityLinkIndex,
             )
             4 -> TradesScreen(
                 targetProfession = targetProfession,
@@ -217,8 +241,19 @@ fun BrowseScreen(
                 onNavigateToBiome = onBiomeTap,
                 onItemTap = onItemTap,
                 onCalcTab = onCalcTab,
+                entityLinkIndex = entityLinkIndex,
+                onEnchantTap = onEnchantTap,
             )
-            7 -> EnchantsScreen(targetEnchantId = targetEnchantId, onCalcTab = onCalcTab)
+            7 -> EnchantsScreen(
+                targetEnchantId = targetEnchantId,
+                onCalcTab = onCalcTab,
+                onItemTap = onItemTap,
+                onMobTap = onMobTap,
+                onBiomeTap = onBiomeTap,
+                onStructureTap = onStructureTap,
+                onEnchantTap = onEnchantTap,
+                entityLinkIndex = entityLinkIndex,
+            )
             8 -> PotionsScreen(onItemTap = onItemTap)
             9 -> AdvancementsScreen(
                 targetAdvancementId = targetAdvancementId,
@@ -227,8 +262,18 @@ fun BrowseScreen(
                 onStructureTap = onStructureTap,
                 onBiomeTap = onBiomeTap,
                 onCalcTab = onCalcTab,
+                onEnchantTap = onEnchantTap,
+                entityLinkIndex = entityLinkIndex,
             )
-            10 -> CommandsScreen(targetCommandId = targetCommandId)
+            10 -> CommandsScreen(
+                targetCommandId = targetCommandId,
+                onItemTap = onItemTap,
+                onMobTap = onMobTap,
+                onBiomeTap = onBiomeTap,
+                onStructureTap = onStructureTap,
+                onEnchantTap = onEnchantTap,
+                entityLinkIndex = entityLinkIndex,
+            )
         }
     }
 }

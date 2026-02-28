@@ -111,6 +111,12 @@ private fun permissionLabel(level: Int): String = when (level) {
 @Composable
 fun CommandsScreen(
     targetCommandId: String? = null,
+    onItemTap: (String) -> Unit = {},
+    onMobTap: (String) -> Unit = {},
+    onBiomeTap: (String) -> Unit = {},
+    onStructureTap: (String) -> Unit = {},
+    onEnchantTap: (String) -> Unit = {},
+    entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
     vm: CommandsViewModel = viewModel(),
 ) {
     val query by vm.query.collectAsState()
@@ -209,7 +215,7 @@ fun CommandsScreen(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
                     ) {
-                        CommandDetailCard(cmd)
+                        CommandDetailCard(cmd, entityLinkIndex, onItemTap, onMobTap, onBiomeTap, onStructureTap, onEnchantTap)
                     }
                 }
             }
@@ -225,7 +231,7 @@ fun CommandsScreen(
 }
 
 @Composable
-private fun CommandDetailCard(cmd: CommandEntity) {
+private fun CommandDetailCard(cmd: CommandEntity, entityLinkIndex: EntityLinkIndex, onItemTap: (String) -> Unit, onMobTap: (String) -> Unit, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onEnchantTap: (String) -> Unit) {
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         Text(
             "SYNTAX",
@@ -241,7 +247,16 @@ private fun CommandDetailCard(cmd: CommandEntity) {
             )
         }
         SpyglassDivider()
-        Text(cmd.description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        LinkedDescription(
+            description = cmd.description,
+            linkIndex = entityLinkIndex,
+            selfId = cmd.id,
+            onItemTap = onItemTap,
+            onMobTap = onMobTap,
+            onBiomeTap = onBiomeTap,
+            onStructureTap = onStructureTap,
+            onEnchantTap = onEnchantTap,
+        )
         SpyglassDivider()
         StatRow("Category", categoryLabel(cmd.category))
         StatRow("Permission", permissionLabel(cmd.permissionLevel))

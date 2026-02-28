@@ -90,6 +90,8 @@ fun StructuresScreen(
     onNavigateToBiome: (biomeId: String) -> Unit = {},
     onItemTap: (itemId: String) -> Unit = {},
     onCalcTab: (Int) -> Unit = {},
+    entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
+    onEnchantTap: (String) -> Unit = {},
     vm: StructuresViewModel = viewModel(),
 ) {
     val query        by vm.query.collectAsState()
@@ -174,7 +176,7 @@ fun StructuresScreen(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
                     ) {
-                        StructureDetailCard(s, onNavigateToMob, onNavigateToBiome, onItemTap, onCalcTab)
+                        StructureDetailCard(s, onNavigateToMob, onNavigateToBiome, onItemTap, onCalcTab, entityLinkIndex, onEnchantTap)
                     }
                 }
             }
@@ -238,6 +240,8 @@ private fun StructureDetailCard(
     onBiomeTap: (String) -> Unit,
     onItemTap: (String) -> Unit,
     onCalcTab: (Int) -> Unit,
+    entityLinkIndex: EntityLinkIndex,
+    onEnchantTap: (String) -> Unit,
 ) {
     val biomes      = parseCommaSeparated(structure.biomes)
     val mobs        = parseCommaSeparated(structure.mobs)
@@ -249,7 +253,16 @@ private fun StructureDetailCard(
 
         // Description
         if (structure.description.isNotEmpty()) {
-            Text(structure.description, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            LinkedDescription(
+                description = structure.description,
+                linkIndex = entityLinkIndex,
+                selfId = structure.id,
+                onItemTap = onItemTap,
+                onMobTap = onMobTap,
+                onBiomeTap = onBiomeTap,
+                onStructureTap = { }, // already on structure tab
+                onEnchantTap = onEnchantTap,
+            )
         }
 
         // How to Find
