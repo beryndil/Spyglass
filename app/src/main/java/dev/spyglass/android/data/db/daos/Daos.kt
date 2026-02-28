@@ -290,6 +290,27 @@ interface WaypointDao {
 }
 
 @Dao
+interface AdvancementProgressDao {
+    @Query("SELECT advancementId FROM advancement_progress WHERE completed = 1")
+    fun completedIds(): Flow<List<String>>
+
+    @Query("SELECT COUNT(*) FROM advancement_progress WHERE completed = 1")
+    fun completedCount(): Flow<Int>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsert(progress: AdvancementProgressEntity)
+
+    @Query("UPDATE advancement_progress SET completed = :completed, completedAt = :completedAt WHERE advancementId = :id")
+    suspend fun setCompleted(id: String, completed: Boolean, completedAt: Long?)
+
+    @Query("SELECT * FROM advancement_progress WHERE advancementId = :id")
+    suspend fun byId(id: String): AdvancementProgressEntity?
+
+    @Query("DELETE FROM advancement_progress")
+    suspend fun deleteAll()
+}
+
+@Dao
 interface CommandDao {
     @Query("SELECT * FROM commands WHERE name LIKE '%' || :q || '%' OR description LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name")
     fun search(q: String): Flow<List<CommandEntity>>

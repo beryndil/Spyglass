@@ -36,12 +36,15 @@ private val BROWSE_TABS = listOf(
     SpyglassTab("Structures", PixelIcons.Structure),    // 6
     SpyglassTab("Enchants",   PixelIcons.Enchant),      // 7
     SpyglassTab("Potions",    PixelIcons.Potion),       // 8
-    SpyglassTab("Advances",  PixelIcons.Enchant),      // 9
+    SpyglassTab("Planner",   PixelIcons.Enchant),       // 9
     SpyglassTab("Commands",  PixelIcons.Blocks),       // 10
 )
 
 @Composable
-fun BrowseScreen(initialTarget: BrowseTarget? = null) {
+fun BrowseScreen(
+    initialTarget: BrowseTarget? = null,
+    onCalcTab: (Int) -> Unit = {},
+) {
     val context = LocalContext.current
     val defaultTab by remember {
         context.dataStore.data.map { it[PreferenceKeys.DEFAULT_BROWSE_TAB] ?: 0 }
@@ -184,6 +187,7 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                 onNavigateToBiome = onBiomeTap,
                 onNavigateToStructure = onStructureTap,
                 onItemTap = onItemTap,
+                onCalcTab = onCalcTab,
             )
             4 -> TradesScreen(
                 targetProfession = targetProfession,
@@ -194,16 +198,25 @@ fun BrowseScreen(initialTarget: BrowseTarget? = null) {
                 onNavigateToMob = onMobTap,
                 onNavigateToStructure = onStructureTap,
                 onItemTap = onItemTap,
+                onCalcTab = onCalcTab,
             )
             6 -> StructuresScreen(
                 targetStructureId = targetStructureId,
                 onNavigateToMob = onMobTap,
                 onNavigateToBiome = onBiomeTap,
                 onItemTap = onItemTap,
+                onCalcTab = onCalcTab,
             )
-            7 -> EnchantsScreen()
+            7 -> EnchantsScreen(onCalcTab = onCalcTab)
             8 -> PotionsScreen(onItemTap = onItemTap)
-            9 -> AdvancementsScreen(targetAdvancementId = targetAdvancementId)
+            9 -> AdvancementsScreen(
+                targetAdvancementId = targetAdvancementId,
+                onItemTap = onItemTap,
+                onMobTap = onMobTap,
+                onStructureTap = onStructureTap,
+                onBiomeTap = onBiomeTap,
+                onCalcTab = onCalcTab,
+            )
             10 -> CommandsScreen(targetCommandId = targetCommandId)
         }
     }

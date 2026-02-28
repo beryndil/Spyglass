@@ -15,7 +15,7 @@ import kotlinx.serialization.json.Json
  */
 object DataSeeder {
 
-    private const val CURRENT_DATA_VERSION = 6
+    private const val CURRENT_DATA_VERSION = 7
     private const val PREFS_NAME = "spyglass_seed"
     private const val KEY_DATA_VERSION = "data_version"
 
@@ -136,6 +136,10 @@ object DataSeeder {
         val id: String, val name: String, val description: String = "",
         val category: String = "", val type: String = "task",
         val parent: String = "",
+        val hint: String = "", val requirements: String = "",
+        val relatedItems: String = "", val relatedMobs: String = "",
+        val relatedStructures: String = "", val relatedBiomes: String = "",
+        val dimension: String = "", val xpReward: String = "",
     )
 
     @Serializable data class CommandJson(
@@ -239,7 +243,9 @@ object DataSeeder {
         val raw = runCatching { readAsset(context, "minecraft/advancements.json") }.getOrNull() ?: return
         val items = json.decodeFromString<List<AdvancementJson>>(raw)
         db.advancementDao().insertAll(items.map {
-            AdvancementEntity(it.id, it.name, it.description, it.category, it.type, it.parent)
+            AdvancementEntity(it.id, it.name, it.description, it.category, it.type, it.parent,
+                it.hint, it.requirements, it.relatedItems, it.relatedMobs,
+                it.relatedStructures, it.relatedBiomes, it.dimension, it.xpReward)
         })
     }
 

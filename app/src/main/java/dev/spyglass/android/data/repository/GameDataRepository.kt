@@ -53,6 +53,19 @@ class GameDataRepository(context: Context) {
     fun advancementsByCategory(cat: String): Flow<List<AdvancementEntity>> = db.advancementDao().byCategory(cat)
     suspend fun advancementById(id: String): AdvancementEntity? = db.advancementDao().byId(id)
 
+    // Advancement Progress
+    fun advancementCompletedIds(): Flow<List<String>> = db.advancementProgressDao().completedIds()
+    fun advancementCompletedCount(): Flow<Int> = db.advancementProgressDao().completedCount()
+    suspend fun toggleAdvancementCompleted(id: String, completed: Boolean) {
+        val existing = db.advancementProgressDao().byId(id)
+        if (existing != null) {
+            db.advancementProgressDao().setCompleted(id, completed, if (completed) System.currentTimeMillis() else null)
+        } else {
+            db.advancementProgressDao().upsert(AdvancementProgressEntity(id, completed, if (completed) System.currentTimeMillis() else null))
+        }
+    }
+    suspend fun resetAllAdvancementProgress() { db.advancementProgressDao().deleteAll() }
+
     // Items
     fun searchItems(q: String): Flow<List<ItemEntity>>       = if (q.isBlank()) db.itemDao().all() else db.itemDao().search(q)
     fun itemsByCategory(cat: String): Flow<List<ItemEntity>> = db.itemDao().byCategory(cat)

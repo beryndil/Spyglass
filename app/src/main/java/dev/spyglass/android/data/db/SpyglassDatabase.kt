@@ -21,6 +21,7 @@ import dev.spyglass.android.data.db.entities.*
         StructureEntity::class,
         ItemEntity::class,
         AdvancementEntity::class,
+        AdvancementProgressEntity::class,
         NoteEntity::class,
         WaypointEntity::class,
         CommandEntity::class,
@@ -29,7 +30,7 @@ import dev.spyglass.android.data.db.entities.*
         ShoppingListItemEntity::class,
         TodoEntity::class,
     ],
-    version = 18,
+    version = 19,
     exportSchema = false,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
@@ -43,6 +44,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
     abstract fun structureDao():    StructureDao
     abstract fun itemDao():          ItemDao
     abstract fun advancementDao():  AdvancementDao
+    abstract fun advancementProgressDao(): AdvancementProgressDao
     abstract fun noteDao():         NoteDao
     abstract fun waypointDao():     WaypointDao
     abstract fun commandDao():      CommandDao
@@ -52,6 +54,26 @@ abstract class SpyglassDatabase : RoomDatabase() {
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null
+
+        private val MIGRATION_18_19 = object : Migration(18, 19) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE advancements ADD COLUMN hint TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE advancements ADD COLUMN requirements TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE advancements ADD COLUMN relatedItems TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE advancements ADD COLUMN relatedMobs TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE advancements ADD COLUMN relatedStructures TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE advancements ADD COLUMN relatedBiomes TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE advancements ADD COLUMN dimension TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE advancements ADD COLUMN xpReward TEXT NOT NULL DEFAULT ''")
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS advancement_progress (
+                        advancementId TEXT NOT NULL PRIMARY KEY,
+                        completed INTEGER NOT NULL DEFAULT 0,
+                        completedAt INTEGER
+                    )
+                """.trimIndent())
+            }
+        }
 
         private val MIGRATION_17_18 = object : Migration(17, 18) {
             override fun migrate(db: SupportSQLiteDatabase) {
@@ -157,7 +179,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
                     SpyglassDatabase::class.java,
                     "spyglass.db",
                 )
-                    .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18)
+                    .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19)
                     .fallbackToDestructiveMigration()
                     .build()
                     .also { INSTANCE = it }

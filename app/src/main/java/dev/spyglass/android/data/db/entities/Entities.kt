@@ -115,6 +115,21 @@ data class AdvancementEntity(
     val category: String = "",      // "minecraft", "nether", "end", "adventure", "husbandry"
     val type: String = "task",      // "task", "goal", "challenge"
     val parent: String = "",
+    val hint: String = "",              // Practical how-to guidance
+    val requirements: String = "",      // Exact trigger conditions
+    val relatedItems: String = "",      // Comma-sep item IDs
+    val relatedMobs: String = "",       // Comma-sep mob IDs
+    val relatedStructures: String = "", // Comma-sep structure IDs
+    val relatedBiomes: String = "",     // Comma-sep biome IDs
+    val dimension: String = "",         // "overworld", "nether", "end"
+    val xpReward: String = "",          // XP reward info
+)
+
+@Entity(tableName = "advancement_progress")
+data class AdvancementProgressEntity(
+    @PrimaryKey val advancementId: String,
+    val completed: Boolean = false,
+    val completedAt: Long? = null,
 )
 
 @Entity(tableName = "items")
