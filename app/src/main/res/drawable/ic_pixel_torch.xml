@@ -1,0 +1,36 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Flame glow (outer, dim orange) -->
+    <path android:fillColor="#FF8800"
+        android:pathData="M6,1h4v2h-4z"/>
+    <!-- Flame core (bright yellow) -->
+    <path android:fillColor="#FFCC00"
+        android:pathData="M7,1h2v2h-2z"/>
+    <!-- Flame tip (bright) -->
+    <path android:fillColor="#FFE680"
+        android:pathData="M7,0h2v1h-2z"/>
+    <!-- Flame center highlight -->
+    <path android:fillColor="#FFFFAA"
+        android:pathData="M8,1h1v1h-1z"/>
+    <!-- Torch top (dark brown cap) -->
+    <path android:fillColor="#4A3320"
+        android:pathData="M6,3h4v1h-4z"/>
+    <!-- Torch stick (brown) -->
+    <path android:fillColor="#6B4F30"
+        android:pathData="M7,4h2v9h-2z"/>
+    <!-- Torch stick highlight (left edge) -->
+    <path android:fillColor="#8B6940"
+        android:pathData="M7,4h1v9h-1z"/>
+    <!-- Torch stick shadow (right edge) -->
+    <path android:fillColor="#5A3A1A"
+        android:pathData="M8,5h1v8h-1z"/>
+    <!-- Torch base -->
+    <path android:fillColor="#4A3320"
+        android:pathData="M6,13h4v1h-4z"/>
+    <!-- Light rays (dim yellow, emanating from flame) -->
+    <path android:fillColor="#FFE680"
+        android:pathData="M5,0h1v1h-1z M10,0h1v1h-1z M5,2h1v1h-1z M10,2h1v1h-1z"/>
+</vector>

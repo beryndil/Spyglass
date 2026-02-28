@@ -44,9 +44,9 @@ private val CALC_TABS = listOf(
     SpyglassTab("Smelt",       PixelIcons.Smelt),        // 7 — resources
     SpyglassTab("Nether",      PixelIcons.Nether),       // 8 — travel
     SpyglassTab("Game Clock", PixelIcons.Clock),         // 9 — day/night cycle
-    SpyglassTab("Light",      PixelIcons.Blocks),        // 10 — light spacing
+    SpyglassTab("Light",      PixelIcons.Torch),         // 10 — light spacing
     SpyglassTab("Notes",      PixelIcons.Bookmark),      // 11 — user notes
-    SpyglassTab("Waypoints",  PixelIcons.Biome),         // 12 — coordinate saver
+    SpyglassTab("Waypoints",  PixelIcons.Waypoints),     // 12 — coordinate saver
     SpyglassTab("Redstone",   PixelIcons.Blocks),        // 13 — signal strength
     SpyglassTab("Librarian",  PixelIcons.Enchant),       // 14 — biome enchantments
     SpyglassTab("Food",       PixelIcons.Item),          // 15 — food & saturation

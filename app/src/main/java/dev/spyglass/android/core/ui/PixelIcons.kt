@@ -30,4 +30,6 @@ object PixelIcons {
     val Clock     = SpyglassIcon.Drawable(R.drawable.ic_pixel_clock)
     val Advancement = SpyglassIcon.Drawable(R.drawable.ic_pixel_advancement)
     val Command   = SpyglassIcon.Drawable(R.drawable.ic_pixel_command)
+    val Waypoints = SpyglassIcon.Drawable(R.drawable.ic_pixel_waypoints)
+    val Torch     = SpyglassIcon.Drawable(R.drawable.ic_pixel_torch)
 }

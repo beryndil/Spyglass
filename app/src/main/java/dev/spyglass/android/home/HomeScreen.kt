@@ -76,36 +76,46 @@ private data class QuickLink(
     val iconTint: Color = Color.Unspecified,
 )
 
+// Pair: QuickLink to browse-tab index
 @Composable
 private fun browseLinks() = listOf(
-    QuickLink(PixelIcons.Blocks,    "Blocks",       MaterialTheme.colorScheme.onSurfaceVariant),
-    QuickLink(PixelIcons.Item,      "Items",        MaterialTheme.colorScheme.primary),
-    QuickLink(PixelIcons.Crafting,  "Recipes",      MaterialTheme.colorScheme.primary),
-    QuickLink(PixelIcons.Mob,       "Mobs",         NetherRed),
-    QuickLink(PixelIcons.Trade,     "Trades",       Emerald),
-    QuickLink(PixelIcons.Biome,     "Biomes",       Emerald),
-    QuickLink(PixelIcons.Structure, "Structures",   MaterialTheme.colorScheme.primary),
-    QuickLink(PixelIcons.Enchant,   "Enchants",     EnderPurple),
-    QuickLink(PixelIcons.Potion,    "Potions",      PotionBlue),
-    QuickLink(PixelIcons.Advancement, "Advancements", Emerald),
-    QuickLink(PixelIcons.Command,   "Commands",     PotionBlue),
-    QuickLink(PixelIcons.Bookmark,  "Reference",    MaterialTheme.colorScheme.primary),
+    // ── Core Content ──
+    QuickLink(PixelIcons.Blocks,    "Blocks",       MaterialTheme.colorScheme.onSurfaceVariant) to 0,
+    QuickLink(PixelIcons.Item,      "Items",        MaterialTheme.colorScheme.primary)           to 1,
+    QuickLink(PixelIcons.Crafting,  "Recipes",      MaterialTheme.colorScheme.primary)           to 2,
+    // ── World & Entities ──
+    QuickLink(PixelIcons.Mob,       "Mobs",         NetherRed)                                   to 3,
+    QuickLink(PixelIcons.Biome,     "Biomes",       Emerald)                                     to 5,
+    QuickLink(PixelIcons.Structure, "Structures",   MaterialTheme.colorScheme.primary)           to 6,
+    // ── Game Mechanics ──
+    QuickLink(PixelIcons.Trade,     "Trades",       Emerald)                                     to 4,
+    QuickLink(PixelIcons.Enchant,   "Enchants",     EnderPurple)                                 to 7,
+    QuickLink(PixelIcons.Potion,    "Potions",      PotionBlue)                                  to 8,
+    // ── Progress & Info ──
+    QuickLink(PixelIcons.Advancement, "Advancements", Emerald)                                   to 9,
+    QuickLink(PixelIcons.Command,   "Commands",     PotionBlue)                                  to 10,
+    QuickLink(PixelIcons.Bookmark,  "Reference",    MaterialTheme.colorScheme.primary)           to 11,
 )
 
+// Pair: QuickLink to calculator-tab index (allows visual reordering independent of tab order)
 private val CALC_LINKS = listOf(
-    QuickLink(PixelIcons.Todo,     "Todo List"),
-    QuickLink(PixelIcons.Storage,  "Shopping Lists"),
-    QuickLink(PixelIcons.Anvil,    "Enchanting"),
-    QuickLink(PixelIcons.Fill,     "Block Fill"),
-    QuickLink(PixelIcons.Shapes,   "Shapes"),
-    QuickLink(PixelIcons.Maze,     "Maze Maker"),
-    QuickLink(PixelIcons.Storage,  "Storage"),
-    QuickLink(PixelIcons.Smelt,    "Smelting"),
-    QuickLink(PixelIcons.Nether,   "Nether Portal"),
-    QuickLink(PixelIcons.Clock,    "Game Clock"),
-    QuickLink(PixelIcons.Blocks,   "Light Spacing"),
-    QuickLink(PixelIcons.Bookmark, "Notes"),
-    QuickLink(PixelIcons.Biome,    "Waypoints",    Emerald),
+    // ── Planning & Organization ──
+    QuickLink(PixelIcons.Todo,      "Todo List")              to 0,
+    QuickLink(PixelIcons.Storage,   "Shopping Lists")         to 1,
+    QuickLink(PixelIcons.Bookmark,  "Notes")                  to 11,
+    QuickLink(PixelIcons.Waypoints, "Waypoints",    Emerald)  to 12,
+    // ── Building & Design ──
+    QuickLink(PixelIcons.Fill,      "Block Fill")             to 3,
+    QuickLink(PixelIcons.Shapes,    "Shapes")                 to 4,
+    QuickLink(PixelIcons.Maze,      "Maze Maker")             to 5,
+    QuickLink(PixelIcons.Torch,     "Light Spacing")          to 10,
+    // ── Crafting & Resources ──
+    QuickLink(PixelIcons.Anvil,     "Enchanting")             to 2,
+    QuickLink(PixelIcons.Smelt,     "Smelting")               to 7,
+    QuickLink(PixelIcons.Storage,   "Storage")                to 6,
+    // ── World & Navigation ──
+    QuickLink(PixelIcons.Nether,    "Nether Portal")          to 8,
+    QuickLink(PixelIcons.Clock,     "Game Clock")             to 9,
 )
 
 // ── Browse tab index for favorite types ─────────────────────────────────────
@@ -343,7 +353,7 @@ fun HomeScreen(
 
         // ── C. Quick Access — Tools ──
         SectionHeader("Tools", icon = SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.item_diamond_pickaxe))
-        QuickLinkGrid(CALC_LINKS) { index -> onCalcTab(index) }
+        QuickLinkGrid(CALC_LINKS.map { it.first }) { index -> onCalcTab(CALC_LINKS[index].second) }
 
         // ── D. Tip of the Day ──
         if (showTipOfDay) {
@@ -364,7 +374,9 @@ fun HomeScreen(
 
         // ── E. Quick Access — Browse ──
         SectionHeader("Browse", icon = PixelIcons.Browse)
-        QuickLinkGrid(browseLinks()) { index -> onBrowseTab(index) }
+        browseLinks().let { links ->
+            QuickLinkGrid(links.map { it.first }) { index -> onBrowseTab(links[index].second) }
+        }
 
         // ── F. What's New ──
         SectionHeader("What's New")

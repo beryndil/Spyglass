@@ -1,0 +1,51 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Circular background (dark) -->
+    <path android:fillColor="#1C1A17"
+        android:pathData="M5,1h6v1h2v1h1v2h1v6h-1v2h-1v1h-2v1h-6v-1h-2v-1h-1v-2h-1v-6h1v-2h1v-1h2z"/>
+    <!-- Gold rim -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M5,1h6v1h-6z M11,2h2v1h-2z M13,3h1v2h-1z M14,5h1v6h-1z M13,11h1v2h-1z M11,13h2v1h-2z M5,13h6v1h-6z M3,11h1v2h-1z M2,5h1v6h-1z M3,3h1v2h-1z M5,2h-2v1h2z"/>
+    <!-- Dark face interior -->
+    <path android:fillColor="#2A2720"
+        android:pathData="M5,3h6v1h1v1h1v6h-1v1h-1v1h-6v-1h-1v-1h-1v-6h1v-1h1z"/>
+    <!-- North arrow tip (red, on rim for prominence) -->
+    <path android:fillColor="#D43A2F"
+        android:pathData="M8,2h1v1h-1z"/>
+    <!-- North arrowhead (red, wider base) -->
+    <path android:fillColor="#D43A2F"
+        android:pathData="M7,3h3v1h-3z"/>
+    <!-- North arm (red) -->
+    <path android:fillColor="#D43A2F"
+        android:pathData="M8,4h1v3h-1z"/>
+    <!-- South arm (gold) -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M8,8h1v4h-1z"/>
+    <!-- South arrowhead (gold, wider) -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M7,12h3v1h-3z"/>
+    <!-- East arm (gold) -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M9,7h4v1h-4z"/>
+    <!-- West arm (gold) -->
+    <path android:fillColor="#C9A84C"
+        android:pathData="M4,7h4v1h-4z"/>
+    <!-- Center dot (bright gold) -->
+    <path android:fillColor="#FFD700"
+        android:pathData="M8,7h1v1h-1z"/>
+    <!-- NE intercardinal tick (dim gold) -->
+    <path android:fillColor="#9E7A2A"
+        android:pathData="M10,5h1v1h-1z M11,4h1v1h-1z"/>
+    <!-- NW intercardinal tick (dim gold) -->
+    <path android:fillColor="#9E7A2A"
+        android:pathData="M5,5h1v1h-1z M4,4h1v1h-1z"/>
+    <!-- SE intercardinal tick (dim gold) -->
+    <path android:fillColor="#9E7A2A"
+        android:pathData="M10,10h1v1h-1z M11,11h1v1h-1z"/>
+    <!-- SW intercardinal tick (dim gold) -->
+    <path android:fillColor="#9E7A2A"
+        android:pathData="M5,10h1v1h-1z M4,11h1v1h-1z"/>
+</vector>
