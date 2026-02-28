@@ -27,6 +27,8 @@ import androidx.compose.material.icons.filled.PriorityHigh
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.datastore.preferences.core.edit
+import coil.compose.AsyncImage
+import dev.spyglass.android.core.net.MojangApi
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -156,6 +158,10 @@ fun HomeScreen(
         context.dataStore.data.map { it[PreferenceKeys.PLAYER_USERNAME] ?: "" }
     }.collectAsState(initial = "")
 
+    val playerUuid by remember {
+        context.dataStore.data.map { it[PreferenceKeys.PLAYER_UUID] ?: "" }
+    }.collectAsState(initial = "")
+
     val dismissUsernameDialog by remember {
         context.dataStore.data.map { it[PreferenceKeys.DISMISS_USERNAME_DIALOG] ?: false }
     }.collectAsState(initial = false)
@@ -167,6 +173,16 @@ fun HomeScreen(
     val todoPreview by repo.incompleteTodosPreview(3).collectAsState(initial = emptyList())
     val todoCount by repo.incompleteTodoCount().collectAsState(initial = 0)
 
+    // If username is set but UUID is missing, fetch it now (upgrade path for existing users)
+    LaunchedEffect(prefsLoaded, playerUsername, playerUuid) {
+        if (prefsLoaded && playerUsername.isNotBlank() && playerUuid.isBlank()) {
+            val uuid = MojangApi.fetchUuid(playerUsername)
+            if (uuid != null) {
+                context.dataStore.edit { it[PreferenceKeys.PLAYER_UUID] = uuid }
+            }
+        }
+    }
+
     // Username dialog state — only evaluate after DataStore has loaded
     var showUsernameDialog by remember { mutableStateOf(false) }
     LaunchedEffect(prefsLoaded, playerUsername, dismissUsernameDialog) {
@@ -176,7 +192,13 @@ fun HomeScreen(
     if (showUsernameDialog) {
         UsernameDialog(
             onSave = { name ->
-                scope.launch { context.dataStore.edit { it[PreferenceKeys.PLAYER_USERNAME] = name } }
+                scope.launch {
+                    context.dataStore.edit { it[PreferenceKeys.PLAYER_USERNAME] = name }
+                    val uuid = MojangApi.fetchUuid(name)
+                    if (uuid != null) {
+                        context.dataStore.edit { it[PreferenceKeys.PLAYER_UUID] = uuid }
+                    }
+                }
                 showUsernameDialog = false
             },
             onLater = { showUsernameDialog = false },
@@ -195,14 +217,41 @@ fun HomeScreen(
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
         // ── A. Header / Branding ──
-        TabIntroHeader(
-            icon = SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.ic_launcher_foreground),
-            title = if (playerUsername.isNotBlank()) "Welcome $playerUsername to Spyglass" else "Welcome to Spyglass",
-            description = "Your Minecraft companion for crafting, building, and exploring",
-            stat = "Minecraft Java 1.21.4",
-            iconTint = Color.Unspecified,
-            iconSize = 144.dp,
-        )
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            if (playerUuid.isNotBlank()) {
+                AsyncImage(
+                    model = MojangApi.skinUrl(playerUuid),
+                    contentDescription = "$playerUsername skin",
+                    modifier = Modifier.height(140.dp),
+                )
+            } else {
+                SpyglassIconImage(
+                    SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.ic_launcher_foreground),
+                    contentDescription = null,
+                    tint = Color.Unspecified,
+                    modifier = Modifier.size(144.dp),
+                )
+            }
+            Spacer(Modifier.height(8.dp))
+            Text(
+                if (playerUsername.isNotBlank()) "Welcome $playerUsername to Spyglass" else "Welcome to Spyglass",
+                style = MaterialTheme.typography.headlineSmall,
+                color = Stone100,
+            )
+            Spacer(Modifier.height(4.dp))
+            Text(
+                "Your Minecraft companion for crafting, building, and exploring",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Stone500,
+                modifier = Modifier.padding(horizontal = 24.dp),
+                textAlign = TextAlign.Center,
+            )
+            Spacer(Modifier.height(6.dp))
+            Text("Minecraft Java 1.21.4", style = MaterialTheme.typography.labelSmall, color = Gold)
+        }
 
         // ── B. Todo list ──
         if (todoCount > 0) {

@@ -13,5 +13,6 @@ object PreferenceKeys {
     val SHOW_TIP_OF_DAY         = booleanPreferencesKey("show_tip_of_day")
     val SHOW_FAVORITES_ON_HOME  = booleanPreferencesKey("show_favorites_on_home")
     val PLAYER_USERNAME         = stringPreferencesKey("player_username")
+    val PLAYER_UUID             = stringPreferencesKey("player_uuid")
     val DISMISS_USERNAME_DIALOG = booleanPreferencesKey("dismiss_username_dialog")
 }

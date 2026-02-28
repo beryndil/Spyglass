@@ -33,6 +33,7 @@ fun SettingsScreen(
     val showTipOfDay        by vm.showTipOfDay.collectAsState()
     val showFavoritesOnHome by vm.showFavoritesOnHome.collectAsState()
     val playerUsername      by vm.playerUsername.collectAsState()
+    val playerUuid          by vm.playerUuid.collectAsState()
     val allFavorites        by vm.allFavorites.collectAsState()
 
     Column(
@@ -67,6 +68,9 @@ fun SettingsScreen(
         ResultCard {
             if (playerUsername.isNotBlank()) {
                 StatRow("Username", playerUsername)
+                if (playerUuid.isNotBlank()) {
+                    StatRow("UUID", playerUuid)
+                }
                 TextButton(
                     onClick = vm::clearPlayerUsername,
                     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),

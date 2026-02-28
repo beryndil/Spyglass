@@ -33,6 +33,10 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         .map { it[PreferenceKeys.PLAYER_USERNAME] ?: "" }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
 
+    val playerUuid: StateFlow<String> = store.data
+        .map { it[PreferenceKeys.PLAYER_UUID] ?: "" }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
+
     val allFavorites: StateFlow<List<FavoriteEntity>> = repo.allFavorites()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -59,6 +63,7 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
     fun clearPlayerUsername() = viewModelScope.launch {
         store.edit {
             it.remove(PreferenceKeys.PLAYER_USERNAME)
+            it.remove(PreferenceKeys.PLAYER_UUID)
             it.remove(PreferenceKeys.DISMISS_USERNAME_DIALOG)
         }
     }
