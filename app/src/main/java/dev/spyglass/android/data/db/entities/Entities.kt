@@ -29,6 +29,7 @@ data class RecipeEntity(
     val type: String = "crafting_shaped", // shaped, shapeless, smelting, stonecutting, etc.
     val ingredientsJson: String = "[]",  // JSON array of ingredient item IDs (with nulls for gaps)
     val shapedGrid: String = "",         // "3x3" or "2x2" grid pattern as 9 or 4 comma-sep items
+    val xp: Float = 0f,                  // XP reward per smelt (smelting recipes only)
 )
 
 @Entity(tableName = "mobs")

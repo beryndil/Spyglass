@@ -15,7 +15,7 @@ import kotlinx.serialization.json.Json
  */
 object DataSeeder {
 
-    private const val CURRENT_DATA_VERSION = 11
+    private const val CURRENT_DATA_VERSION = 12
     private const val PREFS_NAME = "spyglass_seed"
     private const val KEY_DATA_VERSION = "data_version"
 
@@ -118,6 +118,7 @@ object DataSeeder {
         val id: String, val outputItem: String, val outputCount: Int = 1,
         val type: String = "crafting_shaped",
         val ingredientsJson: String = "[]",
+        val xp: Float = 0f,
     )
 
     @Serializable data class StructureJson(
@@ -226,7 +227,7 @@ object DataSeeder {
         val items = json.decodeFromString<List<RecipeJson>>(raw)
         db.recipeDao().insertAll(items.map {
             RecipeEntity(it.id, it.outputItem, it.outputCount, it.type,
-                it.ingredientsJson, "")
+                it.ingredientsJson, "", it.xp)
         })
     }
 

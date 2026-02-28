@@ -352,13 +352,24 @@ private fun RecipePage(
                     }
                 }
 
-                // Recipe type badge
-                Text(
-                    if (recipe.type.contains("crafting")) "Crafting"
-                    else recipe.type.replace('_', ' ').replaceFirstChar { it.uppercase() },
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
+                // Recipe type badge + XP for smelting
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        if (recipe.type.contains("crafting")) "Crafting"
+                        else recipe.type.replace('_', ' ').replaceFirstChar { it.uppercase() },
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                    if (recipe.type.contains("smelting") && recipe.xp > 0f) {
+                        CategoryBadge(
+                            label = "${"%.1f".format(recipe.xp)} XP",
+                            color = Emerald,
+                        )
+                    }
+                }
 
                 SpyglassDivider()
 

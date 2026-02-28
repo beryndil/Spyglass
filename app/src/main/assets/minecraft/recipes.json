@@ -487,63 +487,72 @@
     "outputItem": "iron_ingot",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"raw_iron\"]"
+    "ingredientsJson": "[\"raw_iron\"]",
+    "xp": 0.7
   },
   {
     "id": "gold_ingot_from_raw",
     "outputItem": "gold_ingot",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"raw_gold\"]"
+    "ingredientsJson": "[\"raw_gold\"]",
+    "xp": 0.7
   },
   {
     "id": "copper_ingot_from_raw",
     "outputItem": "copper_ingot",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"raw_copper\"]"
+    "ingredientsJson": "[\"raw_copper\"]",
+    "xp": 0.7
   },
   {
     "id": "glass_from_sand",
     "outputItem": "glass",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"sand\"]"
+    "ingredientsJson": "[\"sand\"]",
+    "xp": 0.1
   },
   {
     "id": "brick_from_clay",
     "outputItem": "brick",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"clay_ball\"]"
+    "ingredientsJson": "[\"clay_ball\"]",
+    "xp": 0.3
   },
   {
     "id": "charcoal_from_log",
     "outputItem": "charcoal",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"oak_log\"]"
+    "ingredientsJson": "[\"oak_log\"]",
+    "xp": 0.15
   },
   {
     "id": "diamond_from_ore",
     "outputItem": "diamond",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"diamond_ore\"]"
+    "ingredientsJson": "[\"diamond_ore\"]",
+    "xp": 1.0
   },
   {
     "id": "smooth_stone",
     "outputItem": "smooth_stone",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"stone\"]"
+    "ingredientsJson": "[\"stone\"]",
+    "xp": 0.1
   },
   {
     "id": "stone_from_cobblestone",
     "outputItem": "stone",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"cobblestone\"]"
+    "ingredientsJson": "[\"cobblestone\"]",
+    "xp": 0.1
   },
   {
     "id": "netherite_ingot",
@@ -1775,63 +1784,72 @@
     "outputItem": "cooked_beef",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"raw_beef\"]"
+    "ingredientsJson": "[\"raw_beef\"]",
+    "xp": 0.35
   },
   {
     "id": "cooked_porkchop",
     "outputItem": "cooked_porkchop",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"raw_porkchop\"]"
+    "ingredientsJson": "[\"raw_porkchop\"]",
+    "xp": 0.35
   },
   {
     "id": "cooked_chicken",
     "outputItem": "cooked_chicken",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"raw_chicken\"]"
+    "ingredientsJson": "[\"raw_chicken\"]",
+    "xp": 0.35
   },
   {
     "id": "cooked_salmon",
     "outputItem": "cooked_salmon",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"raw_salmon\"]"
+    "ingredientsJson": "[\"raw_salmon\"]",
+    "xp": 0.35
   },
   {
     "id": "cooked_cod",
     "outputItem": "cooked_cod",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"raw_cod\"]"
+    "ingredientsJson": "[\"raw_cod\"]",
+    "xp": 0.35
   },
   {
     "id": "cooked_mutton",
     "outputItem": "cooked_mutton",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"raw_mutton\"]"
+    "ingredientsJson": "[\"raw_mutton\"]",
+    "xp": 0.35
   },
   {
     "id": "cooked_rabbit",
     "outputItem": "cooked_rabbit",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"raw_rabbit\"]"
+    "ingredientsJson": "[\"raw_rabbit\"]",
+    "xp": 0.35
   },
   {
     "id": "baked_potato",
     "outputItem": "baked_potato",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"potato\"]"
+    "ingredientsJson": "[\"potato\"]",
+    "xp": 0.35
   },
   {
     "id": "dried_kelp",
     "outputItem": "dried_kelp",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"kelp\"]"
+    "ingredientsJson": "[\"kelp\"]",
+    "xp": 0.1
   },
   {
     "id": "brewing_stand",
@@ -1999,7 +2017,8 @@
     "outputItem": "green_dye",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"cactus\"]"
+    "ingredientsJson": "[\"cactus\"]",
+    "xp": 0.2
   },
   {
     "id": "orange_dye",
@@ -2216,140 +2235,160 @@
     "outputItem": "netherite_scrap",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"ancient_debris\"]"
+    "ingredientsJson": "[\"ancient_debris\"]",
+    "xp": 2.0
   },
   {
     "id": "emerald_from_ore",
     "outputItem": "emerald",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"emerald_ore\"]"
+    "ingredientsJson": "[\"emerald_ore\"]",
+    "xp": 1.0
   },
   {
     "id": "lapis_from_ore",
     "outputItem": "lapis_lazuli",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"lapis_ore\"]"
+    "ingredientsJson": "[\"lapis_ore\"]",
+    "xp": 1.0
   },
   {
     "id": "coal_from_ore",
     "outputItem": "coal",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"coal_ore\"]"
+    "ingredientsJson": "[\"coal_ore\"]",
+    "xp": 0.1
   },
   {
     "id": "redstone_from_ore",
     "outputItem": "redstone",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"redstone_ore\"]"
+    "ingredientsJson": "[\"redstone_ore\"]",
+    "xp": 0.3
   },
   {
     "id": "quartz_from_ore",
     "outputItem": "quartz",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"nether_quartz_ore\"]"
+    "ingredientsJson": "[\"nether_quartz_ore\"]",
+    "xp": 0.2
   },
   {
     "id": "gold_ingot_from_nether_ore",
     "outputItem": "gold_ingot",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"nether_gold_ore\"]"
+    "ingredientsJson": "[\"nether_gold_ore\"]",
+    "xp": 0.7
   },
   {
     "id": "diamond_from_deepslate_ore",
     "outputItem": "diamond",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"deepslate_diamond_ore\"]"
+    "ingredientsJson": "[\"deepslate_diamond_ore\"]",
+    "xp": 1.0
   },
   {
     "id": "iron_ingot_from_ore",
     "outputItem": "iron_ingot",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"iron_ore\"]"
+    "ingredientsJson": "[\"iron_ore\"]",
+    "xp": 0.7
   },
   {
     "id": "gold_ingot_from_ore",
     "outputItem": "gold_ingot",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"gold_ore\"]"
+    "ingredientsJson": "[\"gold_ore\"]",
+    "xp": 0.7
   },
   {
     "id": "copper_ingot_from_ore",
     "outputItem": "copper_ingot",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"copper_ore\"]"
+    "ingredientsJson": "[\"copper_ore\"]",
+    "xp": 0.7
   },
   {
     "id": "iron_ingot_from_deepslate_ore",
     "outputItem": "iron_ingot",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"deepslate_iron_ore\"]"
+    "ingredientsJson": "[\"deepslate_iron_ore\"]",
+    "xp": 0.7
   },
   {
     "id": "gold_ingot_from_deepslate_ore",
     "outputItem": "gold_ingot",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"deepslate_gold_ore\"]"
+    "ingredientsJson": "[\"deepslate_gold_ore\"]",
+    "xp": 0.7
   },
   {
     "id": "charcoal_from_spruce",
     "outputItem": "charcoal",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"spruce_log\"]"
+    "ingredientsJson": "[\"spruce_log\"]",
+    "xp": 0.15
   },
   {
     "id": "charcoal_from_birch",
     "outputItem": "charcoal",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"birch_log\"]"
+    "ingredientsJson": "[\"birch_log\"]",
+    "xp": 0.15
   },
   {
     "id": "charcoal_from_jungle",
     "outputItem": "charcoal",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"jungle_log\"]"
+    "ingredientsJson": "[\"jungle_log\"]",
+    "xp": 0.15
   },
   {
     "id": "charcoal_from_acacia",
     "outputItem": "charcoal",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"acacia_log\"]"
+    "ingredientsJson": "[\"acacia_log\"]",
+    "xp": 0.15
   },
   {
     "id": "charcoal_from_dark_oak",
     "outputItem": "charcoal",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"dark_oak_log\"]"
+    "ingredientsJson": "[\"dark_oak_log\"]",
+    "xp": 0.15
   },
   {
     "id": "charcoal_from_mangrove",
     "outputItem": "charcoal",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"mangrove_log\"]"
+    "ingredientsJson": "[\"mangrove_log\"]",
+    "xp": 0.15
   },
   {
     "id": "charcoal_from_cherry",
     "outputItem": "charcoal",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"cherry_log\"]"
+    "ingredientsJson": "[\"cherry_log\"]",
+    "xp": 0.15
   },
   {
     "id": "iron_ingot_from_block",
@@ -2699,7 +2738,8 @@
     "outputItem": "resin_brick",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"resin_clump\"]"
+    "ingredientsJson": "[\"resin_clump\"]",
+    "xp": 0.1
   },
   {
     "id": "resin_bricks",
@@ -2741,28 +2781,32 @@
     "outputItem": "sponge",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"wet_sponge\"]"
+    "ingredientsJson": "[\"wet_sponge\"]",
+    "xp": 0.15
   },
   {
     "id": "nether_brick_from_netherrack",
     "outputItem": "nether_brick",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"netherrack\"]"
+    "ingredientsJson": "[\"netherrack\"]",
+    "xp": 0.1
   },
   {
     "id": "glass_from_red_sand",
     "outputItem": "glass",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"red_sand\"]"
+    "ingredientsJson": "[\"red_sand\"]",
+    "xp": 0.1
   },
   {
     "id": "deepslate_from_cobbled",
     "outputItem": "deepslate",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"cobbled_deepslate\"]"
+    "ingredientsJson": "[\"cobbled_deepslate\"]",
+    "xp": 0.1
   },
   {
     "id": "wolf_armor",
@@ -3014,63 +3058,72 @@
     "outputItem": "smooth_sandstone",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"sandstone\"]"
+    "ingredientsJson": "[\"sandstone\"]",
+    "xp": 0.1
   },
   {
     "id": "smooth_red_sandstone_from_red_sandstone",
     "outputItem": "smooth_red_sandstone",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"red_sandstone\"]"
+    "ingredientsJson": "[\"red_sandstone\"]",
+    "xp": 0.1
   },
   {
     "id": "smooth_quartz_from_quartz_block",
     "outputItem": "smooth_quartz",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"quartz_block\"]"
+    "ingredientsJson": "[\"quartz_block\"]",
+    "xp": 0.1
   },
   {
     "id": "popped_chorus_fruit_from_chorus_fruit",
     "outputItem": "popped_chorus_fruit",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"chorus_fruit\"]"
+    "ingredientsJson": "[\"chorus_fruit\"]",
+    "xp": 0.1
   },
   {
     "id": "cracked_stone_bricks_from_stone_bricks",
     "outputItem": "cracked_stone_bricks",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"stone_bricks\"]"
+    "ingredientsJson": "[\"stone_bricks\"]",
+    "xp": 0.1
   },
   {
     "id": "cracked_deepslate_bricks",
     "outputItem": "cracked_deepslate_bricks",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"deepslate_bricks\"]"
+    "ingredientsJson": "[\"deepslate_bricks\"]",
+    "xp": 0.1
   },
   {
     "id": "cracked_deepslate_tiles",
     "outputItem": "cracked_deepslate_tiles",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"deepslate_tiles\"]"
+    "ingredientsJson": "[\"deepslate_tiles\"]",
+    "xp": 0.1
   },
   {
     "id": "cracked_nether_bricks",
     "outputItem": "cracked_nether_bricks",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"nether_bricks\"]"
+    "ingredientsJson": "[\"nether_bricks\"]",
+    "xp": 0.1
   },
   {
     "id": "cracked_polished_blackstone_bricks",
     "outputItem": "cracked_polished_blackstone_bricks",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"polished_blackstone_bricks\"]"
+    "ingredientsJson": "[\"polished_blackstone_bricks\"]",
+    "xp": 0.1
   },
   {
     "id": "cobblestone_wall",
@@ -3609,7 +3662,8 @@
     "outputItem": "charcoal",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"pale_oak_log\"]"
+    "ingredientsJson": "[\"pale_oak_log\"]",
+    "xp": 0.15
   },
   {
     "id": "lodestone",
@@ -3931,35 +3985,40 @@
     "outputItem": "copper_ingot",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"deepslate_copper_ore\"]"
+    "ingredientsJson": "[\"deepslate_copper_ore\"]",
+    "xp": 0.7
   },
   {
     "id": "emerald_from_deepslate_ore",
     "outputItem": "emerald",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"deepslate_emerald_ore\"]"
+    "ingredientsJson": "[\"deepslate_emerald_ore\"]",
+    "xp": 1.0
   },
   {
     "id": "lapis_from_deepslate_ore",
     "outputItem": "lapis_lazuli",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"deepslate_lapis_ore\"]"
+    "ingredientsJson": "[\"deepslate_lapis_ore\"]",
+    "xp": 1.0
   },
   {
     "id": "coal_from_deepslate_ore",
     "outputItem": "coal",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"deepslate_coal_ore\"]"
+    "ingredientsJson": "[\"deepslate_coal_ore\"]",
+    "xp": 0.1
   },
   {
     "id": "redstone_from_deepslate_ore",
     "outputItem": "redstone",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"deepslate_redstone_ore\"]"
+    "ingredientsJson": "[\"deepslate_redstone_ore\"]",
+    "xp": 0.3
   },
   {
     "id": "wheat_from_hay_block",
@@ -5100,112 +5159,128 @@
     "outputItem": "white_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"white_terracotta\"]"
+    "ingredientsJson": "[\"white_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "orange_glazed_terracotta",
     "outputItem": "orange_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"orange_terracotta\"]"
+    "ingredientsJson": "[\"orange_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "magenta_glazed_terracotta",
     "outputItem": "magenta_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"magenta_terracotta\"]"
+    "ingredientsJson": "[\"magenta_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "light_blue_glazed_terracotta",
     "outputItem": "light_blue_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"light_blue_terracotta\"]"
+    "ingredientsJson": "[\"light_blue_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "yellow_glazed_terracotta",
     "outputItem": "yellow_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"yellow_terracotta\"]"
+    "ingredientsJson": "[\"yellow_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "lime_glazed_terracotta",
     "outputItem": "lime_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"lime_terracotta\"]"
+    "ingredientsJson": "[\"lime_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "pink_glazed_terracotta",
     "outputItem": "pink_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"pink_terracotta\"]"
+    "ingredientsJson": "[\"pink_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "gray_glazed_terracotta",
     "outputItem": "gray_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"gray_terracotta\"]"
+    "ingredientsJson": "[\"gray_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "light_gray_glazed_terracotta",
     "outputItem": "light_gray_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"light_gray_terracotta\"]"
+    "ingredientsJson": "[\"light_gray_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "cyan_glazed_terracotta",
     "outputItem": "cyan_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"cyan_terracotta\"]"
+    "ingredientsJson": "[\"cyan_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "purple_glazed_terracotta",
     "outputItem": "purple_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"purple_terracotta\"]"
+    "ingredientsJson": "[\"purple_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "blue_glazed_terracotta",
     "outputItem": "blue_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"blue_terracotta\"]"
+    "ingredientsJson": "[\"blue_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "brown_glazed_terracotta",
     "outputItem": "brown_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"brown_terracotta\"]"
+    "ingredientsJson": "[\"brown_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "green_glazed_terracotta",
     "outputItem": "green_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"green_terracotta\"]"
+    "ingredientsJson": "[\"green_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "red_glazed_terracotta",
     "outputItem": "red_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"red_terracotta\"]"
+    "ingredientsJson": "[\"red_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "black_glazed_terracotta",
     "outputItem": "black_glazed_terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"black_terracotta\"]"
+    "ingredientsJson": "[\"black_terracotta\"]",
+    "xp": 0.1
   },
   {
     "id": "white_candle",
@@ -5863,20 +5938,23 @@
     "outputItem": "terracotta",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"clay\"]"
+    "ingredientsJson": "[\"clay\"]",
+    "xp": 0.35
   },
   {
     "id": "charcoal_from_logs",
     "outputItem": "charcoal",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"#logs\"]"
+    "ingredientsJson": "[\"#logs\"]",
+    "xp": 0.15
   },
   {
     "id": "smelt_lime_dye",
     "outputItem": "lime_dye",
     "outputCount": 1,
     "type": "smelting",
-    "ingredientsJson": "[\"sea_pickle\"]"
+    "ingredientsJson": "[\"sea_pickle\"]",
+    "xp": 0.2
   }
 ]
