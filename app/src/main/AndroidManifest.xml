@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="false"
+        android:enableOnBackInvokedCallback="true"
         android:theme="@style/Theme.Spyglass">
         <activity
             android:name=".MainActivity"

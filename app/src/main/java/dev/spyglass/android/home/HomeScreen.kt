@@ -4,9 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -215,169 +214,250 @@ fun HomeScreen(
         )
     }
 
-    Column(
+    // LazyColumn — only visible sections compose on first frame
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp),
+            .padding(horizontal = 16.dp),
+        contentPadding = PaddingValues(vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
         // ── A. Header / Branding ──
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            val skinModel = if (prefs.playerUuid.isNotBlank()) MojangApi.skinUrl(prefs.playerUuid) else null
-            if (skinModel != null) {
-                AsyncImage(
-                    model = skinModel,
-                    contentDescription = "${prefs.playerUsername} skin",
-                    modifier = Modifier.height(140.dp),
-                )
-            } else {
-                SpyglassIconImage(
-                    SpyglassIcon.Drawable(R.drawable.ic_launcher_foreground),
-                    contentDescription = null,
-                    tint = Color.Unspecified,
-                    modifier = Modifier.size(144.dp),
-                )
-            }
-            Spacer(Modifier.height(8.dp))
-            Text(
-                if (prefs.playerUsername.isNotBlank()) stringResource(R.string.home_welcome_name, prefs.playerUsername) else stringResource(R.string.home_welcome),
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.onSurface,
+        item(key = "header") {
+            HomeHeader(
+                playerUsername = prefs.playerUsername,
+                playerUuid = prefs.playerUuid,
             )
-            Spacer(Modifier.height(4.dp))
-            Text(
-                stringResource(R.string.home_subtitle),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.secondary,
-                modifier = Modifier.padding(horizontal = 24.dp),
-                textAlign = TextAlign.Center,
-            )
-            Spacer(Modifier.height(6.dp))
-            Text(stringResource(R.string.home_minecraft_version), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         }
 
         // ── Search ──
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp))
-                .border(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.4f), RoundedCornerShape(8.dp))
-                .clickable { onSearch() }
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-        ) {
-            SpyglassIconImage(PixelIcons.Search, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
-            Spacer(Modifier.width(10.dp))
-            Text(stringResource(R.string.search), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+        item(key = "search") {
+            HomeSearchBar(onSearch = onSearch)
         }
 
         // ── B. Todo list ──
-        if (todoCount > 0) {
-            SectionHeader(stringResource(R.string.home_todo), icon = PixelIcons.Todo)
-            ResultCard {
-                todoPreview.forEach { todo ->
-                    HomeTodoRow(
-                        todo = todo,
-                        onToggle = { repo?.let { r -> scope.launch { r.toggleTodoCompleted(todo.id, !todo.completed) } } },
-                    )
-                }
-                if (todoCount > 3) {
-                    SpyglassDivider()
-                }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onCalcTab(0) }
-                        .padding(vertical = 4.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        if (todoCount > 3) stringResource(R.string.home_todo_view_all, todoCount) else stringResource(R.string.home_todo_edit),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    Icon(Icons.Default.Edit, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(14.dp))
-                }
-            }
-        } else {
-            SectionHeader(stringResource(R.string.home_todo), icon = PixelIcons.Todo)
-            ResultCard(
-                modifier = Modifier.clickable { onCalcTab(0) },
-            ) {
-                Text(
-                    stringResource(R.string.home_todo_empty),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Text(
-                    stringResource(R.string.home_todo_open),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-            }
+        item(key = "todo") {
+            HomeTodoSection(
+                todoCount = todoCount,
+                todoPreview = todoPreview,
+                onCalcTab = onCalcTab,
+                onToggle = { todoId, completed ->
+                    repo?.let { r -> scope.launch { r.toggleTodoCompleted(todoId, completed) } }
+                },
+            )
         }
 
         // ── B2. Favorites on Home ──
         if (prefs.showFavoritesOnHome && favorites.isNotEmpty()) {
-            SectionHeader(stringResource(R.string.favorites), icon = PixelIcons.Bookmark)
-            favorites.forEach { fav ->
-                BrowseListItem(
-                    headline = fav.displayName,
-                    supporting = fav.type,
-                    leadingIcon = iconForFavorite(fav.type, fav.id),
-                    modifier = Modifier.clickable {
-                        onBrowseTab(browseTabForType(fav.type))
-                    },
+            item(key = "favorites") {
+                HomeFavoritesSection(
+                    favorites = favorites,
+                    onBrowseTab = onBrowseTab,
                 )
             }
         }
 
         // ── C. Quick Access — Tools ──
-        SectionHeader(stringResource(R.string.home_tools), icon = SpyglassIcon.Drawable(R.drawable.item_diamond_pickaxe))
-        QuickLinkGrid(CALC_LINKS.map { it.first }) { index -> onCalcTab(CALC_LINKS[index].second) }
+        item(key = "tools") {
+            SectionHeader(stringResource(R.string.home_tools), icon = SpyglassIcon.Drawable(R.drawable.item_diamond_pickaxe))
+            Spacer(Modifier.height(8.dp))
+            QuickLinkGrid(CALC_LINKS.map { it.first }) { index -> onCalcTab(CALC_LINKS[index].second) }
+        }
 
         // ── D. Tip of the Day ──
         if (prefs.showTipOfDay) {
-            ResultCard {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(Icons.Filled.PriorityHigh, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
-                    Spacer(Modifier.width(8.dp))
-                    Text(stringResource(R.string.home_did_you_know), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-                }
-                Spacer(Modifier.height(8.dp))
-                Text(
-                    tips[tipIndex],
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+            item(key = "tip") {
+                HomeTipSection(tip = tips[tipIndex])
             }
         }
 
         // ── E. Quick Access — Browse ──
-        SectionHeader(stringResource(R.string.home_browse), icon = PixelIcons.Browse)
-        browseLinks().let { links ->
-            QuickLinkGrid(links.map { it.first }) { index -> onBrowseTab(links[index].second) }
+        item(key = "browse") {
+            HomeBrowseSection(onBrowseTab = onBrowseTab)
         }
 
         // ── F. What's New ──
-        SectionHeader(stringResource(R.string.home_whats_new))
-        ResultCard {
-            WhatsNewItem(stringResource(R.string.home_whats_new_blocks, blockCount, itemCount), stringResource(R.string.home_whats_new_blocks_desc))
-            SpyglassDivider()
-            WhatsNewItem(stringResource(R.string.home_whats_new_enchant), stringResource(R.string.home_whats_new_enchant_desc))
-            SpyglassDivider()
-            WhatsNewItem(stringResource(R.string.home_whats_new_links), stringResource(R.string.home_whats_new_links_desc))
-            SpyglassDivider()
-            WhatsNewItem(stringResource(R.string.home_whats_new_search), stringResource(R.string.home_whats_new_search_desc))
+        item(key = "whats_new") {
+            HomeWhatsNewSection(blockCount = blockCount, itemCount = itemCount)
         }
 
+        item(key = "bottom_spacer") {
+            Spacer(Modifier.height(8.dp))
+        }
+    }
+}
+
+// ── Extracted section composables ───────────────────────────────────────────
+
+@Composable
+private fun HomeHeader(playerUsername: String, playerUuid: String) {
+    Column(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        val skinModel = if (playerUuid.isNotBlank()) MojangApi.skinUrl(playerUuid) else null
+        if (skinModel != null) {
+            AsyncImage(
+                model = skinModel,
+                contentDescription = "$playerUsername skin",
+                modifier = Modifier.height(140.dp),
+            )
+        } else {
+            SpyglassIconImage(
+                SpyglassIcon.Drawable(R.drawable.ic_launcher_foreground),
+                contentDescription = null,
+                tint = Color.Unspecified,
+                modifier = Modifier.size(144.dp),
+            )
+        }
         Spacer(Modifier.height(8.dp))
+        Text(
+            if (playerUsername.isNotBlank()) stringResource(R.string.home_welcome_name, playerUsername) else stringResource(R.string.home_welcome),
+            style = MaterialTheme.typography.headlineSmall,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+        Spacer(Modifier.height(4.dp))
+        Text(
+            stringResource(R.string.home_subtitle),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.secondary,
+            modifier = Modifier.padding(horizontal = 24.dp),
+            textAlign = TextAlign.Center,
+        )
+        Spacer(Modifier.height(6.dp))
+        Text(stringResource(R.string.home_minecraft_version), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+    }
+}
+
+@Composable
+private fun HomeSearchBar(onSearch: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp))
+            .border(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.4f), RoundedCornerShape(8.dp))
+            .clickable { onSearch() }
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        SpyglassIconImage(PixelIcons.Search, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+        Spacer(Modifier.width(10.dp))
+        Text(stringResource(R.string.search), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+    }
+}
+
+@Composable
+private fun HomeTodoSection(
+    todoCount: Int,
+    todoPreview: List<TodoEntity>,
+    onCalcTab: (Int) -> Unit,
+    onToggle: (Long, Boolean) -> Unit,
+) {
+    SectionHeader(stringResource(R.string.home_todo), icon = PixelIcons.Todo)
+    Spacer(Modifier.height(8.dp))
+    if (todoCount > 0) {
+        ResultCard {
+            todoPreview.forEach { todo ->
+                HomeTodoRow(
+                    todo = todo,
+                    onToggle = { onToggle(todo.id, !todo.completed) },
+                )
+            }
+            if (todoCount > 3) {
+                SpyglassDivider()
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onCalcTab(0) }
+                    .padding(vertical = 4.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    if (todoCount > 3) stringResource(R.string.home_todo_view_all, todoCount) else stringResource(R.string.home_todo_edit),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+                Icon(Icons.Default.Edit, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(14.dp))
+            }
+        }
+    } else {
+        ResultCard(
+            modifier = Modifier.clickable { onCalcTab(0) },
+        ) {
+            Text(
+                stringResource(R.string.home_todo_empty),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                stringResource(R.string.home_todo_open),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.primary,
+            )
+        }
+    }
+}
+
+@Composable
+private fun HomeFavoritesSection(
+    favorites: List<FavoriteEntity>,
+    onBrowseTab: (Int) -> Unit,
+) {
+    SectionHeader(stringResource(R.string.favorites), icon = PixelIcons.Bookmark)
+    Spacer(Modifier.height(8.dp))
+    favorites.forEach { fav ->
+        BrowseListItem(
+            headline = fav.displayName,
+            supporting = fav.type,
+            leadingIcon = iconForFavorite(fav.type, fav.id),
+            modifier = Modifier.clickable {
+                onBrowseTab(browseTabForType(fav.type))
+            },
+        )
+    }
+}
+
+@Composable
+private fun HomeTipSection(tip: String) {
+    ResultCard {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(Icons.Filled.PriorityHigh, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+            Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.home_did_you_know), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+        }
+        Spacer(Modifier.height(8.dp))
+        Text(
+            tip,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+@Composable
+private fun HomeBrowseSection(onBrowseTab: (Int) -> Unit) {
+    SectionHeader(stringResource(R.string.home_browse), icon = PixelIcons.Browse)
+    Spacer(Modifier.height(8.dp))
+    browseLinks().let { links ->
+        QuickLinkGrid(links.map { it.first }) { index -> onBrowseTab(links[index].second) }
+    }
+}
+
+@Composable
+private fun HomeWhatsNewSection(blockCount: Int, itemCount: Int) {
+    SectionHeader(stringResource(R.string.home_whats_new))
+    Spacer(Modifier.height(8.dp))
+    ResultCard {
+        WhatsNewItem(stringResource(R.string.home_whats_new_blocks, blockCount, itemCount), stringResource(R.string.home_whats_new_blocks_desc))
+        SpyglassDivider()
+        WhatsNewItem(stringResource(R.string.home_whats_new_enchant), stringResource(R.string.home_whats_new_enchant_desc))
+        SpyglassDivider()
+        WhatsNewItem(stringResource(R.string.home_whats_new_links), stringResource(R.string.home_whats_new_links_desc))
+        SpyglassDivider()
+        WhatsNewItem(stringResource(R.string.home_whats_new_search), stringResource(R.string.home_whats_new_search_desc))
     }
 }
 
