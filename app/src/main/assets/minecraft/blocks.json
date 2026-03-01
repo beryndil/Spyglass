@@ -115,6 +115,17 @@
     "blastResistance": 0
   },
   {
+    "id": "acacia_shelf",
+    "name": "Acacia Shelf",
+    "hardness": 1.5,
+    "toolRequired": "axe",
+    "drops": "acacia_shelf",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.5
+  },
+  {
     "id": "acacia_sign",
     "name": "Acacia Sign",
     "hardness": 1.0,
@@ -163,6 +174,30 @@
     "isWaterloggable": true
   },
   {
+    "id": "acacia_wall_hanging_sign",
+    "name": "Acacia Wall Hanging Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "acacia_hanging_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "acacia_wall_sign",
+    "name": "Acacia Wall Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "acacia_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "acacia_wood",
     "name": "Acacia Wood",
     "hardness": 2.0,
@@ -184,6 +219,18 @@
     "category": "redstone",
     "blastResistance": 0.7,
     "isWaterloggable": true
+  },
+  {
+    "id": "air",
+    "name": "Air",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
   },
   {
     "id": "allium",
@@ -231,7 +278,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 30.0
+    "blastResistance": 1200.0,
+    "minY": 8,
+    "maxY": 119,
+    "peakY": 16
   },
   {
     "id": "andesite",
@@ -293,14 +343,27 @@
     "hasGravity": true
   },
   {
-    "id": "armor_stand",
-    "name": "Armor Stand",
+    "id": "attached_melon_stem",
+    "name": "Attached Melon Stem",
     "hardness": 0.0,
     "toolRequired": "none",
-    "drops": "armor_stand",
-    "stackSize": 16,
+    "drops": "none",
+    "stackSize": 64,
     "isFlammable": false,
-    "category": "decoration",
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "attached_pumpkin_stem",
+    "name": "Attached Pumpkin Stem",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
     "blastResistance": 0.0
   },
   {
@@ -478,6 +541,29 @@
     "blastResistance": 0.5
   },
   {
+    "id": "bamboo_sapling",
+    "name": "Bamboo Sapling",
+    "hardness": 1.0,
+    "toolRequired": "none",
+    "drops": "bamboo",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "bamboo_shelf",
+    "name": "Bamboo Shelf",
+    "hardness": 1.5,
+    "toolRequired": "axe",
+    "drops": "bamboo_shelf",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.5
+  },
+  {
     "id": "bamboo_sign",
     "name": "Bamboo Sign",
     "hardness": 1.0,
@@ -526,6 +612,30 @@
     "isWaterloggable": true
   },
   {
+    "id": "bamboo_wall_hanging_sign",
+    "name": "Bamboo Wall Hanging Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "bamboo_hanging_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "bamboo_wall_sign",
+    "name": "Bamboo Wall Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "bamboo_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "barrel",
     "name": "Barrel",
     "hardness": 2.5,
@@ -535,6 +645,17 @@
     "isFlammable": true,
     "category": "utility",
     "blastResistance": 2.5
+  },
+  {
+    "id": "barrier",
+    "name": "Barrier",
+    "hardness": -3600000.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 3600000.8
   },
   {
     "id": "basalt",
@@ -627,6 +748,18 @@
     "isTransparent": true,
     "category": "natural",
     "blastResistance": 0.1
+  },
+  {
+    "id": "big_dripleaf_stem",
+    "name": "Big Dripleaf Stem",
+    "hardness": 0.1,
+    "toolRequired": "none",
+    "drops": "big_dripleaf",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
   },
   {
     "id": "birch_button",
@@ -744,6 +877,17 @@
     "blastResistance": 0
   },
   {
+    "id": "birch_shelf",
+    "name": "Birch Shelf",
+    "hardness": 1.5,
+    "toolRequired": "axe",
+    "drops": "birch_shelf",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.5
+  },
+  {
     "id": "birch_sign",
     "name": "Birch Sign",
     "hardness": 1.0,
@@ -792,6 +936,30 @@
     "isWaterloggable": true
   },
   {
+    "id": "birch_wall_hanging_sign",
+    "name": "Birch Wall Hanging Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "birch_hanging_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "birch_wall_sign",
+    "name": "Birch Wall Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "birch_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "birch_wood",
     "name": "Birch Wood",
     "hardness": 2.0,
@@ -836,6 +1004,18 @@
     "isTransparent": true,
     "blastResistance": 0.1,
     "isWaterloggable": true
+  },
+  {
+    "id": "black_candle_cake",
+    "name": "Black Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
   },
   {
     "id": "black_carpet",
@@ -927,7 +1107,18 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
+  },
+  {
+    "id": "black_wall_banner",
+    "name": "Black Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "black_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "black_wool",
@@ -1033,6 +1224,18 @@
     "isTransparent": true,
     "blastResistance": 0.1,
     "isWaterloggable": true
+  },
+  {
+    "id": "blue_candle_cake",
+    "name": "Blue Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
   },
   {
     "id": "blue_carpet",
@@ -1147,7 +1350,18 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
+  },
+  {
+    "id": "blue_wall_banner",
+    "name": "Blue Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "blue_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "blue_wool",
@@ -1210,6 +1424,19 @@
   {
     "id": "brain_coral_fan",
     "name": "Brain Coral Fan",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "isTransparent": true,
+    "blastResistance": 0.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "brain_coral_wall_fan",
+    "name": "Brain Coral Wall Fan",
     "hardness": 0.0,
     "toolRequired": "none",
     "drops": "none",
@@ -1314,6 +1541,18 @@
     "isTransparent": true,
     "blastResistance": 0.1,
     "isWaterloggable": true
+  },
+  {
+    "id": "brown_candle_cake",
+    "name": "Brown Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
   },
   {
     "id": "brown_carpet",
@@ -1429,7 +1668,18 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
+  },
+  {
+    "id": "brown_wall_banner",
+    "name": "Brown Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "brown_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "brown_wool",
@@ -1441,6 +1691,18 @@
     "isFlammable": true,
     "category": "building",
     "blastResistance": 0.8
+  },
+  {
+    "id": "bubble_column",
+    "name": "Bubble Column",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
   },
   {
     "id": "bubble_coral",
@@ -1481,6 +1743,19 @@
     "isWaterloggable": true
   },
   {
+    "id": "bubble_coral_wall_fan",
+    "name": "Bubble Coral Wall Fan",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "isTransparent": true,
+    "blastResistance": 0.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "budding_amethyst",
     "name": "Budding Amethyst",
     "hardness": 1.5,
@@ -1490,6 +1765,18 @@
     "isFlammable": false,
     "category": "natural",
     "blastResistance": 1.5
+  },
+  {
+    "id": "bush",
+    "name": "Bush",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "bush",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "natural",
+    "blastResistance": 0.0,
+    "isTransparent": true
   },
   {
     "id": "cactus",
@@ -1502,6 +1789,18 @@
     "isTransparent": true,
     "category": "natural",
     "blastResistance": 0.4
+  },
+  {
+    "id": "cactus_flower",
+    "name": "Cactus Flower",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "cactus_flower",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "blastResistance": 0.0,
+    "isTransparent": true
   },
   {
     "id": "cake",
@@ -1566,6 +1865,18 @@
     "isWaterloggable": true
   },
   {
+    "id": "candle_cake",
+    "name": "Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
+  },
+  {
     "id": "carrots",
     "name": "Carrots",
     "hardness": 0.0,
@@ -1611,6 +1922,18 @@
     "blastResistance": 2.0
   },
   {
+    "id": "cave_air",
+    "name": "Cave Air",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
     "id": "cave_vines",
     "name": "Cave Vines",
     "hardness": 0.0,
@@ -1624,17 +1947,27 @@
     "lightLevel": 14
   },
   {
-    "id": "chain",
-    "name": "Chain",
-    "hardness": 5.0,
-    "toolRequired": "pickaxe",
-    "drops": "chain",
+    "id": "cave_vines_plant",
+    "name": "Cave Vines Plant",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
     "stackSize": 64,
     "isFlammable": false,
     "isTransparent": true,
-    "category": "decoration",
-    "blastResistance": 5.0,
-    "isWaterloggable": true
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "chain_command_block",
+    "name": "Chain Command Block",
+    "hardness": -1.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "redstone",
+    "blastResistance": 3600000.8
   },
   {
     "id": "cherry_button",
@@ -1752,6 +2085,17 @@
     "blastResistance": 0.0
   },
   {
+    "id": "cherry_shelf",
+    "name": "Cherry Shelf",
+    "hardness": 1.5,
+    "toolRequired": "axe",
+    "drops": "cherry_shelf",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.5
+  },
+  {
     "id": "cherry_sign",
     "name": "Cherry Sign",
     "hardness": 1.0,
@@ -1797,6 +2141,30 @@
     "isFlammable": true,
     "category": "building",
     "blastResistance": 3.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "cherry_wall_hanging_sign",
+    "name": "Cherry Wall Hanging Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "cherry_hanging_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "cherry_wall_sign",
+    "name": "Cherry Wall Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "cherry_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
     "isWaterloggable": true
   },
   {
@@ -2214,6 +2582,19 @@
     "isWaterloggable": true
   },
   {
+    "id": "copper_bars",
+    "name": "Copper Bars",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "copper_bars",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
     "id": "copper_block",
     "name": "Block of Copper",
     "hardness": 3.0,
@@ -2233,8 +2614,32 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "redstone",
-    "blastResistance": 3.0,
+    "blastResistance": 6.0,
     "lightLevel": 15
+  },
+  {
+    "id": "copper_chain",
+    "name": "Copper Chain",
+    "hardness": 5.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "copper_chain",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
+    "id": "copper_chest",
+    "name": "Copper Chest",
+    "hardness": 2.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "copper_chest",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0
   },
   {
     "id": "copper_door",
@@ -2249,6 +2654,18 @@
     "blastResistance": 3.0
   },
   {
+    "id": "copper_golem_statue",
+    "name": "Copper Golem Statue",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "copper_golem_statue",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "copper_grate",
     "name": "Copper Grate",
     "hardness": 3.0,
@@ -2259,6 +2676,20 @@
     "isTransparent": true,
     "category": "building",
     "blastResistance": 3.0
+  },
+  {
+    "id": "copper_lantern",
+    "name": "Copper Lantern",
+    "hardness": 3.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "copper_lantern",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "lightLevel": 15,
+    "isTransparent": true
   },
   {
     "id": "copper_ore",
@@ -2275,6 +2706,20 @@
     "peakY": 48
   },
   {
+    "id": "copper_torch",
+    "name": "Copper Torch",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "copper_torch",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "lightLevel": 14,
+    "isTransparent": true
+  },
+  {
     "id": "copper_trapdoor",
     "name": "Copper Trapdoor",
     "hardness": 3.0,
@@ -2285,6 +2730,19 @@
     "category": "building",
     "blastResistance": 3.0,
     "isWaterloggable": true
+  },
+  {
+    "id": "copper_wall_torch",
+    "name": "Copper Wall Torch",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "copper_torch",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0,
+    "lightLevel": 14
   },
   {
     "id": "cornflower",
@@ -2389,6 +2847,17 @@
   {
     "id": "creeper_head",
     "name": "Creeper Head",
+    "hardness": 1.0,
+    "toolRequired": "none",
+    "drops": "creeper_head",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 1.0
+  },
+  {
+    "id": "creeper_wall_head",
+    "name": "Creeper Wall Head",
     "hardness": 1.0,
     "toolRequired": "none",
     "drops": "creeper_head",
@@ -2524,6 +2993,17 @@
     "blastResistance": 0
   },
   {
+    "id": "crimson_shelf",
+    "name": "Crimson Shelf",
+    "hardness": 1.5,
+    "toolRequired": "axe",
+    "drops": "crimson_shelf",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 1.5
+  },
+  {
     "id": "crimson_sign",
     "name": "Crimson Sign",
     "hardness": 1.0,
@@ -2580,6 +3060,30 @@
     "isFlammable": false,
     "category": "building",
     "blastResistance": 3.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "crimson_wall_hanging_sign",
+    "name": "Crimson Wall Hanging Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "crimson_hanging_sign",
+    "stackSize": 16,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "crimson_wall_sign",
+    "name": "Crimson Wall Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "crimson_sign",
+    "stackSize": 16,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 1.0,
     "isWaterloggable": true
   },
   {
@@ -2711,6 +3215,18 @@
     "isWaterloggable": true
   },
   {
+    "id": "cyan_candle_cake",
+    "name": "Cyan Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
+  },
+  {
     "id": "cyan_carpet",
     "name": "Cyan Carpet",
     "hardness": 0.1,
@@ -2800,7 +3316,18 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
+  },
+  {
+    "id": "cyan_wall_banner",
+    "name": "Cyan Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "cyan_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "cyan_wool",
@@ -2953,6 +3480,17 @@
     "blastResistance": 0
   },
   {
+    "id": "dark_oak_shelf",
+    "name": "Dark Oak Shelf",
+    "hardness": 1.5,
+    "toolRequired": "axe",
+    "drops": "dark_oak_shelf",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.5
+  },
+  {
     "id": "dark_oak_sign",
     "name": "Dark Oak Sign",
     "hardness": 1.0,
@@ -2998,6 +3536,30 @@
     "isFlammable": true,
     "category": "building",
     "blastResistance": 3.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "dark_oak_wall_hanging_sign",
+    "name": "Dark Oak Wall Hanging Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "dark_oak_hanging_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "dark_oak_wall_sign",
+    "name": "Dark Oak Wall Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "dark_oak_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
     "isWaterloggable": true
   },
   {
@@ -3097,6 +3659,19 @@
     "isWaterloggable": true
   },
   {
+    "id": "dead_brain_coral_wall_fan",
+    "name": "Dead Brain Coral Wall Fan",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "dead_brain_coral_fan",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "isTransparent": true,
+    "blastResistance": 0.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "dead_bubble_coral",
     "name": "Dead Bubble Coral",
     "hardness": 0.0,
@@ -3124,6 +3699,19 @@
   {
     "id": "dead_bubble_coral_fan",
     "name": "Dead Bubble Coral Fan",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "dead_bubble_coral_fan",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "isTransparent": true,
+    "blastResistance": 0.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "dead_bubble_coral_wall_fan",
+    "name": "Dead Bubble Coral Wall Fan",
     "hardness": 0.0,
     "toolRequired": "none",
     "drops": "dead_bubble_coral_fan",
@@ -3185,6 +3773,19 @@
     "isWaterloggable": true
   },
   {
+    "id": "dead_fire_coral_wall_fan",
+    "name": "Dead Fire Coral Wall Fan",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "dead_fire_coral_fan",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "isTransparent": true,
+    "blastResistance": 0.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "dead_horn_coral",
     "name": "Dead Horn Coral",
     "hardness": 0.0,
@@ -3223,6 +3824,19 @@
     "isWaterloggable": true
   },
   {
+    "id": "dead_horn_coral_wall_fan",
+    "name": "Dead Horn Coral Wall Fan",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "dead_horn_coral_fan",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "isTransparent": true,
+    "blastResistance": 0.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "dead_tube_coral",
     "name": "Dead Tube Coral",
     "hardness": 0.0,
@@ -3250,6 +3864,19 @@
   {
     "id": "dead_tube_coral_fan",
     "name": "Dead Tube Coral Fan",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "dead_tube_coral_fan",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "isTransparent": true,
+    "blastResistance": 0.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "dead_tube_coral_wall_fan",
+    "name": "Dead Tube Coral Wall Fan",
     "hardness": 0.0,
     "toolRequired": "none",
     "drops": "dead_tube_coral_fan",
@@ -3615,7 +4242,7 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "decoration",
-    "blastResistance": 3.0,
+    "blastResistance": 9.0,
     "lightLevel": 1,
     "hasGravity": true
   },
@@ -3629,6 +4256,28 @@
     "isFlammable": false,
     "category": "decoration",
     "blastResistance": 1.0
+  },
+  {
+    "id": "dragon_wall_head",
+    "name": "Dragon Wall Head",
+    "hardness": 1.0,
+    "toolRequired": "none",
+    "drops": "dragon_head",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 1.0
+  },
+  {
+    "id": "dried_ghast",
+    "name": "Dried Ghast",
+    "hardness": 1.5,
+    "toolRequired": "none",
+    "drops": "dried_ghast",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 1.5
   },
   {
     "id": "dried_kelp_block",
@@ -3843,6 +4492,19 @@
     "blastResistance": 3.0
   },
   {
+    "id": "exposed_copper_bars",
+    "name": "Exposed Copper Bars",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "exposed_copper_bars",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
     "id": "exposed_copper_bulb",
     "name": "Exposed Copper Bulb",
     "hardness": 3.0,
@@ -3851,7 +4513,32 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 3.0
+    "blastResistance": 6.0,
+    "lightLevel": 15
+  },
+  {
+    "id": "exposed_copper_chain",
+    "name": "Exposed Copper Chain",
+    "hardness": 5.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "exposed_copper_chain",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
+    "id": "exposed_copper_chest",
+    "name": "Exposed Copper Chest",
+    "hardness": 2.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "exposed_copper_chest",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0
   },
   {
     "id": "exposed_copper_door",
@@ -3865,6 +4552,18 @@
     "blastResistance": 3.0
   },
   {
+    "id": "exposed_copper_golem_statue",
+    "name": "Exposed Copper Golem Statue",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "exposed_copper_golem_statue",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "exposed_copper_grate",
     "name": "Exposed Copper Grate",
     "hardness": 3.0,
@@ -3874,6 +4573,20 @@
     "isFlammable": false,
     "category": "building",
     "blastResistance": 3.0
+  },
+  {
+    "id": "exposed_copper_lantern",
+    "name": "Exposed Copper Lantern",
+    "hardness": 3.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "exposed_copper_lantern",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "lightLevel": 15,
+    "isTransparent": true
   },
   {
     "id": "exposed_copper_trapdoor",
@@ -3923,16 +4636,16 @@
     "isWaterloggable": true
   },
   {
-    "id": "eyeblossom",
-    "name": "Eyeblossom",
-    "hardness": 0.0,
-    "toolRequired": "none",
-    "drops": "eyeblossom",
+    "id": "exposed_lightning_rod",
+    "name": "Exposed Lightning Rod",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "exposed_lightning_rod",
     "stackSize": 64,
-    "isFlammable": true,
+    "isFlammable": false,
     "isTransparent": true,
-    "category": "natural",
-    "blastResistance": 0.0
+    "category": "utility",
+    "blastResistance": 6.0
   },
   {
     "id": "farmland",
@@ -3955,6 +4668,19 @@
     "isFlammable": false,
     "category": "natural",
     "blastResistance": 0
+  },
+  {
+    "id": "fire",
+    "name": "Fire",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0,
+    "lightLevel": 15
   },
   {
     "id": "fire_coral",
@@ -3993,6 +4719,32 @@
     "isTransparent": true,
     "blastResistance": 0.0,
     "isWaterloggable": true
+  },
+  {
+    "id": "fire_coral_wall_fan",
+    "name": "Fire Coral Wall Fan",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "isTransparent": true,
+    "blastResistance": 0.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "firefly_bush",
+    "name": "Firefly Bush",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "firefly_bush",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "natural",
+    "blastResistance": 0.0,
+    "isTransparent": true,
+    "lightLevel": 2
   },
   {
     "id": "fletching_table",
@@ -4109,17 +4861,6 @@
     "isWaterloggable": true
   },
   {
-    "id": "glazed_terracotta",
-    "name": "Glazed Terracotta (White)",
-    "hardness": 1.4,
-    "toolRequired": "pickaxe",
-    "drops": "white_glazed_terracotta",
-    "stackSize": 64,
-    "isFlammable": false,
-    "category": "building",
-    "blastResistance": 1.4
-  },
-  {
     "id": "glow_lichen",
     "name": "Glow Lichen",
     "hardness": 0.2,
@@ -4168,6 +4909,18 @@
     "minY": -64,
     "maxY": 32,
     "peakY": -16
+  },
+  {
+    "id": "golden_dandelion",
+    "name": "Golden Dandelion",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "golden_dandelion",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "natural",
+    "blastResistance": 0.0,
+    "isTransparent": true
   },
   {
     "id": "granite",
@@ -4275,6 +5028,18 @@
     "isWaterloggable": true
   },
   {
+    "id": "gray_candle_cake",
+    "name": "Gray Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
+  },
+  {
     "id": "gray_carpet",
     "name": "Gray Carpet",
     "hardness": 0.1,
@@ -4364,7 +5129,18 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
+  },
+  {
+    "id": "gray_wall_banner",
+    "name": "Gray Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "gray_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "gray_wool",
@@ -4411,6 +5187,18 @@
     "isTransparent": true,
     "blastResistance": 0.1,
     "isWaterloggable": true
+  },
+  {
+    "id": "green_candle_cake",
+    "name": "Green Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
   },
   {
     "id": "green_carpet",
@@ -4502,7 +5290,18 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
+  },
+  {
+    "id": "green_wall_banner",
+    "name": "Green Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "green_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "green_wool",
@@ -4642,6 +5441,19 @@
     "isWaterloggable": true
   },
   {
+    "id": "horn_coral_wall_fan",
+    "name": "Horn Coral Wall Fan",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "isTransparent": true,
+    "blastResistance": 0.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "ice",
     "name": "Ice",
     "hardness": 0.5,
@@ -4745,12 +5557,25 @@
     "id": "iron_block",
     "name": "Block of Iron",
     "hardness": 5.0,
-    "toolRequired": "pickaxe",
+    "toolRequired": "pickaxe_stone",
     "drops": "iron_block",
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
     "blastResistance": 6.0
+  },
+  {
+    "id": "iron_chain",
+    "name": "Iron Chain",
+    "hardness": 5.0,
+    "toolRequired": "pickaxe",
+    "drops": "iron_chain",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 5.0,
+    "isWaterloggable": true
   },
   {
     "id": "iron_door",
@@ -4802,6 +5627,17 @@
     "blastResistance": 1.0,
     "lightLevel": 15,
     "isWaterloggable": true
+  },
+  {
+    "id": "jigsaw",
+    "name": "Jigsaw Block",
+    "hardness": -1.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "utility",
+    "blastResistance": 3600000.8
   },
   {
     "id": "jukebox",
@@ -4930,6 +5766,17 @@
     "blastResistance": 0
   },
   {
+    "id": "jungle_shelf",
+    "name": "Jungle Shelf",
+    "hardness": 1.5,
+    "toolRequired": "axe",
+    "drops": "jungle_shelf",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.5
+  },
+  {
     "id": "jungle_sign",
     "name": "Jungle Sign",
     "hardness": 1.0,
@@ -4978,6 +5825,30 @@
     "isWaterloggable": true
   },
   {
+    "id": "jungle_wall_hanging_sign",
+    "name": "Jungle Wall Hanging Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "jungle_hanging_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "jungle_wall_sign",
+    "name": "Jungle Wall Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "jungle_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "jungle_wood",
     "name": "Jungle Wood",
     "hardness": 2.0,
@@ -4991,6 +5862,18 @@
   {
     "id": "kelp",
     "name": "Kelp",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "kelp",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "kelp_plant",
+    "name": "Kelp Plant",
     "hardness": 0.0,
     "toolRequired": "none",
     "drops": "kelp",
@@ -5091,6 +5974,30 @@
     "lightLevel": 15
   },
   {
+    "id": "lava_cauldron",
+    "name": "Lava Cauldron",
+    "hardness": 2.0,
+    "toolRequired": "pickaxe",
+    "drops": "cauldron",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "utility",
+    "blastResistance": 2.0,
+    "lightLevel": 2
+  },
+  {
+    "id": "leaf_litter",
+    "name": "Leaf Litter",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "leaf_litter",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "blastResistance": 0.0,
+    "isTransparent": true
+  },
+  {
     "id": "lectern",
     "name": "Lectern",
     "hardness": 2.5,
@@ -5111,6 +6018,17 @@
     "isFlammable": false,
     "category": "redstone",
     "blastResistance": 0.5
+  },
+  {
+    "id": "light",
+    "name": "Light",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "utility",
+    "blastResistance": 3600000.8
   },
   {
     "id": "light_blue_banner",
@@ -5146,6 +6064,18 @@
     "isTransparent": true,
     "blastResistance": 0.1,
     "isWaterloggable": true
+  },
+  {
+    "id": "light_blue_candle_cake",
+    "name": "Light Blue Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
   },
   {
     "id": "light_blue_carpet",
@@ -5237,7 +6167,18 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
+  },
+  {
+    "id": "light_blue_wall_banner",
+    "name": "Light Blue Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "light_blue_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "light_blue_wool",
@@ -5284,6 +6225,18 @@
     "isTransparent": true,
     "blastResistance": 0.1,
     "isWaterloggable": true
+  },
+  {
+    "id": "light_gray_candle_cake",
+    "name": "Light Gray Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
   },
   {
     "id": "light_gray_carpet",
@@ -5375,7 +6328,18 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
+  },
+  {
+    "id": "light_gray_wall_banner",
+    "name": "Light Gray Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "light_gray_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "light_gray_wool",
@@ -5482,6 +6446,18 @@
     "isWaterloggable": true
   },
   {
+    "id": "lime_candle_cake",
+    "name": "Lime Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
+  },
+  {
     "id": "lime_carpet",
     "name": "Lime Carpet",
     "hardness": 0.1,
@@ -5571,7 +6547,18 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
+  },
+  {
+    "id": "lime_wall_banner",
+    "name": "Lime Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "lime_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "lime_wool",
@@ -5640,6 +6627,18 @@
     "isTransparent": true,
     "blastResistance": 0.1,
     "isWaterloggable": true
+  },
+  {
+    "id": "magenta_candle_cake",
+    "name": "Magenta Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
   },
   {
     "id": "magenta_carpet",
@@ -5731,7 +6730,18 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
+  },
+  {
+    "id": "magenta_wall_banner",
+    "name": "Magenta Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "magenta_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "magenta_wool",
@@ -5884,6 +6894,17 @@
     "blastResistance": 0.7
   },
   {
+    "id": "mangrove_shelf",
+    "name": "Mangrove Shelf",
+    "hardness": 1.5,
+    "toolRequired": "axe",
+    "drops": "mangrove_shelf",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.5
+  },
+  {
     "id": "mangrove_sign",
     "name": "Mangrove Sign",
     "hardness": 1.0,
@@ -5932,6 +6953,30 @@
     "isWaterloggable": true
   },
   {
+    "id": "mangrove_wall_hanging_sign",
+    "name": "Mangrove Wall Hanging Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "mangrove_hanging_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "mangrove_wall_sign",
+    "name": "Mangrove Wall Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "mangrove_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "mangrove_wood",
     "name": "Mangrove Wood",
     "hardness": 2.0,
@@ -5966,6 +7011,18 @@
     "isFlammable": false,
     "category": "decoration",
     "blastResistance": 1.0
+  },
+  {
+    "id": "melon_stem",
+    "name": "Melon Stem",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
   },
   {
     "id": "moss_block",
@@ -6083,6 +7140,17 @@
     "isFlammable": false,
     "category": "building",
     "blastResistance": 6.0
+  },
+  {
+    "id": "moving_piston",
+    "name": "Moving Piston",
+    "hardness": -1.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "redstone",
+    "blastResistance": 0.0
   },
   {
     "id": "mud",
@@ -6247,6 +7315,19 @@
     "minY": 10,
     "maxY": 117,
     "peakY": 15
+  },
+  {
+    "id": "nether_portal",
+    "name": "Nether Portal",
+    "hardness": -1.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0,
+    "lightLevel": 11
   },
   {
     "id": "nether_quartz_ore",
@@ -6445,6 +7526,17 @@
     "blastResistance": 0
   },
   {
+    "id": "oak_shelf",
+    "name": "Oak Shelf",
+    "hardness": 1.5,
+    "toolRequired": "axe",
+    "drops": "oak_shelf",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.5
+  },
+  {
     "id": "oak_sign",
     "name": "Oak Sign",
     "hardness": 1.0,
@@ -6490,6 +7582,30 @@
     "isFlammable": true,
     "category": "building",
     "blastResistance": 3.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "oak_wall_hanging_sign",
+    "name": "Oak Wall Hanging Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "oak_hanging_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "oak_wall_sign",
+    "name": "Oak Wall Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "oak_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
     "isWaterloggable": true
   },
   {
@@ -6585,6 +7701,18 @@
     "isWaterloggable": true
   },
   {
+    "id": "orange_candle_cake",
+    "name": "Orange Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
+  },
+  {
     "id": "orange_carpet",
     "name": "Orange Carpet",
     "hardness": 0.1,
@@ -6674,7 +7802,7 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
   },
   {
     "id": "orange_tulip",
@@ -6687,6 +7815,17 @@
     "isTransparent": true,
     "category": "natural",
     "blastResistance": 0.0
+  },
+  {
+    "id": "orange_wall_banner",
+    "name": "Orange Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "orange_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "orange_wool",
@@ -6734,6 +7873,19 @@
     "blastResistance": 3.0
   },
   {
+    "id": "oxidized_copper_bars",
+    "name": "Oxidized Copper Bars",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "oxidized_copper_bars",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
     "id": "oxidized_copper_bulb",
     "name": "Oxidized Copper Bulb",
     "hardness": 3.0,
@@ -6742,7 +7894,32 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 3.0
+    "blastResistance": 6.0,
+    "lightLevel": 15
+  },
+  {
+    "id": "oxidized_copper_chain",
+    "name": "Oxidized Copper Chain",
+    "hardness": 5.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "oxidized_copper_chain",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
+    "id": "oxidized_copper_chest",
+    "name": "Oxidized Copper Chest",
+    "hardness": 2.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "oxidized_copper_chest",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0
   },
   {
     "id": "oxidized_copper_door",
@@ -6756,6 +7933,18 @@
     "blastResistance": 3.0
   },
   {
+    "id": "oxidized_copper_golem_statue",
+    "name": "Oxidized Copper Golem Statue",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "oxidized_copper_golem_statue",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "oxidized_copper_grate",
     "name": "Oxidized Copper Grate",
     "hardness": 3.0,
@@ -6765,6 +7954,20 @@
     "isFlammable": false,
     "category": "building",
     "blastResistance": 3.0
+  },
+  {
+    "id": "oxidized_copper_lantern",
+    "name": "Oxidized Copper Lantern",
+    "hardness": 3.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "oxidized_copper_lantern",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "lightLevel": 15,
+    "isTransparent": true
   },
   {
     "id": "oxidized_copper_trapdoor",
@@ -6812,6 +8015,18 @@
     "category": "building",
     "blastResistance": 3.0,
     "isWaterloggable": true
+  },
+  {
+    "id": "oxidized_lightning_rod",
+    "name": "Oxidized Lightning Rod",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "oxidized_lightning_rod",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "utility",
+    "blastResistance": 6.0
   },
   {
     "id": "packed_ice",
@@ -6960,7 +8175,7 @@
     "stackSize": 64,
     "isFlammable": true,
     "category": "building",
-    "blastResistance": 2.0
+    "blastResistance": 3.0
   },
   {
     "id": "pale_oak_pressure_plate",
@@ -6983,6 +8198,17 @@
     "isFlammable": false,
     "category": "natural",
     "blastResistance": 0
+  },
+  {
+    "id": "pale_oak_shelf",
+    "name": "Pale Oak Shelf",
+    "hardness": 1.5,
+    "toolRequired": "axe",
+    "drops": "pale_oak_shelf",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.5
   },
   {
     "id": "pale_oak_sign",
@@ -7033,6 +8259,30 @@
     "isWaterloggable": true
   },
   {
+    "id": "pale_oak_wall_hanging_sign",
+    "name": "Pale Oak Wall Hanging Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "pale_oak_hanging_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "pale_oak_wall_sign",
+    "name": "Pale Oak Wall Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "pale_oak_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "pale_oak_wood",
     "name": "Pale Oak Wood",
     "hardness": 2.0,
@@ -7067,8 +8317,30 @@
     "blastResistance": 0
   },
   {
+    "id": "petrified_oak_slab",
+    "name": "Petrified Oak Slab",
+    "hardness": 2.0,
+    "toolRequired": "pickaxe",
+    "drops": "petrified_oak_slab",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 2.0
+  },
+  {
     "id": "piglin_head",
     "name": "Piglin Head",
+    "hardness": 1.0,
+    "toolRequired": "none",
+    "drops": "piglin_head",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 1.0
+  },
+  {
+    "id": "piglin_wall_head",
+    "name": "Piglin Wall Head",
     "hardness": 1.0,
     "toolRequired": "none",
     "drops": "piglin_head",
@@ -7111,6 +8383,18 @@
     "isTransparent": true,
     "blastResistance": 0.1,
     "isWaterloggable": true
+  },
+  {
+    "id": "pink_candle_cake",
+    "name": "Pink Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
   },
   {
     "id": "pink_carpet",
@@ -7213,7 +8497,7 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
   },
   {
     "id": "pink_tulip",
@@ -7226,6 +8510,17 @@
     "isTransparent": true,
     "category": "natural",
     "blastResistance": 0.0
+  },
+  {
+    "id": "pink_wall_banner",
+    "name": "Pink Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "pink_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "pink_wool",
@@ -7250,6 +8545,29 @@
     "blastResistance": 1.5
   },
   {
+    "id": "piston_head",
+    "name": "Piston Head",
+    "hardness": 1.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "redstone",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "pitcher_crop",
+    "name": "Pitcher Crop",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "pitcher_plant",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
     "id": "pitcher_plant",
     "name": "Pitcher Plant",
     "hardness": 0.0,
@@ -7264,6 +8582,17 @@
   {
     "id": "player_head",
     "name": "Player Head",
+    "hardness": 1.0,
+    "toolRequired": "none",
+    "drops": "player_head",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 1.0
+  },
+  {
+    "id": "player_wall_head",
+    "name": "Player Wall Head",
     "hardness": 1.0,
     "toolRequired": "none",
     "drops": "player_head",
@@ -7294,7 +8623,6 @@
     "isTransparent": true,
     "category": "natural",
     "blastResistance": 1.5,
-    "hasGravity": true,
     "isWaterloggable": true
   },
   {
@@ -7648,6 +8976,462 @@
     "blastResistance": 0.0
   },
   {
+    "id": "potted_acacia_sapling",
+    "name": "Potted Acacia Sapling",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_allium",
+    "name": "Potted Allium",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_azalea_bush",
+    "name": "Potted Azalea Bush",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_azure_bluet",
+    "name": "Potted Azure Bluet",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_bamboo",
+    "name": "Potted Bamboo",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_birch_sapling",
+    "name": "Potted Birch Sapling",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_blue_orchid",
+    "name": "Potted Blue Orchid",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_brown_mushroom",
+    "name": "Potted Brown Mushroom",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_cactus",
+    "name": "Potted Cactus",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_cherry_sapling",
+    "name": "Potted Cherry Sapling",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_closed_eyeblossom",
+    "name": "Potted Closed Eyeblossom",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_cornflower",
+    "name": "Potted Cornflower",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_crimson_fungus",
+    "name": "Potted Crimson Fungus",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_crimson_roots",
+    "name": "Potted Crimson Roots",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_dandelion",
+    "name": "Potted Dandelion",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_dark_oak_sapling",
+    "name": "Potted Dark Oak Sapling",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_dead_bush",
+    "name": "Potted Dead Bush",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_fern",
+    "name": "Potted Fern",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_flowering_azalea_bush",
+    "name": "Potted Flowering Azalea Bush",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_golden_dandelion",
+    "name": "Potted Golden Dandelion",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_jungle_sapling",
+    "name": "Potted Jungle Sapling",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_lily_of_the_valley",
+    "name": "Potted Lily of the Valley",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_mangrove_propagule",
+    "name": "Potted Mangrove Propagule",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_oak_sapling",
+    "name": "Potted Oak Sapling",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_open_eyeblossom",
+    "name": "Potted Open Eyeblossom",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_orange_tulip",
+    "name": "Potted Orange Tulip",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_oxeye_daisy",
+    "name": "Potted Oxeye Daisy",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_pale_oak_sapling",
+    "name": "Potted Pale Oak Sapling",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_pink_tulip",
+    "name": "Potted Pink Tulip",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_poppy",
+    "name": "Potted Poppy",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_red_mushroom",
+    "name": "Potted Red Mushroom",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_red_tulip",
+    "name": "Potted Red Tulip",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_spruce_sapling",
+    "name": "Potted Spruce Sapling",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_torchflower",
+    "name": "Potted Torchflower",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_warped_fungus",
+    "name": "Potted Warped Fungus",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_warped_roots",
+    "name": "Potted Warped Roots",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_white_tulip",
+    "name": "Potted White Tulip",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potted_wither_rose",
+    "name": "Potted Wither Rose",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "flower_pot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0
+  },
+  {
     "id": "powder_snow",
     "name": "Powder Snow",
     "hardness": 0.25,
@@ -7657,6 +9441,17 @@
     "isFlammable": false,
     "category": "natural",
     "blastResistance": 0.25
+  },
+  {
+    "id": "powder_snow_cauldron",
+    "name": "Powder Snow Cauldron",
+    "hardness": 2.0,
+    "toolRequired": "pickaxe",
+    "drops": "cauldron",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "utility",
+    "blastResistance": 2.0
   },
   {
     "id": "powered_rail",
@@ -7764,6 +9559,18 @@
     "blastResistance": 1.0
   },
   {
+    "id": "pumpkin_stem",
+    "name": "Pumpkin Stem",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
     "id": "purple_banner",
     "name": "Purple Banner",
     "hardness": 1.0,
@@ -7797,6 +9604,18 @@
     "isTransparent": true,
     "blastResistance": 0.1,
     "isWaterloggable": true
+  },
+  {
+    "id": "purple_candle_cake",
+    "name": "Purple Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
   },
   {
     "id": "purple_carpet",
@@ -7888,7 +9707,18 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
+  },
+  {
+    "id": "purple_wall_banner",
+    "name": "Purple Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "purple_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "purple_wool",
@@ -8083,6 +9913,18 @@
     "isTransparent": true,
     "blastResistance": 0.1,
     "isWaterloggable": true
+  },
+  {
+    "id": "red_candle_cake",
+    "name": "Red Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
   },
   {
     "id": "red_carpet",
@@ -8303,7 +10145,7 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
   },
   {
     "id": "red_tulip",
@@ -8316,6 +10158,17 @@
     "isTransparent": true,
     "category": "natural",
     "blastResistance": 0.0
+  },
+  {
+    "id": "red_wall_banner",
+    "name": "Red Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "red_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "red_wool",
@@ -8380,6 +10233,31 @@
     "lightLevel": 7
   },
   {
+    "id": "redstone_wall_torch",
+    "name": "Redstone Wall Torch",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "redstone_torch",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0,
+    "lightLevel": 7
+  },
+  {
+    "id": "redstone_wire",
+    "name": "Redstone Wire",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "redstone",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "redstone",
+    "blastResistance": 0.0
+  },
+  {
     "id": "reinforced_deepslate",
     "name": "Reinforced Deepslate",
     "hardness": 55.0,
@@ -8400,6 +10278,17 @@
     "isFlammable": false,
     "category": "redstone",
     "blastResistance": 0.0
+  },
+  {
+    "id": "repeating_command_block",
+    "name": "Repeating Command Block",
+    "hardness": -1.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "redstone",
+    "blastResistance": 3600000.8
   },
   {
     "id": "resin_block",
@@ -8458,6 +10347,18 @@
     "isFlammable": false,
     "category": "building",
     "blastResistance": 1.5
+  },
+  {
+    "id": "resin_clump",
+    "name": "Resin Clump",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "resin_clump",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "blastResistance": 0.0,
+    "isTransparent": true
   },
   {
     "id": "respawn_anchor",
@@ -8562,7 +10463,8 @@
     "isFlammable": true,
     "isTransparent": true,
     "category": "building",
-    "blastResistance": 0.0
+    "blastResistance": 0.0,
+    "hasGravity": true
   },
   {
     "id": "sculk",
@@ -8648,7 +10550,8 @@
     "isTransparent": true,
     "category": "natural",
     "blastResistance": 0.0,
-    "isWaterloggable": true
+    "isWaterloggable": true,
+    "lightLevel": 6
   },
   {
     "id": "seagrass",
@@ -8660,6 +10563,18 @@
     "isFlammable": false,
     "category": "decoration",
     "blastResistance": 0.0
+  },
+  {
+    "id": "short_dry_grass",
+    "name": "Short Dry Grass",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "short_dry_grass",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "natural",
+    "blastResistance": 0.0,
+    "isTransparent": true
   },
   {
     "id": "short_grass",
@@ -8698,6 +10613,17 @@
   {
     "id": "skeleton_skull",
     "name": "Skeleton Skull",
+    "hardness": 1.0,
+    "toolRequired": "none",
+    "drops": "skeleton_skull",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 1.0
+  },
+  {
+    "id": "skeleton_wall_skull",
+    "name": "Skeleton Wall Skull",
     "hardness": 1.0,
     "toolRequired": "none",
     "drops": "skeleton_skull",
@@ -8905,6 +10831,17 @@
     "isWaterloggable": true
   },
   {
+    "id": "sniffer_egg",
+    "name": "Sniffer Egg",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "sniffer_egg",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "blastResistance": 0.5
+  },
+  {
     "id": "snow",
     "name": "Snow",
     "hardness": 0.1,
@@ -8938,6 +10875,19 @@
     "blastResistance": 2.0,
     "lightLevel": 10,
     "isWaterloggable": true
+  },
+  {
+    "id": "soul_fire",
+    "name": "Soul Fire",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0,
+    "lightLevel": 10
   },
   {
     "id": "soul_lantern",
@@ -8978,6 +10928,19 @@
   {
     "id": "soul_torch",
     "name": "Soul Torch",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "soul_torch",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0,
+    "lightLevel": 10
+  },
+  {
+    "id": "soul_wall_torch",
+    "name": "Soul Wall Torch",
     "hardness": 0.0,
     "toolRequired": "none",
     "drops": "soul_torch",
@@ -9138,6 +11101,17 @@
     "blastResistance": 0
   },
   {
+    "id": "spruce_shelf",
+    "name": "Spruce Shelf",
+    "hardness": 1.5,
+    "toolRequired": "axe",
+    "drops": "spruce_shelf",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.5
+  },
+  {
     "id": "spruce_sign",
     "name": "Spruce Sign",
     "hardness": 1.0,
@@ -9186,6 +11160,30 @@
     "isWaterloggable": true
   },
   {
+    "id": "spruce_wall_hanging_sign",
+    "name": "Spruce Wall Hanging Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "spruce_hanging_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "spruce_wall_sign",
+    "name": "Spruce Wall Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "spruce_sign",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "spruce_wood",
     "name": "Spruce Wood",
     "hardness": 2.0,
@@ -9195,19 +11193,6 @@
     "isFlammable": true,
     "category": "building",
     "blastResistance": 2.0
-  },
-  {
-    "id": "stained_glass_pane",
-    "name": "Stained Glass Pane",
-    "hardness": 0.3,
-    "toolRequired": "none",
-    "drops": "none",
-    "stackSize": 64,
-    "isFlammable": false,
-    "isTransparent": true,
-    "category": "decoration",
-    "blastResistance": 0.3,
-    "isWaterloggable": true
   },
   {
     "id": "sticky_piston",
@@ -9589,6 +11574,28 @@
     "blastResistance": 2.0
   },
   {
+    "id": "structure_block",
+    "name": "Structure Block",
+    "hardness": -1.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "utility",
+    "blastResistance": 3600000.8
+  },
+  {
+    "id": "structure_void",
+    "name": "Structure Void",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "utility",
+    "blastResistance": 0.0
+  },
+  {
     "id": "sugar_cane",
     "name": "Sugar Cane",
     "hardness": 0.0,
@@ -9649,6 +11656,18 @@
     "blastResistance": 0.0
   },
   {
+    "id": "tall_dry_grass",
+    "name": "Tall Dry Grass",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "natural",
+    "blastResistance": 0.0,
+    "isTransparent": true
+  },
+  {
     "id": "tall_grass",
     "name": "Tall Grass",
     "hardness": 0,
@@ -9691,7 +11710,29 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
+  },
+  {
+    "id": "test_block",
+    "name": "Test Block",
+    "hardness": -1.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "utility",
+    "blastResistance": 3600000.8
+  },
+  {
+    "id": "test_instance_block",
+    "name": "Test Instance Block",
+    "hardness": -1.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "utility",
+    "blastResistance": 3600000.8
   },
   {
     "id": "tinted_glass",
@@ -9741,6 +11782,18 @@
     "blastResistance": 0.0
   },
   {
+    "id": "torchflower_crop",
+    "name": "Torchflower Crop",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "torchflower",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
     "id": "trapped_chest",
     "name": "Trapped Chest",
     "hardness": 2.5,
@@ -9761,7 +11814,20 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "utility",
-    "blastResistance": 50.0
+    "blastResistance": 50.0,
+    "lightLevel": 6
+  },
+  {
+    "id": "tripwire",
+    "name": "Tripwire",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "string",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "redstone",
+    "blastResistance": 0.0
   },
   {
     "id": "tripwire_hook",
@@ -9803,6 +11869,19 @@
   {
     "id": "tube_coral_fan",
     "name": "Tube Coral Fan",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "isTransparent": true,
+    "blastResistance": 0.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "tube_coral_wall_fan",
+    "name": "Tube Coral Wall Fan",
     "hardness": 0.0,
     "toolRequired": "none",
     "drops": "none",
@@ -9930,6 +12009,18 @@
     "blastResistance": 0
   },
   {
+    "id": "twisting_vines_plant",
+    "name": "Twisting Vines Plant",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
     "id": "vault",
     "name": "Vault",
     "hardness": 50.0,
@@ -9938,7 +12029,8 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "utility",
-    "blastResistance": 50.0
+    "blastResistance": 50.0,
+    "lightLevel": 6
   },
   {
     "id": "verdant_froglight",
@@ -9963,6 +12055,31 @@
     "isTransparent": true,
     "category": "natural",
     "blastResistance": 0.2
+  },
+  {
+    "id": "void_air",
+    "name": "Void Air",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "wall_torch",
+    "name": "Wall Torch",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "torch",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "decoration",
+    "blastResistance": 0.0,
+    "lightLevel": 14
   },
   {
     "id": "warped_button",
@@ -10091,6 +12208,17 @@
     "blastResistance": 0
   },
   {
+    "id": "warped_shelf",
+    "name": "Warped Shelf",
+    "hardness": 1.5,
+    "toolRequired": "axe",
+    "drops": "warped_shelf",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 1.5
+  },
+  {
     "id": "warped_sign",
     "name": "Warped Sign",
     "hardness": 1.0,
@@ -10150,6 +12278,30 @@
     "isWaterloggable": true
   },
   {
+    "id": "warped_wall_hanging_sign",
+    "name": "Warped Wall Hanging Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "warped_hanging_sign",
+    "stackSize": 16,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
+    "id": "warped_wall_sign",
+    "name": "Warped Wall Sign",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "warped_sign",
+    "stackSize": 16,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 1.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "warped_wart_block",
     "name": "Warped Wart Block",
     "hardness": 1.0,
@@ -10173,6 +12325,17 @@
     "blastResistance": 100.0
   },
   {
+    "id": "water_cauldron",
+    "name": "Water Cauldron",
+    "hardness": 2.0,
+    "toolRequired": "pickaxe",
+    "drops": "cauldron",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "utility",
+    "blastResistance": 2.0
+  },
+  {
     "id": "waxed_chiseled_copper",
     "name": "Waxed Chiseled Copper",
     "hardness": 3.0,
@@ -10182,6 +12345,19 @@
     "isFlammable": false,
     "category": "building",
     "blastResistance": 3.0
+  },
+  {
+    "id": "waxed_copper_bars",
+    "name": "Waxed Copper Bars",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_copper_bars",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
   },
   {
     "id": "waxed_copper_block",
@@ -10203,7 +12379,32 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 3.0
+    "blastResistance": 6.0,
+    "lightLevel": 15
+  },
+  {
+    "id": "waxed_copper_chain",
+    "name": "Waxed Copper Chain",
+    "hardness": 5.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_copper_chain",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
+    "id": "waxed_copper_chest",
+    "name": "Waxed Copper Chest",
+    "hardness": 2.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_copper_chest",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0
   },
   {
     "id": "waxed_copper_door",
@@ -10217,6 +12418,18 @@
     "blastResistance": 3.0
   },
   {
+    "id": "waxed_copper_golem_statue",
+    "name": "Waxed Copper Golem Statue",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_copper_golem_statue",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "waxed_copper_grate",
     "name": "Waxed Copper Grate",
     "hardness": 3.0,
@@ -10226,6 +12439,20 @@
     "isFlammable": false,
     "category": "building",
     "blastResistance": 3.0
+  },
+  {
+    "id": "waxed_copper_lantern",
+    "name": "Waxed Copper Lantern",
+    "hardness": 3.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_copper_lantern",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "lightLevel": 15,
+    "isTransparent": true
   },
   {
     "id": "waxed_copper_trapdoor",
@@ -10297,6 +12524,19 @@
     "blastResistance": 3.0
   },
   {
+    "id": "waxed_exposed_copper_bars",
+    "name": "Waxed Exposed Copper Bars",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_exposed_copper_bars",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
     "id": "waxed_exposed_copper_bulb",
     "name": "Waxed Exposed Copper Bulb",
     "hardness": 3.0,
@@ -10305,7 +12545,32 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 3.0
+    "blastResistance": 6.0,
+    "lightLevel": 15
+  },
+  {
+    "id": "waxed_exposed_copper_chain",
+    "name": "Waxed Exposed Copper Chain",
+    "hardness": 5.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_exposed_copper_chain",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
+    "id": "waxed_exposed_copper_chest",
+    "name": "Waxed Exposed Copper Chest",
+    "hardness": 2.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_exposed_copper_chest",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0
   },
   {
     "id": "waxed_exposed_copper_door",
@@ -10319,6 +12584,18 @@
     "blastResistance": 3.0
   },
   {
+    "id": "waxed_exposed_copper_golem_statue",
+    "name": "Waxed Exposed Copper Golem Statue",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_exposed_copper_golem_statue",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "waxed_exposed_copper_grate",
     "name": "Waxed Exposed Copper Grate",
     "hardness": 3.0,
@@ -10328,6 +12605,20 @@
     "isFlammable": false,
     "category": "building",
     "blastResistance": 3.0
+  },
+  {
+    "id": "waxed_exposed_copper_lantern",
+    "name": "Waxed Exposed Copper Lantern",
+    "hardness": 3.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_exposed_copper_lantern",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "lightLevel": 15,
+    "isTransparent": true
   },
   {
     "id": "waxed_exposed_copper_trapdoor",
@@ -10377,6 +12668,30 @@
     "isWaterloggable": true
   },
   {
+    "id": "waxed_exposed_lightning_rod",
+    "name": "Waxed Exposed Lightning Rod",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_exposed_lightning_rod",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "utility",
+    "blastResistance": 6.0
+  },
+  {
+    "id": "waxed_lightning_rod",
+    "name": "Waxed Lightning Rod",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_lightning_rod",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "utility",
+    "blastResistance": 6.0
+  },
+  {
     "id": "waxed_oxidized_chiseled_copper",
     "name": "Waxed Oxidized Chiseled Copper",
     "hardness": 3.0,
@@ -10399,6 +12714,19 @@
     "blastResistance": 3.0
   },
   {
+    "id": "waxed_oxidized_copper_bars",
+    "name": "Waxed Oxidized Copper Bars",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_oxidized_copper_bars",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
     "id": "waxed_oxidized_copper_bulb",
     "name": "Waxed Oxidized Copper Bulb",
     "hardness": 3.0,
@@ -10407,7 +12735,32 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 3.0
+    "blastResistance": 6.0,
+    "lightLevel": 15
+  },
+  {
+    "id": "waxed_oxidized_copper_chain",
+    "name": "Waxed Oxidized Copper Chain",
+    "hardness": 5.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_oxidized_copper_chain",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
+    "id": "waxed_oxidized_copper_chest",
+    "name": "Waxed Oxidized Copper Chest",
+    "hardness": 2.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_oxidized_copper_chest",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0
   },
   {
     "id": "waxed_oxidized_copper_door",
@@ -10421,6 +12774,18 @@
     "blastResistance": 3.0
   },
   {
+    "id": "waxed_oxidized_copper_golem_statue",
+    "name": "Waxed Oxidized Copper Golem Statue",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_oxidized_copper_golem_statue",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "waxed_oxidized_copper_grate",
     "name": "Waxed Oxidized Copper Grate",
     "hardness": 3.0,
@@ -10430,6 +12795,20 @@
     "isFlammable": false,
     "category": "building",
     "blastResistance": 3.0
+  },
+  {
+    "id": "waxed_oxidized_copper_lantern",
+    "name": "Waxed Oxidized Copper Lantern",
+    "hardness": 3.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_oxidized_copper_lantern",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "lightLevel": 15,
+    "isTransparent": true
   },
   {
     "id": "waxed_oxidized_copper_trapdoor",
@@ -10479,6 +12858,18 @@
     "isWaterloggable": true
   },
   {
+    "id": "waxed_oxidized_lightning_rod",
+    "name": "Waxed Oxidized Lightning Rod",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_oxidized_lightning_rod",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "utility",
+    "blastResistance": 6.0
+  },
+  {
     "id": "waxed_weathered_chiseled_copper",
     "name": "Waxed Weathered Chiseled Copper",
     "hardness": 3.0,
@@ -10501,6 +12892,19 @@
     "blastResistance": 3.0
   },
   {
+    "id": "waxed_weathered_copper_bars",
+    "name": "Waxed Weathered Copper Bars",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_weathered_copper_bars",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
     "id": "waxed_weathered_copper_bulb",
     "name": "Waxed Weathered Copper Bulb",
     "hardness": 3.0,
@@ -10509,7 +12913,32 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 3.0
+    "blastResistance": 6.0,
+    "lightLevel": 15
+  },
+  {
+    "id": "waxed_weathered_copper_chain",
+    "name": "Waxed Weathered Copper Chain",
+    "hardness": 5.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_weathered_copper_chain",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
+    "id": "waxed_weathered_copper_chest",
+    "name": "Waxed Weathered Copper Chest",
+    "hardness": 2.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_weathered_copper_chest",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0
   },
   {
     "id": "waxed_weathered_copper_door",
@@ -10523,6 +12952,18 @@
     "blastResistance": 3.0
   },
   {
+    "id": "waxed_weathered_copper_golem_statue",
+    "name": "Waxed Weathered Copper Golem Statue",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_weathered_copper_golem_statue",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "waxed_weathered_copper_grate",
     "name": "Waxed Weathered Copper Grate",
     "hardness": 3.0,
@@ -10532,6 +12973,20 @@
     "isFlammable": false,
     "category": "building",
     "blastResistance": 3.0
+  },
+  {
+    "id": "waxed_weathered_copper_lantern",
+    "name": "Waxed Weathered Copper Lantern",
+    "hardness": 3.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "waxed_weathered_copper_lantern",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "lightLevel": 15,
+    "isTransparent": true
   },
   {
     "id": "waxed_weathered_copper_trapdoor",
@@ -10603,6 +13058,19 @@
     "blastResistance": 3.0
   },
   {
+    "id": "weathered_copper_bars",
+    "name": "Weathered Copper Bars",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "weathered_copper_bars",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
     "id": "weathered_copper_bulb",
     "name": "Weathered Copper Bulb",
     "hardness": 3.0,
@@ -10611,7 +13079,32 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 3.0
+    "blastResistance": 6.0,
+    "lightLevel": 15
+  },
+  {
+    "id": "weathered_copper_chain",
+    "name": "Weathered Copper Chain",
+    "hardness": 5.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "weathered_copper_chain",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "isTransparent": true
+  },
+  {
+    "id": "weathered_copper_chest",
+    "name": "Weathered Copper Chest",
+    "hardness": 2.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "weathered_copper_chest",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0
   },
   {
     "id": "weathered_copper_door",
@@ -10625,6 +13118,18 @@
     "blastResistance": 3.0
   },
   {
+    "id": "weathered_copper_golem_statue",
+    "name": "Weathered Copper Golem Statue",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "weathered_copper_golem_statue",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "weathered_copper_grate",
     "name": "Weathered Copper Grate",
     "hardness": 3.0,
@@ -10634,6 +13139,20 @@
     "isFlammable": false,
     "category": "building",
     "blastResistance": 3.0
+  },
+  {
+    "id": "weathered_copper_lantern",
+    "name": "Weathered Copper Lantern",
+    "hardness": 3.5,
+    "toolRequired": "pickaxe_stone",
+    "drops": "weathered_copper_lantern",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true,
+    "lightLevel": 15,
+    "isTransparent": true
   },
   {
     "id": "weathered_copper_trapdoor",
@@ -10683,6 +13202,18 @@
     "isWaterloggable": true
   },
   {
+    "id": "weathered_lightning_rod",
+    "name": "Weathered Lightning Rod",
+    "hardness": 3.0,
+    "toolRequired": "pickaxe_stone",
+    "drops": "weathered_lightning_rod",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "utility",
+    "blastResistance": 6.0
+  },
+  {
     "id": "weeping_vines",
     "name": "Weeping Vines",
     "hardness": 0,
@@ -10692,6 +13223,18 @@
     "isFlammable": false,
     "category": "natural",
     "blastResistance": 0
+  },
+  {
+    "id": "weeping_vines_plant",
+    "name": "Weeping Vines Plant",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
   },
   {
     "id": "wet_sponge",
@@ -10750,6 +13293,18 @@
     "isTransparent": true,
     "blastResistance": 0.1,
     "isWaterloggable": true
+  },
+  {
+    "id": "white_candle_cake",
+    "name": "White Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
   },
   {
     "id": "white_carpet",
@@ -10841,7 +13396,7 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
   },
   {
     "id": "white_tulip",
@@ -10856,6 +13411,17 @@
     "blastResistance": 0.0
   },
   {
+    "id": "white_wall_banner",
+    "name": "White Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "white_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
+  },
+  {
     "id": "white_wool",
     "name": "White Wool",
     "hardness": 0.8,
@@ -10865,6 +13431,18 @@
     "isFlammable": true,
     "category": "building",
     "blastResistance": 0.8
+  },
+  {
+    "id": "wildflowers",
+    "name": "Wildflowers",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "wildflowers",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "natural",
+    "blastResistance": 0.0,
+    "isTransparent": true
   },
   {
     "id": "wither_rose",
@@ -10881,6 +13459,17 @@
   {
     "id": "wither_skeleton_skull",
     "name": "Wither Skeleton Skull",
+    "hardness": 1.0,
+    "toolRequired": "none",
+    "drops": "wither_skeleton_skull",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 1.0
+  },
+  {
+    "id": "wither_skeleton_wall_skull",
+    "name": "Wither Skeleton Wall Skull",
     "hardness": 1.0,
     "toolRequired": "none",
     "drops": "wither_skeleton_skull",
@@ -10923,6 +13512,18 @@
     "isTransparent": true,
     "blastResistance": 0.1,
     "isWaterloggable": true
+  },
+  {
+    "id": "yellow_candle_cake",
+    "name": "Yellow Candle Cake",
+    "hardness": 0.5,
+    "toolRequired": "none",
+    "drops": "none",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.5,
+    "lightLevel": 3
   },
   {
     "id": "yellow_carpet",
@@ -11014,7 +13615,18 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
-    "blastResistance": 1.25
+    "blastResistance": 4.2
+  },
+  {
+    "id": "yellow_wall_banner",
+    "name": "Yellow Wall Banner",
+    "hardness": 1.0,
+    "toolRequired": "axe",
+    "drops": "yellow_banner",
+    "stackSize": 16,
+    "isFlammable": true,
+    "category": "decoration",
+    "blastResistance": 1.0
   },
   {
     "id": "yellow_wool",
@@ -11030,6 +13642,17 @@
   {
     "id": "zombie_head",
     "name": "Zombie Head",
+    "hardness": 1.0,
+    "toolRequired": "none",
+    "drops": "zombie_head",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 1.0
+  },
+  {
+    "id": "zombie_wall_head",
+    "name": "Zombie Wall Head",
     "hardness": 1.0,
     "toolRequired": "none",
     "drops": "zombie_head",
