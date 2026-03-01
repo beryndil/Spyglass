@@ -4,9 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
@@ -65,311 +64,327 @@ fun SettingsScreen(
 
     var showDeleteConfirm by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp, vertical = 16.dp),
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        IconButton(onClick = onBack) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = stringResource(R.string.back),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+        item(key = "back") {
+            IconButton(onClick = onBack) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = stringResource(R.string.back),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            SectionHeader(stringResource(R.string.settings))
         }
-        SectionHeader(stringResource(R.string.settings))
 
         // ── Theme ───────────────────────────────────────────────────────
-        SectionHeader(stringResource(R.string.settings_theme))
-        ResultCard {
-            Text(
-                stringResource(R.string.settings_background),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                ThemeOrder.forEach { key ->
-                    val info = ThemeInfoMap[key] ?: return@forEach
-                    val isSelected = backgroundTheme == key
-                    val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
-                    Box(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .clip(CircleShape)
-                            .background(info.background, CircleShape)
-                            .border(
-                                width = if (isSelected) 2.5.dp else 1.dp,
-                                color = borderColor,
-                                shape = CircleShape,
-                            )
-                            .clickable { vm.setBackgroundTheme(key) },
-                    )
-                }
-            }
-            Text(
-                ThemeInfoMap[backgroundTheme]?.label ?: "Obsidian",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.secondary,
-            )
-        }
-
-        // ── Player Name ───────────────────────────────────────────────
-        SectionHeader(stringResource(R.string.settings_player_name))
-        ResultCard {
-            if (playerUsername.isNotBlank()) {
-                StatRow(stringResource(R.string.settings_username), playerUsername)
-                if (playerUuid.isNotBlank()) {
-                    StatRow(stringResource(R.string.settings_uuid), playerUuid)
-                }
-                TextButton(
-                    onClick = vm::clearPlayerUsername,
-                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
-                    modifier = Modifier.height(32.dp),
-                ) {
-                    Text(stringResource(R.string.settings_clear_username), color = MaterialTheme.colorScheme.secondary, style = MaterialTheme.typography.labelSmall)
-                }
-            } else {
+        item(key = "theme") {
+            SectionHeader(stringResource(R.string.settings_theme))
+            ResultCard {
                 Text(
-                    stringResource(R.string.settings_no_username),
+                    stringResource(R.string.settings_background),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    ThemeOrder.forEach { key ->
+                        val info = ThemeInfoMap[key] ?: return@forEach
+                        val isSelected = backgroundTheme == key
+                        val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+                        Box(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .clip(CircleShape)
+                                .background(info.background, CircleShape)
+                                .border(
+                                    width = if (isSelected) 2.5.dp else 1.dp,
+                                    color = borderColor,
+                                    shape = CircleShape,
+                                )
+                                .clickable { vm.setBackgroundTheme(key) },
+                        )
+                    }
+                }
+                Text(
+                    ThemeInfoMap[backgroundTheme]?.label ?: "Obsidian",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
             }
         }
 
-        // ── Default Browse Tab ──────────────────────────────────────────
-        SectionHeader(stringResource(R.string.settings_default_browse_tab))
-        ResultCard {
-            Text(
-                stringResource(R.string.settings_browse_tab_desc),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.secondary,
-            )
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-            ) {
-                browseTabNames().forEachIndexed { i, name ->
-                    FilterChip(
-                        selected = defaultBrowseTab == i,
-                        onClick = { vm.setDefaultBrowseTab(i) },
-                        label = { Text(name, style = MaterialTheme.typography.labelSmall) },
+        // ── Player Name ───────────────────────────────────────────────
+        item(key = "player") {
+            SectionHeader(stringResource(R.string.settings_player_name))
+            ResultCard {
+                if (playerUsername.isNotBlank()) {
+                    StatRow(stringResource(R.string.settings_username), playerUsername)
+                    if (playerUuid.isNotBlank()) {
+                        StatRow(stringResource(R.string.settings_uuid), playerUuid)
+                    }
+                    TextButton(
+                        onClick = vm::clearPlayerUsername,
+                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
+                        modifier = Modifier.height(32.dp),
+                    ) {
+                        Text(stringResource(R.string.settings_clear_username), color = MaterialTheme.colorScheme.secondary, style = MaterialTheme.typography.labelSmall)
+                    }
+                } else {
+                    Text(
+                        stringResource(R.string.settings_no_username),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.secondary,
                     )
+                }
+            }
+        }
+
+        // ── Default Browse Tab ──────────────────────────────────────────
+        item(key = "browse_tab") {
+            SectionHeader(stringResource(R.string.settings_default_browse_tab))
+            ResultCard {
+                Text(
+                    stringResource(R.string.settings_browse_tab_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    browseTabNames().forEachIndexed { i, name ->
+                        FilterChip(
+                            selected = defaultBrowseTab == i,
+                            onClick = { vm.setDefaultBrowseTab(i) },
+                            label = { Text(name, style = MaterialTheme.typography.labelSmall) },
+                        )
+                    }
                 }
             }
         }
 
         // ── Default Tool Tab ────────────────────────────────────────────
-        SectionHeader(stringResource(R.string.settings_default_tool_tab))
-        ResultCard {
-            Text(
-                stringResource(R.string.settings_tool_tab_desc),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.secondary,
-            )
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-            ) {
-                toolTabNames().forEachIndexed { i, name ->
-                    FilterChip(
-                        selected = defaultToolTab == i,
-                        onClick = { vm.setDefaultToolTab(i) },
-                        label = { Text(name, style = MaterialTheme.typography.labelSmall) },
-                    )
+        item(key = "tool_tab") {
+            SectionHeader(stringResource(R.string.settings_default_tool_tab))
+            ResultCard {
+                Text(
+                    stringResource(R.string.settings_tool_tab_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    toolTabNames().forEachIndexed { i, name ->
+                        FilterChip(
+                            selected = defaultToolTab == i,
+                            onClick = { vm.setDefaultToolTab(i) },
+                            label = { Text(name, style = MaterialTheme.typography.labelSmall) },
+                        )
+                    }
                 }
             }
         }
 
         // ── Toggles ─────────────────────────────────────────────────────
-        SectionHeader(stringResource(R.string.settings_display))
-        ResultCard {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(stringResource(R.string.settings_tip_of_day), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                    Text(stringResource(R.string.settings_tip_of_day_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+        item(key = "display") {
+            SectionHeader(stringResource(R.string.settings_display))
+            ResultCard {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(stringResource(R.string.settings_tip_of_day), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                        Text(stringResource(R.string.settings_tip_of_day_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                    }
+                    Switch(
+                        checked = showTipOfDay,
+                        onCheckedChange = vm::setShowTipOfDay,
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = MaterialTheme.colorScheme.primary,
+                            checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                            uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                            uncheckedTrackColor = MaterialTheme.colorScheme.outline,
+                        ),
+                    )
                 }
-                Switch(
-                    checked = showTipOfDay,
-                    onCheckedChange = vm::setShowTipOfDay,
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = MaterialTheme.colorScheme.primary,
-                        checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                        uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                        uncheckedTrackColor = MaterialTheme.colorScheme.outline,
-                    ),
-                )
-            }
-            SpyglassDivider()
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(stringResource(R.string.settings_favorites_on_home), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                    Text(stringResource(R.string.settings_favorites_on_home_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                SpyglassDivider()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(stringResource(R.string.settings_favorites_on_home), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                        Text(stringResource(R.string.settings_favorites_on_home_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                    }
+                    Switch(
+                        checked = showFavoritesOnHome,
+                        onCheckedChange = vm::setShowFavoritesOnHome,
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = MaterialTheme.colorScheme.primary,
+                            checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                            uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                            uncheckedTrackColor = MaterialTheme.colorScheme.outline,
+                        ),
+                    )
                 }
-                Switch(
-                    checked = showFavoritesOnHome,
-                    onCheckedChange = vm::setShowFavoritesOnHome,
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = MaterialTheme.colorScheme.primary,
-                        checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                        uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                        uncheckedTrackColor = MaterialTheme.colorScheme.outline,
-                    ),
-                )
             }
         }
 
         // ── Game Clock ─────────────────────────────────────────────────────
-        SectionHeader(stringResource(R.string.settings_game_clock))
-        ResultCard {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(stringResource(R.string.settings_game_clock), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                    Text(stringResource(R.string.settings_game_clock_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
-                }
-                Switch(
-                    checked = gameClockEnabled,
-                    onCheckedChange = vm::setGameClockEnabled,
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = MaterialTheme.colorScheme.primary,
-                        checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                        uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                        uncheckedTrackColor = MaterialTheme.colorScheme.outline,
-                    ),
-                )
-            }
-            SpyglassDivider()
-            Text(
-                stringResource(R.string.settings_configure_clock),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable { onCalcTab(9) },
-            )
-        }
-
-        // ── Favorites Management ────────────────────────────────────────
-        SectionHeader(stringResource(R.string.settings_favorites))
-        ResultCard {
-            if (allFavorites.isEmpty()) {
-                Text(
-                    stringResource(R.string.settings_no_favorites),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-            } else {
-                Text(
-                    stringResource(R.string.settings_favorites_count, allFavorites.size),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                allFavorites.forEach { fav ->
-                    Text(
-                        "\u2605  ${fav.displayName}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        item(key = "clock") {
+            SectionHeader(stringResource(R.string.settings_game_clock))
+            ResultCard {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(stringResource(R.string.settings_game_clock), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                        Text(stringResource(R.string.settings_game_clock_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                    }
+                    Switch(
+                        checked = gameClockEnabled,
+                        onCheckedChange = vm::setGameClockEnabled,
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = MaterialTheme.colorScheme.primary,
+                            checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                            uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                            uncheckedTrackColor = MaterialTheme.colorScheme.outline,
+                        ),
                     )
                 }
                 SpyglassDivider()
-                TextButton(onClick = vm::clearAllFavorites) {
-                    Text(stringResource(R.string.settings_clear_all_favorites), color = Red400)
+                Text(
+                    stringResource(R.string.settings_configure_clock),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.clickable { onCalcTab(9) },
+                )
+            }
+        }
+
+        // ── Favorites Management ────────────────────────────────────────
+        item(key = "favorites") {
+            SectionHeader(stringResource(R.string.settings_favorites))
+            ResultCard {
+                if (allFavorites.isEmpty()) {
+                    Text(
+                        stringResource(R.string.settings_no_favorites),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                } else {
+                    Text(
+                        stringResource(R.string.settings_favorites_count, allFavorites.size),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    allFavorites.forEach { fav ->
+                        Text(
+                            "\u2605  ${fav.displayName}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    SpyglassDivider()
+                    TextButton(onClick = vm::clearAllFavorites) {
+                        Text(stringResource(R.string.settings_clear_all_favorites), color = Red400)
+                    }
                 }
             }
         }
 
         // ── Privacy & Data ─────────────────────────────────────────────
-        SectionHeader(stringResource(R.string.settings_privacy))
-        ResultCard {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(stringResource(R.string.consent_analytics), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                    Text(stringResource(R.string.consent_analytics_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
-                }
-                Switch(
-                    checked = analyticsConsent,
-                    onCheckedChange = vm::setAnalyticsConsent,
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = MaterialTheme.colorScheme.primary,
-                        checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                        uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                        uncheckedTrackColor = MaterialTheme.colorScheme.outline,
-                    ),
-                )
-            }
-            SpyglassDivider()
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(stringResource(R.string.consent_crash_reports), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                    Text(stringResource(R.string.consent_crash_reports_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
-                }
-                Switch(
-                    checked = crashConsent,
-                    onCheckedChange = vm::setCrashConsent,
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = MaterialTheme.colorScheme.primary,
-                        checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                        uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                        uncheckedTrackColor = MaterialTheme.colorScheme.outline,
-                    ),
-                )
-            }
-            SpyglassDivider()
-            TextButton(onClick = { showDeleteConfirm = true }) {
-                Text(stringResource(R.string.settings_delete_data), color = Red400)
-            }
-        }
-
-        if (showDeleteConfirm) {
-            AlertDialog(
-                onDismissRequest = { showDeleteConfirm = false },
-                title = { Text(stringResource(R.string.settings_delete_data_title), color = MaterialTheme.colorScheme.onSurface) },
-                text = {
-                    Text(
-                        stringResource(R.string.settings_delete_data_message),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        item(key = "privacy") {
+            SectionHeader(stringResource(R.string.settings_privacy))
+            ResultCard {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(stringResource(R.string.consent_analytics), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                        Text(stringResource(R.string.consent_analytics_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                    }
+                    Switch(
+                        checked = analyticsConsent,
+                        onCheckedChange = vm::setAnalyticsConsent,
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = MaterialTheme.colorScheme.primary,
+                            checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                            uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                            uncheckedTrackColor = MaterialTheme.colorScheme.outline,
+                        ),
                     )
-                },
-                confirmButton = {
-                    TextButton(onClick = {
-                        vm.deleteAllUserData()
-                        showDeleteConfirm = false
-                    }) {
-                        Text(stringResource(R.string.settings_delete_data_confirm), color = Red400)
+                }
+                SpyglassDivider()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(stringResource(R.string.consent_crash_reports), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                        Text(stringResource(R.string.consent_crash_reports_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                     }
-                },
-                dismissButton = {
-                    TextButton(onClick = { showDeleteConfirm = false }) {
-                        Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
-                },
-                containerColor = MaterialTheme.colorScheme.surface,
-            )
+                    Switch(
+                        checked = crashConsent,
+                        onCheckedChange = vm::setCrashConsent,
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = MaterialTheme.colorScheme.primary,
+                            checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                            uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                            uncheckedTrackColor = MaterialTheme.colorScheme.outline,
+                        ),
+                    )
+                }
+                SpyglassDivider()
+                TextButton(onClick = { showDeleteConfirm = true }) {
+                    Text(stringResource(R.string.settings_delete_data), color = Red400)
+                }
+            }
         }
 
-        Spacer(Modifier.height(8.dp))
+        item(key = "bottom_spacer") { Spacer(Modifier.height(8.dp)) }
+    }
+
+    if (showDeleteConfirm) {
+        AlertDialog(
+            onDismissRequest = { showDeleteConfirm = false },
+            title = { Text(stringResource(R.string.settings_delete_data_title), color = MaterialTheme.colorScheme.onSurface) },
+            text = {
+                Text(
+                    stringResource(R.string.settings_delete_data_message),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    vm.deleteAllUserData()
+                    showDeleteConfirm = false
+                }) {
+                    Text(stringResource(R.string.settings_delete_data_confirm), color = Red400)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteConfirm = false }) {
+                    Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            },
+            containerColor = MaterialTheme.colorScheme.surface,
+        )
     }
 }

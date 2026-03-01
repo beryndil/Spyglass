@@ -19,6 +19,9 @@ data class BlockEntity(
     val lightLevel: Int = 0,
     val hasGravity: Boolean = false,
     val isWaterloggable: Boolean = false,
+    val minY: Int? = null,
+    val maxY: Int? = null,
+    val peakY: Int? = null,
 )
 
 @Entity(tableName = "recipes")

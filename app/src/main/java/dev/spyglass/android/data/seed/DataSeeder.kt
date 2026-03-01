@@ -15,7 +15,7 @@ import kotlinx.serialization.json.Json
  */
 object DataSeeder {
 
-    private const val CURRENT_DATA_VERSION = 12
+    private const val CURRENT_DATA_VERSION = 13
     private const val PREFS_NAME = "spyglass_seed"
     private const val KEY_DATA_VERSION = "data_version"
 
@@ -72,6 +72,7 @@ object DataSeeder {
         val category: String = "",
         val blastResistance: Float = 0f, val lightLevel: Int = 0,
         val hasGravity: Boolean = false, val isWaterloggable: Boolean = false,
+        val minY: Int? = null, val maxY: Int? = null, val peakY: Int? = null,
     )
 
     @Serializable data class MobJson(
@@ -165,7 +166,8 @@ object DataSeeder {
         db.blockDao().insertAll(items.map {
             BlockEntity(it.id, it.name, it.stackSize, it.hardness, it.toolRequired,
                 it.toolLevel, it.isFlammable, it.isTransparent, it.drops, it.category,
-                it.blastResistance, it.lightLevel, it.hasGravity, it.isWaterloggable)
+                it.blastResistance, it.lightLevel, it.hasGravity, it.isWaterloggable,
+                it.minY, it.maxY, it.peakY)
         })
     }
 

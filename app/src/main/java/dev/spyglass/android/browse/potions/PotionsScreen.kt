@@ -83,9 +83,18 @@ class PotionsViewModel(app: Application) : AndroidViewModel(app) {
     private val _expandedIds = MutableStateFlow<Set<String>>(emptySet())
     val expandedIds: StateFlow<Set<String>> = _expandedIds.asStateFlow()
 
-    val potions: StateFlow<List<PotionEntity>> = combine(_query.debounce(200), _category) { q, cat ->
+    private val _sortKey = MutableStateFlow("name")
+    val sortKey: StateFlow<String> = _sortKey.asStateFlow()
+    fun setSortKey(k: String) { _sortKey.value = k }
+
+    val potions: StateFlow<List<PotionEntity>> = combine(_query.debounce(200), _category, _sortKey) { q, cat, sort ->
         repo.searchPotions(q).map { list ->
-            if (cat == "all") list else list.filter { it.category == cat }
+            val filtered = if (cat == "all") list else list.filter { it.category == cat }
+            when (sort) {
+                "duration" -> filtered.sortedByDescending { it.durationSeconds }
+                "amplifier" -> filtered.sortedByDescending { it.amplifier }
+                else -> filtered
+            }
         }
     }.flatMapLatest { it }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -133,16 +142,31 @@ fun PotionsScreen(
     val expandedIds by vm.expandedIds.collectAsState()
     val favoriteIds by vm.favoriteIds.collectAsState()
     val favoritePotions by vm.favoritePotions.collectAsState()
+    val sortKey    by vm.sortKey.collectAsState()
+
+    val sortOptions = remember {
+        listOf(
+            SortOption("Name A\u2192Z", "name"),
+            SortOption("Duration \u2193", "duration"),
+            SortOption("Amplifier \u2193", "amplifier"),
+        )
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        OutlinedTextField(
-            value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search potions\u2026", color = MaterialTheme.colorScheme.secondary) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
-            singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-        )
+        Row(
+            modifier = Modifier.padding(start = 16.dp, end = 4.dp, top = 16.dp, bottom = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            OutlinedTextField(
+                value = query, onValueChange = vm::setQuery,
+                placeholder = { Text("Search potions\u2026", color = MaterialTheme.colorScheme.secondary) },
+                leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
+                singleLine = true,
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
+                modifier = Modifier.weight(1f),
+            )
+            SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
+        }
 
         // Category filter chips
         LazyRow(

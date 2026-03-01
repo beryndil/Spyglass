@@ -1962,7 +1962,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 3.0
+    "blastResistance": 3.0,
+    "minY": 0,
+    "maxY": 320,
+    "peakY": 96
   },
   {
     "id": "cobbled_deepslate",
@@ -2172,7 +2175,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 3.0
+    "blastResistance": 3.0,
+    "minY": -16,
+    "maxY": 112,
+    "peakY": 48
   },
   {
     "id": "copper_trapdoor",
@@ -3190,7 +3196,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 4.5
+    "blastResistance": 4.5,
+    "minY": -64,
+    "maxY": 0,
+    "peakY": 0
   },
   {
     "id": "deepslate_copper_ore",
@@ -3201,7 +3210,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 4.5
+    "blastResistance": 4.5,
+    "minY": -16,
+    "maxY": 0,
+    "peakY": -16
   },
   {
     "id": "deepslate_diamond_ore",
@@ -3212,7 +3224,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 4.5
+    "blastResistance": 4.5,
+    "minY": -64,
+    "maxY": 16,
+    "peakY": -59
   },
   {
     "id": "deepslate_emerald_ore",
@@ -3223,7 +3238,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 4.5
+    "blastResistance": 4.5,
+    "minY": -16,
+    "maxY": 0,
+    "peakY": -16
   },
   {
     "id": "deepslate_gold_ore",
@@ -3234,7 +3252,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 4.5
+    "blastResistance": 4.5,
+    "minY": -64,
+    "maxY": 0,
+    "peakY": -16
   },
   {
     "id": "deepslate_iron_ore",
@@ -3245,7 +3266,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 4.5
+    "blastResistance": 4.5,
+    "minY": -64,
+    "maxY": 0,
+    "peakY": -16
   },
   {
     "id": "deepslate_lapis_ore",
@@ -3256,7 +3280,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 4.5
+    "blastResistance": 4.5,
+    "minY": -64,
+    "maxY": 0,
+    "peakY": 0
   },
   {
     "id": "deepslate_redstone_ore",
@@ -3268,7 +3295,10 @@
     "isFlammable": false,
     "category": "natural",
     "blastResistance": 4.5,
-    "lightLevel": 9
+    "lightLevel": 9,
+    "minY": -64,
+    "maxY": 0,
+    "peakY": -59
   },
   {
     "id": "deepslate_tile_slab",
@@ -3349,7 +3379,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 3.0
+    "blastResistance": 3.0,
+    "minY": -64,
+    "maxY": 16,
+    "peakY": -59
   },
   {
     "id": "diorite",
@@ -3497,7 +3530,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 3.0
+    "blastResistance": 3.0,
+    "minY": -16,
+    "maxY": 320,
+    "peakY": 232
   },
   {
     "id": "enchanting_table",
@@ -3986,7 +4022,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 3.0
+    "blastResistance": 3.0,
+    "minY": -64,
+    "maxY": 32,
+    "peakY": -16
   },
   {
     "id": "granite",
@@ -4581,7 +4620,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 3.0
+    "blastResistance": 3.0,
+    "minY": -64,
+    "maxY": 320,
+    "peakY": 16
   },
   {
     "id": "iron_trapdoor",
@@ -4852,7 +4894,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 3.0
+    "blastResistance": 3.0,
+    "minY": -64,
+    "maxY": 64,
+    "peakY": 0
   },
   {
     "id": "large_amethyst_bud",
@@ -6045,7 +6090,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 3.0
+    "blastResistance": 3.0,
+    "minY": 10,
+    "maxY": 117,
+    "peakY": 15
   },
   {
     "id": "nether_quartz_ore",
@@ -6056,7 +6104,10 @@
     "stackSize": 64,
     "isFlammable": false,
     "category": "natural",
-    "blastResistance": 3.0
+    "blastResistance": 3.0,
+    "minY": 10,
+    "maxY": 117,
+    "peakY": 15
   },
   {
     "id": "nether_sprouts",
@@ -8122,7 +8173,10 @@
     "isFlammable": false,
     "category": "natural",
     "blastResistance": 3.0,
-    "lightLevel": 9
+    "lightLevel": 9,
+    "minY": -64,
+    "maxY": 16,
+    "peakY": -59
   },
   {
     "id": "redstone_torch",

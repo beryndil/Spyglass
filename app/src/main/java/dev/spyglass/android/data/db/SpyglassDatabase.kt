@@ -30,7 +30,7 @@ import dev.spyglass.android.data.db.entities.*
         ShoppingListItemEntity::class,
         TodoEntity::class,
     ],
-    version = 21,
+    version = 22,
     exportSchema = false,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
@@ -54,6 +54,14 @@ abstract class SpyglassDatabase : RoomDatabase() {
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null
+
+        private val MIGRATION_21_22 = object : Migration(21, 22) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE blocks ADD COLUMN minY INTEGER")
+                db.execSQL("ALTER TABLE blocks ADD COLUMN maxY INTEGER")
+                db.execSQL("ALTER TABLE blocks ADD COLUMN peakY INTEGER")
+            }
+        }
 
         private val MIGRATION_20_21 = object : Migration(20, 21) {
             override fun migrate(db: SupportSQLiteDatabase) {
@@ -207,7 +215,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
                     SpyglassDatabase::class.java,
                     "spyglass.db",
                 )
-                    .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21)
+                    .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21, MIGRATION_21_22)
                     .fallbackToDestructiveMigration()
                     .build()
                     .also { INSTANCE = it }

@@ -41,15 +41,25 @@ class EnchantsViewModel(app: Application) : AndroidViewModel(app) {
     private val repo   = GameDataRepository.get(app)
     private val _query  = MutableStateFlow("")
     private val _target = MutableStateFlow("all")
+    private val _sortKey = MutableStateFlow("name")
     val query:  StateFlow<String> = _query.asStateFlow()
     val target: StateFlow<String> = _target.asStateFlow()
+    val sortKey: StateFlow<String> = _sortKey.asStateFlow()
 
     private val _expandedIds = MutableStateFlow<Set<String>>(emptySet())
     val expandedIds: StateFlow<Set<String>> = _expandedIds.asStateFlow()
 
-    val enchants: StateFlow<List<EnchantEntity>> = combine(_query.debounce(200), _target) { q, t ->
-        if (q.isBlank() && t == "all") repo.searchEnchants("") else
-        if (t != "all") repo.enchantsForTarget(t) else repo.searchEnchants(q)
+    val enchants: StateFlow<List<EnchantEntity>> = combine(_query.debounce(200), _target, _sortKey) { q, t, sort ->
+        (if (q.isBlank() && t == "all") repo.searchEnchants("") else
+        if (t != "all") repo.enchantsForTarget(t) else repo.searchEnchants(q)).map { list ->
+            when (sort) {
+                "max_level" -> list.sortedByDescending { it.maxLevel }
+                "rarity" -> list.sortedWith(compareByDescending {
+                    when (it.rarity.lowercase()) { "very_rare" -> 4; "rare" -> 3; "uncommon" -> 2; else -> 1 }
+                })
+                else -> list
+            }
+        }
     }.flatMapLatest { it }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -58,6 +68,7 @@ class EnchantsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setQuery(q: String)  { _query.value = q }
     fun setTarget(t: String) { _target.value = t }
+    fun setSortKey(k: String) { _sortKey.value = k }
     fun clearWarning() { _warningMessage.value = null }
 
     fun toggleExpanded(id: String) {
@@ -158,6 +169,7 @@ fun EnchantsScreen(
     vm: EnchantsViewModel = viewModel(),
 ) {
     val query       by vm.query.collectAsState()
+    val sortKey     by vm.sortKey.collectAsState()
     val target      by vm.target.collectAsState()
     val enchants    by vm.enchants.collectAsState()
     val expandedIds by vm.expandedIds.collectAsState()
@@ -192,15 +204,27 @@ fun EnchantsScreen(
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
+    val sortOptions = remember { listOf(
+        SortOption("Name A\u2192Z", "name"),
+        SortOption("Max Level \u2193", "max_level"),
+        SortOption("Rarity \u2193", "rarity"),
+    ) }
+
     Column(modifier = Modifier.fillMaxSize()) {
-        OutlinedTextField(
-            value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search enchantments\u2026", color = MaterialTheme.colorScheme.secondary) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
-            singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-        )
+        Row(
+            modifier = Modifier.padding(start = 16.dp, end = 4.dp, top = 16.dp, bottom = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            OutlinedTextField(
+                value = query, onValueChange = vm::setQuery,
+                placeholder = { Text("Search enchantments\u2026", color = MaterialTheme.colorScheme.secondary) },
+                leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
+                singleLine = true,
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
+                modifier = Modifier.weight(1f),
+            )
+            SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
+        }
         FlowRow(
             modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),

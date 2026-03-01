@@ -59,21 +59,28 @@ class BiomesViewModel(app: Application) : AndroidViewModel(app) {
     private val repo = GameDataRepository.get(app)
     private val _query = MutableStateFlow("")
     private val _category = MutableStateFlow("all")
+    private val _sortKey = MutableStateFlow("name")
     val query: StateFlow<String> = _query.asStateFlow()
     val category: StateFlow<String> = _category.asStateFlow()
+    val sortKey: StateFlow<String> = _sortKey.asStateFlow()
 
     private val _expandedIds = MutableStateFlow<Set<String>>(emptySet())
     val expandedIds: StateFlow<Set<String>> = _expandedIds.asStateFlow()
 
-    val biomes: StateFlow<List<BiomeEntity>> = combine(_query.debounce(200), _category) { q, cat ->
+    val biomes: StateFlow<List<BiomeEntity>> = combine(_query.debounce(200), _category, _sortKey) { q, cat, sort ->
         repo.searchBiomes(q).map { list ->
-            if (cat == "all") list else list.filter { it.category.equals(cat, ignoreCase = true) }
+            val filtered = if (cat == "all") list else list.filter { it.category.equals(cat, ignoreCase = true) }
+            when (sort) {
+                "temperature" -> filtered.sortedByDescending { it.temperature }
+                else -> filtered
+            }
         }
     }.flatMapLatest { it }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun setQuery(q: String) { _query.value = q }
     fun setCategory(c: String) { _category.value = c }
+    fun setSortKey(k: String) { _sortKey.value = k }
     fun toggleExpanded(id: String) {
         _expandedIds.value = _expandedIds.value.let { if (id in it) it - id else it + id }
     }
@@ -128,6 +135,7 @@ fun BiomesScreen(
     vm: BiomesViewModel = viewModel(),
 ) {
     val query        by vm.query.collectAsState()
+    val sortKey      by vm.sortKey.collectAsState()
     val category     by vm.category.collectAsState()
     val biomes       by vm.biomes.collectAsState()
     val expandedIds  by vm.expandedIds.collectAsState()
@@ -148,15 +156,26 @@ fun BiomesScreen(
         }
     }
 
+    val sortOptions = remember { listOf(
+        SortOption("Name A\u2192Z", "name"),
+        SortOption("Temperature \u2193", "temperature"),
+    ) }
+
     Column(modifier = Modifier.fillMaxSize()) {
-        OutlinedTextField(
-            value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search biomes\u2026", color = MaterialTheme.colorScheme.secondary) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
-            singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-        )
+        Row(
+            modifier = Modifier.padding(start = 16.dp, end = 4.dp, top = 16.dp, bottom = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            OutlinedTextField(
+                value = query, onValueChange = vm::setQuery,
+                placeholder = { Text("Search biomes\u2026", color = MaterialTheme.colorScheme.secondary) },
+                leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
+                singleLine = true,
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
+                modifier = Modifier.weight(1f),
+            )
+            SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
+        }
 
         // Category filter chips
         LazyRow(

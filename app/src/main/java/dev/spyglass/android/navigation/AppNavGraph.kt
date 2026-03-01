@@ -277,25 +277,35 @@ fun BottomNavBar(navController: NavHostController) {
 
 // -- Mini game clock --
 
+private data class ClockPrefs(
+    val enabled: Boolean = false,
+    val syncTick: Long = -1L,
+    val syncTimeMs: Long = 0L,
+    val eventsJson: String? = null,
+)
+
 @Composable
 private fun MiniGameClock(onTap: () -> Unit = {}) {
     val context = LocalContext.current
     val store = context.dataStore
 
-    val enabled by store.data.map { it[PreferenceKeys.GAME_CLOCK_ENABLED] ?: false }
-        .collectAsState(initial = false)
-    val syncTick by store.data.map { it[PreferenceKeys.CLOCK_TICK_OFFSET] ?: -1L }
-        .collectAsState(initial = -1L)
-    val syncTimeMs by store.data.map { it[PreferenceKeys.CLOCK_SYNC_TIME_MS] ?: 0L }
-        .collectAsState(initial = 0L)
-    val eventsJson by store.data.map { it[PreferenceKeys.CLOCK_ACTIVE_EVENTS] }
-        .collectAsState(initial = null)
+    // Single DataStore collector — replaces 4 separate flows
+    val prefs by remember {
+        store.data.map { p ->
+            ClockPrefs(
+                enabled = p[PreferenceKeys.GAME_CLOCK_ENABLED] ?: false,
+                syncTick = p[PreferenceKeys.CLOCK_TICK_OFFSET] ?: -1L,
+                syncTimeMs = p[PreferenceKeys.CLOCK_SYNC_TIME_MS] ?: 0L,
+                eventsJson = p[PreferenceKeys.CLOCK_ACTIVE_EVENTS],
+            )
+        }
+    }.collectAsState(initial = ClockPrefs())
 
-    if (!enabled || syncTick < 0) return
+    if (!prefs.enabled || prefs.syncTick < 0) return
 
-    val events = remember(eventsJson) {
-        if (eventsJson != null) {
-            ClockEngine.deserializeEvents(eventsJson!!).sortedBy { it.tick }
+    val events = remember(prefs.eventsJson) {
+        if (prefs.eventsJson != null) {
+            ClockEngine.deserializeEvents(prefs.eventsJson!!).sortedBy { it.tick }
         } else {
             ClockEngine.PREDEFINED_EVENTS
                 .filter { it.predefinedId in ClockEngine.DEFAULT_EVENT_IDS }
@@ -306,9 +316,9 @@ private fun MiniGameClock(onTap: () -> Unit = {}) {
     if (events.isEmpty()) return
 
     var tick by remember { mutableLongStateOf(0L) }
-    LaunchedEffect(syncTick, syncTimeMs) {
+    LaunchedEffect(prefs.syncTick, prefs.syncTimeMs) {
         while (true) {
-            tick = ClockEngine.currentTick(syncTick, syncTimeMs)
+            tick = ClockEngine.currentTick(prefs.syncTick, prefs.syncTimeMs)
             delay(1000)
         }
     }

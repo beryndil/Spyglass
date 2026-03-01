@@ -44,10 +44,20 @@ class CommandsViewModel(app: Application) : AndroidViewModel(app) {
     private val _expandedIds = MutableStateFlow<Set<String>>(emptySet())
     val expandedIds: StateFlow<Set<String>> = _expandedIds.asStateFlow()
 
-    val commands: StateFlow<List<CommandEntity>> = combine(_query.debounce(200), _category) { q, cat ->
-        if (q.isBlank() && cat == "all") repo.searchCommands("")
+    private val _sortKey = MutableStateFlow("name")
+    val sortKey: StateFlow<String> = _sortKey.asStateFlow()
+    fun setSortKey(k: String) { _sortKey.value = k }
+
+    val commands: StateFlow<List<CommandEntity>> = combine(_query.debounce(200), _category, _sortKey) { q, cat, sort ->
+        val flow = if (q.isBlank() && cat == "all") repo.searchCommands("")
         else if (cat != "all") repo.commandsByCategory(cat)
         else repo.searchCommands(q)
+        flow.map { list ->
+            when (sort) {
+                "permission" -> list.sortedByDescending { it.permissionLevel }
+                else -> list
+            }
+        }
     }.flatMapLatest { it }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -127,6 +137,14 @@ fun CommandsScreen(
     val expandedIds by vm.expandedIds.collectAsState()
     val favoriteIds by vm.favoriteIds.collectAsState()
     val favoriteCommands by vm.favoriteCommands.collectAsState()
+    val sortKey by vm.sortKey.collectAsState()
+
+    val sortOptions = remember {
+        listOf(
+            SortOption("Name A\u2192Z", "name"),
+            SortOption("Permission \u2193", "permission"),
+        )
+    }
 
     LaunchedEffect(targetCommandId, commands) {
         if (targetCommandId != null && commands.isNotEmpty()) {
@@ -135,14 +153,20 @@ fun CommandsScreen(
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        OutlinedTextField(
-            value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search commands\u2026", color = MaterialTheme.colorScheme.secondary) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
-            singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-        )
+        Row(
+            modifier = Modifier.padding(start = 16.dp, end = 4.dp, top = 16.dp, bottom = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            OutlinedTextField(
+                value = query, onValueChange = vm::setQuery,
+                placeholder = { Text("Search commands\u2026", color = MaterialTheme.colorScheme.secondary) },
+                leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
+                singleLine = true,
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
+                modifier = Modifier.weight(1f),
+            )
+            SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
+        }
         FlowRow(
             modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),

@@ -45,23 +45,32 @@ class StructuresViewModel(app: Application) : AndroidViewModel(app) {
     private val repo = GameDataRepository.get(app)
     private val _query = MutableStateFlow("")
     private val _dimension = MutableStateFlow("all")
+    private val _sortKey = MutableStateFlow("name")
     val query: StateFlow<String> = _query.asStateFlow()
     val dimension: StateFlow<String> = _dimension.asStateFlow()
+    val sortKey: StateFlow<String> = _sortKey.asStateFlow()
 
     private val _expandedIds = MutableStateFlow<Set<String>>(emptySet())
     val expandedIds: StateFlow<Set<String>> = _expandedIds.asStateFlow()
 
     val structures: StateFlow<List<StructureEntity>> = combine(
-        _query.debounce(200), _dimension
-    ) { q, dim ->
+        _query.debounce(200), _dimension, _sortKey
+    ) { q, dim, sort ->
         repo.searchStructures(q).map { list ->
-            if (dim == "all") list else list.filter { it.dimension == dim }
+            val filtered = if (dim == "all") list else list.filter { it.dimension == dim }
+            when (sort) {
+                "difficulty" -> filtered.sortedWith(compareByDescending {
+                    when (it.difficulty.lowercase()) { "hard" -> 3; "medium" -> 2; "easy" -> 1; else -> 0 }
+                })
+                else -> filtered
+            }
         }
     }.flatMapLatest { it }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun setQuery(q: String) { _query.value = q }
     fun setDimension(d: String) { _dimension.value = d }
+    fun setSortKey(k: String) { _sortKey.value = k }
     fun toggleExpanded(id: String) {
         _expandedIds.value = _expandedIds.value.let { if (id in it) it - id else it + id }
     }
@@ -97,6 +106,7 @@ fun StructuresScreen(
     vm: StructuresViewModel = viewModel(),
 ) {
     val query        by vm.query.collectAsState()
+    val sortKey      by vm.sortKey.collectAsState()
     val dimension    by vm.dimension.collectAsState()
     val structures   by vm.structures.collectAsState()
     val expandedIds  by vm.expandedIds.collectAsState()
@@ -119,15 +129,26 @@ fun StructuresScreen(
         }
     }
 
+    val sortOptions = remember { listOf(
+        SortOption("Name A\u2192Z", "name"),
+        SortOption("Difficulty \u2193", "difficulty"),
+    ) }
+
     Column(modifier = Modifier.fillMaxSize()) {
-        OutlinedTextField(
-            value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search structures\u2026", color = MaterialTheme.colorScheme.secondary) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
-            singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-        )
+        Row(
+            modifier = Modifier.padding(start = 16.dp, end = 4.dp, top = 16.dp, bottom = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            OutlinedTextField(
+                value = query, onValueChange = vm::setQuery,
+                placeholder = { Text("Search structures\u2026", color = MaterialTheme.colorScheme.secondary) },
+                leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
+                singleLine = true,
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
+                modifier = Modifier.weight(1f),
+            )
+            SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
+        }
         Row(modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             dimensions.forEach { d ->

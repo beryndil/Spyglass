@@ -63,10 +63,22 @@ class AdvancementsViewModel(app: Application) : AndroidViewModel(app) {
     private val _treeExpandedIds = MutableStateFlow<Set<String>>(emptySet())
     val treeExpandedIds: StateFlow<Set<String>> = _treeExpandedIds.asStateFlow()
 
-    val advancements: StateFlow<List<AdvancementEntity>> = combine(_query.debounce(200), _category) { q, cat ->
-        if (q.isBlank() && cat == "all") repo.searchAdvancements("")
+    private val _sortKey = MutableStateFlow("name")
+    val sortKey: StateFlow<String> = _sortKey.asStateFlow()
+    fun setSortKey(k: String) { _sortKey.value = k }
+
+    val advancements: StateFlow<List<AdvancementEntity>> = combine(_query.debounce(200), _category, _sortKey) { q, cat, sort ->
+        val flow = if (q.isBlank() && cat == "all") repo.searchAdvancements("")
         else if (cat != "all") repo.advancementsByCategory(cat)
         else repo.searchAdvancements(q)
+        flow.map { list ->
+            when (sort) {
+                "type" -> list.sortedWith(compareByDescending {
+                    when (it.type.lowercase()) { "challenge" -> 3; "goal" -> 2; else -> 1 }
+                })
+                else -> list
+            }
+        }
     }.flatMapLatest { it }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -240,9 +252,17 @@ fun AdvancementsScreen(
     val favoriteIds by vm.favoriteIds.collectAsState()
     val favoriteAdvancements by vm.favoriteAdvancements.collectAsState()
     val categoryCounts by vm.categoryCounts.collectAsState()
+    val sortKey by vm.sortKey.collectAsState()
     val listState = rememberLazyListState()
     var showResetDialog by remember { mutableStateOf(false) }
     val isSearching = query.isNotBlank()
+
+    val sortOptions = remember {
+        listOf(
+            SortOption("Name A\u2192Z", "name"),
+            SortOption("Type \u2193", "type"),
+        )
+    }
 
     LaunchedEffect(targetAdvancementId, advancements) {
         if (targetAdvancementId != null && advancements.isNotEmpty()) {
@@ -272,14 +292,20 @@ fun AdvancementsScreen(
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        OutlinedTextField(
-            value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search advancements\u2026", color = MaterialTheme.colorScheme.secondary) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
-            singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-        )
+        Row(
+            modifier = Modifier.padding(start = 16.dp, end = 4.dp, top = 16.dp, bottom = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            OutlinedTextField(
+                value = query, onValueChange = vm::setQuery,
+                placeholder = { Text("Search advancements\u2026", color = MaterialTheme.colorScheme.secondary) },
+                leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
+                singleLine = true,
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
+                modifier = Modifier.weight(1f),
+            )
+            SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
+        }
         FlowRow(
             modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),

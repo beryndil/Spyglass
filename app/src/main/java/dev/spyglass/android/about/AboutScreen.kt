@@ -3,9 +3,8 @@ package dev.spyglass.android.about
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -28,204 +27,218 @@ import dev.spyglass.android.core.ui.*
 fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
     val uriHandler = LocalUriHandler.current
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp, vertical = 16.dp),
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        IconButton(onClick = onBack) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = stringResource(R.string.back),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+        item(key = "back") {
+            IconButton(onClick = onBack) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = stringResource(R.string.back),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
 
         // ── App Info ─────────────────────────────────────────────────────────
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            SpyglassIconImage(
-                icon = SpyglassIcon.Drawable(R.drawable.ic_launcher_foreground),
-                contentDescription = stringResource(R.string.about_app_title),
-                modifier = Modifier.size(64.dp),
-                tint = Color.Unspecified,
-            )
-            Spacer(Modifier.height(8.dp))
-            Text(
-                text = stringResource(R.string.about_app_title),
-                style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.primary,
-            )
-            Spacer(Modifier.height(4.dp))
-            Text(
-                text = stringResource(R.string.about_version, BuildConfig.VERSION_NAME),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Spacer(Modifier.height(4.dp))
-            Text(
-                text = stringResource(R.string.about_companion),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Spacer(Modifier.height(2.dp))
-            Text(
-                text = stringResource(R.string.about_author),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.secondary,
-            )
-            Spacer(Modifier.height(8.dp))
-            SpyglassIconImage(
-                icon = SpyglassIcon.Drawable(R.drawable.about_beryndil),
-                contentDescription = "Beryndil",
-                modifier = Modifier.height(140.dp),
-                tint = Color.Unspecified,
-            )
-            Spacer(Modifier.height(12.dp))
-            val coffeeUrl = "https://buymeacoffee.com/beryndil"
+        item(key = "app_info") {
             Column(
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(8.dp))
-                    .clickable { uriHandler.openUri(coffeeUrl) }
-                    .padding(horizontal = 20.dp, vertical = 10.dp),
+                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(
-                    text = stringResource(R.string.about_enjoy),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.surfaceVariant,
+                SpyglassIconImage(
+                    icon = SpyglassIcon.Drawable(R.drawable.ic_launcher_foreground),
+                    contentDescription = stringResource(R.string.about_app_title),
+                    modifier = Modifier.size(64.dp),
+                    tint = Color.Unspecified,
                 )
+                Spacer(Modifier.height(8.dp))
                 Text(
-                    text = stringResource(R.string.about_coffee),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    text = stringResource(R.string.about_app_title),
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.primary,
                 )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = stringResource(R.string.about_version, BuildConfig.VERSION_NAME),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = stringResource(R.string.about_companion),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Spacer(Modifier.height(2.dp))
+                Text(
+                    text = stringResource(R.string.about_author),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                Spacer(Modifier.height(8.dp))
+                SpyglassIconImage(
+                    icon = SpyglassIcon.Drawable(R.drawable.about_beryndil),
+                    contentDescription = "Beryndil",
+                    modifier = Modifier.height(140.dp),
+                    tint = Color.Unspecified,
+                )
+                Spacer(Modifier.height(12.dp))
+                val coffeeUrl = "https://buymeacoffee.com/beryndil"
+                Column(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(8.dp))
+                        .clickable { uriHandler.openUri(coffeeUrl) }
+                        .padding(horizontal = 20.dp, vertical = 10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text(
+                        text = stringResource(R.string.about_enjoy),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.surfaceVariant,
+                    )
+                    Text(
+                        text = stringResource(R.string.about_coffee),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                    )
+                }
             }
         }
 
         // ── Disclaimer ───────────────────────────────────────────────────────
-        Text(
-            text = stringResource(R.string.about_disclaimer),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.secondary,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth(),
-        )
+        item(key = "disclaimer") {
+            Text(
+                text = stringResource(R.string.about_disclaimer),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
 
         // ── Game Data ────────────────────────────────────────────────────────
-        SectionHeader(stringResource(R.string.about_game_data))
-        ResultCard {
-            StatRow(stringResource(R.string.home_minecraft_version), stringResource(R.string.about_minecraft_version))
+        item(key = "game_data") {
+            SectionHeader(stringResource(R.string.about_game_data))
+            ResultCard {
+                StatRow(stringResource(R.string.home_minecraft_version), stringResource(R.string.about_minecraft_version))
+            }
         }
 
         // ── Credits & Licenses ───────────────────────────────────────────────
-        SectionHeader(stringResource(R.string.about_credits))
-        ResultCard {
-            // Spyglass license
-            Text(stringResource(R.string.about_app_title), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-            Text(stringResource(R.string.about_author), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
-            Text(
-                text = stringResource(R.string.about_license_cc),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable { onLicense() },
-            )
-
-            SpyglassDivider()
-
-            // Pixel Perfection
-            Text(stringResource(R.string.about_pixel_perfection), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-            Text(stringResource(R.string.about_by_xssheep), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        item(key = "credits") {
+            SectionHeader(stringResource(R.string.about_credits))
+            ResultCard {
+                // Spyglass license
+                Text(stringResource(R.string.about_app_title), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                Text(stringResource(R.string.about_author), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
                 Text(
-                    text = stringResource(R.string.about_cc_by_sa),
+                    text = stringResource(R.string.about_license_cc),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.clickable {
-                        uriHandler.openUri("https://creativecommons.org/licenses/by-sa/4.0/")
-                    },
+                    modifier = Modifier.clickable { onLicense() },
                 )
-                Text(
-                    text = stringResource(R.string.about_project_page),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.clickable {
-                        uriHandler.openUri("https://www.curseforge.com/minecraft/texture-packs/pixel-perfection")
-                    },
-                )
-            }
 
-            SpyglassDivider()
+                SpyglassDivider()
 
-            // Entity-Icons
-            Text(stringResource(R.string.about_entity_icons), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text(
-                    text = stringResource(R.string.about_cc0),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.clickable {
-                        uriHandler.openUri("https://creativecommons.org/publicdomain/zero/1.0/")
-                    },
-                )
-                Text(
-                    text = stringResource(R.string.about_github),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.clickable {
-                        uriHandler.openUri("https://github.com/Simplexity-Development/Entity-Icons")
-                    },
-                )
+                // Pixel Perfection
+                Text(stringResource(R.string.about_pixel_perfection), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                Text(stringResource(R.string.about_by_xssheep), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text(
+                        text = stringResource(R.string.about_cc_by_sa),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.clickable {
+                            uriHandler.openUri("https://creativecommons.org/licenses/by-sa/4.0/")
+                        },
+                    )
+                    Text(
+                        text = stringResource(R.string.about_project_page),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.clickable {
+                            uriHandler.openUri("https://www.curseforge.com/minecraft/texture-packs/pixel-perfection")
+                        },
+                    )
+                }
+
+                SpyglassDivider()
+
+                // Entity-Icons
+                Text(stringResource(R.string.about_entity_icons), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text(
+                        text = stringResource(R.string.about_cc0),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.clickable {
+                            uriHandler.openUri("https://creativecommons.org/publicdomain/zero/1.0/")
+                        },
+                    )
+                    Text(
+                        text = stringResource(R.string.about_github),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.clickable {
+                            uriHandler.openUri("https://github.com/Simplexity-Development/Entity-Icons")
+                        },
+                    )
+                }
             }
         }
 
         // ── App License ──────────────────────────────────────────────────────
-        Text(
-            text = stringResource(R.string.about_copyright),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.secondary,
-            modifier = Modifier.fillMaxWidth(),
-        )
+        item(key = "license") {
+            Text(
+                text = stringResource(R.string.about_copyright),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
 
         // ── Privacy ──────────────────────────────────────────────────────────
-        SectionHeader(stringResource(R.string.about_privacy))
-        ResultCard {
-            Text(
-                text = stringResource(R.string.about_privacy_text),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+        item(key = "privacy") {
+            SectionHeader(stringResource(R.string.about_privacy))
+            ResultCard {
+                Text(
+                    text = stringResource(R.string.about_privacy_text),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
 
         // ── Feedback ─────────────────────────────────────────────────────────
-        SectionHeader(stringResource(R.string.feedback))
-        ResultCard {
-            val issuesUrl = "https://github.com/beryndil/spyglass-android/issues"
-            Text(
-                text = stringResource(R.string.about_report_bug),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { uriHandler.openUri(issuesUrl) }
-                    .padding(vertical = 4.dp),
-            )
-            SpyglassDivider()
-            Text(
-                text = stringResource(R.string.about_request_feature),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { uriHandler.openUri(issuesUrl) }
-                    .padding(vertical = 4.dp),
-            )
+        item(key = "feedback") {
+            SectionHeader(stringResource(R.string.feedback))
+            ResultCard {
+                val issuesUrl = "https://github.com/beryndil/spyglass-android/issues"
+                Text(
+                    text = stringResource(R.string.about_report_bug),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { uriHandler.openUri(issuesUrl) }
+                        .padding(vertical = 4.dp),
+                )
+                SpyglassDivider()
+                Text(
+                    text = stringResource(R.string.about_request_feature),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { uriHandler.openUri(issuesUrl) }
+                        .padding(vertical = 4.dp),
+                )
+            }
         }
 
-        Spacer(Modifier.height(8.dp))
+        item(key = "bottom_spacer") { Spacer(Modifier.height(8.dp)) }
     }
 }

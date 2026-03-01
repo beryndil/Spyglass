@@ -101,10 +101,23 @@ class BlocksViewModel(app: Application) : AndroidViewModel(app) {
     private val _expandedIds = MutableStateFlow<Set<String>>(emptySet())
     val expandedIds: StateFlow<Set<String>> = _expandedIds.asStateFlow()
 
-    val blocks: StateFlow<List<BlockEntity>> = combine(_query.debounce(200), _category) { q, cat ->
-        if (cat == "all") repo.searchBlocks(q) else repo.blocksByCategory(cat)
-    }.flatMapLatest { it }
-     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    private val _sortKey = MutableStateFlow("name")
+    val sortKey: StateFlow<String> = _sortKey.asStateFlow()
+
+    val blocks: StateFlow<List<BlockEntity>> = combine(
+        _query.debounce(200), _category, _sortKey
+    ) { q, cat, sort -> Triple(q, cat, sort) }
+    .flatMapLatest { (q, cat, sort) ->
+        val flow = if (cat == "all") repo.searchBlocks(q) else repo.blocksByCategory(cat)
+        flow.map { list ->
+            when (sort) {
+                "hardness" -> list.sortedByDescending { it.hardness }
+                "blast_resistance" -> list.sortedByDescending { it.blastResistance }
+                "light_level" -> list.sortedByDescending { it.lightLevel }
+                else -> list
+            }
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     // Build a map of all recipes keyed by outputItem for chain calculation
     val allRecipes: StateFlow<Map<String, RecipeEntity>> = repo.searchRecipes("")
@@ -131,6 +144,7 @@ class BlocksViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setQuery(q: String) { _query.value = q }
     fun setCategory(c: String) { _category.value = c }
+    fun setSortKey(k: String) { _sortKey.value = k }
     fun toggleExpanded(id: String) {
         _expandedIds.value = _expandedIds.value.let { if (id in it) it - id else it + id }
     }
@@ -155,6 +169,7 @@ fun BlocksScreen(
 ) {
     val query       by vm.query.collectAsState()
     val category    by vm.category.collectAsState()
+    val sortKey     by vm.sortKey.collectAsState()
     val blocks      by vm.blocks.collectAsState()
     val expandedIds by vm.expandedIds.collectAsState()
     val allRecipes  by vm.allRecipes.collectAsState()
@@ -162,6 +177,12 @@ fun BlocksScreen(
     val favoriteIds    by vm.favoriteIds.collectAsState()
     val favoriteBlocks by vm.favoriteBlocks.collectAsState()
     val listState   = rememberLazyListState()
+    val blockSortOptions = remember { listOf(
+        SortOption("Name A\u2192Z", "name"),
+        SortOption("Hardness \u2193", "hardness"),
+        SortOption("Blast Resistance \u2193", "blast_resistance"),
+        SortOption("Light Level \u2193", "light_level"),
+    ) }
 
     // Auto-expand and scroll to target block from cross-reference
     LaunchedEffect(targetBlockId, blocks) {
@@ -177,18 +198,24 @@ fun BlocksScreen(
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        OutlinedTextField(
-            value         = query,
-            onValueChange = vm::setQuery,
-            placeholder   = { Text("Search blocks\u2026", color = MaterialTheme.colorScheme.secondary) },
-            leadingIcon   = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
-            singleLine    = true,
-            colors        = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                cursorColor = MaterialTheme.colorScheme.primary,
-            ),
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-        )
+        Row(
+            modifier = Modifier.padding(start = 16.dp, end = 4.dp, top = 16.dp, bottom = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            OutlinedTextField(
+                value         = query,
+                onValueChange = vm::setQuery,
+                placeholder   = { Text("Search blocks\u2026", color = MaterialTheme.colorScheme.secondary) },
+                leadingIcon   = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
+                singleLine    = true,
+                colors        = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    cursorColor = MaterialTheme.colorScheme.primary,
+                ),
+                modifier = Modifier.weight(1f),
+            )
+            SortButton(options = blockSortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
+        }
 
         // Category filter chips
         LazyRow(
@@ -255,6 +282,13 @@ fun BlocksScreen(
             }
             items(blocks, key = { it.id }) { b ->
                 val isExpanded = b.id in expandedIds
+                val glanceText = when {
+                    b.minY != null && b.maxY != null -> "Y ${b.minY} to ${b.maxY}"
+                    b.lightLevel > 0 -> "${b.lightLevel} light"
+                    b.hasGravity -> "gravity"
+                    b.category == "redstone" -> "redstone"
+                    else -> "${"%.1f".format(b.hardness)} hard"
+                }
                 Column {
                     BrowseListItem(
                         headline    = b.name,
@@ -272,15 +306,22 @@ fun BlocksScreen(
                                         )
                                         Spacer(Modifier.height(2.dp))
                                     }
+                                    Text(
+                                        glanceText,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.secondary,
+                                    )
                                     // Tool icon instead of text
                                     val toolTexId = toolTextureId(b.toolRequired)
                                     val toolIcon = toolTexId?.let { ItemTextures.get(it) }
                                     if (toolIcon != null) {
+                                        Spacer(Modifier.height(2.dp))
                                         SpyglassIconImage(
                                             toolIcon, contentDescription = b.toolRequired,
                                             modifier = Modifier.size(16.dp),
                                         )
                                     } else if (b.toolRequired.isNotBlank() && b.toolRequired != "none") {
+                                        Spacer(Modifier.height(2.dp))
                                         Text(b.toolRequired, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                     }
                                 }
@@ -362,6 +403,15 @@ private fun BlockDetailContent(
         }
         if (block.isFlammable) StatRow("Flammable", stringResource(R.string.yes))
         if (block.isTransparent) StatRow("Transparent", stringResource(R.string.yes))
+
+        // ── Ore Generation section ──
+        if (block.minY != null) {
+            SpyglassDivider()
+            Text("Ore Generation", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow("Min Y", "${block.minY}")
+            if (block.maxY != null) StatRow("Max Y", "${block.maxY}")
+            if (block.peakY != null) StatRow("Peak Y", "${block.peakY}")
+        }
 
         // ── Drops section ──
         val drops = block.drops.split(",").map { it.trim() }.filter { it.isNotEmpty() }

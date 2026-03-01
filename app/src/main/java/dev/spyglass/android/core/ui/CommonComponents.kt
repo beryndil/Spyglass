@@ -11,6 +11,9 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Sort
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import dev.spyglass.android.data.ItemTags
@@ -518,3 +521,48 @@ fun RotatingTagIcon(
 
 fun formatTagName(tagId: String): String =
     "Any " + tagId.removePrefix("#").split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
+
+// ── Sort button ──────────────────────────────────────────────────────────────
+
+data class SortOption(val label: String, val key: String)
+
+@Composable
+fun SortButton(
+    options: List<SortOption>,
+    selectedKey: String,
+    onSelect: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var expanded by remember { mutableStateOf(false) }
+    Box(modifier = modifier) {
+        IconButton(onClick = { expanded = true }) {
+            Icon(
+                Icons.AutoMirrored.Filled.Sort,
+                contentDescription = "Sort",
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        }
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            options.forEach { option ->
+                val isSelected = option.key == selectedKey
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            option.label,
+                            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
+                        )
+                    },
+                    onClick = { onSelect(option.key); expanded = false },
+                    trailingIcon = if (isSelected) { {
+                        Icon(
+                            Icons.Default.Check,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(18.dp),
+                        )
+                    } } else null,
+                )
+            }
+        }
+    }
+}
