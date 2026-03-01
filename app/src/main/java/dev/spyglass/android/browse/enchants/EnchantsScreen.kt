@@ -21,6 +21,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.EnchantEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
@@ -207,7 +209,7 @@ fun EnchantsScreen(
             listOf("all", "armor", "sword", "bow", "crossbow", "trident", "mace", "fishing_rod").forEach { t ->
                 val icon = targetIcon(t)
                 FilterChip(selected = target == t, onClick = { vm.setTarget(t) },
-                    label = { Text(t.replace('_', ' ').replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) },
+                    label = { Text(if (t == "all") stringResource(R.string.all) else t.replace('_', ' ').replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) },
                     leadingIcon = if (icon != null) { { SpyglassIconImage(icon, contentDescription = null, modifier = Modifier.size(16.dp)) } } else null,
                 )
             }
@@ -236,7 +238,7 @@ fun EnchantsScreen(
             }
             if (favoriteEnchants.isNotEmpty()) {
                 item(key = "fav_header") {
-                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
+                    Text(stringResource(R.string.favorites), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
                 }
                 items(favoriteEnchants, key = { "fav_${it.id}" }) { fav ->
@@ -247,7 +249,7 @@ fun EnchantsScreen(
                         leadingIcon = EnchantTextures.get(fav.id) ?: PixelIcons.Enchant,
                         trailing    = {
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
-                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                                Icon(Icons.Filled.Star, contentDescription = stringResource(R.string.favorite), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             }
                         },
                     )
@@ -292,7 +294,7 @@ fun EnchantsScreen(
                                 IconButton(onClick = { vm.toggleFavorite(e.id, e.name) }, modifier = Modifier.size(32.dp)) {
                                     Icon(
                                         Icons.Filled.Star,
-                                        contentDescription = "Favorite",
+                                        contentDescription = stringResource(R.string.favorite),
                                         tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                         modifier = Modifier.size(20.dp),
                                     )
@@ -364,7 +366,7 @@ private fun EnchantDetailCard(
         StatRow("Applies to", formatTarget(enchant.target))
         StatRow("Rarity", enchant.rarity.replace('_', ' ').replaceFirstChar { it.uppercase() })
         if (enchant.isTreasure) StatRow("Treasure", "Yes (Loot/Anvil only)")
-        if (enchant.isCurse) StatRow("Curse", "Yes")
+        if (enchant.isCurse) StatRow("Curse", stringResource(R.string.yes))
 
         // Incompatible enchantments
         if (incompatible.isNotEmpty()) {

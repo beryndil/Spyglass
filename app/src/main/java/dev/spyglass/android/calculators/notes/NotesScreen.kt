@@ -17,7 +17,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.spyglass.android.R
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -120,7 +122,7 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
                 FilterChip(
                     selected = labelFilter == "all",
                     onClick = { vm.setLabelFilter("all") },
-                    label = { Text("All", style = MaterialTheme.typography.labelSmall) },
+                    label = { Text(stringResource(R.string.all), style = MaterialTheme.typography.labelSmall) },
                 )
                 labels.forEach { label ->
                     FilterChip(
@@ -239,20 +241,20 @@ private fun NoteDetailCard(
             TextButton(onClick = onEdit) {
                 Icon(Icons.Default.Edit, contentDescription = null, modifier = Modifier.size(16.dp))
                 Spacer(Modifier.width(4.dp))
-                Text("Edit")
+                Text(stringResource(R.string.edit))
             }
             if (!confirmDelete) {
                 TextButton(onClick = { confirmDelete = true }, colors = ButtonDefaults.textButtonColors(contentColor = Red400)) {
                     Icon(Icons.Default.Delete, contentDescription = null, modifier = Modifier.size(16.dp))
                     Spacer(Modifier.width(4.dp))
-                    Text("Delete")
+                    Text(stringResource(R.string.delete))
                 }
             } else {
                 TextButton(onClick = onDelete, colors = ButtonDefaults.textButtonColors(contentColor = Red400)) {
-                    Text("Confirm Delete")
+                    Text(stringResource(R.string.confirm_delete))
                 }
                 TextButton(onClick = { confirmDelete = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         }
@@ -324,10 +326,10 @@ private fun NoteDialog(
             TextButton(
                 onClick = { onSave(noteTitle.trim(), noteLabel.trim(), noteContent.trim()) },
                 enabled = noteTitle.isNotBlank(),
-            ) { Text("Save", color = MaterialTheme.colorScheme.primary) }
+            ) { Text(stringResource(R.string.save), color = MaterialTheme.colorScheme.primary) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
         },
     )
 }

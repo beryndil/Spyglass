@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.ItemTags
 import dev.spyglass.android.data.db.entities.FavoriteEntity
@@ -159,7 +161,7 @@ fun CraftingScreen(
                     onClick = { vm.setType(t) },
                     label = {
                         Text(
-                            t.replaceFirstChar { it.uppercase() },
+                            if (t == "all") stringResource(R.string.all) else t.replaceFirstChar { it.uppercase() },
                             style = MaterialTheme.typography.labelSmall,
                         )
                     },
@@ -182,7 +184,7 @@ fun CraftingScreen(
             }
             if (favoriteRecipes.isNotEmpty()) {
                 item(key = "fav_header") {
-                    SectionHeader("Favorites", icon = PixelIcons.Bookmark)
+                    SectionHeader(stringResource(R.string.favorites), icon = PixelIcons.Bookmark)
                 }
                 items(favoriteRecipes, key = { "fav_${it.id}" }) { fav ->
                     val isFav = fav.id in favoriteIds
@@ -195,7 +197,7 @@ fun CraftingScreen(
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(
                                     Icons.Filled.Star,
-                                    contentDescription = "Favorite",
+                                    contentDescription = stringResource(R.string.favorite),
                                     tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                     modifier = Modifier.size(20.dp),
                                 )
@@ -218,7 +220,7 @@ fun CraftingScreen(
                             IconButton(onClick = { vm.toggleFavorite(r.id, r.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { it.uppercase() }) }, modifier = Modifier.size(32.dp)) {
                                 Icon(
                                     Icons.Filled.Star,
-                                    contentDescription = "Favorite",
+                                    contentDescription = stringResource(R.string.favorite),
                                     tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                     modifier = Modifier.size(20.dp),
                                 )

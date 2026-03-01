@@ -9,8 +9,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 @Composable
@@ -113,7 +115,7 @@ private fun PortalsTab(s: NetherState, vm: NetherViewModel) {
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                         Text(p.name, style = MaterialTheme.typography.titleMedium)
                         IconButton(onClick = { vm.deletePortal(p) }) {
-                            Icon(Icons.Default.Delete, "Delete", tint = MaterialTheme.colorScheme.secondary)
+                            Icon(Icons.Default.Delete, stringResource(R.string.delete), tint = MaterialTheme.colorScheme.secondary)
                         }
                     }
                     StatRow("Overworld", "${p.owX}, ${p.owZ}")

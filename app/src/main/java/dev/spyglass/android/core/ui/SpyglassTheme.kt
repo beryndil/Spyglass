@@ -33,6 +33,7 @@ val Emerald       = Color(0xFF66BB6A)
 // ── CompositionLocal for SurfaceCard (no Material3 slot) ─────────────────────
 
 val LocalSurfaceCard = compositionLocalOf { Color(0xFF211F1B) }
+val LocalIsWideScreen = compositionLocalOf { false }
 
 // ── Theme preset data ────────────────────────────────────────────────────────
 
@@ -292,9 +293,12 @@ val ThemeOrder = listOf(
 const val DEFAULT_THEME = "obsidian"
 
 @Composable
-fun SpyglassTheme(theme: String = DEFAULT_THEME, content: @Composable () -> Unit) {
+fun SpyglassTheme(theme: String = DEFAULT_THEME, isWideScreen: Boolean = false, content: @Composable () -> Unit) {
     val colors = ThemePresets[theme] ?: ThemePresets[DEFAULT_THEME]!!
-    CompositionLocalProvider(LocalSurfaceCard provides colors.surfaceCard) {
+    CompositionLocalProvider(
+        LocalSurfaceCard provides colors.surfaceCard,
+        LocalIsWideScreen provides isWideScreen,
+    ) {
         MaterialTheme(
             colorScheme = colors.scheme,
             typography  = SpyglassTypography,

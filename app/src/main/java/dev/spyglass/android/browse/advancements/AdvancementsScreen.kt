@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.AdvancementEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
@@ -262,7 +264,7 @@ fun AdvancementsScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showResetDialog = false }) {
-                    Text("Cancel", color = MaterialTheme.colorScheme.secondary)
+                    Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.secondary)
                 }
             },
             containerColor = MaterialTheme.colorScheme.surface,
@@ -285,7 +287,7 @@ fun AdvancementsScreen(
         ) {
             listOf("all", "minecraft", "nether", "end", "adventure", "husbandry").forEach { cat ->
                 val counts = if (cat == "all") null else categoryCounts[cat]
-                val chipLabel = if (cat == "all") "All"
+                val chipLabel = if (cat == "all") stringResource(R.string.all)
                     else if (counts != null) "${categoryLabel(cat)} (${counts.first}/${counts.second})"
                     else categoryLabel(cat)
                 FilterChip(
@@ -334,7 +336,7 @@ fun AdvancementsScreen(
             // Favorites section
             if (favoriteAdvancements.isNotEmpty()) {
                 item(key = "fav_header") {
-                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
+                    Text(stringResource(R.string.favorites), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
                 }
                 items(favoriteAdvancements, key = { "fav_${it.id}" }) { fav ->
@@ -347,7 +349,7 @@ fun AdvancementsScreen(
                         leadingIconTint = if (isComplete) Emerald else MaterialTheme.colorScheme.onSurfaceVariant,
                         trailing = {
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
-                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                                Icon(Icons.Filled.Star, contentDescription = stringResource(R.string.favorite), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             }
                         },
                     )
@@ -429,7 +431,7 @@ fun AdvancementsScreen(
                         IconButton(onClick = { vm.toggleFavorite(adv.id, adv.name) }, modifier = Modifier.size(28.dp)) {
                             Icon(
                                 Icons.Filled.Star,
-                                contentDescription = "Favorite",
+                                contentDescription = stringResource(R.string.favorite),
                                 tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                 modifier = Modifier.size(18.dp),
                             )
@@ -525,10 +527,10 @@ private fun AdvancementDetailCard(
 
         // Stats
         SectionHeader(title = "Stats")
-        StatRow("Category", categoryLabel(adv.category))
-        StatRow("Type", typeLabel(adv.type))
+        StatRow(stringResource(R.string.category), categoryLabel(adv.category))
+        StatRow(stringResource(R.string.type), typeLabel(adv.type))
         if (adv.dimension.isNotEmpty()) {
-            StatRow("Dimension", adv.dimension.replaceFirstChar { it.uppercase() })
+            StatRow(stringResource(R.string.dimension), adv.dimension.replaceFirstChar { it.uppercase() })
         }
         if (adv.xpReward.isNotEmpty() && adv.xpReward != "0") {
             StatRow("XP Reward", adv.xpReward)

@@ -13,8 +13,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 @Composable
@@ -520,14 +522,14 @@ private fun AddEventDialog(
                             (customTick.toLongOrNull() ?: -1L) in 0 until ClockEngine.TICKS_PER_DAY,
                         modifier = Modifier.fillMaxWidth(),
                     ) {
-                        Text("Add")
+                        Text(stringResource(R.string.add))
                     }
                 }
             }
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text("Done", color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.done), color = MaterialTheme.colorScheme.primary)
             }
         },
     )
@@ -573,7 +575,7 @@ private fun SetDayDialog(
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel", color = MaterialTheme.colorScheme.secondary)
+                Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.secondary)
             }
         },
     )

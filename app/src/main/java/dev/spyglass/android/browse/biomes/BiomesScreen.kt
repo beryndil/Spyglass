@@ -25,6 +25,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.BiomeResourceMap
 import dev.spyglass.android.data.db.entities.BiomeEntity
@@ -167,7 +169,7 @@ fun BiomesScreen(
                     onClick = { vm.setCategory(c) },
                     label = {
                         Text(
-                            c.replaceFirstChar { it.uppercase() },
+                            if (c == "all") stringResource(R.string.all) else c.replaceFirstChar { it.uppercase() },
                             style = MaterialTheme.typography.labelSmall,
                         )
                     },
@@ -190,7 +192,7 @@ fun BiomesScreen(
             }
             if (favoriteBiomes.isNotEmpty()) {
                 item(key = "fav_header") {
-                    SectionHeader("Favorites", icon = PixelIcons.Bookmark)
+                    SectionHeader(stringResource(R.string.favorites), icon = PixelIcons.Bookmark)
                 }
                 items(favoriteBiomes, key = { "fav_${it.id}" }) { fav ->
                     val isFav = fav.id in favoriteIds
@@ -203,7 +205,7 @@ fun BiomesScreen(
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(
                                     Icons.Filled.Star,
-                                    contentDescription = "Favorite",
+                                    contentDescription = stringResource(R.string.favorite),
                                     tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                     modifier = Modifier.size(20.dp),
                                 )
@@ -257,7 +259,7 @@ private fun BiomeListItem(b: BiomeEntity, isFavorite: Boolean, onToggleFavorite:
                 IconButton(onClick = onToggleFavorite, modifier = Modifier.size(32.dp)) {
                     Icon(
                         Icons.Filled.Star,
-                        contentDescription = "Favorite",
+                        contentDescription = stringResource(R.string.favorite),
                         tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                         modifier = Modifier.size(20.dp),
                     )
@@ -306,7 +308,7 @@ private fun BiomeDetailCard(
             Text(biome.precipitation.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.bodyLarge, color = textColor)
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("Category", style = MaterialTheme.typography.bodyMedium, color = subtextColor)
+            Text(stringResource(R.string.category), style = MaterialTheme.typography.bodyMedium, color = subtextColor)
             Text(biome.category.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.bodyLarge, color = textColor)
         }
 

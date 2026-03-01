@@ -21,6 +21,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.MobEntity
@@ -161,7 +163,7 @@ fun MobsScreen(
         ) {
             items(categories) { c ->
                 FilterChip(selected = category == c, onClick = { vm.setCategory(c) },
-                    label = { Text(c.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) })
+                    label = { Text(if (c == "all") stringResource(R.string.all) else c.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) })
             }
         }
         LazyColumn(
@@ -179,7 +181,7 @@ fun MobsScreen(
             }
             if (favoriteMobs.isNotEmpty()) {
                 item(key = "fav_header") {
-                    SectionHeader("Favorites", icon = PixelIcons.Bookmark)
+                    SectionHeader(stringResource(R.string.favorites), icon = PixelIcons.Bookmark)
                 }
                 items(favoriteMobs, key = { "fav_${it.id}" }) { fav ->
                     val isFav = fav.id in favoriteIds
@@ -192,7 +194,7 @@ fun MobsScreen(
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(
                                     Icons.Filled.Star,
-                                    contentDescription = "Favorite",
+                                    contentDescription = stringResource(R.string.favorite),
                                     tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                     modifier = Modifier.size(20.dp),
                                 )
@@ -229,7 +231,7 @@ fun MobsScreen(
                                 IconButton(onClick = { vm.toggleFavorite(m.id, m.name) }, modifier = Modifier.size(32.dp)) {
                                     Icon(
                                         Icons.Filled.Star,
-                                        contentDescription = "Favorite",
+                                        contentDescription = stringResource(R.string.favorite),
                                         tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                         modifier = Modifier.size(20.dp),
                                     )
@@ -282,7 +284,7 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
         // Stats
         StatRow("Health", "${mob.health} HP")
         StatRow("XP Drop", mob.xpDrop)
-        if (mob.isFireImmune) StatRow("Fire Immune", "Yes")
+        if (mob.isFireImmune) StatRow("Fire Immune", stringResource(R.string.yes))
 
         // Breeding
         if (mob.breeding.isNotEmpty()) {

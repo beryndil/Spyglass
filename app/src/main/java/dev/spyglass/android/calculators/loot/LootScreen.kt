@@ -12,7 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 private data class StructureLoot(
@@ -143,7 +145,7 @@ fun LootScreen(onStructureTap: (String) -> Unit = {}) {
                 FilterChip(
                     selected = dimensionFilter == dim,
                     onClick = { dimensionFilter = dim },
-                    label = { Text(if (dim == "all") "All" else dimensionLabel(dim), style = MaterialTheme.typography.labelSmall) },
+                    label = { Text(if (dim == "all") stringResource(R.string.all) else dimensionLabel(dim), style = MaterialTheme.typography.labelSmall) },
                 )
             }
         }

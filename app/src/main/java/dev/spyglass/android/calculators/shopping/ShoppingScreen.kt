@@ -25,8 +25,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.RecipeEntity
 import dev.spyglass.android.data.db.entities.ShoppingListItemEntity
@@ -97,7 +99,7 @@ private fun ListPicker(vm: ShoppingViewModel) {
                         onClick = { listToDelete = list.id },
                         modifier = Modifier.size(32.dp),
                     ) {
-                        Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(18.dp))
                     }
                 },
             )
@@ -123,12 +125,12 @@ private fun ListPicker(vm: ShoppingViewModel) {
             text = { Text("This will permanently remove this list and all its items.", color = MaterialTheme.colorScheme.onSurfaceVariant) },
             confirmButton = {
                 TextButton(onClick = { vm.deleteList(id); listToDelete = null }) {
-                    Text("Delete", color = NetherRed)
+                    Text(stringResource(R.string.delete), color = NetherRed)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { listToDelete = null }) {
-                    Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             },
             containerColor = MaterialTheme.colorScheme.surface,
@@ -166,7 +168,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(onClick = { vm.selectList(null) }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = MaterialTheme.colorScheme.primary)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back), tint = MaterialTheme.colorScheme.primary)
                 }
                 Text(
                     currentList?.name ?: "List",
@@ -191,7 +193,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
         // ── Add item section ──
         item(key = "add_section") {
             InputCard {
-                Text("Add Item", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.add), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -240,7 +242,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
                             colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.primary),
                             modifier = Modifier.size(40.dp),
                         ) {
-                            Icon(Icons.Default.Add, contentDescription = "Add to list", tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
+                            Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add), tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
                         }
                     }
                 }
@@ -487,7 +489,7 @@ private fun ShoppingItemRow(
             }
         }
         IconButton(onClick = onDelete, modifier = Modifier.size(28.dp)) {
-            Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
+            Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
         }
     }
 }
@@ -581,7 +583,7 @@ private fun NewListDialog(onConfirm: (String) -> Unit, onDismiss: () -> Unit) {
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant) }
         },
         containerColor = MaterialTheme.colorScheme.surface,
     )
@@ -613,7 +615,7 @@ private fun RenameDialog(currentName: String, onConfirm: (String) -> Unit, onDis
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant) }
         },
         containerColor = MaterialTheme.colorScheme.surface,
     )

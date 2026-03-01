@@ -1,0 +1,14 @@
+## google-services.json Setup
+
+This file is required for Firebase integration (Crashlytics, Analytics, Performance).
+
+### Steps:
+1. Go to https://console.firebase.google.com/
+2. Create a new project (or use an existing one)
+3. Add an Android app with package name: `dev.spyglass.android`
+4. Download the generated `google-services.json`
+5. Place it in this directory: `app/google-services.json`
+6. Uncomment the Firebase dependencies in `app/build.gradle.kts`
+7. Uncomment the Firebase plugin apply lines in `app/build.gradle.kts`
+
+Note: `google-services.json` is gitignored and should never be committed.

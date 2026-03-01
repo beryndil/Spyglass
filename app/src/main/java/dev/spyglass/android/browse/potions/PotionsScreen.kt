@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.PotionEntity
@@ -153,7 +155,7 @@ fun PotionsScreen(
                     onClick = { vm.setCategory(c) },
                     label = {
                         Text(
-                            c.replaceFirstChar { it.uppercase() },
+                            if (c == "all") stringResource(R.string.all) else c.replaceFirstChar { it.uppercase() },
                             style = MaterialTheme.typography.labelSmall,
                         )
                     },
@@ -175,7 +177,7 @@ fun PotionsScreen(
             }
             if (favoritePotions.isNotEmpty()) {
                 item(key = "fav_header") {
-                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
+                    Text(stringResource(R.string.favorites), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
                 }
                 items(favoritePotions, key = { "fav_${it.id}" }) { fav ->
@@ -186,7 +188,7 @@ fun PotionsScreen(
                         leadingIcon = PotionTextures.get(fav.id) ?: PixelIcons.Potion,
                         trailing    = {
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
-                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                                Icon(Icons.Filled.Star, contentDescription = stringResource(R.string.favorite), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             }
                         },
                     )
@@ -222,7 +224,7 @@ fun PotionsScreen(
                                 IconButton(onClick = { vm.toggleFavorite(p.id, p.name) }, modifier = Modifier.size(32.dp)) {
                                     Icon(
                                         Icons.Filled.Star,
-                                        contentDescription = "Favorite",
+                                        contentDescription = stringResource(R.string.favorite),
                                         tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                         modifier = Modifier.size(20.dp),
                                     )
@@ -270,7 +272,7 @@ private fun PotionDetailCard(potion: PotionEntity, onItemTap: (String) -> Unit) 
         if (potion.amplifier > 0) {
             StatRow("Level", "${potion.amplifier + 1}")
         }
-        StatRow("Category", potion.category.replaceFirstChar { it.uppercase() })
+        StatRow(stringResource(R.string.category), potion.category.replaceFirstChar { it.uppercase() })
 
         // Brewing path with clickable ingredients
         if (potion.ingredientPath.isNotBlank()) {

@@ -260,6 +260,9 @@ interface NoteDao {
 
     @Query("DELETE FROM notes WHERE id = :id")
     suspend fun delete(id: Long)
+
+    @Query("DELETE FROM notes")
+    suspend fun deleteAll()
 }
 
 @Dao
@@ -287,6 +290,9 @@ interface WaypointDao {
 
     @Query("DELETE FROM waypoints WHERE id = :id")
     suspend fun delete(id: Long)
+
+    @Query("DELETE FROM waypoints")
+    suspend fun deleteAll()
 }
 
 @Dao

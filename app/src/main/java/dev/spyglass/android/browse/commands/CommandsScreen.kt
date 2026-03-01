@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.CommandEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
@@ -150,7 +152,7 @@ fun CommandsScreen(
                 FilterChip(
                     selected = category == cat,
                     onClick = { vm.setCategory(cat) },
-                    label = { Text(if (cat == "all") "All" else categoryLabel(cat), style = MaterialTheme.typography.labelSmall) },
+                    label = { Text(if (cat == "all") stringResource(R.string.all) else categoryLabel(cat), style = MaterialTheme.typography.labelSmall) },
                 )
             }
         }
@@ -168,7 +170,7 @@ fun CommandsScreen(
             }
             if (favoriteCommands.isNotEmpty()) {
                 item(key = "fav_header") {
-                    Text("Favorites", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
+                    Text(stringResource(R.string.favorites), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
                 }
                 items(favoriteCommands, key = { "fav_${it.id}" }) { fav ->
@@ -179,7 +181,7 @@ fun CommandsScreen(
                         leadingIcon = PixelIcons.Command,
                         trailing = {
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
-                                Icon(Icons.Filled.Star, contentDescription = "Favorite", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                                Icon(Icons.Filled.Star, contentDescription = stringResource(R.string.favorite), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             }
                         },
                     )
@@ -202,7 +204,7 @@ fun CommandsScreen(
                                 IconButton(onClick = { vm.toggleFavorite(cmd.id, cmd.name) }, modifier = Modifier.size(32.dp)) {
                                     Icon(
                                         Icons.Filled.Star,
-                                        contentDescription = "Favorite",
+                                        contentDescription = stringResource(R.string.favorite),
                                         tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                         modifier = Modifier.size(20.dp),
                                     )
@@ -258,7 +260,7 @@ private fun CommandDetailCard(cmd: CommandEntity, entityLinkIndex: EntityLinkInd
             onEnchantTap = onEnchantTap,
         )
         SpyglassDivider()
-        StatRow("Category", categoryLabel(cmd.category))
+        StatRow(stringResource(R.string.category), categoryLabel(cmd.category))
         StatRow("Permission", permissionLabel(cmd.permissionLevel))
     }
 }

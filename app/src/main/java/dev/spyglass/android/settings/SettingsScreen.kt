@@ -14,20 +14,34 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
-private val BROWSE_TAB_NAMES = listOf(
-    "Blocks", "Items", "Recipes", "Mobs", "Trades",
-    "Biomes", "Structures", "Enchants", "Potions",
-    "Advancements", "Commands", "Reference",
+@Composable
+private fun browseTabNames() = listOf(
+    stringResource(R.string.browse_tab_blocks), stringResource(R.string.browse_tab_items),
+    stringResource(R.string.browse_tab_recipes), stringResource(R.string.browse_tab_mobs),
+    stringResource(R.string.browse_tab_trades), stringResource(R.string.browse_tab_biomes),
+    stringResource(R.string.browse_tab_structures), stringResource(R.string.browse_tab_enchants),
+    stringResource(R.string.browse_tab_potions), stringResource(R.string.browse_tab_advancements),
+    stringResource(R.string.browse_tab_commands), stringResource(R.string.browse_tab_reference),
 )
 
-private val TOOL_TAB_NAMES = listOf(
-    "Todo", "Shopping", "Enchanting", "Fill", "Shapes", "Maze", "Storage",
-    "Smelt", "Nether", "Game Clock", "Light", "Notes", "Waypoints",
-    "Redstone", "Librarian", "Food", "Banners", "Trims", "Loot",
+@Composable
+private fun toolTabNames() = listOf(
+    stringResource(R.string.calc_tab_todo), stringResource(R.string.calc_tab_shopping),
+    stringResource(R.string.calc_tab_enchanting), stringResource(R.string.calc_tab_fill),
+    stringResource(R.string.calc_tab_shapes), stringResource(R.string.calc_tab_maze),
+    stringResource(R.string.calc_tab_storage), stringResource(R.string.calc_tab_smelt),
+    stringResource(R.string.calc_tab_nether), stringResource(R.string.calc_tab_game_clock),
+    stringResource(R.string.calc_tab_light), stringResource(R.string.calc_tab_notes),
+    stringResource(R.string.calc_tab_waypoints), stringResource(R.string.calc_tab_redstone),
+    stringResource(R.string.calc_tab_librarian), stringResource(R.string.calc_tab_food),
+    stringResource(R.string.calc_tab_banners), stringResource(R.string.calc_tab_trims),
+    stringResource(R.string.calc_tab_loot),
 )
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -46,6 +60,10 @@ fun SettingsScreen(
     val gameClockEnabled    by vm.gameClockEnabled.collectAsState()
     val allFavorites        by vm.allFavorites.collectAsState()
     val backgroundTheme     by vm.backgroundTheme.collectAsState()
+    val analyticsConsent    by vm.analyticsConsent.collectAsState()
+    val crashConsent        by vm.crashConsent.collectAsState()
+
+    var showDeleteConfirm by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -57,17 +75,17 @@ fun SettingsScreen(
         IconButton(onClick = onBack) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
+                contentDescription = stringResource(R.string.back),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        SectionHeader("Settings")
+        SectionHeader(stringResource(R.string.settings))
 
         // ── Theme ───────────────────────────────────────────────────────
-        SectionHeader("Theme")
+        SectionHeader(stringResource(R.string.settings_theme))
         ResultCard {
             Text(
-                "Background",
+                stringResource(R.string.settings_background),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -81,7 +99,7 @@ fun SettingsScreen(
                     val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
                     Box(
                         modifier = Modifier
-                            .size(34.dp)
+                            .size(48.dp)
                             .clip(CircleShape)
                             .background(info.background, CircleShape)
                             .border(
@@ -101,23 +119,23 @@ fun SettingsScreen(
         }
 
         // ── Player Name ───────────────────────────────────────────────
-        SectionHeader("Player Name")
+        SectionHeader(stringResource(R.string.settings_player_name))
         ResultCard {
             if (playerUsername.isNotBlank()) {
-                StatRow("Username", playerUsername)
+                StatRow(stringResource(R.string.settings_username), playerUsername)
                 if (playerUuid.isNotBlank()) {
-                    StatRow("UUID", playerUuid)
+                    StatRow(stringResource(R.string.settings_uuid), playerUuid)
                 }
                 TextButton(
                     onClick = vm::clearPlayerUsername,
                     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
                     modifier = Modifier.height(32.dp),
                 ) {
-                    Text("Clear Username", color = MaterialTheme.colorScheme.secondary, style = MaterialTheme.typography.labelSmall)
+                    Text(stringResource(R.string.settings_clear_username), color = MaterialTheme.colorScheme.secondary, style = MaterialTheme.typography.labelSmall)
                 }
             } else {
                 Text(
-                    "No username set. You\u2019ll be asked on next launch.",
+                    stringResource(R.string.settings_no_username),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -125,10 +143,10 @@ fun SettingsScreen(
         }
 
         // ── Default Browse Tab ──────────────────────────────────────────
-        SectionHeader("Default Browse Tab")
+        SectionHeader(stringResource(R.string.settings_default_browse_tab))
         ResultCard {
             Text(
-                "Which tab opens first when you tap Browse",
+                stringResource(R.string.settings_browse_tab_desc),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.secondary,
             )
@@ -136,7 +154,7 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                BROWSE_TAB_NAMES.forEachIndexed { i, name ->
+                browseTabNames().forEachIndexed { i, name ->
                     FilterChip(
                         selected = defaultBrowseTab == i,
                         onClick = { vm.setDefaultBrowseTab(i) },
@@ -147,10 +165,10 @@ fun SettingsScreen(
         }
 
         // ── Default Tool Tab ────────────────────────────────────────────
-        SectionHeader("Default Tool Tab")
+        SectionHeader(stringResource(R.string.settings_default_tool_tab))
         ResultCard {
             Text(
-                "Which tab opens first when you tap Tools",
+                stringResource(R.string.settings_tool_tab_desc),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.secondary,
             )
@@ -158,7 +176,7 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                TOOL_TAB_NAMES.forEachIndexed { i, name ->
+                toolTabNames().forEachIndexed { i, name ->
                     FilterChip(
                         selected = defaultToolTab == i,
                         onClick = { vm.setDefaultToolTab(i) },
@@ -169,7 +187,7 @@ fun SettingsScreen(
         }
 
         // ── Toggles ─────────────────────────────────────────────────────
-        SectionHeader("Display")
+        SectionHeader(stringResource(R.string.settings_display))
         ResultCard {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -177,8 +195,8 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Show Tip of the Day", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                    Text("Daily Minecraft tip on the Home screen", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                    Text(stringResource(R.string.settings_tip_of_day), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                    Text(stringResource(R.string.settings_tip_of_day_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                 }
                 Switch(
                     checked = showTipOfDay,
@@ -198,8 +216,8 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Show Favorites on Home", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                    Text("Display your favorited items on the Home page", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                    Text(stringResource(R.string.settings_favorites_on_home), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                    Text(stringResource(R.string.settings_favorites_on_home_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                 }
                 Switch(
                     checked = showFavoritesOnHome,
@@ -215,7 +233,7 @@ fun SettingsScreen(
         }
 
         // ── Game Clock ─────────────────────────────────────────────────────
-        SectionHeader("Game Clock")
+        SectionHeader(stringResource(R.string.settings_game_clock))
         ResultCard {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -223,8 +241,8 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Game Clock", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                    Text("Show mini clock in the top bar", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                    Text(stringResource(R.string.settings_game_clock), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                    Text(stringResource(R.string.settings_game_clock_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                 }
                 Switch(
                     checked = gameClockEnabled,
@@ -239,7 +257,7 @@ fun SettingsScreen(
             }
             SpyglassDivider()
             Text(
-                "Configure Game Clock \u2192",
+                stringResource(R.string.settings_configure_clock),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.clickable { onCalcTab(9) },
@@ -247,17 +265,17 @@ fun SettingsScreen(
         }
 
         // ── Favorites Management ────────────────────────────────────────
-        SectionHeader("Favorites")
+        SectionHeader(stringResource(R.string.settings_favorites))
         ResultCard {
             if (allFavorites.isEmpty()) {
                 Text(
-                    "No favorites yet. Star items in the Browse tabs to add them here.",
+                    stringResource(R.string.settings_no_favorites),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.secondary,
                 )
             } else {
                 Text(
-                    "${allFavorites.size} favorite(s)",
+                    stringResource(R.string.settings_favorites_count, allFavorites.size),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -270,9 +288,86 @@ fun SettingsScreen(
                 }
                 SpyglassDivider()
                 TextButton(onClick = vm::clearAllFavorites) {
-                    Text("Clear All Favorites", color = Red400)
+                    Text(stringResource(R.string.settings_clear_all_favorites), color = Red400)
                 }
             }
+        }
+
+        // ── Privacy & Data ─────────────────────────────────────────────
+        SectionHeader(stringResource(R.string.settings_privacy))
+        ResultCard {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(stringResource(R.string.consent_analytics), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                    Text(stringResource(R.string.consent_analytics_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                }
+                Switch(
+                    checked = analyticsConsent,
+                    onCheckedChange = vm::setAnalyticsConsent,
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = MaterialTheme.colorScheme.primary,
+                        checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                        uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                        uncheckedTrackColor = MaterialTheme.colorScheme.outline,
+                    ),
+                )
+            }
+            SpyglassDivider()
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(stringResource(R.string.consent_crash_reports), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                    Text(stringResource(R.string.consent_crash_reports_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                }
+                Switch(
+                    checked = crashConsent,
+                    onCheckedChange = vm::setCrashConsent,
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = MaterialTheme.colorScheme.primary,
+                        checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                        uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                        uncheckedTrackColor = MaterialTheme.colorScheme.outline,
+                    ),
+                )
+            }
+            SpyglassDivider()
+            TextButton(onClick = { showDeleteConfirm = true }) {
+                Text(stringResource(R.string.settings_delete_data), color = Red400)
+            }
+        }
+
+        if (showDeleteConfirm) {
+            AlertDialog(
+                onDismissRequest = { showDeleteConfirm = false },
+                title = { Text(stringResource(R.string.settings_delete_data_title), color = MaterialTheme.colorScheme.onSurface) },
+                text = {
+                    Text(
+                        stringResource(R.string.settings_delete_data_message),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                },
+                confirmButton = {
+                    TextButton(onClick = {
+                        vm.deleteAllUserData()
+                        showDeleteConfirm = false
+                    }) {
+                        Text(stringResource(R.string.settings_delete_data_confirm), color = Red400)
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showDeleteConfirm = false }) {
+                        Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                },
+                containerColor = MaterialTheme.colorScheme.surface,
+            )
         }
 
         Spacer(Modifier.height(8.dp))

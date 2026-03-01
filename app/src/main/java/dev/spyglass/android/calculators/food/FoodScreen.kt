@@ -10,7 +10,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 private data class FoodItem(
@@ -136,7 +138,7 @@ fun FoodScreen() {
                 FilterChip(
                     selected = categoryFilter == cat,
                     onClick = { categoryFilter = cat },
-                    label = { Text(if (cat == "all") "All" else cat.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) },
+                    label = { Text(if (cat == "all") stringResource(R.string.all) else cat.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) },
                 )
             }
         }

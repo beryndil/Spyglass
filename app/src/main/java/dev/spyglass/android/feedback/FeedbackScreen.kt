@@ -13,7 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 @Composable
@@ -31,14 +33,14 @@ fun FeedbackScreen(onBack: () -> Unit = {}) {
         IconButton(onClick = onBack) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
+                contentDescription = stringResource(R.string.back),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        SectionHeader("Feedback")
+        SectionHeader(stringResource(R.string.feedback_title))
         ResultCard {
             Text(
-                text = "Report a Bug",
+                text = stringResource(R.string.feedback_report_bug),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
@@ -48,7 +50,7 @@ fun FeedbackScreen(onBack: () -> Unit = {}) {
             )
             SpyglassDivider()
             Text(
-                text = "Request a Feature",
+                text = stringResource(R.string.feedback_request_feature),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
@@ -58,7 +60,7 @@ fun FeedbackScreen(onBack: () -> Unit = {}) {
             )
             SpyglassDivider()
             Text(
-                text = "Rate on Play Store",
+                text = stringResource(R.string.feedback_rate),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
@@ -69,7 +71,7 @@ fun FeedbackScreen(onBack: () -> Unit = {}) {
         }
 
         Text(
-            "Your feedback helps make Spyglass better for everyone. Thank you!",
+            stringResource(R.string.feedback_thanks),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.secondary,
         )

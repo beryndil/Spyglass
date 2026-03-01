@@ -1,16 +1,42 @@
 package dev.spyglass.android.core.net
 
+import dev.spyglass.android.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.CertificatePinner
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
-import java.net.HttpURLConnection
-import java.net.URL
+import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 object MojangApi {
 
-    private val USERNAME_REGEX = Regex("^[a-zA-Z0-9_]{3,16}$")
+    val USERNAME_REGEX = Regex("^[a-zA-Z0-9_]{3,16}$")
     private val UUID_HEX_REGEX = Regex("^[a-f0-9]{32}$")
     private val UUID_DASHED_REGEX = Regex("^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$")
+
+    private val client: OkHttpClient by lazy {
+        OkHttpClient.Builder()
+            .connectTimeout(5, TimeUnit.SECONDS)
+            .readTimeout(5, TimeUnit.SECONDS)
+            .writeTimeout(5, TimeUnit.SECONDS)
+            .certificatePinner(
+                CertificatePinner.Builder()
+                    .add("api.mojang.com", "sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=") // TODO: replace with actual pin
+                    .build()
+            )
+            .apply {
+                if (BuildConfig.DEBUG) {
+                    addInterceptor(
+                        HttpLoggingInterceptor { message -> Timber.tag("OkHttp").d(message) }
+                            .setLevel(HttpLoggingInterceptor.Level.BASIC)
+                    )
+                }
+            }
+            .build()
+    }
 
     /**
      * Fetches the Mojang UUID for a Minecraft Java username.
@@ -19,21 +45,21 @@ object MojangApi {
     suspend fun fetchUuid(username: String): String? = withContext(Dispatchers.IO) {
         if (!USERNAME_REGEX.matches(username)) return@withContext null
         try {
-            val url = URL("https://api.mojang.com/users/profiles/minecraft/$username")
-            val conn = url.openConnection() as HttpURLConnection
-            try {
-                conn.connectTimeout = 5_000
-                conn.readTimeout = 5_000
-                if (conn.responseCode != 200) return@withContext null
-                val body = conn.inputStream.bufferedReader().use { it.readText().take(1024) }
+            val request = Request.Builder()
+                .url("https://api.mojang.com/users/profiles/minecraft/$username")
+                .get()
+                .build()
+
+            client.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) return@withContext null
+                val body = response.body?.string()?.take(1024) ?: return@withContext null
                 val raw = JSONObject(body).getString("id") // 32 hex chars, no dashes
                 if (!UUID_HEX_REGEX.matches(raw)) return@withContext null
                 // Insert dashes: 8-4-4-4-12
                 "${raw.substring(0, 8)}-${raw.substring(8, 12)}-${raw.substring(12, 16)}-${raw.substring(16, 20)}-${raw.substring(20)}"
-            } finally {
-                conn.disconnect()
             }
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to fetch UUID for username: %s", username)
             null
         }
     }

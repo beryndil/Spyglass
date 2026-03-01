@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.BiomeResourceMap
 import dev.spyglass.android.data.CompostData
@@ -225,7 +227,7 @@ fun ItemsScreen(
                     onClick = { vm.setCategory(c) },
                     label = {
                         Text(
-                            c.replace('_', ' ').replaceFirstChar { it.uppercase() },
+                            if (c == "all") stringResource(R.string.all) else c.replace('_', ' ').replaceFirstChar { it.uppercase() },
                             style = MaterialTheme.typography.labelSmall,
                             color = chipColor,
                         )
@@ -253,7 +255,7 @@ fun ItemsScreen(
             }
             if (favoriteItems.isNotEmpty()) {
                 item(key = "fav_header") {
-                    SectionHeader("Favorites", icon = PixelIcons.Bookmark)
+                    SectionHeader(stringResource(R.string.favorites), icon = PixelIcons.Bookmark)
                 }
                 items(favoriteItems, key = { "fav_${it.id}" }) { fav ->
                     val isFav = fav.id in favoriteIds
@@ -266,7 +268,7 @@ fun ItemsScreen(
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(
                                     Icons.Filled.Star,
-                                    contentDescription = "Favorite",
+                                    contentDescription = stringResource(R.string.favorite),
                                     tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                     modifier = Modifier.size(20.dp),
                                 )
@@ -314,7 +316,7 @@ fun ItemsScreen(
                                 IconButton(onClick = { vm.toggleFavorite(item.id, item.name) }, modifier = Modifier.size(32.dp)) {
                                     Icon(
                                         Icons.Filled.Star,
-                                        contentDescription = "Favorite",
+                                        contentDescription = stringResource(R.string.favorite),
                                         tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                         modifier = Modifier.size(20.dp),
                                     )

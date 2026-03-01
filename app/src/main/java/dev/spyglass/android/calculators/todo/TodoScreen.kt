@@ -21,8 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.ShoppingListEntity
 import dev.spyglass.android.data.db.entities.TodoEntity
@@ -105,7 +107,7 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                             ),
                             modifier = Modifier.size(40.dp),
                         ) {
-                            Icon(Icons.Default.Add, contentDescription = "Add", tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
+                            Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add), tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
                         }
                     }
                 } else {
@@ -163,7 +165,7 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                                 colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.primary),
                                 modifier = Modifier.size(40.dp),
                             ) {
-                                Icon(Icons.Default.Add, contentDescription = "Add", tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
+                                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add), tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
                             }
                         }
                     }
@@ -336,7 +338,7 @@ private fun TodoRow(
 
         // Edit button
         IconButton(onClick = onEdit, modifier = Modifier.size(28.dp)) {
-            Icon(Icons.Default.Edit, contentDescription = "Edit", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
+            Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.edit), tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
         }
         // Link button
         IconButton(onClick = onLinkTap, modifier = Modifier.size(28.dp)) {
@@ -344,7 +346,7 @@ private fun TodoRow(
         }
         // Delete button
         IconButton(onClick = onDelete, modifier = Modifier.size(28.dp)) {
-            Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
+            Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
         }
     }
 }
@@ -379,11 +381,11 @@ private fun EditTodoDialog(
                 onClick = { onSave(text) },
                 enabled = text.isNotBlank() && text != todo.title,
             ) {
-                Text("Save", color = if (text.isNotBlank() && text != todo.title) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
+                Text(stringResource(R.string.save), color = if (text.isNotBlank() && text != todo.title) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant) }
         },
         containerColor = MaterialTheme.colorScheme.surface,
     )
@@ -467,7 +469,7 @@ private fun LinkDialog(
                     Text("Unlink", color = Red400)
                 }
             }
-            TextButton(onClick = onDismiss) { Text("Cancel", color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant) }
         },
         containerColor = MaterialTheme.colorScheme.surface,
     )

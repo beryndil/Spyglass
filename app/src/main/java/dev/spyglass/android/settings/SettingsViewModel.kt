@@ -88,4 +88,35 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
     fun clearAllFavorites() = viewModelScope.launch {
         repo.deleteAllFavorites()
     }
+
+    // Privacy & Consent
+    val analyticsConsent: StateFlow<Boolean> = store.data
+        .map { it[PreferenceKeys.ANALYTICS_CONSENT] ?: false }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    val crashConsent: StateFlow<Boolean> = store.data
+        .map { it[PreferenceKeys.CRASH_CONSENT] ?: false }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    fun setAnalyticsConsent(enabled: Boolean) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.ANALYTICS_CONSENT] = enabled }
+    }
+
+    fun setCrashConsent(enabled: Boolean) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.CRASH_CONSENT] = enabled }
+    }
+
+    fun deleteAllUserData() = viewModelScope.launch {
+        repo.deleteAllUserData()
+        // Clear player data from DataStore
+        store.edit {
+            it.remove(PreferenceKeys.PLAYER_USERNAME)
+            it.remove(PreferenceKeys.PLAYER_UUID)
+            it.remove(PreferenceKeys.DISMISS_USERNAME_DIALOG)
+        }
+        // Clear secure preferences
+        try {
+            SecurePreferences.clearAll(getApplication())
+        } catch (_: Exception) { /* SecurePreferences may not be initialized yet */ }
+    }
 }

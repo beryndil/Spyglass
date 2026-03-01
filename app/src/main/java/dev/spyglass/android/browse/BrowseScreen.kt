@@ -5,7 +5,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.spyglass.android.R
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import dev.spyglass.android.browse.biomes.BiomesScreen
@@ -31,19 +33,20 @@ import dev.spyglass.android.navigation.BrowseTarget
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 
-private val BROWSE_TABS = listOf(
-    SpyglassTab("Blocks",     PixelIcons.Blocks),      // 0
-    SpyglassTab("Items",      PixelIcons.Item),         // 1
-    SpyglassTab("Recipes",    PixelIcons.Crafting),     // 2
-    SpyglassTab("Mobs",       PixelIcons.Mob),          // 3
-    SpyglassTab("Trades",     PixelIcons.Trade, untinted = true), // 4
-    SpyglassTab("Biomes",     PixelIcons.Biome),        // 5
-    SpyglassTab("Structures", PixelIcons.Structure),    // 6
-    SpyglassTab("Enchants",   PixelIcons.Enchant, untinted = true), // 7
-    SpyglassTab("Potions",    PixelIcons.Potion),       // 8
-    SpyglassTab("Advancements", PixelIcons.Advancement, untinted = true), // 9
-    SpyglassTab("Commands",  PixelIcons.Command),       // 10
-    SpyglassTab("Reference", PixelIcons.Bookmark),     // 11
+@Composable
+private fun browseTabs() = listOf(
+    SpyglassTab(stringResource(R.string.browse_tab_blocks),       PixelIcons.Blocks),      // 0
+    SpyglassTab(stringResource(R.string.browse_tab_items),        PixelIcons.Item),         // 1
+    SpyglassTab(stringResource(R.string.browse_tab_recipes),      PixelIcons.Crafting),     // 2
+    SpyglassTab(stringResource(R.string.browse_tab_mobs),         PixelIcons.Mob),          // 3
+    SpyglassTab(stringResource(R.string.browse_tab_trades),       PixelIcons.Trade, untinted = true), // 4
+    SpyglassTab(stringResource(R.string.browse_tab_biomes),       PixelIcons.Biome),        // 5
+    SpyglassTab(stringResource(R.string.browse_tab_structures),   PixelIcons.Structure),    // 6
+    SpyglassTab(stringResource(R.string.browse_tab_enchants),     PixelIcons.Enchant, untinted = true), // 7
+    SpyglassTab(stringResource(R.string.browse_tab_potions),      PixelIcons.Potion),       // 8
+    SpyglassTab(stringResource(R.string.browse_tab_advancements), PixelIcons.Advancement, untinted = true), // 9
+    SpyglassTab(stringResource(R.string.browse_tab_commands),     PixelIcons.Command),      // 10
+    SpyglassTab(stringResource(R.string.browse_tab_reference),    PixelIcons.Bookmark),     // 11
 )
 
 @Composable
@@ -185,7 +188,7 @@ fun BrowseScreen(
 
     Column(modifier = Modifier.fillMaxSize()) {
         SpyglassTabRow(
-            tabs          = BROWSE_TABS,
+            tabs          = browseTabs(),
             selectedIndex = tab,
             onSelect      = { tab = it; clearAllTargets() },
         )

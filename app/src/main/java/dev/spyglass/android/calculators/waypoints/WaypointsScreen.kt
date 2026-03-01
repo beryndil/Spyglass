@@ -23,7 +23,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.spyglass.android.R
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -144,7 +146,7 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
             FilterChip(
                 selected = categoryFilter == "all",
                 onClick = { vm.setCategoryFilter("all") },
-                label = { Text("All", style = MaterialTheme.typography.labelSmall) },
+                label = { Text(stringResource(R.string.all), style = MaterialTheme.typography.labelSmall) },
             )
             CATEGORIES.forEach { cat ->
                 FilterChip(
@@ -305,7 +307,7 @@ private fun WaypointDetailCard(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
-                if (copied) "Copied!" else "Tap to copy",
+                if (copied) stringResource(R.string.copied) else stringResource(R.string.tap_to_copy),
                 style = MaterialTheme.typography.labelSmall,
                 color = if (copied) Emerald else MaterialTheme.colorScheme.secondary,
             )
@@ -360,20 +362,20 @@ private fun WaypointDetailCard(
             TextButton(onClick = onEdit) {
                 Icon(Icons.Default.Edit, contentDescription = null, modifier = Modifier.size(16.dp))
                 Spacer(Modifier.width(4.dp))
-                Text("Edit")
+                Text(stringResource(R.string.edit))
             }
             if (!confirmDelete) {
                 TextButton(onClick = { confirmDelete = true }, colors = ButtonDefaults.textButtonColors(contentColor = Red400)) {
                     Icon(Icons.Default.Delete, contentDescription = null, modifier = Modifier.size(16.dp))
                     Spacer(Modifier.width(4.dp))
-                    Text("Delete")
+                    Text(stringResource(R.string.delete))
                 }
             } else {
                 TextButton(onClick = onDelete, colors = ButtonDefaults.textButtonColors(contentColor = Red400)) {
-                    Text("Confirm Delete")
+                    Text(stringResource(R.string.confirm_delete))
                 }
                 TextButton(onClick = { confirmDelete = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         }
@@ -445,7 +447,7 @@ private fun WaypointDialog(
                     )
                 }
 
-                Text("Dimension", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.dimension), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     DIMENSIONS.forEach { dim ->
                         FilterChip(
@@ -456,7 +458,7 @@ private fun WaypointDialog(
                     }
                 }
 
-                Text("Category", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.category), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -506,10 +508,10 @@ private fun WaypointDialog(
             TextButton(
                 onClick = { onSave(name.trim(), x.toInt(), y.toInt(), z.toInt(), dimension, category, color, notes.trim()) },
                 enabled = canSave,
-            ) { Text("Save", color = if (canSave) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary) }
+            ) { Text(stringResource(R.string.save), color = if (canSave) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
         },
     )
 }

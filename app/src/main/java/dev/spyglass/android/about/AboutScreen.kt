@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.spyglass.android.BuildConfig
 import dev.spyglass.android.R
@@ -37,7 +38,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
         IconButton(onClick = onBack) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
+                contentDescription = stringResource(R.string.back),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
@@ -49,31 +50,31 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
         ) {
             SpyglassIconImage(
                 icon = SpyglassIcon.Drawable(R.drawable.ic_launcher_foreground),
-                contentDescription = "Spyglass",
+                contentDescription = stringResource(R.string.about_app_title),
                 modifier = Modifier.size(64.dp),
                 tint = Color.Unspecified,
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Spyglass",
+                text = stringResource(R.string.about_app_title),
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.height(4.dp))
             Text(
-                text = "v${BuildConfig.VERSION_NAME}",
+                text = stringResource(R.string.about_version, BuildConfig.VERSION_NAME),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Spacer(Modifier.height(4.dp))
             Text(
-                text = "A Minecraft companion tool.",
+                text = stringResource(R.string.about_companion),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Spacer(Modifier.height(2.dp))
             Text(
-                text = "by Beryndil",
+                text = stringResource(R.string.about_author),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.secondary,
             )
@@ -94,12 +95,12 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Text(
-                    text = "Enjoy SpyGlass?",
+                    text = stringResource(R.string.about_enjoy),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.surfaceVariant,
                 )
                 Text(
-                    text = "Buy Me a Cup of Coffee",
+                    text = stringResource(R.string.about_coffee),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onPrimary,
                 )
@@ -108,7 +109,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
 
         // ── Disclaimer ───────────────────────────────────────────────────────
         Text(
-            text = "Not affiliated with Mojang Studios or Microsoft.",
+            text = stringResource(R.string.about_disclaimer),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.secondary,
             textAlign = TextAlign.Center,
@@ -116,19 +117,19 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
         )
 
         // ── Game Data ────────────────────────────────────────────────────────
-        SectionHeader("Game Data")
+        SectionHeader(stringResource(R.string.about_game_data))
         ResultCard {
-            StatRow("Minecraft Version", "Java 1.21.4")
+            StatRow(stringResource(R.string.home_minecraft_version), stringResource(R.string.about_minecraft_version))
         }
 
         // ── Credits & Licenses ───────────────────────────────────────────────
-        SectionHeader("Credits & Licenses")
+        SectionHeader(stringResource(R.string.about_credits))
         ResultCard {
             // Spyglass license
-            Text("Spyglass", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-            Text("by Beryndil", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
+            Text(stringResource(R.string.about_app_title), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+            Text(stringResource(R.string.about_author), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
             Text(
-                text = "CC BY-NC-SA 4.0 \u2014 View License",
+                text = stringResource(R.string.about_license_cc),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.clickable { onLicense() },
@@ -137,11 +138,11 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
             SpyglassDivider()
 
             // Pixel Perfection
-            Text("Pixel Perfection", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-            Text("by XSSheep", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
+            Text(stringResource(R.string.about_pixel_perfection), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+            Text(stringResource(R.string.about_by_xssheep), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
-                    text = "CC-BY-SA 4.0",
+                    text = stringResource(R.string.about_cc_by_sa),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
@@ -149,7 +150,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
                     },
                 )
                 Text(
-                    text = "Project Page",
+                    text = stringResource(R.string.about_project_page),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
@@ -161,10 +162,10 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
             SpyglassDivider()
 
             // Entity-Icons
-            Text("Entity-Icons", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+            Text(stringResource(R.string.about_entity_icons), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
-                    text = "CC0 1.0",
+                    text = stringResource(R.string.about_cc0),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
@@ -172,7 +173,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
                     },
                 )
                 Text(
-                    text = "GitHub",
+                    text = stringResource(R.string.about_github),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
@@ -184,28 +185,28 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
 
         // ── App License ──────────────────────────────────────────────────────
         Text(
-            text = "\u00A9 2026 Beryndil. Licensed under CC BY-NC-SA 4.0.",
+            text = stringResource(R.string.about_copyright),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier.fillMaxWidth(),
         )
 
         // ── Privacy ──────────────────────────────────────────────────────────
-        SectionHeader("Privacy")
+        SectionHeader(stringResource(R.string.about_privacy))
         ResultCard {
             Text(
-                text = "All game data is stored locally on your device. If you provide your Minecraft username, it is sent to Mojang (api.mojang.com) to look up your player UUID. Your UUID is then used to load your skin from third-party rendering services (starlightskins.lunareclipse.studio, mc-heads.net). No other personal data is collected or shared.",
+                text = stringResource(R.string.about_privacy_text),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
         // ── Feedback ─────────────────────────────────────────────────────────
-        SectionHeader("Feedback")
+        SectionHeader(stringResource(R.string.feedback))
         ResultCard {
             val issuesUrl = "https://github.com/beryndil/spyglass-android/issues"
             Text(
-                text = "Report a Bug",
+                text = stringResource(R.string.about_report_bug),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
@@ -215,7 +216,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
             )
             SpyglassDivider()
             Text(
-                text = "Request a Feature",
+                text = stringResource(R.string.about_request_feature),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier

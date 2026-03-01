@@ -22,6 +22,8 @@ import dev.spyglass.android.calculators.clock.ClockEngine
 import dev.spyglass.android.calculators.clock.eventColor
 import dev.spyglass.android.browse.BrowseScreen
 import dev.spyglass.android.browse.search.SearchScreen
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.home.HomeScreen
 import dev.spyglass.android.changelog.ChangelogScreen
@@ -34,11 +36,11 @@ import androidx.compose.foundation.clickable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 
-sealed class TopDest(val route: String, val label: String, val icon: SpyglassIcon) {
-    data object Home        : TopDest("home",        "Home",        SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.item_compass))
-    data object Browse      : TopDest("browse",      "Browse",      PixelIcons.Browse)
-    data object Calculators : TopDest("calculators", "Tools", SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.item_diamond_pickaxe))
-    data object Search      : TopDest("search",      "Search",      PixelIcons.Search)
+sealed class TopDest(val route: String, val labelResId: Int, val icon: SpyglassIcon) {
+    data object Home        : TopDest("home",        R.string.nav_home,   SpyglassIcon.Drawable(R.drawable.item_compass))
+    data object Browse      : TopDest("browse",      R.string.nav_browse, PixelIcons.Browse)
+    data object Calculators : TopDest("calculators",  R.string.nav_tools,  SpyglassIcon.Drawable(R.drawable.item_diamond_pickaxe))
+    data object Search      : TopDest("search",      R.string.nav_search, PixelIcons.Search)
 }
 
 val TOP_DESTINATIONS = listOf(TopDest.Home, TopDest.Browse, TopDest.Calculators, TopDest.Search)
@@ -171,13 +173,13 @@ private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> U
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text  = "SPYGLASS",
+                text  = stringResource(R.string.top_bar_title),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.width(6.dp))
             SpyglassIconImage(
-                icon = SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.ic_launcher_foreground),
+                icon = SpyglassIcon.Drawable(R.drawable.ic_launcher_foreground),
                 contentDescription = null,
                 modifier = Modifier.size(32.dp),
                 tint = Color.Unspecified,
@@ -191,7 +193,7 @@ private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> U
             IconButton(onClick = { menuExpanded = true }) {
                 SpyglassIconImage(
                     icon = PixelIcons.Menu,
-                    contentDescription = "Menu",
+                    contentDescription = stringResource(R.string.menu),
                     tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.size(20.dp),
                 )
@@ -201,7 +203,7 @@ private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> U
                 onDismissRequest = { menuExpanded = false },
             ) {
                 DropdownMenuItem(
-                    text = { Text("Settings") },
+                    text = { Text(stringResource(R.string.settings)) },
                     onClick = {
                         menuExpanded = false
                         navController.navigate("settings") {
@@ -210,7 +212,7 @@ private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> U
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text("Changelog") },
+                    text = { Text(stringResource(R.string.changelog)) },
                     onClick = {
                         menuExpanded = false
                         navController.navigate("changelog") {
@@ -219,7 +221,7 @@ private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> U
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text("Feedback") },
+                    text = { Text(stringResource(R.string.feedback)) },
                     onClick = {
                         menuExpanded = false
                         navController.navigate("feedback") {
@@ -228,7 +230,7 @@ private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> U
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text("About") },
+                    text = { Text(stringResource(R.string.about)) },
                     onClick = {
                         menuExpanded = false
                         navController.navigate("about") {
@@ -259,8 +261,8 @@ fun BottomNavBar(navController: NavHostController) {
                         restoreState    = true
                     }
                 },
-                icon  = { SpyglassIconImage(dest.icon, contentDescription = dest.label, modifier = Modifier.size(24.dp)) },
-                label = { Text(dest.label) },
+                icon  = { SpyglassIconImage(dest.icon, contentDescription = stringResource(dest.labelResId), modifier = Modifier.size(24.dp)) },
+                label = { Text(stringResource(dest.labelResId)) },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor   = MaterialTheme.colorScheme.primary,
                     selectedTextColor   = MaterialTheme.colorScheme.primary,

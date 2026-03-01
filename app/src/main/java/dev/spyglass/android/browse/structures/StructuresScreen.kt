@@ -21,6 +21,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.StructureEntity
@@ -130,7 +132,7 @@ fun StructuresScreen(
             horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             dimensions.forEach { d ->
                 FilterChip(selected = dimension == d, onClick = { vm.setDimension(d) },
-                    label = { Text(d.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) })
+                    label = { Text(if (d == "all") stringResource(R.string.all) else d.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) })
             }
         }
         LazyColumn(
@@ -148,7 +150,7 @@ fun StructuresScreen(
             }
             if (favoriteStructures.isNotEmpty()) {
                 item(key = "fav_header") {
-                    SectionHeader("Favorites", icon = PixelIcons.Bookmark)
+                    SectionHeader(stringResource(R.string.favorites), icon = PixelIcons.Bookmark)
                 }
                 items(favoriteStructures, key = { "fav_${it.id}" }) { fav ->
                     val isFav = fav.id in favoriteIds
@@ -161,7 +163,7 @@ fun StructuresScreen(
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(
                                     Icons.Filled.Star,
-                                    contentDescription = "Favorite",
+                                    contentDescription = stringResource(R.string.favorite),
                                     tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                     modifier = Modifier.size(20.dp),
                                 )
@@ -226,7 +228,7 @@ private fun StructureListItem(s: StructureEntity, isFavorite: Boolean, onToggleF
                 IconButton(onClick = onToggleFavorite, modifier = Modifier.size(32.dp)) {
                     Icon(
                         Icons.Filled.Star,
-                        contentDescription = "Favorite",
+                        contentDescription = stringResource(R.string.favorite),
                         tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                         modifier = Modifier.size(20.dp),
                     )

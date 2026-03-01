@@ -1,4 +1,5 @@
 import java.util.Calendar
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -6,6 +7,9 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
+    alias(libs.plugins.firebase.perf) apply false
 }
 
 // CalVer: versionCode = YYYYMMDD, versionName = "YYYY.MMDD-alpha"
@@ -19,9 +23,26 @@ val calVerName = "%d.%02d%02d-alpha".format(
     calVerDate.get(Calendar.DAY_OF_MONTH),
 )
 
+val localProps = Properties().apply {
+    val f = rootProject.file("local.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+
 android {
     namespace = "dev.spyglass.android"
     compileSdk = 35
+
+    signingConfigs {
+        create("release") {
+            val ks = localProps.getProperty("RELEASE_STORE_FILE")
+            if (ks != null) {
+                storeFile = file(ks)
+                storePassword = localProps.getProperty("RELEASE_STORE_PASSWORD", "")
+                keyAlias = localProps.getProperty("RELEASE_KEY_ALIAS", "")
+                keyPassword = localProps.getProperty("RELEASE_KEY_PASSWORD", "")
+            }
+        }
+    }
 
     defaultConfig {
         applicationId = "dev.spyglass.android"
@@ -36,6 +57,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.findByName("release")
         }
     }
 
@@ -77,4 +99,40 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.coil.compose)
+
+    // Debug tools
+    implementation(libs.timber)
+    debugImplementation(libs.leakcanary)
+
+    // OkHttp
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+
+    // Firebase (uncomment after adding google-services.json)
+    // implementation(platform(libs.firebase.bom))
+    // implementation(libs.firebase.crashlytics)
+    // implementation(libs.firebase.analytics)
+    // implementation(libs.firebase.perf)
+
+    // Security
+    implementation(libs.security.crypto)
+
+    // Window Manager
+    implementation(libs.window)
+
+    // WorkManager & Paging
+    implementation(libs.work.runtime.ktx)
+    implementation(libs.paging.runtime.ktx)
+    implementation(libs.paging.compose)
+
+    // Testing
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.coroutines.test)
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.room.testing)
+    androidTestImplementation(libs.compose.ui.test.junit4)
+    debugImplementation(libs.compose.ui.test.manifest)
 }

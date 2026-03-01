@@ -22,4 +22,7 @@ object PreferenceKeys {
     val CLOCK_ACTIVE_EVENTS     = stringPreferencesKey("clock_active_events")
     val CLOCK_DAY_OFFSET        = longPreferencesKey("clock_day_offset")
     val BACKGROUND_THEME        = stringPreferencesKey("background_theme")
+    val ANALYTICS_CONSENT       = booleanPreferencesKey("analytics_consent")
+    val CRASH_CONSENT           = booleanPreferencesKey("crash_consent")
+    val CONSENT_SHOWN           = booleanPreferencesKey("consent_shown")
 }

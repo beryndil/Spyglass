@@ -10,7 +10,9 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.spyglass.android.R
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -136,7 +138,7 @@ fun SearchScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search all Minecraft data\u2026", color = MaterialTheme.colorScheme.secondary) },
+            placeholder = { Text(stringResource(R.string.search_placeholder), color = MaterialTheme.colorScheme.secondary) },
             leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
             colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
@@ -146,8 +148,8 @@ fun SearchScreen(
         if (query.length < 2 && results.isEmpty()) {
             EmptyState(
                 icon     = PixelIcons.Search,
-                title    = "Search everything",
-                subtitle = "Type at least 2 characters to search blocks, mobs, biomes, structures, items, recipes, trades, and more.",
+                title    = stringResource(R.string.search_empty_title),
+                subtitle = stringResource(R.string.search_empty_subtitle),
             )
         } else {
             LazyColumn(
@@ -177,8 +179,8 @@ fun SearchScreen(
                     item {
                         EmptyState(
                             icon     = PixelIcons.SearchOff,
-                            title    = "No results",
-                            subtitle = "No matches for \"$query\"",
+                            title    = stringResource(R.string.search_no_results),
+                            subtitle = stringResource(R.string.search_no_matches, query),
                         )
                     }
                 }

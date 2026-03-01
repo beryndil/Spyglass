@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.CompostData
 import dev.spyglass.android.data.db.entities.BlockEntity
@@ -200,7 +202,7 @@ fun BlocksScreen(
                     onClick = { vm.setCategory(c) },
                     label = {
                         Text(
-                            c.replaceFirstChar { it.uppercase() },
+                            if (c == "all") stringResource(R.string.all) else c.replaceFirstChar { it.uppercase() },
                             style = MaterialTheme.typography.labelSmall,
                             color = chipColor,
                         )
@@ -228,7 +230,7 @@ fun BlocksScreen(
             }
             if (favoriteBlocks.isNotEmpty()) {
                 item(key = "fav_header") {
-                    SectionHeader("Favorites", icon = PixelIcons.Bookmark)
+                    SectionHeader(stringResource(R.string.favorites), icon = PixelIcons.Bookmark)
                 }
                 items(favoriteBlocks, key = { "fav_${it.id}" }) { fav ->
                     val isFav = fav.id in favoriteIds
@@ -241,7 +243,7 @@ fun BlocksScreen(
                             IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(
                                     Icons.Filled.Star,
-                                    contentDescription = "Favorite",
+                                    contentDescription = stringResource(R.string.favorite),
                                     tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                     modifier = Modifier.size(20.dp),
                                 )
@@ -287,7 +289,7 @@ fun BlocksScreen(
                                 IconButton(onClick = { vm.toggleFavorite(b.id, b.name) }, modifier = Modifier.size(32.dp)) {
                                     Icon(
                                         Icons.Filled.Star,
-                                        contentDescription = "Favorite",
+                                        contentDescription = stringResource(R.string.favorite),
                                         tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                                         modifier = Modifier.size(20.dp),
                                     )
@@ -358,8 +360,8 @@ private fun BlockDetailContent(
                 }
             }
         }
-        if (block.isFlammable) StatRow("Flammable", "Yes")
-        if (block.isTransparent) StatRow("Transparent", "Yes")
+        if (block.isFlammable) StatRow("Flammable", stringResource(R.string.yes))
+        if (block.isTransparent) StatRow("Transparent", stringResource(R.string.yes))
 
         // ── Drops section ──
         val drops = block.drops.split(",").map { it.trim() }.filter { it.isNotEmpty() }

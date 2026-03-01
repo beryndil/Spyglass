@@ -145,6 +145,17 @@ class GameDataRepository(context: Context) {
     suspend fun deleteCompletedTodos()                              { db.todoDao().deleteCompleted() }
     fun todosForLink(type: String, id: Long): Flow<List<TodoEntity>> = db.todoDao().findByLink(type, id)
 
+    // Delete all user-generated data (todos, notes, waypoints, shopping lists, favorites, advancement progress)
+    suspend fun deleteAllUserData() {
+        db.todoDao().deleteAll()
+        db.noteDao().deleteAll()
+        db.waypointDao().deleteAll()
+        db.shoppingListDao().deleteAllItems()
+        db.shoppingListDao().deleteAllLists()
+        db.favoriteDao().deleteAll()
+        db.advancementProgressDao().deleteAll()
+    }
+
     companion object {
         @Volatile private var INSTANCE: GameDataRepository? = null
         fun get(context: Context) = INSTANCE ?: synchronized(this) {

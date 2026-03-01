@@ -39,4 +39,7 @@ interface TodoDao {
 
     @Query("SELECT * FROM todos WHERE linkedType = :linkedType AND linkedId = :linkedId ORDER BY completed ASC, createdAt DESC")
     fun findByLink(linkedType: String, linkedId: Long): Flow<List<TodoEntity>>
+
+    @Query("DELETE FROM todos")
+    suspend fun deleteAll()
 }

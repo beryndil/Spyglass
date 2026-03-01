@@ -5,7 +5,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.spyglass.android.R
 import dev.spyglass.android.calculators.anvil.AnvilScreen
 import dev.spyglass.android.calculators.blockfill.BlockFillScreen
 import dev.spyglass.android.calculators.nether.NetherScreen
@@ -33,26 +35,27 @@ import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.flow.map
 
-private val CALC_TABS = listOf(
-    SpyglassTab("Todo",        PixelIcons.Todo),        // 0 — daily planning
-    SpyglassTab("Shopping",    PixelIcons.Storage),      // 1 — list management
-    SpyglassTab("Enchanting",  PixelIcons.Anvil),        // 2 — optimizer
-    SpyglassTab("Fill",        PixelIcons.Fill),         // 3 — building
-    SpyglassTab("Shapes",      PixelIcons.Shapes),       // 4 — building
-    SpyglassTab("Maze",        PixelIcons.Maze),          // 5 — building
-    SpyglassTab("Storage",     PixelIcons.Storage),      // 6 — building
-    SpyglassTab("Smelt",       PixelIcons.Smelt),        // 7 — resources
-    SpyglassTab("Nether",      PixelIcons.Nether),       // 8 — travel
-    SpyglassTab("Game Clock", PixelIcons.Clock),         // 9 — day/night cycle
-    SpyglassTab("Light",      PixelIcons.Torch),         // 10 — light spacing
-    SpyglassTab("Notes",      PixelIcons.Bookmark),      // 11 — user notes
-    SpyglassTab("Waypoints",  PixelIcons.Waypoints),     // 12 — coordinate saver
-    SpyglassTab("Redstone",   PixelIcons.Blocks),        // 13 — signal strength
-    SpyglassTab("Librarian",  PixelIcons.Enchant),       // 14 — biome enchantments
-    SpyglassTab("Food",       PixelIcons.Item),          // 15 — food & saturation
-    SpyglassTab("Banners",    PixelIcons.Blocks),        // 16 — banner patterns
-    SpyglassTab("Trims",      PixelIcons.Item),          // 17 — armor trims
-    SpyglassTab("Loot",       PixelIcons.Structure),     // 18 — structure loot
+@Composable
+private fun calcTabs() = listOf(
+    SpyglassTab(stringResource(R.string.calc_tab_todo),        PixelIcons.Todo),        // 0 — daily planning
+    SpyglassTab(stringResource(R.string.calc_tab_shopping),    PixelIcons.Storage),      // 1 — list management
+    SpyglassTab(stringResource(R.string.calc_tab_enchanting),  PixelIcons.Anvil),        // 2 — optimizer
+    SpyglassTab(stringResource(R.string.calc_tab_fill),        PixelIcons.Fill),         // 3 — building
+    SpyglassTab(stringResource(R.string.calc_tab_shapes),      PixelIcons.Shapes),       // 4 — building
+    SpyglassTab(stringResource(R.string.calc_tab_maze),        PixelIcons.Maze),          // 5 — building
+    SpyglassTab(stringResource(R.string.calc_tab_storage),     PixelIcons.Storage),      // 6 — building
+    SpyglassTab(stringResource(R.string.calc_tab_smelt),       PixelIcons.Smelt),        // 7 — resources
+    SpyglassTab(stringResource(R.string.calc_tab_nether),      PixelIcons.Nether),       // 8 — travel
+    SpyglassTab(stringResource(R.string.calc_tab_game_clock),  PixelIcons.Clock),         // 9 — day/night cycle
+    SpyglassTab(stringResource(R.string.calc_tab_light),       PixelIcons.Torch),         // 10 — light spacing
+    SpyglassTab(stringResource(R.string.calc_tab_notes),       PixelIcons.Bookmark),      // 11 — user notes
+    SpyglassTab(stringResource(R.string.calc_tab_waypoints),   PixelIcons.Waypoints),     // 12 — coordinate saver
+    SpyglassTab(stringResource(R.string.calc_tab_redstone),    PixelIcons.Blocks),        // 13 — signal strength
+    SpyglassTab(stringResource(R.string.calc_tab_librarian),   PixelIcons.Enchant),       // 14 — biome enchantments
+    SpyglassTab(stringResource(R.string.calc_tab_food),        PixelIcons.Item),          // 15 — food & saturation
+    SpyglassTab(stringResource(R.string.calc_tab_banners),     PixelIcons.Blocks),        // 16 — banner patterns
+    SpyglassTab(stringResource(R.string.calc_tab_trims),       PixelIcons.Item),          // 17 — armor trims
+    SpyglassTab(stringResource(R.string.calc_tab_loot),        PixelIcons.Structure),     // 18 — structure loot
 )
 
 @Composable
@@ -82,7 +85,7 @@ fun CalculatorsScreen(
 
     Column(modifier = Modifier.fillMaxSize()) {
         SpyglassTabRow(
-            tabs          = CALC_TABS,
+            tabs          = calcTabs(),
             selectedIndex = selectedTab,
             onSelect      = { selectedTab = it },
         )

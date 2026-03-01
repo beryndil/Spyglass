@@ -13,8 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.repository.GameDataRepository
@@ -34,39 +37,7 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 
 // ── Minecraft tips / Did You Know ───────────────────────────────────────────
-
-private val TIPS = listOf(
-    "Foxes can pick up items with their mouths. Breed two foxes and the baby will trust you and bring you whatever it picks up.",
-    "You can place torches on furnaces and crafting tables to save wall space in tight builds.",
-    "Holding a shield blocks melee attacks and projectiles. It also reduces explosion damage and knockback from Creepers and TNT.",
-    "Piglins will trade you items for gold ingots, but they attack immediately if you open a chest in the Nether near them.",
-    "A single water source placed at the center of a 9x9 farm hydrates every block in range.",
-    "Putting a campfire under a beehive lets you harvest honey without angering the bees.",
-    "Fortune III on a hoe gives you more seeds and other drops from crops.",
-    "You can use a Name Tag to name a mob 'Dinnerbone' or 'Grumm' to flip it upside down.",
-    "Scaffolding is the fastest way to ascend and descend tall builds - just hold jump or sneak.",
-    "Soul Speed boots let you walk faster on soul sand and soul soil but they take durability damage.",
-    "Cats scare away Creepers and Phantoms, making them the best pet for base defense.",
-    "A Smithing Table with a Netherite Upgrade template converts diamond gear without losing enchantments.",
-    "Efficiency V on a pickaxe with a Haste II beacon mines stone almost instantly.",
-    "Zombies and Skeletons burn in sunlight, but not if they're wearing a helmet.",
-    "Sweet berries slow down all mobs that walk through them, including the Warden.",
-    "Tridents with Riptide let you fly through rain - combine with Elytra for long-distance travel.",
-    "Shulker boxes keep their contents when broken, making them portable storage.",
-    "You can cure a Zombie Villager by throwing a Splash Potion of Weakness and feeding it a Golden Apple.",
-    "Composters turn excess crops and plant matter into bone meal for more farming.",
-    "Silk Touch on a pickaxe lets you pick up spawners... just kidding. But it does work on glass and ice.",
-    "A Redstone comparator can read the fill level of containers like chests and barrels.",
-    "Endermen can't teleport if they're in a boat or minecart.",
-    "Dolphins give you a speed boost in water if you swim near them.",
-    "The Warden is not meant to be fought - it has 500 HP and deals massive damage. Sneak past it.",
-    "You can put banners on shields at a crafting table to display your custom design.",
-    "Mending repairs your gear using XP orbs, making it the most valuable enchantment for tools.",
-    "Respawn anchors work in the Nether like beds work in the Overworld. Beds explode in the Nether.",
-    "Place blue ice blocks in a long track and ride a boat on top for ultra-fast travel - faster than minecarts or sprinting.",
-    "A Looting III sword gives more drops from mobs, including rare drops like Wither Skeleton skulls.",
-    "Copper blocks oxidize over time, changing color from orange to teal. Wax them with honeycomb to freeze the look.",
-)
+// Tips are loaded from string-array resource for localization support
 
 // ── Quick link data ─────────────────────────────────────────────────────────
 
@@ -158,7 +129,8 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val tipIndex = remember { Calendar.getInstance().get(Calendar.DAY_OF_YEAR) % TIPS.size }
+    val tips = stringArrayResource(R.array.tips)
+    val tipIndex = remember { Calendar.getInstance().get(Calendar.DAY_OF_YEAR) % tips.size }
 
     val showTipOfDay by remember {
         context.dataStore.data.map { it[PreferenceKeys.SHOW_TIP_OF_DAY] ?: true }
@@ -249,7 +221,7 @@ fun HomeScreen(
                 )
             } else {
                 SpyglassIconImage(
-                    SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.ic_launcher_foreground),
+                    SpyglassIcon.Drawable(R.drawable.ic_launcher_foreground),
                     contentDescription = null,
                     tint = Color.Unspecified,
                     modifier = Modifier.size(144.dp),
@@ -257,20 +229,20 @@ fun HomeScreen(
             }
             Spacer(Modifier.height(8.dp))
             Text(
-                if (playerUsername.isNotBlank()) "Welcome $playerUsername to Spyglass" else "Welcome to Spyglass",
+                if (playerUsername.isNotBlank()) stringResource(R.string.home_welcome_name, playerUsername) else stringResource(R.string.home_welcome),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface,
             )
             Spacer(Modifier.height(4.dp))
             Text(
-                "Your Minecraft companion for crafting, building, and exploring",
+                stringResource(R.string.home_subtitle),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.padding(horizontal = 24.dp),
                 textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(6.dp))
-            Text("Minecraft Java 1.21.4", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.home_minecraft_version), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         }
 
         // ── Search ──
@@ -286,12 +258,12 @@ fun HomeScreen(
         ) {
             SpyglassIconImage(PixelIcons.Search, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
             Spacer(Modifier.width(10.dp))
-            Text("Search", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.search), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
         }
 
         // ── B. Todo list ──
         if (todoCount > 0) {
-            SectionHeader("Todo", icon = PixelIcons.Todo)
+            SectionHeader(stringResource(R.string.home_todo), icon = PixelIcons.Todo)
             ResultCard {
                 todoPreview.forEach { todo ->
                     HomeTodoRow(
@@ -311,7 +283,7 @@ fun HomeScreen(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        if (todoCount > 3) "View all $todoCount tasks" else "Edit Todo List",
+                        if (todoCount > 3) stringResource(R.string.home_todo_view_all, todoCount) else stringResource(R.string.home_todo_edit),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.primary,
                     )
@@ -319,17 +291,17 @@ fun HomeScreen(
                 }
             }
         } else {
-            SectionHeader("Todo", icon = PixelIcons.Todo)
+            SectionHeader(stringResource(R.string.home_todo), icon = PixelIcons.Todo)
             ResultCard(
                 modifier = Modifier.clickable { onCalcTab(0) },
             ) {
                 Text(
-                    "What do you have planned for today?",
+                    stringResource(R.string.home_todo_empty),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Text(
-                    "Tap to open your Todo list \u2192",
+                    stringResource(R.string.home_todo_open),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                 )
@@ -338,7 +310,7 @@ fun HomeScreen(
 
         // ── B2. Favorites on Home ──
         if (showFavoritesOnHome && favorites.isNotEmpty()) {
-            SectionHeader("Favorites", icon = PixelIcons.Bookmark)
+            SectionHeader(stringResource(R.string.favorites), icon = PixelIcons.Bookmark)
             favorites.forEach { fav ->
                 BrowseListItem(
                     headline = fav.displayName,
@@ -352,7 +324,7 @@ fun HomeScreen(
         }
 
         // ── C. Quick Access — Tools ──
-        SectionHeader("Tools", icon = SpyglassIcon.Drawable(dev.spyglass.android.R.drawable.item_diamond_pickaxe))
+        SectionHeader(stringResource(R.string.home_tools), icon = SpyglassIcon.Drawable(R.drawable.item_diamond_pickaxe))
         QuickLinkGrid(CALC_LINKS.map { it.first }) { index -> onCalcTab(CALC_LINKS[index].second) }
 
         // ── D. Tip of the Day ──
@@ -361,11 +333,11 @@ fun HomeScreen(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Filled.PriorityHigh, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text("DID YOU KNOW?", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource(R.string.home_did_you_know), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 }
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    TIPS[tipIndex],
+                    tips[tipIndex],
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -373,21 +345,21 @@ fun HomeScreen(
         }
 
         // ── E. Quick Access — Browse ──
-        SectionHeader("Browse", icon = PixelIcons.Browse)
+        SectionHeader(stringResource(R.string.home_browse), icon = PixelIcons.Browse)
         browseLinks().let { links ->
             QuickLinkGrid(links.map { it.first }) { index -> onBrowseTab(links[index].second) }
         }
 
         // ── F. What's New ──
-        SectionHeader("What's New")
+        SectionHeader(stringResource(R.string.home_whats_new))
         ResultCard {
-            WhatsNewItem("$blockCount blocks & $itemCount items", "Full database with categories, durability, and recipes")
+            WhatsNewItem(stringResource(R.string.home_whats_new_blocks, blockCount, itemCount), stringResource(R.string.home_whats_new_blocks_desc))
             SpyglassDivider()
-            WhatsNewItem("Enchant optimizer", "Calculate the cheapest XP order for combining books on the anvil")
+            WhatsNewItem(stringResource(R.string.home_whats_new_enchant), stringResource(R.string.home_whats_new_enchant_desc))
             SpyglassDivider()
-            WhatsNewItem("Cross-tab links", "Tap any item, mob, biome, or structure to jump to its detail page")
+            WhatsNewItem(stringResource(R.string.home_whats_new_links), stringResource(R.string.home_whats_new_links_desc))
             SpyglassDivider()
-            WhatsNewItem("Search everything", "Global search across blocks, mobs, items, recipes, and more")
+            WhatsNewItem(stringResource(R.string.home_whats_new_search), stringResource(R.string.home_whats_new_search_desc))
         }
 
         Spacer(Modifier.height(8.dp))

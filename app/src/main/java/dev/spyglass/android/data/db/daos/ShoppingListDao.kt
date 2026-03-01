@@ -22,6 +22,12 @@ interface ShoppingListDao {
     @Query("DELETE FROM shopping_lists WHERE id = :listId")
     suspend fun deleteList(listId: Long)
 
+    @Query("DELETE FROM shopping_lists")
+    suspend fun deleteAllLists()
+
+    @Query("DELETE FROM shopping_list_items")
+    suspend fun deleteAllItems()
+
     // ── Items ────────────────────────────────────────────────────────────────
 
     @Query("SELECT * FROM shopping_list_items WHERE listId = :listId ORDER BY id ASC")
