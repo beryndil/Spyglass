@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.firebase.perf) apply false
+    alias(libs.plugins.baselineprofile)
 }
 
 // CalVer: versionCode = YYYYMMDD, versionName = "YYYY.MMDD-alpha"
@@ -59,6 +60,12 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.findByName("release")
         }
+        create("benchmark") {
+            initWith(buildTypes.getByName("release"))
+            matchingFallbacks += listOf("release")
+            isDebuggable = false
+            signingConfig = signingConfigs.getByName("debug")
+        }
     }
 
     compileOptions {
@@ -72,6 +79,10 @@ android {
         compose = true
         buildConfig = true
     }
+}
+
+baselineProfile {
+    automaticGenerationDuringBuild = false
 }
 
 dependencies {
@@ -124,6 +135,9 @@ dependencies {
     implementation(libs.work.runtime.ktx)
     implementation(libs.paging.runtime.ktx)
     implementation(libs.paging.compose)
+
+    // Baseline Profiles
+    implementation(libs.profileinstaller)
 
     // Testing
     testImplementation(libs.junit)

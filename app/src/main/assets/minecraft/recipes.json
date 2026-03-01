@@ -4186,7 +4186,7 @@
     "outputItem": "chiseled_bookshelf",
     "outputCount": 1,
     "type": "crafting_shaped",
-    "ingredientsJson": "[[\"oak_planks\",\"oak_planks\",\"oak_planks\"],[\"oak_slab\",\"oak_slab\",\"oak_slab\"],[\"oak_planks\",\"oak_planks\",\"oak_planks\"]]"
+    "ingredientsJson": "[[\"#planks\",\"#planks\",\"#planks\"],[\"#wooden_slab\",\"#wooden_slab\",\"#wooden_slab\"],[\"#planks\",\"#planks\",\"#planks\"]]"
   },
   {
     "id": "bone_block",
@@ -5956,5 +5956,152 @@
     "type": "smelting",
     "ingredientsJson": "[\"sea_pickle\"]",
     "xp": 0.2
+  },
+  {
+    "id": "coal_from_block",
+    "outputItem": "coal",
+    "outputCount": 9,
+    "type": "crafting_shapeless",
+    "ingredientsJson": "[\"coal_block\"]"
+  },
+  {
+    "id": "raw_iron_from_block",
+    "outputItem": "raw_iron",
+    "outputCount": 9,
+    "type": "crafting_shapeless",
+    "ingredientsJson": "[\"raw_iron_block\"]"
+  },
+  {
+    "id": "raw_gold_from_block",
+    "outputItem": "raw_gold",
+    "outputCount": 9,
+    "type": "crafting_shapeless",
+    "ingredientsJson": "[\"raw_gold_block\"]"
+  },
+  {
+    "id": "raw_copper_from_block",
+    "outputItem": "raw_copper",
+    "outputCount": 9,
+    "type": "crafting_shapeless",
+    "ingredientsJson": "[\"raw_copper_block\"]"
+  },
+  {
+    "id": "resin_clump_from_block",
+    "outputItem": "resin_clump",
+    "outputCount": 9,
+    "type": "crafting_shapeless",
+    "ingredientsJson": "[\"resin_block\"]"
+  },
+  {
+    "id": "white_terracotta",
+    "outputItem": "white_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"white_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "orange_terracotta",
+    "outputItem": "orange_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"orange_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "magenta_terracotta",
+    "outputItem": "magenta_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"magenta_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "light_blue_terracotta",
+    "outputItem": "light_blue_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"light_blue_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "yellow_terracotta",
+    "outputItem": "yellow_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"yellow_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "lime_terracotta",
+    "outputItem": "lime_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"lime_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "pink_terracotta",
+    "outputItem": "pink_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"pink_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "gray_terracotta",
+    "outputItem": "gray_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"gray_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "light_gray_terracotta",
+    "outputItem": "light_gray_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"light_gray_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "cyan_terracotta",
+    "outputItem": "cyan_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"cyan_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "purple_terracotta",
+    "outputItem": "purple_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"purple_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "blue_terracotta",
+    "outputItem": "blue_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"blue_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "brown_terracotta",
+    "outputItem": "brown_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"brown_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "green_terracotta",
+    "outputItem": "green_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"green_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "red_terracotta",
+    "outputItem": "red_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"red_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
+  },
+  {
+    "id": "black_terracotta",
+    "outputItem": "black_terracotta",
+    "outputCount": 8,
+    "type": "crafting_shaped",
+    "ingredientsJson": "[[\"terracotta\",\"terracotta\",\"terracotta\"],[\"terracotta\",\"black_dye\",\"terracotta\"],[\"terracotta\",\"terracotta\",\"terracotta\"]]"
   }
 ]

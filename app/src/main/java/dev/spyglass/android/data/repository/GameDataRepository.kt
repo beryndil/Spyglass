@@ -1,6 +1,7 @@
 package dev.spyglass.android.data.repository
 
 import android.content.Context
+import android.os.Trace
 import dev.spyglass.android.data.db.SpyglassDatabase
 import dev.spyglass.android.data.db.entities.*
 import kotlinx.coroutines.flow.Flow
@@ -159,7 +160,14 @@ class GameDataRepository(context: Context) {
     companion object {
         @Volatile private var INSTANCE: GameDataRepository? = null
         fun get(context: Context) = INSTANCE ?: synchronized(this) {
-            INSTANCE ?: GameDataRepository(context.applicationContext).also { INSTANCE = it }
+            INSTANCE ?: run {
+                Trace.beginSection("GameDataRepository.init")
+                try {
+                    GameDataRepository(context.applicationContext)
+                } finally {
+                    Trace.endSection()
+                }
+            }.also { INSTANCE = it }
         }
     }
 }

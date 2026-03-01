@@ -1,6 +1,7 @@
 package dev.spyglass.android.data.db
 
 import android.content.Context
+import android.os.Trace
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -210,15 +211,21 @@ abstract class SpyglassDatabase : RoomDatabase() {
 
         fun get(context: Context): SpyglassDatabase =
             INSTANCE ?: synchronized(this) {
-                INSTANCE ?: Room.databaseBuilder(
-                    context.applicationContext,
-                    SpyglassDatabase::class.java,
-                    "spyglass.db",
-                )
-                    .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21, MIGRATION_21_22)
-                    .fallbackToDestructiveMigration()
-                    .build()
-                    .also { INSTANCE = it }
+                INSTANCE ?: run {
+                    Trace.beginSection("SpyglassDatabase.build")
+                    try {
+                        Room.databaseBuilder(
+                            context.applicationContext,
+                            SpyglassDatabase::class.java,
+                            "spyglass.db",
+                        )
+                            .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21, MIGRATION_21_22)
+                            .fallbackToDestructiveMigration()
+                            .build()
+                    } finally {
+                        Trace.endSection()
+                    }
+                }.also { INSTANCE = it }
             }
     }
 }

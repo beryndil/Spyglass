@@ -2,6 +2,7 @@ package dev.spyglass.android
 
 import android.app.Application
 import android.os.StrictMode
+import android.os.Trace
 import dev.spyglass.android.data.repository.GameDataRepository
 import dev.spyglass.android.data.seed.DataSeeder
 import dev.spyglass.android.settings.PreferenceKeys
@@ -19,40 +20,50 @@ class SpyglassApp : Application() {
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     override fun onCreate() {
-        super.onCreate()
+        Trace.beginSection("SpyglassApp.onCreate")
+        try {
+            super.onCreate()
 
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
+            if (BuildConfig.DEBUG) {
+                Timber.plant(Timber.DebugTree())
 
-            StrictMode.setThreadPolicy(
-                StrictMode.ThreadPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build()
-            )
-            StrictMode.setVmPolicy(
-                StrictMode.VmPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build()
-            )
-        }
+                StrictMode.setThreadPolicy(
+                    StrictMode.ThreadPolicy.Builder()
+                        .detectAll()
+                        .penaltyLog()
+                        .build()
+                )
+                StrictMode.setVmPolicy(
+                    StrictMode.VmPolicy.Builder()
+                        .detectAll()
+                        .penaltyLog()
+                        .build()
+                )
+            }
 
-        // Global uncaught exception handler — logs via Timber then delegates
-        val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
-        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-            Timber.e(throwable, "Uncaught exception on thread %s", thread.name)
-            defaultHandler?.uncaughtException(thread, throwable)
-        }
+            // Global uncaught exception handler — logs via Timber then delegates
+            val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+            Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+                Timber.e(throwable, "Uncaught exception on thread %s", thread.name)
+                defaultHandler?.uncaughtException(thread, throwable)
+            }
 
-        // Pre-warm database, seed game data, and migrate player prefs — all on IO
-        appScope.launch(Dispatchers.IO) {
-            // Pre-warm database singleton so it's ready before HomeScreen composes
-            GameDataRepository.get(this@SpyglassApp)
-            // Seed game data from bundled JSON assets (no-op after first install)
-            DataSeeder.seedIfNeeded(this@SpyglassApp)
-            // Migrate player data from DataStore to SecurePreferences (one-time)
-            migratePlayerDataToSecurePrefs()
+            // Pre-warm database, seed game data, and migrate player prefs — all on IO
+            appScope.launch(Dispatchers.IO) {
+                Trace.beginSection("SpyglassApp.seedAndWarm")
+                try {
+                    // Pre-warm database singleton so it's ready before HomeScreen composes
+                    GameDataRepository.get(this@SpyglassApp)
+                    // Seed game data from bundled JSON assets (no-op after first install)
+                    DataSeeder.seedIfNeeded(this@SpyglassApp)
+                    // Migrate player data from DataStore to SecurePreferences (one-time)
+                    migratePlayerDataToSecurePrefs()
+                } finally {
+                    Trace.endSection()
+                }
+            }
+        } finally {
+            Trace.endSection()
         }
     }
 
