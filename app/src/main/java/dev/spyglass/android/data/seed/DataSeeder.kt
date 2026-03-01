@@ -1,6 +1,7 @@
 package dev.spyglass.android.data.seed
 
 import android.content.Context
+import android.os.Trace
 import dev.spyglass.android.data.db.SpyglassDatabase
 import dev.spyglass.android.data.db.entities.*
 import kotlinx.coroutines.Dispatchers
@@ -15,47 +16,90 @@ import kotlinx.serialization.json.Json
  */
 object DataSeeder {
 
-    private const val CURRENT_DATA_VERSION = 13
+    private const val CURRENT_DATA_VERSION = 15
     private const val PREFS_NAME = "spyglass_seed"
     private const val KEY_DATA_VERSION = "data_version"
 
     private val json = Json { ignoreUnknownKeys = true; coerceInputValues = true }
 
     suspend fun seedIfNeeded(context: Context) = withContext(Dispatchers.IO) {
-        val db = SpyglassDatabase.get(context)
-        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val storedVersion = prefs.getInt(KEY_DATA_VERSION, 0)
+        Trace.beginSection("DataSeeder.seedIfNeeded")
+        try {
+            val db = SpyglassDatabase.get(context)
+            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            val storedVersion = prefs.getInt(KEY_DATA_VERSION, 0)
 
-        if (storedVersion < CURRENT_DATA_VERSION) {
-            // Clear game data tables (NOT favorites)
-            db.blockDao().deleteAll()
-            db.mobDao().deleteAll()
-            db.biomeDao().deleteAll()
-            db.enchantDao().deleteAll()
-            db.potionDao().deleteAll()
-            db.tradeDao().deleteAll()
-            db.recipeDao().deleteAll()
-            db.structureDao().deleteAll()
-            db.itemDao().deleteAll()
-            db.advancementDao().deleteAll()
-            db.commandDao().deleteAll()
-        }
+            if (storedVersion < CURRENT_DATA_VERSION) {
+                Trace.beginSection("DataSeeder.clearTables")
+                try {
+                    // Clear game data tables (NOT favorites)
+                    db.blockDao().deleteAll()
+                    db.mobDao().deleteAll()
+                    db.biomeDao().deleteAll()
+                    db.enchantDao().deleteAll()
+                    db.potionDao().deleteAll()
+                    db.tradeDao().deleteAll()
+                    db.recipeDao().deleteAll()
+                    db.structureDao().deleteAll()
+                    db.itemDao().deleteAll()
+                    db.advancementDao().deleteAll()
+                    db.commandDao().deleteAll()
+                } finally {
+                    Trace.endSection()
+                }
+            }
 
-        // Seed any empty tables
-        if (db.blockDao().count()       == 0) seedBlocks(context, db)
-        if (db.mobDao().count()         == 0) seedMobs(context, db)
-        if (db.biomeDao().count()       == 0) seedBiomes(context, db)
-        if (db.enchantDao().count()     == 0) seedEnchants(context, db)
-        if (db.potionDao().count()      == 0) seedPotions(context, db)
-        if (db.tradeDao().count()       == 0) seedTrades(context, db)
-        if (db.recipeDao().count()      == 0) seedRecipes(context, db)
-        if (db.structureDao().count()   == 0) seedStructures(context, db)
-        if (db.itemDao().count()        == 0) seedItems(context, db)
-        if (db.advancementDao().count() == 0) seedAdvancements(context, db)
-        if (db.commandDao().count()     == 0) seedCommands(context, db)
+            // Seed any empty tables
+            if (db.blockDao().count() == 0) {
+                Trace.beginSection("DataSeeder.seed.blocks")
+                try { seedBlocks(context, db) } finally { Trace.endSection() }
+            }
+            if (db.mobDao().count() == 0) {
+                Trace.beginSection("DataSeeder.seed.mobs")
+                try { seedMobs(context, db) } finally { Trace.endSection() }
+            }
+            if (db.biomeDao().count() == 0) {
+                Trace.beginSection("DataSeeder.seed.biomes")
+                try { seedBiomes(context, db) } finally { Trace.endSection() }
+            }
+            if (db.enchantDao().count() == 0) {
+                Trace.beginSection("DataSeeder.seed.enchants")
+                try { seedEnchants(context, db) } finally { Trace.endSection() }
+            }
+            if (db.potionDao().count() == 0) {
+                Trace.beginSection("DataSeeder.seed.potions")
+                try { seedPotions(context, db) } finally { Trace.endSection() }
+            }
+            if (db.tradeDao().count() == 0) {
+                Trace.beginSection("DataSeeder.seed.trades")
+                try { seedTrades(context, db) } finally { Trace.endSection() }
+            }
+            if (db.recipeDao().count() == 0) {
+                Trace.beginSection("DataSeeder.seed.recipes")
+                try { seedRecipes(context, db) } finally { Trace.endSection() }
+            }
+            if (db.structureDao().count() == 0) {
+                Trace.beginSection("DataSeeder.seed.structures")
+                try { seedStructures(context, db) } finally { Trace.endSection() }
+            }
+            if (db.itemDao().count() == 0) {
+                Trace.beginSection("DataSeeder.seed.items")
+                try { seedItems(context, db) } finally { Trace.endSection() }
+            }
+            if (db.advancementDao().count() == 0) {
+                Trace.beginSection("DataSeeder.seed.advancements")
+                try { seedAdvancements(context, db) } finally { Trace.endSection() }
+            }
+            if (db.commandDao().count() == 0) {
+                Trace.beginSection("DataSeeder.seed.commands")
+                try { seedCommands(context, db) } finally { Trace.endSection() }
+            }
 
-        if (storedVersion < CURRENT_DATA_VERSION) {
-            prefs.edit().putInt(KEY_DATA_VERSION, CURRENT_DATA_VERSION).apply()
+            if (storedVersion < CURRENT_DATA_VERSION) {
+                prefs.edit().putInt(KEY_DATA_VERSION, CURRENT_DATA_VERSION).apply()
+            }
+        } finally {
+            Trace.endSection()
         }
     }
 

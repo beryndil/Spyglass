@@ -593,6 +593,18 @@
     "blastResistance": 0.6
   },
   {
+    "id": "beetroots",
+    "name": "Beetroots",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "beetroot,beetroot_seeds",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
     "id": "bell",
     "name": "Bell",
     "hardness": 5.0,
@@ -1554,6 +1566,18 @@
     "isWaterloggable": true
   },
   {
+    "id": "carrots",
+    "name": "Carrots",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "carrot",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
     "id": "cartography_table",
     "name": "Cartography Table",
     "hardness": 2.5,
@@ -1799,6 +1823,18 @@
     "isWaterloggable": true
   },
   {
+    "id": "chipped_anvil",
+    "name": "Chipped Anvil",
+    "hardness": 5.0,
+    "toolRequired": "pickaxe",
+    "drops": "chipped_anvil",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "utility",
+    "blastResistance": 1200.0,
+    "hasGravity": true
+  },
+  {
     "id": "chiseled_bookshelf",
     "name": "Chiseled Bookshelf",
     "hardness": 1.5,
@@ -1852,6 +1888,17 @@
     "isFlammable": false,
     "category": "building",
     "blastResistance": 1.5
+  },
+  {
+    "id": "chiseled_quartz_block",
+    "name": "Chiseled Quartz Block",
+    "hardness": 0.8,
+    "toolRequired": "pickaxe",
+    "drops": "chiseled_quartz_block",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 0.8
   },
   {
     "id": "chiseled_red_sandstone",
@@ -1920,6 +1967,30 @@
     "blastResistance": 1.5
   },
   {
+    "id": "chorus_flower",
+    "name": "Chorus Flower",
+    "hardness": 0.4,
+    "toolRequired": "none",
+    "drops": "chorus_flower",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "end",
+    "blastResistance": 0.4
+  },
+  {
+    "id": "chorus_plant",
+    "name": "Chorus Plant",
+    "hardness": 0.4,
+    "toolRequired": "none",
+    "drops": "chorus_fruit",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "end",
+    "blastResistance": 0.4
+  },
+  {
     "id": "clay",
     "name": "Clay",
     "hardness": 0.6,
@@ -1966,6 +2037,17 @@
     "minY": 0,
     "maxY": 320,
     "peakY": 96
+  },
+  {
+    "id": "coarse_dirt",
+    "name": "Coarse Dirt",
+    "hardness": 0.5,
+    "toolRequired": "shovel",
+    "drops": "coarse_dirt",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "natural",
+    "blastResistance": 0.5
   },
   {
     "id": "cobbled_deepslate",
@@ -2072,6 +2154,18 @@
     "isTransparent": true,
     "category": "decoration",
     "blastResistance": 4.0
+  },
+  {
+    "id": "cocoa",
+    "name": "Cocoa",
+    "hardness": 0.2,
+    "toolRequired": "axe",
+    "drops": "cocoa_beans",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 3.0
   },
   {
     "id": "command_block",
@@ -2351,6 +2445,18 @@
     "isWaterloggable": true
   },
   {
+    "id": "crimson_fungus",
+    "name": "Crimson Fungus",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "crimson_fungus",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
     "id": "crimson_hanging_sign",
     "name": "Crimson Hanging Sign",
     "hardness": 1.0,
@@ -2535,6 +2641,18 @@
     "blastResistance": 0.8
   },
   {
+    "id": "cut_red_sandstone_slab",
+    "name": "Cut Red Sandstone Slab",
+    "hardness": 2.0,
+    "toolRequired": "pickaxe",
+    "drops": "cut_red_sandstone_slab",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true
+  },
+  {
     "id": "cut_sandstone",
     "name": "Cut Sandstone",
     "hardness": 0.8,
@@ -2544,6 +2662,18 @@
     "isFlammable": false,
     "category": "building",
     "blastResistance": 0.8
+  },
+  {
+    "id": "cut_sandstone_slab",
+    "name": "Cut Sandstone Slab",
+    "hardness": 2.0,
+    "toolRequired": "pickaxe",
+    "drops": "cut_sandstone_slab",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 6.0,
+    "isWaterloggable": true
   },
   {
     "id": "cyan_banner",
@@ -2682,6 +2812,18 @@
     "isFlammable": true,
     "category": "building",
     "blastResistance": 0.8
+  },
+  {
+    "id": "damaged_anvil",
+    "name": "Damaged Anvil",
+    "hardness": 5.0,
+    "toolRequired": "pickaxe",
+    "drops": "damaged_anvil",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "utility",
+    "blastResistance": 1200.0,
+    "hasGravity": true
   },
   {
     "id": "dandelion",
@@ -3489,6 +3631,17 @@
     "blastResistance": 1.0
   },
   {
+    "id": "dried_kelp_block",
+    "name": "Dried Kelp Block",
+    "hardness": 0.5,
+    "toolRequired": "hoe",
+    "drops": "dried_kelp_block",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "building",
+    "blastResistance": 2.5
+  },
+  {
     "id": "dripstone_block",
     "name": "Dripstone Block",
     "hardness": 1.5,
@@ -3684,17 +3837,6 @@
     "hardness": 3.0,
     "toolRequired": "pickaxe_stone",
     "drops": "exposed_copper",
-    "stackSize": 64,
-    "isFlammable": false,
-    "category": "building",
-    "blastResistance": 3.0
-  },
-  {
-    "id": "exposed_copper_block",
-    "name": "Exposed Copper Block",
-    "hardness": 3.0,
-    "toolRequired": "pickaxe_stone",
-    "drops": "exposed_copper_block",
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
@@ -4438,6 +4580,17 @@
     "isFlammable": false,
     "category": "building",
     "blastResistance": 0.0
+  },
+  {
+    "id": "honeycomb_block",
+    "name": "Honeycomb Block",
+    "hardness": 0.6,
+    "toolRequired": "none",
+    "drops": "honeycomb_block",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "decoration",
+    "blastResistance": 0.6
   },
   {
     "id": "hopper",
@@ -6121,6 +6274,18 @@
     "blastResistance": 0
   },
   {
+    "id": "nether_wart",
+    "name": "Nether Wart",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "nether_wart",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
     "id": "nether_wart_block",
     "name": "Nether Wart Block",
     "hardness": 1.0,
@@ -6563,17 +6728,6 @@
     "hardness": 3.0,
     "toolRequired": "pickaxe_stone",
     "drops": "oxidized_copper",
-    "stackSize": 64,
-    "isFlammable": false,
-    "category": "building",
-    "blastResistance": 3.0
-  },
-  {
-    "id": "oxidized_copper_block",
-    "name": "Oxidized Copper Block",
-    "hardness": 3.0,
-    "toolRequired": "pickaxe_stone",
-    "drops": "oxidized_copper_block",
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
@@ -7179,6 +7333,17 @@
     "isWaterloggable": true
   },
   {
+    "id": "polished_basalt",
+    "name": "Polished Basalt",
+    "hardness": 1.25,
+    "toolRequired": "pickaxe",
+    "drops": "polished_basalt",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 4.2
+  },
+  {
     "id": "polished_blackstone",
     "name": "Polished Blackstone",
     "hardness": 2.0,
@@ -7466,6 +7631,18 @@
     "drops": "poppy",
     "stackSize": 64,
     "isFlammable": true,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
+    "id": "potatoes",
+    "name": "Potatoes",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "potato",
+    "stackSize": 64,
+    "isFlammable": false,
     "isTransparent": true,
     "category": "natural",
     "blastResistance": 0.0
@@ -7776,6 +7953,17 @@
     "hardness": 0.8,
     "toolRequired": "pickaxe",
     "drops": "quartz_block",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 0.8
+  },
+  {
+    "id": "quartz_bricks",
+    "name": "Quartz Bricks",
+    "hardness": 0.8,
+    "toolRequired": "pickaxe",
+    "drops": "quartz_bricks",
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
@@ -8438,6 +8626,18 @@
     "blastResistance": 0.2
   },
   {
+    "id": "sea_lantern",
+    "name": "Sea Lantern",
+    "hardness": 0.3,
+    "toolRequired": "none",
+    "drops": "prismarine_crystals",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 0.3,
+    "lightLevel": 15
+  },
+  {
     "id": "sea_pickle",
     "name": "Sea Pickle",
     "hardness": 0.0,
@@ -8564,6 +8764,17 @@
     "category": "utility",
     "blastResistance": 3.5,
     "lightLevel": 13
+  },
+  {
+    "id": "smooth_basalt",
+    "name": "Smooth Basalt",
+    "hardness": 1.25,
+    "toolRequired": "pickaxe",
+    "drops": "smooth_basalt",
+    "stackSize": 64,
+    "isFlammable": false,
+    "category": "building",
+    "blastResistance": 4.2
   },
   {
     "id": "smooth_quartz",
@@ -9449,6 +9660,18 @@
     "blastResistance": 0
   },
   {
+    "id": "tall_seagrass",
+    "name": "Tall Seagrass",
+    "hardness": 0.0,
+    "toolRequired": "shears",
+    "drops": "seagrass",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
     "id": "target",
     "name": "Target",
     "hardness": 0.5,
@@ -9789,6 +10012,18 @@
     "isWaterloggable": true
   },
   {
+    "id": "warped_fungus",
+    "name": "Warped Fungus",
+    "hardness": 0.0,
+    "toolRequired": "none",
+    "drops": "warped_fungus",
+    "stackSize": 64,
+    "isFlammable": false,
+    "isTransparent": true,
+    "category": "natural",
+    "blastResistance": 0.0
+  },
+  {
     "id": "warped_hanging_sign",
     "name": "Warped Hanging Sign",
     "hardness": 1.0,
@@ -10062,17 +10297,6 @@
     "blastResistance": 3.0
   },
   {
-    "id": "waxed_exposed_copper_block",
-    "name": "Waxed Exposed Copper Block",
-    "hardness": 3.0,
-    "toolRequired": "pickaxe_stone",
-    "drops": "waxed_exposed_copper_block",
-    "stackSize": 64,
-    "isFlammable": false,
-    "category": "building",
-    "blastResistance": 3.0
-  },
-  {
     "id": "waxed_exposed_copper_bulb",
     "name": "Waxed Exposed Copper Bulb",
     "hardness": 3.0,
@@ -10169,17 +10393,6 @@
     "hardness": 3.0,
     "toolRequired": "pickaxe_stone",
     "drops": "waxed_oxidized_copper",
-    "stackSize": 64,
-    "isFlammable": false,
-    "category": "building",
-    "blastResistance": 3.0
-  },
-  {
-    "id": "waxed_oxidized_copper_block",
-    "name": "Waxed Oxidized Copper Block",
-    "hardness": 3.0,
-    "toolRequired": "pickaxe_stone",
-    "drops": "waxed_oxidized_copper_block",
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
@@ -10288,17 +10501,6 @@
     "blastResistance": 3.0
   },
   {
-    "id": "waxed_weathered_copper_block",
-    "name": "Waxed Weathered Copper Block",
-    "hardness": 3.0,
-    "toolRequired": "pickaxe_stone",
-    "drops": "waxed_weathered_copper_block",
-    "stackSize": 64,
-    "isFlammable": false,
-    "category": "building",
-    "blastResistance": 3.0
-  },
-  {
     "id": "waxed_weathered_copper_bulb",
     "name": "Waxed Weathered Copper Bulb",
     "hardness": 3.0,
@@ -10395,17 +10597,6 @@
     "hardness": 3.0,
     "toolRequired": "pickaxe_stone",
     "drops": "weathered_copper",
-    "stackSize": 64,
-    "isFlammable": false,
-    "category": "building",
-    "blastResistance": 3.0
-  },
-  {
-    "id": "weathered_copper_block",
-    "name": "Weathered Copper Block",
-    "hardness": 3.0,
-    "toolRequired": "pickaxe_stone",
-    "drops": "weathered_copper_block",
     "stackSize": 64,
     "isFlammable": false,
     "category": "building",
@@ -10665,6 +10856,17 @@
     "blastResistance": 0.0
   },
   {
+    "id": "white_wool",
+    "name": "White Wool",
+    "hardness": 0.8,
+    "toolRequired": "shears",
+    "drops": "white_wool",
+    "stackSize": 64,
+    "isFlammable": true,
+    "category": "building",
+    "blastResistance": 0.8
+  },
+  {
     "id": "wither_rose",
     "name": "Wither Rose",
     "hardness": 0.0,
@@ -10686,17 +10888,6 @@
     "isFlammable": false,
     "category": "decoration",
     "blastResistance": 1.0
-  },
-  {
-    "id": "wool",
-    "name": "Wool (White)",
-    "hardness": 0.8,
-    "toolRequired": "shears",
-    "drops": "white_wool",
-    "stackSize": 64,
-    "isFlammable": true,
-    "category": "building",
-    "blastResistance": 0.8
   },
   {
     "id": "yellow_banner",
