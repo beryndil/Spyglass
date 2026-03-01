@@ -30,8 +30,10 @@ import dev.spyglass.android.core.ui.SpyglassTab
 import dev.spyglass.android.core.ui.SpyglassTabRow
 import dev.spyglass.android.data.repository.GameDataRepository
 import dev.spyglass.android.navigation.BrowseTarget
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 @Composable
 private fun browseTabs() = listOf(
@@ -104,29 +106,36 @@ fun BrowseScreen(
         }
     }
 
-    // Collect block IDs and item IDs so we can route taps to the correct tab
-    val repo = remember { GameDataRepository.get(context) }
-    val blockIdsFlow = remember { repo.searchBlocks("").map { list -> list.map { it.id }.toSet() } }
-    val blockIds by blockIdsFlow.collectAsState(initial = emptySet())
-    val itemIdsFlow = remember { repo.searchItems("").map { list -> list.map { it.id }.toSet() } }
-    val itemIds by itemIdsFlow.collectAsState(initial = emptySet())
+    // Async repo access — avoids blocking main thread if database isn't ready yet
+    val repo by produceState<GameDataRepository?>(null) {
+        value = withContext(Dispatchers.IO) { GameDataRepository.get(context) }
+    }
 
-    // Build EntityLinkIndex from all entity names for linkified descriptions
-    val entityLinkIndex by remember {
+    // Collect block IDs and item IDs so we can route taps to the correct tab
+    val blockIds by produceState(emptySet<String>(), repo) {
+        repo?.searchBlocks("")?.map { list -> list.map { it.id }.toSet() }?.collect { value = it }
+    }
+    val itemIds by produceState(emptySet<String>(), repo) {
+        repo?.searchItems("")?.map { list -> list.map { it.id }.toSet() }?.collect { value = it }
+    }
+
+    // Build EntityLinkIndex on Default dispatcher (regex compilation is CPU-heavy)
+    val entityLinkIndex by produceState(EntityLinkIndex(emptyList()), repo) {
+        val r = repo ?: return@produceState
         combine(
-            repo.searchBlocks("").map { list -> list.map { EntityLink(EntityType.BLOCK, it.id, it.name) } },
-            repo.searchItems("").map { list -> list.map { EntityLink(EntityType.ITEM, it.id, it.name) } },
-            repo.searchMobs("").map { list -> list.map { EntityLink(EntityType.MOB, it.id, it.name) } },
-            repo.searchBiomes("").map { list -> list.map { EntityLink(EntityType.BIOME, it.id, it.name) } },
-            repo.searchStructures("").map { list -> list.map { EntityLink(EntityType.STRUCTURE, it.id, it.name) } },
+            r.searchBlocks("").map { list -> list.map { EntityLink(EntityType.BLOCK, it.id, it.name) } },
+            r.searchItems("").map { list -> list.map { EntityLink(EntityType.ITEM, it.id, it.name) } },
+            r.searchMobs("").map { list -> list.map { EntityLink(EntityType.MOB, it.id, it.name) } },
+            r.searchBiomes("").map { list -> list.map { EntityLink(EntityType.BIOME, it.id, it.name) } },
+            r.searchStructures("").map { list -> list.map { EntityLink(EntityType.STRUCTURE, it.id, it.name) } },
         ) { blocks, items, mobs, biomes, structures ->
             blocks + items + mobs + biomes + structures
         }.combine(
-            repo.searchEnchants("").map { list -> list.map { EntityLink(EntityType.ENCHANT, it.id, it.name) } },
+            r.searchEnchants("").map { list -> list.map { EntityLink(EntityType.ENCHANT, it.id, it.name) } },
         ) { combined, enchants ->
-            EntityLinkIndex(combined + enchants)
-        }
-    }.collectAsState(initial = EntityLinkIndex(emptyList()))
+            withContext(Dispatchers.Default) { EntityLinkIndex(combined + enchants) }
+        }.collect { value = it }
+    }
 
     fun clearAllTargets() {
         targetMobId = null

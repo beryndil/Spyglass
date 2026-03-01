@@ -119,6 +119,17 @@ private fun iconForFavorite(type: String, id: String): SpyglassIcon = when (type
     else        -> PixelIcons.Bookmark
 }
 
+// ── Home preferences (single DataStore collector) ───────────────────────────
+
+private data class HomePrefs(
+    val showTipOfDay: Boolean = true,
+    val showFavoritesOnHome: Boolean = false,
+    val playerUsername: String = "",
+    val playerUuid: String = "",
+    val dismissUsernameDialog: Boolean = false,
+    val loaded: Boolean = false,
+)
+
 // ── Home screen ─────────────────────────────────────────────────────────────
 
 @Composable
@@ -132,42 +143,46 @@ fun HomeScreen(
     val tips = stringArrayResource(R.array.tips)
     val tipIndex = remember { Calendar.getInstance().get(Calendar.DAY_OF_YEAR) % tips.size }
 
-    val showTipOfDay by remember {
-        context.dataStore.data.map { it[PreferenceKeys.SHOW_TIP_OF_DAY] ?: true }
-    }.collectAsState(initial = true)
+    // Single DataStore collector — replaces 6 separate flows
+    val prefs by remember {
+        context.dataStore.data.map { p ->
+            HomePrefs(
+                showTipOfDay = p[PreferenceKeys.SHOW_TIP_OF_DAY] ?: true,
+                showFavoritesOnHome = p[PreferenceKeys.SHOW_FAVORITES_ON_HOME] ?: false,
+                playerUsername = p[PreferenceKeys.PLAYER_USERNAME] ?: "",
+                playerUuid = p[PreferenceKeys.PLAYER_UUID] ?: "",
+                dismissUsernameDialog = p[PreferenceKeys.DISMISS_USERNAME_DIALOG] ?: false,
+                loaded = true,
+            )
+        }
+    }.collectAsState(initial = HomePrefs())
 
-    val showFavoritesOnHome by remember {
-        context.dataStore.data.map { it[PreferenceKeys.SHOW_FAVORITES_ON_HOME] ?: false }
-    }.collectAsState(initial = false)
-
-    // Use a sentinel to know when DataStore has actually loaded
-    val prefsLoaded by remember {
-        context.dataStore.data.map { true }
-    }.collectAsState(initial = false)
-
-    val playerUsername by remember {
-        context.dataStore.data.map { it[PreferenceKeys.PLAYER_USERNAME] ?: "" }
-    }.collectAsState(initial = "")
-
-    val playerUuid by remember {
-        context.dataStore.data.map { it[PreferenceKeys.PLAYER_UUID] ?: "" }
-    }.collectAsState(initial = "")
-
-    val dismissUsernameDialog by remember {
-        context.dataStore.data.map { it[PreferenceKeys.DISMISS_USERNAME_DIALOG] ?: false }
-    }.collectAsState(initial = false)
-
-    val repo = remember { GameDataRepository.get(context) }
-    val favorites by repo.allFavorites().collectAsState(initial = emptyList())
-    val blockCount by repo.blockCountFlow().collectAsState(initial = 0)
-    val itemCount by repo.itemCountFlow().collectAsState(initial = 0)
-    val todoPreview by repo.incompleteTodosPreview(3).collectAsState(initial = emptyList())
-    val todoCount by repo.incompleteTodoCount().collectAsState(initial = 0)
+    // Async repo access — avoids blocking main thread if database isn't ready yet
+    val repo by produceState<GameDataRepository?>(null) {
+        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+            GameDataRepository.get(context)
+        }
+    }
+    val favorites by produceState(emptyList<FavoriteEntity>(), repo) {
+        repo?.allFavorites()?.collect { value = it }
+    }
+    val blockCount by produceState(0, repo) {
+        repo?.blockCountFlow()?.collect { value = it }
+    }
+    val itemCount by produceState(0, repo) {
+        repo?.itemCountFlow()?.collect { value = it }
+    }
+    val todoPreview by produceState(emptyList<TodoEntity>(), repo) {
+        repo?.incompleteTodosPreview(3)?.collect { value = it }
+    }
+    val todoCount by produceState(0, repo) {
+        repo?.incompleteTodoCount()?.collect { value = it }
+    }
 
     // If username is set but UUID is missing, fetch it now (upgrade path for existing users)
-    LaunchedEffect(prefsLoaded, playerUsername, playerUuid) {
-        if (prefsLoaded && playerUsername.isNotBlank() && playerUuid.isBlank()) {
-            val uuid = MojangApi.fetchUuid(playerUsername)
+    LaunchedEffect(prefs.loaded, prefs.playerUsername, prefs.playerUuid) {
+        if (prefs.loaded && prefs.playerUsername.isNotBlank() && prefs.playerUuid.isBlank()) {
+            val uuid = MojangApi.fetchUuid(prefs.playerUsername)
             if (uuid != null) {
                 context.dataStore.edit { it[PreferenceKeys.PLAYER_UUID] = uuid }
             }
@@ -176,8 +191,8 @@ fun HomeScreen(
 
     // Username dialog state — only evaluate after DataStore has loaded
     var showUsernameDialog by remember { mutableStateOf(false) }
-    LaunchedEffect(prefsLoaded, playerUsername, dismissUsernameDialog) {
-        showUsernameDialog = prefsLoaded && playerUsername.isBlank() && !dismissUsernameDialog
+    LaunchedEffect(prefs.loaded, prefs.playerUsername, prefs.dismissUsernameDialog) {
+        showUsernameDialog = prefs.loaded && prefs.playerUsername.isBlank() && !prefs.dismissUsernameDialog
     }
 
     if (showUsernameDialog) {
@@ -212,11 +227,11 @@ fun HomeScreen(
             modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            val skinModel = if (playerUuid.isNotBlank()) MojangApi.skinUrl(playerUuid) else null
+            val skinModel = if (prefs.playerUuid.isNotBlank()) MojangApi.skinUrl(prefs.playerUuid) else null
             if (skinModel != null) {
                 AsyncImage(
                     model = skinModel,
-                    contentDescription = "$playerUsername skin",
+                    contentDescription = "${prefs.playerUsername} skin",
                     modifier = Modifier.height(140.dp),
                 )
             } else {
@@ -229,7 +244,7 @@ fun HomeScreen(
             }
             Spacer(Modifier.height(8.dp))
             Text(
-                if (playerUsername.isNotBlank()) stringResource(R.string.home_welcome_name, playerUsername) else stringResource(R.string.home_welcome),
+                if (prefs.playerUsername.isNotBlank()) stringResource(R.string.home_welcome_name, prefs.playerUsername) else stringResource(R.string.home_welcome),
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface,
             )
@@ -268,7 +283,7 @@ fun HomeScreen(
                 todoPreview.forEach { todo ->
                     HomeTodoRow(
                         todo = todo,
-                        onToggle = { scope.launch { repo.toggleTodoCompleted(todo.id, !todo.completed) } },
+                        onToggle = { repo?.let { r -> scope.launch { r.toggleTodoCompleted(todo.id, !todo.completed) } } },
                     )
                 }
                 if (todoCount > 3) {
@@ -309,7 +324,7 @@ fun HomeScreen(
         }
 
         // ── B2. Favorites on Home ──
-        if (showFavoritesOnHome && favorites.isNotEmpty()) {
+        if (prefs.showFavoritesOnHome && favorites.isNotEmpty()) {
             SectionHeader(stringResource(R.string.favorites), icon = PixelIcons.Bookmark)
             favorites.forEach { fav ->
                 BrowseListItem(
@@ -328,7 +343,7 @@ fun HomeScreen(
         QuickLinkGrid(CALC_LINKS.map { it.first }) { index -> onCalcTab(CALC_LINKS[index].second) }
 
         // ── D. Tip of the Day ──
-        if (showTipOfDay) {
+        if (prefs.showTipOfDay) {
             ResultCard {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Filled.PriorityHigh, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))

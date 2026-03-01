@@ -1,9 +1,11 @@
 package dev.spyglass.android.core.net
 
+import android.net.TrafficStats
 import dev.spyglass.android.BuildConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.CertificatePinner
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,6 +19,8 @@ object MojangApi {
     private val UUID_HEX_REGEX = Regex("^[a-f0-9]{32}$")
     private val UUID_DASHED_REGEX = Regex("^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$")
 
+    private val TRAFFIC_STATS_TAG = 0xF00D
+
     private val client: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .connectTimeout(5, TimeUnit.SECONDS)
@@ -27,6 +31,10 @@ object MojangApi {
                     .add("api.mojang.com", "sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=") // TODO: replace with actual pin
                     .build()
             )
+            .addNetworkInterceptor(Interceptor { chain ->
+                TrafficStats.setThreadStatsTag(TRAFFIC_STATS_TAG)
+                chain.proceed(chain.request())
+            })
             .apply {
                 if (BuildConfig.DEBUG) {
                     addInterceptor(

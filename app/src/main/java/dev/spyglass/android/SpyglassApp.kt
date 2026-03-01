@@ -2,6 +2,8 @@ package dev.spyglass.android
 
 import android.app.Application
 import android.os.StrictMode
+import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.data.seed.DataSeeder
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.SecurePreferences
 import dev.spyglass.android.settings.dataStore
@@ -43,8 +45,13 @@ class SpyglassApp : Application() {
             defaultHandler?.uncaughtException(thread, throwable)
         }
 
-        // Migrate player data from DataStore to SecurePreferences (one-time)
+        // Pre-warm database, seed game data, and migrate player prefs — all on IO
         appScope.launch(Dispatchers.IO) {
+            // Pre-warm database singleton so it's ready before HomeScreen composes
+            GameDataRepository.get(this@SpyglassApp)
+            // Seed game data from bundled JSON assets (no-op after first install)
+            DataSeeder.seedIfNeeded(this@SpyglassApp)
+            // Migrate player data from DataStore to SecurePreferences (one-time)
             migratePlayerDataToSecurePrefs()
         }
     }

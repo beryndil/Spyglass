@@ -10,12 +10,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
-import androidx.lifecycle.lifecycleScope
 import dev.spyglass.android.core.ui.ConsentDialog
 import dev.spyglass.android.core.ui.DEFAULT_THEME
-import dev.spyglass.android.core.ui.LocalIsWideScreen
 import dev.spyglass.android.core.ui.SpyglassTheme
-import dev.spyglass.android.data.seed.DataSeeder
 import dev.spyglass.android.navigation.AppNavGraph
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
@@ -26,9 +23,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        // Seed game data from bundled JSON assets (no-op after first install)
-        lifecycleScope.launch { DataSeeder.seedIfNeeded(this@MainActivity) }
 
         setContent {
             val theme by dataStore.data
