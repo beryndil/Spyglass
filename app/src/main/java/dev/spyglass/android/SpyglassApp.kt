@@ -50,6 +50,9 @@ class SpyglassApp : Application() {
             // Init TextureManager (checks if textures are already downloaded)
             TextureManager.init(this)
 
+            // Load texture mappings (block/item ID → filename) from JSON
+            TextureManager.loadTextureMaps(this)
+
             // Pre-warm database and seed game data on IO
             appScope.launch(Dispatchers.IO) {
                 Trace.beginSection("SpyglassApp.seedAndWarm")

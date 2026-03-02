@@ -84,7 +84,18 @@ object DataSyncManager {
             }
         }
 
-        // 5. Sync news.json if version changed
+        // 5. Sync texture_map.json if version changed
+        if (remoteManifest.hasTextureMapUpdate(localManifest)) {
+            val textureMapJson = GitHubDataClient.fetchDataFile("texture_map.json")
+            if (textureMapJson != null) {
+                saveToInternalStorage(context, "texture_map.json", textureMapJson)
+                TextureManager.loadTextureMaps(context)
+                localManifest = localManifest.copy(textureMap = remoteManifest.textureMap)
+                Timber.d("DataSync: updated texture_map to version %d", remoteManifest.textureMap)
+            }
+        }
+
+        // 6. Sync news.json if version changed
         if (remoteManifest.hasNewsUpdate(localManifest)) {
             val newsJson = GitHubDataClient.fetchDataFile("news.json")
             if (newsJson != null) {
@@ -94,7 +105,7 @@ object DataSyncManager {
             }
         }
 
-        // 6. Flag texture update if textures are already downloaded and remote is newer
+        // 7. Flag texture update if textures are already downloaded and remote is newer
         if (remoteManifest.hasTextureUpdate(localManifest) &&
             TextureManager.state.value == TextureManager.TextureState.DOWNLOADED) {
             Timber.d("DataSync: texture update available (local=%d, remote=%d)",

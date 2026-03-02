@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 import timber.log.Timber
 import java.io.File
 import java.util.zip.ZipInputStream
@@ -155,5 +157,49 @@ object TextureManager {
         textureDir(context).deleteRecursively()
         bitmapCache.evictAll()
         _state.value = TextureState.NOT_DOWNLOADED
+    }
+
+    // ── Texture map loading ─────────────────────────────────────────────────
+
+    @Serializable
+    private data class TextureMapData(
+        val blocks: Map<String, String> = emptyMap(),
+        val items: Map<String, String> = emptyMap(),
+    )
+
+    private val mapJson = Json { ignoreUnknownKeys = true }
+
+    /**
+     * Loads `texture_map.json` and populates [BlockTextures] and [ItemTextures].
+     * Tries synced copy in `filesDir/minecraft/` first, falls back to bundled asset.
+     */
+    fun loadTextureMaps(context: Context) {
+        val raw = readSyncedOrBundled(context, "texture_map.json")
+        if (raw == null) {
+            Timber.w("TextureManager: no texture_map.json found")
+            return
+        }
+        try {
+            val data = mapJson.decodeFromString<TextureMapData>(raw)
+            BlockTextures.loadMap(data.blocks)
+            ItemTextures.loadMap(data.items)
+            Timber.d("TextureManager: loaded texture map (blocks=%d, items=%d)",
+                data.blocks.size, data.items.size)
+        } catch (e: Exception) {
+            Timber.e(e, "TextureManager: failed to parse texture_map.json")
+        }
+    }
+
+    /** Reads a JSON file from synced internal storage, falling back to bundled assets. */
+    private fun readSyncedOrBundled(context: Context, fileName: String): String? {
+        // Try synced copy first
+        val synced = File(context.filesDir, "minecraft/$fileName")
+        if (synced.exists()) {
+            return try { synced.readText() } catch (_: Exception) { null }
+        }
+        // Fall back to bundled asset
+        return try {
+            context.assets.open("minecraft/$fileName").bufferedReader().readText()
+        } catch (_: Exception) { null }
     }
 }

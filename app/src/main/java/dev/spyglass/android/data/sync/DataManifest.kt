@@ -1,5 +1,6 @@
 package dev.spyglass.android.data.sync
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
@@ -24,6 +25,7 @@ data class DataManifest(
     val advancements: Long = 0,
     val commands: Long = 0,
     val textures: Long = 0,
+    @SerialName("texture_map") val textureMap: Long = 0,
     val news: Long = 0,
 ) {
     /** The effective version is the highest per-table version. */
@@ -79,6 +81,9 @@ data class DataManifest(
 
     /** True when remote textures version is higher than local. */
     fun hasTextureUpdate(local: DataManifest): Boolean = textures > local.textures
+
+    /** True when remote texture_map version is higher than local. */
+    fun hasTextureMapUpdate(local: DataManifest): Boolean = textureMap > local.textureMap
 
     /** True when remote news version is higher than local. */
     fun hasNewsUpdate(local: DataManifest): Boolean = news > local.news
