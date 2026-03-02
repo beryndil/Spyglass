@@ -13,10 +13,6 @@ object ItemTextures {
      */
     private val textureMap = mapOf(
         "acacia_boat" to "item_acacia_boat",
-        "acacia_button" to "item_acacia_button",
-        "acacia_fence_gate" to "item_acacia_fence_gate",
-        "acacia_pressure_plate" to "item_acacia_pressure_plate",
-        "acacia_sign" to "item_acacia_sign",
         "amethyst_shard" to "item_amethyst_shard",
         "apple" to "item_apple",
         "armadillo_scute" to "item_armadillo_scute",
@@ -28,20 +24,7 @@ object ItemTextures {
         "beetroot_soup" to "item_mushroom_stew",
         "bamboo_boat" to "item_bamboo_boat",
         "bamboo_raft" to "item_bamboo_raft",
-        "bamboo_button" to "item_bamboo_button",
-        "bamboo_door" to "item_bamboo_door",
-        "bamboo_fence" to "item_bamboo_fence",
-        "bamboo_fence_gate" to "item_bamboo_fence_gate",
-        "bamboo_pressure_plate" to "item_bamboo_pressure_plate",
-        "bamboo_sign" to "item_bamboo_sign",
-        "bamboo_slab" to "item_bamboo_slab",
-        "bamboo_stairs" to "item_bamboo_stairs",
-        "bamboo_trapdoor" to "item_bamboo_trapdoor",
         "birch_boat" to "item_birch_boat",
-        "birch_button" to "item_birch_button",
-        "birch_fence_gate" to "item_birch_fence_gate",
-        "birch_pressure_plate" to "item_birch_pressure_plate",
-        "birch_sign" to "item_birch_sign",
         "black_dye" to "item_black_dye",
         "blaze_powder" to "item_blaze_powder",
         "blaze_rod" to "item_blaze_rod",
@@ -73,15 +56,6 @@ object ItemTextures {
         "chain" to "item_iron_bars",
         "charcoal" to "item_charcoal",
         "cherry_boat" to "item_cherry_boat",
-        "cherry_button" to "item_cherry_button",
-        "cherry_door" to "item_cherry_door",
-        "cherry_fence" to "item_cherry_fence",
-        "cherry_fence_gate" to "item_cherry_fence_gate",
-        "cherry_pressure_plate" to "item_cherry_pressure_plate",
-        "cherry_sign" to "item_cherry_sign",
-        "cherry_slab" to "item_cherry_slab",
-        "cherry_stairs" to "item_cherry_stairs",
-        "cherry_trapdoor" to "item_cherry_trapdoor",
         "clay_ball" to "item_clay_ball",
         "clock" to "item_clock",
         "coal" to "item_coal",
@@ -108,22 +82,12 @@ object ItemTextures {
         "copper_pickaxe" to "item_iron_pickaxe",
         "copper_shovel" to "item_iron_shovel",
         "copper_sword" to "item_iron_sword",
-        "crimson_button" to "item_crimson_button",
-        "crimson_fence_gate" to "item_crimson_fence_gate",
         "crimson_planks" to "item_crimson_planks",
-        "crimson_pressure_plate" to "item_crimson_pressure_plate",
-        "crimson_sign" to "item_crimson_sign",
-        "crimson_slab" to "item_crimson_slab",
-        "crimson_stairs" to "item_crimson_stairs",
         "crossbow" to "item_crossbow",
         "cyan_dye" to "item_cyan_dye",
         "dandelion" to "item_dandelion",
         "dead_bush" to "item_stick",
         "dark_oak_boat" to "item_dark_oak_boat",
-        "dark_oak_button" to "item_dark_oak_button",
-        "dark_oak_fence_gate" to "item_dark_oak_fence_gate",
-        "dark_oak_pressure_plate" to "item_dark_oak_pressure_plate",
-        "dark_oak_sign" to "item_dark_oak_sign",
         "diamond" to "item_diamond",
         "disc_fragment_5" to "item_disc_fragment_5",
         "diamond_axe" to "item_diamond_axe",
@@ -208,10 +172,6 @@ object ItemTextures {
         "iron_sword" to "item_iron_sword",
         "item_frame" to "item_item_frame",
         "jungle_boat" to "item_jungle_boat",
-        "jungle_button" to "item_jungle_button",
-        "jungle_fence_gate" to "item_jungle_fence_gate",
-        "jungle_pressure_plate" to "item_jungle_pressure_plate",
-        "jungle_sign" to "item_jungle_sign",
         "kelp" to "item_kelp",
         "ladder" to "item_ladder",
         "lapis_block" to "item_lapis_lazuli",
@@ -233,15 +193,6 @@ object ItemTextures {
         "magenta_dye" to "item_magenta_dye",
         "magma_cream" to "item_magma_cream",
         "mangrove_boat" to "item_mangrove_boat",
-        "mangrove_button" to "item_mangrove_button",
-        "mangrove_door" to "item_mangrove_door",
-        "mangrove_fence" to "item_mangrove_fence",
-        "mangrove_fence_gate" to "item_mangrove_fence_gate",
-        "mangrove_pressure_plate" to "item_mangrove_pressure_plate",
-        "mangrove_sign" to "item_mangrove_sign",
-        "mangrove_slab" to "item_mangrove_slab",
-        "mangrove_stairs" to "item_mangrove_stairs",
-        "mangrove_trapdoor" to "item_mangrove_trapdoor",
         "map" to "item_map",
         "melon" to "item_melon_slice",
         "melon_seeds" to "item_melon_seeds",
@@ -274,10 +225,6 @@ object ItemTextures {
         "orange_dye" to "item_orange_dye",
         "oak_boat" to "item_oak_boat",
         "ominous_trial_key" to "item_ominous_trial_key",
-        "oak_button" to "item_oak_button",
-        "oak_fence_gate" to "item_oak_fence_gate",
-        "oak_pressure_plate" to "item_oak_pressure_plate",
-        "oak_sign" to "item_oak_sign",
         "ocean_explorer_map" to "item_map",
         "ocean_map" to "item_map",
         "ominous_bottle" to "item_experience_bottle",
@@ -334,10 +281,6 @@ object ItemTextures {
         "snowball" to "item_snowball",
         "spectral_arrow" to "item_spectral_arrow",
         "spruce_boat" to "item_spruce_boat",
-        "spruce_button" to "item_spruce_button",
-        "spruce_fence_gate" to "item_spruce_fence_gate",
-        "spruce_pressure_plate" to "item_spruce_pressure_plate",
-        "spruce_sign" to "item_spruce_sign",
         "spider_eye" to "item_spider_eye",
         "stick" to "item_stick",
         "stone_axe" to "item_stone_axe",
@@ -363,13 +306,7 @@ object ItemTextures {
         "sugar" to "item_sugar",
         "sugar_cane" to "item_sugar_cane",
         "warped_fungus_on_a_stick" to "item_carrot_on_a_stick",
-        "warped_button" to "item_warped_button",
-        "warped_fence_gate" to "item_warped_fence_gate",
         "warped_planks" to "item_warped_planks",
-        "warped_pressure_plate" to "item_warped_pressure_plate",
-        "warped_sign" to "item_warped_sign",
-        "warped_slab" to "item_warped_slab",
-        "warped_stairs" to "item_warped_stairs",
         "water_bucket" to "item_water_bucket",
         "wheat" to "item_wheat",
         "wheat_seeds" to "item_wheat_seeds",
@@ -428,6 +365,8 @@ object ItemTextures {
         if (itemId in blockRefs) {
             BlockTextures.get(itemId)?.let { return it }
         }
+        // Shape overlay: material texture clipped to shape mask + frame
+        resolveShapeOverlay(itemId)?.let { return it }
         // Check block textures first
         BlockTextures.get(itemId)?.let { return it }
         // Check item texture map
@@ -446,6 +385,88 @@ object ItemTextures {
         textureMap[id]?.let { filename ->
             TextureManager.resolveOrBundled(filename)?.let { return it }
         }
+        return null
+    }
+
+    // ── Shape overlay resolution ────────────────────────────────────────────
+
+    /** Suffix → shape name, checked longest-first so `_wall_hanging_sign` matches before `_sign`. */
+    private val SHAPE_SUFFIXES = listOf(
+        "_wall_hanging_sign" to "hanging_sign",
+        "_pressure_plate" to "pressure_plate",
+        "_wall_sign" to "sign",
+        "_hanging_sign" to "hanging_sign",
+        "_fence_gate" to "fence_gate",
+        "_trapdoor" to "trapdoor",
+        "_button" to "button",
+        "_stairs" to "stairs",
+        "_shelf" to "shelf",
+        "_fence" to "fence",
+        "_door" to "door",
+        "_slab" to "slab",
+        "_sign" to "sign",
+        "_wall" to "wall",
+    )
+
+    private fun resolveShapeOverlay(itemId: String): SpyglassIcon? {
+        for ((suffix, shape) in SHAPE_SUFFIXES) {
+            if (!itemId.endsWith(suffix)) continue
+            val base = itemId.removeSuffix(suffix)
+            val materialId = resolveMaterial(base) ?: return null
+            val texture = lookup(materialId) ?: return null
+            val mask = TextureManager.resolveOrBundled("block_${shape}_mask") ?: return null
+            val frame = TextureManager.resolveOrBundled("block_${shape}_frame") ?: return null
+            return SpyglassIcon.Overlay(texture, mask, frame)
+        }
+        return null
+    }
+
+    /** Map a shape's base name to the block ID of its material texture. */
+    private fun resolveMaterial(base: String): String? {
+        // Special cases
+        when (base) {
+            "iron" -> return "iron_block"
+            "copper" -> return "copper_block"
+            "heavy_weighted" -> return "iron_block"
+            "light_weighted" -> return "gold_block"
+            "petrified_oak" -> return "oak_planks"
+            "bamboo_mosaic" -> return "bamboo_planks"
+            "stone" -> return "stone"
+            "polished_blackstone" -> return "polished_blackstone"
+        }
+        // Waxed / oxidized copper
+        if (base.startsWith("waxed_") || base.startsWith("exposed_") ||
+            base.startsWith("weathered_") || base.startsWith("oxidized_")) return "copper_block"
+
+        // Wood: ${base}_planks
+        if (lookup("${base}_planks") != null) return "${base}_planks"
+        // Bricks: ${base}s  (brick→bricks, nether_brick→nether_bricks, stone_brick→stone_bricks)
+        if (lookup("${base}s") != null) return "${base}s"
+        // Block form: ${base}_block  (quartz→quartz_block, purpur→purpur_block)
+        if (lookup("${base}_block") != null) return "${base}_block"
+        // Direct: base itself (stone, cobblestone, sandstone, prismarine, etc.)
+        if (lookup(base) != null) return base
+
+        // Strip last segment (mossy_stone_brick → mossy_stone → mossy_stone_bricks)
+        val lastUnderscore = base.lastIndexOf('_')
+        if (lastUnderscore > 0) {
+            val parent = base.substring(0, lastUnderscore)
+            if (lookup("${parent}s") != null) return "${parent}s"
+            if (lookup(parent) != null) return parent
+            if (lookup("${parent}_block") != null) return "${parent}_block"
+        }
+
+        // Strip known prefixes
+        for (prefix in listOf("smooth_", "polished_", "mossy_", "red_", "cut_", "dark_", "chiseled_", "cracked_")) {
+            if (base.startsWith(prefix)) {
+                val stripped = base.removePrefix(prefix)
+                if (lookup("${stripped}_planks") != null) return "${stripped}_planks"
+                if (lookup("${stripped}s") != null) return "${stripped}s"
+                if (lookup("${stripped}_block") != null) return "${stripped}_block"
+                if (lookup(stripped) != null) return stripped
+            }
+        }
+
         return null
     }
 

@@ -1,6 +1,9 @@
 package dev.spyglass.android.core.ui
 
 import android.graphics.BitmapFactory
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.RectF
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -9,11 +12,14 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import dev.spyglass.android.R
 import java.io.File
@@ -25,6 +31,8 @@ sealed interface SpyglassIcon {
     data class Potion(val color: Color) : SpyglassIcon
     /** Bitmap loaded from a file on disk (downloaded textures). */
     data class FileBitmap(val file: File) : SpyglassIcon
+    /** Material texture clipped to a shape mask with a frame overlay (e.g., button). */
+    data class Overlay(val texture: SpyglassIcon, val mask: SpyglassIcon, val frame: SpyglassIcon) : SpyglassIcon
 }
 
 @Composable
@@ -73,6 +81,45 @@ fun SpyglassIconImage(
                     contentScale = ContentScale.Fit,
                     filterQuality = FilterQuality.None, // Pixel art — nearest-neighbor
                 )
+            }
+        }
+        is SpyglassIcon.Overlay -> {
+            val context = LocalContext.current
+            val maskBitmap = remember(icon.mask) {
+                when (val m = icon.mask) {
+                    is SpyglassIcon.FileBitmap -> TextureManager.getCachedBitmap(m.file)
+                    is SpyglassIcon.Drawable ->
+                        BitmapFactory.decodeResource(context.resources, m.resId)
+                    else -> null
+                }
+            }
+            val maskPaint = remember {
+                android.graphics.Paint().apply {
+                    xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_IN)
+                }
+            }
+            Box(modifier = modifier) {
+                // Texture clipped to mask shape via DST_IN
+                Box(
+                    modifier = modifier.drawWithContent {
+                        val nativeCanvas = drawContext.canvas.nativeCanvas
+                        val checkpoint = nativeCanvas.saveLayer(null, null)
+                        drawContent()
+                        if (maskBitmap != null) {
+                            nativeCanvas.drawBitmap(
+                                maskBitmap,
+                                null,
+                                RectF(0f, 0f, size.width, size.height),
+                                maskPaint,
+                            )
+                        }
+                        nativeCanvas.restoreToCount(checkpoint)
+                    }
+                ) {
+                    SpyglassIconImage(icon.texture, null, modifier, Color.Unspecified)
+                }
+                // Frame edges on top
+                SpyglassIconImage(icon.frame, contentDescription, modifier, Color.Unspecified)
             }
         }
     }
