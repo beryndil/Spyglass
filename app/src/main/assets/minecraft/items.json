@@ -22,6 +22,17 @@
     "minedFrom": ""
   },
   {
+    "id": "allay_spawn_egg",
+    "name": "Allay Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns an allay when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "amethyst_shard",
     "name": "Amethyst Shard",
     "stackSize": 64,
@@ -79,6 +90,28 @@
     "minedFrom": ""
   },
   {
+    "id": "armadillo_spawn_egg",
+    "name": "Armadillo Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns an armadillo when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "armor_stand",
+    "name": "Armor Stand",
+    "stackSize": 16,
+    "category": "misc",
+    "durability": 0,
+    "description": "An entity that can display armor, mob heads, elytra, and held items.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "arms_up_pottery_sherd",
     "name": "Arms Up Pottery Sherd",
     "stackSize": 64,
@@ -98,6 +131,28 @@
     "description": "Ammunition for bows and crossbows. Crafted from flint, stick, and feather.",
     "obtainedFrom": "crafting,mob_drop,trading",
     "droppedBy": "skeleton,pillager,stray,bogged,spider_jockey",
+    "minedFrom": ""
+  },
+  {
+    "id": "axolotl_bucket",
+    "name": "Bucket of Axolotl",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A water bucket containing an axolotl. Place to release the mob.",
+    "obtainedFrom": "mob_interaction",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "axolotl_spawn_egg",
+    "name": "Axolotl Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns an axolotl when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
     "minedFrom": ""
   },
   {
@@ -136,112 +191,13 @@
     "minedFrom": ""
   },
   {
-    "id": "banner_pattern_bordure_indented",
-    "name": "Banner Pattern (Bordure Indented)",
-    "stackSize": 1,
+    "id": "bat_spawn_egg",
+    "name": "Bat Spawn Egg",
+    "stackSize": 64,
     "category": "misc",
     "durability": 0,
-    "description": "A banner pattern item used to apply an indented border at a loom. Crafted with paper and a vine.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "banner_pattern_creeper",
-    "name": "Banner Pattern (Creeper Charge)",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A banner pattern item used to apply a creeper face design at a loom. Crafted with paper and a creeper head.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "banner_pattern_field_masoned",
-    "name": "Banner Pattern (Field Masoned)",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A banner pattern item used to apply a brick-like design at a loom. Crafted with paper and a brick.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "banner_pattern_flow",
-    "name": "Banner Pattern (Flow)",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A banner pattern item used to apply a flow design at a loom. Found in trial chambers ominous vaults.",
-    "obtainedFrom": "structure_loot",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "banner_pattern_flower",
-    "name": "Banner Pattern (Flower Charge)",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A banner pattern item used to apply a flower design at a loom. Crafted with paper and an oxeye daisy.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "banner_pattern_globe",
-    "name": "Banner Pattern (Globe)",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A banner pattern item used to apply a globe design at a loom. Obtained from master-level cartographer villagers.",
-    "obtainedFrom": "trading",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "banner_pattern_guster",
-    "name": "Banner Pattern (Guster)",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A banner pattern item used to apply a guster design at a loom. Found in trial chambers ominous vaults.",
-    "obtainedFrom": "structure_loot",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "banner_pattern_piglin",
-    "name": "Banner Pattern (Snout)",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A banner pattern item used to apply a piglin snout design at a loom. Found in bastion remnant chests.",
-    "obtainedFrom": "structure_loot",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "banner_pattern_skull",
-    "name": "Banner Pattern (Skull Charge)",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A banner pattern item used to apply a skull and crossbones design at a loom. Crafted with paper and a wither skeleton skull.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "banner_pattern_thing",
-    "name": "Banner Pattern (Thing)",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A banner pattern item used to apply a Mojang logo design at a loom. Crafted with paper and an enchanted golden apple.",
-    "obtainedFrom": "crafting",
+    "description": "Spawns a bat when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -256,6 +212,17 @@
     "droppedBy": "",
     "minedFrom": "",
     "isRenewable": false
+  },
+  {
+    "id": "bee_spawn_egg",
+    "name": "Bee Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a bee when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
   },
   {
     "id": "beetroot",
@@ -317,12 +284,34 @@
     "minedFrom": ""
   },
   {
+    "id": "black_bundle",
+    "name": "Black Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A black dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "black_dye",
     "name": "Black Dye",
     "stackSize": 64,
     "category": "materials",
     "durability": 0,
     "description": "Crafted from ink sacs or wither roses.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "black_harness",
+    "name": "Black Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A black harness used to ride happy ghasts. Allows up to 4 players to mount.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
@@ -361,6 +350,28 @@
     "minedFrom": ""
   },
   {
+    "id": "blaze_spawn_egg",
+    "name": "Blaze Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a blaze when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "blue_bundle",
+    "name": "Blue Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A blue dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "blue_dye",
     "name": "Blue Dye",
     "stackSize": 64,
@@ -368,6 +379,39 @@
     "durability": 0,
     "description": "Crafted from lapis lazuli or cornflowers.",
     "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "blue_egg",
+    "name": "Blue Egg",
+    "stackSize": 16,
+    "category": "materials",
+    "durability": 0,
+    "description": "A variant egg laid by cold chickens. Has a chance to spawn a cold chicken variant when thrown.",
+    "obtainedFrom": "mob_drop",
+    "droppedBy": "chicken",
+    "minedFrom": ""
+  },
+  {
+    "id": "blue_harness",
+    "name": "Blue Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A blue harness used to ride happy ghasts. Allows up to 4 players to mount.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "bogged_spawn_egg",
+    "name": "Bogged Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a bogged when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -411,6 +455,17 @@
     "category": "materials",
     "durability": 0,
     "description": "Used to craft bookshelves and enchanting tables. Made from paper and leather.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "bordure_indented_banner_pattern",
+    "name": "Banner Pattern (Bordure Indented)",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A banner pattern item used to apply an indented border at a loom. Crafted with paper and a vine.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
@@ -464,6 +519,17 @@
     "minedFrom": ""
   },
   {
+    "id": "breeze_spawn_egg",
+    "name": "Breeze Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a breeze when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "brewer_pottery_sherd",
     "name": "Brewer Pottery Sherd",
     "stackSize": 64,
@@ -486,12 +552,45 @@
     "minedFrom": ""
   },
   {
+    "id": "brown_bundle",
+    "name": "Brown Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A brown dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "brown_dye",
     "name": "Brown Dye",
     "stackSize": 64,
     "category": "materials",
     "durability": 0,
     "description": "Crafted from cocoa beans. Used to dye wool, leather armor, and more.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "brown_egg",
+    "name": "Brown Egg",
+    "stackSize": 16,
+    "category": "materials",
+    "durability": 0,
+    "description": "A variant egg laid by warm chickens. Has a chance to spawn a warm chicken variant when thrown.",
+    "obtainedFrom": "mob_drop",
+    "droppedBy": "chicken",
+    "minedFrom": ""
+  },
+  {
+    "id": "brown_harness",
+    "name": "Brown Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A brown harness used to ride happy ghasts. Allows up to 4 players to mount.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
@@ -515,72 +614,6 @@
     "durability": 0,
     "description": "Used to pick up and place water, lava, powder snow, or milk cows.",
     "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "bucket_of_axolotl",
-    "name": "Bucket of Axolotl",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A water bucket containing an axolotl. Place to release the mob.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "bucket_of_cod",
-    "name": "Bucket of Cod",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A water bucket containing a cod. Place to release the fish.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "bucket_of_pufferfish",
-    "name": "Bucket of Pufferfish",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A water bucket containing a pufferfish. Place to release the fish.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "bucket_of_salmon",
-    "name": "Bucket of Salmon",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A water bucket containing a salmon. Place to release the fish.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "bucket_of_tadpole",
-    "name": "Bucket of Tadpole",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A water bucket containing a tadpole. Place to release the mob.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "bucket_of_tropical_fish",
-    "name": "Bucket of Tropical Fish",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "A water bucket containing a tropical fish. Used to breed axolotls.",
-    "obtainedFrom": "mob_interaction",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -621,6 +654,28 @@
     "isRenewable": true
   },
   {
+    "id": "camel_husk_spawn_egg",
+    "name": "Camel Husk Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a camel husk when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "camel_spawn_egg",
+    "name": "Camel Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a camel when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "carrot",
     "name": "Carrot",
     "stackSize": 64,
@@ -644,6 +699,39 @@
     "droppedBy": "",
     "minedFrom": "",
     "enchantTarget": "fishing_rod"
+  },
+  {
+    "id": "cat_spawn_egg",
+    "name": "Cat Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a cat when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "cave_spider_spawn_egg",
+    "name": "Cave Spider Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a cave spider when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "chain",
+    "name": "Chain",
+    "stackSize": 64,
+    "category": "decoration",
+    "durability": 0,
+    "description": "Decorative block used in hanging signs and as a chain link.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
   },
   {
     "id": "chainmail_boots",
@@ -758,6 +846,17 @@
     "minedFrom": ""
   },
   {
+    "id": "chicken_spawn_egg",
+    "name": "Chicken Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a chicken when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "chorus_fruit",
     "name": "Chorus Fruit",
     "stackSize": 64,
@@ -823,6 +922,28 @@
     "durability": 0,
     "description": "Brown dye source. Grows on jungle trees. Used to craft cookies.",
     "obtainedFrom": "farming",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "cod_bucket",
+    "name": "Bucket of Cod",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A water bucket containing a cod. Place to release the fish.",
+    "obtainedFrom": "mob_interaction",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "cod_spawn_egg",
+    "name": "Cod Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a cod when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -942,6 +1063,107 @@
     "saturation": 0.4
   },
   {
+    "id": "copper_axe",
+    "name": "Copper Axe",
+    "stackSize": 1,
+    "category": "tools",
+    "durability": 190,
+    "description": "A mid-tier axe between stone and iron. Deals 9 attack damage.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "attackDamage": "9",
+    "attackSpeed": "0.8",
+    "enchantability": 8,
+    "enchantTarget": "axe"
+  },
+  {
+    "id": "copper_boots",
+    "name": "Copper Boots",
+    "stackSize": 1,
+    "category": "armor",
+    "durability": 143,
+    "description": "Mid-tier footwear providing 1 armor. Between chainmail and iron tier.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "enchantability": 8,
+    "defensePoints": 1,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,boots"
+  },
+  {
+    "id": "copper_chestplate",
+    "name": "Copper Chestplate",
+    "stackSize": 1,
+    "category": "armor",
+    "durability": 176,
+    "description": "Mid-tier chestpiece providing 4 armor. Between chainmail and iron tier.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "enchantability": 8,
+    "defensePoints": 4,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor"
+  },
+  {
+    "id": "copper_golem_spawn_egg",
+    "name": "Copper Golem Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a copper golem when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "copper_helmet",
+    "name": "Copper Helmet",
+    "stackSize": 1,
+    "category": "armor",
+    "durability": 121,
+    "description": "Mid-tier helmet providing 2 armor. Between chainmail and iron tier.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "enchantability": 8,
+    "defensePoints": 2,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,helmet"
+  },
+  {
+    "id": "copper_hoe",
+    "name": "Copper Hoe",
+    "stackSize": 1,
+    "category": "tools",
+    "durability": 190,
+    "description": "A mid-tier hoe between stone and iron.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "attackDamage": "1",
+    "attackSpeed": "2.0",
+    "enchantability": 8,
+    "enchantTarget": "hoe"
+  },
+  {
+    "id": "copper_horse_armor",
+    "name": "Copper Horse Armor",
+    "stackSize": 1,
+    "category": "armor",
+    "durability": 0,
+    "description": "Provides armor to horses. Found in structure chests.",
+    "obtainedFrom": "structure_loot",
+    "droppedBy": "",
+    "minedFrom": "",
+    "enchantability": 8
+  },
+  {
     "id": "copper_ingot",
     "name": "Copper Ingot",
     "stackSize": 64,
@@ -950,6 +1172,147 @@
     "description": "Used to craft spyglasses, lightning rods, and copper blocks. Smelted from raw copper.",
     "obtainedFrom": "smelting,mob_drop",
     "droppedBy": "drowned",
+    "minedFrom": ""
+  },
+  {
+    "id": "copper_leggings",
+    "name": "Copper Leggings",
+    "stackSize": 1,
+    "category": "armor",
+    "durability": 165,
+    "description": "Mid-tier leg armor providing 3 armor. Between chainmail and iron tier.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "enchantability": 8,
+    "defensePoints": 3,
+    "armorToughness": 0.0,
+    "knockbackResistance": 0.0,
+    "enchantTarget": "armor,leggings"
+  },
+  {
+    "id": "copper_nautilus_armor",
+    "name": "Copper Nautilus Armor",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "Copper armor equippable on nautiluses and zombie nautiluses for protection.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "copper_nugget",
+    "name": "Copper Nugget",
+    "stackSize": 64,
+    "category": "materials",
+    "durability": 0,
+    "description": "Nine nuggets craft into one copper ingot. Crafted by placing a copper ingot in a crafting grid.",
+    "obtainedFrom": "crafting,smelting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "copper_pickaxe",
+    "name": "Copper Pickaxe",
+    "stackSize": 1,
+    "category": "tools",
+    "durability": 190,
+    "description": "A mid-tier pickaxe between stone and iron. Mines iron ore and lapis.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "attackDamage": "3",
+    "attackSpeed": "1.2",
+    "enchantability": 8,
+    "enchantTarget": "pickaxe"
+  },
+  {
+    "id": "copper_shovel",
+    "name": "Copper Shovel",
+    "stackSize": 1,
+    "category": "tools",
+    "durability": 190,
+    "description": "A mid-tier shovel between stone and iron.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "attackDamage": "3.5",
+    "attackSpeed": "1.0",
+    "enchantability": 8,
+    "enchantTarget": "shovel"
+  },
+  {
+    "id": "copper_spear",
+    "name": "Copper Spear",
+    "stackSize": 1,
+    "category": "weapons",
+    "durability": 190,
+    "description": "A spear weapon with jab and charge attacks. Can be enchanted with Lunge.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "attackDamage": "2",
+    "enchantability": 8,
+    "enchantTarget": "spear"
+  },
+  {
+    "id": "copper_sword",
+    "name": "Copper Sword",
+    "stackSize": 1,
+    "category": "weapons",
+    "durability": 190,
+    "description": "A mid-tier sword between stone and iron. Deals 5 attack damage.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "attackDamage": "5",
+    "attackSpeed": "1.6",
+    "enchantability": 8,
+    "enchantTarget": "sword"
+  },
+  {
+    "id": "cow_spawn_egg",
+    "name": "Cow Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a cow when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "creaking_spawn_egg",
+    "name": "Creaking Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a creaking when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "creeper_charge_banner_pattern",
+    "name": "Banner Pattern (Creeper Charge)",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A banner pattern item used to apply a creeper face design at a loom. Crafted with paper and a creeper head.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "creeper_spawn_egg",
+    "name": "Creeper Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a creeper when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
     "minedFrom": ""
   },
   {
@@ -966,12 +1329,34 @@
     "enchantTarget": "crossbow"
   },
   {
+    "id": "cyan_bundle",
+    "name": "Cyan Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A cyan dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "cyan_dye",
     "name": "Cyan Dye",
     "stackSize": 64,
     "category": "materials",
     "durability": 0,
     "description": "Crafted by combining blue and green dye.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "cyan_harness",
+    "name": "Cyan Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A cyan harness used to ride happy ghasts. Allows up to 4 players to mount.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
@@ -1128,6 +1513,17 @@
     "enchantTarget": "armor,leggings"
   },
   {
+    "id": "diamond_nautilus_armor",
+    "name": "Diamond Nautilus Armor",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "Diamond armor equippable on nautiluses and zombie nautiluses for protection.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "diamond_pickaxe",
     "name": "Diamond Pickaxe",
     "stackSize": 1,
@@ -1158,6 +1554,20 @@
     "enchantTarget": "shovel"
   },
   {
+    "id": "diamond_spear",
+    "name": "Diamond Spear",
+    "stackSize": 1,
+    "category": "weapons",
+    "durability": 1561,
+    "description": "A spear weapon with jab and charge attacks. Can be enchanted with Lunge.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "attackDamage": "4",
+    "enchantability": 10,
+    "enchantTarget": "spear"
+  },
+  {
     "id": "diamond_sword",
     "name": "Diamond Sword",
     "stackSize": 1,
@@ -1185,6 +1595,28 @@
     "isRenewable": false
   },
   {
+    "id": "dolphin_spawn_egg",
+    "name": "Dolphin Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a dolphin when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "donkey_spawn_egg",
+    "name": "Donkey Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a donkey when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "dragon_breath",
     "name": "Dragon's Breath",
     "stackSize": 64,
@@ -1202,7 +1634,7 @@
     "stackSize": 64,
     "category": "misc",
     "durability": 0,
-    "description": "A decorative trophy dropped by the Ender Dragon upon its first defeat. Teleports when clicked directly — push with a piston to collect.",
+    "description": "A decorative trophy dropped by the Ender Dragon upon its first defeat. Teleports when clicked directly \u2014 push with a piston to collect.",
     "obtainedFrom": "found",
     "droppedBy": "ender_dragon",
     "minedFrom": "",
@@ -1220,6 +1652,17 @@
     "minedFrom": "",
     "hunger": 1,
     "saturation": 0.6
+  },
+  {
+    "id": "drowned_spawn_egg",
+    "name": "Drowned Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a drowned when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
   },
   {
     "id": "dune_armor_trim_smithing_template",
@@ -1256,6 +1699,17 @@
     "minedFrom": ""
   },
   {
+    "id": "elder_guardian_spawn_egg",
+    "name": "Elder Guardian Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns an elder guardian when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "elytra",
     "name": "Elytra",
     "stackSize": 1,
@@ -1284,17 +1738,6 @@
     "minedFrom": "emerald_ore,deepslate_emerald_ore"
   },
   {
-    "id": "empty_map",
-    "name": "Empty Map",
-    "stackSize": 64,
-    "category": "misc",
-    "durability": 0,
-    "description": "A blank map that records terrain when used. Crafted from paper and a compass.",
-    "obtainedFrom": "crafting",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
     "id": "enchanted_book",
     "name": "Enchanted Book",
     "stackSize": 1,
@@ -1311,7 +1754,7 @@
     "stackSize": 64,
     "category": "food",
     "durability": 0,
-    "description": "Grants Absorption IV, Regeneration II, Resistance, and Fire Resistance. Cannot be crafted — structure loot only.",
+    "description": "Grants Absorption IV, Regeneration II, Resistance, and Fire Resistance. Cannot be crafted \u2014 structure loot only.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
     "minedFrom": "",
@@ -1328,6 +1771,17 @@
     "durability": 0,
     "description": "Placed on bedrock or obsidian. Used to respawn the Ender Dragon. Explodes when destroyed.",
     "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "ender_dragon_spawn_egg",
+    "name": "Ender Dragon Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns an ender dragon when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -1351,6 +1805,39 @@
     "description": "Throw to teleport. Used to craft Eyes of Ender for locating strongholds.",
     "obtainedFrom": "mob_drop,trading,bartering",
     "droppedBy": "enderman",
+    "minedFrom": ""
+  },
+  {
+    "id": "enderman_spawn_egg",
+    "name": "Enderman Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns an enderman when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "endermite_spawn_egg",
+    "name": "Endermite Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns an endermite when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "evoker_spawn_egg",
+    "name": "Evoker Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns an evoker when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
     "minedFrom": ""
   },
   {
@@ -1404,6 +1891,17 @@
     "category": "mob_drops",
     "durability": 0,
     "description": "Corrupts potions to create negative or inverted effects. Crafted from spider eye, sugar, and brown mushroom.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "field_masoned_banner_pattern",
+    "name": "Banner Pattern (Field Masoned)",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A banner pattern item used to apply a brick-like design at a loom. Crafted with paper and a brick.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
@@ -1521,6 +2019,17 @@
     "minedFrom": ""
   },
   {
+    "id": "fox_spawn_egg",
+    "name": "Fox Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a fox when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "friend_pottery_sherd",
     "name": "Friend Pottery Sherd",
     "stackSize": 64,
@@ -1532,6 +2041,17 @@
     "minedFrom": ""
   },
   {
+    "id": "frog_spawn_egg",
+    "name": "Frog Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a frog when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "furnace_minecart",
     "name": "Minecart with Furnace",
     "stackSize": 1,
@@ -1539,6 +2059,17 @@
     "durability": 0,
     "description": "A minecart with a furnace. Can push other minecarts when fueled.",
     "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "ghast_spawn_egg",
+    "name": "Ghast Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a ghast when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -1622,6 +2153,17 @@
     "minedFrom": ""
   },
   {
+    "id": "glow_squid_spawn_egg",
+    "name": "Glow Squid Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a glow squid when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "glowstone_dust",
     "name": "Glowstone Dust",
     "stackSize": 64,
@@ -1641,6 +2183,17 @@
     "description": "Use to play a loud horn sound. Dropped when goats ram blocks. Found in pillager outposts.",
     "obtainedFrom": "mob_drop,structure_loot",
     "droppedBy": "goat",
+    "minedFrom": ""
+  },
+  {
+    "id": "goat_spawn_egg",
+    "name": "Goat Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a goat when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
     "minedFrom": ""
   },
   {
@@ -1716,7 +2269,7 @@
     "stackSize": 64,
     "category": "food",
     "durability": 0,
-    "description": "Restores 6 hunger with 14.4 saturation — the highest saturation food. Used in brewing.",
+    "description": "Restores 6 hunger with 14.4 saturation \u2014 the highest saturation food. Used in brewing.",
     "obtainedFrom": "crafting,trading",
     "droppedBy": "",
     "minedFrom": "",
@@ -1800,6 +2353,17 @@
     "enchantTarget": "armor,leggings"
   },
   {
+    "id": "golden_nautilus_armor",
+    "name": "Golden Nautilus Armor",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "Golden armor equippable on nautiluses and zombie nautiluses for protection.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "golden_pickaxe",
     "name": "Golden Pickaxe",
     "stackSize": 1,
@@ -1830,6 +2394,20 @@
     "enchantTarget": "shovel"
   },
   {
+    "id": "golden_spear",
+    "name": "Golden Spear",
+    "stackSize": 1,
+    "category": "weapons",
+    "durability": 32,
+    "description": "A spear weapon with jab and charge attacks. Can be enchanted with Lunge.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "attackDamage": "1",
+    "enchantability": 22,
+    "enchantTarget": "spear"
+  },
+  {
     "id": "golden_sword",
     "name": "Golden Sword",
     "stackSize": 1,
@@ -1845,12 +2423,45 @@
     "enchantTarget": "sword"
   },
   {
+    "id": "gray_bundle",
+    "name": "Gray Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A gray dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "gray_dye",
     "name": "Gray Dye",
     "stackSize": 64,
     "category": "materials",
     "durability": 0,
     "description": "Crafted by combining black and white dye.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "gray_harness",
+    "name": "Gray Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A gray harness used to ride happy ghasts. Allows up to 4 players to mount.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "green_bundle",
+    "name": "Green Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A green dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
@@ -1863,6 +2474,28 @@
     "durability": 0,
     "description": "Smelted from cactus. Used to dye wool, leather armor, and more.",
     "obtainedFrom": "smelting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "green_harness",
+    "name": "Green Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A green harness used to ride happy ghasts. Allows up to 4 players to mount.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "guardian_spawn_egg",
+    "name": "Guardian Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a guardian when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -1900,6 +2533,17 @@
     "minedFrom": ""
   },
   {
+    "id": "happy_ghast_spawn_egg",
+    "name": "Happy Ghast Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a happy ghast when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "heart_of_the_sea",
     "name": "Heart of the Sea",
     "stackSize": 64,
@@ -1930,6 +2574,17 @@
     "durability": 0,
     "description": "A pottery sherd with the Heartbreak pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "hoglin_spawn_egg",
+    "name": "Hoglin Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a hoglin when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -1970,35 +2625,13 @@
     "minedFrom": ""
   },
   {
-    "id": "horse_armor_diamond",
-    "name": "Diamond Horse Armor",
-    "stackSize": 1,
+    "id": "horse_spawn_egg",
+    "name": "Horse Spawn Egg",
+    "stackSize": 64,
     "category": "misc",
     "durability": 0,
-    "description": "The strongest horse armor. Found in various loot chests.",
-    "obtainedFrom": "structure_loot",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "horse_armor_gold",
-    "name": "Gold Horse Armor",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "Armor for horses with moderate protection. Found in various loot chests.",
-    "obtainedFrom": "structure_loot",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "horse_armor_iron",
-    "name": "Iron Horse Armor",
-    "stackSize": 1,
-    "category": "misc",
-    "durability": 0,
-    "description": "Armor for horses that provides protection. Found in various loot chests.",
-    "obtainedFrom": "structure_loot",
+    "description": "Spawns a horse when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -2021,6 +2654,17 @@
     "durability": 0,
     "description": "A pottery sherd with the Howl pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "husk_spawn_egg",
+    "name": "Husk Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a husk when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -2081,6 +2725,17 @@
     "armorToughness": 0.0,
     "knockbackResistance": 0.0,
     "enchantTarget": "armor"
+  },
+  {
+    "id": "iron_golem_spawn_egg",
+    "name": "Iron Golem Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns an iron golem when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
   },
   {
     "id": "iron_helmet",
@@ -2154,6 +2809,17 @@
     "enchantTarget": "armor,leggings"
   },
   {
+    "id": "iron_nautilus_armor",
+    "name": "Iron Nautilus Armor",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "Iron armor equippable on nautiluses and zombie nautiluses for protection.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "iron_nugget",
     "name": "Iron Nugget",
     "stackSize": 64,
@@ -2193,6 +2859,20 @@
     "attackSpeed": "1.0",
     "enchantability": 14,
     "enchantTarget": "shovel"
+  },
+  {
+    "id": "iron_spear",
+    "name": "Iron Spear",
+    "stackSize": 1,
+    "category": "weapons",
+    "durability": 250,
+    "description": "A spear weapon with jab and charge attacks. Can be enchanted with Lunge.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "attackDamage": "3",
+    "enchantability": 14,
+    "enchantTarget": "spear"
   },
   {
     "id": "iron_sword",
@@ -2374,12 +3054,45 @@
     "enchantTarget": "armor,leggings"
   },
   {
+    "id": "light_blue_bundle",
+    "name": "Light Blue Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A light blue dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "light_blue_dye",
     "name": "Light Blue Dye",
     "stackSize": 64,
     "category": "materials",
     "durability": 0,
     "description": "Crafted from blue orchids or combining blue and white dye.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "light_blue_harness",
+    "name": "Light Blue Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A light blue harness used to ride happy ghasts. Allows up to 4 players to mount.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "light_gray_bundle",
+    "name": "Light Gray Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A light gray dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
@@ -2396,6 +3109,28 @@
     "minedFrom": ""
   },
   {
+    "id": "light_gray_harness",
+    "name": "Light Gray Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A light gray harness used to ride happy ghasts. Allows up to 4 players to mount.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "lime_bundle",
+    "name": "Lime Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A lime dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "lime_dye",
     "name": "Lime Dye",
     "stackSize": 64,
@@ -2407,6 +3142,17 @@
     "minedFrom": ""
   },
   {
+    "id": "lime_harness",
+    "name": "Lime Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A lime harness used to ride happy ghasts. Allows up to 4 players to mount.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "lingering_potion",
     "name": "Lingering Potion",
     "stackSize": 1,
@@ -2414,6 +3160,17 @@
     "durability": 0,
     "description": "A throwable potion that creates an area effect cloud on the ground.",
     "obtainedFrom": "brewing",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "llama_spawn_egg",
+    "name": "Llama Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a llama when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -2433,12 +3190,34 @@
     "enchantTarget": "mace"
   },
   {
+    "id": "magenta_bundle",
+    "name": "Magenta Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A magenta dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "magenta_dye",
     "name": "Magenta Dye",
     "stackSize": 64,
     "category": "materials",
     "durability": 0,
     "description": "Crafted from allium or lilac, or by combining dyes.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "magenta_harness",
+    "name": "Magenta Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A magenta harness used to ride happy ghasts. Allows up to 4 players to mount.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
@@ -2452,6 +3231,17 @@
     "description": "Dropped by magma cubes. Also crafted from blaze powder + slimeball. Brews Fire Resistance.",
     "obtainedFrom": "mob_drop,crafting",
     "droppedBy": "magma_cube",
+    "minedFrom": ""
+  },
+  {
+    "id": "magma_cube_spawn_egg",
+    "name": "Magma Cube Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a magma cube when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
     "minedFrom": ""
   },
   {
@@ -2548,6 +3338,17 @@
     "minedFrom": ""
   },
   {
+    "id": "mooshroom_spawn_egg",
+    "name": "Mooshroom Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a mooshroom when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "mourner_pottery_sherd",
     "name": "Mourner Pottery Sherd",
     "stackSize": 64,
@@ -2555,6 +3356,17 @@
     "durability": 0,
     "description": "A pottery sherd with the Mourner pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "mule_spawn_egg",
+    "name": "Mule Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a mule when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -2678,6 +3490,17 @@
     "isRenewable": false
   },
   {
+    "id": "music_disc_lava_chicken",
+    "name": "Music Disc (Lava Chicken)",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A music disc by Hyper Potions. Obtained by killing a chicken jockey (baby zombie riding a chicken).",
+    "obtainedFrom": "mob_drop",
+    "droppedBy": "chicken_jockey",
+    "minedFrom": ""
+  },
+  {
     "id": "music_disc_mall",
     "name": "Music Disc (Mall)",
     "stackSize": 1,
@@ -2773,6 +3596,17 @@
     "isRenewable": false
   },
   {
+    "id": "music_disc_tears",
+    "name": "Music Disc (Tears)",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A music disc by Amos Roddy. Obtained by killing a ghast with a deflected fireball.",
+    "obtainedFrom": "mob_drop",
+    "droppedBy": "ghast",
+    "minedFrom": ""
+  },
+  {
     "id": "music_disc_wait",
     "name": "Music Disc (Wait)",
     "stackSize": 1,
@@ -2817,6 +3651,17 @@
     "description": "Obtained from fishing or drowned. Eight shells plus a heart of the sea craft a conduit.",
     "obtainedFrom": "fishing,mob_drop",
     "droppedBy": "drowned",
+    "minedFrom": ""
+  },
+  {
+    "id": "nautilus_spawn_egg",
+    "name": "Nautilus Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a nautilus when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
     "minedFrom": ""
   },
   {
@@ -2937,6 +3782,19 @@
     "isRenewable": false
   },
   {
+    "id": "netherite_horse_armor",
+    "name": "Netherite Horse Armor",
+    "stackSize": 1,
+    "category": "armor",
+    "durability": 0,
+    "description": "The strongest horse armor. Upgraded from diamond horse armor at a smithing table.",
+    "obtainedFrom": "smithing",
+    "droppedBy": "",
+    "minedFrom": "",
+    "enchantability": 15,
+    "isRenewable": false
+  },
+  {
     "id": "netherite_ingot",
     "name": "Netherite Ingot",
     "stackSize": 64,
@@ -2964,6 +3822,17 @@
     "knockbackResistance": 0.1,
     "enchantTarget": "armor,leggings",
     "isRenewable": false
+  },
+  {
+    "id": "netherite_nautilus_armor",
+    "name": "Netherite Nautilus Armor",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "Netherite armor equippable on nautiluses and zombie nautiluses for protection.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
   },
   {
     "id": "netherite_pickaxe",
@@ -3008,6 +3877,20 @@
     "enchantability": 15,
     "enchantTarget": "shovel",
     "isRenewable": false
+  },
+  {
+    "id": "netherite_spear",
+    "name": "Netherite Spear",
+    "stackSize": 1,
+    "category": "weapons",
+    "durability": 2031,
+    "description": "A spear weapon with jab and charge attacks. Fire-resistant. Can be enchanted with Lunge.",
+    "obtainedFrom": "smithing",
+    "droppedBy": "",
+    "minedFrom": "",
+    "attackDamage": "5",
+    "enchantability": 15,
+    "enchantTarget": "spear"
   },
   {
     "id": "netherite_sword",
@@ -3070,6 +3953,17 @@
     "minedFrom": ""
   },
   {
+    "id": "ocelot_spawn_egg",
+    "name": "Ocelot Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns an ocelot when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "ominous_bottle",
     "name": "Ominous Bottle",
     "stackSize": 64,
@@ -3092,12 +3986,34 @@
     "minedFrom": ""
   },
   {
+    "id": "orange_bundle",
+    "name": "Orange Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A orange dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "orange_dye",
     "name": "Orange Dye",
     "stackSize": 64,
     "category": "materials",
     "durability": 0,
     "description": "Crafted from orange tulips or combining red and yellow dye.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "orange_harness",
+    "name": "Orange Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A orange harness used to ride happy ghasts. Allows up to 4 players to mount.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
@@ -3136,6 +4052,17 @@
     "minedFrom": ""
   },
   {
+    "id": "panda_spawn_egg",
+    "name": "Panda Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a panda when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "paper",
     "name": "Paper",
     "stackSize": 64,
@@ -3143,6 +4070,28 @@
     "durability": 0,
     "description": "Used to craft books, maps, and banner patterns. Made from sugar cane.",
     "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "parched_spawn_egg",
+    "name": "Parched Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a parched when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "parrot_spawn_egg",
+    "name": "Parrot Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a parrot when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -3158,6 +4107,28 @@
     "minedFrom": ""
   },
   {
+    "id": "phantom_spawn_egg",
+    "name": "Phantom Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a phantom when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "pig_spawn_egg",
+    "name": "Pig Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a pig when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "piglin_banner_pattern",
     "name": "Piglin Banner Pattern",
     "stackSize": 1,
@@ -3169,12 +4140,67 @@
     "minedFrom": ""
   },
   {
+    "id": "piglin_brute_spawn_egg",
+    "name": "Piglin Brute Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a piglin brute when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "piglin_spawn_egg",
+    "name": "Piglin Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a piglin when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "pillager_spawn_egg",
+    "name": "Pillager Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a pillager when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "pink_bundle",
+    "name": "Pink Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A pink dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "pink_dye",
     "name": "Pink Dye",
     "stackSize": 64,
     "category": "materials",
     "durability": 0,
     "description": "Crafted from pink tulips, peonies, or combining red and white dye.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "pink_harness",
+    "name": "Pink Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A pink harness used to ride happy ghasts. Allows up to 4 players to mount.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
@@ -3214,6 +4240,28 @@
     "hunger": 2,
     "saturation": 1.2,
     "foodEffect": "Poison (0:05) 60%"
+  },
+  {
+    "id": "polar_bear_spawn_egg",
+    "name": "Polar Bear Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a polar bear when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "popped_chorus_fruit",
+    "name": "Popped Chorus Fruit",
+    "stackSize": 64,
+    "category": "materials",
+    "durability": 0,
+    "description": "Smelted chorus fruit used to craft purpur blocks and end rods.",
+    "obtainedFrom": "smelting",
+    "droppedBy": "",
+    "minedFrom": ""
   },
   {
     "id": "potato",
@@ -3298,6 +4346,28 @@
     "foodEffect": "Hunger III (0:15), Nausea II (0:15), Poison IV (1:00)"
   },
   {
+    "id": "pufferfish_bucket",
+    "name": "Bucket of Pufferfish",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A water bucket containing a pufferfish. Place to release the fish.",
+    "obtainedFrom": "mob_interaction",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "pufferfish_spawn_egg",
+    "name": "Pufferfish Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a pufferfish when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "pumpkin_pie",
     "name": "Pumpkin Pie",
     "stackSize": 64,
@@ -3322,12 +4392,34 @@
     "minedFrom": ""
   },
   {
+    "id": "purple_bundle",
+    "name": "Purple Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A purple dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "purple_dye",
     "name": "Purple Dye",
     "stackSize": 64,
     "category": "materials",
     "durability": 0,
     "description": "Crafted by combining blue and red dye.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "purple_harness",
+    "name": "Purple Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A purple harness used to ride happy ghasts. Allows up to 4 players to mount.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
@@ -3366,6 +4458,17 @@
     "minedFrom": ""
   },
   {
+    "id": "rabbit_spawn_egg",
+    "name": "Rabbit Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a rabbit when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "rabbit_stew",
     "name": "Rabbit Stew",
     "stackSize": 1,
@@ -3386,6 +4489,17 @@
     "durability": 0,
     "description": "Smithing template used to apply the Raiser armor trim pattern at a smithing table.",
     "obtainedFrom": "structure_loot",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "ravager_spawn_egg",
+    "name": "Ravager Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a ravager when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -3527,12 +4641,34 @@
     "isRenewable": false
   },
   {
+    "id": "red_bundle",
+    "name": "Red Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A red dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "red_dye",
     "name": "Red Dye",
     "stackSize": 64,
     "category": "materials",
     "durability": 0,
     "description": "Crafted from poppies, red tulips, rose bushes, or beetroot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "red_harness",
+    "name": "Red Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A red harness used to ride happy ghasts. Allows up to 4 players to mount.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
@@ -3606,6 +4742,28 @@
     "isRenewable": false
   },
   {
+    "id": "salmon_bucket",
+    "name": "Bucket of Salmon",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A water bucket containing a salmon. Place to release the fish.",
+    "obtainedFrom": "mob_interaction",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "salmon_spawn_egg",
+    "name": "Salmon Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a salmon when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "scrape_pottery_sherd",
     "name": "Scrape Pottery Sherd",
     "stackSize": 64,
@@ -3613,17 +4771,6 @@
     "durability": 0,
     "description": "A pottery sherd with the Scrape pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
-    "droppedBy": "",
-    "minedFrom": ""
-  },
-  {
-    "id": "scute",
-    "name": "Scute",
-    "stackSize": 64,
-    "category": "materials",
-    "durability": 0,
-    "description": "Dropped by baby turtles when they grow up. Five scutes craft a turtle helmet.",
-    "obtainedFrom": "mob_drop",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -3674,6 +4821,17 @@
     "enchantTarget": "shears"
   },
   {
+    "id": "sheep_spawn_egg",
+    "name": "Sheep Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a sheep when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "shelter_pottery_sherd",
     "name": "Shelter Pottery Sherd",
     "stackSize": 64,
@@ -3708,6 +4866,17 @@
     "minedFrom": ""
   },
   {
+    "id": "shulker_spawn_egg",
+    "name": "Shulker Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a shulker when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "silence_armor_trim_smithing_template",
     "name": "Silence Armor Trim Smithing Template",
     "stackSize": 64,
@@ -3718,6 +4887,39 @@
     "droppedBy": "",
     "minedFrom": "",
     "isRenewable": false
+  },
+  {
+    "id": "silverfish_spawn_egg",
+    "name": "Silverfish Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a silverfish when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "skeleton_horse_spawn_egg",
+    "name": "Skeleton Horse Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a skeleton horse when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "skeleton_spawn_egg",
+    "name": "Skeleton Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a skeleton when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
   },
   {
     "id": "skull_banner_pattern",
@@ -3738,6 +4940,28 @@
     "durability": 0,
     "description": "A pottery sherd with the Skull pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "slime_ball",
+    "name": "Slime Ball",
+    "stackSize": 64,
+    "category": "materials",
+    "durability": 0,
+    "description": "Dropped by slimes. Used to craft sticky pistons, leads, magma cream, and slime blocks.",
+    "obtainedFrom": "mob_drop",
+    "droppedBy": "slime",
+    "minedFrom": ""
+  },
+  {
+    "id": "slime_spawn_egg",
+    "name": "Slime Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a slime when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -3765,6 +4989,17 @@
     "isRenewable": false
   },
   {
+    "id": "sniffer_spawn_egg",
+    "name": "Sniffer Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a sniffer when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "snort_pottery_sherd",
     "name": "Snort Pottery Sherd",
     "stackSize": 64,
@@ -3786,6 +5021,17 @@
     "droppedBy": "",
     "minedFrom": "",
     "isRenewable": false
+  },
+  {
+    "id": "snow_golem_spawn_egg",
+    "name": "Snow Golem Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a snow golem when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
   },
   {
     "id": "snowball",
@@ -3818,6 +5064,17 @@
     "description": "Restores 2 hunger but inflicts Poison. Used to brew Poison potions and fermented spider eyes.",
     "obtainedFrom": "mob_drop",
     "droppedBy": "spider,cave_spider,witch,spider_jockey",
+    "minedFrom": ""
+  },
+  {
+    "id": "spider_spawn_egg",
+    "name": "Spider Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a spider when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
     "minedFrom": ""
   },
   {
@@ -3873,6 +5130,17 @@
     "durability": 0,
     "description": "Allows zooming in on distant objects. Crafted from copper ingots and an amethyst shard.",
     "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "squid_spawn_egg",
+    "name": "Squid Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a squid when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   },
@@ -3948,6 +5216,20 @@
     "enchantTarget": "shovel"
   },
   {
+    "id": "stone_spear",
+    "name": "Stone Spear",
+    "stackSize": 1,
+    "category": "weapons",
+    "durability": 131,
+    "description": "A spear weapon with jab and charge attacks. Can be enchanted with Lunge.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "attackDamage": "2",
+    "enchantability": 5,
+    "enchantTarget": "spear"
+  },
+  {
     "id": "stone_sword",
     "name": "Stone Sword",
     "stackSize": 1,
@@ -3961,6 +5243,28 @@
     "attackSpeed": "1.6",
     "enchantability": 5,
     "enchantTarget": "sword"
+  },
+  {
+    "id": "stray_spawn_egg",
+    "name": "Stray Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a stray when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "strider_spawn_egg",
+    "name": "Strider Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a strider when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
   },
   {
     "id": "string",
@@ -4010,6 +5314,39 @@
     "minedFrom": "",
     "hunger": 2,
     "saturation": 0.4
+  },
+  {
+    "id": "tadpole_bucket",
+    "name": "Bucket of Tadpole",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A water bucket containing a tadpole. Place to release the mob.",
+    "obtainedFrom": "mob_interaction",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "tadpole_spawn_egg",
+    "name": "Tadpole Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a tadpole when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "thing_banner_pattern",
+    "name": "Banner Pattern (Thing)",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A banner pattern item used to apply a Mojang logo design at a loom. Crafted with paper and an enchanted golden apple.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
   },
   {
     "id": "tide_armor_trim_smithing_template",
@@ -4090,6 +5427,17 @@
     "isRenewable": false
   },
   {
+    "id": "trader_llama_spawn_egg",
+    "name": "Trader Llama Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a trader llama when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "trial_key",
     "name": "Trial Key",
     "stackSize": 64,
@@ -4130,6 +5478,28 @@
     "saturation": 0.2
   },
   {
+    "id": "tropical_fish_bucket",
+    "name": "Bucket of Tropical Fish",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A water bucket containing a tropical fish. Used to breed axolotls.",
+    "obtainedFrom": "mob_interaction",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "tropical_fish_spawn_egg",
+    "name": "Tropical Fish Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a tropical fish when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "turtle_helmet",
     "name": "Turtle Helmet",
     "stackSize": 1,
@@ -4157,6 +5527,17 @@
     "minedFrom": ""
   },
   {
+    "id": "turtle_spawn_egg",
+    "name": "Turtle Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a turtle when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "vex_armor_trim_smithing_template",
     "name": "Vex Armor Trim Smithing Template",
     "stackSize": 64,
@@ -4169,6 +5550,50 @@
     "isRenewable": false
   },
   {
+    "id": "vex_spawn_egg",
+    "name": "Vex Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a vex when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "villager_spawn_egg",
+    "name": "Villager Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a villager when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "vindicator_spawn_egg",
+    "name": "Vindicator Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a vindicator when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "wandering_trader_spawn_egg",
+    "name": "Wandering Trader Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a wandering trader when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "ward_armor_trim_smithing_template",
     "name": "Ward Armor Trim Smithing Template",
     "stackSize": 64,
@@ -4179,6 +5604,28 @@
     "droppedBy": "",
     "minedFrom": "",
     "isRenewable": false
+  },
+  {
+    "id": "warden_spawn_egg",
+    "name": "Warden Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a warden when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "warped_fungus_on_a_stick",
+    "name": "Warped Fungus on a Stick",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 100,
+    "description": "Used to control striders while riding them in the Nether.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
   },
   {
     "id": "water_bucket",
@@ -4203,6 +5650,17 @@
     "minedFrom": ""
   },
   {
+    "id": "wheat",
+    "name": "Wheat",
+    "stackSize": 64,
+    "category": "materials",
+    "durability": 0,
+    "description": "Used to craft bread, cake, and cookies. Also used to breed cows, sheep, goats, and mooshrooms.",
+    "obtainedFrom": "farming",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "wheat_seeds",
     "name": "Wheat Seeds",
     "stackSize": 64,
@@ -4214,12 +5672,34 @@
     "minedFrom": ""
   },
   {
+    "id": "white_bundle",
+    "name": "White Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A white dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "white_dye",
     "name": "White Dye",
     "stackSize": 64,
     "category": "materials",
     "durability": 0,
     "description": "Crafted from bone meal or lily of the valley. Dyes wool, leather armor, and more.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "white_harness",
+    "name": "White Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A white harness used to ride happy ghasts. Allows up to 4 players to mount.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
     "minedFrom": ""
@@ -4247,6 +5727,39 @@
     "minedFrom": ""
   },
   {
+    "id": "witch_spawn_egg",
+    "name": "Witch Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a witch when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "wither_skeleton_spawn_egg",
+    "name": "Wither Skeleton Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a wither skeleton when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "wither_spawn_egg",
+    "name": "Wither Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a wither when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "wolf_armor",
     "name": "Wolf Armor",
     "stackSize": 1,
@@ -4259,6 +5772,17 @@
     "defensePoints": 11,
     "armorToughness": 0.0,
     "knockbackResistance": 0.0
+  },
+  {
+    "id": "wolf_spawn_egg",
+    "name": "Wolf Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a wolf when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
   },
   {
     "id": "wooden_axe",
@@ -4321,6 +5845,20 @@
     "enchantTarget": "shovel"
   },
   {
+    "id": "wooden_spear",
+    "name": "Wooden Spear",
+    "stackSize": 1,
+    "category": "weapons",
+    "durability": 59,
+    "description": "A spear weapon with jab and charge attacks. Can be enchanted with Lunge.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": "",
+    "attackDamage": "1",
+    "enchantability": 15,
+    "enchantTarget": "spear"
+  },
+  {
     "id": "wooden_sword",
     "name": "Wooden Sword",
     "stackSize": 1,
@@ -4369,6 +5907,17 @@
     "minedFrom": ""
   },
   {
+    "id": "yellow_bundle",
+    "name": "Yellow Bundle",
+    "stackSize": 1,
+    "category": "misc",
+    "durability": 0,
+    "description": "A yellow dyed bundle that can hold up to one stack of mixed items in a single inventory slot.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
     "id": "yellow_dye",
     "name": "Yellow Dye",
     "stackSize": 64,
@@ -4376,6 +5925,83 @@
     "durability": 0,
     "description": "Crafted from dandelions or sunflowers.",
     "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "yellow_harness",
+    "name": "Yellow Harness",
+    "stackSize": 1,
+    "category": "transportation",
+    "durability": 0,
+    "description": "A yellow harness used to ride happy ghasts. Allows up to 4 players to mount.",
+    "obtainedFrom": "crafting",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "zoglin_spawn_egg",
+    "name": "Zoglin Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a zoglin when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "zombie_horse_spawn_egg",
+    "name": "Zombie Horse Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a zombie horse when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "zombie_nautilus_spawn_egg",
+    "name": "Zombie Nautilus Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a zombie nautilus when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "zombie_spawn_egg",
+    "name": "Zombie Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a zombie when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "zombie_villager_spawn_egg",
+    "name": "Zombie Villager Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a zombie villager when used.",
+    "obtainedFrom": "creative_only",
+    "droppedBy": "",
+    "minedFrom": ""
+  },
+  {
+    "id": "zombified_piglin_spawn_egg",
+    "name": "Zombified Piglin Spawn Egg",
+    "stackSize": 64,
+    "category": "misc",
+    "durability": 0,
+    "description": "Spawns a zombified piglin when used.",
+    "obtainedFrom": "creative_only",
     "droppedBy": "",
     "minedFrom": ""
   }

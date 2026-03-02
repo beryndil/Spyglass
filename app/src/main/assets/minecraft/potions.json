@@ -16,7 +16,7 @@
     "duration": 0,
     "amplifier": 0,
     "category": "special",
-    "ingredientPath": "Water Bottle + (Sugar, Spider Eye, Magma Cream, Blaze Powder, Ghast Tear, Glistering Melon Slice, Rabbit Foot, Redstone Dust)",
+    "ingredientPath": "Water Bottle + (Redstone Dust, Sugar, Spider Eye, Magma Cream, Blaze Powder, Ghast Tear, Glistering Melon Slice, Rabbit Foot, Cobweb, Stone, Slime Block, Breeze Rod)",
     "color": "#385DC6"
   },
   {
@@ -195,7 +195,7 @@
     "effect": "Slowness IV + Resistance III",
     "duration": 20,
     "amplifier": 0,
-    "category": "special",
+    "category": "mixed",
     "ingredientPath": "Awkward Potion + Turtle Shell",
     "color": "#8D82E6"
   },
@@ -205,7 +205,7 @@
     "effect": "Slowness IV + Resistance III",
     "duration": 40,
     "amplifier": 0,
-    "category": "special",
+    "category": "mixed",
     "ingredientPath": "Turtle Master + Redstone Dust",
     "color": "#8D82E6"
   },
@@ -215,7 +215,7 @@
     "effect": "Slowness VI + Resistance IV",
     "duration": 20,
     "amplifier": 1,
-    "category": "special",
+    "category": "mixed",
     "ingredientPath": "Turtle Master + Glowstone Dust",
     "color": "#8D82E6"
   },
@@ -421,7 +421,7 @@
   },
   {
     "id": "wind_charged",
-    "name": "Wind Charged",
+    "name": "Wind Charging",
     "effect": "Wind Charged",
     "duration": 180,
     "amplifier": 0,
@@ -451,7 +451,7 @@
   },
   {
     "id": "infested",
-    "name": "Infested",
+    "name": "Infestation",
     "effect": "Infested",
     "duration": 180,
     "amplifier": 0,
