@@ -1,98 +1,123 @@
 package dev.spyglass.android.core.ui
 
-import dev.spyglass.android.R
+import androidx.compose.ui.graphics.Color
 
 /**
- * Texture lookup for potions using their key brewing ingredient.
- * Variants (_long, _ii, _iv) share the base potion's ingredient.
+ * Texture lookup for potions — returns a tinted potion bottle icon.
+ * Colors sourced from Minecraft Wiki effect color values (Java 1.21.4).
+ * Variants (_long, _ii, _iv) share the base potion's color.
  */
 object PotionTextures {
+
+    // ── Potion effect colors ────────────────────────────────────────────────
+    private val WATER         = Color(0xFF385DC6)
+    private val NIGHT_VISION  = Color(0xFFC2FF66)
+    private val INVISIBILITY  = Color(0xFFF6F6F6)
+    private val LEAPING       = Color(0xFFFDFF84)
+    private val FIRE_RES      = Color(0xFFFF9900)
+    private val SWIFTNESS     = Color(0xFF33EBFF)
+    private val SLOWNESS      = Color(0xFF8BAFE0)
+    private val WATER_BREATH  = Color(0xFF98DAC0)
+    private val HEALING       = Color(0xFFF82423)
+    private val HARMING       = Color(0xFFA9656A)
+    private val POISON        = Color(0xFF87A363)
+    private val REGENERATION  = Color(0xFFCD5CAB)
+    private val STRENGTH      = Color(0xFFFFC700)
+    private val WEAKNESS      = Color(0xFF484D48)
+    private val LUCK          = Color(0xFF59C106)
+    private val TURTLE_MASTER = Color(0xFF8D82E6)
+    private val SLOW_FALLING  = Color(0xFFF3CFB9)
+    private val WIND_CHARGED  = Color(0xFFBDC9FF)
+    private val OOZING        = Color(0xFF99FFA3)
+    private val WEAVING       = Color(0xFF78695A)
+    private val INFESTED      = Color(0xFF8C9B8C)
+
     private val map = mapOf(
-        // Base potions
-        "water" to R.drawable.item_glass_bottle,
-        "mundane" to R.drawable.item_potion,
-        "thick" to R.drawable.item_glowstone_dust,
-        "awkward" to R.drawable.item_nether_wart,
+        // Base potions (default water-blue tint)
+        "water"                to WATER,
+        "mundane"              to WATER,
+        "thick"                to WATER,
+        "awkward"              to WATER,
 
-        // Night Vision family → Golden Carrot
-        "night_vision" to R.drawable.item_golden_carrot,
-        "night_vision_long" to R.drawable.item_golden_carrot,
+        // Night Vision
+        "night_vision"         to NIGHT_VISION,
+        "night_vision_long"    to NIGHT_VISION,
 
-        // Invisibility → Fermented Spider Eye
-        "invisibility" to R.drawable.item_fermented_spider_eye,
-        "invisibility_long" to R.drawable.item_fermented_spider_eye,
+        // Invisibility
+        "invisibility"         to INVISIBILITY,
+        "invisibility_long"    to INVISIBILITY,
 
-        // Leaping → Rabbit Foot
-        "leaping" to R.drawable.item_rabbit_foot,
-        "leaping_long" to R.drawable.item_rabbit_foot,
-        "leaping_ii" to R.drawable.item_rabbit_foot,
+        // Leaping (Jump Boost)
+        "leaping"              to LEAPING,
+        "leaping_long"         to LEAPING,
+        "leaping_ii"           to LEAPING,
 
-        // Fire Resistance → Magma Cream
-        "fire_resistance" to R.drawable.item_magma_cream,
-        "fire_resistance_long" to R.drawable.item_magma_cream,
+        // Fire Resistance
+        "fire_resistance"      to FIRE_RES,
+        "fire_resistance_long" to FIRE_RES,
 
-        // Swiftness → Sugar
-        "swiftness" to R.drawable.item_sugar,
-        "swiftness_long" to R.drawable.item_sugar,
-        "swiftness_ii" to R.drawable.item_sugar,
+        // Swiftness (Speed)
+        "swiftness"            to SWIFTNESS,
+        "swiftness_long"       to SWIFTNESS,
+        "swiftness_ii"         to SWIFTNESS,
 
-        // Slowness → Fermented Spider Eye (from Swiftness)
-        "slowness" to R.drawable.item_fermented_spider_eye,
-        "slowness_long" to R.drawable.item_fermented_spider_eye,
-        "slowness_iv" to R.drawable.item_fermented_spider_eye,
+        // Slowness
+        "slowness"             to SLOWNESS,
+        "slowness_long"        to SLOWNESS,
+        "slowness_iv"          to SLOWNESS,
 
-        // Water Breathing → Pufferfish
-        "water_breathing" to R.drawable.item_pufferfish,
-        "water_breathing_long" to R.drawable.item_pufferfish,
+        // Water Breathing
+        "water_breathing"      to WATER_BREATH,
+        "water_breathing_long" to WATER_BREATH,
 
-        // Healing → Glistering Melon Slice
-        "healing" to R.drawable.item_glistering_melon_slice,
-        "healing_ii" to R.drawable.item_glistering_melon_slice,
+        // Healing (Instant Health)
+        "healing"              to HEALING,
+        "healing_ii"           to HEALING,
 
-        // Harming → Fermented Spider Eye (from Healing)
-        "harming" to R.drawable.item_fermented_spider_eye,
-        "harming_ii" to R.drawable.item_fermented_spider_eye,
+        // Harming (Instant Damage)
+        "harming"              to HARMING,
+        "harming_ii"           to HARMING,
 
-        // Poison → Spider Eye
-        "poison" to R.drawable.item_spider_eye,
-        "poison_long" to R.drawable.item_spider_eye,
-        "poison_ii" to R.drawable.item_spider_eye,
+        // Poison
+        "poison"               to POISON,
+        "poison_long"          to POISON,
+        "poison_ii"            to POISON,
 
-        // Regeneration → Ghast Tear
-        "regeneration" to R.drawable.item_ghast_tear,
-        "regeneration_long" to R.drawable.item_ghast_tear,
-        "regeneration_ii" to R.drawable.item_ghast_tear,
+        // Regeneration
+        "regeneration"         to REGENERATION,
+        "regeneration_long"    to REGENERATION,
+        "regeneration_ii"      to REGENERATION,
 
-        // Strength → Blaze Powder
-        "strength" to R.drawable.item_blaze_powder,
-        "strength_long" to R.drawable.item_blaze_powder,
-        "strength_ii" to R.drawable.item_blaze_powder,
+        // Strength
+        "strength"             to STRENGTH,
+        "strength_long"        to STRENGTH,
+        "strength_ii"          to STRENGTH,
 
-        // Weakness → Fermented Spider Eye
-        "weakness" to R.drawable.item_fermented_spider_eye,
-        "weakness_long" to R.drawable.item_fermented_spider_eye,
+        // Weakness
+        "weakness"             to WEAKNESS,
+        "weakness_long"        to WEAKNESS,
 
-        // Luck → Creative only
-        "luck" to R.drawable.item_potion,
+        // Luck (Creative only)
+        "luck"                 to LUCK,
 
-        // Turtle Master → Turtle Shell
-        "turtle_master" to R.drawable.item_turtle_helmet,
-        "turtle_master_long" to R.drawable.item_turtle_helmet,
-        "turtle_master_ii" to R.drawable.item_turtle_helmet,
+        // Turtle Master (Slowness + Resistance blend)
+        "turtle_master"        to TURTLE_MASTER,
+        "turtle_master_long"   to TURTLE_MASTER,
+        "turtle_master_ii"     to TURTLE_MASTER,
 
-        // Slow Falling → Phantom Membrane
-        "slow_falling" to R.drawable.item_phantom_membrane,
-        "slow_falling_long" to R.drawable.item_phantom_membrane,
+        // Slow Falling
+        "slow_falling"         to SLOW_FALLING,
+        "slow_falling_long"    to SLOW_FALLING,
 
-        // Trial chamber potions
-        "oozing" to R.drawable.item_slime_ball,
-        "weaving" to R.drawable.item_string,
-        "infested" to R.drawable.item_potion,
-        "wind_charged" to R.drawable.item_breeze_rod,
+        // Trial chamber potions (1.21+)
+        "wind_charged"         to WIND_CHARGED,
+        "oozing"               to OOZING,
+        "weaving"              to WEAVING,
+        "infested"             to INFESTED,
     )
 
     fun get(potionId: String): SpyglassIcon? {
-        val resId = map[potionId] ?: return null
-        return SpyglassIcon.Drawable(resId)
+        val color = map[potionId] ?: return null
+        return SpyglassIcon.Potion(color)
     }
 }

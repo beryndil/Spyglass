@@ -73,6 +73,7 @@ object BlockTextures {
         "sponge" to R.drawable.block_sponge,
         "wet_sponge" to R.drawable.block_wet_sponge,
         "wool" to R.drawable.block_wool,
+        "white_wool" to R.drawable.block_wool,
         "hay_block" to R.drawable.block_hay_block,
         "bookshelf" to R.drawable.block_bookshelf,
         "chiseled_bookshelf" to R.drawable.block_chiseled_bookshelf,
@@ -280,10 +281,316 @@ object BlockTextures {
         "green_wool" to R.drawable.block_green_wool,
         "red_wool" to R.drawable.block_red_wool,
         "black_wool" to R.drawable.block_black_wool,
+
+        // ── Additional direct mappings (no block left behind) ─────────────────
+
+        // Anvil variants
+        "chipped_anvil" to R.drawable.block_anvil,
+        "damaged_anvil" to R.drawable.block_anvil,
+
+        // Chest variants
+        "trapped_chest" to R.drawable.block_chest,
+
+        // Pumpkin variants
+        "pumpkin" to R.drawable.block_carved_pumpkin_bk,
+        "carved_pumpkin" to R.drawable.block_carved_pumpkin_bk,
+        "jack_o_lantern" to R.drawable.block_jack_o_lantern_bk,
+
+        // Stone/brick variants
+        "polished_basalt" to R.drawable.block_polished_basalt_bk,
+        "polished_blackstone_bricks" to R.drawable.block_polished_blackstone,
+        "cracked_polished_blackstone_bricks" to R.drawable.block_polished_blackstone,
+        "polished_tuff" to R.drawable.block_polished_tuff_bk,
+        "dark_prismarine" to R.drawable.block_dark_prismarine_bk,
+        "red_nether_bricks" to R.drawable.block_red_nether_bk,
+        "deepslate_bricks" to R.drawable.block_deepslate_brick,
+        "deepslate_tiles" to R.drawable.block_deepslate_brick,
+        "cracked_deepslate_bricks" to R.drawable.block_deepslate_brick,
+        "cracked_deepslate_tiles" to R.drawable.block_deepslate_brick,
+        "tuff_bricks" to R.drawable.block_tuff_brick,
+        "chiseled_tuff_bricks" to R.drawable.block_tuff_brick,
+        "quartz_bricks" to R.drawable.block_quartz_variant,
+        "quartz_pillar" to R.drawable.block_quartz_variant,
+        "chiseled_copper" to R.drawable.block_copper_item,
+        "reinforced_deepslate" to R.drawable.block_reinforced_deepslate_bk,
+        "gilded_blackstone" to R.drawable.block_gilded_blackstone_bk,
+
+        // Dirt variants
+        "coarse_dirt" to R.drawable.block_coarse_dirt_bk,
+        "dirt_path" to R.drawable.block_coarse_dirt_bk,
+        "rooted_dirt" to R.drawable.block_coarse_dirt_bk,
+        "farmland" to R.drawable.block_coarse_dirt_bk,
+
+        // Sandstone variants
+        "cut_sandstone" to R.drawable.block_cut_sandstone_bk,
+        "cut_sandstone_slab" to R.drawable.block_cut_sandstone_bk,
+        "cut_red_sandstone" to R.drawable.block_cut_red_sandstone_bk,
+        "cut_red_sandstone_slab" to R.drawable.block_cut_red_sandstone_bk,
+
+        // Raw ore blocks
+        "raw_copper_block" to R.drawable.block_raw_copper_bk,
+        "raw_gold_block" to R.drawable.block_raw_gold_bk,
+        "raw_iron_block" to R.drawable.block_raw_iron_bk,
+
+        // Copper functional blocks
+        "copper_bars" to R.drawable.block_copper_item,
+        "copper_bulb" to R.drawable.block_copper_item,
+        "copper_chain" to R.drawable.block_copper_item,
+        "copper_chest" to R.drawable.block_copper_item,
+        "copper_door" to R.drawable.block_copper_item,
+        "copper_golem_statue" to R.drawable.block_copper_item,
+        "copper_grate" to R.drawable.block_copper_item,
+        "copper_lantern" to R.drawable.block_copper_item,
+        "copper_torch" to R.drawable.block_copper_item,
+        "copper_trapdoor" to R.drawable.block_copper_item,
+        "copper_wall_torch" to R.drawable.block_copper_item,
+
+        // Nature blocks
+        "bone_block" to R.drawable.block_bone_bk,
+        "honeycomb_block" to R.drawable.block_honeycomb_bk,
+        "dried_kelp_block" to R.drawable.block_dried_kelp_bk,
+        "moss_block" to R.drawable.block_moss_bk,
+        "moss_carpet" to R.drawable.block_moss_bk,
+        "pale_moss_block" to R.drawable.block_pale_moss_bk,
+        "pale_moss_carpet" to R.drawable.block_pale_moss_bk,
+        "pale_hanging_moss" to R.drawable.block_pale_moss_bk,
+
+        // Light/glow blocks
+        "sea_lantern" to R.drawable.block_sea_lantern_bk,
+        "frosted_ice" to R.drawable.block_frosted_ice_bk,
+        "end_rod" to R.drawable.block_end_rod_bk,
+
+        // Utility blocks
+        "lodestone" to R.drawable.block_lodestone_bk,
+        "respawn_anchor" to R.drawable.block_respawn_anchor_bk,
+        "note_block" to R.drawable.block_jukebox,
+        "target" to R.drawable.block_target_bk,
+        "decorated_pot" to R.drawable.block_decorated_pot_bk,
+        "daylight_detector" to R.drawable.block_oak_slab,
+        "calibrated_sculk_sensor" to R.drawable.block_sculk_sensor,
+        "crafter" to R.drawable.block_crafting_table,
+
+        // Beehive/nest
+        "beehive" to R.drawable.block_beehive_bk,
+        "bee_nest" to R.drawable.block_beehive_bk,
+
+        // Liquids and fluids
+        "water" to R.drawable.block_water_still,
+        "water_cauldron" to R.drawable.block_water_still,
+        "lava" to R.drawable.block_lava_still,
+        "lava_cauldron" to R.drawable.block_lava_still,
+        "bubble_column" to R.drawable.block_bubble_column_bk,
+        "powder_snow" to R.drawable.block_powder_snow_bk,
+        "powder_snow_cauldron" to R.drawable.block_powder_snow_bk,
+
+        // Fire
+        "fire" to R.drawable.block_fire_bk,
+        "soul_fire" to R.drawable.block_soul_fire_bk,
+
+        // Snow
+        "snow" to R.drawable.block_snow_layer,
+
+        // Portals
+        "nether_portal" to R.drawable.block_nether_portal_bk,
+        "end_portal" to R.drawable.block_end_portal_bk,
+        "end_portal_frame" to R.drawable.block_end_stone,
+
+        // Amethyst
+        "amethyst_cluster" to R.drawable.block_amethyst_bk,
+        "budding_amethyst" to R.drawable.block_amethyst_block,
+        "large_amethyst_bud" to R.drawable.block_amethyst_bk,
+        "medium_amethyst_bud" to R.drawable.block_amethyst_bk,
+        "small_amethyst_bud" to R.drawable.block_amethyst_bk,
+
+        // Cobweb
+        "cobweb" to R.drawable.block_cobweb_bk,
+
+        // Plants & bushes
+        "lily_pad" to R.drawable.block_lily_pad_bk,
+        "azalea" to R.drawable.block_azalea_bk,
+        "flowering_azalea" to R.drawable.block_azalea_bk,
+        "bush" to R.drawable.block_bush_bk,
+        "firefly_bush" to R.drawable.block_bush_bk,
+        "dead_bush" to R.drawable.block_bush_bk,
+        "sweet_berry_bush" to R.drawable.block_bush_bk,
+
+        // Flowers
+        "blue_orchid" to R.drawable.block_flower_blue,
+        "orange_tulip" to R.drawable.block_flower_orange,
+        "pink_tulip" to R.drawable.block_flower_pink,
+        "red_tulip" to R.drawable.block_flower_red,
+        "white_tulip" to R.drawable.block_flower_white,
+        "golden_dandelion" to R.drawable.block_flower_yellow,
+        "open_eyeblossom" to R.drawable.block_flower_purple,
+        "closed_eyeblossom" to R.drawable.block_flower_purple,
+        "cactus_flower" to R.drawable.block_flower_pink,
+        "pink_petals" to R.drawable.block_flower_pink,
+        "wildflowers" to R.drawable.block_flower_blue,
+
+        // Vines and hanging plants
+        "vine" to R.drawable.block_vine_bk,
+        "glow_lichen" to R.drawable.block_vine_bk,
+        "hanging_roots" to R.drawable.block_vine_bk,
+        "cave_vines" to R.drawable.block_vine_bk,
+        "cave_vines_plant" to R.drawable.block_vine_bk,
+        "twisting_vines_plant" to R.drawable.block_vine_bk,
+        "weeping_vines_plant" to R.drawable.block_vine_bk,
+        "kelp_plant" to R.drawable.block_vine_bk,
+        "sculk_vein" to R.drawable.block_sculk_vein_bk,
+
+        // Leaves and foliage
+        "big_dripleaf" to R.drawable.block_leaf_bk,
+        "big_dripleaf_stem" to R.drawable.block_vine_bk,
+        "small_dripleaf" to R.drawable.block_leaf_bk,
+        "leaf_litter" to R.drawable.block_coarse_dirt_bk,
+        "short_dry_grass" to R.drawable.block_coarse_dirt_bk,
+        "tall_dry_grass" to R.drawable.block_coarse_dirt_bk,
+        "tall_seagrass" to R.drawable.block_vine_bk,
+
+        // Dripstone
+        "pointed_dripstone" to R.drawable.block_dripstone_bk,
+
+        // Chorus
+        "chorus_flower" to R.drawable.block_flower_purple,
+        "chorus_plant" to R.drawable.block_flower_purple,
+
+        // Crops
+        "beetroots" to R.drawable.block_crop_bk,
+        "carrots" to R.drawable.block_crop_bk,
+        "potatoes" to R.drawable.block_crop_bk,
+        "melon_stem" to R.drawable.block_crop_bk,
+        "pumpkin_stem" to R.drawable.block_crop_bk,
+        "attached_melon_stem" to R.drawable.block_crop_bk,
+        "attached_pumpkin_stem" to R.drawable.block_crop_bk,
+        "cocoa" to R.drawable.block_crop_bk,
+        "pitcher_crop" to R.drawable.block_crop_bk,
+        "torchflower_crop" to R.drawable.block_crop_bk,
+
+        // Rails
+        "activator_rail" to R.drawable.block_rail_bk,
+        "detector_rail" to R.drawable.block_rail_bk,
+
+        // Redstone components
+        "lever" to R.drawable.block_lever_bk,
+        "tripwire" to R.drawable.block_redstone_wire_bk,
+        "redstone_wire" to R.drawable.block_redstone_wire_bk,
+        "redstone_wall_torch" to R.drawable.block_redstone_torch,
+        "wall_torch" to R.drawable.block_torch,
+        "soul_wall_torch" to R.drawable.block_soul_torch,
+        "heavy_weighted_pressure_plate" to R.drawable.block_iron_block,
+        "light_weighted_pressure_plate" to R.drawable.block_gold_block,
+
+        // Spawner / cage blocks
+        "spawner" to R.drawable.block_spawner_bk,
+        "trial_spawner" to R.drawable.block_spawner_bk,
+        "vault" to R.drawable.block_spawner_bk,
+
+        // Command blocks
+        "command_block" to R.drawable.block_command_bk,
+        "chain_command_block" to R.drawable.block_command_bk,
+        "repeating_command_block" to R.drawable.block_command_bk,
+
+        // Technical / invisible blocks
+        "air" to R.drawable.block_powder_snow_bk,
+        "cave_air" to R.drawable.block_powder_snow_bk,
+        "void_air" to R.drawable.block_end_portal_bk,
+        "barrier" to R.drawable.block_command_bk,
+        "light" to R.drawable.block_sea_lantern_bk,
+        "structure_void" to R.drawable.block_command_bk,
+        "structure_block" to R.drawable.block_command_bk,
+        "jigsaw" to R.drawable.block_command_bk,
+        "moving_piston" to R.drawable.block_piston,
+        "test_block" to R.drawable.block_command_bk,
+        "test_instance_block" to R.drawable.block_command_bk,
+
+        // Misc blocks
+        "candle_cake" to R.drawable.block_torch,
+        "dried_ghast" to R.drawable.block_bone_bk,
+        "muddy_mangrove_roots" to R.drawable.block_mud,
+        "petrified_oak_slab" to R.drawable.block_oak_slab,
+        "suspicious_gravel" to R.drawable.block_gravel,
+        "suspicious_sand" to R.drawable.block_sand,
+        "sea_pickle" to R.drawable.block_vine_bk,
+
+        // Nether fungi
+        "crimson_fungus" to R.drawable.block_crimson_stem,
+        "warped_fungus" to R.drawable.block_warped_stem,
+
+        // Froglights
+        "ochre_froglight" to R.drawable.block_sea_lantern_bk,
+        "pearlescent_froglight" to R.drawable.block_sea_lantern_bk,
+        "verdant_froglight" to R.drawable.block_sea_lantern_bk,
+
+        // Iron chain
+        "iron_chain" to R.drawable.block_iron_block,
+
+        // Polished blackstone variants
+        "polished_blackstone_button" to R.drawable.block_polished_blackstone,
+        "polished_blackstone_pressure_plate" to R.drawable.block_polished_blackstone,
+
+        // Stone variants
+        "stone_button" to R.drawable.block_stone,
+        "stone_pressure_plate" to R.drawable.block_stone,
+
+        // Smooth quartz
+        "smooth_quartz" to R.drawable.block_quartz_variant,
+
+        // Red sandstone slab variant
+        "smooth_red_sandstone_slab" to R.drawable.block_cut_red_sandstone_bk,
+
+        // Piston head
+        "piston_head" to R.drawable.block_piston,
     )
 
     fun get(blockId: String): SpyglassIcon? {
-        val resId = map[blockId] ?: return null
-        return SpyglassIcon.Drawable(resId)
+        map[blockId]?.let { return SpyglassIcon.Drawable(it) }
+        return resolveFallback(blockId)
     }
+
+    /** Block-specific fallback: maps common variant patterns to a base block texture. */
+    private fun resolveFallback(blockId: String): SpyglassIcon? {
+        // Waxed / oxidation → copper_block
+        if (blockId.startsWith("waxed_") || blockId.startsWith("exposed_") ||
+            blockId.startsWith("weathered_") || blockId.startsWith("oxidized_") ||
+            blockId.startsWith("cut_copper"))
+            return SpyglassIcon.Drawable(map["copper_block"] ?: return null)
+
+        // Colored block variants
+        for (color in COLORS) {
+            if (!blockId.startsWith("${color}_")) continue
+            val suffix = blockId.removePrefix("${color}_")
+            val res = when (suffix) {
+                "wool" -> map["${color}_wool"] ?: map["wool"]
+                "concrete", "concrete_powder" -> map["${color}_concrete"]
+                "terracotta", "glazed_terracotta" -> map["terracotta"]
+                "stained_glass" -> map["glass"]
+                "stained_glass_pane" -> map["glass_pane"]
+                "shulker_box" -> map["shulker_box"]
+                "carpet", "bed", "banner", "wall_banner" -> map["${color}_wool"] ?: map["wool"]
+                "candle", "candle_cake" -> map["torch"]
+                else -> null
+            }
+            if (res != null) return SpyglassIcon.Drawable(res)
+        }
+
+        // Slab/stairs/wall → base material
+        for (suffix in listOf("_slab", "_stairs", "_wall")) {
+            if (!blockId.endsWith(suffix)) continue
+            val base = blockId.removeSuffix(suffix)
+            map[base]?.let { return SpyglassIcon.Drawable(it) }
+            map["${base}s"]?.let { return SpyglassIcon.Drawable(it) }
+            map["${base}_block"]?.let { return SpyglassIcon.Drawable(it) }
+        }
+
+        // Coral → prismarine
+        if (blockId.contains("coral"))
+            return SpyglassIcon.Drawable(map["prismarine"] ?: return null)
+
+        return null
+    }
+
+    private val COLORS = listOf(
+        "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink",
+        "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black",
+    )
 }

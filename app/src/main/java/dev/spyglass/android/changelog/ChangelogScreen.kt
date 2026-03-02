@@ -32,8 +32,8 @@ private val VERSIONS = listOf(
         version = "v1.0-alpha.3",
         date = "February 2026",
         highlights = listOf(
-            "Comprehensive Minecraft Wiki sync across all 11 data categories",
-            "1,167 blocks validated — 223 added, 44 properties corrected",
+            "Major data accuracy pass across all 11 categories",
+            "1,167 blocks with corrected properties and missing entries added",
             "550+ entries added or corrected across mobs, biomes, items, trades, and more",
             "5 new shapes: Wall, Arch, Ellipsoid, Arc Wall, Spiral",
             "Smelting XP values for all 78 smelting recipes",

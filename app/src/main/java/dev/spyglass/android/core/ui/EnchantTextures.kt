@@ -59,6 +59,9 @@ object EnchantTextures {
         "luck_of_the_sea" to R.drawable.item_fishing_rod,
         "lure" to R.drawable.item_fishing_rod,
 
+        // Spear
+        "lunge" to R.drawable.item_trident,
+
         // Trident
         "loyalty" to R.drawable.item_trident,
         "impaling" to R.drawable.item_trident,

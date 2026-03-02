@@ -31,6 +31,7 @@ object StructureTextures {
         "end_city" to R.drawable.block_purpur_block,
         "end_gateway" to R.drawable.block_obsidian,
         "fossil" to R.drawable.block_stone,
+        "nether_fossil" to R.drawable.block_soul_sand,
         "desert_well" to R.drawable.block_sandstone,
     )
 

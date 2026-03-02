@@ -21,6 +21,7 @@ object ItemTextures {
         "bamboo" to R.drawable.item_bamboo,
         "beetroot" to R.drawable.item_beetroot,
         "beetroot_seeds" to R.drawable.item_beetroot_seeds,
+        "beetroot_soup" to R.drawable.item_mushroom_stew,
         "bamboo_boat" to R.drawable.item_bamboo_boat,
         "bamboo_raft" to R.drawable.item_bamboo_raft,
         "bamboo_button" to R.drawable.item_bamboo_button,
@@ -66,6 +67,7 @@ object ItemTextures {
         "chainmail_helmet" to R.drawable.item_chainmail_helmet,
         "chainmail_leggings" to R.drawable.item_chainmail_leggings,
         "chorus_fruit" to R.drawable.item_chorus_fruit,
+        "chain" to R.drawable.item_iron_bars,
         "charcoal" to R.drawable.item_charcoal,
         "cherry_boat" to R.drawable.item_cherry_boat,
         "cherry_button" to R.drawable.item_cherry_button,
@@ -91,7 +93,18 @@ object ItemTextures {
         "cooked_rabbit" to R.drawable.item_cooked_rabbit,
         "cooked_salmon" to R.drawable.item_cooked_salmon,
         "cookie" to R.drawable.item_cookie,
+        "copper_axe" to R.drawable.item_iron_axe,
+        "copper_boots" to R.drawable.item_iron_boots,
+        "copper_chestplate" to R.drawable.item_iron_chestplate,
+        "copper_helmet" to R.drawable.item_iron_helmet,
+        "copper_hoe" to R.drawable.item_iron_hoe,
+        "copper_horse_armor" to R.drawable.item_iron_horse_armor,
         "copper_ingot" to R.drawable.item_copper_ingot,
+        "copper_leggings" to R.drawable.item_iron_leggings,
+        "copper_nugget" to R.drawable.item_copper_ingot,
+        "copper_pickaxe" to R.drawable.item_iron_pickaxe,
+        "copper_shovel" to R.drawable.item_iron_shovel,
+        "copper_sword" to R.drawable.item_iron_sword,
         "crimson_button" to R.drawable.item_crimson_button,
         "crimson_fence_gate" to R.drawable.item_crimson_fence_gate,
         "crimson_planks" to R.drawable.item_crimson_planks,
@@ -141,6 +154,7 @@ object ItemTextures {
         "fermented_spider_eye" to R.drawable.item_fermented_spider_eye,
         "fire_charge" to R.drawable.item_fire_charge,
         "firework_rocket" to R.drawable.item_firework_rocket,
+        "firework_star" to R.drawable.item_gunpowder,
         "fishing_rod" to R.drawable.item_fishing_rod,
         "flint" to R.drawable.item_flint,
         "flower_pot" to R.drawable.item_brick,
@@ -151,6 +165,7 @@ object ItemTextures {
         "glistering_melon" to R.drawable.item_glistering_melon_slice,
         "glistering_melon_slice" to R.drawable.item_glistering_melon_slice,
         "glow_berries" to R.drawable.item_glow_berries,
+        "glow_item_frame" to R.drawable.item_item_frame,
         "glow_ink_sac" to R.drawable.item_glow_ink_sac,
         "glowstone_dust" to R.drawable.item_glowstone_dust,
         "goat_horn" to R.drawable.item_goat_horn,
@@ -175,6 +190,7 @@ object ItemTextures {
         "heavy_core" to R.drawable.item_heavy_core,
         "honey_block" to R.drawable.item_honey_block,
         "honey_bottle" to R.drawable.item_honey_bottle,
+        "honeycomb" to R.drawable.item_honey_bottle,
         "ink_sac" to R.drawable.item_ink_sac,
         "iron_axe" to R.drawable.item_iron_axe,
         "iron_horse_armor" to R.drawable.item_iron_horse_armor,
@@ -238,6 +254,7 @@ object ItemTextures {
         "mushroom_stew" to R.drawable.item_mushroom_stew,
         "music_disc_13" to R.drawable.item_music_disc_13,
         "name_tag" to R.drawable.item_name_tag,
+        "knowledge_book" to R.drawable.item_book,
         "nautilus_shell" to R.drawable.item_nautilus_shell,
         "nether_brick" to R.drawable.item_nether_brick,
         "nether_sprouts" to R.drawable.block_warped_stem,
@@ -248,6 +265,7 @@ object ItemTextures {
         "netherite_chestplate" to R.drawable.item_netherite_chestplate,
         "netherite_helmet" to R.drawable.item_netherite_helmet,
         "netherite_hoe" to R.drawable.item_netherite_hoe,
+        "netherite_horse_armor" to R.drawable.item_diamond_horse_armor,
         "netherite_ingot" to R.drawable.item_netherite_ingot,
         "netherite_leggings" to R.drawable.item_netherite_leggings,
         "netherite_pickaxe" to R.drawable.item_netherite_pickaxe,
@@ -263,9 +281,13 @@ object ItemTextures {
         "oak_fence_gate" to R.drawable.item_oak_fence_gate,
         "oak_pressure_plate" to R.drawable.item_oak_pressure_plate,
         "oak_sign" to R.drawable.item_oak_sign,
+        "ocean_explorer_map" to R.drawable.item_map,
         "ocean_map" to R.drawable.item_map,
+        "ominous_bottle" to R.drawable.item_experience_bottle,
         "painting" to R.drawable.item_painting,
+        "pitcher_pod" to R.drawable.item_wheat_seeds,
         "poisonous_potato" to R.drawable.item_potato,
+        "popped_chorus_fruit" to R.drawable.item_chorus_fruit,
         "paper" to R.drawable.item_paper,
         "phantom_membrane" to R.drawable.item_phantom_membrane,
         "pink_dye" to R.drawable.item_pink_dye,
@@ -297,6 +319,7 @@ object ItemTextures {
         "raw_salmon" to R.drawable.item_raw_salmon,
         "red_dye" to R.drawable.item_red_dye,
         "redstone" to R.drawable.item_redstone,
+        "recovery_compass" to R.drawable.item_compass,
         "redstone_dust" to R.drawable.item_redstone,
         "resin_brick" to R.drawable.item_resin_brick,
         "resin_clump" to R.drawable.item_resin_clump,
@@ -338,6 +361,7 @@ object ItemTextures {
         "tipped_arrow" to R.drawable.item_arrow,
         "tipped_arrow_poison" to R.drawable.item_tipped_arrow_poison,
         "tipped_arrow_slowness" to R.drawable.item_tipped_arrow_slowness,
+        "torchflower_seeds" to R.drawable.item_wheat_seeds,
         "totem_of_undying" to R.drawable.item_totem_of_undying,
         "trial_key" to R.drawable.item_trial_key,
         "trident" to R.drawable.item_trident,
@@ -347,6 +371,7 @@ object ItemTextures {
         "turtle_scute" to R.drawable.item_turtle_scute,
         "sugar" to R.drawable.item_sugar,
         "sugar_cane" to R.drawable.item_sugar_cane,
+        "warped_fungus_on_a_stick" to R.drawable.item_carrot_on_a_stick,
         "warped_wart_block" to R.drawable.block_warped_stem,
         "warped_button" to R.drawable.item_warped_button,
         "warped_fence_gate" to R.drawable.item_warped_fence_gate,
@@ -367,7 +392,10 @@ object ItemTextures {
         "wind_charge" to R.drawable.item_wind_charge,
         "wither_skeleton_skull" to R.drawable.item_wither_skeleton_skull,
         "wolf_armor" to R.drawable.item_wolf_armor,
+        "woodland_explorer_map" to R.drawable.item_map,
         "woodland_map" to R.drawable.item_map,
+        "writable_book" to R.drawable.item_book_and_quill,
+        "written_book" to R.drawable.item_book,
         "wooden_axe" to R.drawable.item_wooden_axe,
         "wooden_hoe" to R.drawable.item_wooden_hoe,
         "wooden_pickaxe" to R.drawable.item_wooden_pickaxe,
@@ -453,10 +481,10 @@ object ItemTextures {
         if (itemId.endsWith("_smithing_template")) return lookup("netherite_upgrade_template")
 
         // Banner patterns → paper
-        if (itemId.startsWith("banner_pattern_")) return lookup("paper")
+        if (itemId.endsWith("_banner_pattern")) return lookup("paper")
 
         // Mob buckets → bucket
-        if (itemId.startsWith("bucket_of_")) return lookup("bucket")
+        if (itemId.endsWith("_bucket") && itemId != "bucket") return lookup("bucket")
 
         // Minecart variants → minecart
         if (itemId.endsWith("_minecart")) return lookup("minecart")
@@ -475,11 +503,32 @@ object ItemTextures {
         if (itemId == "potion" || itemId == "splash_potion" || itemId == "lingering_potion")
             return SpyglassIcon.Drawable(R.drawable.item_potion)
 
+        // Spawn eggs → egg
+        if (itemId.endsWith("_spawn_egg")) return lookup("egg")
+
+        // Bundles → leather
+        if (itemId == "bundle" || itemId.endsWith("_bundle")) return lookup("leather")
+
+        // Spears → trident (closest weapon shape)
+        if (itemId.endsWith("_spear")) return lookup("trident")
+
+        // Nautilus armor → matching tier chestplate
+        if (itemId.endsWith("_nautilus_armor")) {
+            val tier = itemId.removeSuffix("_nautilus_armor")
+            return lookup("${tier}_chestplate") ?: lookup("iron_chestplate")
+        }
+
+        // Colored eggs → egg
+        if (itemId.endsWith("_egg") && itemId != "dragon_egg") return lookup("egg")
+
         // Flowers and small plants → poppy/dandelion fallback
         if (itemId in setOf(
                 "allium", "azure_bluet", "oxeye_daisy", "cornflower",
                 "lily_of_the_valley", "wither_rose", "torchflower", "pitcher_plant",
                 "spore_blossom", "lilac", "rose_bush", "peony", "sunflower",
+                "blue_orchid", "orange_tulip", "pink_tulip", "red_tulip", "white_tulip",
+                "golden_dandelion", "open_eyeblossom", "closed_eyeblossom",
+                "cactus_flower", "pink_petals", "wildflowers",
             ))
             return lookup("poppy") ?: lookup("dandelion")
 
@@ -500,6 +549,7 @@ object ItemTextures {
                 "candle" -> lookup("torch")
                 "tulip", "orchid" -> lookup("poppy")
                 "petals" -> lookup("poppy")
+                "harness" -> lookup("saddle")
                 else -> null
             }
         }
@@ -530,6 +580,7 @@ object ItemTextures {
                 itemId.endsWith("_sign") || itemId.endsWith("_hanging_sign") -> lookup("${wood}_sign") ?: planks
                 itemId.endsWith("_button") -> lookup("${wood}_button") ?: planks
                 itemId.endsWith("_pressure_plate") -> lookup("${wood}_pressure_plate") ?: planks
+                itemId.endsWith("_shelf") -> lookup("bookshelf") ?: planks
                 itemId.endsWith("_leaves") -> lookup("${wood}_leaves") ?: lookup("oak_leaves")
                 itemId.endsWith("_sapling") || itemId.endsWith("_propagule") -> lookup("${wood}_leaves") ?: lookup("oak_leaves")
                 itemId.endsWith("_roots") -> log ?: lookup("netherrack")

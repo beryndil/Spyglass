@@ -44,6 +44,7 @@ object MobTextures {
         "husk" to R.drawable.mob_husk,
         "iron_golem" to R.drawable.mob_iron_golem,
         "llama" to R.drawable.mob_llama,
+        "trader_llama" to R.drawable.mob_llama,
         "magma_cube" to R.drawable.mob_magma_cube,
         "mooshroom" to R.drawable.mob_mooshroom,
         "mule" to R.drawable.mob_mule,
