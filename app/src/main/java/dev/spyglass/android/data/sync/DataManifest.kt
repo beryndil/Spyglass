@@ -18,6 +18,10 @@ data class DataManifest(
     val advancements: Int = 0,
     val commands: Int = 0,
 ) {
+    /** The effective version is the highest per-table version. */
+    val effectiveVersion: Int
+        get() = maxOf(blocks, mobs, biomes, enchants, potions, trades, recipes, structures, items, advancements, commands)
+
     /** Returns the list of table names whose version differs between [this] and [other]. */
     fun changedTables(other: DataManifest): List<String> = buildList {
         if (blocks != other.blocks) add("blocks")

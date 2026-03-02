@@ -37,10 +37,10 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
             val prefs = context.getSharedPreferences("spyglass_sync", android.content.Context.MODE_PRIVATE)
             val raw = prefs.getString("local_manifest", null)
             if (raw != null) {
-                DataManifest.fromJson(raw).version
+                DataManifest.fromJson(raw).effectiveVersion
             } else {
                 val bundled = context.assets.open("minecraft/manifest.json").bufferedReader().readText()
-                DataManifest.fromJson(bundled).version
+                DataManifest.fromJson(bundled).effectiveVersion
             }
         } catch (_: Exception) { 0 }
     }
