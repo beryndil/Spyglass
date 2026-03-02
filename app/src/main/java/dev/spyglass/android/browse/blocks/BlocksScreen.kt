@@ -184,11 +184,14 @@ fun BlocksScreen(
         SortOption("Light Level \u2193", "light_level"),
     ) }
 
-    // Auto-expand and scroll to target block from cross-reference
-    LaunchedEffect(targetBlockId, blocks) {
-        if (targetBlockId != null && blocks.isNotEmpty()) {
+    // Auto-expand and scroll to target block from cross-reference (runs once per targetBlockId)
+    LaunchedEffect(targetBlockId) {
+        if (targetBlockId != null) {
             vm.setQuery("")
             vm.setCategory("all")
+            // Wait for the blocks list to populate after clearing filters
+            snapshotFlow { blocks }
+                .first { it.isNotEmpty() }
             val idx = blocks.indexOfFirst { it.id == targetBlockId }
             if (idx >= 0) {
                 listState.scrollToItem(idx + 1) // +1 for intro header

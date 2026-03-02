@@ -264,8 +264,10 @@ fun AdvancementsScreen(
         )
     }
 
-    LaunchedEffect(targetAdvancementId, advancements) {
-        if (targetAdvancementId != null && advancements.isNotEmpty()) {
+    LaunchedEffect(targetAdvancementId) {
+        if (targetAdvancementId != null) {
+            snapshotFlow { advancements }
+                .first { it.isNotEmpty() }
             vm.navigateToAdvancement(targetAdvancementId, advancements)
             val idx = flatTreeItems.indexOfFirst { it.first.id == targetAdvancementId }
             if (idx >= 0) listState.animateScrollToItem(idx + 2) // offset for header + progress

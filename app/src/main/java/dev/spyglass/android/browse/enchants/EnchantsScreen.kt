@@ -191,10 +191,12 @@ fun EnchantsScreen(
     val enchantIndex = remember(enchants) { enchants.mapIndexed { i, e -> e.id to i }.toMap() }
 
     // Auto-expand and scroll to target enchant from cross-reference
-    LaunchedEffect(targetEnchantId, enchants) {
-        if (targetEnchantId != null && enchants.isNotEmpty()) {
+    LaunchedEffect(targetEnchantId) {
+        if (targetEnchantId != null) {
             vm.setQuery("")
             vm.setTarget("all")
+            snapshotFlow { enchants }
+                .first { it.isNotEmpty() }
             val idx = enchantIndex[targetEnchantId]
             if (idx != null) {
                 listState.scrollToItem(idx + 1) // +1 for intro header

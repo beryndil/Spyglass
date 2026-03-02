@@ -41,7 +41,10 @@ object GitHubDataClient {
 
     private fun fetch(url: String): String? {
         return try {
-            val request = Request.Builder().url(url).build()
+            val request = Request.Builder()
+                .url(url)
+                .header("Cache-Control", "no-cache")
+                .build()
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
                 response.body?.string()

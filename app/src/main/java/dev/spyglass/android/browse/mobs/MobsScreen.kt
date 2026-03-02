@@ -154,10 +154,12 @@ fun MobsScreen(
     val categories = listOf("all", "hostile", "neutral", "passive", "boss", "breedable")
 
     // Auto-expand and scroll to target mob from cross-reference
-    LaunchedEffect(targetMobId, mobs) {
-        if (targetMobId != null && mobs.isNotEmpty()) {
+    LaunchedEffect(targetMobId) {
+        if (targetMobId != null) {
             vm.setQuery("")
             vm.setCategory("all")
+            snapshotFlow { mobs }
+                .first { it.isNotEmpty() }
             val idx = mobs.indexOfFirst { it.id == targetMobId }
             if (idx >= 0) {
                 listState.scrollToItem(idx + 1) // +1 for intro header

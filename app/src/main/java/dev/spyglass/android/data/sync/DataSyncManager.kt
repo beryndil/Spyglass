@@ -51,15 +51,9 @@ object DataSyncManager {
         // 2. Load local manifest
         var localManifest = loadLocalManifest(context)
 
-        // Quick check — if top-level version matches, skip per-table comparison
-        if (remoteManifest.version == localManifest.version) {
-            Timber.d("DataSync: data version %d is current", localManifest.version)
-            return
-        }
+        Timber.d("DataSync: local v%d, remote v%d", localManifest.version, remoteManifest.version)
 
-        Timber.d("DataSync: local v%d → remote v%d", localManifest.version, remoteManifest.version)
-
-        // 3. Determine which tables have changed
+        // 3. Determine which tables have changed (compare per-table versions)
         val changed = remoteManifest.changedTables(localManifest)
         if (changed.isEmpty()) {
             // Version bumped but no individual tables changed — just update version

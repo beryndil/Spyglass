@@ -128,10 +128,12 @@ fun CraftingScreen(
     }
 
     // Auto-expand and scroll to target recipe from cross-reference
-    LaunchedEffect(targetRecipeId, dedupedRecipes) {
-        if (targetRecipeId != null && dedupedRecipes.isNotEmpty()) {
+    LaunchedEffect(targetRecipeId) {
+        if (targetRecipeId != null) {
             vm.setQuery("")
             vm.setType("all")
+            snapshotFlow { dedupedRecipes }
+                .first { it.isNotEmpty() }
             val idx = dedupedRecipes.indexOfFirst { it.id == targetRecipeId || it.outputItem == targetRecipeId }
             if (idx >= 0) {
                 listState.scrollToItem(idx + 1)

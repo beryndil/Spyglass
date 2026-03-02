@@ -144,10 +144,12 @@ fun BiomesScreen(
     val listState    = rememberLazyListState()
 
     // Auto-expand and scroll to target biome from cross-reference
-    LaunchedEffect(targetBiomeId, biomes) {
-        if (targetBiomeId != null && biomes.isNotEmpty()) {
+    LaunchedEffect(targetBiomeId) {
+        if (targetBiomeId != null) {
             vm.setQuery("")
             vm.setCategory("all")
+            snapshotFlow { biomes }
+                .first { it.isNotEmpty() }
             val idx = biomes.indexOfFirst { it.id == targetBiomeId }
             if (idx >= 0) {
                 listState.scrollToItem(idx + 1) // +1 for intro header

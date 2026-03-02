@@ -217,10 +217,12 @@ fun ItemsScreen(
     ) }
 
     // Auto-expand and scroll to target item from cross-reference
-    LaunchedEffect(targetItemId, items) {
-        if (targetItemId != null && items.isNotEmpty()) {
+    LaunchedEffect(targetItemId) {
+        if (targetItemId != null) {
             vm.setQuery("")
             vm.setCategory("all")
+            snapshotFlow { items }
+                .first { it.isNotEmpty() }
             val idx = items.indexOfFirst { it.id == targetItemId }
             if (idx >= 0) {
                 listState.scrollToItem(idx + 1) // +1 for intro header

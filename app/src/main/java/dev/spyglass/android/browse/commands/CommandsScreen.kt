@@ -146,8 +146,10 @@ fun CommandsScreen(
         )
     }
 
-    LaunchedEffect(targetCommandId, commands) {
-        if (targetCommandId != null && commands.isNotEmpty()) {
+    LaunchedEffect(targetCommandId) {
+        if (targetCommandId != null) {
+            snapshotFlow { commands }
+                .first { it.isNotEmpty() }
             vm.expandCommand(targetCommandId)
         }
     }
