@@ -1,12 +1,17 @@
 package dev.spyglass.android.core.ui
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+
 object BlockTextures {
     /**
      * Block ID → texture filename (without extension).
      * Loaded from `texture_map.json` at startup; resolved via [TextureManager.resolveOrBundled].
      * Handles both downloaded PNGs and bundled vector drawables.
+     * Backed by [mutableStateOf] so Compose recomposes when the map is reloaded.
      */
-    private var textureMap: Map<String, String> = emptyMap()
+    private var textureMap: Map<String, String> by mutableStateOf(emptyMap())
 
     /** Replace the texture map with data loaded from JSON. */
     fun loadMap(blocks: Map<String, String>) {

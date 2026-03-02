@@ -1,5 +1,8 @@
 package dev.spyglass.android.core.ui
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import dev.spyglass.android.R
 
 /**
@@ -10,8 +13,9 @@ object ItemTextures {
     /**
      * Item ID → PNG filename (without extension).
      * Loaded from `texture_map.json` at startup; resolved via [TextureManager.resolveOrBundled].
+     * Backed by [mutableStateOf] so Compose recomposes when the map is reloaded.
      */
-    private var textureMap: Map<String, String> = emptyMap()
+    private var textureMap: Map<String, String> by mutableStateOf(emptyMap())
 
     /** Replace the texture map with data loaded from JSON. */
     fun loadMap(items: Map<String, String>) {
