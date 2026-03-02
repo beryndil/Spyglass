@@ -156,12 +156,6 @@ fun HomeScreen(
     val favorites by produceState(emptyList<FavoriteEntity>(), repo) {
         repo?.allFavorites()?.collect { value = it }
     }
-    val blockCount by produceState(0, repo) {
-        repo?.blockCountFlow()?.collect { value = it }
-    }
-    val itemCount by produceState(0, repo) {
-        repo?.itemCountFlow()?.collect { value = it }
-    }
     val todoPreview by produceState(emptyList<TodoEntity>(), repo) {
         repo?.incompleteTodosPreview(3)?.collect { value = it }
     }
@@ -211,7 +205,7 @@ fun HomeScreen(
 
         // ── C. Quick Access — Tools ──
         item(key = "tools") {
-            SectionHeader(stringResource(R.string.home_tools), icon = SpyglassIcon.Drawable(R.drawable.item_diamond_pickaxe))
+            SectionHeader(stringResource(R.string.home_tools), icon = PixelIcons.Anvil)
             Spacer(Modifier.height(8.dp))
             QuickLinkGrid(CALC_LINKS.map { it.first }) { index -> onCalcTab(CALC_LINKS[index].second) }
         }
@@ -228,9 +222,9 @@ fun HomeScreen(
             HomeBrowseSection(onBrowseTab = onBrowseTab)
         }
 
-        // ── F. What's New ──
-        item(key = "whats_new") {
-            HomeWhatsNewSection(blockCount = blockCount, itemCount = itemCount)
+        // ── F. News ──
+        item(key = "news") {
+            HomeNewsSection()
         }
 
         item(key = "bottom_spacer") {
@@ -389,21 +383,6 @@ private fun HomeBrowseSection(onBrowseTab: (Int) -> Unit) {
     }
 }
 
-@Composable
-private fun HomeWhatsNewSection(blockCount: Int, itemCount: Int) {
-    SectionHeader(stringResource(R.string.home_whats_new))
-    Spacer(Modifier.height(8.dp))
-    ResultCard {
-        WhatsNewItem(stringResource(R.string.home_whats_new_blocks, blockCount, itemCount), stringResource(R.string.home_whats_new_blocks_desc))
-        SpyglassDivider()
-        WhatsNewItem(stringResource(R.string.home_whats_new_enchant), stringResource(R.string.home_whats_new_enchant_desc))
-        SpyglassDivider()
-        WhatsNewItem(stringResource(R.string.home_whats_new_links), stringResource(R.string.home_whats_new_links_desc))
-        SpyglassDivider()
-        WhatsNewItem(stringResource(R.string.home_whats_new_search), stringResource(R.string.home_whats_new_search_desc))
-    }
-}
-
 // ── Quick link grid — 2 columns ─────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -477,11 +456,3 @@ private fun HomeTodoRow(todo: TodoEntity, onToggle: () -> Unit) {
     }
 }
 
-@Composable
-private fun WhatsNewItem(title: String, desc: String) {
-    Column {
-        Text(title, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-        Spacer(Modifier.height(2.dp))
-        Text(desc, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
-    }
-}

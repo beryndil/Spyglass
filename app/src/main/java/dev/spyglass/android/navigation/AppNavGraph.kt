@@ -37,9 +37,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 
 sealed class TopDest(val route: String, val labelResId: Int, val icon: SpyglassIcon) {
-    data object Home        : TopDest("home",        R.string.nav_home,   SpyglassIcon.Drawable(R.drawable.item_compass))
+    data object Home        : TopDest("home",        R.string.nav_home,   PixelIcons.Blocks)
     data object Browse      : TopDest("browse",      R.string.nav_browse, PixelIcons.Browse)
-    data object Calculators : TopDest("calculators",  R.string.nav_tools,  SpyglassIcon.Drawable(R.drawable.item_diamond_pickaxe))
+    data object Calculators : TopDest("calculators",  R.string.nav_tools,  PixelIcons.Anvil)
     data object Search      : TopDest("search",      R.string.nav_search, PixelIcons.Search)
 }
 

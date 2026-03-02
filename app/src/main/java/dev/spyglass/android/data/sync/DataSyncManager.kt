@@ -1,6 +1,7 @@
 package dev.spyglass.android.data.sync
 
 import android.content.Context
+import dev.spyglass.android.core.ui.TextureManager
 import dev.spyglass.android.data.seed.DataSeeder
 import timber.log.Timber
 import java.io.File
@@ -36,7 +37,8 @@ object DataSyncManager {
      * 2. Compare with local manifest
      * 3. Download changed files
      * 4. Re-seed affected tables
-     * 5. Persist updated manifest
+     * 5. Handle texture + news updates
+     * 6. Persist updated manifest
      */
     suspend fun sync(context: Context) {
         Timber.d("DataSync: starting sync")
@@ -55,36 +57,51 @@ object DataSyncManager {
 
         // 3. Determine which tables have changed (compare per-table versions)
         val changed = remoteManifest.changedTables(localManifest)
-        if (changed.isEmpty()) {
-            // Version bumped but no individual tables changed — just update version
-            localManifest = localManifest.copy(version = remoteManifest.version)
-            saveLocalManifest(context, localManifest)
-            Timber.d("DataSync: all tables up to date")
-            return
-        }
-
-        Timber.d("DataSync: %d table(s) changed: %s", changed.size, changed)
 
         // 4. Download and reseed each changed table
-        for (table in changed) {
-            val fileName = TABLE_FILES[table] ?: continue
-            val jsonContent = GitHubDataClient.fetchDataFile(fileName)
-            if (jsonContent == null) {
-                Timber.w("DataSync: failed to download %s, skipping", fileName)
-                continue
+        if (changed.isNotEmpty()) {
+            Timber.d("DataSync: %d table(s) changed: %s", changed.size, changed)
+
+            for (table in changed) {
+                val fileName = TABLE_FILES[table] ?: continue
+                val jsonContent = GitHubDataClient.fetchDataFile(fileName)
+                if (jsonContent == null) {
+                    Timber.w("DataSync: failed to download %s, skipping", fileName)
+                    continue
+                }
+
+                // Save to internal storage so DataSeeder can read it
+                saveToInternalStorage(context, fileName, jsonContent)
+
+                // Re-seed the table
+                DataSeeder.reseedTable(context, table)
+
+                // Update local manifest version for this table
+                localManifest = localManifest.withVersion(table, remoteManifest.versionOf(table))
+                saveLocalManifest(context, localManifest)
+
+                Timber.d("DataSync: updated %s to version %d", table, remoteManifest.versionOf(table))
             }
+        }
 
-            // Save to internal storage so DataSeeder can read it
-            saveToInternalStorage(context, fileName, jsonContent)
+        // 5. Sync news.json if version changed
+        if (remoteManifest.hasNewsUpdate(localManifest)) {
+            val newsJson = GitHubDataClient.fetchDataFile("news.json")
+            if (newsJson != null) {
+                saveToInternalStorage(context, "news.json", newsJson)
+                localManifest = localManifest.copy(news = remoteManifest.news)
+                Timber.d("DataSync: updated news to version %d", remoteManifest.news)
+            }
+        }
 
-            // Re-seed the table
-            DataSeeder.reseedTable(context, table)
-
-            // Update local manifest version for this table
-            localManifest = localManifest.withVersion(table, remoteManifest.versionOf(table))
-            saveLocalManifest(context, localManifest)
-
-            Timber.d("DataSync: updated %s to version %d", table, remoteManifest.versionOf(table))
+        // 6. Flag texture update if textures are already downloaded and remote is newer
+        if (remoteManifest.hasTextureUpdate(localManifest) &&
+            TextureManager.state.value == TextureManager.TextureState.DOWNLOADED) {
+            Timber.d("DataSync: texture update available (local=%d, remote=%d)",
+                localManifest.textures, remoteManifest.textures)
+            // Auto-update textures in background
+            TextureManager.download(context)
+            localManifest = localManifest.copy(textures = remoteManifest.textures)
         }
 
         // Update top-level version
@@ -101,7 +118,7 @@ object DataSyncManager {
         File(dir, fileName).writeText(content)
     }
 
-    private fun loadLocalManifest(context: Context): DataManifest {
+    fun loadLocalManifest(context: Context): DataManifest {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val raw = prefs.getString(KEY_MANIFEST, null) ?: return loadBundledManifest(context)
         return try {

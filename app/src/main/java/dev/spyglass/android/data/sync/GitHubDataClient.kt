@@ -39,6 +39,11 @@ object GitHubDataClient {
         fetch("$BASE_URL/$fileName")
     }
 
+    /** Fetches a binary file (e.g. "textures.zip"). Returns null on failure. */
+    suspend fun fetchBinaryFile(fileName: String): ByteArray? = withContext(Dispatchers.IO) {
+        fetchBytes("$BASE_URL/$fileName")
+    }
+
     private fun fetch(url: String): String? {
         return try {
             val request = Request.Builder()
@@ -48,6 +53,25 @@ object GitHubDataClient {
             val response = client.newCall(request).execute()
             if (response.isSuccessful) {
                 response.body?.string()
+            } else {
+                Timber.w("HTTP %d fetching %s", response.code, url)
+                null
+            }
+        } catch (e: Exception) {
+            Timber.w(e, "Network error fetching %s", url)
+            null
+        }
+    }
+
+    private fun fetchBytes(url: String): ByteArray? {
+        return try {
+            val request = Request.Builder()
+                .url(url)
+                .header("Cache-Control", "no-cache")
+                .build()
+            val response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                response.body?.bytes()
             } else {
                 Timber.w("HTTP %d fetching %s", response.code, url)
                 null

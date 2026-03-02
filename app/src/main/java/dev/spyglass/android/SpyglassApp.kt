@@ -3,6 +3,7 @@ package dev.spyglass.android
 import android.app.Application
 import android.os.StrictMode
 import android.os.Trace
+import dev.spyglass.android.core.ui.TextureManager
 import dev.spyglass.android.data.repository.GameDataRepository
 import dev.spyglass.android.data.seed.DataSeeder
 import dev.spyglass.android.data.sync.DataSyncManager
@@ -45,6 +46,9 @@ class SpyglassApp : Application() {
                 Timber.e(throwable, "Uncaught exception on thread %s", thread.name)
                 defaultHandler?.uncaughtException(thread, throwable)
             }
+
+            // Init TextureManager (checks if textures are already downloaded)
+            TextureManager.init(this)
 
             // Pre-warm database and seed game data on IO
             appScope.launch(Dispatchers.IO) {

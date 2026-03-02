@@ -3,23 +3,31 @@ package dev.spyglass.android.data.sync
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
+/**
+ * Tracks per-table version numbers plus textures and news versions.
+ *
+ * Version format: `YYMMDDHHMM` (Long) — e.g. `2603021430` = March 2, 2026 at 14:30.
+ * Old integer versions (e.g. `18`) remain valid; they simply compare as older.
+ */
 @Serializable
 data class DataManifest(
-    val version: Int = 0,
-    val blocks: Int = 0,
-    val mobs: Int = 0,
-    val biomes: Int = 0,
-    val enchants: Int = 0,
-    val potions: Int = 0,
-    val trades: Int = 0,
-    val recipes: Int = 0,
-    val structures: Int = 0,
-    val items: Int = 0,
-    val advancements: Int = 0,
-    val commands: Int = 0,
+    val version: Long = 0,
+    val blocks: Long = 0,
+    val mobs: Long = 0,
+    val biomes: Long = 0,
+    val enchants: Long = 0,
+    val potions: Long = 0,
+    val trades: Long = 0,
+    val recipes: Long = 0,
+    val structures: Long = 0,
+    val items: Long = 0,
+    val advancements: Long = 0,
+    val commands: Long = 0,
+    val textures: Long = 0,
+    val news: Long = 0,
 ) {
     /** The effective version is the highest per-table version. */
-    val effectiveVersion: Int
+    val effectiveVersion: Long
         get() = maxOf(blocks, mobs, biomes, enchants, potions, trades, recipes, structures, items, advancements, commands)
 
     /** Returns the list of table names whose version differs between [this] and [other]. */
@@ -38,7 +46,7 @@ data class DataManifest(
     }
 
     /** Returns a copy with the version for [table] updated to [version]. */
-    fun withVersion(table: String, version: Int): DataManifest = when (table) {
+    fun withVersion(table: String, version: Long): DataManifest = when (table) {
         "blocks" -> copy(blocks = version)
         "mobs" -> copy(mobs = version)
         "biomes" -> copy(biomes = version)
@@ -54,7 +62,7 @@ data class DataManifest(
     }
 
     /** Gets the version number for a specific [table]. */
-    fun versionOf(table: String): Int = when (table) {
+    fun versionOf(table: String): Long = when (table) {
         "blocks" -> blocks
         "mobs" -> mobs
         "biomes" -> biomes
@@ -68,6 +76,12 @@ data class DataManifest(
         "commands" -> commands
         else -> 0
     }
+
+    /** True when remote textures version is higher than local. */
+    fun hasTextureUpdate(local: DataManifest): Boolean = textures > local.textures
+
+    /** True when remote news version is higher than local. */
+    fun hasNewsUpdate(local: DataManifest): Boolean = news > local.news
 
     companion object {
         private val json = Json { ignoreUnknownKeys = true }

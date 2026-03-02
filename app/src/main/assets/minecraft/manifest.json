@@ -1,14 +1,16 @@
 {
-  "version": 18,
-  "blocks": 18,
-  "mobs": 18,
-  "biomes": 18,
-  "enchants": 18,
-  "potions": 18,
-  "trades": 18,
-  "recipes": 18,
-  "structures": 18,
-  "items": 18,
-  "advancements": 18,
-  "commands": 18
+  "version": 2603021319,
+  "blocks": 2603021319,
+  "mobs": 2603021319,
+  "biomes": 2603021319,
+  "enchants": 2603021319,
+  "potions": 2603021319,
+  "trades": 2603021319,
+  "recipes": 2603021319,
+  "structures": 2603021319,
+  "items": 2603021319,
+  "advancements": 2603021319,
+  "commands": 2603021319,
+  "textures": 2603021319,
+  "news": 2603021319
 }

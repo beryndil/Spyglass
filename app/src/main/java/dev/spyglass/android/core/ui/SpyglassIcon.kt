@@ -1,21 +1,30 @@
 package dev.spyglass.android.core.ui
 
+import android.graphics.BitmapFactory
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.FilterQuality
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import dev.spyglass.android.R
+import java.io.File
 
 sealed interface SpyglassIcon {
     data class Vector(val imageVector: ImageVector) : SpyglassIcon
     data class Drawable(@DrawableRes val resId: Int) : SpyglassIcon
     /** Potion bottle whose liquid is tinted with [color]. */
     data class Potion(val color: Color) : SpyglassIcon
+    /** Bitmap loaded from a file on disk (downloaded textures). */
+    data class FileBitmap(val file: File) : SpyglassIcon
 }
 
 @Composable
@@ -51,6 +60,20 @@ fun SpyglassIconImage(
                 modifier = modifier,
                 tint = Color.Unspecified,
             )
+        }
+        is SpyglassIcon.FileBitmap -> {
+            val bitmap = remember(icon.file.absolutePath) {
+                TextureManager.getCachedBitmap(icon.file)
+            }
+            if (bitmap != null) {
+                Image(
+                    bitmap = bitmap.asImageBitmap(),
+                    contentDescription = contentDescription,
+                    modifier = modifier,
+                    contentScale = ContentScale.Fit,
+                    filterQuality = FilterQuality.None, // Pixel art — nearest-neighbor
+                )
+            }
         }
     }
 }

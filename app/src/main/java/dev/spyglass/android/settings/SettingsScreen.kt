@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
+import kotlinx.coroutines.launch
 
 @Composable
 private fun browseTabNames() = listOf(

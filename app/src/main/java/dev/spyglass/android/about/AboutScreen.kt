@@ -32,17 +32,17 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
     val uriHandler = LocalUriHandler.current
     val context = LocalContext.current
 
-    val dataVersion by produceState(0) {
+    val manifest by produceState<DataManifest?>(null) {
         value = try {
             val prefs = context.getSharedPreferences("spyglass_sync", android.content.Context.MODE_PRIVATE)
             val raw = prefs.getString("local_manifest", null)
             if (raw != null) {
-                DataManifest.fromJson(raw).effectiveVersion
+                DataManifest.fromJson(raw)
             } else {
                 val bundled = context.assets.open("minecraft/manifest.json").bufferedReader().readText()
-                DataManifest.fromJson(bundled).effectiveVersion
+                DataManifest.fromJson(bundled)
             }
-        } catch (_: Exception) { 0 }
+        } catch (_: Exception) { null }
     }
 
     LazyColumn(
@@ -142,7 +142,8 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
             SectionHeader(stringResource(R.string.about_game_data))
             ResultCard {
                 StatRow(stringResource(R.string.home_minecraft_version), stringResource(R.string.about_minecraft_version))
-                StatRow(stringResource(R.string.about_data_version), dataVersion.toString())
+                StatRow(stringResource(R.string.about_data_version), formatDataVersion(manifest?.effectiveVersion ?: 0L))
+                StatRow("Images Version", formatDataVersion(manifest?.textures ?: 0L))
             }
         }
 
@@ -260,4 +261,15 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
 
         item(key = "bottom_spacer") { Spacer(Modifier.height(8.dp)) }
     }
+}
+
+/** Formats a YYMMDDHHMM Long (e.g. 2603021319) as "2026.0302.1319". */
+private fun formatDataVersion(v: Long): String {
+    if (v < 1_000_000_000) return v.toString() // legacy int format
+    val yy = v / 100_000_000
+    val mm = (v / 1_000_000) % 100
+    val dd = (v / 10_000) % 100
+    val hh = (v / 100) % 100
+    val min = v % 100
+    return "20%02d.%02d%02d.%02d%02d".format(yy, mm, dd, hh, min)
 }
