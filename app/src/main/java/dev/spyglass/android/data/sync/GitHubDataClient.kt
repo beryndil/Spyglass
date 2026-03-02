@@ -14,7 +14,7 @@ object GitHubDataClient {
 
     private const val OWNER = "Dev-VulX"
     private const val REPO = "Spyglass"
-    private const val BRANCH = "master"
+    private const val BRANCH = "main"
     private const val BASE_URL =
         "https://raw.githubusercontent.com/$OWNER/$REPO/$BRANCH/data"
 
