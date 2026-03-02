@@ -20,6 +20,17 @@ private data class VersionData(val version: String, val date: String, val highli
 
 private val VERSIONS = listOf(
     VersionData(
+        version = "v1.0-alpha.5",
+        date = "March 2026",
+        highlights = listOf(
+            "News feed on the home screen — synced from Spyglass-Data, supports Markdown and images",
+            "Updatable textures — bundled icons can be updated via sync without rebuilding the APK",
+            "Versioning now includes hour and minute (YYMMDDHHMM format)",
+            "Images version displayed on the About screen",
+            "Texture lookup uses downloaded overrides with bundled drawable fallback",
+        ),
+    ),
+    VersionData(
         version = "v1.0-alpha.4",
         date = "March 2026",
         highlights = listOf(
