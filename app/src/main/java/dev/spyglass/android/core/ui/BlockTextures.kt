@@ -88,6 +88,8 @@ object BlockTextures {
         "chest" to "block_chest",
         "barrel" to "block_barrel",
         "shulker_box" to "block_shulker_box",
+        "black_shulker_box" to "block_black_shulker_box",
+        "black_glazed_terracotta" to "block_black_glazed_terracotta",
         "ender_chest" to "block_ender_chest",
         "anvil" to "block_anvil",
         "enchanting_table" to "block_enchanting_table",
