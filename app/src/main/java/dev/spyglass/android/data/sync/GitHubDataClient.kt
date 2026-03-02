@@ -12,9 +12,9 @@ import java.util.concurrent.TimeUnit
  */
 object GitHubDataClient {
 
-    private const val OWNER = "dwhennigan"
-    private const val REPO = "spyglass-android"
-    private const val BRANCH = "main"
+    private const val OWNER = "Dev-VulX"
+    private const val REPO = "Spyglass"
+    private const val BRANCH = "master"
     private const val BASE_URL =
         "https://raw.githubusercontent.com/$OWNER/$REPO/$BRANCH/data"
 
