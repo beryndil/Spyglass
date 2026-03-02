@@ -10260,7 +10260,7 @@
   {
     "id": "reinforced_deepslate",
     "name": "Reinforced Deepslate",
-    "hardness": 1.0,
+    "hardness": 55.0,
     "toolRequired": "none",
     "drops": "none",
     "stackSize": 64,
