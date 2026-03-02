@@ -357,16 +357,32 @@ object BlockTextures {
         "firefly_bush" to R.drawable.block_bush_bk,
         "dead_bush" to R.drawable.block_bush_bk,
         "sweet_berry_bush" to R.drawable.block_bush_bk,
-        // Flowers
-        "blue_orchid" to R.drawable.block_flower_blue,
-        "orange_tulip" to R.drawable.block_flower_orange,
-        "pink_tulip" to R.drawable.block_flower_pink,
-        "red_tulip" to R.drawable.block_flower_red,
-        "white_tulip" to R.drawable.block_flower_white,
-        "golden_dandelion" to R.drawable.block_flower_yellow,
-        "open_eyeblossom" to R.drawable.block_flower_purple,
-        "closed_eyeblossom" to R.drawable.block_flower_purple,
-        "cactus_flower" to R.drawable.block_flower_pink,
+        // Flowers — color matches the dye each flower crafts into
+        "dandelion" to R.drawable.block_flower_yellow,          // → yellow dye
+        "allium" to R.drawable.block_flower_magenta,            // → magenta dye
+        "azure_bluet" to R.drawable.block_flower_light_gray,    // → light gray dye
+        "blue_orchid" to R.drawable.block_flower_light_blue,    // → light blue dye
+        "cornflower" to R.drawable.block_flower_blue,           // → blue dye
+        "lily_of_the_valley" to R.drawable.block_flower_white,  // → white dye
+        "orange_tulip" to R.drawable.block_flower_orange,       // → orange dye
+        "oxeye_daisy" to R.drawable.block_flower_light_gray,    // → light gray dye
+        "pink_tulip" to R.drawable.block_flower_pink,           // → pink dye
+        "red_tulip" to R.drawable.block_flower_red,             // → red dye
+        "white_tulip" to R.drawable.block_flower_light_gray,    // → light gray dye
+        "wither_rose" to R.drawable.block_flower_black,         // → black dye
+        "torchflower" to R.drawable.block_flower_orange,        // → orange dye
+        "pitcher_plant" to R.drawable.block_flower_cyan,        // → cyan dye
+        "golden_dandelion" to R.drawable.block_flower_yellow,   // → yellow dye
+        "open_eyeblossom" to R.drawable.block_flower_orange,    // → orange dye
+        "closed_eyeblossom" to R.drawable.block_flower_gray,    // → gray dye
+        // Tall flowers (×2 dye output)
+        "sunflower" to R.drawable.block_flower_yellow,          // → yellow dye
+        "lilac" to R.drawable.block_flower_magenta,             // → magenta dye
+        "rose_bush" to R.drawable.block_flower_red,             // → red dye
+        "peony" to R.drawable.block_flower_pink,                // → pink dye
+        // Decorative (no dye recipe)
+        "spore_blossom" to R.drawable.block_flower_pink,
+        "cactus_flower" to R.drawable.block_flower_yellow,
         "pink_petals" to R.drawable.block_flower_pink,
         "wildflowers" to R.drawable.block_flower_blue,
         "chorus_flower" to R.drawable.block_flower_purple,
