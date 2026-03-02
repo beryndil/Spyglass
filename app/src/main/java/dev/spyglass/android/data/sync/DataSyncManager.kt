@@ -1,0 +1,137 @@
+package dev.spyglass.android.data.sync
+
+import android.content.Context
+import dev.spyglass.android.data.seed.DataSeeder
+import timber.log.Timber
+import java.io.File
+
+/**
+ * Orchestrates data sync: fetches the remote manifest from GitHub,
+ * compares with the local manifest, downloads changed JSON files,
+ * and re-seeds the affected database tables.
+ */
+object DataSyncManager {
+
+    private const val PREFS_NAME = "spyglass_sync"
+    private const val KEY_MANIFEST = "local_manifest"
+
+    /** Maps table name → JSON file name in the data directory. */
+    private val TABLE_FILES = mapOf(
+        "blocks" to "blocks.json",
+        "mobs" to "mobs.json",
+        "biomes" to "biomes.json",
+        "enchants" to "enchants.json",
+        "potions" to "potions.json",
+        "trades" to "trades.json",
+        "recipes" to "recipes.json",
+        "structures" to "structures.json",
+        "items" to "items.json",
+        "advancements" to "advancements.json",
+        "commands" to "commands.json",
+    )
+
+    /**
+     * Runs a full sync cycle:
+     * 1. Fetch remote manifest
+     * 2. Compare with local manifest
+     * 3. Download changed files
+     * 4. Re-seed affected tables
+     * 5. Persist updated manifest
+     */
+    suspend fun sync(context: Context) {
+        Timber.d("DataSync: starting sync")
+
+        // 1. Fetch remote manifest
+        val remoteManifest = GitHubDataClient.fetchManifest()
+        if (remoteManifest == null) {
+            Timber.d("DataSync: no remote manifest, skipping")
+            return
+        }
+
+        // 2. Load local manifest
+        var localManifest = loadLocalManifest(context)
+
+        // Quick check — if top-level version matches, skip per-table comparison
+        if (remoteManifest.version == localManifest.version) {
+            Timber.d("DataSync: data version %d is current", localManifest.version)
+            return
+        }
+
+        Timber.d("DataSync: local v%d → remote v%d", localManifest.version, remoteManifest.version)
+
+        // 3. Determine which tables have changed
+        val changed = remoteManifest.changedTables(localManifest)
+        if (changed.isEmpty()) {
+            // Version bumped but no individual tables changed — just update version
+            localManifest = localManifest.copy(version = remoteManifest.version)
+            saveLocalManifest(context, localManifest)
+            Timber.d("DataSync: all tables up to date")
+            return
+        }
+
+        Timber.d("DataSync: %d table(s) changed: %s", changed.size, changed)
+
+        // 4. Download and reseed each changed table
+        for (table in changed) {
+            val fileName = TABLE_FILES[table] ?: continue
+            val jsonContent = GitHubDataClient.fetchDataFile(fileName)
+            if (jsonContent == null) {
+                Timber.w("DataSync: failed to download %s, skipping", fileName)
+                continue
+            }
+
+            // Save to internal storage so DataSeeder can read it
+            saveToInternalStorage(context, fileName, jsonContent)
+
+            // Re-seed the table
+            DataSeeder.reseedTable(context, table)
+
+            // Update local manifest version for this table
+            localManifest = localManifest.withVersion(table, remoteManifest.versionOf(table))
+            saveLocalManifest(context, localManifest)
+
+            Timber.d("DataSync: updated %s to version %d", table, remoteManifest.versionOf(table))
+        }
+
+        // Update top-level version
+        localManifest = localManifest.copy(version = remoteManifest.version)
+        saveLocalManifest(context, localManifest)
+
+        Timber.d("DataSync: sync complete, now at v%d", remoteManifest.version)
+    }
+
+    /** Saves JSON content to internal storage at minecraft/{fileName}. */
+    private fun saveToInternalStorage(context: Context, fileName: String, content: String) {
+        val dir = File(context.filesDir, "minecraft")
+        if (!dir.exists()) dir.mkdirs()
+        File(dir, fileName).writeText(content)
+    }
+
+    private fun loadLocalManifest(context: Context): DataManifest {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val raw = prefs.getString(KEY_MANIFEST, null) ?: return loadBundledManifest(context)
+        return try {
+            DataManifest.fromJson(raw)
+        } catch (e: Exception) {
+            Timber.w(e, "DataSync: invalid local manifest, using bundled")
+            loadBundledManifest(context)
+        }
+    }
+
+    private fun loadBundledManifest(context: Context): DataManifest {
+        return try {
+            val raw = context.assets.open("minecraft/manifest.json").bufferedReader().readText()
+            DataManifest.fromJson(raw)
+        } catch (e: Exception) {
+            Timber.w(e, "DataSync: failed to read bundled manifest")
+            DataManifest()
+        }
+    }
+
+    private fun saveLocalManifest(context: Context, manifest: DataManifest) {
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .edit()
+            .putString(KEY_MANIFEST, DataManifest.toJson(manifest))
+            .apply()
+    }
+}

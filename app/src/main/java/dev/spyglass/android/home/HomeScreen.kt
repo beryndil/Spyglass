@@ -28,9 +28,6 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PriorityHigh
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.datastore.preferences.core.edit
-import coil.compose.AsyncImage
-import dev.spyglass.android.core.net.MojangApi
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -123,9 +120,6 @@ private fun iconForFavorite(type: String, id: String): SpyglassIcon = when (type
 private data class HomePrefs(
     val showTipOfDay: Boolean = true,
     val showFavoritesOnHome: Boolean = false,
-    val playerUsername: String = "",
-    val playerUuid: String = "",
-    val dismissUsernameDialog: Boolean = false,
     val loaded: Boolean = false,
 )
 
@@ -142,15 +136,12 @@ fun HomeScreen(
     val tips = stringArrayResource(R.array.tips)
     val tipIndex = remember { Calendar.getInstance().get(Calendar.DAY_OF_YEAR) % tips.size }
 
-    // Single DataStore collector — replaces 6 separate flows
+    // Single DataStore collector
     val prefs by remember {
         context.dataStore.data.map { p ->
             HomePrefs(
                 showTipOfDay = p[PreferenceKeys.SHOW_TIP_OF_DAY] ?: true,
                 showFavoritesOnHome = p[PreferenceKeys.SHOW_FAVORITES_ON_HOME] ?: false,
-                playerUsername = p[PreferenceKeys.PLAYER_USERNAME] ?: "",
-                playerUuid = p[PreferenceKeys.PLAYER_UUID] ?: "",
-                dismissUsernameDialog = p[PreferenceKeys.DISMISS_USERNAME_DIALOG] ?: false,
                 loaded = true,
             )
         }
@@ -178,42 +169,6 @@ fun HomeScreen(
         repo?.incompleteTodoCount()?.collect { value = it }
     }
 
-    // If username is set but UUID is missing, fetch it now (upgrade path for existing users)
-    LaunchedEffect(prefs.loaded, prefs.playerUsername, prefs.playerUuid) {
-        if (prefs.loaded && prefs.playerUsername.isNotBlank() && prefs.playerUuid.isBlank()) {
-            val uuid = MojangApi.fetchUuid(prefs.playerUsername)
-            if (uuid != null) {
-                context.dataStore.edit { it[PreferenceKeys.PLAYER_UUID] = uuid }
-            }
-        }
-    }
-
-    // Username dialog state — only evaluate after DataStore has loaded
-    var showUsernameDialog by remember { mutableStateOf(false) }
-    LaunchedEffect(prefs.loaded, prefs.playerUsername, prefs.dismissUsernameDialog) {
-        showUsernameDialog = prefs.loaded && prefs.playerUsername.isBlank() && !prefs.dismissUsernameDialog
-    }
-
-    if (showUsernameDialog) {
-        UsernameDialog(
-            onSave = { name ->
-                scope.launch {
-                    context.dataStore.edit { it[PreferenceKeys.PLAYER_USERNAME] = name }
-                    val uuid = MojangApi.fetchUuid(name)
-                    if (uuid != null) {
-                        context.dataStore.edit { it[PreferenceKeys.PLAYER_UUID] = uuid }
-                    }
-                }
-                showUsernameDialog = false
-            },
-            onLater = { showUsernameDialog = false },
-            onDontAskAgain = {
-                scope.launch { context.dataStore.edit { it[PreferenceKeys.DISMISS_USERNAME_DIALOG] = true } }
-                showUsernameDialog = false
-            },
-        )
-    }
-
     // LazyColumn — only visible sections compose on first frame
     LazyColumn(
         modifier = Modifier
@@ -224,10 +179,7 @@ fun HomeScreen(
     ) {
         // ── A. Header / Branding ──
         item(key = "header") {
-            HomeHeader(
-                playerUsername = prefs.playerUsername,
-                playerUuid = prefs.playerUuid,
-            )
+            HomeHeader()
         }
 
         // ── Search ──
@@ -290,29 +242,20 @@ fun HomeScreen(
 // ── Extracted section composables ───────────────────────────────────────────
 
 @Composable
-private fun HomeHeader(playerUsername: String, playerUuid: String) {
+private fun HomeHeader() {
     Column(
         modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        val skinModel = if (playerUuid.isNotBlank()) MojangApi.skinUrl(playerUuid) else null
-        if (skinModel != null) {
-            AsyncImage(
-                model = skinModel,
-                contentDescription = "$playerUsername skin",
-                modifier = Modifier.height(140.dp),
-            )
-        } else {
-            SpyglassIconImage(
-                SpyglassIcon.Drawable(R.drawable.ic_launcher_foreground),
-                contentDescription = null,
-                tint = Color.Unspecified,
-                modifier = Modifier.size(144.dp),
-            )
-        }
+        SpyglassIconImage(
+            SpyglassIcon.Drawable(R.drawable.ic_launcher_foreground),
+            contentDescription = null,
+            tint = Color.Unspecified,
+            modifier = Modifier.size(144.dp),
+        )
         Spacer(Modifier.height(8.dp))
         Text(
-            if (playerUsername.isNotBlank()) stringResource(R.string.home_welcome_name, playerUsername) else stringResource(R.string.home_welcome),
+            stringResource(R.string.home_welcome),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onSurface,
         )

@@ -37,7 +37,6 @@
 
     <!-- Home Screen -->
     <string name="home_welcome">Welcome to Spyglass</string>
-    <string name="home_welcome_name">Welcome %s to Spyglass</string>
     <string name="home_subtitle">Your Minecraft companion for crafting, building, and exploring</string>
     <string name="home_minecraft_version">Minecraft Java 1.21.4</string>
     <string name="home_todo_empty">What do you have planned for today?</string>
@@ -58,13 +57,6 @@
     <string name="home_whats_new_search">Search everything</string>
     <string name="home_whats_new_search_desc">Global search across blocks, mobs, items, recipes, and more</string>
 
-    <!-- Username Dialog -->
-    <string name="username_dialog_title">What\'s your player name?</string>
-    <string name="username_dialog_placeholder">Minecraft username</string>
-    <string name="username_dialog_error">3–16 characters: letters, numbers, underscores</string>
-    <string name="username_dialog_later">Later</string>
-    <string name="username_dialog_dont_ask">Don\'t ask again</string>
-
     <!-- Consent Dialog -->
     <string name="consent_title">Privacy &amp; Data Collection</string>
     <string name="consent_body">Spyglass can collect anonymous data to help improve the app. No personal information is ever shared.</string>
@@ -80,11 +72,6 @@
     <!-- Settings Screen -->
     <string name="settings_theme">Theme</string>
     <string name="settings_background">Background</string>
-    <string name="settings_player_name">Player Name</string>
-    <string name="settings_username">Username</string>
-    <string name="settings_uuid">UUID</string>
-    <string name="settings_clear_username">Clear Username</string>
-    <string name="settings_no_username">No username set. You\u2019ll be asked on next launch.</string>
     <string name="settings_default_browse_tab">Default Browse Tab</string>
     <string name="settings_browse_tab_desc">Which tab opens first when you tap Browse</string>
     <string name="settings_default_tool_tab">Default Tool Tab</string>
@@ -116,6 +103,7 @@
     <string name="about_coffee">Buy Me a Cup of Coffee</string>
     <string name="about_disclaimer">Not affiliated with Mojang Studios or Microsoft.</string>
     <string name="about_game_data">Game Data</string>
+    <string name="about_data_version">Data Version</string>
     <string name="about_minecraft_version">Java 1.21.4</string>
     <string name="about_credits">Credits &amp; Licenses</string>
     <string name="about_license_cc">CC BY-NC-SA 4.0 \u2014 View License</string>
@@ -128,7 +116,7 @@
     <string name="about_github">GitHub</string>
     <string name="about_copyright">\u00A9 2026 Beryndil. Licensed under CC BY-NC-SA 4.0.</string>
     <string name="about_privacy">Privacy</string>
-    <string name="about_privacy_text">All game data is stored locally on your device. If you provide your Minecraft username, it is sent to Mojang (api.mojang.com) to look up your player UUID. Your UUID is then used to load your skin from third-party rendering services (starlightskins.lunareclipse.studio, mc-heads.net). No other personal data is collected or shared.</string>
+    <string name="about_privacy_text">All game data is stored locally on your device. No personal data is collected or shared.</string>
     <string name="about_report_bug">Report a Bug</string>
     <string name="about_request_feature">Request a Feature</string>
 

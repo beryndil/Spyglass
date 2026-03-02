@@ -30,14 +30,6 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         .map { it[PreferenceKeys.SHOW_FAVORITES_ON_HOME] ?: false }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
-    val playerUsername: StateFlow<String> = store.data
-        .map { it[PreferenceKeys.PLAYER_USERNAME] ?: "" }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
-
-    val playerUuid: StateFlow<String> = store.data
-        .map { it[PreferenceKeys.PLAYER_UUID] ?: "" }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
-
     val allFavorites: StateFlow<List<FavoriteEntity>> = repo.allFavorites()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -55,18 +47,6 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setShowFavoritesOnHome(show: Boolean) = viewModelScope.launch {
         store.edit { it[PreferenceKeys.SHOW_FAVORITES_ON_HOME] = show }
-    }
-
-    fun setPlayerUsername(name: String) = viewModelScope.launch {
-        store.edit { it[PreferenceKeys.PLAYER_USERNAME] = name }
-    }
-
-    fun clearPlayerUsername() = viewModelScope.launch {
-        store.edit {
-            it.remove(PreferenceKeys.PLAYER_USERNAME)
-            it.remove(PreferenceKeys.PLAYER_UUID)
-            it.remove(PreferenceKeys.DISMISS_USERNAME_DIALOG)
-        }
     }
 
     val gameClockEnabled: StateFlow<Boolean> = store.data
@@ -108,15 +88,5 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun deleteAllUserData() = viewModelScope.launch {
         repo.deleteAllUserData()
-        // Clear player data from DataStore
-        store.edit {
-            it.remove(PreferenceKeys.PLAYER_USERNAME)
-            it.remove(PreferenceKeys.PLAYER_UUID)
-            it.remove(PreferenceKeys.DISMISS_USERNAME_DIALOG)
-        }
-        // Clear secure preferences
-        try {
-            SecurePreferences.clearAll(getApplication())
-        } catch (_: Exception) { /* SecurePreferences may not be initialized yet */ }
     }
 }

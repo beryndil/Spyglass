@@ -12,7 +12,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
+import dev.spyglass.android.data.sync.DataManifest
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +30,20 @@ import dev.spyglass.android.core.ui.*
 @Composable
 fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
     val uriHandler = LocalUriHandler.current
+    val context = LocalContext.current
+
+    val dataVersion by produceState(0) {
+        value = try {
+            val prefs = context.getSharedPreferences("spyglass_sync", android.content.Context.MODE_PRIVATE)
+            val raw = prefs.getString("local_manifest", null)
+            if (raw != null) {
+                DataManifest.fromJson(raw).version
+            } else {
+                val bundled = context.assets.open("minecraft/manifest.json").bufferedReader().readText()
+                DataManifest.fromJson(bundled).version
+            }
+        } catch (_: Exception) { 0 }
+    }
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -124,6 +142,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
             SectionHeader(stringResource(R.string.about_game_data))
             ResultCard {
                 StatRow(stringResource(R.string.home_minecraft_version), stringResource(R.string.about_minecraft_version))
+                StatRow(stringResource(R.string.about_data_version), dataVersion.toString())
             }
         }
 

@@ -109,8 +109,6 @@ dependencies {
     implementation(libs.datastore.preferences)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.coil.compose)
-
     // Debug tools
     implementation(libs.timber)
     debugImplementation(libs.leakcanary)
@@ -124,9 +122,6 @@ dependencies {
     // implementation(libs.firebase.crashlytics)
     // implementation(libs.firebase.analytics)
     // implementation(libs.firebase.perf)
-
-    // Security
-    implementation(libs.security.crypto)
 
     // Window Manager
     implementation(libs.window)

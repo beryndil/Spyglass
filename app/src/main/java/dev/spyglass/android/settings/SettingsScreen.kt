@@ -54,8 +54,6 @@ fun SettingsScreen(
     val defaultToolTab      by vm.defaultToolTab.collectAsState()
     val showTipOfDay        by vm.showTipOfDay.collectAsState()
     val showFavoritesOnHome by vm.showFavoritesOnHome.collectAsState()
-    val playerUsername      by vm.playerUsername.collectAsState()
-    val playerUuid          by vm.playerUuid.collectAsState()
     val gameClockEnabled    by vm.gameClockEnabled.collectAsState()
     val allFavorites        by vm.allFavorites.collectAsState()
     val backgroundTheme     by vm.backgroundTheme.collectAsState()
@@ -116,32 +114,6 @@ fun SettingsScreen(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
-            }
-        }
-
-        // ── Player Name ───────────────────────────────────────────────
-        item(key = "player") {
-            SectionHeader(stringResource(R.string.settings_player_name))
-            ResultCard {
-                if (playerUsername.isNotBlank()) {
-                    StatRow(stringResource(R.string.settings_username), playerUsername)
-                    if (playerUuid.isNotBlank()) {
-                        StatRow(stringResource(R.string.settings_uuid), playerUuid)
-                    }
-                    TextButton(
-                        onClick = vm::clearPlayerUsername,
-                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
-                        modifier = Modifier.height(32.dp),
-                    ) {
-                        Text(stringResource(R.string.settings_clear_username), color = MaterialTheme.colorScheme.secondary, style = MaterialTheme.typography.labelSmall)
-                    }
-                } else {
-                    Text(
-                        stringResource(R.string.settings_no_username),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                }
             }
         }
 

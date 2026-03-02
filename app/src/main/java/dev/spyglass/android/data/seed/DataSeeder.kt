@@ -8,6 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import timber.log.Timber
+import java.io.File
 
 /**
  * Reads JSON files from assets/minecraft/ and inserts into Room.
@@ -106,6 +108,57 @@ object DataSeeder {
     private fun readAsset(context: Context, path: String): String =
         context.assets.open(path).bufferedReader().readText()
 
+    /** Maps table name → asset file name. */
+    private val TABLE_FILES = mapOf(
+        "blocks" to "blocks.json", "mobs" to "mobs.json",
+        "biomes" to "biomes.json", "enchants" to "enchants.json",
+        "potions" to "potions.json", "trades" to "trades.json",
+        "recipes" to "recipes.json", "structures" to "structures.json",
+        "items" to "items.json", "advancements" to "advancements.json",
+        "commands" to "commands.json",
+    )
+
+    /**
+     * Reads JSON for a table. Checks internal storage first (updated by sync),
+     * then falls back to bundled assets.
+     */
+    fun getJsonForTable(context: Context, tableName: String): String? {
+        val fileName = TABLE_FILES[tableName] ?: return null
+        // Check internal storage first (downloaded from GitHub)
+        val localFile = File(context.filesDir, "minecraft/$fileName")
+        if (localFile.exists()) {
+            return runCatching { localFile.readText() }.getOrNull()
+        }
+        // Fall back to bundled assets
+        return runCatching { readAsset(context, "minecraft/$fileName") }.getOrNull()
+    }
+
+    /**
+     * Clears a single table and re-seeds it from the latest available JSON.
+     * Called by [DataSyncManager] after downloading updated data.
+     */
+    suspend fun reseedTable(context: Context, tableName: String) = withContext(Dispatchers.IO) {
+        val db = SpyglassDatabase.get(context)
+        val raw = getJsonForTable(context, tableName) ?: run {
+            Timber.w("reseedTable: no JSON found for %s", tableName)
+            return@withContext
+        }
+        Timber.d("reseedTable: re-seeding %s", tableName)
+        when (tableName) {
+            "blocks" -> { db.blockDao().deleteAll(); seedBlocksFrom(raw, db) }
+            "mobs" -> { db.mobDao().deleteAll(); seedMobsFrom(raw, db) }
+            "biomes" -> { db.biomeDao().deleteAll(); seedBiomesFrom(raw, db) }
+            "enchants" -> { db.enchantDao().deleteAll(); seedEnchantsFrom(raw, db) }
+            "potions" -> { db.potionDao().deleteAll(); seedPotionsFrom(raw, db) }
+            "trades" -> { db.tradeDao().deleteAll(); seedTradesFrom(raw, db) }
+            "recipes" -> { db.recipeDao().deleteAll(); seedRecipesFrom(raw, db) }
+            "structures" -> { db.structureDao().deleteAll(); seedStructuresFrom(raw, db) }
+            "items" -> { db.itemDao().deleteAll(); seedItemsFrom(raw, db) }
+            "advancements" -> { db.advancementDao().deleteAll(); seedAdvancementsFrom(raw, db) }
+            "commands" -> { db.commandDao().deleteAll(); seedCommandsFrom(raw, db) }
+        }
+    }
+
     // ── JSON DTOs ─────────────────────────────────────────────────────────────
 
     @Serializable data class BlockJson(
@@ -203,9 +256,15 @@ object DataSeeder {
     )
 
     // ── Seed helpers ──────────────────────────────────────────────────────────
+    // Each table has a *From(raw, db) method that parses JSON and inserts.
+    // The seedX(context, db) wrappers read from assets for initial install.
 
     private suspend fun seedBlocks(context: Context, db: SpyglassDatabase) {
         val raw = runCatching { readAsset(context, "minecraft/blocks.json") }.getOrNull() ?: return
+        seedBlocksFrom(raw, db)
+    }
+
+    private suspend fun seedBlocksFrom(raw: String, db: SpyglassDatabase) {
         val items = json.decodeFromString<List<BlockJson>>(raw)
         db.blockDao().insertAll(items.map {
             BlockEntity(it.id, it.name, it.stackSize, it.hardness, it.toolRequired,
@@ -217,6 +276,10 @@ object DataSeeder {
 
     private suspend fun seedMobs(context: Context, db: SpyglassDatabase) {
         val raw = runCatching { readAsset(context, "minecraft/mobs.json") }.getOrNull() ?: return
+        seedMobsFrom(raw, db)
+    }
+
+    private suspend fun seedMobsFrom(raw: String, db: SpyglassDatabase) {
         val items = json.decodeFromString<List<MobJson>>(raw)
         db.mobDao().insertAll(items.map {
             val healthStr = it.health.toString().trim('"')
@@ -230,6 +293,10 @@ object DataSeeder {
 
     private suspend fun seedBiomes(context: Context, db: SpyglassDatabase) {
         val raw = runCatching { readAsset(context, "minecraft/biomes.json") }.getOrNull() ?: return
+        seedBiomesFrom(raw, db)
+    }
+
+    private suspend fun seedBiomesFrom(raw: String, db: SpyglassDatabase) {
         val items = json.decodeFromString<List<BiomeJson>>(raw)
         db.biomeDao().insertAll(items.map {
             BiomeEntity(it.id, it.name, it.temperature, it.precipitation, it.category,
@@ -239,6 +306,10 @@ object DataSeeder {
 
     private suspend fun seedEnchants(context: Context, db: SpyglassDatabase) {
         val raw = runCatching { readAsset(context, "minecraft/enchants.json") }.getOrNull() ?: return
+        seedEnchantsFrom(raw, db)
+    }
+
+    private suspend fun seedEnchantsFrom(raw: String, db: SpyglassDatabase) {
         val items = json.decodeFromString<List<EnchantJson>>(raw)
         db.enchantDao().insertAll(items.map {
             EnchantEntity(it.id, it.name, it.maxLevel, it.target,
@@ -249,6 +320,10 @@ object DataSeeder {
 
     private suspend fun seedPotions(context: Context, db: SpyglassDatabase) {
         val raw = runCatching { readAsset(context, "minecraft/potions.json") }.getOrNull() ?: return
+        seedPotionsFrom(raw, db)
+    }
+
+    private suspend fun seedPotionsFrom(raw: String, db: SpyglassDatabase) {
         val items = json.decodeFromString<List<PotionJson>>(raw)
         db.potionDao().insertAll(items.map {
             PotionEntity(it.id, it.name, it.effect, it.duration, it.amplifier,
@@ -260,6 +335,10 @@ object DataSeeder {
 
     private suspend fun seedTrades(context: Context, db: SpyglassDatabase) {
         val raw = runCatching { readAsset(context, "minecraft/trades.json") }.getOrNull() ?: return
+        seedTradesFrom(raw, db)
+    }
+
+    private suspend fun seedTradesFrom(raw: String, db: SpyglassDatabase) {
         val items = json.decodeFromString<List<TradeJson>>(raw)
         db.tradeDao().insertAll(items.map {
             TradeEntity(0, it.profession, it.level, levelNames[it.level] ?: "Novice",
@@ -270,6 +349,10 @@ object DataSeeder {
 
     private suspend fun seedRecipes(context: Context, db: SpyglassDatabase) {
         val raw = runCatching { readAsset(context, "minecraft/recipes.json") }.getOrNull() ?: return
+        seedRecipesFrom(raw, db)
+    }
+
+    private suspend fun seedRecipesFrom(raw: String, db: SpyglassDatabase) {
         val items = json.decodeFromString<List<RecipeJson>>(raw)
         db.recipeDao().insertAll(items.map {
             RecipeEntity(it.id, it.outputItem, it.outputCount, it.type,
@@ -279,6 +362,10 @@ object DataSeeder {
 
     private suspend fun seedStructures(context: Context, db: SpyglassDatabase) {
         val raw = runCatching { readAsset(context, "minecraft/structures.json") }.getOrNull() ?: return
+        seedStructuresFrom(raw, db)
+    }
+
+    private suspend fun seedStructuresFrom(raw: String, db: SpyglassDatabase) {
         val items = json.decodeFromString<List<StructureJson>>(raw)
         db.structureDao().insertAll(items.map {
             StructureEntity(it.id, it.name, it.dimension, it.difficulty,
@@ -288,6 +375,10 @@ object DataSeeder {
 
     private suspend fun seedItems(context: Context, db: SpyglassDatabase) {
         val raw = runCatching { readAsset(context, "minecraft/items.json") }.getOrNull() ?: return
+        seedItemsFrom(raw, db)
+    }
+
+    private suspend fun seedItemsFrom(raw: String, db: SpyglassDatabase) {
         val items = json.decodeFromString<List<ItemJson>>(raw)
         db.itemDao().insertAll(items.map {
             ItemEntity(it.id, it.name, it.stackSize, it.category, it.durability,
@@ -300,6 +391,10 @@ object DataSeeder {
 
     private suspend fun seedAdvancements(context: Context, db: SpyglassDatabase) {
         val raw = runCatching { readAsset(context, "minecraft/advancements.json") }.getOrNull() ?: return
+        seedAdvancementsFrom(raw, db)
+    }
+
+    private suspend fun seedAdvancementsFrom(raw: String, db: SpyglassDatabase) {
         val items = json.decodeFromString<List<AdvancementJson>>(raw)
         db.advancementDao().insertAll(items.map {
             AdvancementEntity(it.id, it.name, it.description, it.category, it.type, it.parent,
@@ -310,6 +405,10 @@ object DataSeeder {
 
     private suspend fun seedCommands(context: Context, db: SpyglassDatabase) {
         val raw = runCatching { readAsset(context, "minecraft/commands.json") }.getOrNull() ?: return
+        seedCommandsFrom(raw, db)
+    }
+
+    private suspend fun seedCommandsFrom(raw: String, db: SpyglassDatabase) {
         val items = json.decodeFromString<List<CommandJson>>(raw)
         db.commandDao().insertAll(items.map {
             CommandEntity(it.id, it.name, it.syntax, it.description, it.category, it.permissionLevel)

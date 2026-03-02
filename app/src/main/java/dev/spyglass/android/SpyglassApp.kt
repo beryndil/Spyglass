@@ -5,13 +5,11 @@ import android.os.StrictMode
 import android.os.Trace
 import dev.spyglass.android.data.repository.GameDataRepository
 import dev.spyglass.android.data.seed.DataSeeder
-import dev.spyglass.android.settings.PreferenceKeys
-import dev.spyglass.android.settings.SecurePreferences
-import dev.spyglass.android.settings.dataStore
+import dev.spyglass.android.data.sync.DataSyncManager
+import dev.spyglass.android.data.sync.DataSyncWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -48,7 +46,7 @@ class SpyglassApp : Application() {
                 defaultHandler?.uncaughtException(thread, throwable)
             }
 
-            // Pre-warm database, seed game data, and migrate player prefs — all on IO
+            // Pre-warm database and seed game data on IO
             appScope.launch(Dispatchers.IO) {
                 Trace.beginSection("SpyglassApp.seedAndWarm")
                 try {
@@ -56,35 +54,23 @@ class SpyglassApp : Application() {
                     GameDataRepository.get(this@SpyglassApp)
                     // Seed game data from bundled JSON assets (no-op after first install)
                     DataSeeder.seedIfNeeded(this@SpyglassApp)
-                    // Migrate player data from DataStore to SecurePreferences (one-time)
-                    migratePlayerDataToSecurePrefs()
                 } finally {
                     Trace.endSection()
                 }
+
+                // Sync with GitHub for data updates (fire-and-forget)
+                try {
+                    DataSyncManager.sync(this@SpyglassApp)
+                } catch (e: Exception) {
+                    Timber.w(e, "Initial data sync failed")
+                }
             }
+
+            // Enroll periodic sync worker (every 12 hours, requires network)
+            DataSyncWorker.enqueue(this)
         } finally {
             Trace.endSection()
         }
     }
 
-    private suspend fun migratePlayerDataToSecurePrefs() {
-        try {
-            val prefs = dataStore.data.first()
-            val username = prefs[PreferenceKeys.PLAYER_USERNAME] ?: return
-            if (username.isBlank()) return
-
-            val secure = SecurePreferences.get(this)
-            // Only migrate if SecurePreferences doesn't already have the data
-            if (SecurePreferences.getPlayerUsername(this).isNotBlank()) return
-
-            SecurePreferences.setPlayerUsername(this, username)
-            val uuid = prefs[PreferenceKeys.PLAYER_UUID] ?: ""
-            if (uuid.isNotBlank()) {
-                SecurePreferences.setPlayerUuid(this, uuid)
-            }
-            Timber.d("Migrated player data to SecurePreferences")
-        } catch (e: Exception) {
-            Timber.w(e, "Failed to migrate player data to SecurePreferences")
-        }
-    }
 }

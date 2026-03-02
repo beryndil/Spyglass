@@ -20,6 +20,34 @@ private data class VersionData(val version: String, val date: String, val highli
 
 private val VERSIONS = listOf(
     VersionData(
+        version = "v1.0-alpha.4",
+        date = "March 2026",
+        highlights = listOf(
+            "Remote data sync — app checks GitHub for data updates without needing an app update",
+            "Data version displayed in About screen for easy verification",
+            "Removed player username/skin feature for a cleaner home screen",
+        ),
+    ),
+    VersionData(
+        version = "v1.0-alpha.3",
+        date = "February 2026",
+        highlights = listOf(
+            "Comprehensive Minecraft Wiki sync across all 11 data categories",
+            "1,167 blocks validated — 223 added, 44 properties corrected",
+            "550+ entries added or corrected across mobs, biomes, items, trades, and more",
+            "5 new shapes: Wall, Arch, Ellipsoid, Arc Wall, Spiral",
+            "Smelting XP values for all 78 smelting recipes",
+            "Block glance text, ore Y-levels, and sort/filter UI for browse tabs",
+            "Linkified entity descriptions with cross-tab navigation",
+            "Search moved to top of home page",
+            "Reference tab added to Browse",
+            "Game clock: editable day counter and color fixes",
+            "Baseline profiles and Trace instrumentation for faster startup",
+            "ANR fix: database init moved off main thread",
+            "Startup performance: HomeScreen converted to LazyColumn",
+        ),
+    ),
+    VersionData(
         version = "v1.0-alpha.2",
         date = "February 2026",
         highlights = listOf(
