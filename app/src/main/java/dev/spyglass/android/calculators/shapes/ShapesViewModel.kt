@@ -4,9 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlin.coroutines.coroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlin.math.*
 
@@ -62,7 +65,7 @@ class ShapesViewModel : ViewModel() {
         calcJob = viewModelScope.launch(Dispatchers.Default) { doRecalc() }
     }
 
-    private fun doRecalc() {
+    private suspend fun doRecalc() {
         val s = _state.value
         val r = s.radiusInput.toIntOrNull()?.takeIf { it in 1..100 } ?: return
         val thick = s.thickness.coerceIn(1, 3)
@@ -118,13 +121,16 @@ class ShapesViewModel : ViewModel() {
         val yMin = layers.keys.minOrNull() ?: 0
         val yMax = layers.keys.maxOrNull() ?: 0
         val total = layers.values.sumOf { it.size }
-        _state.value = s.copy(
-            layers      = layers,
-            totalBlocks = total,
-            layerMin    = yMin,
-            layerMax    = yMax,
-            currentLayer = currentLayer(s.currentLayer, yMin, yMax),
-        )
+        coroutineContext.ensureActive()
+        _state.update { current ->
+            current.copy(
+                layers      = layers,
+                totalBlocks = total,
+                layerMin    = yMin,
+                layerMax    = yMax,
+                currentLayer = currentLayer(current.currentLayer, yMin, yMax),
+            )
+        }
     }
 
     private fun currentLayer(prev: Int, min: Int, max: Int) = prev.coerceIn(min, max)
