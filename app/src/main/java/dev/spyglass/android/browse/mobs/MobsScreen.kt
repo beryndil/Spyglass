@@ -329,6 +329,7 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
 
         // Stats
         StatRow("Health", "${mob.health} HP")
+        if (mob.attackDamage.isNotBlank()) StatRow("Attack Damage", "${mob.attackDamage} HP")
         StatRow("XP Drop", mob.xpDrop)
         if (mob.isFireImmune) StatRow("Fire Immune", stringResource(R.string.yes))
 

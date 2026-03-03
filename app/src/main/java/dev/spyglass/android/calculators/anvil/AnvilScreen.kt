@@ -1,5 +1,9 @@
 package dev.spyglass.android.calculators.anvil
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -171,6 +175,38 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.secondary,
         )
+
+        // Expandable prior-work penalty explanation
+        var showInfo by remember { mutableStateOf(false) }
+        ResultCard {
+            Row(
+                modifier = Modifier.fillMaxWidth().clickable { showInfo = !showInfo },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text("How Anvil Costs Work", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(if (showInfo) "\u25B2" else "\u25BC", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary)
+            }
+            AnimatedVisibility(visible = showInfo, enter = expandVertically(), exit = shrinkVertically()) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
+                    Text("Prior-Work Penalty", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                    Text(
+                        "Every time an item is used in an anvil, it gains a hidden \"anvil uses\" counter. The penalty doubles each time: 0, 1, 3, 7, 15, 31 levels (formula: 2\u207F \u2212 1). This applies to both the target and sacrifice items.",
+                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Text("\"Too Expensive\"", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                    Text(
+                        "If any single anvil operation costs 40+ levels, the game blocks it entirely. After 6 anvil uses, the penalty alone hits 63 levels \u2014 making further enchanting impossible.",
+                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Text("Why Order Matters", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                    Text(
+                        "The output item\u2019s anvil uses = max(target, sacrifice) + 1. By combining books in pairs first (binary tree), each book accumulates fewer anvil uses. Cheapest enchantments go first so their small base costs absorb the growing penalty. This calculator finds that optimal order automatically.",
+                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
     }
     SnackbarHost(
         hostState = snackbarHostState,

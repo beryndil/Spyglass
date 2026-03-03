@@ -18,7 +18,7 @@ import java.io.File
  */
 object DataSeeder {
 
-    private const val CURRENT_DATA_VERSION = 18
+    private const val CURRENT_DATA_VERSION = 19
     private const val PREFS_NAME = "spyglass_seed"
     private const val KEY_DATA_VERSION = "data_version"
 
@@ -183,6 +183,7 @@ object DataSeeder {
         val isFireImmune: Boolean = false, val description: String = "",
         val breeding: String = "",
         val spawnConditions: String = "",
+        val attackDamage: String = "",
     )
 
     @Serializable data class BiomeJson(
@@ -190,6 +191,7 @@ object DataSeeder {
         val precipitation: String = "rain", val category: String = "",
         val color: String = "", val structures: String = "",
         val mobs: String = "[]", val features: String = "",
+        val description: String = "", val buildingPalette: String = "",
     )
 
     @Serializable data class EnchantJson(
@@ -295,7 +297,7 @@ object DataSeeder {
             }
             MobEntity(it.id, it.name, healthStr, it.hostility.ifEmpty { it.category },
                 biomesList, dropsStr, xpStr, it.isFireImmune, it.description, it.breeding,
-                it.spawnConditions)
+                it.spawnConditions, it.attackDamage)
         })
     }
 
@@ -308,7 +310,7 @@ object DataSeeder {
         val items = json.decodeFromString<List<BiomeJson>>(raw)
         db.biomeDao().insertAll(items.map {
             BiomeEntity(it.id, it.name, it.temperature, it.precipitation, it.category,
-                it.color, it.structures, it.mobs, it.features)
+                it.color, it.structures, it.mobs, it.features, it.description, it.buildingPalette)
         })
     }
 

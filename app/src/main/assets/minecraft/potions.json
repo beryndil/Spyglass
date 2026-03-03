@@ -50,6 +50,26 @@
     "color": "#C2FF66"
   },
   {
+    "id": "night_vision_splash",
+    "name": "Splash Night Vision",
+    "effect": "Night Vision",
+    "duration": 180,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Night Vision + Gunpowder",
+    "color": "#C2FF66"
+  },
+  {
+    "id": "night_vision_lingering",
+    "name": "Lingering Night Vision",
+    "effect": "Night Vision",
+    "duration": 45,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Night Vision + Dragon's Breath",
+    "color": "#C2FF66"
+  },
+  {
     "id": "night_vision_long",
     "name": "Night Vision (Extended)",
     "effect": "Night Vision",
@@ -57,6 +77,26 @@
     "amplifier": 0,
     "category": "positive",
     "ingredientPath": "Night Vision + Redstone Dust",
+    "color": "#C2FF66"
+  },
+  {
+    "id": "night_vision_long_splash",
+    "name": "Splash Night Vision (Extended)",
+    "effect": "Night Vision",
+    "duration": 480,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Night Vision (Extended) + Gunpowder",
+    "color": "#C2FF66"
+  },
+  {
+    "id": "night_vision_long_lingering",
+    "name": "Lingering Night Vision (Extended)",
+    "effect": "Night Vision",
+    "duration": 120,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Night Vision (Extended) + Dragon's Breath",
     "color": "#C2FF66"
   },
   {
@@ -70,6 +110,26 @@
     "color": "#F6F6F6"
   },
   {
+    "id": "invisibility_splash",
+    "name": "Splash Invisibility",
+    "effect": "Invisibility",
+    "duration": 180,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Invisibility + Gunpowder",
+    "color": "#F6F6F6"
+  },
+  {
+    "id": "invisibility_lingering",
+    "name": "Lingering Invisibility",
+    "effect": "Invisibility",
+    "duration": 45,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Invisibility + Dragon's Breath",
+    "color": "#F6F6F6"
+  },
+  {
     "id": "invisibility_long",
     "name": "Invisibility (Extended)",
     "effect": "Invisibility",
@@ -77,6 +137,26 @@
     "amplifier": 0,
     "category": "positive",
     "ingredientPath": "Invisibility + Redstone Dust",
+    "color": "#F6F6F6"
+  },
+  {
+    "id": "invisibility_long_splash",
+    "name": "Splash Invisibility (Extended)",
+    "effect": "Invisibility",
+    "duration": 480,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Invisibility (Extended) + Gunpowder",
+    "color": "#F6F6F6"
+  },
+  {
+    "id": "invisibility_long_lingering",
+    "name": "Lingering Invisibility (Extended)",
+    "effect": "Invisibility",
+    "duration": 120,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Invisibility (Extended) + Dragon's Breath",
     "color": "#F6F6F6"
   },
   {
@@ -90,6 +170,26 @@
     "color": "#FDFF84"
   },
   {
+    "id": "leaping_splash",
+    "name": "Splash Leaping",
+    "effect": "Jump Boost",
+    "duration": 180,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Leaping + Gunpowder",
+    "color": "#FDFF84"
+  },
+  {
+    "id": "leaping_lingering",
+    "name": "Lingering Leaping",
+    "effect": "Jump Boost",
+    "duration": 45,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Leaping + Dragon's Breath",
+    "color": "#FDFF84"
+  },
+  {
     "id": "leaping_long",
     "name": "Leaping (Extended)",
     "effect": "Jump Boost",
@@ -97,6 +197,26 @@
     "amplifier": 0,
     "category": "positive",
     "ingredientPath": "Leaping + Redstone Dust",
+    "color": "#FDFF84"
+  },
+  {
+    "id": "leaping_long_splash",
+    "name": "Splash Leaping (Extended)",
+    "effect": "Jump Boost",
+    "duration": 480,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Leaping (Extended) + Gunpowder",
+    "color": "#FDFF84"
+  },
+  {
+    "id": "leaping_long_lingering",
+    "name": "Lingering Leaping (Extended)",
+    "effect": "Jump Boost",
+    "duration": 120,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Leaping (Extended) + Dragon's Breath",
     "color": "#FDFF84"
   },
   {
@@ -110,6 +230,26 @@
     "color": "#FDFF84"
   },
   {
+    "id": "leaping_ii_splash",
+    "name": "Splash Leaping II",
+    "effect": "Jump Boost",
+    "duration": 90,
+    "amplifier": 1,
+    "category": "positive",
+    "ingredientPath": "Leaping II + Gunpowder",
+    "color": "#FDFF84"
+  },
+  {
+    "id": "leaping_ii_lingering",
+    "name": "Lingering Leaping II",
+    "effect": "Jump Boost",
+    "duration": 23,
+    "amplifier": 1,
+    "category": "positive",
+    "ingredientPath": "Splash Leaping II + Dragon's Breath",
+    "color": "#FDFF84"
+  },
+  {
     "id": "fire_resistance",
     "name": "Fire Resistance",
     "effect": "Fire Resistance",
@@ -117,6 +257,26 @@
     "amplifier": 0,
     "category": "positive",
     "ingredientPath": "Awkward Potion + Magma Cream",
+    "color": "#FF9900"
+  },
+  {
+    "id": "fire_resistance_splash",
+    "name": "Splash Fire Resistance",
+    "effect": "Fire Resistance",
+    "duration": 180,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Fire Resistance + Gunpowder",
+    "color": "#FF9900"
+  },
+  {
+    "id": "fire_resistance_lingering",
+    "name": "Lingering Fire Resistance",
+    "effect": "Fire Resistance",
+    "duration": 45,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Fire Resistance + Dragon's Breath",
     "color": "#FF9900"
   },
   {
@@ -130,6 +290,26 @@
     "color": "#FF9900"
   },
   {
+    "id": "fire_resistance_long_splash",
+    "name": "Splash Fire Resistance (Extended)",
+    "effect": "Fire Resistance",
+    "duration": 480,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Fire Resistance (Extended) + Gunpowder",
+    "color": "#FF9900"
+  },
+  {
+    "id": "fire_resistance_long_lingering",
+    "name": "Lingering Fire Resistance (Extended)",
+    "effect": "Fire Resistance",
+    "duration": 120,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Fire Resistance (Extended) + Dragon's Breath",
+    "color": "#FF9900"
+  },
+  {
     "id": "swiftness",
     "name": "Swiftness",
     "effect": "Speed",
@@ -137,6 +317,26 @@
     "amplifier": 0,
     "category": "positive",
     "ingredientPath": "Awkward Potion + Sugar",
+    "color": "#33EBFF"
+  },
+  {
+    "id": "swiftness_splash",
+    "name": "Splash Swiftness",
+    "effect": "Speed",
+    "duration": 180,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Swiftness + Gunpowder",
+    "color": "#33EBFF"
+  },
+  {
+    "id": "swiftness_lingering",
+    "name": "Lingering Swiftness",
+    "effect": "Speed",
+    "duration": 45,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Swiftness + Dragon's Breath",
     "color": "#33EBFF"
   },
   {
@@ -150,6 +350,26 @@
     "color": "#33EBFF"
   },
   {
+    "id": "swiftness_long_splash",
+    "name": "Splash Swiftness (Extended)",
+    "effect": "Speed",
+    "duration": 480,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Swiftness (Extended) + Gunpowder",
+    "color": "#33EBFF"
+  },
+  {
+    "id": "swiftness_long_lingering",
+    "name": "Lingering Swiftness (Extended)",
+    "effect": "Speed",
+    "duration": 120,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Swiftness (Extended) + Dragon's Breath",
+    "color": "#33EBFF"
+  },
+  {
     "id": "swiftness_ii",
     "name": "Swiftness II",
     "effect": "Speed",
@@ -157,6 +377,26 @@
     "amplifier": 1,
     "category": "positive",
     "ingredientPath": "Swiftness + Glowstone Dust",
+    "color": "#33EBFF"
+  },
+  {
+    "id": "swiftness_ii_splash",
+    "name": "Splash Swiftness II",
+    "effect": "Speed",
+    "duration": 90,
+    "amplifier": 1,
+    "category": "positive",
+    "ingredientPath": "Swiftness II + Gunpowder",
+    "color": "#33EBFF"
+  },
+  {
+    "id": "swiftness_ii_lingering",
+    "name": "Lingering Swiftness II",
+    "effect": "Speed",
+    "duration": 23,
+    "amplifier": 1,
+    "category": "positive",
+    "ingredientPath": "Splash Swiftness II + Dragon's Breath",
     "color": "#33EBFF"
   },
   {
@@ -170,6 +410,26 @@
     "color": "#8BAFE0"
   },
   {
+    "id": "slowness_splash",
+    "name": "Splash Slowness",
+    "effect": "Slowness",
+    "duration": 90,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Slowness + Gunpowder",
+    "color": "#8BAFE0"
+  },
+  {
+    "id": "slowness_lingering",
+    "name": "Lingering Slowness",
+    "effect": "Slowness",
+    "duration": 23,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Splash Slowness + Dragon's Breath",
+    "color": "#8BAFE0"
+  },
+  {
     "id": "slowness_long",
     "name": "Slowness (Extended)",
     "effect": "Slowness",
@@ -177,6 +437,26 @@
     "amplifier": 0,
     "category": "negative",
     "ingredientPath": "Slowness + Redstone Dust",
+    "color": "#8BAFE0"
+  },
+  {
+    "id": "slowness_long_splash",
+    "name": "Splash Slowness (Extended)",
+    "effect": "Slowness",
+    "duration": 240,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Slowness (Extended) + Gunpowder",
+    "color": "#8BAFE0"
+  },
+  {
+    "id": "slowness_long_lingering",
+    "name": "Lingering Slowness (Extended)",
+    "effect": "Slowness",
+    "duration": 60,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Splash Slowness (Extended) + Dragon's Breath",
     "color": "#8BAFE0"
   },
   {
@@ -190,6 +470,26 @@
     "color": "#8BAFE0"
   },
   {
+    "id": "slowness_iv_splash",
+    "name": "Splash Slowness IV",
+    "effect": "Slowness",
+    "duration": 20,
+    "amplifier": 3,
+    "category": "negative",
+    "ingredientPath": "Slowness IV + Gunpowder",
+    "color": "#8BAFE0"
+  },
+  {
+    "id": "slowness_iv_lingering",
+    "name": "Lingering Slowness IV",
+    "effect": "Slowness",
+    "duration": 5,
+    "amplifier": 3,
+    "category": "negative",
+    "ingredientPath": "Splash Slowness IV + Dragon's Breath",
+    "color": "#8BAFE0"
+  },
+  {
     "id": "turtle_master",
     "name": "Turtle Master",
     "effect": "Slowness IV + Resistance III",
@@ -197,6 +497,26 @@
     "amplifier": 0,
     "category": "mixed",
     "ingredientPath": "Awkward Potion + Turtle Shell",
+    "color": "#8D82E6"
+  },
+  {
+    "id": "turtle_master_splash",
+    "name": "Splash Turtle Master",
+    "effect": "Slowness IV + Resistance III",
+    "duration": 20,
+    "amplifier": 0,
+    "category": "mixed",
+    "ingredientPath": "Turtle Master + Gunpowder",
+    "color": "#8D82E6"
+  },
+  {
+    "id": "turtle_master_lingering",
+    "name": "Lingering Turtle Master",
+    "effect": "Slowness IV + Resistance III",
+    "duration": 5,
+    "amplifier": 0,
+    "category": "mixed",
+    "ingredientPath": "Splash Turtle Master + Dragon's Breath",
     "color": "#8D82E6"
   },
   {
@@ -210,6 +530,26 @@
     "color": "#8D82E6"
   },
   {
+    "id": "turtle_master_long_splash",
+    "name": "Splash Turtle Master (Extended)",
+    "effect": "Slowness IV + Resistance III",
+    "duration": 40,
+    "amplifier": 0,
+    "category": "mixed",
+    "ingredientPath": "Turtle Master (Extended) + Gunpowder",
+    "color": "#8D82E6"
+  },
+  {
+    "id": "turtle_master_long_lingering",
+    "name": "Lingering Turtle Master (Extended)",
+    "effect": "Slowness IV + Resistance III",
+    "duration": 10,
+    "amplifier": 0,
+    "category": "mixed",
+    "ingredientPath": "Splash Turtle Master (Extended) + Dragon's Breath",
+    "color": "#8D82E6"
+  },
+  {
     "id": "turtle_master_ii",
     "name": "Turtle Master II",
     "effect": "Slowness VI + Resistance IV",
@@ -217,6 +557,26 @@
     "amplifier": 1,
     "category": "mixed",
     "ingredientPath": "Turtle Master + Glowstone Dust",
+    "color": "#8D82E6"
+  },
+  {
+    "id": "turtle_master_ii_splash",
+    "name": "Splash Turtle Master II",
+    "effect": "Slowness VI + Resistance IV",
+    "duration": 20,
+    "amplifier": 1,
+    "category": "mixed",
+    "ingredientPath": "Turtle Master II + Gunpowder",
+    "color": "#8D82E6"
+  },
+  {
+    "id": "turtle_master_ii_lingering",
+    "name": "Lingering Turtle Master II",
+    "effect": "Slowness VI + Resistance IV",
+    "duration": 5,
+    "amplifier": 1,
+    "category": "mixed",
+    "ingredientPath": "Splash Turtle Master II + Dragon's Breath",
     "color": "#8D82E6"
   },
   {
@@ -230,6 +590,26 @@
     "color": "#98DAC0"
   },
   {
+    "id": "water_breathing_splash",
+    "name": "Splash Water Breathing",
+    "effect": "Water Breathing",
+    "duration": 180,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Water Breathing + Gunpowder",
+    "color": "#98DAC0"
+  },
+  {
+    "id": "water_breathing_lingering",
+    "name": "Lingering Water Breathing",
+    "effect": "Water Breathing",
+    "duration": 45,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Water Breathing + Dragon's Breath",
+    "color": "#98DAC0"
+  },
+  {
     "id": "water_breathing_long",
     "name": "Water Breathing (Extended)",
     "effect": "Water Breathing",
@@ -237,6 +617,26 @@
     "amplifier": 0,
     "category": "positive",
     "ingredientPath": "Water Breathing + Redstone Dust",
+    "color": "#98DAC0"
+  },
+  {
+    "id": "water_breathing_long_splash",
+    "name": "Splash Water Breathing (Extended)",
+    "effect": "Water Breathing",
+    "duration": 480,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Water Breathing (Extended) + Gunpowder",
+    "color": "#98DAC0"
+  },
+  {
+    "id": "water_breathing_long_lingering",
+    "name": "Lingering Water Breathing (Extended)",
+    "effect": "Water Breathing",
+    "duration": 120,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Water Breathing (Extended) + Dragon's Breath",
     "color": "#98DAC0"
   },
   {
@@ -250,6 +650,26 @@
     "color": "#F82423"
   },
   {
+    "id": "healing_splash",
+    "name": "Splash Healing",
+    "effect": "Instant Health",
+    "duration": 0,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Healing + Gunpowder",
+    "color": "#F82423"
+  },
+  {
+    "id": "healing_lingering",
+    "name": "Lingering Healing",
+    "effect": "Instant Health",
+    "duration": 0,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Healing + Dragon's Breath",
+    "color": "#F82423"
+  },
+  {
     "id": "healing_ii",
     "name": "Healing II",
     "effect": "Instant Health",
@@ -257,6 +677,26 @@
     "amplifier": 1,
     "category": "positive",
     "ingredientPath": "Healing + Glowstone Dust",
+    "color": "#F82423"
+  },
+  {
+    "id": "healing_ii_splash",
+    "name": "Splash Healing II",
+    "effect": "Instant Health",
+    "duration": 0,
+    "amplifier": 1,
+    "category": "positive",
+    "ingredientPath": "Healing II + Gunpowder",
+    "color": "#F82423"
+  },
+  {
+    "id": "healing_ii_lingering",
+    "name": "Lingering Healing II",
+    "effect": "Instant Health",
+    "duration": 0,
+    "amplifier": 1,
+    "category": "positive",
+    "ingredientPath": "Splash Healing II + Dragon's Breath",
     "color": "#F82423"
   },
   {
@@ -270,6 +710,26 @@
     "color": "#A9656A"
   },
   {
+    "id": "harming_splash",
+    "name": "Splash Harming",
+    "effect": "Instant Damage",
+    "duration": 0,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Harming + Gunpowder",
+    "color": "#A9656A"
+  },
+  {
+    "id": "harming_lingering",
+    "name": "Lingering Harming",
+    "effect": "Instant Damage",
+    "duration": 0,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Splash Harming + Dragon's Breath",
+    "color": "#A9656A"
+  },
+  {
     "id": "harming_ii",
     "name": "Harming II",
     "effect": "Instant Damage",
@@ -277,6 +737,26 @@
     "amplifier": 1,
     "category": "negative",
     "ingredientPath": "Harming + Glowstone Dust",
+    "color": "#A9656A"
+  },
+  {
+    "id": "harming_ii_splash",
+    "name": "Splash Harming II",
+    "effect": "Instant Damage",
+    "duration": 0,
+    "amplifier": 1,
+    "category": "negative",
+    "ingredientPath": "Harming II + Gunpowder",
+    "color": "#A9656A"
+  },
+  {
+    "id": "harming_ii_lingering",
+    "name": "Lingering Harming II",
+    "effect": "Instant Damage",
+    "duration": 0,
+    "amplifier": 1,
+    "category": "negative",
+    "ingredientPath": "Splash Harming II + Dragon's Breath",
     "color": "#A9656A"
   },
   {
@@ -290,6 +770,26 @@
     "color": "#87A363"
   },
   {
+    "id": "poison_splash",
+    "name": "Splash Poison",
+    "effect": "Poison",
+    "duration": 45,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Poison + Gunpowder",
+    "color": "#87A363"
+  },
+  {
+    "id": "poison_lingering",
+    "name": "Lingering Poison",
+    "effect": "Poison",
+    "duration": 11,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Splash Poison + Dragon's Breath",
+    "color": "#87A363"
+  },
+  {
     "id": "poison_long",
     "name": "Poison (Extended)",
     "effect": "Poison",
@@ -297,6 +797,26 @@
     "amplifier": 0,
     "category": "negative",
     "ingredientPath": "Poison + Redstone Dust",
+    "color": "#87A363"
+  },
+  {
+    "id": "poison_long_splash",
+    "name": "Splash Poison (Extended)",
+    "effect": "Poison",
+    "duration": 90,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Poison (Extended) + Gunpowder",
+    "color": "#87A363"
+  },
+  {
+    "id": "poison_long_lingering",
+    "name": "Lingering Poison (Extended)",
+    "effect": "Poison",
+    "duration": 23,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Splash Poison (Extended) + Dragon's Breath",
     "color": "#87A363"
   },
   {
@@ -310,6 +830,26 @@
     "color": "#87A363"
   },
   {
+    "id": "poison_ii_splash",
+    "name": "Splash Poison II",
+    "effect": "Poison",
+    "duration": 21,
+    "amplifier": 1,
+    "category": "negative",
+    "ingredientPath": "Poison II + Gunpowder",
+    "color": "#87A363"
+  },
+  {
+    "id": "poison_ii_lingering",
+    "name": "Lingering Poison II",
+    "effect": "Poison",
+    "duration": 5,
+    "amplifier": 1,
+    "category": "negative",
+    "ingredientPath": "Splash Poison II + Dragon's Breath",
+    "color": "#87A363"
+  },
+  {
     "id": "regeneration",
     "name": "Regeneration",
     "effect": "Regeneration",
@@ -317,6 +857,26 @@
     "amplifier": 0,
     "category": "positive",
     "ingredientPath": "Awkward Potion + Ghast Tear",
+    "color": "#CD5CAB"
+  },
+  {
+    "id": "regeneration_splash",
+    "name": "Splash Regeneration",
+    "effect": "Regeneration",
+    "duration": 45,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Regeneration + Gunpowder",
+    "color": "#CD5CAB"
+  },
+  {
+    "id": "regeneration_lingering",
+    "name": "Lingering Regeneration",
+    "effect": "Regeneration",
+    "duration": 11,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Regeneration + Dragon's Breath",
     "color": "#CD5CAB"
   },
   {
@@ -330,6 +890,26 @@
     "color": "#CD5CAB"
   },
   {
+    "id": "regeneration_long_splash",
+    "name": "Splash Regeneration (Extended)",
+    "effect": "Regeneration",
+    "duration": 90,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Regeneration (Extended) + Gunpowder",
+    "color": "#CD5CAB"
+  },
+  {
+    "id": "regeneration_long_lingering",
+    "name": "Lingering Regeneration (Extended)",
+    "effect": "Regeneration",
+    "duration": 23,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Regeneration (Extended) + Dragon's Breath",
+    "color": "#CD5CAB"
+  },
+  {
     "id": "regeneration_ii",
     "name": "Regeneration II",
     "effect": "Regeneration",
@@ -337,6 +917,26 @@
     "amplifier": 1,
     "category": "positive",
     "ingredientPath": "Regeneration + Glowstone Dust",
+    "color": "#CD5CAB"
+  },
+  {
+    "id": "regeneration_ii_splash",
+    "name": "Splash Regeneration II",
+    "effect": "Regeneration",
+    "duration": 22,
+    "amplifier": 1,
+    "category": "positive",
+    "ingredientPath": "Regeneration II + Gunpowder",
+    "color": "#CD5CAB"
+  },
+  {
+    "id": "regeneration_ii_lingering",
+    "name": "Lingering Regeneration II",
+    "effect": "Regeneration",
+    "duration": 6,
+    "amplifier": 1,
+    "category": "positive",
+    "ingredientPath": "Splash Regeneration II + Dragon's Breath",
     "color": "#CD5CAB"
   },
   {
@@ -350,6 +950,26 @@
     "color": "#FFC700"
   },
   {
+    "id": "strength_splash",
+    "name": "Splash Strength",
+    "effect": "Strength",
+    "duration": 180,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Strength + Gunpowder",
+    "color": "#FFC700"
+  },
+  {
+    "id": "strength_lingering",
+    "name": "Lingering Strength",
+    "effect": "Strength",
+    "duration": 45,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Strength + Dragon's Breath",
+    "color": "#FFC700"
+  },
+  {
     "id": "strength_long",
     "name": "Strength (Extended)",
     "effect": "Strength",
@@ -357,6 +977,26 @@
     "amplifier": 0,
     "category": "positive",
     "ingredientPath": "Strength + Redstone Dust",
+    "color": "#FFC700"
+  },
+  {
+    "id": "strength_long_splash",
+    "name": "Splash Strength (Extended)",
+    "effect": "Strength",
+    "duration": 480,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Strength (Extended) + Gunpowder",
+    "color": "#FFC700"
+  },
+  {
+    "id": "strength_long_lingering",
+    "name": "Lingering Strength (Extended)",
+    "effect": "Strength",
+    "duration": 120,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Strength (Extended) + Dragon's Breath",
     "color": "#FFC700"
   },
   {
@@ -370,6 +1010,26 @@
     "color": "#FFC700"
   },
   {
+    "id": "strength_ii_splash",
+    "name": "Splash Strength II",
+    "effect": "Strength",
+    "duration": 90,
+    "amplifier": 1,
+    "category": "positive",
+    "ingredientPath": "Strength II + Gunpowder",
+    "color": "#FFC700"
+  },
+  {
+    "id": "strength_ii_lingering",
+    "name": "Lingering Strength II",
+    "effect": "Strength",
+    "duration": 23,
+    "amplifier": 1,
+    "category": "positive",
+    "ingredientPath": "Splash Strength II + Dragon's Breath",
+    "color": "#FFC700"
+  },
+  {
     "id": "weakness",
     "name": "Weakness",
     "effect": "Weakness",
@@ -377,6 +1037,26 @@
     "amplifier": 0,
     "category": "negative",
     "ingredientPath": "Water Bottle + Fermented Spider Eye",
+    "color": "#484D48"
+  },
+  {
+    "id": "weakness_splash",
+    "name": "Splash Weakness",
+    "effect": "Weakness",
+    "duration": 90,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Weakness + Gunpowder",
+    "color": "#484D48"
+  },
+  {
+    "id": "weakness_lingering",
+    "name": "Lingering Weakness",
+    "effect": "Weakness",
+    "duration": 23,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Splash Weakness + Dragon's Breath",
     "color": "#484D48"
   },
   {
@@ -390,6 +1070,26 @@
     "color": "#484D48"
   },
   {
+    "id": "weakness_long_splash",
+    "name": "Splash Weakness (Extended)",
+    "effect": "Weakness",
+    "duration": 240,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Weakness (Extended) + Gunpowder",
+    "color": "#484D48"
+  },
+  {
+    "id": "weakness_long_lingering",
+    "name": "Lingering Weakness (Extended)",
+    "effect": "Weakness",
+    "duration": 60,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Splash Weakness (Extended) + Dragon's Breath",
+    "color": "#484D48"
+  },
+  {
     "id": "luck",
     "name": "Luck",
     "effect": "Luck",
@@ -397,6 +1097,26 @@
     "amplifier": 0,
     "category": "special",
     "ingredientPath": "Uncraftable (Creative/Commands only)",
+    "color": "#59C106"
+  },
+  {
+    "id": "luck_splash",
+    "name": "Splash Luck",
+    "effect": "Luck",
+    "duration": 300,
+    "amplifier": 0,
+    "category": "special",
+    "ingredientPath": "Luck + Gunpowder",
+    "color": "#59C106"
+  },
+  {
+    "id": "luck_lingering",
+    "name": "Lingering Luck",
+    "effect": "Luck",
+    "duration": 75,
+    "amplifier": 0,
+    "category": "special",
+    "ingredientPath": "Splash Luck + Dragon's Breath",
     "color": "#59C106"
   },
   {
@@ -410,6 +1130,26 @@
     "color": "#F3CFB9"
   },
   {
+    "id": "slow_falling_splash",
+    "name": "Splash Slow Falling",
+    "effect": "Slow Falling",
+    "duration": 90,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Slow Falling + Gunpowder",
+    "color": "#F3CFB9"
+  },
+  {
+    "id": "slow_falling_lingering",
+    "name": "Lingering Slow Falling",
+    "effect": "Slow Falling",
+    "duration": 23,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Slow Falling + Dragon's Breath",
+    "color": "#F3CFB9"
+  },
+  {
     "id": "slow_falling_long",
     "name": "Slow Falling (Extended)",
     "effect": "Slow Falling",
@@ -417,6 +1157,26 @@
     "amplifier": 0,
     "category": "positive",
     "ingredientPath": "Slow Falling + Redstone Dust",
+    "color": "#F3CFB9"
+  },
+  {
+    "id": "slow_falling_long_splash",
+    "name": "Splash Slow Falling (Extended)",
+    "effect": "Slow Falling",
+    "duration": 240,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Slow Falling (Extended) + Gunpowder",
+    "color": "#F3CFB9"
+  },
+  {
+    "id": "slow_falling_long_lingering",
+    "name": "Lingering Slow Falling (Extended)",
+    "effect": "Slow Falling",
+    "duration": 60,
+    "amplifier": 0,
+    "category": "positive",
+    "ingredientPath": "Splash Slow Falling (Extended) + Dragon's Breath",
     "color": "#F3CFB9"
   },
   {
@@ -430,6 +1190,26 @@
     "color": "#BDC9FF"
   },
   {
+    "id": "wind_charged_splash",
+    "name": "Splash Wind Charging",
+    "effect": "Wind Charged",
+    "duration": 180,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Wind Charging + Gunpowder",
+    "color": "#BDC9FF"
+  },
+  {
+    "id": "wind_charged_lingering",
+    "name": "Lingering Wind Charging",
+    "effect": "Wind Charged",
+    "duration": 45,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Splash Wind Charging + Dragon's Breath",
+    "color": "#BDC9FF"
+  },
+  {
     "id": "oozing",
     "name": "Oozing",
     "effect": "Oozing",
@@ -437,6 +1217,26 @@
     "amplifier": 0,
     "category": "negative",
     "ingredientPath": "Awkward Potion + Slime Block",
+    "color": "#99FFA3"
+  },
+  {
+    "id": "oozing_splash",
+    "name": "Splash Oozing",
+    "effect": "Oozing",
+    "duration": 180,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Oozing + Gunpowder",
+    "color": "#99FFA3"
+  },
+  {
+    "id": "oozing_lingering",
+    "name": "Lingering Oozing",
+    "effect": "Oozing",
+    "duration": 45,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Splash Oozing + Dragon's Breath",
     "color": "#99FFA3"
   },
   {
@@ -450,6 +1250,26 @@
     "color": "#78695A"
   },
   {
+    "id": "weaving_splash",
+    "name": "Splash Weaving",
+    "effect": "Weaving",
+    "duration": 180,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Weaving + Gunpowder",
+    "color": "#78695A"
+  },
+  {
+    "id": "weaving_lingering",
+    "name": "Lingering Weaving",
+    "effect": "Weaving",
+    "duration": 45,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Splash Weaving + Dragon's Breath",
+    "color": "#78695A"
+  },
+  {
     "id": "infested",
     "name": "Infestation",
     "effect": "Infested",
@@ -457,6 +1277,26 @@
     "amplifier": 0,
     "category": "negative",
     "ingredientPath": "Awkward Potion + Stone",
+    "color": "#8C9B8C"
+  },
+  {
+    "id": "infested_splash",
+    "name": "Splash Infestation",
+    "effect": "Infested",
+    "duration": 180,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Infestation + Gunpowder",
+    "color": "#8C9B8C"
+  },
+  {
+    "id": "infested_lingering",
+    "name": "Lingering Infestation",
+    "effect": "Infested",
+    "duration": 45,
+    "amplifier": 0,
+    "category": "negative",
+    "ingredientPath": "Splash Infestation + Dragon's Breath",
     "color": "#8C9B8C"
   }
 ]

@@ -320,6 +320,11 @@ private fun BiomeDetailCard(
     ) {
         MinecraftIdRow(biome.id)
 
+        // Description
+        if (biome.description.isNotBlank()) {
+            Text(biome.description, style = MaterialTheme.typography.bodySmall, color = subtextColor)
+        }
+
         // Stats
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text("Temperature", style = MaterialTheme.typography.bodyMedium, color = subtextColor)
@@ -357,6 +362,35 @@ private fun BiomeDetailCard(
                                     Spacer(Modifier.width(4.dp))
                                 }
                                 Text(formatId(itemId), style = MaterialTheme.typography.labelSmall)
+                            }
+                        },
+                        colors = AssistChipDefaults.assistChipColors(
+                            labelColor = textColor,
+                            containerColor = textColor.copy(alpha = 0.15f),
+                        ),
+                        border = null,
+                    )
+                }
+            }
+        }
+
+        // Building palette
+        val palette = biome.buildingPalette.split(",").map { it.trim() }.filter { it.isNotEmpty() }
+        if (palette.isNotEmpty()) {
+            HorizontalDivider(color = textColor.copy(alpha = 0.2f), thickness = 0.5.dp)
+            Text("Building Palette", style = MaterialTheme.typography.labelSmall, color = labelColor)
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                palette.forEach { blockId ->
+                    AssistChip(
+                        onClick = { onItemTap(blockId) },
+                        label = {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                val tex = BlockTextures.get(blockId) ?: ItemTextures.get(blockId)
+                                if (tex != null) {
+                                    SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(14.dp))
+                                    Spacer(Modifier.width(4.dp))
+                                }
+                                Text(formatId(blockId), style = MaterialTheme.typography.labelSmall)
                             }
                         },
                         colors = AssistChipDefaults.assistChipColors(

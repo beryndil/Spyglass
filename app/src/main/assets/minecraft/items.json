@@ -52,7 +52,8 @@
     "description": "A pottery sherd with the Angler pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "apple",
@@ -76,7 +77,8 @@
     "description": "A pottery sherd with the Archer pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "armadillo_scute",
@@ -120,7 +122,8 @@
     "description": "A pottery sherd with the Arms Up pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "arrow",
@@ -325,7 +328,8 @@
     "description": "A pottery sherd with the Blade pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "blaze_powder",
@@ -538,7 +542,8 @@
     "description": "A pottery sherd with the Brewer pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "brick",
@@ -637,7 +642,8 @@
     "description": "A pottery sherd with the Burn pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "cake",
@@ -1161,7 +1167,8 @@
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
     "minedFrom": "",
-    "enchantability": 8
+    "enchantability": 8,
+    "isRenewable": false
   },
   {
     "id": "copper_ingot",
@@ -1370,7 +1377,8 @@
     "description": "A pottery sherd with the Danger pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "dark_oak_boat",
@@ -1634,7 +1642,7 @@
     "stackSize": 64,
     "category": "misc",
     "durability": 0,
-    "description": "A decorative trophy dropped by the Ender Dragon upon its first defeat. Teleports when clicked directly \u2014 push with a piston to collect.",
+    "description": "A decorative trophy dropped by the Ender Dragon upon its first defeat. Teleports when clicked directly — push with a piston to collect.",
     "obtainedFrom": "found",
     "droppedBy": "ender_dragon",
     "minedFrom": "",
@@ -1754,7 +1762,7 @@
     "stackSize": 64,
     "category": "food",
     "durability": 0,
-    "description": "Grants Absorption IV, Regeneration II, Resistance, and Fire Resistance. Cannot be crafted \u2014 structure loot only.",
+    "description": "Grants Absorption IV, Regeneration II, Resistance, and Fire Resistance. Cannot be crafted — structure loot only.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
     "minedFrom": "",
@@ -1860,7 +1868,8 @@
     "description": "A pottery sherd with the Explorer pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "eye_armor_trim_smithing_template",
@@ -2005,7 +2014,8 @@
     "description": "A pottery sherd with the Flow pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "flower_banner_pattern",
@@ -2038,7 +2048,8 @@
     "description": "A pottery sherd with the Friend pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "frog_spawn_egg",
@@ -2269,7 +2280,7 @@
     "stackSize": 64,
     "category": "food",
     "durability": 0,
-    "description": "Restores 6 hunger with 14.4 saturation \u2014 the highest saturation food. Used in brewing.",
+    "description": "Restores 6 hunger with 14.4 saturation — the highest saturation food. Used in brewing.",
     "obtainedFrom": "crafting,trading",
     "droppedBy": "",
     "minedFrom": "",
@@ -2530,7 +2541,8 @@
     "description": "A pottery sherd with the Guster pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "happy_ghast_spawn_egg",
@@ -2564,7 +2576,8 @@
     "description": "A pottery sherd with the Heart pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "heartbreak_pottery_sherd",
@@ -2575,7 +2588,8 @@
     "description": "A pottery sherd with the Heartbreak pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "hoglin_spawn_egg",
@@ -2655,7 +2669,8 @@
     "description": "A pottery sherd with the Howl pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "husk_spawn_egg",
@@ -3335,7 +3350,8 @@
     "description": "A pottery sherd with the Miner pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "mooshroom_spawn_egg",
@@ -3357,7 +3373,8 @@
     "description": "A pottery sherd with the Mourner pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "mule_spawn_egg",
@@ -3464,7 +3481,8 @@
     "description": "A music disc found in trial chambers. Features a melodic, creative track.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_creator_music_box",
@@ -3475,7 +3493,8 @@
     "description": "A variant of the Creator disc with a music box rendition. Found in trial chambers.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_far",
@@ -3557,7 +3576,8 @@
     "description": "A music disc found in trial chambers. Features a dramatic, intense track.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "music_disc_relic",
@@ -3832,7 +3852,8 @@
     "description": "Netherite armor equippable on nautiluses and zombie nautiluses for protection.",
     "obtainedFrom": "crafting",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "netherite_pickaxe",
@@ -3890,7 +3911,8 @@
     "minedFrom": "",
     "attackDamage": "5",
     "enchantability": 15,
-    "enchantTarget": "spear"
+    "enchantTarget": "spear",
+    "isRenewable": false
   },
   {
     "id": "netherite_sword",
@@ -4137,7 +4159,8 @@
     "description": "A banner pattern with a piglin snout design. Found in bastion remnants.",
     "obtainedFrom": "structure_loot",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "piglin_brute_spawn_egg",
@@ -4225,7 +4248,8 @@
     "description": "A pottery sherd with the Plenty pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "poisonous_potato",
@@ -4329,7 +4353,8 @@
     "description": "A pottery sherd with the Prize pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "pufferfish",
@@ -4772,7 +4797,8 @@
     "description": "A pottery sherd with the Scrape pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "sentry_armor_trim_smithing_template",
@@ -4805,7 +4831,8 @@
     "description": "A pottery sherd with the Sheaf pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "shears",
@@ -4840,7 +4867,8 @@
     "description": "A pottery sherd with the Shelter pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "shield",
@@ -4941,7 +4969,8 @@
     "description": "A pottery sherd with the Skull pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "slime_ball",
@@ -5008,7 +5037,8 @@
     "description": "A pottery sherd with the Snort pattern. Used on decorated pots at a crafting table. Found by brushing suspicious sand or gravel.",
     "obtainedFrom": "archaeology",
     "droppedBy": "",
-    "minedFrom": ""
+    "minedFrom": "",
+    "isRenewable": false
   },
   {
     "id": "snout_armor_trim_smithing_template",

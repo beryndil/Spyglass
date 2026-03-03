@@ -50,6 +50,7 @@ data class MobEntity(
     val description: String = "",
     val breeding: String = "",      // e.g. "wheat" or "carrots,potatoes,beetroot" or ""
     val spawnConditions: String = "", // e.g. "Light level 0-7, solid block"
+    val attackDamage: String = "",   // "3" or "2-6" for variable damage
 )
 
 @Entity(tableName = "biomes")
@@ -63,6 +64,8 @@ data class BiomeEntity(
     val structures: String = "",        // comma-sep structure IDs
     val mobsJson: String = "[]",
     val features: String = "",
+    val description: String = "",
+    val buildingPalette: String = "",   // comma-sep block IDs
 )
 
 @Entity(tableName = "enchants")

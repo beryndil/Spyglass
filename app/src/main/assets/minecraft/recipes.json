@@ -8756,5 +8756,362 @@
     "outputCount": 4,
     "type": "stonecutting",
     "ingredientsJson": "[\"weathered_copper\"]"
+  },
+  {
+    "id": "loom_base",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_stripe_top",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_stripe_bottom",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_stripe_left",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_stripe_right",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_stripe_center",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_stripe_middle",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_stripe_downright",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_stripe_downleft",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_small_stripes",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_cross",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_straight_cross",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_diagonal_left",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_diagonal_right",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_diagonal_up_left",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_diagonal_up_right",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_half_vertical",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_half_vertical_right",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_half_horizontal",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_half_horizontal_bottom",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_square_bottom_left",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_square_bottom_right",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_square_top_left",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_square_top_right",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_triangle_bottom",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_triangle_top",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_triangles_bottom",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_triangles_top",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_circle",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_rhombus",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_border",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_curly_border",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_bricks",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_gradient",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_gradient_up",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_per_bend",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_per_bend_inverted",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_per_bend_sinister",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_per_bend_sinister_inverted",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_per_fess",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_per_fess_inverted",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_per_pale",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_per_pale_inverted",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_saltire",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\"]"
+  },
+  {
+    "id": "loom_creeper_charge",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\",\"creeper_banner_pattern\"]"
+  },
+  {
+    "id": "loom_skull_charge",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\",\"skull_banner_pattern\"]"
+  },
+  {
+    "id": "loom_flower_charge",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\",\"flower_banner_pattern\"]"
+  },
+  {
+    "id": "loom_thing",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\",\"globe_banner_pattern\"]"
+  },
+  {
+    "id": "loom_snout",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\",\"piglin_banner_pattern\"]"
+  },
+  {
+    "id": "loom_flow",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\",\"flow_banner_pattern\"]"
+  },
+  {
+    "id": "loom_guster",
+    "outputItem": "banner",
+    "outputCount": 1,
+    "type": "loom",
+    "ingredientsJson": "[\"#banner\",\"#dye\",\"guster_banner_pattern\"]"
   }
 ]

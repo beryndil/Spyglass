@@ -41,7 +41,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.*
 
-private val RECIPE_TYPES = listOf("all", "shaped", "shapeless", "smelting", "food", "smithing")
+private val RECIPE_TYPES = listOf("all", "shaped", "shapeless", "smelting", "food", "smithing", "stonecutting", "loom")
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class CraftingViewModel(app: Application) : AndroidViewModel(app) {
