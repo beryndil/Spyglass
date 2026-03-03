@@ -5,6 +5,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -14,7 +15,7 @@ private val MAZE_TYPE_LABELS = listOf("Rect", "Circle", "Floors")
 
 @Composable
 fun MazeScreen(vm: MazeViewModel = viewModel()) {
-    val s by vm.state.collectAsState()
+    val s by vm.state.collectAsStateWithLifecycle()
     var view3D by remember { mutableStateOf(false) }
 
     Column(

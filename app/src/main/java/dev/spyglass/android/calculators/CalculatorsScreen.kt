@@ -3,6 +3,7 @@ package dev.spyglass.android.calculators
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -66,7 +67,7 @@ fun CalculatorsScreen(
     val context = LocalContext.current
     val defaultTab by remember {
         context.dataStore.data.map { it[PreferenceKeys.DEFAULT_TOOL_TAB] ?: 0 }
-    }.collectAsState(initial = 0)
+    }.collectAsStateWithLifecycle(initialValue = 0)
 
     var selectedTab by remember { mutableIntStateOf(initialTab ?: 0) }
 

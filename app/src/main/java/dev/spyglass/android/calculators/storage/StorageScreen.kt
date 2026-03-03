@@ -5,6 +5,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -13,7 +14,7 @@ import dev.spyglass.android.core.ui.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StorageScreen(vm: StorageViewModel = viewModel()) {
-    val s  by vm.state.collectAsState()
+    val s  by vm.state.collectAsStateWithLifecycle()
     var expanded by remember { mutableStateOf(false) }
     val selectedItem = vm.items[s.selectedItemIndex]
 

@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
@@ -236,23 +237,23 @@ fun AdvancementsScreen(
     onMobTap: (String) -> Unit = {},
     onStructureTap: (String) -> Unit = {},
     onBiomeTap: (String) -> Unit = {},
-    onCalcTab: (Int) -> Unit = {},
+    @Suppress("UNUSED_PARAMETER") onCalcTab: (Int) -> Unit = {},
     onEnchantTap: (String) -> Unit = {},
     entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
     vm: AdvancementsViewModel = viewModel(),
 ) {
-    val query by vm.query.collectAsState()
-    val category by vm.category.collectAsState()
-    val advancements by vm.advancements.collectAsState()
-    val flatTreeItems by vm.flatTreeItems.collectAsState()
-    val expandedIds by vm.expandedIds.collectAsState()
-    val treeExpandedIds by vm.treeExpandedIds.collectAsState()
-    val completedIds by vm.completedIds.collectAsState()
-    val completedCount by vm.completedCount.collectAsState()
-    val favoriteIds by vm.favoriteIds.collectAsState()
-    val favoriteAdvancements by vm.favoriteAdvancements.collectAsState()
-    val categoryCounts by vm.categoryCounts.collectAsState()
-    val sortKey by vm.sortKey.collectAsState()
+    val query by vm.query.collectAsStateWithLifecycle()
+    val category by vm.category.collectAsStateWithLifecycle()
+    val advancements by vm.advancements.collectAsStateWithLifecycle()
+    val flatTreeItems by vm.flatTreeItems.collectAsStateWithLifecycle()
+    val expandedIds by vm.expandedIds.collectAsStateWithLifecycle()
+    val treeExpandedIds by vm.treeExpandedIds.collectAsStateWithLifecycle()
+    val completedIds by vm.completedIds.collectAsStateWithLifecycle()
+    val completedCount by vm.completedCount.collectAsStateWithLifecycle()
+    val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
+    val favoriteAdvancements by vm.favoriteAdvancements.collectAsStateWithLifecycle()
+    val categoryCounts by vm.categoryCounts.collectAsStateWithLifecycle()
+    val sortKey by vm.sortKey.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
     var showResetDialog by remember { mutableStateOf(false) }
     val isSearching = query.isNotBlank()

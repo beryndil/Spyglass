@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.firebase.perf) apply false
     alias(libs.plugins.baselineprofile)
+    alias(libs.plugins.detekt)
 }
 
 // Conditionally apply Firebase plugins when google-services.json exists
@@ -104,6 +105,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.activity.compose)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.runtime.compose)
     implementation(libs.lifecycle.viewmodel.compose)
 
     implementation(platform(libs.compose.bom))

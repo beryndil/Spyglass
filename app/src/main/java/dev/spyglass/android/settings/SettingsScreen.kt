@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,15 +52,15 @@ fun SettingsScreen(
     onCalcTab: (Int) -> Unit = {},
     vm: SettingsViewModel = viewModel(),
 ) {
-    val defaultBrowseTab    by vm.defaultBrowseTab.collectAsState()
-    val defaultToolTab      by vm.defaultToolTab.collectAsState()
-    val showTipOfDay        by vm.showTipOfDay.collectAsState()
-    val showFavoritesOnHome by vm.showFavoritesOnHome.collectAsState()
-    val gameClockEnabled    by vm.gameClockEnabled.collectAsState()
-    val allFavorites        by vm.allFavorites.collectAsState()
-    val backgroundTheme     by vm.backgroundTheme.collectAsState()
-    val analyticsConsent    by vm.analyticsConsent.collectAsState()
-    val crashConsent        by vm.crashConsent.collectAsState()
+    val defaultBrowseTab    by vm.defaultBrowseTab.collectAsStateWithLifecycle()
+    val defaultToolTab      by vm.defaultToolTab.collectAsStateWithLifecycle()
+    val showTipOfDay        by vm.showTipOfDay.collectAsStateWithLifecycle()
+    val showFavoritesOnHome by vm.showFavoritesOnHome.collectAsStateWithLifecycle()
+    val gameClockEnabled    by vm.gameClockEnabled.collectAsStateWithLifecycle()
+    val allFavorites        by vm.allFavorites.collectAsStateWithLifecycle()
+    val backgroundTheme     by vm.backgroundTheme.collectAsStateWithLifecycle()
+    val analyticsConsent    by vm.analyticsConsent.collectAsStateWithLifecycle()
+    val crashConsent        by vm.crashConsent.collectAsStateWithLifecycle()
 
     var showDeleteConfirm by remember { mutableStateOf(false) }
 

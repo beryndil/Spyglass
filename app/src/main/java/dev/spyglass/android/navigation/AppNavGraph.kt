@@ -3,6 +3,7 @@ package dev.spyglass.android.navigation
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -304,18 +305,16 @@ private fun MiniGameClock(onTap: () -> Unit = {}) {
                 eventsJson = p[PreferenceKeys.CLOCK_ACTIVE_EVENTS],
             )
         }
-    }.collectAsState(initial = ClockPrefs())
+    }.collectAsStateWithLifecycle(initialValue = ClockPrefs())
 
     if (!prefs.enabled || prefs.syncTick < 0) return
 
     val events = remember(prefs.eventsJson) {
-        if (prefs.eventsJson != null) {
-            ClockEngine.deserializeEvents(prefs.eventsJson!!).sortedBy { it.tick }
-        } else {
-            ClockEngine.PREDEFINED_EVENTS
-                .filter { it.predefinedId in ClockEngine.DEFAULT_EVENT_IDS }
-                .sortedBy { it.tick }
-        }
+        prefs.eventsJson?.let { json ->
+            ClockEngine.deserializeEvents(json).sortedBy { it.tick }
+        } ?: ClockEngine.PREDEFINED_EVENTS
+            .filter { it.predefinedId in ClockEngine.DEFAULT_EVENT_IDS }
+            .sortedBy { it.tick }
     }
 
     if (events.isEmpty()) return

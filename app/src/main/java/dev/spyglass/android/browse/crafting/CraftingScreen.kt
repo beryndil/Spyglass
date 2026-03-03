@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -108,13 +109,13 @@ fun CraftingScreen(
     onBiomeTap: (String) -> Unit = {},
     vm: CraftingViewModel = viewModel(),
 ) {
-    val query       by vm.query.collectAsState()
-    val type        by vm.type.collectAsState()
-    val recipes     by vm.recipes.collectAsState()
-    val expandedIds by vm.expandedIds.collectAsState()
-    val allRecipes  by vm.allRecipes.collectAsState()
-    val favoriteIds     by vm.favoriteIds.collectAsState()
-    val favoriteRecipes by vm.favoriteRecipes.collectAsState()
+    val query       by vm.query.collectAsStateWithLifecycle()
+    val type        by vm.type.collectAsStateWithLifecycle()
+    val recipes     by vm.recipes.collectAsStateWithLifecycle()
+    val expandedIds by vm.expandedIds.collectAsStateWithLifecycle()
+    val allRecipes  by vm.allRecipes.collectAsStateWithLifecycle()
+    val favoriteIds     by vm.favoriteIds.collectAsStateWithLifecycle()
+    val favoriteRecipes by vm.favoriteRecipes.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
 
     // Deduplicate recipes that differ only by tag-member variants
@@ -157,7 +158,7 @@ fun CraftingScreen(
             modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            items(RECIPE_TYPES) { t ->
+            items(RECIPE_TYPES, key = { it }) { t ->
                 FilterChip(
                     selected = type == t,
                     onClick = { vm.setType(t) },
@@ -257,8 +258,8 @@ private fun RecipeDetailContent(
     onItemTap: (String) -> Unit,
     onBiomeTap: (String) -> Unit,
 ) {
-    val recipesForItem   by vm.recipesForItem(outputItem).collectAsState(initial = emptyList())
-    val recipesUsingItem by vm.recipesUsingItem(outputItem).collectAsState(initial = emptyList())
+    val recipesForItem   by vm.recipesForItem(outputItem).collectAsStateWithLifecycle(initialValue = emptyList())
+    val recipesUsingItem by vm.recipesUsingItem(outputItem).collectAsStateWithLifecycle(initialValue = emptyList())
 
     ItemDetailPager(
         itemId = outputItem,

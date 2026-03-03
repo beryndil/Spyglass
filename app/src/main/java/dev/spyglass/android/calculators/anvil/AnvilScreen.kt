@@ -5,6 +5,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,8 +40,8 @@ private fun ItemType.textureId(): String = when (this) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
-    val s by vm.state.collectAsState()
-    val warning by vm.warningMessage.collectAsState()
+    val s by vm.state.collectAsStateWithLifecycle()
+    val warning by vm.warningMessage.collectAsStateWithLifecycle()
     val available = vm.enchantsForCurrentItem()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -126,7 +127,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                     if (picked != null && e.maxLevel > 1) {
                         Spacer(Modifier.width(8.dp))
                         Row {
-                            (1..e.maxLevel).forEach { lvl ->
+                            for (lvl in 1..e.maxLevel) {
                                 IconButton(onClick = { vm.setEnchantLevel(e.id, lvl) }, modifier = Modifier.size(32.dp)) {
                                     val numeral = listOf("I","II","III","IV","V")[lvl - 1]
                                     Text(numeral, style = MaterialTheme.typography.labelSmall,

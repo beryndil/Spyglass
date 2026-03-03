@@ -1,0 +1,86 @@
+build:
+  maxIssues: -1  # report all, don't fail
+
+complexity:
+  LongMethod:
+    threshold: 100
+  LongParameterList:
+    functionThreshold: 8
+    constructorThreshold: 10
+  ComplexMethod:
+    threshold: 20
+  TooManyFunctions:
+    active: false
+  LargeClass:
+    threshold: 600
+  NestedBlockDepth:
+    threshold: 5
+
+style:
+  MagicNumber:
+    active: false
+  WildcardImport:
+    active: false
+  MaxLineLength:
+    active: false
+  ReturnCount:
+    active: false
+  UnusedPrivateMember:
+    active: true
+  UnusedParameter:
+    active: true
+  ForbiddenComment:
+    active: false
+  UnnecessaryAbstractClass:
+    active: true
+  NewLineAtEndOfFile:
+    active: false
+  TrailingWhitespace:
+    active: false
+
+empty-blocks:
+  EmptyFunctionBlock:
+    active: true
+  EmptyCatchBlock:
+    active: true
+  EmptyClassBlock:
+    active: true
+
+potential-bugs:
+  DuplicateCaseInWhenExpression:
+    active: true
+  UnreachableCode:
+    active: true
+  UnsafeCallOnNullableType:
+    active: true
+  UselessPostfixExpression:
+    active: true
+
+performance:
+  SpreadOperator:
+    active: false
+  ForEachOnRange:
+    active: true
+
+exceptions:
+  TooGenericExceptionCaught:
+    active: false
+  SwallowedException:
+    active: false
+
+naming:
+  FunctionNaming:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**']
+    functionPattern: '[a-zA-Z][a-zA-Z0-9]*'
+  TopLevelPropertyNaming:
+    active: false
+  VariableNaming:
+    active: false
+  MatchingDeclarationName:
+    active: false
+  InvalidPackageDeclaration:
+    active: false
+
+coroutines:
+  active: true

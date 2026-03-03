@@ -2,6 +2,7 @@ package dev.spyglass.android.data.repository
 
 import android.content.Context
 import android.os.Trace
+import androidx.room.withTransaction
 import dev.spyglass.android.data.db.SpyglassDatabase
 import dev.spyglass.android.data.db.entities.*
 import kotlinx.coroutines.flow.Flow
@@ -58,11 +59,13 @@ class GameDataRepository(context: Context) {
     fun advancementCompletedIds(): Flow<List<String>> = db.advancementProgressDao().completedIds()
     fun advancementCompletedCount(): Flow<Int> = db.advancementProgressDao().completedCount()
     suspend fun toggleAdvancementCompleted(id: String, completed: Boolean) {
-        val existing = db.advancementProgressDao().byId(id)
-        if (existing != null) {
-            db.advancementProgressDao().setCompleted(id, completed, if (completed) System.currentTimeMillis() else null)
-        } else {
-            db.advancementProgressDao().upsert(AdvancementProgressEntity(id, completed, if (completed) System.currentTimeMillis() else null))
+        db.withTransaction {
+            val existing = db.advancementProgressDao().byId(id)
+            if (existing != null) {
+                db.advancementProgressDao().setCompleted(id, completed, if (completed) System.currentTimeMillis() else null)
+            } else {
+                db.advancementProgressDao().upsert(AdvancementProgressEntity(id, completed, if (completed) System.currentTimeMillis() else null))
+            }
         }
     }
     suspend fun resetAllAdvancementProgress() { db.advancementProgressDao().deleteAll() }
@@ -131,13 +134,15 @@ class GameDataRepository(context: Context) {
     suspend fun deleteShoppingList(listId: Long)              { db.shoppingListDao().deleteList(listId) }
     fun shoppingListItems(listId: Long): Flow<List<ShoppingListItemEntity>> = db.shoppingListDao().itemsForList(listId)
     suspend fun addToShoppingList(listId: Long, itemId: String, itemName: String, quantity: Int) {
-        val existing = db.shoppingListDao().findItem(listId, itemId)
-        if (existing != null) {
-            db.shoppingListDao().updateItemQuantity(existing.id, existing.quantity + quantity)
-        } else {
-            db.shoppingListDao().insertItem(
-                ShoppingListItemEntity(listId = listId, itemId = itemId, itemName = itemName, quantity = quantity)
-            )
+        db.withTransaction {
+            val existing = db.shoppingListDao().findItem(listId, itemId)
+            if (existing != null) {
+                db.shoppingListDao().updateItemQuantity(existing.id, existing.quantity + quantity)
+            } else {
+                db.shoppingListDao().insertItem(
+                    ShoppingListItemEntity(listId = listId, itemId = itemId, itemName = itemName, quantity = quantity)
+                )
+            }
         }
     }
     suspend fun updateShoppingItemQuantity(id: Long, quantity: Int) { db.shoppingListDao().updateItemQuantity(id, quantity) }
@@ -161,13 +166,15 @@ class GameDataRepository(context: Context) {
 
     // Delete all user-generated data (todos, notes, waypoints, shopping lists, favorites, advancement progress)
     suspend fun deleteAllUserData() {
-        db.todoDao().deleteAll()
-        db.noteDao().deleteAll()
-        db.waypointDao().deleteAll()
-        db.shoppingListDao().deleteAllItems()
-        db.shoppingListDao().deleteAllLists()
-        db.favoriteDao().deleteAll()
-        db.advancementProgressDao().deleteAll()
+        db.withTransaction {
+            db.todoDao().deleteAll()
+            db.noteDao().deleteAll()
+            db.waypointDao().deleteAll()
+            db.shoppingListDao().deleteAllItems()
+            db.shoppingListDao().deleteAllLists()
+            db.favoriteDao().deleteAll()
+            db.advancementProgressDao().deleteAll()
+        }
     }
 
     companion object {

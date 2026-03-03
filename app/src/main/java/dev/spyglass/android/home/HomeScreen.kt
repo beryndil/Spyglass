@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -145,7 +146,7 @@ fun HomeScreen(
                 loaded = true,
             )
         }
-    }.collectAsState(initial = HomePrefs())
+    }.collectAsStateWithLifecycle(initialValue = HomePrefs())
 
     // Async repo access — avoids blocking main thread if database isn't ready yet
     val repo by produceState<GameDataRepository?>(null) {
@@ -154,13 +155,13 @@ fun HomeScreen(
         }
     }
     val favorites by produceState(emptyList<FavoriteEntity>(), repo) {
-        repo?.allFavorites()?.collect { value = it }
+        repo?.allFavorites()?.collect { value = it } ?: return@produceState
     }
     val todoPreview by produceState(emptyList<TodoEntity>(), repo) {
-        repo?.incompleteTodosPreview(3)?.collect { value = it }
+        repo?.incompleteTodosPreview(3)?.collect { value = it } ?: return@produceState
     }
     val todoCount by produceState(0, repo) {
-        repo?.incompleteTodoCount()?.collect { value = it }
+        repo?.incompleteTodoCount()?.collect { value = it } ?: return@produceState
     }
 
     // LazyColumn — only visible sections compose on first frame
@@ -385,34 +386,41 @@ private fun HomeBrowseSection(onBrowseTab: (Int) -> Unit) {
 
 // ── Quick link grid — 2 columns ─────────────────────────────────────────────
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun QuickLinkGrid(links: List<QuickLink>, onTap: (Int) -> Unit) {
-    FlowRow(
+    Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        maxItemsInEachRow = 2,
     ) {
-        links.forEachIndexed { index, link ->
-            Row(
-                modifier = Modifier
-                    .weight(1f)
-                    .background(LocalSurfaceCard.current, RoundedCornerShape(8.dp))
-                    .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
-                    .clickable { onTap(index) }
-                    .padding(horizontal = 12.dp, vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                SpyglassIconImage(link.icon, contentDescription = null, tint = if (link.iconTint == Color.Unspecified) MaterialTheme.colorScheme.primary else link.iconTint, modifier = Modifier.size(22.dp))
-                Spacer(Modifier.width(10.dp))
-                Text(link.label, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+        // Left column: even indices (0, 2, 4, ...)
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            links.forEachIndexed { i, link ->
+                if (i % 2 == 0) QuickLinkCard(link) { onTap(i) }
             }
         }
-        // If odd number of links, add spacer to fill the last row
-        if (links.size % 2 != 0) {
-            Spacer(Modifier.weight(1f))
+        // Right column: odd indices (1, 3, 5, ...)
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            links.forEachIndexed { i, link ->
+                if (i % 2 != 0) QuickLinkCard(link) { onTap(i) }
+            }
         }
+    }
+}
+
+@Composable
+private fun QuickLinkCard(link: QuickLink, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(LocalSurfaceCard.current, RoundedCornerShape(8.dp))
+            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
+            .clickable { onClick() }
+            .padding(horizontal = 12.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        SpyglassIconImage(link.icon, contentDescription = null, tint = if (link.iconTint == Color.Unspecified) MaterialTheme.colorScheme.primary else link.iconTint, modifier = Modifier.size(22.dp))
+        Spacer(Modifier.width(10.dp))
+        Text(link.label, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
     }
 }
 

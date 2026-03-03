@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -167,15 +168,15 @@ fun BlocksScreen(
     onStructureTap: (String) -> Unit = {},
     vm: BlocksViewModel = viewModel(),
 ) {
-    val query       by vm.query.collectAsState()
-    val category    by vm.category.collectAsState()
-    val sortKey     by vm.sortKey.collectAsState()
-    val blocks      by vm.blocks.collectAsState()
-    val expandedIds by vm.expandedIds.collectAsState()
-    val allRecipes  by vm.allRecipes.collectAsState()
-    val structures  by vm.structures.collectAsState()
-    val favoriteIds    by vm.favoriteIds.collectAsState()
-    val favoriteBlocks by vm.favoriteBlocks.collectAsState()
+    val query       by vm.query.collectAsStateWithLifecycle()
+    val category    by vm.category.collectAsStateWithLifecycle()
+    val sortKey     by vm.sortKey.collectAsStateWithLifecycle()
+    val blocks      by vm.blocks.collectAsStateWithLifecycle()
+    val expandedIds by vm.expandedIds.collectAsStateWithLifecycle()
+    val allRecipes  by vm.allRecipes.collectAsStateWithLifecycle()
+    val structures  by vm.structures.collectAsStateWithLifecycle()
+    val favoriteIds    by vm.favoriteIds.collectAsStateWithLifecycle()
+    val favoriteBlocks by vm.favoriteBlocks.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
     val blockSortOptions = remember { listOf(
         SortOption("Name A\u2192Z", "name"),
@@ -225,7 +226,7 @@ fun BlocksScreen(
             modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            items(BLOCK_CATEGORIES) { c ->
+            items(BLOCK_CATEGORIES, key = { it }) { c ->
                 val chipColor = if (c == "all") MaterialTheme.colorScheme.primary else blockCategoryColor(c)
                 FilterChip(
                     selected = category == c,
@@ -375,8 +376,8 @@ private fun BlockDetailContent(
     onTradeTap: (String) -> Unit,
     onStructureTap: (String) -> Unit,
 ) {
-    val recipesForItem  by vm.recipesForItem(block.id).collectAsState(initial = emptyList())
-    val recipesUsingItem by vm.recipesUsingItem(block.id).collectAsState(initial = emptyList())
+    val recipesForItem  by vm.recipesForItem(block.id).collectAsStateWithLifecycle(initialValue = emptyList())
+    val recipesUsingItem by vm.recipesUsingItem(block.id).collectAsStateWithLifecycle(initialValue = emptyList())
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         // ── Minecraft ID ──

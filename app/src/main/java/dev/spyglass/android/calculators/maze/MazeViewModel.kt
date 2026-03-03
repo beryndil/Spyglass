@@ -547,7 +547,7 @@ class MazeViewModel : ViewModel() {
             var maxDist = 0
             while (queue.isNotEmpty()) {
                 val cur = queue.removeFirst()
-                val d = dist[cur]!!
+                val d = dist.getValue(cur)
                 if (d > maxDist) { maxDist = d; farthest = cur }
                 for ((a, b) in edges) {
                     if (a == cur && b !in dist) { dist[b] = d + 1; queue.addLast(b) }

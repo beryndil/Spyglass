@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalConfiguration
@@ -33,11 +33,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             val theme by dataStore.data
                 .map { it[PreferenceKeys.BACKGROUND_THEME] ?: DEFAULT_THEME }
-                .collectAsState(initial = DEFAULT_THEME)
+                .collectAsStateWithLifecycle(initialValue = DEFAULT_THEME)
 
             val consentShown by dataStore.data
                 .map { it[PreferenceKeys.CONSENT_SHOWN] ?: false }
-                .collectAsState(initial = true) // default true to avoid flash
+                .collectAsStateWithLifecycle(initialValue = true) // default true to avoid flash
 
             val scope = rememberCoroutineScope()
 

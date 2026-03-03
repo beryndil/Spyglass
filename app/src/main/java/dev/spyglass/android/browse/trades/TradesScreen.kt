@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -154,11 +155,11 @@ fun TradesScreen(
     onItemTap: (String) -> Unit = {},
     vm: TradesViewModel = viewModel(),
 ) {
-    val query      by vm.query.collectAsState()
-    val profession by vm.profession.collectAsState()
-    val trades     by vm.trades.collectAsState()
-    val favoriteIds by vm.favoriteIds.collectAsState()
-    val favoriteTrades by vm.favoriteTrades.collectAsState()
+    val query      by vm.query.collectAsStateWithLifecycle()
+    val profession by vm.profession.collectAsStateWithLifecycle()
+    val trades     by vm.trades.collectAsStateWithLifecycle()
+    val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
+    val favoriteTrades by vm.favoriteTrades.collectAsStateWithLifecycle()
 
     // Auto-select profession when navigated from a job block
     LaunchedEffect(targetProfession) {
@@ -181,7 +182,7 @@ fun TradesScreen(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             modifier = Modifier.padding(bottom = 8.dp),
         ) {
-            items(vm.professions) { p ->
+            items(vm.professions, key = { it }) { p ->
                 FilterChip(selected = profession == p, onClick = { vm.setProfession(p) },
                     label = { Text(if (p == "all") stringResource(R.string.all) else p.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) })
             }

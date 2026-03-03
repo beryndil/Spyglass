@@ -31,8 +31,10 @@ object TextureManager {
     /** Download progress 0..1. Only meaningful when state == DOWNLOADING. */
     val progress: StateFlow<Float> = _progress.asStateFlow()
 
-    /** LRU bitmap cache (~100 entries) for scroll performance. */
-    private val bitmapCache = LruCache<String, Bitmap>(100)
+    /** LRU bitmap cache (8 MB) for scroll performance. */
+    private val bitmapCache = object : LruCache<String, Bitmap>(8 * 1024 * 1024) {
+        override fun sizeOf(key: String, bitmap: Bitmap) = bitmap.byteCount
+    }
 
     /** Stored after [init] so [resolve] doesn't need a Context. */
     private var textureDirPath: File? = null
@@ -125,15 +127,43 @@ object TextureManager {
                 count
             }
 
-            // Extract
+            // Extract with size guards
+            val maxEntrySize = 1_024_000L // 1 MB — textures are small PNGs
+            val maxTotalSize = 50L * 1024 * 1024 // 50 MB — prevent zip bomb
             var extracted = 0
+            var totalBytes = 0L
             ZipInputStream(zipBytes.inputStream()).use { zip ->
                 var entry = zip.nextEntry
                 while (entry != null) {
                     if (!entry.isDirectory) {
+                        if (entry.size > maxEntrySize) {
+                            Timber.w("TextureManager: skipping oversized entry %s (%d bytes)", entry.name, entry.size)
+                            zip.closeEntry(); extracted++; entry = zip.nextEntry; continue
+                        }
                         val name = entry.name.substringAfterLast('/')
                         if (name.isNotEmpty()) {
-                            File(dir, name).outputStream().use { out -> zip.copyTo(out) }
+                            val buf = ByteArray(8192)
+                            var entryBytes = 0L
+                            File(dir, name).outputStream().use { out ->
+                                var n: Int
+                                while (zip.read(buf).also { n = it } != -1) {
+                                    entryBytes += n
+                                    if (entryBytes > maxEntrySize) {
+                                        Timber.w("TextureManager: entry %s exceeded size limit, skipping", name)
+                                        break
+                                    }
+                                    out.write(buf, 0, n)
+                                }
+                            }
+                            if (entryBytes > maxEntrySize) {
+                                File(dir, name).delete()
+                            } else {
+                                totalBytes += entryBytes
+                            }
+                            if (totalBytes > maxTotalSize) {
+                                Timber.w("TextureManager: total extraction exceeded %d MB, aborting", maxTotalSize / (1024 * 1024))
+                                zip.closeEntry(); break
+                            }
                         }
                     }
                     zip.closeEntry()

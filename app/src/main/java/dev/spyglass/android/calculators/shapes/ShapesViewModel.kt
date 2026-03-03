@@ -412,7 +412,7 @@ class ShapesViewModel : ViewModel() {
     }
 
     /** Spiral staircase — blocks rotate around the center as Y increases. */
-    private fun spiralLayers(radius: Int, height: Int, stepHeight: Int, width: Int): Map<Int, Set<Pair<Int, Int>>> {
+    private fun spiralLayers(radius: Int, height: Int, @Suppress("UNUSED_PARAMETER") stepHeight: Int, width: Int): Map<Int, Set<Pair<Int, Int>>> {
         val layers = mutableMapOf<Int, MutableSet<Pair<Int, Int>>>()
         val rOuter = radius + 0.5
         val rInner = (radius - width).coerceAtLeast(0) + 0.5

@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -105,13 +106,13 @@ fun StructuresScreen(
     onEnchantTap: (String) -> Unit = {},
     vm: StructuresViewModel = viewModel(),
 ) {
-    val query        by vm.query.collectAsState()
-    val sortKey      by vm.sortKey.collectAsState()
-    val dimension    by vm.dimension.collectAsState()
-    val structures   by vm.structures.collectAsState()
-    val expandedIds  by vm.expandedIds.collectAsState()
-    val favoriteIds  by vm.favoriteIds.collectAsState()
-    val favoriteStructures by vm.favoriteStructures.collectAsState()
+    val query        by vm.query.collectAsStateWithLifecycle()
+    val sortKey      by vm.sortKey.collectAsStateWithLifecycle()
+    val dimension    by vm.dimension.collectAsStateWithLifecycle()
+    val structures   by vm.structures.collectAsStateWithLifecycle()
+    val expandedIds  by vm.expandedIds.collectAsStateWithLifecycle()
+    val favoriteIds  by vm.favoriteIds.collectAsStateWithLifecycle()
+    val favoriteStructures by vm.favoriteStructures.collectAsStateWithLifecycle()
     val listState    = rememberLazyListState()
 
     val dimensions = listOf("all", "overworld", "nether", "end")

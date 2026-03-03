@@ -305,7 +305,7 @@ fun MinecraftIdRow(id: String) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager ?: return@clickable
                 clipboard.setPrimaryClip(android.content.ClipData.newPlainText("Minecraft ID", fullId))
                 copied = true
             }

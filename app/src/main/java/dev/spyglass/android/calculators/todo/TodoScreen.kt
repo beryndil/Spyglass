@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.LinkOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -31,10 +32,10 @@ import dev.spyglass.android.data.db.entities.TodoEntity
 
 @Composable
 fun TodoScreen(vm: TodoViewModel = viewModel()) {
-    val todos by vm.allTodos.collectAsState()
-    val shoppingLists by vm.allShoppingLists.collectAsState()
-    val searchQuery by vm.searchQuery.collectAsState()
-    val searchResults by vm.searchResults.collectAsState()
+    val todos by vm.allTodos.collectAsStateWithLifecycle()
+    val shoppingLists by vm.allShoppingLists.collectAsStateWithLifecycle()
+    val searchQuery by vm.searchQuery.collectAsStateWithLifecycle()
+    val searchResults by vm.searchResults.collectAsStateWithLifecycle()
 
     var mode by remember { mutableIntStateOf(0) } // 0 = free-form, 1 = item-linked
     var freeformInput by remember { mutableStateOf("") }

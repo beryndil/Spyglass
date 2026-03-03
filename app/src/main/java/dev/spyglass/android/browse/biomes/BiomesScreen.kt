@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -134,13 +135,13 @@ fun BiomesScreen(
     onCalcTab: (Int) -> Unit = {},
     vm: BiomesViewModel = viewModel(),
 ) {
-    val query        by vm.query.collectAsState()
-    val sortKey      by vm.sortKey.collectAsState()
-    val category     by vm.category.collectAsState()
-    val biomes       by vm.biomes.collectAsState()
-    val expandedIds  by vm.expandedIds.collectAsState()
-    val favoriteIds  by vm.favoriteIds.collectAsState()
-    val favoriteBiomes by vm.favoriteBiomes.collectAsState()
+    val query        by vm.query.collectAsStateWithLifecycle()
+    val sortKey      by vm.sortKey.collectAsStateWithLifecycle()
+    val category     by vm.category.collectAsStateWithLifecycle()
+    val biomes       by vm.biomes.collectAsStateWithLifecycle()
+    val expandedIds  by vm.expandedIds.collectAsStateWithLifecycle()
+    val favoriteIds  by vm.favoriteIds.collectAsStateWithLifecycle()
+    val favoriteBiomes by vm.favoriteBiomes.collectAsStateWithLifecycle()
     val listState    = rememberLazyListState()
 
     // Auto-expand and scroll to target biome from cross-reference
@@ -184,7 +185,7 @@ fun BiomesScreen(
             modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            items(BIOME_CATEGORIES) { c ->
+            items(BIOME_CATEGORIES, key = { it }) { c ->
                 FilterChip(
                     selected = category == c,
                     onClick = { vm.setCategory(c) },

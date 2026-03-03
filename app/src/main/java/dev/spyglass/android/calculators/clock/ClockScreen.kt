@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,7 +22,7 @@ import dev.spyglass.android.core.ui.*
 
 @Composable
 fun ClockScreen(vm: ClockViewModel = viewModel()) {
-    val state by vm.state.collectAsState()
+    val state by vm.state.collectAsStateWithLifecycle()
     var tickInput by remember { mutableStateOf("") }
     var showF3Help by remember { mutableStateOf(false) }
     var showQuickHelp by remember { mutableStateOf(false) }

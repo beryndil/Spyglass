@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -73,10 +74,6 @@ class ItemsViewModel(app: Application) : AndroidViewModel(app) {
             }
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
-
-    val allRecipes: StateFlow<Map<String, RecipeEntity>> = repo.searchRecipes("")
-        .map { list -> list.associateBy { it.outputItem } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
     val structures: StateFlow<List<StructureEntity>> = repo.searchStructures("")
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -197,16 +194,15 @@ fun ItemsScreen(
     entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
     vm: ItemsViewModel = viewModel(),
 ) {
-    val query      by vm.query.collectAsState()
-    val category   by vm.category.collectAsState()
-    val sortKey    by vm.sortKey.collectAsState()
-    val items      by vm.items.collectAsState()
-    val expandedIds by vm.expandedIds.collectAsState()
-    val allRecipes  by vm.allRecipes.collectAsState()
-    val structures  by vm.structures.collectAsState()
-    val breedingMap by vm.breedingMap.collectAsState()
-    val favoriteIds    by vm.favoriteIds.collectAsState()
-    val favoriteItems  by vm.favoriteItems.collectAsState()
+    val query      by vm.query.collectAsStateWithLifecycle()
+    val category   by vm.category.collectAsStateWithLifecycle()
+    val sortKey    by vm.sortKey.collectAsStateWithLifecycle()
+    val items      by vm.items.collectAsStateWithLifecycle()
+    val expandedIds by vm.expandedIds.collectAsStateWithLifecycle()
+    val structures  by vm.structures.collectAsStateWithLifecycle()
+    val breedingMap by vm.breedingMap.collectAsStateWithLifecycle()
+    val favoriteIds    by vm.favoriteIds.collectAsStateWithLifecycle()
+    val favoriteItems  by vm.favoriteItems.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
     val itemSortOptions = remember { listOf(
         SortOption("Name A\u2192Z", "name"),
@@ -251,7 +247,7 @@ fun ItemsScreen(
             modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            items(ITEM_CATEGORIES) { c ->
+            items(ITEM_CATEGORIES, key = { it }) { c ->
                 val chipColor = if (c == "all") MaterialTheme.colorScheme.primary else categoryColor(c)
                 FilterChip(
                     selected = category == c,
@@ -362,7 +358,6 @@ fun ItemsScreen(
                     ) {
                         ItemDetailCard(
                             item = item,
-                            allRecipes = allRecipes,
                             structures = structures,
                             breedingMap = breedingMap,
                             vm = vm,
@@ -394,7 +389,6 @@ fun ItemsScreen(
 @Composable
 private fun ItemDetailCard(
     item: ItemEntity,
-    allRecipes: Map<String, RecipeEntity>,
     structures: List<StructureEntity>,
     breedingMap: Map<String, List<String>>,
     vm: ItemsViewModel,
@@ -406,9 +400,9 @@ private fun ItemDetailCard(
     onEnchantTap: (String) -> Unit,
     entityLinkIndex: EntityLinkIndex,
 ) {
-    val recipesFor  by vm.recipesForItem(item.id).collectAsState(initial = emptyList())
-    val recipesUsing by vm.recipesUsingItem(item.id).collectAsState(initial = emptyList())
-    val enchants    by vm.enchantsForItem(item.enchantTarget).collectAsState(initial = emptyList())
+    val recipesFor  by vm.recipesForItem(item.id).collectAsStateWithLifecycle(initialValue = emptyList())
+    val recipesUsing by vm.recipesUsingItem(item.id).collectAsStateWithLifecycle(initialValue = emptyList())
+    val enchants    by vm.enchantsForItem(item.enchantTarget).collectAsStateWithLifecycle(initialValue = emptyList())
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         // ── Enhanced Header ──────────────────────────────────────────────

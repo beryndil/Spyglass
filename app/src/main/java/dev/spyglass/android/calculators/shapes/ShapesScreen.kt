@@ -6,6 +6,7 @@ import androidx.compose.foundation.verticalScroll
 import dev.spyglass.android.core.ui.PixelIcons
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -29,7 +30,7 @@ private val SHAPE_LABELS = mapOf(
 
 @Composable
 fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
-    val s by vm.state.collectAsState()
+    val s by vm.state.collectAsStateWithLifecycle()
     var view3D by remember { mutableStateOf(false) }
 
     Column(

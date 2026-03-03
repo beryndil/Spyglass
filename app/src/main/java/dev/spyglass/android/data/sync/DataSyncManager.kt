@@ -65,9 +65,13 @@ object DataSyncManager {
 
             for (table in changed) {
                 val fileName = TABLE_FILES[table] ?: continue
-                val jsonContent = GitHubDataClient.fetchDataFile(fileName)
+                var jsonContent: String? = null
+                for (attempt in 1..3) {
+                    jsonContent = GitHubDataClient.fetchDataFile(fileName)
+                    if (jsonContent != null) break
+                }
                 if (jsonContent == null) {
-                    Timber.w("DataSync: failed to download %s, skipping", fileName)
+                    Timber.w("DataSync: failed to download %s after retries, skipping", fileName)
                     continue
                 }
 
@@ -167,7 +171,7 @@ object DataSyncManager {
             hex.equals(expectedHex, ignoreCase = true)
         } catch (e: Exception) {
             Timber.w(e, "DataSync: SHA-256 verification error")
-            true // fail open — don't block sync if hashing itself fails
+            false // fail closed — reject if hashing itself fails; next sync retries
         }
     }
 

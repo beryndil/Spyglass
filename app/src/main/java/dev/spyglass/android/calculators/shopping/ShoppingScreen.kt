@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -37,7 +38,7 @@ import dev.spyglass.android.data.db.entities.ShoppingListItemEntity
 
 @Composable
 fun ShoppingScreen(vm: ShoppingViewModel = viewModel()) {
-    val selectedListId by vm.selectedListId.collectAsState()
+    val selectedListId by vm.selectedListId.collectAsStateWithLifecycle()
 
     if (selectedListId == null) {
         ListPicker(vm)
@@ -50,7 +51,7 @@ fun ShoppingScreen(vm: ShoppingViewModel = viewModel()) {
 
 @Composable
 private fun ListPicker(vm: ShoppingViewModel) {
-    val lists by vm.allLists.collectAsState()
+    val lists by vm.allLists.collectAsStateWithLifecycle()
     var showDialog by remember { mutableStateOf(false) }
     var listToDelete by remember { mutableStateOf<Long?>(null) }
 
@@ -142,14 +143,14 @@ private fun ListPicker(vm: ShoppingViewModel) {
 
 @Composable
 private fun ListDetail(vm: ShoppingViewModel) {
-    val listId by vm.selectedListId.collectAsState()
-    val lists by vm.allLists.collectAsState()
-    val items by vm.selectedListItems.collectAsState()
-    val allRecipes by vm.allRecipes.collectAsState()
-    val craftingPlan by vm.craftingPlan.collectAsState()
-    val expandedItemId by vm.expandedItemId.collectAsState()
-    val searchQuery by vm.searchQuery.collectAsState()
-    val searchResults by vm.searchResults.collectAsState()
+    val listId by vm.selectedListId.collectAsStateWithLifecycle()
+    val lists by vm.allLists.collectAsStateWithLifecycle()
+    val items by vm.selectedListItems.collectAsStateWithLifecycle()
+    val allRecipes by vm.allRecipes.collectAsStateWithLifecycle()
+    val craftingPlan by vm.craftingPlan.collectAsStateWithLifecycle()
+    val expandedItemId by vm.expandedItemId.collectAsStateWithLifecycle()
+    val searchQuery by vm.searchQuery.collectAsStateWithLifecycle()
+    val searchResults by vm.searchResults.collectAsStateWithLifecycle()
 
     val currentList = lists.find { it.id == listId }
     var quantityInput by remember { mutableStateOf("1") }

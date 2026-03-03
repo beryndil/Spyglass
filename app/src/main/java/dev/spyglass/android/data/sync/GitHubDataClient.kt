@@ -50,12 +50,13 @@ object GitHubDataClient {
                 .url(url)
                 .header("Cache-Control", "no-cache")
                 .build()
-            val response = client.newCall(request).execute()
-            if (response.isSuccessful) {
-                response.body?.string()
-            } else {
-                Timber.w("HTTP %d fetching %s", response.code, url)
-                null
+            client.newCall(request).execute().use { response ->
+                if (response.isSuccessful) {
+                    response.body?.string()
+                } else {
+                    Timber.w("HTTP %d fetching %s", response.code, url)
+                    null
+                }
             }
         } catch (e: Exception) {
             Timber.w(e, "Network error fetching %s", url)
@@ -69,12 +70,13 @@ object GitHubDataClient {
                 .url(url)
                 .header("Cache-Control", "no-cache")
                 .build()
-            val response = client.newCall(request).execute()
-            if (response.isSuccessful) {
-                response.body?.bytes()
-            } else {
-                Timber.w("HTTP %d fetching %s", response.code, url)
-                null
+            client.newCall(request).execute().use { response ->
+                if (response.isSuccessful) {
+                    response.body?.bytes()
+                } else {
+                    Timber.w("HTTP %d fetching %s", response.code, url)
+                    null
+                }
             }
         } catch (e: Exception) {
             Timber.w(e, "Network error fetching %s", url)

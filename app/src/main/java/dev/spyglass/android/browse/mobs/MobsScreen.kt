@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -137,13 +138,13 @@ fun MobsScreen(
     entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
     vm: MobsViewModel = viewModel(),
 ) {
-    val query       by vm.query.collectAsState()
-    val category    by vm.category.collectAsState()
-    val sortKey     by vm.sortKey.collectAsState()
-    val mobs        by vm.mobs.collectAsState()
-    val expandedIds by vm.expandedIds.collectAsState()
-    val favoriteIds by vm.favoriteIds.collectAsState()
-    val favoriteMobs by vm.favoriteMobs.collectAsState()
+    val query       by vm.query.collectAsStateWithLifecycle()
+    val category    by vm.category.collectAsStateWithLifecycle()
+    val sortKey     by vm.sortKey.collectAsStateWithLifecycle()
+    val mobs        by vm.mobs.collectAsStateWithLifecycle()
+    val expandedIds by vm.expandedIds.collectAsStateWithLifecycle()
+    val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
+    val favoriteMobs by vm.favoriteMobs.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
     val mobSortOptions = remember { listOf(
         SortOption("Name A\u2192Z", "name"),
@@ -188,7 +189,7 @@ fun MobsScreen(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             modifier = Modifier.padding(bottom = 8.dp),
         ) {
-            items(categories) { c ->
+            items(categories, key = { it }) { c ->
                 FilterChip(selected = category == c, onClick = { vm.setCategory(c) },
                     label = { Text(if (c == "all") stringResource(R.string.all) else c.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) })
             }

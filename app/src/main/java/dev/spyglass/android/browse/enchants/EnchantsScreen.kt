@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -168,14 +169,14 @@ fun EnchantsScreen(
     entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
     vm: EnchantsViewModel = viewModel(),
 ) {
-    val query       by vm.query.collectAsState()
-    val sortKey     by vm.sortKey.collectAsState()
-    val target      by vm.target.collectAsState()
-    val enchants    by vm.enchants.collectAsState()
-    val expandedIds by vm.expandedIds.collectAsState()
-    val warning     by vm.warningMessage.collectAsState()
-    val favoriteIds by vm.favoriteIds.collectAsState()
-    val favoriteEnchants by vm.favoriteEnchants.collectAsState()
+    val query       by vm.query.collectAsStateWithLifecycle()
+    val sortKey     by vm.sortKey.collectAsStateWithLifecycle()
+    val target      by vm.target.collectAsStateWithLifecycle()
+    val enchants    by vm.enchants.collectAsStateWithLifecycle()
+    val expandedIds by vm.expandedIds.collectAsStateWithLifecycle()
+    val warning     by vm.warningMessage.collectAsStateWithLifecycle()
+    val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
+    val favoriteEnchants by vm.favoriteEnchants.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
     val snackbarHostState = remember { SnackbarHostState() }
 

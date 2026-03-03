@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -25,7 +26,7 @@ fun AddToListSection(
     val context = LocalContext.current
     val repo = remember { GameDataRepository.get(context) }
     val scope = rememberCoroutineScope()
-    val lists by repo.allShoppingLists().collectAsState(initial = emptyList())
+    val lists by repo.allShoppingLists().collectAsStateWithLifecycle(initialValue = emptyList())
 
     var quantityInput by remember { mutableStateOf("1") }
     var selectedList by remember { mutableStateOf<ShoppingListEntity?>(null) }

@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
@@ -131,13 +132,13 @@ fun CommandsScreen(
     entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
     vm: CommandsViewModel = viewModel(),
 ) {
-    val query by vm.query.collectAsState()
-    val category by vm.category.collectAsState()
-    val commands by vm.commands.collectAsState()
-    val expandedIds by vm.expandedIds.collectAsState()
-    val favoriteIds by vm.favoriteIds.collectAsState()
-    val favoriteCommands by vm.favoriteCommands.collectAsState()
-    val sortKey by vm.sortKey.collectAsState()
+    val query by vm.query.collectAsStateWithLifecycle()
+    val category by vm.category.collectAsStateWithLifecycle()
+    val commands by vm.commands.collectAsStateWithLifecycle()
+    val expandedIds by vm.expandedIds.collectAsStateWithLifecycle()
+    val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
+    val favoriteCommands by vm.favoriteCommands.collectAsStateWithLifecycle()
+    val sortKey by vm.sortKey.collectAsStateWithLifecycle()
 
     val sortOptions = remember {
         listOf(

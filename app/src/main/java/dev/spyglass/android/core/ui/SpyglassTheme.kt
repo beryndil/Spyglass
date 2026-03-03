@@ -294,7 +294,7 @@ const val DEFAULT_THEME = "obsidian"
 
 @Composable
 fun SpyglassTheme(theme: String = DEFAULT_THEME, isWideScreen: Boolean = false, content: @Composable () -> Unit) {
-    val colors = ThemePresets[theme] ?: ThemePresets[DEFAULT_THEME]!!
+    val colors = ThemePresets[theme] ?: ThemePresets.getValue(DEFAULT_THEME)
     CompositionLocalProvider(
         LocalSurfaceCard provides colors.surfaceCard,
         LocalIsWideScreen provides isWideScreen,

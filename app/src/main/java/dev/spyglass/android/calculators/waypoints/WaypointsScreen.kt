@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -108,10 +109,10 @@ class WaypointsViewModel(app: Application) : AndroidViewModel(app) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
-    val query by vm.query.collectAsState()
-    val categoryFilter by vm.categoryFilter.collectAsState()
-    val waypoints by vm.waypoints.collectAsState()
-    val expandedIds by vm.expandedIds.collectAsState()
+    val query by vm.query.collectAsStateWithLifecycle()
+    val categoryFilter by vm.categoryFilter.collectAsStateWithLifecycle()
+    val waypoints by vm.waypoints.collectAsStateWithLifecycle()
+    val expandedIds by vm.expandedIds.collectAsStateWithLifecycle()
 
     var showCreateDialog by remember { mutableStateOf(false) }
     var editingWaypoint by remember { mutableStateOf<WaypointEntity?>(null) }
@@ -292,7 +293,7 @@ private fun WaypointDetailCard(
                 .fillMaxWidth()
                 .clickable {
                     val cmd = "/tp @s ${wp.x} ${wp.y} ${wp.z}"
-                    val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                    val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager ?: return@clickable
                     clipboard.setPrimaryClip(android.content.ClipData.newPlainText("TP Command", cmd))
                     copied = true
                 }

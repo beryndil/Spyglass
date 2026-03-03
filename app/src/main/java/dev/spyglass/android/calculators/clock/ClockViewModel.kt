@@ -8,6 +8,7 @@ import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 data class EventDisplay(
@@ -169,7 +170,7 @@ class ClockViewModel(app: Application) : AndroidViewModel(app) {
     private fun startTicking() {
         tickingJob?.cancel()
         tickingJob = viewModelScope.launch {
-            while (true) {
+            while (isActive) {
                 val s = _state.value
                 if (!s.synced) break
                 val current = ClockEngine.currentTick(s.syncTick, s.syncTimeMs)

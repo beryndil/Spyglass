@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -80,11 +81,11 @@ class NotesViewModel(app: Application) : AndroidViewModel(app) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun NotesScreen(vm: NotesViewModel = viewModel()) {
-    val query by vm.query.collectAsState()
-    val labelFilter by vm.labelFilter.collectAsState()
-    val notes by vm.notes.collectAsState()
-    val labels by vm.labels.collectAsState()
-    val expandedIds by vm.expandedIds.collectAsState()
+    val query by vm.query.collectAsStateWithLifecycle()
+    val labelFilter by vm.labelFilter.collectAsStateWithLifecycle()
+    val notes by vm.notes.collectAsStateWithLifecycle()
+    val labels by vm.labels.collectAsStateWithLifecycle()
+    val expandedIds by vm.expandedIds.collectAsStateWithLifecycle()
 
     var showCreateDialog by remember { mutableStateOf(false) }
     var editingNote by remember { mutableStateOf<NoteEntity?>(null) }

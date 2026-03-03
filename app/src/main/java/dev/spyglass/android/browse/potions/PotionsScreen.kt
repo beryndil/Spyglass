@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -68,9 +69,6 @@ private val BREWING_ITEM_IDS = mapOf(
     "breeze_rod" to "breeze_rod",
     "breeze rod" to "breeze_rod",
 )
-
-private fun formatId(id: String): String =
-    id.split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class PotionsViewModel(app: Application) : AndroidViewModel(app) {
@@ -136,13 +134,13 @@ fun PotionsScreen(
     onItemTap: (String) -> Unit = {},
     vm: PotionsViewModel = viewModel(),
 ) {
-    val query      by vm.query.collectAsState()
-    val category   by vm.category.collectAsState()
-    val potions    by vm.potions.collectAsState()
-    val expandedIds by vm.expandedIds.collectAsState()
-    val favoriteIds by vm.favoriteIds.collectAsState()
-    val favoritePotions by vm.favoritePotions.collectAsState()
-    val sortKey    by vm.sortKey.collectAsState()
+    val query      by vm.query.collectAsStateWithLifecycle()
+    val category   by vm.category.collectAsStateWithLifecycle()
+    val potions    by vm.potions.collectAsStateWithLifecycle()
+    val expandedIds by vm.expandedIds.collectAsStateWithLifecycle()
+    val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
+    val favoritePotions by vm.favoritePotions.collectAsStateWithLifecycle()
+    val sortKey    by vm.sortKey.collectAsStateWithLifecycle()
 
     val sortOptions = remember {
         listOf(
@@ -173,7 +171,7 @@ fun PotionsScreen(
             modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            items(POTION_CATEGORIES) { c ->
+            items(POTION_CATEGORIES, key = { it }) { c ->
                 FilterChip(
                     selected = category == c,
                     onClick = { vm.setCategory(c) },

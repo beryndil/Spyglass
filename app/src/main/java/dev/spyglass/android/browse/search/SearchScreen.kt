@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -124,8 +125,8 @@ fun SearchScreen(
     onResultTap: (tab: Int, id: String) -> Unit = { _, _ -> },
     vm: SearchViewModel = viewModel(),
 ) {
-    val query   by vm.query.collectAsState()
-    val results by vm.results.collectAsState()
+    val query   by vm.query.collectAsStateWithLifecycle()
+    val results by vm.results.collectAsStateWithLifecycle()
 
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
@@ -148,7 +149,7 @@ fun SearchScreen(
                 contentPadding = PaddingValues(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                items(results) { r ->
+                items(results, key = { "${it.type}_${it.id}_${it.name}" }) { r ->
                     val icon = typeIcon(r.type, r.id)
                     BrowseListItem(
                         headline    = r.name,
