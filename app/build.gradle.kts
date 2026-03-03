@@ -169,6 +169,13 @@ dependencies {
     implementation(libs.paging.runtime.ktx)
     implementation(libs.paging.compose)
 
+    // Spyglass Connect — QR scanning + CameraX
+    implementation(libs.zxing.android.embedded)
+    implementation(libs.camerax.core)
+    implementation(libs.camerax.camera2)
+    implementation(libs.camerax.lifecycle)
+    implementation(libs.camerax.view)
+
     // Baseline Profiles
     implementation(libs.profileinstaller)
 

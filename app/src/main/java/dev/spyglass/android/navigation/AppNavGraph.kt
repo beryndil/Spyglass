@@ -24,10 +24,18 @@ import dev.spyglass.android.calculators.clock.eventColor
 import dev.spyglass.android.browse.BrowseScreen
 import dev.spyglass.android.browse.search.SearchScreen
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.home.HomeScreen
 import dev.spyglass.android.changelog.ChangelogScreen
+import dev.spyglass.android.connect.ConnectScreen
+import dev.spyglass.android.connect.ConnectViewModel
+import dev.spyglass.android.connect.QrScannerScreen
+import dev.spyglass.android.connect.chestfinder.ChestFinderScreen
+import dev.spyglass.android.connect.inventory.EnderChestScreen
+import dev.spyglass.android.connect.inventory.InventoryScreen
+import dev.spyglass.android.connect.map.MapScreen
 import dev.spyglass.android.disclaimer.DisclaimerScreen
 import dev.spyglass.android.feedback.FeedbackScreen
 import dev.spyglass.android.license.LicenseScreen
@@ -47,7 +55,11 @@ sealed class TopDest(val route: String, val labelResId: Int, val icon: SpyglassI
 
 val TOP_DESTINATIONS = listOf(TopDest.Home, TopDest.Browse, TopDest.Calculators, TopDest.Search)
 
-private val SUB_ROUTES = setOf("about", "settings", "changelog", "feedback", "license", "disclaimer")
+private val SUB_ROUTES = setOf(
+    "about", "settings", "changelog", "feedback", "license", "disclaimer",
+    "connect", "connect_scan", "connect_inventory", "connect_enderchest",
+    "connect_chestfinder", "connect_map",
+)
 
 /** Pending navigation target from Search -> Browse */
 data class BrowseTarget(val tab: Int, val id: String)
@@ -63,6 +75,7 @@ fun AppNavGraph() {
     }
     var pendingTarget by remember { mutableStateOf<BrowseTarget?>(null) }
     var pendingCalcTab by remember { mutableStateOf<Int?>(null) }
+    val connectViewModel: ConnectViewModel = viewModel()
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
@@ -105,6 +118,10 @@ fun AppNavGraph() {
                         navigateTo(TopDest.Calculators.route)
                     },
                     onSearch = { navigateTo(TopDest.Search.route) },
+                    connectViewModel = connectViewModel,
+                    onConnectTap = {
+                        navController.navigate("connect") { launchSingleTop = true }
+                    },
                 )
             }
             composable(TopDest.Calculators.route) {
@@ -163,6 +180,52 @@ fun AppNavGraph() {
             }
             composable("changelog") { ChangelogScreen(onBack = { navController.popBackStack() }) }
             composable("feedback") { FeedbackScreen(onBack = { navController.popBackStack() }) }
+
+            // ── Spyglass Connect routes ──
+            composable("connect") {
+                ConnectScreen(
+                    viewModel = connectViewModel,
+                    onScanQr = { navController.navigate("connect_scan") { launchSingleTop = true } },
+                    onBack = { navController.popBackStack() },
+                    onInventory = { navController.navigate("connect_inventory") { launchSingleTop = true } },
+                    onEnderChest = { navController.navigate("connect_enderchest") { launchSingleTop = true } },
+                    onChestFinder = { navController.navigate("connect_chestfinder") { launchSingleTop = true } },
+                    onMap = { navController.navigate("connect_map") { launchSingleTop = true } },
+                )
+            }
+            composable("connect_scan") {
+                QrScannerScreen(
+                    onPairingDataScanned = { pairingData ->
+                        connectViewModel.connectFromQr(pairingData)
+                        navController.popBackStack()
+                    },
+                    onBack = { navController.popBackStack() },
+                )
+            }
+            composable("connect_inventory") {
+                InventoryScreen(
+                    viewModel = connectViewModel,
+                    onBack = { navController.popBackStack() },
+                )
+            }
+            composable("connect_enderchest") {
+                EnderChestScreen(
+                    viewModel = connectViewModel,
+                    onBack = { navController.popBackStack() },
+                )
+            }
+            composable("connect_chestfinder") {
+                ChestFinderScreen(
+                    viewModel = connectViewModel,
+                    onBack = { navController.popBackStack() },
+                )
+            }
+            composable("connect_map") {
+                MapScreen(
+                    viewModel = connectViewModel,
+                    onBack = { navController.popBackStack() },
+                )
+            }
         }
     }
 }
@@ -215,6 +278,16 @@ private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> U
                 expanded = menuExpanded,
                 onDismissRequest = { menuExpanded = false },
             ) {
+                DropdownMenuItem(
+                    text = { Text("Connect to PC") },
+                    onClick = {
+                        menuExpanded = false
+                        navController.navigate("connect") {
+                            launchSingleTop = true
+                        }
+                    },
+                )
+                HorizontalDivider()
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.settings)) },
                     onClick = {

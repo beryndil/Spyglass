@@ -361,6 +361,38 @@ fun SettingsScreen(
             }
         }
 
+        // ── Spyglass Connect ──────────────────────────────────────────
+        item(key = "connect") {
+            SectionHeader("Spyglass Connect")
+            ResultCard {
+                Text(
+                    "Stream Minecraft world data from your PC over local WiFi",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    "Paired device info and connection settings are managed from the Connect screen.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    "Download Spyglass Connect for your computer:",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Text(
+                    "github.com/Dev-VulX/Spyglass-Connect",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.clickable {
+                        uriHandler.openUri("https://github.com/Dev-VulX/Spyglass-Connect")
+                    },
+                )
+            }
+        }
+
         // ── Privacy & Data ─────────────────────────────────────────────
         item(key = "privacy") {
             SectionHeader(stringResource(R.string.settings_privacy))

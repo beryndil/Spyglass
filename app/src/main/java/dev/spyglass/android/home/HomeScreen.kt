@@ -33,6 +33,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import dev.spyglass.android.connect.ConnectViewModel
+import dev.spyglass.android.connect.client.ConnectionState
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import timber.log.Timber
@@ -140,6 +142,8 @@ fun HomeScreen(
     onBrowseTab: (Int) -> Unit,
     onCalcTab: (Int) -> Unit,
     onSearch: () -> Unit,
+    connectViewModel: ConnectViewModel? = null,
+    onConnectTap: () -> Unit = {},
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -189,6 +193,16 @@ fun HomeScreen(
         // ── Search ──
         item(key = "search") {
             HomeSearchBar(onSearch = onSearch)
+        }
+
+        // ── Connect status ──
+        if (connectViewModel != null) {
+            item(key = "connect") {
+                HomeConnectSection(
+                    connectViewModel = connectViewModel,
+                    onTap = onConnectTap,
+                )
+            }
         }
 
         // ── B. Todo list ──
@@ -509,6 +523,74 @@ private fun HomeTodoRow(todo: TodoEntity, onToggle: () -> Unit) {
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
+    }
+}
+
+// ── Spyglass Connect section ────────────────────────────────────────────────
+
+@Composable
+private fun HomeConnectSection(
+    connectViewModel: ConnectViewModel,
+    onTap: () -> Unit,
+) {
+    val state by connectViewModel.connectionState.collectAsStateWithLifecycle()
+    val playerData by connectViewModel.playerData.collectAsStateWithLifecycle()
+
+    ResultCard(modifier = Modifier.clickable { onTap() }) {
+        when {
+            state is ConnectionState.Connected -> {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    SpyglassIconImage(PixelIcons.Waypoints, contentDescription = null, tint = Emerald, modifier = Modifier.size(22.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            "Connected to PC",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Emerald,
+                        )
+                        playerData?.let { p ->
+                            Text(
+                                "${p.worldName} • ${p.dimension.replace("_", " ").replaceFirstChar { it.uppercase() }}",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                    Text(
+                        "Open",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
+            }
+            else -> {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    SpyglassIconImage(PixelIcons.Waypoints, contentDescription = null, tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(22.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            "Spyglass Connect",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+                        Text(
+                            "Stream Minecraft world data from your PC",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    Text(
+                        "Connect",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
+            }
+        }
     }
 }
 

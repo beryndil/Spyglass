@@ -1,0 +1,237 @@
+package dev.spyglass.android.connect
+
+import android.Manifest
+import android.util.Base64
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.google.zxing.*
+import com.google.zxing.common.HybridBinarizer
+import kotlinx.serialization.json.Json
+import timber.log.Timber
+import java.util.concurrent.Executors
+
+/**
+ * QR scanner screen using CameraX + ZXing for barcode decoding.
+ * Scans the pairing QR code from Spyglass Connect desktop app.
+ */
+@Composable
+fun QrScannerScreen(
+    onPairingDataScanned: (QrPairingData) -> Unit,
+    onBack: () -> Unit,
+) {
+    var hasCameraPermission by remember { mutableStateOf(false) }
+    var scanError by remember { mutableStateOf<String?>(null) }
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { granted ->
+        hasCameraPermission = granted
+    }
+
+    LaunchedEffect(Unit) {
+        permissionLauncher.launch(Manifest.permission.CAMERA)
+    }
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        // Top bar
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .statusBarsPadding()
+                .padding(horizontal = 8.dp, vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(onClick = onBack) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+            }
+            Text(
+                "Scan QR Code",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.weight(1f),
+            )
+        }
+
+        if (hasCameraPermission) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                CameraPreviewWithAnalysis(
+                    onQrDecoded = { data ->
+                        try {
+                            // Try raw JSON first, then Base64-wrapped JSON
+                            val jsonStr = if (data.trimStart().startsWith("{")) {
+                                data
+                            } else {
+                                String(Base64.decode(data, Base64.DEFAULT))
+                            }
+                            val json = Json { ignoreUnknownKeys = true }
+                            val pairingData = json.decodeFromString<QrPairingData>(jsonStr)
+                            if (pairingData.app == "spyglass-connect") {
+                                onPairingDataScanned(pairingData)
+                            } else {
+                                scanError = "Not a Spyglass Connect QR code"
+                            }
+                        } catch (e: Exception) {
+                            Timber.w(e, "Failed to parse QR data: ${e.message}")
+                            scanError = "Invalid QR code: ${e.message?.take(80)}"
+                        }
+                    },
+                )
+
+                // Scanning overlay
+                Box(
+                    modifier = Modifier
+                        .size(250.dp)
+                        .border(2.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(12.dp)),
+                )
+
+                // Instructions
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(32.dp)
+                        .background(
+                            Color.Black.copy(alpha = 0.6f),
+                            RoundedCornerShape(8.dp),
+                        )
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text(
+                        "Point at the QR code on your computer",
+                        color = Color.White,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                    scanError?.let { error ->
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            error,
+                            color = Color(0xFFF44336),
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                }
+            }
+        } else {
+            // Permission denied
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        "Camera permission is required to scan QR codes",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Spacer(Modifier.height(16.dp))
+                    Button(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
+                        Text("Grant Permission")
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CameraPreviewWithAnalysis(onQrDecoded: (String) -> Unit) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    var decoded by remember { mutableStateOf(false) }
+
+    AndroidView(
+        factory = { ctx ->
+            val previewView = PreviewView(ctx)
+            val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
+
+            cameraProviderFuture.addListener({
+                val cameraProvider = cameraProviderFuture.get()
+
+                val preview = Preview.Builder().build().also {
+                    it.surfaceProvider = previewView.surfaceProvider
+                }
+
+                val imageAnalysis = ImageAnalysis.Builder()
+                    .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                    .build()
+                    .also { analysis ->
+                        val executor = Executors.newSingleThreadExecutor()
+                        analysis.setAnalyzer(executor) { imageProxy ->
+                            if (decoded) {
+                                imageProxy.close()
+                                return@setAnalyzer
+                            }
+
+                            val buffer = imageProxy.planes[0].buffer
+                            val bytes = ByteArray(buffer.remaining())
+                            buffer.get(bytes)
+
+                            val source = PlanarYUVLuminanceSource(
+                                bytes,
+                                imageProxy.width,
+                                imageProxy.height,
+                                0, 0,
+                                imageProxy.width,
+                                imageProxy.height,
+                                false,
+                            )
+
+                            try {
+                                val binaryBitmap = BinaryBitmap(HybridBinarizer(source))
+                                val result = MultiFormatReader().apply {
+                                    setHints(mapOf(DecodeHintType.POSSIBLE_FORMATS to listOf(BarcodeFormat.QR_CODE)))
+                                }.decode(binaryBitmap)
+
+                                decoded = true
+                                onQrDecoded(result.text)
+                            } catch (_: NotFoundException) {
+                                // No QR code found in this frame
+                            } catch (e: Exception) {
+                                Timber.w(e, "QR decode error")
+                            } finally {
+                                imageProxy.close()
+                            }
+                        }
+                    }
+
+                try {
+                    cameraProvider.unbindAll()
+                    cameraProvider.bindToLifecycle(
+                        lifecycleOwner,
+                        CameraSelector.DEFAULT_BACK_CAMERA,
+                        preview,
+                        imageAnalysis,
+                    )
+                } catch (e: Exception) {
+                    Timber.e(e, "Camera bind failed")
+                }
+            }, ContextCompat.getMainExecutor(ctx))
+
+            previewView
+        },
+        modifier = Modifier.fillMaxSize(),
+    )
+}
