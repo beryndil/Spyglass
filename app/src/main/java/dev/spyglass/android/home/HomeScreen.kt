@@ -263,8 +263,6 @@ private fun HomeHeader() {
             modifier = Modifier.padding(horizontal = 24.dp),
             textAlign = TextAlign.Center,
         )
-        Spacer(Modifier.height(6.dp))
-        Text(stringResource(R.string.home_minecraft_version), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
     }
 }
 
