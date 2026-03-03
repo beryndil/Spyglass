@@ -315,7 +315,7 @@ fun MinecraftIdRow(id: String) {
     val fullId = if (id.contains(':')) id else "minecraft:$id"
     var copied by remember { mutableStateOf(false) }
 
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
@@ -325,8 +325,6 @@ fun MinecraftIdRow(id: String) {
             }
             .background(MaterialTheme.colorScheme.outline.copy(alpha = 0.3f), RoundedCornerShape(6.dp))
             .padding(horizontal = 12.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(
             fullId,

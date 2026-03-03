@@ -143,7 +143,6 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}, onDisclaime
         item(key = "game_data") {
             SectionHeader(stringResource(R.string.about_game_data))
             ResultCard {
-                StatRow(stringResource(R.string.home_minecraft_version), stringResource(R.string.about_minecraft_version))
                 StatRow(stringResource(R.string.about_data_version), formatDataVersion(manifest?.effectiveVersion ?: 0L))
                 StatRow("Images Version", formatDataVersion(manifest?.textures ?: 0L))
             }
