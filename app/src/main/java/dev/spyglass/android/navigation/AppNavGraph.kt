@@ -81,7 +81,7 @@ fun AppNavGraph() {
             navigateTo(TopDest.Calculators.route)
         }) },
         bottomBar = {
-            Column {
+            Column(Modifier.navigationBarsPadding()) {
                 if (showBars) {
                     BottomNavBar(navController)
                 }

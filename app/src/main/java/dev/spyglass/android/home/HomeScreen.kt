@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import dev.spyglass.android.BuildConfig
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.FavoriteEntity
@@ -29,9 +30,14 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PriorityHigh
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import timber.log.Timber
 import java.util.Calendar
+import java.util.concurrent.TimeUnit
 
 // ── Minecraft tips / Did You Know ───────────────────────────────────────────
 // Tips are loaded from string-array resource for localization support
@@ -237,10 +243,43 @@ fun HomeScreen(
     }
 }
 
+// ── Update check ────────────────────────────────────────────────────────────
+
+private fun checkForUpdate(): Boolean? {
+    return try {
+        val client = OkHttpClient.Builder()
+            .connectTimeout(5, TimeUnit.SECONDS)
+            .readTimeout(5, TimeUnit.SECONDS)
+            .build()
+        val request = Request.Builder()
+            .url("https://api.github.com/repos/Dev-VulX/Spyglass/releases/latest")
+            .header("Accept", "application/vnd.github.v3+json")
+            .build()
+        client.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) return null
+            val body = response.body?.string() ?: return null
+            // Parse tag_name from JSON (e.g. "v2026.0303")
+            val tagMatch = Regex(""""tag_name"\s*:\s*"v?(\d{4})\.(\d{4})"""").find(body)
+                ?: return null
+            val remoteCode = tagMatch.groupValues[1].toInt() * 10000 +
+                tagMatch.groupValues[2].substring(0, 2).toInt() * 100 +
+                tagMatch.groupValues[2].substring(2, 4).toInt()
+            remoteCode > BuildConfig.VERSION_CODE
+        }
+    } catch (e: Exception) {
+        Timber.d(e, "Update check failed")
+        null
+    }
+}
+
 // ── Extracted section composables ───────────────────────────────────────────
 
 @Composable
 private fun HomeHeader() {
+    val updateAvailable by produceState<Boolean?>(null) {
+        value = kotlinx.coroutines.withContext(Dispatchers.IO) { checkForUpdate() }
+    }
+
     Column(
         modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -257,6 +296,14 @@ private fun HomeHeader() {
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onSurface,
         )
+        if (updateAvailable == true) {
+            Spacer(Modifier.height(4.dp))
+            Text(
+                stringResource(R.string.home_update_available),
+                style = MaterialTheme.typography.labelMedium,
+                color = Color(0xFFD32F2F),
+            )
+        }
         Spacer(Modifier.height(4.dp))
         Text(
             stringResource(R.string.home_subtitle),

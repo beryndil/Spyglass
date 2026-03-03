@@ -37,6 +37,7 @@
 
     <!-- Home Screen -->
     <string name="home_welcome">Welcome to Spyglass</string>
+    <string name="home_update_available">Update Available</string>
     <string name="home_subtitle">Your Minecraft companion for crafting, building, and exploring</string>
     <string name="home_minecraft_version">Minecraft Java 1.21.4</string>
     <string name="home_todo_empty">What do you have planned for today?</string>
