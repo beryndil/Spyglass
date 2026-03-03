@@ -17,9 +17,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.data.db.entities.*
 import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
 
 data class SearchResult(val type: String, val id: String, val name: String, val detail: String = "")
@@ -32,50 +35,39 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
 
     val results: StateFlow<List<SearchResult>> = _query
         .debounce(300)
-        .flatMapLatest { q ->
-            if (q.length < 2) return@flatMapLatest flowOf(emptyList())
-            combine(
-                listOf(
-                    repo.searchBlocks(q),
-                    repo.searchRecipes(q),
-                    repo.searchMobs(q),
-                    repo.searchBiomes(q),
-                    repo.searchEnchants(q),
-                    repo.searchPotions(q),
-                    repo.searchTrades(q),
-                    repo.searchStructures(q),
-                    repo.searchItems(q),
-                    repo.searchAdvancements(q),
-                    repo.searchCommands(q),
-                )
-            ) { results ->
-                val blocks     = (results[0] as List<*>)
-                val recipes    = (results[1] as List<*>)
-                val mobs       = (results[2] as List<*>)
-                val biomes     = (results[3] as List<*>)
-                val enchants   = (results[4] as List<*>)
-                val potions    = (results[5] as List<*>)
-                val trades     = (results[6] as List<*>)
-                val structures = (results[7] as List<*>)
-                val items        = (results[8] as List<*>)
-                val advancements = (results[9] as List<*>)
-                val commands    = (results[10] as List<*>)
-                buildList {
-                    addAll(blocks.take(5).map   { it as dev.spyglass.android.data.db.entities.BlockEntity;     SearchResult("Block",       it.id, it.name, it.category) })
-                    addAll(recipes.take(5).map  { it as dev.spyglass.android.data.db.entities.RecipeEntity;    SearchResult("Recipe",      it.outputItem, it.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { c -> c.uppercase() }, it.type.replace('_', ' ')) })
-                    addAll(mobs.take(5).map     { it as dev.spyglass.android.data.db.entities.MobEntity;       SearchResult("Mob",         it.id, it.name, it.category) })
-                    addAll(biomes.take(5).map   { it as dev.spyglass.android.data.db.entities.BiomeEntity;     SearchResult("Biome",       it.id, it.name, it.category) })
-                    addAll(enchants.take(5).map { it as dev.spyglass.android.data.db.entities.EnchantEntity;   SearchResult("Enchantment", it.id, it.name, it.target) })
-                    addAll(potions.take(5).map  { it as dev.spyglass.android.data.db.entities.PotionEntity;    SearchResult("Potion",      it.id, it.name, it.category) })
-                    addAll(trades.take(5).map   { it as dev.spyglass.android.data.db.entities.TradeEntity;     SearchResult("Trade",       it.profession, "${it.sellItem.replace('_', ' ')} (${it.levelName})", it.profession) })
-                    addAll(structures.take(5).map { it as dev.spyglass.android.data.db.entities.StructureEntity; SearchResult("Structure",  it.id, it.name, it.dimension) })
-                    addAll(items.take(5).map    { it as dev.spyglass.android.data.db.entities.ItemEntity;      SearchResult("Item",        it.id, it.name, it.category) })
-                    addAll(advancements.take(5).map { it as dev.spyglass.android.data.db.entities.AdvancementEntity; SearchResult("Advancement", it.id, it.name, it.category) })
-                    addAll(commands.take(5).map { it as dev.spyglass.android.data.db.entities.CommandEntity; SearchResult("Command", it.id, it.name, it.category) })
-                }
-            }
+        .mapLatest { q ->
+            if (q.length < 2) return@mapLatest emptyList()
+            searchAll(q)
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    private suspend fun searchAll(q: String): List<SearchResult> = coroutineScope {
+        val blocks       = async { repo.searchBlocksOnce(q) }
+        val recipes      = async { repo.searchRecipesOnce(q) }
+        val mobs         = async { repo.searchMobsOnce(q) }
+        val biomes       = async { repo.searchBiomesOnce(q) }
+        val enchants     = async { repo.searchEnchantsOnce(q) }
+        val potions      = async { repo.searchPotionsOnce(q) }
+        val trades       = async { repo.searchTradesOnce(q) }
+        val structures   = async { repo.searchStructuresOnce(q) }
+        val items        = async { repo.searchItemsOnce(q) }
+        val advancements = async { repo.searchAdvancementsOnce(q) }
+        val commands     = async { repo.searchCommandsOnce(q) }
+
+        buildList {
+            addAll(blocks.await().map { SearchResult("Block", it.id, it.name, it.category) })
+            addAll(recipes.await().map { SearchResult("Recipe", it.outputItem, it.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { c -> c.uppercase() }, it.type.replace('_', ' ')) })
+            addAll(mobs.await().map { SearchResult("Mob", it.id, it.name, it.category) })
+            addAll(biomes.await().map { SearchResult("Biome", it.id, it.name, it.category) })
+            addAll(enchants.await().map { SearchResult("Enchantment", it.id, it.name, it.target) })
+            addAll(potions.await().map { SearchResult("Potion", it.id, it.name, it.category) })
+            addAll(trades.await().map { SearchResult("Trade", it.profession, "${it.sellItem.replace('_', ' ')} (${it.levelName})", it.profession) })
+            addAll(structures.await().map { SearchResult("Structure", it.id, it.name, it.dimension) })
+            addAll(items.await().map { SearchResult("Item", it.id, it.name, it.category) })
+            addAll(advancements.await().map { SearchResult("Advancement", it.id, it.name, it.category) })
+            addAll(commands.await().map { SearchResult("Command", it.id, it.name, it.category) })
+        }
+    }
 
     fun setQuery(q: String) { _query.value = q }
 }

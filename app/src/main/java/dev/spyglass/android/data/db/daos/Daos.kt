@@ -9,6 +9,9 @@ interface BlockDao {
     @Query("SELECT * FROM blocks WHERE name LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name")
     fun search(q: String): Flow<List<BlockEntity>>
 
+    @Query("SELECT * FROM blocks WHERE name LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name LIMIT 5")
+    suspend fun searchOnce(q: String): List<BlockEntity>
+
     @Query("SELECT * FROM blocks ORDER BY name")
     fun all(): Flow<List<BlockEntity>>
 
@@ -35,6 +38,9 @@ interface BlockDao {
 interface RecipeDao {
     @Query("SELECT * FROM recipes WHERE outputItem LIKE '%' || :q || '%' ORDER BY outputItem")
     fun search(q: String): Flow<List<RecipeEntity>>
+
+    @Query("SELECT * FROM recipes WHERE outputItem LIKE '%' || :q || '%' ORDER BY outputItem LIMIT 5")
+    suspend fun searchOnce(q: String): List<RecipeEntity>
 
     @Query("SELECT * FROM recipes WHERE outputItem = :itemId")
     fun forItem(itemId: String): Flow<List<RecipeEntity>>
@@ -63,6 +69,9 @@ interface MobDao {
     @Query("SELECT * FROM mobs WHERE name LIKE '%' || :q || '%' ORDER BY name")
     fun search(q: String): Flow<List<MobEntity>>
 
+    @Query("SELECT * FROM mobs WHERE name LIKE '%' || :q || '%' ORDER BY name LIMIT 5")
+    suspend fun searchOnce(q: String): List<MobEntity>
+
     @Query("SELECT * FROM mobs ORDER BY name")
     fun all(): Flow<List<MobEntity>>
 
@@ -90,6 +99,9 @@ interface BiomeDao {
     @Query("SELECT * FROM biomes WHERE name LIKE '%' || :q || '%' ORDER BY name")
     fun search(q: String): Flow<List<BiomeEntity>>
 
+    @Query("SELECT * FROM biomes WHERE name LIKE '%' || :q || '%' ORDER BY name LIMIT 5")
+    suspend fun searchOnce(q: String): List<BiomeEntity>
+
     @Query("SELECT * FROM biomes ORDER BY name")
     fun all(): Flow<List<BiomeEntity>>
 
@@ -110,6 +122,9 @@ interface BiomeDao {
 interface EnchantDao {
     @Query("SELECT * FROM enchants WHERE name LIKE '%' || :q || '%' ORDER BY name")
     fun search(q: String): Flow<List<EnchantEntity>>
+
+    @Query("SELECT * FROM enchants WHERE name LIKE '%' || :q || '%' ORDER BY name LIMIT 5")
+    suspend fun searchOnce(q: String): List<EnchantEntity>
 
     @Query("SELECT * FROM enchants ORDER BY name")
     fun all(): Flow<List<EnchantEntity>>
@@ -132,6 +147,9 @@ interface PotionDao {
     @Query("SELECT * FROM potions WHERE name LIKE '%' || :q || '%' ORDER BY name")
     fun search(q: String): Flow<List<PotionEntity>>
 
+    @Query("SELECT * FROM potions WHERE name LIKE '%' || :q || '%' ORDER BY name LIMIT 5")
+    suspend fun searchOnce(q: String): List<PotionEntity>
+
     @Query("SELECT * FROM potions ORDER BY name")
     fun all(): Flow<List<PotionEntity>>
 
@@ -149,6 +167,9 @@ interface PotionDao {
 interface TradeDao {
     @Query("SELECT * FROM trades WHERE profession LIKE '%' || :q || '%' OR sellItem LIKE '%' || :q || '%' ORDER BY profession, level")
     fun search(q: String): Flow<List<TradeEntity>>
+
+    @Query("SELECT * FROM trades WHERE profession LIKE '%' || :q || '%' OR sellItem LIKE '%' || :q || '%' ORDER BY profession, level LIMIT 5")
+    suspend fun searchOnce(q: String): List<TradeEntity>
 
     @Query("SELECT * FROM trades ORDER BY profession, level")
     fun all(): Flow<List<TradeEntity>>
@@ -171,6 +192,9 @@ interface StructureDao {
     @Query("SELECT * FROM structures WHERE name LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name")
     fun search(q: String): Flow<List<StructureEntity>>
 
+    @Query("SELECT * FROM structures WHERE name LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name LIMIT 5")
+    suspend fun searchOnce(q: String): List<StructureEntity>
+
     @Query("SELECT * FROM structures ORDER BY name")
     fun all(): Flow<List<StructureEntity>>
 
@@ -188,6 +212,9 @@ interface StructureDao {
 interface AdvancementDao {
     @Query("SELECT * FROM advancements WHERE name LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' OR description LIKE '%' || :q || '%' ORDER BY name")
     fun search(q: String): Flow<List<AdvancementEntity>>
+
+    @Query("SELECT * FROM advancements WHERE name LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' OR description LIKE '%' || :q || '%' ORDER BY name LIMIT 5")
+    suspend fun searchOnce(q: String): List<AdvancementEntity>
 
     @Query("SELECT * FROM advancements ORDER BY name")
     fun all(): Flow<List<AdvancementEntity>>
@@ -212,6 +239,9 @@ interface AdvancementDao {
 interface ItemDao {
     @Query("SELECT * FROM items WHERE name LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name")
     fun search(q: String): Flow<List<ItemEntity>>
+
+    @Query("SELECT * FROM items WHERE name LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name LIMIT 5")
+    suspend fun searchOnce(q: String): List<ItemEntity>
 
     @Query("SELECT * FROM items ORDER BY name")
     fun all(): Flow<List<ItemEntity>>
@@ -320,6 +350,9 @@ interface AdvancementProgressDao {
 interface CommandDao {
     @Query("SELECT * FROM commands WHERE name LIKE '%' || :q || '%' OR description LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name")
     fun search(q: String): Flow<List<CommandEntity>>
+
+    @Query("SELECT * FROM commands WHERE name LIKE '%' || :q || '%' OR description LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name LIMIT 5")
+    suspend fun searchOnce(q: String): List<CommandEntity>
 
     @Query("SELECT * FROM commands ORDER BY name")
     fun all(): Flow<List<CommandEntity>>

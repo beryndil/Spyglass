@@ -1,16 +1,22 @@
 package dev.spyglass.android
 
 import android.app.Application
+import android.content.ComponentCallbacks2
 import android.os.StrictMode
 import android.os.Trace
+import dev.spyglass.android.core.FirebaseHelper
 import dev.spyglass.android.core.ui.TextureManager
 import dev.spyglass.android.data.repository.GameDataRepository
 import dev.spyglass.android.data.seed.DataSeeder
 import dev.spyglass.android.data.sync.DataSyncManager
 import dev.spyglass.android.data.sync.DataSyncWorker
+import dev.spyglass.android.settings.PreferenceKeys
+import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -47,14 +53,14 @@ class SpyglassApp : Application() {
                 defaultHandler?.uncaughtException(thread, throwable)
             }
 
-            // Init TextureManager (checks if textures are already downloaded)
-            TextureManager.init(this)
-
-            // Load texture mappings (block/item ID → filename) from JSON
-            TextureManager.loadTextureMaps(this)
-
-            // Pre-warm database and seed game data on IO
+            // Pre-warm database, seed data, init textures — all on IO to avoid ANR
             appScope.launch(Dispatchers.IO) {
+                // Init TextureManager (checks if textures are already downloaded)
+                TextureManager.init(this@SpyglassApp)
+
+                // Load texture mappings (block/item ID -> filename) from JSON
+                TextureManager.loadTextureMaps(this@SpyglassApp)
+
                 Trace.beginSection("SpyglassApp.seedAndWarm")
                 try {
                     // Pre-warm database singleton so it's ready before HomeScreen composes
@@ -73,6 +79,21 @@ class SpyglassApp : Application() {
                 }
             }
 
+            // Read consent and conditionally enable Firebase
+            appScope.launch(Dispatchers.IO) {
+                try {
+                    val crashConsent = dataStore.data
+                        .map { it[PreferenceKeys.CRASH_CONSENT] ?: false }
+                        .first()
+                    val analyticsConsent = dataStore.data
+                        .map { it[PreferenceKeys.ANALYTICS_CONSENT] ?: false }
+                        .first()
+                    FirebaseHelper.applyConsent(crashConsent, analyticsConsent)
+                } catch (e: Exception) {
+                    Timber.w(e, "Failed to read consent for Firebase init")
+                }
+            }
+
             // Enroll periodic sync worker (every 12 hours, requires network)
             DataSyncWorker.enqueue(this)
         } finally {
@@ -80,4 +101,22 @@ class SpyglassApp : Application() {
         }
     }
 
+    @Suppress("DEPRECATION")
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        when {
+            level >= ComponentCallbacks2.TRIM_MEMORY_COMPLETE -> {
+                Timber.d("onTrimMemory CRITICAL — evicting all bitmaps")
+                TextureManager.evictAllBitmaps()
+            }
+            level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE -> {
+                Timber.d("onTrimMemory MODERATE — trimming bitmap cache")
+                TextureManager.trimBitmapCache()
+            }
+            level >= ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW -> {
+                Timber.d("onTrimMemory LOW — trimming bitmap cache")
+                TextureManager.trimBitmapCache()
+            }
+        }
+    }
 }

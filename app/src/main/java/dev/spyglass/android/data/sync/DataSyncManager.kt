@@ -5,6 +5,7 @@ import dev.spyglass.android.core.ui.TextureManager
 import dev.spyglass.android.data.seed.DataSeeder
 import timber.log.Timber
 import java.io.File
+import java.security.MessageDigest
 
 /**
  * Orchestrates data sync: fetches the remote manifest from GitHub,
@@ -67,6 +68,13 @@ object DataSyncManager {
                 val jsonContent = GitHubDataClient.fetchDataFile(fileName)
                 if (jsonContent == null) {
                     Timber.w("DataSync: failed to download %s, skipping", fileName)
+                    continue
+                }
+
+                // Verify SHA-256 checksum if provided by the manifest
+                val expectedHash = remoteManifest.checksums[fileName]
+                if (!expectedHash.isNullOrBlank() && !verifySha256(jsonContent, expectedHash)) {
+                    Timber.w("DataSync: checksum mismatch for %s, skipping", fileName)
                     continue
                 }
 
@@ -147,6 +155,19 @@ object DataSyncManager {
         } catch (e: Exception) {
             Timber.w(e, "DataSync: failed to read bundled manifest")
             DataManifest()
+        }
+    }
+
+    /** Returns true if the SHA-256 of [content] matches [expectedHex]. */
+    private fun verifySha256(content: String, expectedHex: String): Boolean {
+        return try {
+            val digest = MessageDigest.getInstance("SHA-256")
+            val hash = digest.digest(content.toByteArray(Charsets.UTF_8))
+            val hex = hash.joinToString("") { "%02x".format(it) }
+            hex.equals(expectedHex, ignoreCase = true)
+        } catch (e: Exception) {
+            Timber.w(e, "DataSync: SHA-256 verification error")
+            true // fail open — don't block sync if hashing itself fails
         }
     }
 

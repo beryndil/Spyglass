@@ -99,6 +99,19 @@ class GameDataRepository(context: Context) {
 
     // Commands
     fun searchCommands(q: String): Flow<List<CommandEntity>> = if (q.isBlank()) db.commandDao().all() else db.commandDao().search(q)
+
+    // One-shot search methods (LIMIT 5, for global search performance)
+    suspend fun searchBlocksOnce(q: String): List<BlockEntity>         = db.blockDao().searchOnce(q)
+    suspend fun searchRecipesOnce(q: String): List<RecipeEntity>       = db.recipeDao().searchOnce(q)
+    suspend fun searchMobsOnce(q: String): List<MobEntity>            = db.mobDao().searchOnce(q)
+    suspend fun searchBiomesOnce(q: String): List<BiomeEntity>         = db.biomeDao().searchOnce(q)
+    suspend fun searchEnchantsOnce(q: String): List<EnchantEntity>     = db.enchantDao().searchOnce(q)
+    suspend fun searchPotionsOnce(q: String): List<PotionEntity>       = db.potionDao().searchOnce(q)
+    suspend fun searchTradesOnce(q: String): List<TradeEntity>         = db.tradeDao().searchOnce(q)
+    suspend fun searchStructuresOnce(q: String): List<StructureEntity> = db.structureDao().searchOnce(q)
+    suspend fun searchItemsOnce(q: String): List<ItemEntity>           = db.itemDao().searchOnce(q)
+    suspend fun searchAdvancementsOnce(q: String): List<AdvancementEntity> = db.advancementDao().searchOnce(q)
+    suspend fun searchCommandsOnce(q: String): List<CommandEntity>     = db.commandDao().searchOnce(q)
     fun commandsByCategory(cat: String): Flow<List<CommandEntity>> = db.commandDao().byCategory(cat)
     suspend fun commandById(id: String): CommandEntity?      = db.commandDao().byId(id)
 

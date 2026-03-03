@@ -7,10 +7,18 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
+    // Firebase plugins — only applied when google-services.json exists
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.firebase.perf) apply false
     alias(libs.plugins.baselineprofile)
+}
+
+// Conditionally apply Firebase plugins when google-services.json exists
+if (file("google-services.json").exists()) {
+    apply(plugin = libs.plugins.google.services.get().pluginId)
+    apply(plugin = libs.plugins.firebase.crashlytics.get().pluginId)
+    apply(plugin = libs.plugins.firebase.perf.get().pluginId)
 }
 
 // CalVer: versionCode = YYYYMMDD, versionName = "YYYY.MMDD.HHmm-alpha"
@@ -77,6 +85,10 @@ android {
 
     kotlinOptions { jvmTarget = "17" }
 
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
+
     buildFeatures {
         compose = true
         buildConfig = true
@@ -89,6 +101,7 @@ baselineProfile {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.activity.compose)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.lifecycle.viewmodel.compose)
@@ -119,11 +132,14 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
 
-    // Firebase (uncomment after adding google-services.json)
-    // implementation(platform(libs.firebase.bom))
-    // implementation(libs.firebase.crashlytics)
-    // implementation(libs.firebase.analytics)
-    // implementation(libs.firebase.perf)
+    // Firebase — disabled at runtime by default; enabled only with user consent
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.perf)
+
+    // In-App Review
+    implementation(libs.play.review.ktx)
 
     // Window Manager
     implementation(libs.window)

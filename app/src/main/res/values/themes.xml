@@ -9,4 +9,10 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
     </style>
+
+    <!-- Splash screen theme (extends base so the window stays dark during init) -->
+    <style name="Theme.Spyglass.Splash" parent="Theme.Spyglass">
+        <item name="android:windowSplashScreenBackground">#0E0C0A</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+    </style>
 </resources>

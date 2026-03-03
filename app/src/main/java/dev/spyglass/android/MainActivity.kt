@@ -4,12 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
+import dev.spyglass.android.core.ReviewHelper
 import dev.spyglass.android.core.ui.ConsentDialog
 import dev.spyglass.android.core.ui.DEFAULT_THEME
 import dev.spyglass.android.core.ui.SpyglassTheme
@@ -21,8 +23,12 @@ import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // Track app opens and prompt for review after 10 launches (one-time)
+        ReviewHelper.trackOpenAndPrompt(this)
 
         setContent {
             val theme by dataStore.data

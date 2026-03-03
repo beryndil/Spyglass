@@ -28,7 +28,7 @@ import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 @Composable
-fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
+fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}, onDisclaimer: () -> Unit = {}) {
     val uriHandler = LocalUriHandler.current
     val context = LocalContext.current
 
@@ -131,9 +131,11 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}) {
             Text(
                 text = stringResource(R.string.about_disclaimer),
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.secondary,
+                color = MaterialTheme.colorScheme.primary,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onDisclaimer() },
             )
         }
 

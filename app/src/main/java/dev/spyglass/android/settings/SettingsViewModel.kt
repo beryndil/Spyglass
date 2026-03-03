@@ -3,6 +3,7 @@ package dev.spyglass.android.settings
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import dev.spyglass.android.core.FirebaseHelper
 import dev.spyglass.android.core.ui.DEFAULT_THEME
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.repository.GameDataRepository
@@ -80,10 +81,12 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setAnalyticsConsent(enabled: Boolean) = viewModelScope.launch {
         store.edit { it[PreferenceKeys.ANALYTICS_CONSENT] = enabled }
+        FirebaseHelper.applyConsent(crashConsent.value, enabled)
     }
 
     fun setCrashConsent(enabled: Boolean) = viewModelScope.launch {
         store.edit { it[PreferenceKeys.CRASH_CONSENT] = enabled }
+        FirebaseHelper.applyConsent(enabled, analyticsConsent.value)
     }
 
     fun deleteAllUserData() = viewModelScope.launch {

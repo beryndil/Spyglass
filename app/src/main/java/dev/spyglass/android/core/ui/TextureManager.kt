@@ -152,6 +152,18 @@ object TextureManager {
         }
     }
 
+    /** Evicts all bitmaps from the LRU cache (for critical memory pressure). */
+    fun evictAllBitmaps() {
+        bitmapCache.evictAll()
+        Timber.d("TextureManager: evicted all cached bitmaps")
+    }
+
+    /** Trims the bitmap cache to half its current size. */
+    fun trimBitmapCache() {
+        bitmapCache.trimToSize(bitmapCache.maxSize() / 2)
+        Timber.d("TextureManager: trimmed bitmap cache to half")
+    }
+
     /** Deletes all downloaded textures. */
     suspend fun delete(context: Context) = withContext(Dispatchers.IO) {
         textureDir(context).deleteRecursively()

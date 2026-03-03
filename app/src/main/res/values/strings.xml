@@ -120,6 +120,10 @@
     <string name="about_report_bug">Report a Bug</string>
     <string name="about_request_feature">Request a Feature</string>
 
+    <!-- Disclaimer Screen -->
+    <string name="disclaimer_title">Legal Disclaimer</string>
+    <string name="disclaimer_body">Spyglass is an unofficial, fan-made companion application for Minecraft: Java Edition.\n\nThis app is NOT an official Minecraft product. It is NOT approved by or associated with Mojang Studios, Microsoft Corporation, or any of their subsidiaries or affiliates.\n\n\"Minecraft\" is a trademark of Mojang Studios. All Minecraft-related content, including but not limited to game data, item names, mob names, biome names, and block names, is the intellectual property of Mojang Studios.\n\nAll game data displayed in this application is sourced from publicly available information on the Minecraft Wiki and official Mojang resources. This app does not modify, interact with, or connect to Minecraft game servers in any way.\n\nPixel art textures used in this app are from the \"Pixel Perfection\" resource pack by XSSheep, licensed under CC BY-SA 4.0. Entity icons are from the \"Entity-Icons\" project, licensed under CC0 1.0.\n\nThis application is provided \"as is\" without warranty of any kind. The developer assumes no responsibility for any issues arising from the use of this application.</string>
+
     <!-- License Screen -->
     <string name="license_title">License</string>
     <string name="license_full_name">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</string>

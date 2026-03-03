@@ -1,9 +1,13 @@
 package dev.spyglass.android.calculators.shapes
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlin.math.*
 
 enum class ShapeType { CIRCLE, SPHERE, DOME, CYLINDER, CONE, PYRAMID, TORUS, WALL, ARCH, ELLIPSOID, ARC_WALL, SPIRAL }
@@ -34,6 +38,7 @@ data class ShapesState(
 class ShapesViewModel : ViewModel() {
     private val _state = MutableStateFlow(ShapesState())
     val state: StateFlow<ShapesState> = _state.asStateFlow()
+    private var calcJob: Job? = null
 
     fun setShape(t: ShapeType) { _state.value = _state.value.copy(shapeType = t); recalc() }
     fun setRadius(v: String)   { _state.value = _state.value.copy(radiusInput = v); recalc() }
@@ -53,6 +58,11 @@ class ShapesViewModel : ViewModel() {
     fun setLayer(y: Int)       { _state.value = _state.value.copy(currentLayer = y) }
 
     private fun recalc() {
+        calcJob?.cancel()
+        calcJob = viewModelScope.launch(Dispatchers.Default) { doRecalc() }
+    }
+
+    private fun doRecalc() {
         val s = _state.value
         val r = s.radiusInput.toIntOrNull()?.takeIf { it in 1..100 } ?: return
         val thick = s.thickness.coerceIn(1, 3)

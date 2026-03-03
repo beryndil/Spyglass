@@ -27,6 +27,8 @@ data class DataManifest(
     val textures: Long = 0,
     @SerialName("texture_map") val textureMap: Long = 0,
     val news: Long = 0,
+    /** Optional SHA-256 checksums per file. Empty map when server doesn't provide them. */
+    val checksums: Map<String, String> = emptyMap(),
 ) {
     /** The effective version is the highest per-table version. */
     val effectiveVersion: Long

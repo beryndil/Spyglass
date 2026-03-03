@@ -27,13 +27,17 @@ class DataSyncWorker(
     companion object {
         private const val WORK_NAME = "data_sync"
 
-        /** Enqueues a periodic sync worker (every 12 hours, requires network). */
+        /** Enqueues a periodic sync worker (every 12 hours, requires network).
+         *  Random 0–60 min initial delay spreads server load across installs. */
         fun enqueue(context: Context) {
+            val jitterMinutes = (0L..60L).random()
+
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
             val request = PeriodicWorkRequestBuilder<DataSyncWorker>(12, TimeUnit.HOURS)
+                .setInitialDelay(jitterMinutes, TimeUnit.MINUTES)
                 .setConstraints(constraints)
                 .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.MINUTES)
                 .build()

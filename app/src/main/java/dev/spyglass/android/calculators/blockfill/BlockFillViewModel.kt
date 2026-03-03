@@ -43,10 +43,17 @@ class BlockFillViewModel : ViewModel() {
         val h = s.heightInput.toLongOrNull()  ?: return let { _state.value = s.copy(result = null) }
         if (w <= 0 || l <= 0 || h <= 0) { _state.value = s.copy(result = null); return }
 
-        val total = if (s.hollow && w >= 3 && l >= 3 && h >= 3) {
-            w * l * h - (w - 2) * (l - 2) * (h - 2)
-        } else {
-            w * l * h
+        val total = try {
+            if (s.hollow && w >= 3 && l >= 3 && h >= 3) {
+                val outer = Math.multiplyExact(Math.multiplyExact(w, l), h)
+                val inner = Math.multiplyExact(Math.multiplyExact(w - 2, l - 2), h - 2)
+                Math.subtractExact(outer, inner)
+            } else {
+                Math.multiplyExact(Math.multiplyExact(w, l), h)
+            }
+        } catch (_: ArithmeticException) {
+            _state.value = s.copy(result = null)
+            return
         }
         _state.value = s.copy(result = BlockFillResult(
             totalBlocks = total,

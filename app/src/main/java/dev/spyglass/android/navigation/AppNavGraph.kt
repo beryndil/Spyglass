@@ -27,6 +27,7 @@ import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.home.HomeScreen
 import dev.spyglass.android.changelog.ChangelogScreen
+import dev.spyglass.android.disclaimer.DisclaimerScreen
 import dev.spyglass.android.feedback.FeedbackScreen
 import dev.spyglass.android.license.LicenseScreen
 import dev.spyglass.android.settings.PreferenceKeys
@@ -45,7 +46,7 @@ sealed class TopDest(val route: String, val labelResId: Int, val icon: SpyglassI
 
 val TOP_DESTINATIONS = listOf(TopDest.Home, TopDest.Browse, TopDest.Calculators, TopDest.Search)
 
-private val SUB_ROUTES = setOf("about", "settings", "changelog", "feedback", "license")
+private val SUB_ROUTES = setOf("about", "settings", "changelog", "feedback", "license", "disclaimer")
 
 /** Pending navigation target from Search -> Browse */
 data class BrowseTarget(val tab: Int, val id: String)
@@ -135,9 +136,13 @@ fun AppNavGraph() {
                     onLicense = {
                         navController.navigate("license") { launchSingleTop = true }
                     },
+                    onDisclaimer = {
+                        navController.navigate("disclaimer") { launchSingleTop = true }
+                    },
                 )
             }
             composable("license") { LicenseScreen(onBack = { navController.popBackStack() }) }
+            composable("disclaimer") { DisclaimerScreen(onBack = { navController.popBackStack() }) }
             composable("settings") {
                 SettingsScreen(
                     onBack = { navController.popBackStack() },
