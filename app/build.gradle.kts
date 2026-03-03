@@ -64,12 +64,12 @@ android {
         versionName = calVerName
 
         // AdMob — defaults to test IDs; override in local.properties for production
-        val admobAppId = localProps.getProperty(
-            "ADMOB_APP_ID", "ca-app-pub-3940256099942544~3347511713"
-        )
-        val admobBannerId = localProps.getProperty(
-            "ADMOB_BANNER_ID", "ca-app-pub-3940256099942544/9214589741"
-        )
+        val testAppId = "ca-app-pub-3940256099942544~3347511713"
+        val testBannerId = "ca-app-pub-3940256099942544/9214589741"
+        val admobAppId = localProps.getProperty("ADMOB_APP_ID")
+            .let { if (it.isNullOrBlank()) testAppId else it }
+        val admobBannerId = localProps.getProperty("ADMOB_BANNER_ID")
+            .let { if (it.isNullOrBlank()) testBannerId else it }
         manifestPlaceholders["admobAppId"] = admobAppId
         buildConfigField("String", "ADMOB_BANNER_ID", "\"$admobBannerId\"")
     }
