@@ -28,6 +28,7 @@ private fun browseTabNames() = listOf(
     stringResource(R.string.browse_tab_structures), stringResource(R.string.browse_tab_enchants),
     stringResource(R.string.browse_tab_potions), stringResource(R.string.browse_tab_advancements),
     stringResource(R.string.browse_tab_commands), stringResource(R.string.browse_tab_reference),
+    stringResource(R.string.browse_tab_versions),
 )
 
 @Composable

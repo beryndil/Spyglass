@@ -22,6 +22,7 @@ import dev.spyglass.android.browse.structures.StructuresScreen
 import dev.spyglass.android.browse.advancements.AdvancementsScreen
 import dev.spyglass.android.browse.commands.CommandsScreen
 import dev.spyglass.android.browse.trades.TradesScreen
+import dev.spyglass.android.browse.versions.VersionsScreen
 import dev.spyglass.android.calculators.reference.ReferenceScreen
 import dev.spyglass.android.core.ui.EntityLink
 import dev.spyglass.android.core.ui.EntityLinkIndex
@@ -50,6 +51,7 @@ private fun browseTabs() = listOf(
     SpyglassTab(stringResource(R.string.browse_tab_advancements), PixelIcons.Advancement, untinted = true), // 9
     SpyglassTab(stringResource(R.string.browse_tab_commands),     PixelIcons.Command),      // 10
     SpyglassTab(stringResource(R.string.browse_tab_reference),    PixelIcons.Bookmark),     // 11
+    SpyglassTab(stringResource(R.string.browse_tab_versions),    PixelIcons.Clock),        // 12
 )
 
 @Composable
@@ -291,6 +293,7 @@ fun BrowseScreen(
                 entityLinkIndex = entityLinkIndex,
             )
             11 -> ReferenceScreen()
+            12 -> VersionsScreen()
         }
     }
 }

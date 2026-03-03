@@ -173,6 +173,7 @@
     <string name="browse_tab_advancements">Advancements</string>
     <string name="browse_tab_commands">Commands</string>
     <string name="browse_tab_reference">Reference</string>
+    <string name="browse_tab_versions">Versions</string>
 
     <!-- Calculator/Tool Tabs -->
     <string name="calc_tab_todo">Todo</string>

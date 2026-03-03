@@ -63,6 +63,7 @@ private fun browseLinks() = listOf(
     QuickLink(PixelIcons.Advancement, "Advancements", Emerald)                                   to 9,
     QuickLink(PixelIcons.Command,   "Commands",     PotionBlue)                                  to 10,
     QuickLink(PixelIcons.Bookmark,  "Reference",    MaterialTheme.colorScheme.primary)           to 11,
+    QuickLink(PixelIcons.Clock,     "Versions",     MaterialTheme.colorScheme.secondary)         to 12,
 )
 
 // Pair: QuickLink to calculator-tab index (allows visual reordering independent of tab order)
@@ -76,12 +77,13 @@ private val CALC_LINKS = listOf(
     QuickLink(PixelIcons.Fill,      "Block Fill")             to 3,
     QuickLink(PixelIcons.Shapes,    "Shapes")                 to 4,
     QuickLink(PixelIcons.Maze,      "Maze Maker")             to 5,
-    QuickLink(PixelIcons.Torch,     "Light Spacing")          to 10,
+    QuickLink(PixelIcons.Storage,   "Storage")                to 6,
     // ── Crafting & Resources ──
     QuickLink(PixelIcons.Anvil,     "Enchanting")             to 2,
-    QuickLink(PixelIcons.Enchant,   "Librarian Guide")        to 14,
     QuickLink(PixelIcons.Smelt,     "Smelting")               to 7,
-    QuickLink(PixelIcons.Storage,   "Storage")                to 6,
+    // ── Reference ──
+    QuickLink(PixelIcons.Enchant,   "Librarian Guide")        to 14,
+    QuickLink(PixelIcons.Torch,     "Light Spacing")          to 10,
     // ── World & Navigation ──
     QuickLink(PixelIcons.Nether,    "Nether Portal")          to 8,
     QuickLink(PixelIcons.Clock,     "Game Clock")             to 9,
