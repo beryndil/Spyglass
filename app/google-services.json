@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "43872112094",
+    "project_id": "spyglass-93e57",
+    "storage_bucket": "spyglass-93e57.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43872112094:android:9928c9bca3df927338614f",
+        "android_client_info": {
+          "package_name": "dev.spyglass.android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd3rjWDbhEZ5DfG0qwwSzuUl3grVmR6N0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

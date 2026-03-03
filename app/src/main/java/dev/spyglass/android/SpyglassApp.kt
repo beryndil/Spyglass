@@ -95,8 +95,8 @@ class SpyglassApp : Application() {
                 }
             }
 
-            // Initialize AdMob SDK
-            appScope.launch(Dispatchers.IO) {
+            // Initialize AdMob SDK (must run on main thread per Google docs)
+            appScope.launch {
                 try {
                     MobileAds.initialize(this@SpyglassApp) {
                         Timber.d("MobileAds init complete: %s", it.adapterStatusMap)
