@@ -55,11 +55,32 @@ Search and filter across 9 categories with pixel-art textures and deep cross-lin
 
 Real-time search across all 9 categories simultaneously. Tap any result to jump directly to its detail page.
 
+### Spyglass Connect
+
+Connect to the **[Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect)** desktop companion app to access your Minecraft world data from your phone over local WiFi.
+
+| Feature | Description |
+|---------|-------------|
+| **QR Pairing** | Scan a QR code to connect — auto-reconnects after that |
+| **Inventory Viewer** | See your full inventory, armor, offhand, and ender chest |
+| **Chest Finder** | Search for any item across all containers in the world |
+| **Structure Locator** | Find villages, temples, monuments, and more |
+| **Overhead Map** | Terrain map with structure markers and player position |
+
+**Requires:** [Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect) running on your PC, same WiFi network.
+
 ---
 
 ## Screenshots
 
 *Coming soon.*
+
+---
+
+## Related Projects
+
+- **[Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect)** — Desktop companion app (reads your Minecraft saves, streams to phone)
+- **[Spyglass-Data](https://github.com/Dev-VulX/Spyglass-Data)** — Minecraft reference data (auto-synced to app)
 
 ---
 
