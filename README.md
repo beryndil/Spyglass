@@ -4,7 +4,11 @@
 
 Spyglass is a fully offline Android reference app for Minecraft Java Edition 1.21.4. Browse a complete database of blocks, items, recipes, mobs, biomes, enchantments, potions, structures, and villager trades — plus six specialized calculators for building and enchanting. Everything runs locally on your device with zero data collection.
 
-> Not affiliated with Mojang Studios or Microsoft.
+## Disclaimer
+
+**Spyglass is not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft.** Minecraft is a trademark of Mojang Studios. All game data is used for informational purposes only.
+
+---
 
 ## Download
 
@@ -91,8 +95,6 @@ The debug APK will be at `app/build/outputs/apk/debug/app-debug.apk`.
 |----------|--------|---------|
 | [Pixel Perfection](https://www.curseforge.com/minecraft/texture-packs/pixel-perfection) | XSSheep | [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
 | [Entity-Icons](https://github.com/Simplexity-Development/Entity-Icons) | Simplexity Development | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
-
-All game data references Minecraft Java Edition 1.21.4 by Mojang Studios / Microsoft.
 
 ---
 
