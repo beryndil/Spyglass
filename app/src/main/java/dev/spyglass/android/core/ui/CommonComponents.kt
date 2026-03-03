@@ -293,6 +293,20 @@ fun CategoryBadge(label: String, color: Color, modifier: Modifier = Modifier) {
     )
 }
 
+// ── Version badge — shows "1.17" for items added in later versions ───────────
+
+@Composable
+fun VersionBadge(version: String, modifier: Modifier = Modifier) {
+    Text(
+        text  = version,
+        style = MaterialTheme.typography.labelSmall,
+        color = PotionBlue,
+        modifier = modifier
+            .background(PotionBlue.copy(alpha = 0.12f), RoundedCornerShape(4.dp))
+            .padding(horizontal = 6.dp, vertical = 1.dp),
+    )
+}
+
 // ── Minecraft ID row — tap to copy ──────────────────────────────────────────
 
 @Composable
@@ -525,6 +539,100 @@ fun formatTagName(tagId: String): String =
 // ── Sort button ──────────────────────────────────────────────────────────────
 
 data class SortOption(val label: String, val key: String)
+
+// ── Version card — themed card showing Minecraft update info + changelog ─────
+
+@Composable
+fun VersionCard(
+    version: String,
+    name: String,
+    releaseDate: String,
+    accentColor: Color,
+    icon: SpyglassIcon,
+    changelog: List<String>,
+    modifier: Modifier = Modifier,
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(12.dp))
+            .border(1.dp, accentColor.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
+            .clickable { expanded = !expanded },
+    ) {
+        // Header banner with accent color
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    accentColor.copy(alpha = 0.15f),
+                    RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
+                )
+                .padding(16.dp),
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                SpyglassIconImage(
+                    icon, contentDescription = null,
+                    tint = accentColor,
+                    modifier = Modifier.size(36.dp),
+                )
+                Spacer(Modifier.width(12.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        "Minecraft $version",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                    Text(
+                        name,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = accentColor,
+                    )
+                }
+                Text(
+                    releaseDate,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+            }
+        }
+
+        // Changelog section
+        Column(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            val visibleItems = if (expanded) changelog else changelog.take(4)
+            visibleItems.forEach { entry ->
+                Row(verticalAlignment = Alignment.Top) {
+                    Text(
+                        "\u2022",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = accentColor,
+                        modifier = Modifier.padding(end = 8.dp, top = 1.dp),
+                    )
+                    Text(
+                        entry,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+            if (changelog.size > 4) {
+                Text(
+                    if (expanded) "Show less" else "+${changelog.size - 4} more\u2026",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = accentColor,
+                    modifier = Modifier.padding(top = 4.dp),
+                )
+            }
+        }
+    }
+}
 
 @Composable
 fun SortButton(

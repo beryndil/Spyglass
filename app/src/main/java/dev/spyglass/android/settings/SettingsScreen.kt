@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
-import kotlinx.coroutines.launch
 
 @Composable
 private fun browseTabNames() = listOf(
@@ -59,10 +58,14 @@ fun SettingsScreen(
     val gameClockEnabled    by vm.gameClockEnabled.collectAsStateWithLifecycle()
     val allFavorites        by vm.allFavorites.collectAsStateWithLifecycle()
     val backgroundTheme     by vm.backgroundTheme.collectAsStateWithLifecycle()
+    val minecraftEdition    by vm.minecraftEdition.collectAsStateWithLifecycle()
+    val minecraftVersion    by vm.minecraftVersion.collectAsStateWithLifecycle()
+    val versionFilterMode   by vm.versionFilterMode.collectAsStateWithLifecycle()
     val analyticsConsent    by vm.analyticsConsent.collectAsStateWithLifecycle()
     val crashConsent        by vm.crashConsent.collectAsStateWithLifecycle()
 
     var showDeleteConfirm by remember { mutableStateOf(false) }
+    var versionExpanded by remember { mutableStateOf(false) }
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -115,6 +118,79 @@ fun SettingsScreen(
                     ThemeInfoMap[backgroundTheme]?.label ?: "Obsidian",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
+                )
+            }
+        }
+
+        // ── Game Version ────────────────────────────────────────────────
+        item(key = "game_version") {
+            SectionHeader("Game Version")
+            ResultCard {
+                Text(
+                    "Filter content by Minecraft edition and version",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+
+                // Edition toggle
+                Text("Edition", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                TogglePill(
+                    options = listOf("Java", "Bedrock"),
+                    selected = if (minecraftEdition == "bedrock") 1 else 0,
+                    onSelect = { vm.setMinecraftEdition(if (it == 1) "bedrock" else "java") },
+                )
+
+                // Version dropdown
+                val versions = if (minecraftEdition == "bedrock") MinecraftVersions.BEDROCK_VERSIONS else MinecraftVersions.JAVA_VERSIONS
+                val displayVersion = minecraftVersion.ifBlank { "Latest" }
+                Text("Version", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                Box {
+                    OutlinedButton(onClick = { versionExpanded = true }) {
+                        Text(displayVersion, color = MaterialTheme.colorScheme.onSurface)
+                    }
+                    DropdownMenu(expanded = versionExpanded, onDismissRequest = { versionExpanded = false }) {
+                        DropdownMenuItem(
+                            text = { Text("Latest", color = if (minecraftVersion.isBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface) },
+                            onClick = { vm.setMinecraftVersion(""); versionExpanded = false },
+                        )
+                        versions.reversed().forEach { v ->
+                            DropdownMenuItem(
+                                text = { Text(v, color = if (minecraftVersion == v) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface) },
+                                onClick = { vm.setMinecraftVersion(v); versionExpanded = false },
+                            )
+                        }
+                    }
+                }
+
+                // Filter mode
+                Text("Filter Mode", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    val modes = listOf("show_all" to "Show All", "highlight" to "Highlight Unavailable", "hide" to "Hide Unavailable")
+                    modes.forEach { (key, label) ->
+                        FilterChip(
+                            selected = versionFilterMode == key,
+                            onClick = { vm.setVersionFilterMode(key) },
+                            label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                        )
+                    }
+                }
+            }
+
+            // Version info card
+            val selectedVersion = minecraftVersion.ifBlank { MinecraftVersions.JAVA_VERSIONS.last() }
+            val updateInfo = remember(selectedVersion) { MinecraftUpdates.forVersion(selectedVersion) }
+            if (updateInfo != null) {
+                Spacer(Modifier.height(4.dp))
+                VersionCard(
+                    version = updateInfo.version,
+                    name = updateInfo.name,
+                    releaseDate = updateInfo.releaseDate,
+                    accentColor = updateInfo.color,
+                    icon = updateInfo.icon,
+                    changelog = updateInfo.changelog,
                 )
             }
         }

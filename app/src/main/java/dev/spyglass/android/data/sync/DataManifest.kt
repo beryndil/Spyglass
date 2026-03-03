@@ -24,6 +24,7 @@ data class DataManifest(
     val items: Long = 0,
     val advancements: Long = 0,
     val commands: Long = 0,
+    @SerialName("version_tags") val versionTags: Long = 0,
     val textures: Long = 0,
     @SerialName("texture_map") val textureMap: Long = 0,
     val news: Long = 0,
@@ -32,7 +33,7 @@ data class DataManifest(
 ) {
     /** The effective version is the highest per-table version. */
     val effectiveVersion: Long
-        get() = maxOf(blocks, mobs, biomes, enchants, potions, trades, recipes, structures, items, advancements, commands)
+        get() = maxOf(blocks, mobs, biomes, enchants, potions, trades, recipes, structures, items, advancements, commands, versionTags)
 
     /** Returns the list of table names whose version differs between [this] and [other]. */
     fun changedTables(other: DataManifest): List<String> = buildList {
@@ -47,6 +48,7 @@ data class DataManifest(
         if (items != other.items) add("items")
         if (advancements != other.advancements) add("advancements")
         if (commands != other.commands) add("commands")
+        if (versionTags != other.versionTags) add("version_tags")
     }
 
     /** Returns a copy with the version for [table] updated to [version]. */
@@ -62,6 +64,7 @@ data class DataManifest(
         "items" -> copy(items = version)
         "advancements" -> copy(advancements = version)
         "commands" -> copy(commands = version)
+        "version_tags" -> copy(versionTags = version)
         else -> this
     }
 
@@ -78,6 +81,7 @@ data class DataManifest(
         "items" -> items
         "advancements" -> advancements
         "commands" -> commands
+        "version_tags" -> versionTags
         else -> 0
     }
 

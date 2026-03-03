@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dev.spyglass.android.core.FirebaseHelper
+import dev.spyglass.android.core.VersionFilterState
 import dev.spyglass.android.core.ui.DEFAULT_THEME
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.repository.GameDataRepository
@@ -64,6 +65,37 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setBackgroundTheme(theme: String) = viewModelScope.launch {
         store.edit { it[PreferenceKeys.BACKGROUND_THEME] = theme }
+    }
+
+    // Game Version filter
+    val minecraftEdition: StateFlow<String> = store.data
+        .map { it[PreferenceKeys.MINECRAFT_EDITION] ?: "java" }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "java")
+
+    val minecraftVersion: StateFlow<String> = store.data
+        .map { it[PreferenceKeys.MINECRAFT_VERSION] ?: "" }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
+
+    val versionFilterMode: StateFlow<String> = store.data
+        .map { it[PreferenceKeys.VERSION_FILTER_MODE] ?: "show_all" }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "show_all")
+
+    val versionFilter: StateFlow<VersionFilterState> = combine(
+        minecraftEdition, minecraftVersion, versionFilterMode
+    ) { edition, version, mode ->
+        VersionFilterState(edition, version, mode)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), VersionFilterState())
+
+    fun setMinecraftEdition(edition: String) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.MINECRAFT_EDITION] = edition }
+    }
+
+    fun setMinecraftVersion(version: String) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.MINECRAFT_VERSION] = version }
+    }
+
+    fun setVersionFilterMode(mode: String) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.VERSION_FILTER_MODE] = mode }
     }
 
     fun clearAllFavorites() = viewModelScope.launch {

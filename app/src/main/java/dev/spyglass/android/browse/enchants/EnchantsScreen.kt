@@ -24,10 +24,18 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
+import dev.spyglass.android.core.VersionAvailability
+import dev.spyglass.android.core.VersionFilterState
+import dev.spyglass.android.core.applyVersionFilter
+import dev.spyglass.android.core.checkAvailability
+import dev.spyglass.android.core.toTagMap
+import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.EnchantEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
+import dev.spyglass.android.data.db.entities.VersionTagEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -35,6 +43,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
@@ -50,6 +59,12 @@ class EnchantsViewModel(app: Application) : AndroidViewModel(app) {
     private val _expandedIds = MutableStateFlow<Set<String>>(emptySet())
     val expandedIds: StateFlow<Set<String>> = _expandedIds.asStateFlow()
 
+    val versionFilter: StateFlow<VersionFilterState> = versionFilterFrom(app.dataStore)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), VersionFilterState())
+    val versionTags: StateFlow<Map<String, VersionTagEntity>> = repo.allVersionTags()
+        .map { it.toTagMap() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val enchants: StateFlow<List<EnchantEntity>> = combine(_query.debounce(200), _target, _sortKey) { q, t, sort ->
         (if (q.isBlank() && t == "all") repo.searchEnchants("") else
         if (t != "all") repo.enchantsForTarget(t) else repo.searchEnchants(q)).map { list ->
@@ -62,6 +77,7 @@ class EnchantsViewModel(app: Application) : AndroidViewModel(app) {
             }
         }
     }.flatMapLatest { it }
+     .applyVersionFilter(versionFilter, versionTags, "enchant") { it.id }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     private val _warningMessage = MutableStateFlow<String?>(null)
@@ -177,6 +193,8 @@ fun EnchantsScreen(
     val warning     by vm.warningMessage.collectAsStateWithLifecycle()
     val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
     val favoriteEnchants by vm.favoriteEnchants.collectAsStateWithLifecycle()
+    val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
+    val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -283,8 +301,16 @@ fun EnchantsScreen(
                 }
             }
             items(enchants, key = { it.id }) { e ->
+                val tag = vTags["enchant:${e.id}"]
+                val availability = checkAvailability(tag, vFilter)
+                val vAlpha = when (availability) {
+                    VersionAvailability.NOT_YET_ADDED -> 0.5f
+                    VersionAvailability.REMOVED, VersionAvailability.WRONG_EDITION -> 0.4f
+                    else -> 1f
+                }
+                val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val isExpanded = e.id in expandedIds
-                Column {
+                Column(modifier = Modifier.alpha(vAlpha)) {
                     BrowseListItem(
                         headline    = buildString {
                             append(e.name)
@@ -298,6 +324,10 @@ fun EnchantsScreen(
                         trailing    = {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(horizontalAlignment = Alignment.End) {
+                                    if (addedIn.isNotBlank() && availability != VersionAvailability.AVAILABLE) {
+                                        VersionBadge(addedIn)
+                                        Spacer(Modifier.height(2.dp))
+                                    }
                                     Text("Max ${e.maxLevel}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
                                     Spacer(Modifier.height(2.dp))
                                     val rarityColor = when (e.rarity.lowercase()) {

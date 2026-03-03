@@ -18,7 +18,7 @@ import java.io.File
  */
 object DataSeeder {
 
-    private const val CURRENT_DATA_VERSION = 19
+    private const val CURRENT_DATA_VERSION = 20
     private const val PREFS_NAME = "spyglass_seed"
     private const val KEY_DATA_VERSION = "data_version"
 
@@ -46,6 +46,7 @@ object DataSeeder {
                     db.itemDao().deleteAll()
                     db.advancementDao().deleteAll()
                     db.commandDao().deleteAll()
+                    db.versionTagDao().deleteAll()
                 } finally {
                     Trace.endSection()
                 }
@@ -96,6 +97,10 @@ object DataSeeder {
                 Trace.beginSection("DataSeeder.seed.commands")
                 try { seedCommands(context, db) } finally { Trace.endSection() }
             }
+            if (db.versionTagDao().count() == 0) {
+                Trace.beginSection("DataSeeder.seed.version_tags")
+                try { seedVersionTags(context, db) } finally { Trace.endSection() }
+            }
 
             if (storedVersion < CURRENT_DATA_VERSION) {
                 prefs.edit().putInt(KEY_DATA_VERSION, CURRENT_DATA_VERSION).apply()
@@ -116,6 +121,7 @@ object DataSeeder {
         "recipes" to "recipes.json", "structures" to "structures.json",
         "items" to "items.json", "advancements" to "advancements.json",
         "commands" to "commands.json",
+        "version_tags" to "version_tags.json",
     )
 
     /**
@@ -156,6 +162,7 @@ object DataSeeder {
             "items" -> { db.itemDao().deleteAll(); seedItemsFrom(raw, db) }
             "advancements" -> { db.advancementDao().deleteAll(); seedAdvancementsFrom(raw, db) }
             "commands" -> { db.commandDao().deleteAll(); seedCommandsFrom(raw, db) }
+            "version_tags" -> { db.versionTagDao().deleteAll(); seedVersionTagsFrom(raw, db) }
         }
     }
 
@@ -257,6 +264,13 @@ object DataSeeder {
         val id: String, val name: String, val syntax: String = "",
         val description: String = "", val category: String = "",
         val permissionLevel: Int = 2,
+    )
+
+    @Serializable data class VersionTagJson(
+        val entityType: String, val entityId: String,
+        val addedInJava: String = "", val removedInJava: String = "",
+        val addedInBedrock: String = "", val removedInBedrock: String = "",
+        val javaOnly: Boolean = false, val bedrockOnly: Boolean = false,
     )
 
     // ── Seed helpers ──────────────────────────────────────────────────────────
@@ -422,6 +436,19 @@ object DataSeeder {
         val items = json.decodeFromString<List<CommandJson>>(raw)
         db.commandDao().insertAll(items.map {
             CommandEntity(it.id, it.name, it.syntax, it.description, it.category, it.permissionLevel)
+        })
+    }
+
+    private suspend fun seedVersionTags(context: Context, db: SpyglassDatabase) {
+        val raw = runCatching { readAsset(context, "minecraft/version_tags.json") }.getOrNull() ?: return
+        seedVersionTagsFrom(raw, db)
+    }
+
+    private suspend fun seedVersionTagsFrom(raw: String, db: SpyglassDatabase) {
+        val items = json.decodeFromString<List<VersionTagJson>>(raw)
+        db.versionTagDao().insertAll(items.map {
+            VersionTagEntity(it.entityType, it.entityId, it.addedInJava, it.removedInJava,
+                it.addedInBedrock, it.removedInBedrock, it.javaOnly, it.bedrockOnly)
         })
     }
 }

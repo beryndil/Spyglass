@@ -21,13 +21,22 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
+import dev.spyglass.android.core.VersionAvailability
+import dev.spyglass.android.core.VersionFilterState
+import dev.spyglass.android.core.applyVersionFilter
+import dev.spyglass.android.core.checkAvailability
+import dev.spyglass.android.core.toTagMap
+import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.StructureEntity
+import dev.spyglass.android.data.db.entities.VersionTagEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -54,6 +63,12 @@ class StructuresViewModel(app: Application) : AndroidViewModel(app) {
     private val _expandedIds = MutableStateFlow<Set<String>>(emptySet())
     val expandedIds: StateFlow<Set<String>> = _expandedIds.asStateFlow()
 
+    val versionFilter: StateFlow<VersionFilterState> = versionFilterFrom(app.dataStore)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), VersionFilterState())
+    val versionTags: StateFlow<Map<String, VersionTagEntity>> = repo.allVersionTags()
+        .map { it.toTagMap() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val structures: StateFlow<List<StructureEntity>> = combine(
         _query.debounce(200), _dimension, _sortKey
     ) { q, dim, sort ->
@@ -67,6 +82,7 @@ class StructuresViewModel(app: Application) : AndroidViewModel(app) {
             }
         }
     }.flatMapLatest { it }
+     .applyVersionFilter(versionFilter, versionTags, "structure") { it.id }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun setQuery(q: String) { _query.value = q }
@@ -113,6 +129,8 @@ fun StructuresScreen(
     val expandedIds  by vm.expandedIds.collectAsStateWithLifecycle()
     val favoriteIds  by vm.favoriteIds.collectAsStateWithLifecycle()
     val favoriteStructures by vm.favoriteStructures.collectAsStateWithLifecycle()
+    val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
+    val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val listState    = rememberLazyListState()
 
     val dimensions = listOf("all", "overworld", "nether", "end")
@@ -198,9 +216,17 @@ fun StructuresScreen(
                 item(key = "fav_divider") { SpyglassDivider() }
             }
             items(structures, key = { it.id }) { s ->
+                val tag = vTags["structure:${s.id}"]
+                val availability = checkAvailability(tag, vFilter)
+                val vAlpha = when (availability) {
+                    VersionAvailability.NOT_YET_ADDED -> 0.5f
+                    VersionAvailability.REMOVED, VersionAvailability.WRONG_EDITION -> 0.4f
+                    else -> 1f
+                }
+                val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val isExpanded = s.id in expandedIds
-                Column {
-                    StructureListItem(s, isFavorite = s.id in favoriteIds, onToggleFavorite = { vm.toggleFavorite(s.id, s.name) }, onClick = { vm.toggleExpanded(s.id) })
+                Column(modifier = Modifier.alpha(vAlpha)) {
+                    StructureListItem(s, isFavorite = s.id in favoriteIds, onToggleFavorite = { vm.toggleFavorite(s.id, s.name) }, onClick = { vm.toggleExpanded(s.id) }, addedIn = addedIn, availability = availability)
                     AnimatedVisibility(
                         visible = isExpanded,
                         enter = expandVertically(),
@@ -222,7 +248,7 @@ fun StructuresScreen(
 }
 
 @Composable
-private fun StructureListItem(s: StructureEntity, isFavorite: Boolean, onToggleFavorite: () -> Unit, onClick: () -> Unit) {
+private fun StructureListItem(s: StructureEntity, isFavorite: Boolean, onToggleFavorite: () -> Unit, onClick: () -> Unit, addedIn: String = "", availability: VersionAvailability = VersionAvailability.AVAILABLE) {
     val dimensionColor = when (s.dimension) {
         "nether" -> NetherRed
         "end"    -> EnderPurple
@@ -242,6 +268,10 @@ private fun StructureListItem(s: StructureEntity, isFavorite: Boolean, onToggleF
         trailing    = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(horizontalAlignment = Alignment.End) {
+                    if (addedIn.isNotBlank() && availability != VersionAvailability.AVAILABLE) {
+                        VersionBadge(addedIn)
+                        Spacer(Modifier.height(2.dp))
+                    }
                     CategoryBadge(label = s.dimension, color = dimensionColor)
                     if (s.difficulty.isNotEmpty()) {
                         Spacer(Modifier.height(2.dp))

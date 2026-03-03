@@ -204,3 +204,15 @@ data class CommandEntity(
     val category: String = "",      // chat, player, entity, world, server, operator, debug
     val permissionLevel: Int = 2,
 )
+
+@Entity(tableName = "version_tags", primaryKeys = ["entityType", "entityId"])
+data class VersionTagEntity(
+    val entityType: String,          // "block", "item", "mob", etc.
+    val entityId: String,            // matches PK of target table
+    val addedInJava: String = "",    // "1.13" — empty = since 1.0
+    val removedInJava: String = "",  // empty = still present
+    val addedInBedrock: String = "",
+    val removedInBedrock: String = "",
+    val javaOnly: Boolean = false,
+    val bedrockOnly: Boolean = false,
+)

@@ -25,14 +25,23 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
+import dev.spyglass.android.core.VersionAvailability
+import dev.spyglass.android.core.VersionFilterState
+import dev.spyglass.android.core.applyVersionFilter
+import dev.spyglass.android.core.checkAvailability
+import dev.spyglass.android.core.toTagMap
+import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.BiomeResourceMap
 import dev.spyglass.android.data.db.entities.BiomeEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
+import dev.spyglass.android.data.db.entities.VersionTagEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -68,6 +77,12 @@ class BiomesViewModel(app: Application) : AndroidViewModel(app) {
     private val _expandedIds = MutableStateFlow<Set<String>>(emptySet())
     val expandedIds: StateFlow<Set<String>> = _expandedIds.asStateFlow()
 
+    val versionFilter: StateFlow<VersionFilterState> = versionFilterFrom(app.dataStore)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), VersionFilterState())
+    val versionTags: StateFlow<Map<String, VersionTagEntity>> = repo.allVersionTags()
+        .map { it.toTagMap() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val biomes: StateFlow<List<BiomeEntity>> = combine(_query.debounce(200), _category, _sortKey) { q, cat, sort ->
         repo.searchBiomes(q).map { list ->
             val filtered = if (cat == "all") list else list.filter { it.category.equals(cat, ignoreCase = true) }
@@ -77,6 +92,7 @@ class BiomesViewModel(app: Application) : AndroidViewModel(app) {
             }
         }
     }.flatMapLatest { it }
+     .applyVersionFilter(versionFilter, versionTags, "biome") { it.id }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun setQuery(q: String) { _query.value = q }
@@ -142,6 +158,8 @@ fun BiomesScreen(
     val expandedIds  by vm.expandedIds.collectAsStateWithLifecycle()
     val favoriteIds  by vm.favoriteIds.collectAsStateWithLifecycle()
     val favoriteBiomes by vm.favoriteBiomes.collectAsStateWithLifecycle()
+    val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
+    val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val listState    = rememberLazyListState()
 
     // Auto-expand and scroll to target biome from cross-reference
@@ -238,9 +256,17 @@ fun BiomesScreen(
                 item(key = "fav_divider") { SpyglassDivider() }
             }
             items(biomes, key = { it.id }) { b ->
+                val tag = vTags["biome:${b.id}"]
+                val availability = checkAvailability(tag, vFilter)
+                val vAlpha = when (availability) {
+                    VersionAvailability.NOT_YET_ADDED -> 0.5f
+                    VersionAvailability.REMOVED, VersionAvailability.WRONG_EDITION -> 0.4f
+                    else -> 1f
+                }
+                val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val isExpanded = b.id in expandedIds
-                Column {
-                    BiomeListItem(b, isFavorite = b.id in favoriteIds, onToggleFavorite = { vm.toggleFavorite(b.id, b.name) }, onClick = { vm.toggleExpanded(b.id) })
+                Column(modifier = Modifier.alpha(vAlpha)) {
+                    BiomeListItem(b, isFavorite = b.id in favoriteIds, onToggleFavorite = { vm.toggleFavorite(b.id, b.name) }, onClick = { vm.toggleExpanded(b.id) }, addedIn = addedIn, availability = availability)
                     AnimatedVisibility(
                         visible = isExpanded,
                         enter = expandVertically(),
@@ -262,7 +288,7 @@ fun BiomesScreen(
 }
 
 @Composable
-private fun BiomeListItem(b: BiomeEntity, isFavorite: Boolean, onToggleFavorite: () -> Unit, onClick: () -> Unit) {
+private fun BiomeListItem(b: BiomeEntity, isFavorite: Boolean, onToggleFavorite: () -> Unit, onClick: () -> Unit, addedIn: String = "", availability: VersionAvailability = VersionAvailability.AVAILABLE) {
     val biomeColor = parseBiomeColor(b.color)
 
     BrowseListItem(
@@ -273,6 +299,10 @@ private fun BiomeListItem(b: BiomeEntity, isFavorite: Boolean, onToggleFavorite:
         trailing    = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(horizontalAlignment = Alignment.End) {
+                    if (addedIn.isNotBlank() && availability != VersionAvailability.AVAILABLE) {
+                        VersionBadge(addedIn)
+                        Spacer(Modifier.height(2.dp))
+                    }
                     CategoryBadge(label = b.category.ifEmpty { "unknown" }, color = Emerald)
                     Spacer(Modifier.height(2.dp))
                     Text("${b.temperature}\u00B0  ${b.precipitation}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)

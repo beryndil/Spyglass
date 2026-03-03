@@ -21,13 +21,22 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
+import dev.spyglass.android.core.VersionAvailability
+import dev.spyglass.android.core.VersionFilterState
+import dev.spyglass.android.core.applyVersionFilter
+import dev.spyglass.android.core.checkAvailability
+import dev.spyglass.android.core.toTagMap
+import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.MobEntity
+import dev.spyglass.android.data.db.entities.VersionTagEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -55,6 +64,12 @@ class MobsViewModel(app: Application) : AndroidViewModel(app) {
     private val _sortKey = MutableStateFlow("name")
     val sortKey: StateFlow<String> = _sortKey.asStateFlow()
 
+    val versionFilter: StateFlow<VersionFilterState> = versionFilterFrom(app.dataStore)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), VersionFilterState())
+    val versionTags: StateFlow<Map<String, VersionTagEntity>> = repo.allVersionTags()
+        .map { it.toTagMap() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val mobs: StateFlow<List<MobEntity>> = combine(
         _query.debounce(200), _category, _sortKey
     ) { q, cat, sort -> Triple(q, cat, sort) }
@@ -71,7 +86,8 @@ class MobsViewModel(app: Application) : AndroidViewModel(app) {
                 else -> list
             }
         }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    }.applyVersionFilter(versionFilter, versionTags, "mob") { it.id }
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun setQuery(q: String) { _query.value = q }
     fun setCategory(c: String) { _category.value = c }
@@ -163,6 +179,8 @@ fun MobsScreen(
     val expandedIds by vm.expandedIds.collectAsStateWithLifecycle()
     val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
     val favoriteMobs by vm.favoriteMobs.collectAsStateWithLifecycle()
+    val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
+    val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
     val mobSortOptions = remember { listOf(
         SortOption("Name A\u2192Z", "name"),
@@ -251,6 +269,14 @@ fun MobsScreen(
                 item(key = "fav_divider") { SpyglassDivider() }
             }
             items(mobs, key = { it.id }) { m ->
+                val tag = vTags["mob:${m.id}"]
+                val availability = checkAvailability(tag, vFilter)
+                val vAlpha = when (availability) {
+                    VersionAvailability.NOT_YET_ADDED -> 0.5f
+                    VersionAvailability.REMOVED, VersionAvailability.WRONG_EDITION -> 0.4f
+                    else -> 1f
+                }
+                val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val isExpanded = m.id in expandedIds
                 val categoryColor = when (m.category) {
                     "hostile"  -> NetherRed
@@ -259,7 +285,7 @@ fun MobsScreen(
                     "boss"     -> EnderPurple
                     else       -> MaterialTheme.colorScheme.secondary
                 }
-                Column {
+                Column(modifier = Modifier.alpha(vAlpha)) {
                     BrowseListItem(
                         headline    = m.name,
                         supporting  = "",
@@ -268,6 +294,10 @@ fun MobsScreen(
                         trailing    = {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(horizontalAlignment = Alignment.End) {
+                                    if (addedIn.isNotBlank() && availability != VersionAvailability.AVAILABLE) {
+                                        VersionBadge(addedIn)
+                                        Spacer(Modifier.height(2.dp))
+                                    }
                                     CategoryBadge(label = m.category, color = categoryColor)
                                     Spacer(Modifier.height(2.dp))
                                     Text("HP ${m.health}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)

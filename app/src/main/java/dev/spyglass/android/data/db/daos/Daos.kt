@@ -347,6 +347,24 @@ interface AdvancementProgressDao {
 }
 
 @Dao
+interface VersionTagDao {
+    @Query("SELECT * FROM version_tags WHERE entityType = :type")
+    fun byType(type: String): Flow<List<VersionTagEntity>>
+
+    @Query("SELECT * FROM version_tags")
+    fun all(): Flow<List<VersionTagEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(items: List<VersionTagEntity>)
+
+    @Query("SELECT COUNT(*) FROM version_tags")
+    suspend fun count(): Int
+
+    @Query("DELETE FROM version_tags")
+    suspend fun deleteAll()
+}
+
+@Dao
 interface CommandDao {
     @Query("SELECT * FROM commands WHERE name LIKE '%' || :q || '%' OR description LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name")
     fun search(q: String): Flow<List<CommandEntity>>

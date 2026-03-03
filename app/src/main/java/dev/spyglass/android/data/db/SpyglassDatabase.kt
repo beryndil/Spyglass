@@ -26,12 +26,13 @@ import dev.spyglass.android.data.db.entities.*
         NoteEntity::class,
         WaypointEntity::class,
         CommandEntity::class,
+        VersionTagEntity::class,
         FavoriteEntity::class,
         ShoppingListEntity::class,
         ShoppingListItemEntity::class,
         TodoEntity::class,
     ],
-    version = 24,
+    version = 25,
     exportSchema = true,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
@@ -49,12 +50,31 @@ abstract class SpyglassDatabase : RoomDatabase() {
     abstract fun noteDao():         NoteDao
     abstract fun waypointDao():     WaypointDao
     abstract fun commandDao():      CommandDao
+    abstract fun versionTagDao():   VersionTagDao
     abstract fun favoriteDao():     FavoriteDao
     abstract fun shoppingListDao(): ShoppingListDao
     abstract fun todoDao():         TodoDao
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null
+
+        private val MIGRATION_24_25 = object : Migration(24, 25) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS version_tags (
+                        entityType TEXT NOT NULL,
+                        entityId TEXT NOT NULL,
+                        addedInJava TEXT NOT NULL DEFAULT '',
+                        removedInJava TEXT NOT NULL DEFAULT '',
+                        addedInBedrock TEXT NOT NULL DEFAULT '',
+                        removedInBedrock TEXT NOT NULL DEFAULT '',
+                        javaOnly INTEGER NOT NULL DEFAULT 0,
+                        bedrockOnly INTEGER NOT NULL DEFAULT 0,
+                        PRIMARY KEY (entityType, entityId)
+                    )
+                """.trimIndent())
+            }
+        }
 
         private val MIGRATION_23_24 = object : Migration(23, 24) {
             override fun migrate(db: SupportSQLiteDatabase) {
@@ -236,7 +256,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
                             SpyglassDatabase::class.java,
                             "spyglass.db",
                         )
-                            .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21, MIGRATION_21_22, MIGRATION_22_23, MIGRATION_23_24)
+                            .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21, MIGRATION_21_22, MIGRATION_22_23, MIGRATION_23_24, MIGRATION_24_25)
                             .build()
                     } finally {
                         Trace.endSection()

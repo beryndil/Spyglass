@@ -100,6 +100,10 @@ class GameDataRepository(context: Context) {
     }
     suspend fun deleteWaypoint(id: Long)                               { db.waypointDao().delete(id) }
 
+    // Version Tags
+    fun versionTagsByType(type: String): Flow<List<VersionTagEntity>> = db.versionTagDao().byType(type)
+    fun allVersionTags(): Flow<List<VersionTagEntity>> = db.versionTagDao().all()
+
     // Commands
     fun searchCommands(q: String): Flow<List<CommandEntity>> = if (q.isBlank()) db.commandDao().all() else db.commandDao().search(q)
 

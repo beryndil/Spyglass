@@ -23,12 +23,21 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
+import dev.spyglass.android.core.VersionAvailability
+import dev.spyglass.android.core.VersionFilterState
+import dev.spyglass.android.core.applyVersionFilter
+import dev.spyglass.android.core.checkAvailability
+import dev.spyglass.android.core.toTagMap
+import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.CommandEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
+import dev.spyglass.android.data.db.entities.VersionTagEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -49,6 +58,12 @@ class CommandsViewModel(app: Application) : AndroidViewModel(app) {
     val sortKey: StateFlow<String> = _sortKey.asStateFlow()
     fun setSortKey(k: String) { _sortKey.value = k }
 
+    val versionFilter: StateFlow<VersionFilterState> = versionFilterFrom(app.dataStore)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), VersionFilterState())
+    val versionTags: StateFlow<Map<String, VersionTagEntity>> = repo.allVersionTags()
+        .map { it.toTagMap() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val commands: StateFlow<List<CommandEntity>> = combine(_query.debounce(200), _category, _sortKey) { q, cat, sort ->
         val flow = if (q.isBlank() && cat == "all") repo.searchCommands("")
         else if (cat != "all") repo.commandsByCategory(cat)
@@ -60,6 +75,7 @@ class CommandsViewModel(app: Application) : AndroidViewModel(app) {
             }
         }
     }.flatMapLatest { it }
+     .applyVersionFilter(versionFilter, versionTags, "command") { it.id }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val favoriteIds: StateFlow<Set<String>> = repo.allFavoriteIds()
@@ -139,6 +155,8 @@ fun CommandsScreen(
     val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
     val favoriteCommands by vm.favoriteCommands.collectAsStateWithLifecycle()
     val sortKey by vm.sortKey.collectAsStateWithLifecycle()
+    val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
+    val vTags       by vm.versionTags.collectAsStateWithLifecycle()
 
     val sortOptions = remember {
         listOf(
@@ -215,8 +233,16 @@ fun CommandsScreen(
                 }
             }
             items(commands, key = { it.id }) { cmd ->
+                val tag = vTags["command:${cmd.id}"]
+                val availability = checkAvailability(tag, vFilter)
+                val vAlpha = when (availability) {
+                    VersionAvailability.NOT_YET_ADDED -> 0.5f
+                    VersionAvailability.REMOVED, VersionAvailability.WRONG_EDITION -> 0.4f
+                    else -> 1f
+                }
+                val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val isExpanded = cmd.id in expandedIds
-                Column {
+                Column(modifier = Modifier.alpha(vAlpha)) {
                     BrowseListItem(
                         headline = cmd.name,
                         supporting = cmd.description.take(60),
@@ -225,7 +251,13 @@ fun CommandsScreen(
                         modifier = Modifier.clickable { vm.toggleExpanded(cmd.id) },
                         trailing = {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                CategoryBadge(label = categoryLabel(cmd.category), color = categoryColor(cmd.category))
+                                Column(horizontalAlignment = Alignment.End) {
+                                    if (addedIn.isNotBlank() && availability != VersionAvailability.AVAILABLE) {
+                                        VersionBadge(addedIn)
+                                        Spacer(Modifier.height(2.dp))
+                                    }
+                                    CategoryBadge(label = categoryLabel(cmd.category), color = categoryColor(cmd.category))
+                                }
                                 Spacer(Modifier.width(4.dp))
                                 val isFav = cmd.id in favoriteIds
                                 IconButton(onClick = { vm.toggleFavorite(cmd.id, cmd.name) }, modifier = Modifier.size(32.dp)) {

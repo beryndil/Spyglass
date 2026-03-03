@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.alpha
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -28,13 +29,21 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
+import dev.spyglass.android.core.VersionAvailability
+import dev.spyglass.android.core.VersionFilterState
+import dev.spyglass.android.core.applyVersionFilter
+import dev.spyglass.android.core.checkAvailability
+import dev.spyglass.android.core.toTagMap
+import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.CompostData
 import dev.spyglass.android.data.db.entities.BlockEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.RecipeEntity
 import dev.spyglass.android.data.db.entities.StructureEntity
+import dev.spyglass.android.data.db.entities.VersionTagEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -108,6 +117,12 @@ class BlocksViewModel(app: Application) : AndroidViewModel(app) {
     private val _sortKey = MutableStateFlow("name")
     val sortKey: StateFlow<String> = _sortKey.asStateFlow()
 
+    val versionFilter: StateFlow<VersionFilterState> = versionFilterFrom(app.dataStore)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), VersionFilterState())
+    val versionTags: StateFlow<Map<String, VersionTagEntity>> = repo.allVersionTags()
+        .map { it.toTagMap() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val blocks: StateFlow<List<BlockEntity>> = combine(
         _query.debounce(200), _category, _sortKey
     ) { q, cat, sort -> Triple(q, cat, sort) }
@@ -121,7 +136,8 @@ class BlocksViewModel(app: Application) : AndroidViewModel(app) {
                 else -> list
             }
         }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    }.applyVersionFilter(versionFilter, versionTags, "block") { it.id }
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     // Build a map of all recipes keyed by outputItem for chain calculation
     val allRecipes: StateFlow<Map<String, RecipeEntity>> = repo.searchRecipes("")
@@ -180,6 +196,8 @@ fun BlocksScreen(
     val structures  by vm.structures.collectAsStateWithLifecycle()
     val favoriteIds    by vm.favoriteIds.collectAsStateWithLifecycle()
     val favoriteBlocks by vm.favoriteBlocks.collectAsStateWithLifecycle()
+    val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
+    val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
     val blockSortOptions = remember { listOf(
         SortOption("Name A\u2192Z", "name"),
@@ -288,6 +306,14 @@ fun BlocksScreen(
                 item(key = "fav_divider") { SpyglassDivider() }
             }
             items(blocks, key = { it.id }) { b ->
+                val tag = vTags["block:${b.id}"]
+                val availability = checkAvailability(tag, vFilter)
+                val vAlpha = when (availability) {
+                    VersionAvailability.NOT_YET_ADDED -> 0.5f
+                    VersionAvailability.REMOVED, VersionAvailability.WRONG_EDITION -> 0.4f
+                    else -> 1f
+                }
+                val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val isExpanded = b.id in expandedIds
                 val glanceText = when {
                     b.minY != null && b.maxY != null -> "Y ${b.minY} to ${b.maxY}"
@@ -296,7 +322,7 @@ fun BlocksScreen(
                     b.category == "redstone" -> "redstone"
                     else -> "${"%.1f".format(b.hardness)} hard"
                 }
-                Column {
+                Column(modifier = Modifier.alpha(vAlpha)) {
                     BrowseListItem(
                         headline    = b.name,
                         supporting  = "",
@@ -305,6 +331,10 @@ fun BlocksScreen(
                         trailing    = {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(horizontalAlignment = Alignment.End) {
+                                    if (addedIn.isNotBlank() && availability != VersionAvailability.AVAILABLE) {
+                                        VersionBadge(addedIn)
+                                        Spacer(Modifier.height(2.dp))
+                                    }
                                     if (b.category.isNotBlank()) {
                                         CategoryBadge(
                                             label = b.category.replace('_', ' '),
@@ -350,7 +380,7 @@ fun BlocksScreen(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
                     ) {
-                        BlockDetailContent(b, allRecipes, structures, vm, onItemTap, onBiomeTap, onTradeTap, onStructureTap)
+                        BlockDetailContent(b, allRecipes, structures, vm, onItemTap, onBiomeTap, onTradeTap, onStructureTap, addedIn)
                     }
                 }
             }
@@ -378,6 +408,7 @@ private fun BlockDetailContent(
     onBiomeTap: (String) -> Unit,
     onTradeTap: (String) -> Unit,
     onStructureTap: (String) -> Unit,
+    addedInVersion: String = "",
 ) {
     val recipesForItem  by vm.recipesForItem(block.id).collectAsStateWithLifecycle(initialValue = emptyList())
     val recipesUsingItem by vm.recipesUsingItem(block.id).collectAsStateWithLifecycle(initialValue = emptyList())
@@ -385,6 +416,11 @@ private fun BlockDetailContent(
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         // ── Minecraft ID ──
         MinecraftIdRow(block.id)
+
+        // ── Version info ──
+        if (addedInVersion.isNotBlank()) {
+            StatRow("Added in Java Edition", addedInVersion)
+        }
 
         // ── Description ──
         if (block.description.isNotBlank()) {

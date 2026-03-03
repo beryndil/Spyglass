@@ -30,6 +30,7 @@ object DataSyncManager {
         "items" to "items.json",
         "advancements" to "advancements.json",
         "commands" to "commands.json",
+        "version_tags" to "version_tags.json",
     )
 
     /**

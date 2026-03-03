@@ -26,6 +26,12 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
+import dev.spyglass.android.core.VersionAvailability
+import dev.spyglass.android.core.VersionFilterState
+import dev.spyglass.android.core.applyVersionFilter
+import dev.spyglass.android.core.checkAvailability
+import dev.spyglass.android.core.toTagMap
+import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.BiomeResourceMap
 import dev.spyglass.android.data.CompostData
@@ -35,11 +41,14 @@ import dev.spyglass.android.data.db.entities.ItemEntity
 import dev.spyglass.android.data.db.entities.MobEntity
 import dev.spyglass.android.data.db.entities.RecipeEntity
 import dev.spyglass.android.data.db.entities.StructureEntity
+import dev.spyglass.android.data.db.entities.VersionTagEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 
@@ -59,6 +68,12 @@ class ItemsViewModel(app: Application) : AndroidViewModel(app) {
     private val _sortKey = MutableStateFlow("name")
     val sortKey: StateFlow<String> = _sortKey.asStateFlow()
 
+    val versionFilter: StateFlow<VersionFilterState> = versionFilterFrom(app.dataStore)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), VersionFilterState())
+    val versionTags: StateFlow<Map<String, VersionTagEntity>> = repo.allVersionTags()
+        .map { it.toTagMap() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val items: StateFlow<List<ItemEntity>> = combine(
         _query.debounce(200), _category, _sortKey
     ) { q, cat, sort -> Triple(q, cat, sort) }
@@ -73,7 +88,8 @@ class ItemsViewModel(app: Application) : AndroidViewModel(app) {
                 else -> list
             }
         }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    }.applyVersionFilter(versionFilter, versionTags, "item") { it.id }
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val structures: StateFlow<List<StructureEntity>> = repo.searchStructures("")
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -203,6 +219,8 @@ fun ItemsScreen(
     val breedingMap by vm.breedingMap.collectAsStateWithLifecycle()
     val favoriteIds    by vm.favoriteIds.collectAsStateWithLifecycle()
     val favoriteItems  by vm.favoriteItems.collectAsStateWithLifecycle()
+    val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
+    val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
     val itemSortOptions = remember { listOf(
         SortOption("Name A\u2192Z", "name"),
@@ -306,8 +324,16 @@ fun ItemsScreen(
                 item(key = "fav_divider") { SpyglassDivider() }
             }
             items(items, key = { it.id }) { item ->
+                val tag = vTags["item:${item.id}"]
+                val availability = checkAvailability(tag, vFilter)
+                val vAlpha = when (availability) {
+                    VersionAvailability.NOT_YET_ADDED -> 0.5f
+                    VersionAvailability.REMOVED, VersionAvailability.WRONG_EDITION -> 0.4f
+                    else -> 1f
+                }
+                val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val isExpanded = item.id in expandedIds
-                Column {
+                Column(modifier = Modifier.alpha(vAlpha)) {
                     val texture = ItemTextures.get(item.id)
                     val glanceText = when (item.category) {
                         "weapons" -> if (item.attackDamage.isNotBlank()) "${item.attackDamage} dmg" else null
@@ -324,6 +350,10 @@ fun ItemsScreen(
                         trailing    = {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(horizontalAlignment = Alignment.End) {
+                                    if (addedIn.isNotBlank() && availability != VersionAvailability.AVAILABLE) {
+                                        VersionBadge(addedIn)
+                                        Spacer(Modifier.height(2.dp))
+                                    }
                                     CategoryBadge(
                                         label = item.category.replace('_', ' '),
                                         color = categoryColor(item.category),

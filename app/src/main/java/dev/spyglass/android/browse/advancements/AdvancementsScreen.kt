@@ -22,6 +22,7 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -30,10 +31,18 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
+import dev.spyglass.android.core.VersionAvailability
+import dev.spyglass.android.core.VersionFilterState
+import dev.spyglass.android.core.applyVersionFilter
+import dev.spyglass.android.core.checkAvailability
+import dev.spyglass.android.core.toTagMap
+import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.AdvancementEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
+import dev.spyglass.android.data.db.entities.VersionTagEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -68,6 +77,12 @@ class AdvancementsViewModel(app: Application) : AndroidViewModel(app) {
     val sortKey: StateFlow<String> = _sortKey.asStateFlow()
     fun setSortKey(k: String) { _sortKey.value = k }
 
+    val versionFilter: StateFlow<VersionFilterState> = versionFilterFrom(app.dataStore)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), VersionFilterState())
+    val versionTags: StateFlow<Map<String, VersionTagEntity>> = repo.allVersionTags()
+        .map { it.toTagMap() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val advancements: StateFlow<List<AdvancementEntity>> = combine(_query.debounce(200), _category, _sortKey) { q, cat, sort ->
         val flow = if (q.isBlank() && cat == "all") repo.searchAdvancements("")
         else if (cat != "all") repo.advancementsByCategory(cat)
@@ -81,6 +96,7 @@ class AdvancementsViewModel(app: Application) : AndroidViewModel(app) {
             }
         }
     }.flatMapLatest { it }
+     .applyVersionFilter(versionFilter, versionTags, "advancement") { it.id }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val completedIds: StateFlow<Set<String>> = repo.advancementCompletedIds()
@@ -254,6 +270,8 @@ fun AdvancementsScreen(
     val favoriteAdvancements by vm.favoriteAdvancements.collectAsStateWithLifecycle()
     val categoryCounts by vm.categoryCounts.collectAsStateWithLifecycle()
     val sortKey by vm.sortKey.collectAsStateWithLifecycle()
+    val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
+    val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
     var showResetDialog by remember { mutableStateOf(false) }
     val isSearching = query.isNotBlank()
@@ -386,12 +404,20 @@ fun AdvancementsScreen(
             }
             // Tree view items
             items(flatTreeItems, key = { it.first.id }) { (adv, depth) ->
+                val tag = vTags["advancement:${adv.id}"]
+                val availability = checkAvailability(tag, vFilter)
+                val vAlpha = when (availability) {
+                    VersionAvailability.NOT_YET_ADDED -> 0.5f
+                    VersionAvailability.REMOVED, VersionAvailability.WRONG_EDITION -> 0.4f
+                    else -> 1f
+                }
+                val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val isDetailExpanded = adv.id in expandedIds
                 val isTreeExpanded = adv.id in treeExpandedIds
                 val isComplete = adv.id in completedIds
                 val hasChildren = advancements.any { it.parent == adv.id }
 
-                Column {
+                Column(modifier = Modifier.alpha(vAlpha)) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -442,6 +468,10 @@ fun AdvancementsScreen(
                         Spacer(Modifier.width(4.dp))
                         // Badges
                         Column(horizontalAlignment = Alignment.End) {
+                            if (addedIn.isNotBlank() && availability != VersionAvailability.AVAILABLE) {
+                                VersionBadge(addedIn)
+                                Spacer(Modifier.height(2.dp))
+                            }
                             val typeColor = when (adv.type) {
                                 "challenge" -> MaterialTheme.colorScheme.primary
                                 "goal" -> PotionBlue

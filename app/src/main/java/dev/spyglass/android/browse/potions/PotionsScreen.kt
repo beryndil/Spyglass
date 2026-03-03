@@ -21,12 +21,21 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
+import dev.spyglass.android.core.VersionAvailability
+import dev.spyglass.android.core.VersionFilterState
+import dev.spyglass.android.core.applyVersionFilter
+import dev.spyglass.android.core.checkAvailability
+import dev.spyglass.android.core.toTagMap
+import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.PotionEntity
+import dev.spyglass.android.data.db.entities.VersionTagEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -111,6 +120,12 @@ class PotionsViewModel(app: Application) : AndroidViewModel(app) {
     val sortKey: StateFlow<String> = _sortKey.asStateFlow()
     fun setSortKey(k: String) { _sortKey.value = k }
 
+    val versionFilter: StateFlow<VersionFilterState> = versionFilterFrom(app.dataStore)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), VersionFilterState())
+    val versionTags: StateFlow<Map<String, VersionTagEntity>> = repo.allVersionTags()
+        .map { it.toTagMap() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val potions: StateFlow<List<PotionEntity>> = combine(_query.debounce(200), _category, _sortKey) { q, cat, sort ->
         repo.searchPotions(q).map { list ->
             val filtered = if (cat == "all") list else list.filter { it.category == cat }
@@ -121,6 +136,7 @@ class PotionsViewModel(app: Application) : AndroidViewModel(app) {
             }
         }
     }.flatMapLatest { it }
+     .applyVersionFilter(versionFilter, versionTags, "potion") { it.id }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun setQuery(q: String) { _query.value = q }
@@ -167,6 +183,8 @@ fun PotionsScreen(
     val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
     val favoritePotions by vm.favoritePotions.collectAsStateWithLifecycle()
     val sortKey    by vm.sortKey.collectAsStateWithLifecycle()
+    val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
+    val vTags       by vm.versionTags.collectAsStateWithLifecycle()
 
     val sortOptions = remember {
         listOf(
@@ -243,13 +261,21 @@ fun PotionsScreen(
                 }
             }
             items(potions, key = { it.id }) { p ->
+                val tag = vTags["potion:${p.id}"]
+                val availability = checkAvailability(tag, vFilter)
+                val vAlpha = when (availability) {
+                    VersionAvailability.NOT_YET_ADDED -> 0.5f
+                    VersionAvailability.REMOVED, VersionAvailability.WRONG_EDITION -> 0.4f
+                    else -> 1f
+                }
+                val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val catColor = when (p.category) {
                     "negative" -> NetherRed
                     "positive" -> Emerald
                     else       -> MaterialTheme.colorScheme.secondary
                 }
                 val isExpanded = p.id in expandedIds
-                Column {
+                Column(modifier = Modifier.alpha(vAlpha)) {
                     BrowseListItem(
                         headline    = p.name,
                         supporting  = "",
@@ -259,6 +285,10 @@ fun PotionsScreen(
                         trailing    = {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(horizontalAlignment = Alignment.End) {
+                                    if (addedIn.isNotBlank() && availability != VersionAvailability.AVAILABLE) {
+                                        VersionBadge(addedIn)
+                                        Spacer(Modifier.height(2.dp))
+                                    }
                                     if (p.durationSeconds > 0) {
                                         val mins = p.durationSeconds / 60
                                         val secs = p.durationSeconds % 60
