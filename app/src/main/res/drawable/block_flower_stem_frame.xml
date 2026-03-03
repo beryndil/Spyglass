@@ -1,0 +1,9 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="16dp"
+    android:height="16dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <!-- Green stem and leaves drawn on top of the dye-colored bud -->
+    <path android:fillColor="#4B7A28" android:pathData="M7,9h2v6h-2z"/>
+    <path android:fillColor="#3A6020" android:pathData="M5,11h2v1h-2z M9,12h2v1h-2z"/>
+</vector>

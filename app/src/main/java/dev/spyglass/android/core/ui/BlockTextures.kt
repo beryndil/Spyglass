@@ -19,6 +19,7 @@ object BlockTextures {
     }
 
     fun get(blockId: String): SpyglassIcon? {
+        resolveFlowerOverlay(blockId)?.let { return it }
         textureMap[blockId]?.let { filename ->
             TextureManager.resolveOrBundled(filename)?.let { return it }
         }
@@ -85,4 +86,43 @@ object BlockTextures {
     )
 
     private val CORAL_TYPES = listOf("tube", "brain", "bubble", "fire", "horn")
+
+    /** Maps flower block IDs to the dye color they produce when crafted. */
+    private val FLOWER_DYE_MAP = mapOf(
+        "dandelion" to "yellow",
+        "poppy" to "red",
+        "blue_orchid" to "light_blue",
+        "allium" to "magenta",
+        "azure_bluet" to "light_gray",
+        "red_tulip" to "red",
+        "orange_tulip" to "orange",
+        "pink_tulip" to "pink",
+        "white_tulip" to "light_gray",
+        "oxeye_daisy" to "light_gray",
+        "cornflower" to "blue",
+        "lily_of_the_valley" to "white",
+        "wither_rose" to "black",
+        "sunflower" to "yellow",
+        "lilac" to "magenta",
+        "rose_bush" to "red",
+        "peony" to "pink",
+        "torchflower" to "orange",
+        "pitcher_plant" to "cyan",
+        "cactus_flower" to "yellow",
+        "open_eyeblossom" to "orange",
+        "closed_eyeblossom" to "gray",
+        "golden_dandelion" to "yellow",
+        "pink_petals" to "pink",
+        "spore_blossom" to "pink",
+        "wildflowers" to "blue",
+    )
+
+    /** Returns an [SpyglassIcon.Overlay] with the flower's dye color clipped to the bud shape. */
+    private fun resolveFlowerOverlay(blockId: String): SpyglassIcon? {
+        val dyeColor = FLOWER_DYE_MAP[blockId] ?: return null
+        val texture = TextureManager.resolveOrBundled("block_dye_$dyeColor") ?: return null
+        val mask = TextureManager.resolveOrBundled("block_flower_bud_mask") ?: return null
+        val frame = TextureManager.resolveOrBundled("block_flower_stem_frame") ?: return null
+        return SpyglassIcon.Overlay(texture, mask, frame)
+    }
 }
