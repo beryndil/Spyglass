@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.ComponentCallbacks2
 import android.os.StrictMode
 import android.os.Trace
+import com.google.android.gms.ads.MobileAds
 import dev.spyglass.android.core.FirebaseHelper
 import dev.spyglass.android.core.ui.TextureManager
 import dev.spyglass.android.data.repository.GameDataRepository
@@ -91,6 +92,17 @@ class SpyglassApp : Application() {
                     FirebaseHelper.applyConsent(crashConsent, analyticsConsent)
                 } catch (e: Exception) {
                     Timber.w(e, "Failed to read consent for Firebase init")
+                }
+            }
+
+            // Initialize AdMob SDK
+            appScope.launch(Dispatchers.IO) {
+                try {
+                    MobileAds.initialize(this@SpyglassApp) {
+                        Timber.d("MobileAds init complete: %s", it.adapterStatusMap)
+                    }
+                } catch (e: Exception) {
+                    Timber.w(e, "MobileAds init failed")
                 }
             }
 

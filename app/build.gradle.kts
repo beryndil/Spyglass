@@ -62,6 +62,16 @@ android {
         targetSdk = 35
         versionCode = calVerCode
         versionName = calVerName
+
+        // AdMob — defaults to test IDs; override in local.properties for production
+        val admobAppId = localProps.getProperty(
+            "ADMOB_APP_ID", "ca-app-pub-3940256099942544~3347511713"
+        )
+        val admobBannerId = localProps.getProperty(
+            "ADMOB_BANNER_ID", "ca-app-pub-3940256099942544/9214589741"
+        )
+        manifestPlaceholders["admobAppId"] = admobAppId
+        buildConfigField("String", "ADMOB_BANNER_ID", "\"$admobBannerId\"")
     }
 
     buildTypes {
@@ -142,6 +152,14 @@ dependencies {
 
     // In-App Review
     implementation(libs.play.review.ktx)
+
+    // Ads — AdMob + mediation adapters
+    implementation(libs.play.services.ads)
+    implementation(libs.admob.mediation.meta)
+    implementation(libs.admob.mediation.unity)
+    implementation(libs.admob.mediation.applovin)
+    implementation(libs.admob.mediation.ironsource)
+    implementation(libs.unity.ads)
 
     // Window Manager
     implementation(libs.window)

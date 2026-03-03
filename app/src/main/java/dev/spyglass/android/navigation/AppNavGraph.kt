@@ -80,7 +80,16 @@ fun AppNavGraph() {
             pendingCalcTab = 9
             navigateTo(TopDest.Calculators.route)
         }) },
-        bottomBar = { if (showBars) BottomNavBar(navController) },
+        bottomBar = {
+            Column {
+                if (currentRoute != TopDest.Calculators.route) {
+                    AdBanner()
+                }
+                if (showBars) {
+                    BottomNavBar(navController)
+                }
+            }
+        },
     ) { innerPadding ->
         NavHost(
             navController    = navController,

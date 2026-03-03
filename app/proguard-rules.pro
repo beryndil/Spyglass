@@ -49,3 +49,31 @@
 -keep class * extends androidx.work.ListenableWorker {
     public <init>(android.content.Context, androidx.work.WorkerParameters);
 }
+
+# Google Mobile Ads (AdMob)
+-keep class com.google.android.gms.ads.** { *; }
+-dontwarn com.google.android.gms.ads.**
+
+# AdMob mediation adapters
+-keep class com.google.ads.mediation.** { *; }
+-dontwarn com.google.ads.mediation.**
+
+# Meta Audience Network
+-keep class com.facebook.ads.** { *; }
+-dontwarn com.facebook.ads.**
+
+# Unity Ads
+-keep class com.unity3d.ads.** { *; }
+-dontwarn com.unity3d.ads.**
+-keep class com.unity3d.services.** { *; }
+-dontwarn com.unity3d.services.**
+
+# AppLovin
+-keep class com.applovin.** { *; }
+-dontwarn com.applovin.**
+
+# ironSource
+-keep class com.ironsource.** { *; }
+-dontwarn com.ironsource.**
+-keep class com.unity3d.mediation.** { *; }
+-dontwarn com.unity3d.mediation.**
