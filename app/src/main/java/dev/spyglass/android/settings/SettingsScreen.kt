@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.platform.LocalUriHandler
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
@@ -64,6 +65,9 @@ fun SettingsScreen(
     val versionFilterMode   by vm.versionFilterMode.collectAsStateWithLifecycle()
     val analyticsConsent    by vm.analyticsConsent.collectAsStateWithLifecycle()
     val crashConsent        by vm.crashConsent.collectAsStateWithLifecycle()
+    val adPersonalizationConsent by vm.adPersonalizationConsent.collectAsStateWithLifecycle()
+
+    val uriHandler = LocalUriHandler.current
 
     var showDeleteConfirm by remember { mutableStateOf(false) }
     var versionExpanded by remember { mutableStateOf(false) }
@@ -403,9 +407,39 @@ fun SettingsScreen(
                     )
                 }
                 SpyglassDivider()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(stringResource(R.string.consent_personalized_ads), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                        Text(stringResource(R.string.consent_personalized_ads_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                    }
+                    Switch(
+                        checked = adPersonalizationConsent,
+                        onCheckedChange = vm::setAdPersonalizationConsent,
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = MaterialTheme.colorScheme.primary,
+                            checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                            uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                            uncheckedTrackColor = MaterialTheme.colorScheme.outline,
+                        ),
+                    )
+                }
+                SpyglassDivider()
                 TextButton(onClick = { showDeleteConfirm = true }) {
                     Text(stringResource(R.string.settings_delete_data), color = Red400)
                 }
+                SpyglassDivider()
+                Text(
+                    text = stringResource(R.string.settings_privacy_policy),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.clickable {
+                        uriHandler.openUri("https://dev-vulx.github.io/Spyglass/privacy-policy.html")
+                    },
+                )
             }
         }
 

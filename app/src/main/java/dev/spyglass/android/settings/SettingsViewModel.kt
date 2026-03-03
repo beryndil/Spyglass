@@ -121,6 +121,14 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         FirebaseHelper.applyConsent(enabled, analyticsConsent.value)
     }
 
+    val adPersonalizationConsent: StateFlow<Boolean> = store.data
+        .map { it[PreferenceKeys.AD_PERSONALIZATION_CONSENT] ?: false }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    fun setAdPersonalizationConsent(enabled: Boolean) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.AD_PERSONALIZATION_CONSENT] = enabled }
+    }
+
     fun deleteAllUserData() = viewModelScope.launch {
         repo.deleteAllUserData()
     }

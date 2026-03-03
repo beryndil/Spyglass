@@ -49,6 +49,9 @@ jobs:
       - name: Build release APK
         run: ./gradlew assembleRelease
 
+      - name: Build release AAB
+        run: ./gradlew bundleRelease
+
       - name: Generate release tag
         id: tag
         run: echo "tag=v$(date +'%Y.%m%d')" >> "$GITHUB_OUTPUT"
@@ -61,8 +64,11 @@ jobs:
           body: |
             Release build from `main` — ${{ github.sha }}
 
-            Install: download `app-release.apk` and open it on your Android device.
-          files: app/build/outputs/apk/release/app-release.apk
+            **APK** — download `app-release.apk` and sideload on your Android device.
+            **AAB** — download `app-release.aab` for Google Play Store upload.
+          files: |
+            app/build/outputs/apk/release/app-release.apk
+            app/build/outputs/bundle/release/app-release.aab
           make_latest: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

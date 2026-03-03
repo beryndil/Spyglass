@@ -15,7 +15,7 @@ Spyglass is an Android reference app for Minecraft Java Edition 1.21.4. Browse a
 **[Download the latest APK from Releases](https://github.com/Dev-VulX/Spyglass/releases/latest)**
 
 1. Open the link on your Android device
-2. Download `app-debug.apk`
+2. Download `app-release.apk`
 3. Tap the file to install (you may need to allow "Install from unknown sources")
 
 **Requirements:** Android 8.0+ (Oreo) | ~30 MB storage
@@ -78,7 +78,9 @@ Real-time search across all 9 categories simultaneously. Tap any result to jump 
 
 ## Privacy
 
-Spyglass does not collect, store, or transmit any personal data. The app displays ads via Google AdMob. No analytics, no tracking, no accounts.
+Spyglass displays ads via Google AdMob and may collect anonymous analytics and crash reports with your consent. No personal information is ever shared. All game data is stored locally on your device.
+
+[Read our full Privacy Policy](https://dev-vulx.github.io/Spyglass/privacy-policy.html)
 
 ---
 

@@ -25,4 +25,5 @@ object PreferenceKeys {
     val ANALYTICS_CONSENT       = booleanPreferencesKey("analytics_consent")
     val CRASH_CONSENT           = booleanPreferencesKey("crash_consent")
     val CONSENT_SHOWN           = booleanPreferencesKey("consent_shown")
+    val AD_PERSONALIZATION_CONSENT = booleanPreferencesKey("ad_personalization_consent")
 }

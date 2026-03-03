@@ -69,6 +69,9 @@
     <string name="consent_analytics_desc">Usage patterns to improve features</string>
     <string name="consent_crash_reports">Crash Reports</string>
     <string name="consent_crash_reports_desc">Automatic error reporting to fix bugs</string>
+    <string name="consent_personalized_ads">Personalized Ads</string>
+    <string name="consent_personalized_ads_desc">Show ads based on your interests. Non-personalized ads still appear if disabled.</string>
+    <string name="consent_privacy_policy_link">Read our full Privacy Policy</string>
 
     <!-- Settings Screen -->
     <string name="settings_theme">Theme</string>
@@ -90,6 +93,7 @@
     <string name="settings_favorites_count">%d favorite(s)</string>
     <string name="settings_clear_all_favorites">Clear All Favorites</string>
     <string name="settings_privacy">Privacy &amp; Data</string>
+    <string name="settings_privacy_policy">Privacy Policy \u2192</string>
     <string name="settings_delete_data">Delete All My Data</string>
     <string name="settings_delete_data_title">Delete All Data?</string>
     <string name="settings_delete_data_message">This will permanently delete all your todos, notes, waypoints, shopping lists, favorites, and advancement progress. This cannot be undone.</string>
@@ -117,7 +121,7 @@
     <string name="about_github">GitHub</string>
     <string name="about_copyright">\u00A9 2026 Beryndil. All rights reserved.</string>
     <string name="about_privacy">Privacy</string>
-    <string name="about_privacy_text">All game data is stored locally on your device. No personal data is collected or shared.</string>
+    <string name="about_privacy_text">All game data is stored locally on your device. Spyglass displays ads via Google AdMob and may collect anonymous analytics and crash reports with your consent. No personal information is ever shared.</string>
     <string name="about_report_bug">Report a Bug</string>
     <string name="about_request_feature">Request a Feature</string>
 

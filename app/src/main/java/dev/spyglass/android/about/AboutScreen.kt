@@ -231,6 +231,15 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}, onDisclaime
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = stringResource(R.string.settings_privacy_policy),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.clickable {
+                        uriHandler.openUri("https://dev-vulx.github.io/Spyglass/privacy-policy.html")
+                    },
+                )
             }
         }
 

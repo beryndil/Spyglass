@@ -46,11 +46,12 @@ class MainActivity : ComponentActivity() {
 
             SpyglassTheme(theme = theme, isWideScreen = isWideScreen) {
                 if (!consentShown) {
-                    ConsentDialog { analyticsConsent, crashConsent ->
+                    ConsentDialog { analyticsConsent, crashConsent, adPersonalizationConsent ->
                         scope.launch {
                             dataStore.edit {
                                 it[PreferenceKeys.ANALYTICS_CONSENT] = analyticsConsent
                                 it[PreferenceKeys.CRASH_CONSENT] = crashConsent
+                                it[PreferenceKeys.AD_PERSONALIZATION_CONSENT] = adPersonalizationConsent
                                 it[PreferenceKeys.CONSENT_SHOWN] = true
                             }
                         }
