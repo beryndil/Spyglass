@@ -71,6 +71,14 @@ The debug APK will be at `app/build/outputs/apk/debug/app-debug.apk`.
 
 **Build requirements:** JDK 17, Android SDK (API 35)
 
+### Run Tests
+
+```bash
+./gradlew testDebugUnitTest
+```
+
+45 JVM unit tests covering calculators (block fill, shapes), data sync manifest, and search tab mapping.
+
 ---
 
 ## Credits
