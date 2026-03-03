@@ -46,12 +46,12 @@ object BlockTextures {
                 "concrete", "concrete_powder" -> resolveById("${color}_concrete")
                 "terracotta", "glazed_terracotta" -> resolveById("terracotta")
                 "stained_glass", "stained_glass_pane" ->
-                    resolveById("${color}_stained_glass_bk") ?: resolveById("glass")
+                    TextureManager.resolveOrBundled("block_${color}_stained_glass_bk") ?: resolveById("glass")
                 "shulker_box" ->
-                    resolveById("${color}_shulker_box_bk") ?: resolveById("shulker_box")
+                    TextureManager.resolveOrBundled("block_${color}_shulker_box_bk") ?: resolveById("shulker_box")
                 "carpet", "bed", "banner", "wall_banner" -> resolveById("${color}_wool") ?: resolveById("wool")
                 "candle", "candle_cake" ->
-                    resolveById("${color}_candle_bk") ?: resolveById("candle_bk")
+                    TextureManager.resolveOrBundled("block_${color}_candle_bk") ?: TextureManager.resolveOrBundled("block_candle_bk")
                 else -> null
             }
             if (result != null) return result
@@ -62,10 +62,10 @@ object BlockTextures {
             val coralType = CORAL_TYPES.firstOrNull { blockId.contains(it) }
             if (coralType != null) {
                 val isDead = blockId.startsWith("dead_")
-                val key = if (isDead) "dead_${coralType}_coral_bk" else "${coralType}_coral_bk"
-                resolveById(key)?.let { return it }
+                val key = if (isDead) "block_dead_${coralType}_coral_bk" else "block_${coralType}_coral_bk"
+                TextureManager.resolveOrBundled(key)?.let { return it }
             }
-            return resolveById("coral_block_bk") ?: resolveById("prismarine")
+            return TextureManager.resolveOrBundled("block_coral_block_bk") ?: resolveById("prismarine")
         }
 
         return null

@@ -196,10 +196,10 @@ object ItemTextures {
             val coralType = CORAL_TYPES.firstOrNull { itemId.contains(it) }
             if (coralType != null) {
                 val isDead = itemId.startsWith("dead_")
-                val key = if (isDead) "dead_${coralType}_coral_bk" else "${coralType}_coral_bk"
-                lookup(key)?.let { return it }
+                val key = if (isDead) "block_dead_${coralType}_coral_bk" else "block_${coralType}_coral_bk"
+                TextureManager.resolveOrBundled(key)?.let { return it }
             }
-            return lookup("coral_block_bk") ?: lookup("prismarine")
+            return TextureManager.resolveOrBundled("block_coral_block_bk") ?: lookup("prismarine")
         }
 
         // Skulls/heads
@@ -273,12 +273,12 @@ object ItemTextures {
             return when (itemId.removePrefix("${color}_")) {
                 "carpet", "bed", "banner" -> lookup("${color}_wool") ?: lookup("wool")
                 "stained_glass", "stained_glass_pane" ->
-                    lookup("${color}_stained_glass_bk") ?: lookup("glass")
+                    TextureManager.resolveOrBundled("block_${color}_stained_glass_bk") ?: lookup("glass")
                 "concrete_powder" -> lookup("${color}_concrete")
                 "glazed_terracotta" -> lookup("terracotta")
                 "terracotta" -> lookup("terracotta")
-                "shulker_box" -> lookup("${color}_shulker_box_bk") ?: lookup("shulker_box")
-                "candle" -> lookup("${color}_candle_bk") ?: lookup("candle_bk")
+                "shulker_box" -> TextureManager.resolveOrBundled("block_${color}_shulker_box_bk") ?: lookup("shulker_box")
+                "candle" -> TextureManager.resolveOrBundled("block_${color}_candle_bk") ?: TextureManager.resolveOrBundled("block_candle_bk")
                 "tulip", "orchid" -> lookup("poppy")
                 "petals" -> lookup("poppy")
                 "harness" -> lookup("saddle")
