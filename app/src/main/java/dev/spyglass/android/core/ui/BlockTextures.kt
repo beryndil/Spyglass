@@ -45,18 +45,28 @@ object BlockTextures {
                 "wool" -> resolveById("${color}_wool") ?: resolveById("wool")
                 "concrete", "concrete_powder" -> resolveById("${color}_concrete")
                 "terracotta", "glazed_terracotta" -> resolveById("terracotta")
-                "stained_glass" -> resolveById("glass")
-                "stained_glass_pane" -> resolveById("glass_pane")
-                "shulker_box" -> resolveById("shulker_box")
+                "stained_glass", "stained_glass_pane" ->
+                    resolveById("${color}_stained_glass_bk") ?: resolveById("glass")
+                "shulker_box" ->
+                    resolveById("${color}_shulker_box_bk") ?: resolveById("shulker_box")
                 "carpet", "bed", "banner", "wall_banner" -> resolveById("${color}_wool") ?: resolveById("wool")
-                "candle", "candle_cake" -> resolveById("torch")
+                "candle", "candle_cake" ->
+                    resolveById("${color}_candle_bk") ?: resolveById("candle_bk")
                 else -> null
             }
             if (result != null) return result
         }
 
-        // Coral → prismarine
-        if (blockId.contains("coral")) return resolveById("prismarine")
+        // Coral → type-specific fallbacks
+        if (blockId.contains("coral")) {
+            val coralType = CORAL_TYPES.firstOrNull { blockId.contains(it) }
+            if (coralType != null) {
+                val isDead = blockId.startsWith("dead_")
+                val key = if (isDead) "dead_${coralType}_coral_bk" else "${coralType}_coral_bk"
+                resolveById(key)?.let { return it }
+            }
+            return resolveById("coral_block_bk") ?: resolveById("prismarine")
+        }
 
         return null
     }
@@ -73,4 +83,6 @@ object BlockTextures {
         "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink",
         "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black",
     )
+
+    private val CORAL_TYPES = listOf("tube", "brain", "bubble", "fire", "horn")
 }

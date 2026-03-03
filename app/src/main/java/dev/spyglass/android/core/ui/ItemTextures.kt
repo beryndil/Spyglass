@@ -47,6 +47,8 @@ object ItemTextures {
 
     private val NETHER_WOOD = listOf("crimson", "warped")
 
+    private val CORAL_TYPES = listOf("tube", "brain", "bubble", "fire", "horn")
+
     private val resolveCache = mutableMapOf<String, SpyglassIcon?>()
 
     /** Look up a texture for any item ID. Checks block textures, item textures, then smart fallback. */
@@ -189,8 +191,16 @@ object ItemTextures {
         if (itemId.startsWith("deepslate_") && itemId.endsWith("_ore"))
             return lookup("deepslate")
 
-        // Coral → prismarine
-        if (itemId.contains("coral")) return lookup("prismarine")
+        // Coral → type-specific fallbacks
+        if (itemId.contains("coral")) {
+            val coralType = CORAL_TYPES.firstOrNull { itemId.contains(it) }
+            if (coralType != null) {
+                val isDead = itemId.startsWith("dead_")
+                val key = if (isDead) "dead_${coralType}_coral_bk" else "${coralType}_coral_bk"
+                lookup(key)?.let { return it }
+            }
+            return lookup("coral_block_bk") ?: lookup("prismarine")
+        }
 
         // Skulls/heads
         if (itemId.endsWith("_head") || itemId.endsWith("_skull") ||
@@ -262,13 +272,13 @@ object ItemTextures {
             if (!itemId.startsWith("${color}_")) continue
             return when (itemId.removePrefix("${color}_")) {
                 "carpet", "bed", "banner" -> lookup("${color}_wool") ?: lookup("wool")
-                "stained_glass" -> lookup("glass")
-                "stained_glass_pane" -> lookup("glass_pane")
+                "stained_glass", "stained_glass_pane" ->
+                    lookup("${color}_stained_glass_bk") ?: lookup("glass")
                 "concrete_powder" -> lookup("${color}_concrete")
                 "glazed_terracotta" -> lookup("terracotta")
                 "terracotta" -> lookup("terracotta")
-                "shulker_box" -> lookup("shulker_box")
-                "candle" -> lookup("torch")
+                "shulker_box" -> lookup("${color}_shulker_box_bk") ?: lookup("shulker_box")
+                "candle" -> lookup("${color}_candle_bk") ?: lookup("candle_bk")
                 "tulip", "orchid" -> lookup("poppy")
                 "petals" -> lookup("poppy")
                 "harness" -> lookup("saddle")
