@@ -22,6 +22,8 @@ data class BlockEntity(
     val minY: Int? = null,
     val maxY: Int? = null,
     val peakY: Int? = null,
+    val description: String = "",
+    val isObtainable: Boolean = true,
 )
 
 @Entity(tableName = "recipes")
@@ -47,6 +49,7 @@ data class MobEntity(
     val isFireImmune: Boolean = false,
     val description: String = "",
     val breeding: String = "",      // e.g. "wheat" or "carrots,potatoes,beetroot" or ""
+    val spawnConditions: String = "", // e.g. "Light level 0-7, solid block"
 )
 
 @Entity(tableName = "biomes")
@@ -99,6 +102,7 @@ data class TradeEntity(
     val buyItem2Count: Int = 0,
     val sellItem: String,
     val sellItemCount: Int,
+    val maxUses: Int = 0,           // times available per restock
 )
 
 @Entity(tableName = "structures")

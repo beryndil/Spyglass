@@ -18,7 +18,7 @@ import java.io.File
  */
 object DataSeeder {
 
-    private const val CURRENT_DATA_VERSION = 17
+    private const val CURRENT_DATA_VERSION = 18
     private const val PREFS_NAME = "spyglass_seed"
     private const val KEY_DATA_VERSION = "data_version"
 
@@ -170,6 +170,7 @@ object DataSeeder {
         val blastResistance: Float = 0f, val lightLevel: Int = 0,
         val hasGravity: Boolean = false, val isWaterloggable: Boolean = false,
         val minY: Int? = null, val maxY: Int? = null, val peakY: Int? = null,
+        val description: String = "", val isObtainable: Boolean = true,
     )
 
     @Serializable data class MobJson(
@@ -177,10 +178,11 @@ object DataSeeder {
         val health: kotlinx.serialization.json.JsonElement = kotlinx.serialization.json.JsonPrimitive(20),
         val category: String = "hostile", val hostility: String = "",
         val spawnBiomes: String = "",
-        val drops: String = "",
+        val drops: kotlinx.serialization.json.JsonElement = kotlinx.serialization.json.JsonPrimitive(""),
         val xp: kotlinx.serialization.json.JsonElement = kotlinx.serialization.json.JsonPrimitive(0),
         val isFireImmune: Boolean = false, val description: String = "",
         val breeding: String = "",
+        val spawnConditions: String = "",
     )
 
     @Serializable data class BiomeJson(
@@ -270,7 +272,7 @@ object DataSeeder {
             BlockEntity(it.id, it.name, it.stackSize, it.hardness, it.toolRequired,
                 it.toolLevel, it.isFlammable, it.isTransparent, it.drops, it.category,
                 it.blastResistance, it.lightLevel, it.hasGravity, it.isWaterloggable,
-                it.minY, it.maxY, it.peakY)
+                it.minY, it.maxY, it.peakY, it.description, it.isObtainable)
         })
     }
 
@@ -286,8 +288,14 @@ object DataSeeder {
             val xpStr = it.xp.toString().trim('"')
             val biomesList = if (it.spawnBiomes.isBlank()) "[]"
                 else "[${it.spawnBiomes.split(",").joinToString(",") { s -> "\"${s.trim()}\""}}]"
+            val dropsStr = when (it.drops) {
+                is kotlinx.serialization.json.JsonArray -> it.drops.toString()
+                is kotlinx.serialization.json.JsonPrimitive -> it.drops.content
+                else -> it.drops.toString()
+            }
             MobEntity(it.id, it.name, healthStr, it.hostility.ifEmpty { it.category },
-                biomesList, it.drops, xpStr, it.isFireImmune, it.description, it.breeding)
+                biomesList, dropsStr, xpStr, it.isFireImmune, it.description, it.breeding,
+                it.spawnConditions)
         })
     }
 
@@ -343,7 +351,7 @@ object DataSeeder {
         db.tradeDao().insertAll(items.map {
             TradeEntity(0, it.profession, it.level, levelNames[it.level] ?: "Novice",
                 it.buyItem1, it.buyItem1Count, it.buyItem2, it.buyItem2Count,
-                it.sellItem, it.sellCount)
+                it.sellItem, it.sellCount, it.quantity)
         })
     }
 

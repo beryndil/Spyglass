@@ -70,6 +70,32 @@ private val BREWING_ITEM_IDS = mapOf(
     "breeze rod" to "breeze_rod",
 )
 
+private val EFFECT_DESCRIPTIONS = mapOf(
+    "Speed" to "+20% movement speed per level",
+    "Slowness" to "-15% movement speed per level",
+    "Haste" to "+20% mining speed per level",
+    "Mining Fatigue" to "-70% mining speed (level I)",
+    "Strength" to "+3 attack damage per level",
+    "Instant Health" to "Restores 4 HP per level",
+    "Instant Damage" to "Deals 6 HP damage per level",
+    "Jump Boost" to "+0.5 blocks jump height per level",
+    "Regeneration" to "1 HP every 2.5s/1.25s per level",
+    "Resistance" to "-20% damage taken per level",
+    "Fire Resistance" to "Immune to fire and lava damage",
+    "Water Breathing" to "Breathe underwater, improved visibility",
+    "Invisibility" to "Invisible to mobs (no armor); reduced detection range",
+    "Night Vision" to "See in the dark and underwater clearly",
+    "Weakness" to "-4 attack damage",
+    "Poison" to "1 HP every 2.5s/1.25s (won't kill)",
+    "Slow Falling" to "Fall slowly, no fall damage",
+    "Turtle Master" to "Slowness IV + Resistance III",
+    "Luck" to "+1 luck attribute for loot tables",
+    "Wind Charged" to "Emit a wind burst on death",
+    "Weaving" to "Spawn cobweb blocks on death",
+    "Oozing" to "Spawn slimes on death",
+    "Infested" to "Spawn silverfish when hurt",
+)
+
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class PotionsViewModel(app: Application) : AndroidViewModel(app) {
     private val repo = GameDataRepository.get(app)
@@ -283,6 +309,10 @@ private fun PotionDetailCard(potion: PotionEntity, onItemTap: (String) -> Unit) 
         // Effect
         if (potion.effect.isNotBlank() && potion.effect != "none") {
             Text(potion.effect, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            val desc = EFFECT_DESCRIPTIONS[potion.effect]
+            if (desc != null) {
+                Text(desc, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+            }
         }
 
         // Stats

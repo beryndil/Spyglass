@@ -32,6 +32,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 
 // Non-biome, non-structure spawn locations shown as plain badges
 private val SPECIAL_LOCATIONS = setOf(
@@ -96,14 +98,30 @@ class MobsViewModel(app: Application) : AndroidViewModel(app) {
     }
 }
 
-private fun parseDrops(dropsJson: String): List<String> {
+@Serializable
+private data class MobDrop(
+    val id: String,
+    val min: Int = 0,
+    val max: Int = 1,
+    val chance: Float = 100f,
+)
+
+private val dropJson = Json { ignoreUnknownKeys = true }
+
+private fun parseStructuredDrops(dropsJson: String): List<MobDrop> {
     val trimmed = dropsJson.trim()
     if (trimmed.isBlank() || trimmed == "[]") return emptyList()
+    // Structured JSON array format: [{"id":"...","min":0,"max":2,"chance":100}]
+    if (trimmed.startsWith("[{")) {
+        return runCatching { dropJson.decodeFromString<List<MobDrop>>(trimmed) }.getOrDefault(emptyList())
+    }
+    // Legacy CSV format: "rotten_flesh,iron_ingot,carrot"
     return trimmed.removeSurrounding("[", "]")
         .replace("\"", "")
         .split(",")
         .map { it.trim() }
         .filter { it.isNotEmpty() }
+        .map { MobDrop(it) }
 }
 
 private fun parseBiomes(biomesJson: String): List<String> {
@@ -290,7 +308,7 @@ fun MobsScreen(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onItemTap: (String) -> Unit, onMobTap: (String) -> Unit, onCalcTab: (Int) -> Unit, entityLinkIndex: EntityLinkIndex) {
-    val drops  = parseDrops(mob.dropsJson)
+    val drops  = parseStructuredDrops(mob.dropsJson)
     val biomes = parseBiomes(mob.spawnBiomesJson)
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
@@ -313,6 +331,13 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
         StatRow("Health", "${mob.health} HP")
         StatRow("XP Drop", mob.xpDrop)
         if (mob.isFireImmune) StatRow("Fire Immune", stringResource(R.string.yes))
+
+        // Spawn conditions
+        if (mob.spawnConditions.isNotBlank()) {
+            SpyglassDivider()
+            Text("Spawn Conditions", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(mob.spawnConditions, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
 
         // Breeding
         if (mob.breeding.isNotEmpty()) {
@@ -343,9 +368,23 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
             Text("Drops", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 drops.forEach { drop ->
+                    val qtyLabel = when {
+                        drop.min == drop.max && drop.min == 1 -> ""
+                        drop.min == drop.max -> "${drop.min}"
+                        else -> "${drop.min}-${drop.max}"
+                    }
+                    val chanceLabel = if (drop.chance < 100f) {
+                        if (drop.chance == drop.chance.toInt().toFloat()) "${drop.chance.toInt()}%"
+                        else "${"%.1f".format(drop.chance)}%"
+                    } else ""
+                    val suffix = listOfNotNull(
+                        qtyLabel.ifEmpty { null },
+                        chanceLabel.ifEmpty { null },
+                    ).joinToString(" ")
+                    val chipLabel = if (suffix.isNotEmpty()) "${formatId(drop.id)} ($suffix)" else formatId(drop.id)
                     AssistChip(
-                        onClick = { onItemTap(drop) },
-                        label = { Text(formatId(drop), style = MaterialTheme.typography.labelSmall) },
+                        onClick = { onItemTap(drop.id) },
+                        label = { Text(chipLabel, style = MaterialTheme.typography.labelSmall) },
                         colors = AssistChipDefaults.assistChipColors(
                             labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
                             containerColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f),
@@ -390,7 +429,7 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
         }
 
         // Cross-links to tool tabs
-        val hasFoodDrops = drops.any { it in FOOD_DROP_IDS }
+        val hasFoodDrops = drops.any { it.id in FOOD_DROP_IDS }
         val isHostile = mob.category == "hostile" || mob.category == "boss"
         if (hasFoodDrops || isHostile) {
             SpyglassDivider()

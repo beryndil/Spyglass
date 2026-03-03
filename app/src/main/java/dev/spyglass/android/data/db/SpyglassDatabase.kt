@@ -31,7 +31,7 @@ import dev.spyglass.android.data.db.entities.*
         ShoppingListItemEntity::class,
         TodoEntity::class,
     ],
-    version = 22,
+    version = 23,
     exportSchema = true,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
@@ -55,6 +55,15 @@ abstract class SpyglassDatabase : RoomDatabase() {
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null
+
+        private val MIGRATION_22_23 = object : Migration(22, 23) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE trades ADD COLUMN maxUses INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE mobs ADD COLUMN spawnConditions TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE blocks ADD COLUMN description TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE blocks ADD COLUMN isObtainable INTEGER NOT NULL DEFAULT 1")
+            }
+        }
 
         private val MIGRATION_21_22 = object : Migration(21, 22) {
             override fun migrate(db: SupportSQLiteDatabase) {
@@ -219,7 +228,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
                             SpyglassDatabase::class.java,
                             "spyglass.db",
                         )
-                            .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21, MIGRATION_21_22)
+                            .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21, MIGRATION_21_22, MIGRATION_22_23)
                             .build()
                     } finally {
                         Trace.endSection()

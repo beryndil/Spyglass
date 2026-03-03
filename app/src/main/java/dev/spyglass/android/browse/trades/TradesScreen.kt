@@ -334,11 +334,20 @@ private fun TradeListItem(trade: TradeEntity, onItemTap: (String) -> Unit, favor
                     onClick = { onItemTap(sellId) })
             }
             Spacer(Modifier.height(2.dp))
-            Text(
-                "${trade.profession.replaceFirstChar { it.uppercase() }} \u00B7 ${trade.levelName}",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.secondary,
-            )
+            Row {
+                Text(
+                    "${trade.profession.replaceFirstChar { it.uppercase() }} \u00B7 ${trade.levelName}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                if (trade.maxUses > 0) {
+                    Text(
+                        " \u00B7 ${trade.maxUses}/restock",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                }
+            }
         }
         Spacer(Modifier.width(8.dp))
         CategoryBadge(label = "Lvl ${trade.level}", color = MaterialTheme.colorScheme.primary)

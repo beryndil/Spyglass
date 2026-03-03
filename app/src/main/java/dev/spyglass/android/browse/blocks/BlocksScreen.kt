@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -18,6 +20,7 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
@@ -383,9 +386,36 @@ private fun BlockDetailContent(
         // ── Minecraft ID ──
         MinecraftIdRow(block.id)
 
+        // ── Description ──
+        if (block.description.isNotBlank()) {
+            Text(block.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+
+        // ── Property badges ──
+        val badges = buildList {
+            if (!block.isObtainable) add("Unobtainable" to NetherRed)
+            if (block.isFlammable) add("Flammable" to NetherRed)
+            if (block.isTransparent) add("Transparent" to PotionBlue)
+            if (block.hasGravity) add("Gravity" to MaterialTheme.colorScheme.primary)
+            if (block.isWaterloggable) add("Waterloggable" to PotionBlue)
+            if (block.lightLevel > 0) add("Light: ${block.lightLevel}" to Color(0xFFFFA726))
+        }
+        if (badges.isNotEmpty()) {
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                badges.forEach { (label, color) ->
+                    CategoryBadge(label = label, color = color)
+                }
+            }
+            Spacer(Modifier.height(6.dp))
+        }
+
         // ── Stats section ──
         if (block.stackSize != 64) StatRow("Stack Size", "${block.stackSize}")
         StatRow("Hardness", "${block.hardness}")
+        StatRow("Blast Resistance", "${block.blastResistance}")
 
         if (block.toolRequired.isNotBlank() && block.toolRequired != "none") {
             val toolTexId = toolTextureId(block.toolRequired)
@@ -405,8 +435,44 @@ private fun BlockDetailContent(
                 }
             }
         }
-        if (block.isFlammable) StatRow("Flammable", stringResource(R.string.yes))
-        if (block.isTransparent) StatRow("Transparent", stringResource(R.string.yes))
+        if (block.toolLevel.isNotBlank()) {
+            StatRow("Min. Tool Tier", formatId(block.toolLevel))
+        }
+
+        // ── Light level bar ──
+        if (block.lightLevel > 0) {
+            Spacer(Modifier.height(4.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text("Light Level", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
+                Text("${block.lightLevel}/15", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth().height(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(2.dp),
+            ) {
+                for (i in 1..15) {
+                    val fraction = i / 15f
+                    val segmentColor = if (i <= block.lightLevel)
+                        Color(
+                            red = 0.2f + 0.8f * fraction,
+                            green = 0.6f + 0.4f * fraction,
+                            blue = 0.1f,
+                        )
+                    else MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .clip(RoundedCornerShape(2.dp))
+                            .background(segmentColor),
+                    )
+                }
+            }
+        }
 
         // ── Ore Generation section ──
         if (block.minY != null) {
