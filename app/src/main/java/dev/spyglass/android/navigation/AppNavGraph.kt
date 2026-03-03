@@ -82,11 +82,11 @@ fun AppNavGraph() {
         }) },
         bottomBar = {
             Column {
-                if (currentRoute != TopDest.Calculators.route) {
-                    AdBanner()
-                }
                 if (showBars) {
                     BottomNavBar(navController)
+                }
+                if (currentRoute != TopDest.Calculators.route) {
+                    AdBanner()
                 }
             }
         },
