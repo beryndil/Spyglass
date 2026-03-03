@@ -2,7 +2,7 @@
 
 **Your Minecraft companion for crafting, building, and exploring.**
 
-Spyglass is a fully offline Android reference app for Minecraft Java Edition 1.21.4. Browse a complete database of blocks, items, recipes, mobs, biomes, enchantments, potions, structures, and villager trades — plus six specialized calculators for building and enchanting. Everything runs locally on your device with zero data collection.
+Spyglass is an Android reference app for Minecraft Java Edition 1.21.4. Browse a complete database of blocks, items, recipes, mobs, biomes, enchantments, potions, structures, and villager trades — plus specialized calculators for building and enchanting. All game data is bundled with the app and works offline.
 
 ## Disclaimer
 
@@ -18,7 +18,7 @@ Spyglass is a fully offline Android reference app for Minecraft Java Edition 1.2
 2. Download `app-debug.apk`
 3. Tap the file to install (you may need to allow "Install from unknown sources")
 
-**Requirements:** Android 8.0+ (Oreo) | ~30 MB storage | No internet needed
+**Requirements:** Android 8.0+ (Oreo) | ~30 MB storage
 
 ---
 
@@ -63,28 +63,6 @@ Real-time search across all 9 categories simultaneously. Tap any result to jump 
 
 ---
 
-## Build from Source
-
-```bash
-git clone https://github.com/Dev-VulX/Spyglass.git
-cd Spyglass
-./gradlew assembleDebug
-```
-
-The debug APK will be at `app/build/outputs/apk/debug/app-debug.apk`.
-
-**Build requirements:** JDK 17, Android SDK (API 35)
-
-### Run Tests
-
-```bash
-./gradlew testDebugUnitTest
-```
-
-45 JVM unit tests covering calculators (block fill, shapes), data sync manifest, and search tab mapping.
-
----
-
 ## Credits
 
 **Spyglass** is created by **Beryndil**.
@@ -100,16 +78,13 @@ The debug APK will be at `app/build/outputs/apk/debug/app-debug.apk`.
 
 ## Privacy
 
-Spyglass does not collect, store, or transmit any personal data. No analytics, no tracking, no ads, no accounts, no internet required.
+Spyglass does not collect, store, or transmit any personal data. The app displays ads via Google AdMob. No analytics, no tracking, no accounts.
 
 ---
 
-## Contributing
+## License
 
-- [Report a Bug](https://github.com/Dev-VulX/Spyglass/issues)
-- [Request a Feature](https://github.com/Dev-VulX/Spyglass/issues)
-
-Pull requests welcome — fork, branch, and submit a PR.
+Copyright (c) 2026 Beryndil. All rights reserved. See [LICENSE](LICENSE) for details.
 
 ---
 

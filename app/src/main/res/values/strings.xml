@@ -106,7 +106,7 @@
     <string name="about_data_version">Data Version</string>
     <string name="about_minecraft_version">Java 1.21.4</string>
     <string name="about_credits">Credits &amp; Licenses</string>
-    <string name="about_license_cc">CC BY-NC-SA 4.0 \u2014 View License</string>
+    <string name="about_license_cc">All Rights Reserved \u2014 View License</string>
     <string name="about_pixel_perfection">Pixel Perfection</string>
     <string name="about_by_xssheep">by XSSheep</string>
     <string name="about_cc_by_sa">CC-BY-SA 4.0</string>
@@ -114,7 +114,7 @@
     <string name="about_entity_icons">Entity-Icons</string>
     <string name="about_cc0">CC0 1.0</string>
     <string name="about_github">GitHub</string>
-    <string name="about_copyright">\u00A9 2026 Beryndil. Licensed under CC BY-NC-SA 4.0.</string>
+    <string name="about_copyright">\u00A9 2026 Beryndil. All rights reserved.</string>
     <string name="about_privacy">Privacy</string>
     <string name="about_privacy_text">All game data is stored locally on your device. No personal data is collected or shared.</string>
     <string name="about_report_bug">Report a Bug</string>
@@ -126,22 +126,19 @@
 
     <!-- License Screen -->
     <string name="license_title">License</string>
-    <string name="license_full_name">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</string>
-    <string name="license_copyright">\u00A9 2026 Beryndil. Some rights reserved.</string>
-    <string name="license_free_to">You are free to</string>
-    <string name="license_share">Share \u2014 copy and redistribute the material in any medium or format.</string>
-    <string name="license_adapt">Adapt \u2014 remix, transform, and build upon the material.</string>
-    <string name="license_terms">Under the following terms</string>
-    <string name="license_attribution">Attribution</string>
-    <string name="license_attribution_desc">You must give appropriate credit to Beryndil, provide a link to this license, and indicate if changes were made.</string>
-    <string name="license_noncommercial">NonCommercial</string>
-    <string name="license_noncommercial_desc">You may not use the material for commercial purposes. You may not sell, monetize, or profit from this work or any derivative of it.</string>
-    <string name="license_sharealike">ShareAlike</string>
-    <string name="license_sharealike_desc">If you remix, transform, or build upon the material, you must distribute your contributions under the same license.</string>
-    <string name="license_no_restrictions">No additional restrictions</string>
-    <string name="license_no_restrictions_desc">You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.</string>
-    <string name="license_view_full">View full legal text at creativecommons.org</string>
-    <string name="license_third_party">This license applies to the Spyglass application source code and original assets. Third-party assets (Pixel Perfection, Entity-Icons) retain their own licenses as noted on the About page.</string>
+    <string name="license_full_name">Proprietary Software License</string>
+    <string name="license_copyright">\u00A9 2026 Beryndil. All rights reserved.</string>
+    <string name="license_permitted_use">Permitted Use</string>
+    <string name="license_permitted_use_desc">You are granted a non-exclusive, non-transferable, revocable license to use the Spyglass application as distributed through official release channels for personal, non-commercial purposes.</string>
+    <string name="license_restrictions">Restrictions</string>
+    <string name="license_restriction_copy">You may not copy, reproduce, or duplicate the source code or application.</string>
+    <string name="license_restriction_modify">You may not modify, adapt, translate, or create derivative works.</string>
+    <string name="license_restriction_distribute">You may not distribute, sublicense, lease, rent, or transfer the application to any third party.</string>
+    <string name="license_restriction_reverse">You may not reverse-engineer, decompile, or disassemble the application.</string>
+    <string name="license_restriction_commercial">You may not use the source code or application for any commercial purpose.</string>
+    <string name="license_third_party">This application includes third-party assets subject to their own licenses, as noted on the About page.</string>
+    <string name="license_no_warranty">No Warranty</string>
+    <string name="license_no_warranty_desc">The software is provided \"as is\", without warranty of any kind. The developer assumes no responsibility for any issues arising from the use of this application.</string>
 
     <!-- Feedback Screen -->
     <string name="feedback_title">Feedback</string>

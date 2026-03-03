@@ -1,6 +1,5 @@
 package dev.spyglass.android.license
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -12,7 +11,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.spyglass.android.R
@@ -20,8 +18,6 @@ import dev.spyglass.android.core.ui.*
 
 @Composable
 fun LicenseScreen(onBack: () -> Unit = {}) {
-    val uriHandler = LocalUriHandler.current
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -59,74 +55,56 @@ fun LicenseScreen(onBack: () -> Unit = {}) {
             )
         }
 
-        SectionHeader(stringResource(R.string.license_free_to))
+        SectionHeader(stringResource(R.string.license_permitted_use))
         ResultCard {
             Text(
-                text = stringResource(R.string.license_share),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            SpyglassDivider()
-            Text(
-                text = stringResource(R.string.license_adapt),
+                text = stringResource(R.string.license_permitted_use_desc),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
-        SectionHeader(stringResource(R.string.license_terms))
+        SectionHeader(stringResource(R.string.license_restrictions))
         ResultCard {
             Text(
-                text = stringResource(R.string.license_attribution),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.primary,
-            )
-            Text(
-                text = stringResource(R.string.license_attribution_desc),
+                text = stringResource(R.string.license_restriction_copy),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
             Text(
-                text = stringResource(R.string.license_noncommercial),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.primary,
-            )
-            Text(
-                text = stringResource(R.string.license_noncommercial_desc),
+                text = stringResource(R.string.license_restriction_modify),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
             Text(
-                text = stringResource(R.string.license_sharealike),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.primary,
+                text = stringResource(R.string.license_restriction_distribute),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+            SpyglassDivider()
             Text(
-                text = stringResource(R.string.license_sharealike_desc),
+                text = stringResource(R.string.license_restriction_reverse),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            SpyglassDivider()
+            Text(
+                text = stringResource(R.string.license_restriction_commercial),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
-        SectionHeader(stringResource(R.string.license_no_restrictions))
+        SectionHeader(stringResource(R.string.license_no_warranty))
         ResultCard {
             Text(
-                text = stringResource(R.string.license_no_restrictions_desc),
+                text = stringResource(R.string.license_no_warranty_desc),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-
-        Text(
-            text = stringResource(R.string.license_view_full),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.clickable {
-                uriHandler.openUri("https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode")
-            },
-        )
 
         Text(
             text = stringResource(R.string.license_third_party),
