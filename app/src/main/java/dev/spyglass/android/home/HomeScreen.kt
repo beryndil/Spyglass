@@ -79,6 +79,7 @@ private val CALC_LINKS = listOf(
     QuickLink(PixelIcons.Torch,     "Light Spacing")          to 10,
     // ── Crafting & Resources ──
     QuickLink(PixelIcons.Anvil,     "Enchanting")             to 2,
+    QuickLink(PixelIcons.Enchant,   "Librarian Guide")        to 14,
     QuickLink(PixelIcons.Smelt,     "Smelting")               to 7,
     QuickLink(PixelIcons.Storage,   "Storage")                to 6,
     // ── World & Navigation ──
