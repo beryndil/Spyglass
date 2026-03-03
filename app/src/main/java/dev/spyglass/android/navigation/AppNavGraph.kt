@@ -85,9 +85,7 @@ fun AppNavGraph() {
                 if (showBars) {
                     BottomNavBar(navController)
                 }
-                if (currentRoute != TopDest.Calculators.route) {
-                    AdBanner()
-                }
+                AdBanner()
             }
         },
     ) { innerPadding ->
