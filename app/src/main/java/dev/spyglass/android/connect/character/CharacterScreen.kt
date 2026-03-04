@@ -141,11 +141,11 @@ private fun CharacterContent(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.Top,
         ) {
-            // Body render (256dp, dungeons pose)
+            // Body render (dungeons pose)
             Box(
                 modifier = Modifier
-                    .height(256.dp)
-                    .widthIn(min = 128.dp)
+                    .height(200.dp)
+                    .widthIn(min = 100.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(if (playerBodySkin == null) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent),
                 contentAlignment = Alignment.Center,
@@ -154,7 +154,7 @@ private fun CharacterContent(
                     Image(
                         bitmap = playerBodySkin.asImageBitmap(),
                         contentDescription = "Player body",
-                        modifier = Modifier.height(256.dp),
+                        modifier = Modifier.fillMaxHeight(),
                         contentScale = ContentScale.Fit,
                     )
                 } else {
@@ -169,8 +169,8 @@ private fun CharacterContent(
 
             // Right side: IGN, UUID, then armor boxes
             Column(
-                modifier = Modifier.height(256.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
+                modifier = Modifier.height(200.dp),
+                verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 // IGN
                 Text("IGN", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
@@ -178,6 +178,8 @@ private fun CharacterContent(
                     playerName ?: "Unknown Player",
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
 
                 // UUID
@@ -186,27 +188,29 @@ private fun CharacterContent(
                     playerData.playerUuid ?: "—",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 2,
+                    maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
 
                 Spacer(Modifier.weight(1f))
 
-                // Armor boxes
-                val armorSlotTypes = listOf(SlotType.HEAD, SlotType.CHEST, SlotType.LEGS, SlotType.FEET)
-                armorSlotTypes.forEach { slotType ->
-                    val slotAnalysis = gearAnalysis?.slots?.find { it.slotType == slotType }
-                    Box(
-                        modifier = Modifier
-                            .size(44.dp)
-                            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(6.dp)),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        val itemId = slotAnalysis?.item?.id
-                        if (itemId != null) {
-                            val tex = ItemTextures.get(itemId)
-                            if (tex != null) {
-                                SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(32.dp))
+                // Armor boxes — horizontal row
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    val armorSlotTypes = listOf(SlotType.HEAD, SlotType.CHEST, SlotType.LEGS, SlotType.FEET)
+                    armorSlotTypes.forEach { slotType ->
+                        val slotAnalysis = gearAnalysis?.slots?.find { it.slotType == slotType }
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(6.dp)),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            val itemId = slotAnalysis?.item?.id
+                            if (itemId != null) {
+                                val tex = ItemTextures.get(itemId)
+                                if (tex != null) {
+                                    SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(28.dp))
+                                }
                             }
                         }
                     }
