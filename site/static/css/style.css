@@ -174,33 +174,26 @@ a:hover { text-decoration: underline; }
   color: #fff;
 }
 
-/* ── Steps Row ────────────────────────────────────── */
-.steps-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
-}
-@media (min-width: 640px) {
-  .steps-row { grid-template-columns: repeat(3, 1fr); }
-}
-.step-card {
+/* ── Steps List ───────────────────────────────────── */
+.steps-list {
+  max-width: 540px;
+  margin: 0 auto;
   text-align: center;
-  padding: 1.5rem;
 }
-.step-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #AB47BC;
-  margin: 0 auto 0.75rem;
-}
-.step-card h3 {
+.step-item h3 {
   color: var(--text);
-  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  margin-bottom: 0.35rem;
 }
-.step-card p {
+.step-item p {
   color: var(--text-dim);
   font-size: 0.95rem;
+}
+.step-sep {
+  width: 2px;
+  height: 24px;
+  background: rgba(171, 71, 188, 0.4);
+  margin: 1rem auto;
 }
 
 /* ── Connect Cards ────────────────────────────────── */
