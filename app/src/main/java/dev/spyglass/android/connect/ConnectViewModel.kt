@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dev.spyglass.android.connect.client.*
+import dev.spyglass.android.core.CrashReporter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -93,6 +94,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     /** Connect via QR pairing data. */
     fun connectFromQr(pairingData: QrPairingData) {
         reconnectJob?.cancel()
+        CrashReporter.log("QR pair started")
         viewModelScope.launch(Dispatchers.IO) {
             client.connect(pairingData.ip, pairingData.port)
 
@@ -122,6 +124,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         // Don't start if already reconnecting
         if (reconnectJob?.isActive == true) return
 
+        CrashReporter.log("Auto-reconnect started")
         reconnectJob = viewModelScope.launch(Dispatchers.IO) {
             val device = PairingStore.load(getApplication()) ?: run {
                 Timber.d("No paired device stored, can't auto-reconnect")
@@ -153,10 +156,12 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     }
                     if (paired is ConnectionState.Connected) {
                         Timber.d("Auto-reconnect succeeded on attempt $attempt")
+                        CrashReporter.log("Auto-reconnect succeeded attempt $attempt")
                         return@launch
                     }
                 } else if (result is ConnectionState.Connected) {
                     Timber.d("Auto-reconnect succeeded on attempt $attempt")
+                    CrashReporter.log("Auto-reconnect succeeded attempt $attempt")
                     return@launch
                 }
 
@@ -165,6 +170,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
             // Exhausted all attempts
             Timber.d("Auto-reconnect exhausted after ${reconnectManager.currentAttempt} attempts")
+            CrashReporter.log("Auto-reconnect exhausted")
             client.setError("Lost connection to PC")
             ConnectService.stop(getApplication())
         }
@@ -241,6 +247,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Disconnect and clean up. */
     fun disconnect() {
+        CrashReporter.log("User disconnect")
         wasConnected = false
         reconnectJob?.cancel()
         ConnectService.stop(getApplication())
@@ -297,6 +304,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             }
         } catch (e: Exception) {
             Timber.w(e, "Failed to handle message: ${message.type}")
+            CrashReporter.recordException(e, "Handle message failed: ${message.type}")
         }
     }
 

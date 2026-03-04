@@ -12,6 +12,7 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import dev.spyglass.android.MainActivity
 import dev.spyglass.android.R
+import dev.spyglass.android.core.CrashReporter
 
 /**
  * Foreground service that keeps the Spyglass Connect WebSocket alive
@@ -47,10 +48,14 @@ class ConnectService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val deviceName = intent?.getStringExtra("device_name") ?: "PC"
         startForeground(NOTIFICATION_ID, buildNotification(deviceName))
+        CrashReporter.log("Connect service started")
+        CrashReporter.setKey("service_running", "true")
         return START_STICKY
     }
 
     override fun onDestroy() {
+        CrashReporter.log("Connect service stopped")
+        CrashReporter.setKey("service_running", "false")
         releaseWifiLock()
         super.onDestroy()
     }

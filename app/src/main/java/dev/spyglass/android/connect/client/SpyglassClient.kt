@@ -1,6 +1,7 @@
 package dev.spyglass.android.connect.client
 
 import dev.spyglass.android.connect.*
+import dev.spyglass.android.core.CrashReporter
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,6 +45,8 @@ class SpyglassClient {
     fun connect(ip: String, port: Int) {
         userDisconnect = false
         _connectionState.value = ConnectionState.Connecting(ip, port)
+        CrashReporter.setKey("connect_state", "connecting")
+        CrashReporter.setKey("connect_ip", "$ip:$port")
 
         val request = Request.Builder()
             .url("ws://$ip:$port/ws")
@@ -53,13 +56,15 @@ class SpyglassClient {
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 Timber.d("WebSocket connected to $ip:$port")
                 _connectionState.value = ConnectionState.Pairing
+                CrashReporter.setKey("connect_state", "pairing")
             }
 
             override fun onMessage(webSocket: WebSocket, text: String) {
                 val messageText = if (encryption.isReady) {
                     try {
                         encryption.decrypt(text)
-                    } catch (_: Exception) {
+                    } catch (e: Exception) {
+                        CrashReporter.recordException(e, "Decrypt failed")
                         text
                     }
                 } else {
@@ -74,6 +79,8 @@ class SpyglassClient {
                         val accept = json.decodeFromJsonElement(PairAcceptPayload.serializer(), message.payload)
                         if (accept.accepted) {
                             _connectionState.value = ConnectionState.Connected(accept.deviceName)
+                            CrashReporter.setKey("connect_state", "connected")
+                            CrashReporter.setKey("connect_device", accept.deviceName)
                         } else {
                             _connectionState.value = ConnectionState.Error("Pairing rejected")
                         }
@@ -84,6 +91,7 @@ class SpyglassClient {
                     _messages.tryEmit(message)
                 } catch (e: Exception) {
                     Timber.w(e, "Failed to parse message")
+                    CrashReporter.recordException(e, "Message parse failed")
                 }
             }
 
@@ -100,6 +108,7 @@ class SpyglassClient {
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
                 Timber.w(t, "WebSocket failure")
                 _connectionState.value = ConnectionState.Error(t.message ?: "Connection failed")
+                CrashReporter.recordException(t, "WebSocket failure")
             }
         })
     }
@@ -148,6 +157,7 @@ class SpyglassClient {
         webSocket?.close(1000, "Client disconnect")
         webSocket = null
         _connectionState.value = ConnectionState.Disconnected
+        CrashReporter.setKey("connect_state", "disconnected")
     }
 
     /** Check if currently connected. */
@@ -160,10 +170,12 @@ class SpyglassClient {
     /** Set a reconnecting state (called by ViewModel during auto-reconnect). */
     fun setReconnecting(attempt: Int) {
         _connectionState.value = ConnectionState.Reconnecting(attempt)
+        CrashReporter.setKey("connect_state", "reconnecting")
     }
 
     /** Set an error state (called by ViewModel when reconnect is exhausted). */
     fun setError(message: String) {
         _connectionState.value = ConnectionState.Error(message)
+        CrashReporter.setKey("connect_state", "error")
     }
 }
