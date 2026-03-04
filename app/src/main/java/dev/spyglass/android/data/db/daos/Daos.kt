@@ -132,6 +132,9 @@ interface EnchantDao {
     @Query("SELECT * FROM enchants WHERE ',' || target || ',' LIKE '%,' || :target || ',%' OR target = 'all' ORDER BY name")
     fun forTarget(target: String): Flow<List<EnchantEntity>>
 
+    @Query("SELECT * FROM enchants WHERE ',' || target || ',' LIKE '%,' || :target || ',%' OR target = 'all' ORDER BY name")
+    suspend fun forTargetOnce(target: String): List<EnchantEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(items: List<EnchantEntity>)
 

@@ -57,11 +57,16 @@ data class WorldInfo(
 data class WorldListPayload(val worlds: List<WorldInfo>)
 
 @Serializable
+data class EnchantmentData(val id: String, val level: Int)
+
+@Serializable
 data class ItemStack(
     val id: String,
     val count: Int = 1,
     val slot: Int = -1,
-    val nbt: String? = null,
+    val enchantments: List<EnchantmentData> = emptyList(),
+    val damage: Int = 0,
+    val customName: String? = null,
 )
 
 @Serializable
@@ -79,6 +84,9 @@ data class PlayerData(
     val armor: List<ItemStack> = emptyList(),
     val offhand: ItemStack? = null,
     val enderChest: List<ItemStack> = emptyList(),
+    val playerUuid: String? = null,
+    val playerName: String? = null,
+    val selectedSlot: Int = 0,
 )
 
 @Serializable

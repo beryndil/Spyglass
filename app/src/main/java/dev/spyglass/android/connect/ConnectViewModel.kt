@@ -1,11 +1,15 @@
 package dev.spyglass.android.connect
 
 import android.app.Application
+import android.graphics.Bitmap
 import android.os.Build
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dev.spyglass.android.connect.client.*
+import dev.spyglass.android.connect.gear.GearAnalysis
+import dev.spyglass.android.connect.gear.GearAnalyzer
 import dev.spyglass.android.core.CrashReporter
+import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -52,11 +56,50 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private val _selectedWorld = MutableStateFlow<String?>(null)
     val selectedWorld: StateFlow<String?> = _selectedWorld
 
+    private val _playerSkin = MutableStateFlow<Bitmap?>(null)
+    val playerSkin: StateFlow<Bitmap?> = _playerSkin
+
+    private val _playerName = MutableStateFlow<String?>(null)
+    val playerName: StateFlow<String?> = _playerName
+
+    private val _gearAnalysis = MutableStateFlow<GearAnalysis?>(null)
+    val gearAnalysis: StateFlow<GearAnalysis?> = _gearAnalysis
+
+    private val repo by lazy { GameDataRepository.get(getApplication()) }
+
     init {
         // Listen for incoming messages
         viewModelScope.launch {
             client.messages.collect { message ->
                 handleMessage(message)
+            }
+        }
+
+        // Fetch player skin + name when UUID is available, compute gear analysis
+        viewModelScope.launch {
+            _playerData.collectLatest { data ->
+                val uuid = data?.playerUuid
+                if (uuid != null) {
+                    _playerSkin.value = SkinManager.fetchSkin(uuid)
+                    // Prefer desktop-provided name, fall back to Mojang API
+                    _playerName.value = data.playerName
+                        ?: SkinManager.fetchPlayerName(uuid)
+                } else {
+                    _playerSkin.value = null
+                    _playerName.value = data?.playerName
+                }
+
+                // Compute gear analysis
+                if (data != null) {
+                    try {
+                        _gearAnalysis.value = GearAnalyzer.analyze(data, repo)
+                    } catch (e: Exception) {
+                        Timber.w(e, "Gear analysis failed")
+                        _gearAnalysis.value = null
+                    }
+                } else {
+                    _gearAnalysis.value = null
+                }
             }
         }
 
@@ -255,6 +298,10 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         client.disconnect()
         _worlds.value = emptyList()
         _playerData.value = null
+        _playerSkin.value = null
+        _playerName.value = null
+        _gearAnalysis.value = null
+        SkinManager.clear()
         _searchResults.value = null
         _structures.value = emptyList()
         _mapTiles.value = null

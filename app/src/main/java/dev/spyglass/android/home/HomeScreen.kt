@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -33,8 +35,22 @@ import androidx.compose.ui.text.style.TextOverflow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import dev.spyglass.android.connect.ConnectViewModel
+import android.graphics.Bitmap
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import dev.spyglass.android.connect.*
 import dev.spyglass.android.connect.client.ConnectionState
+import dev.spyglass.android.connect.gear.GearAnalysis
+import dev.spyglass.android.connect.gear.SlotAnalysis
+import dev.spyglass.android.connect.gear.SlotType
+import dev.spyglass.android.connect.gear.EnchantInfo
+import dev.spyglass.android.connect.chestfinder.ChestFinderContent
+import dev.spyglass.android.connect.inventory.EnderChestContent
+import dev.spyglass.android.connect.inventory.InventoryContent
+import dev.spyglass.android.connect.map.MapContent
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import timber.log.Timber
@@ -139,12 +155,13 @@ private data class HomePrefs(
 
 @Composable
 fun HomeScreen(
-    onBrowseTab: (Int) -> Unit,
+    onBrowseTarget: (dev.spyglass.android.navigation.BrowseTarget) -> Unit,
     onCalcTab: (Int) -> Unit,
     onSearch: () -> Unit,
     connectViewModel: ConnectViewModel? = null,
-    onConnectTap: () -> Unit = {},
+    onScanQr: () -> Unit = {},
 ) {
+    val onBrowseTab: (Int) -> Unit = { tab -> onBrowseTarget(dev.spyglass.android.navigation.BrowseTarget(tab, "")) }
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val tips = stringArrayResource(R.array.tips)
@@ -195,12 +212,13 @@ fun HomeScreen(
             HomeSearchBar(onSearch = onSearch)
         }
 
-        // ── Connect status ──
+        // ── Connect hub ──
         if (connectViewModel != null) {
             item(key = "connect") {
                 HomeConnectSection(
                     connectViewModel = connectViewModel,
-                    onTap = onConnectTap,
+                    onScanQr = onScanQr,
+                    onBrowseTarget = onBrowseTarget,
                 )
             }
         }
@@ -526,71 +544,613 @@ private fun HomeTodoRow(todo: TodoEntity, onToggle: () -> Unit) {
     }
 }
 
-// ── Spyglass Connect section ────────────────────────────────────────────────
+// ── Spyglass Connect hub ─────────────────────────────────────────────────────
 
 @Composable
 private fun HomeConnectSection(
     connectViewModel: ConnectViewModel,
-    onTap: () -> Unit,
+    onScanQr: () -> Unit,
+    onBrowseTarget: (dev.spyglass.android.navigation.BrowseTarget) -> Unit = {},
 ) {
     val state by connectViewModel.connectionState.collectAsStateWithLifecycle()
+    val worlds by connectViewModel.worlds.collectAsStateWithLifecycle()
     val playerData by connectViewModel.playerData.collectAsStateWithLifecycle()
+    val selectedWorld by connectViewModel.selectedWorld.collectAsStateWithLifecycle()
+    val playerSkin by connectViewModel.playerSkin.collectAsStateWithLifecycle()
+    val playerName by connectViewModel.playerName.collectAsStateWithLifecycle()
+    val gearAnalysis by connectViewModel.gearAnalysis.collectAsStateWithLifecycle()
 
-    ResultCard(modifier = Modifier.clickable { onTap() }) {
-        when {
-            state is ConnectionState.Connected -> {
+    SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
+    Spacer(Modifier.height(8.dp))
+
+    when {
+        // ── Disconnected / Error ──
+        state is ConnectionState.Disconnected || state is ConnectionState.Error -> {
+            ConnectDisconnectedCard(
+                state = state,
+                onScanQr = onScanQr,
+                onReconnect = { connectViewModel.tryReconnect() },
+            )
+        }
+
+        // ── Connecting / Pairing / Reconnecting ──
+        !state.isConnected -> {
+            ResultCard {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    SpyglassIconImage(PixelIcons.Waypoints, contentDescription = null, tint = Emerald, modifier = Modifier.size(22.dp))
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            "Connected to PC",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Emerald,
-                        )
-                        playerData?.let { p ->
-                            Text(
-                                "${p.worldName} • ${p.dimension.replace("_", " ").replaceFirstChar { it.uppercase() }}",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                    }
-                    Text(
-                        "Open",
-                        style = MaterialTheme.typography.labelSmall,
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        strokeWidth = 2.dp,
                         color = MaterialTheme.colorScheme.primary,
                     )
-                }
-            }
-            else -> {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                ) {
-                    SpyglassIconImage(PixelIcons.Waypoints, contentDescription = null, tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(22.dp))
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            "Spyglass Connect",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface,
-                        )
-                        Text(
-                            "Stream Minecraft world data from your PC",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
                     Text(
-                        "Connect",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.primary,
+                        state.statusText,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                 }
             }
         }
+
+        // ── Connected, no world selected ──
+        state.isConnected && selectedWorld == null -> {
+            ConnectStatusBar(state)
+            Spacer(Modifier.height(8.dp))
+            ConnectWorldSelector(
+                worlds = worlds,
+                selectedWorld = null,
+                onSelectWorld = {
+                    connectViewModel.selectWorld(it)
+                    connectViewModel.requestPlayerData()
+                },
+                onDisconnect = { connectViewModel.disconnect() },
+            )
+        }
+
+        // ── Connected, world selected — full hub ──
+        state.isConnected -> {
+            ConnectStatusBar(state)
+            Spacer(Modifier.height(8.dp))
+            ConnectWorldHeader(
+                worlds = worlds,
+                selectedWorld = selectedWorld,
+                onSelectWorld = {
+                    connectViewModel.selectWorld(it)
+                    connectViewModel.requestPlayerData()
+                },
+                onDisconnect = { connectViewModel.disconnect() },
+            )
+            Spacer(Modifier.height(8.dp))
+            ConnectTabHub(
+                viewModel = connectViewModel,
+                playerData = playerData,
+                playerSkin = playerSkin,
+                playerName = playerName,
+                gearAnalysis = gearAnalysis,
+                onBrowseItem = { itemId ->
+                    onBrowseTarget(dev.spyglass.android.navigation.BrowseTarget(1, itemId))
+                },
+                onBrowseEnchant = { enchantId ->
+                    onBrowseTarget(dev.spyglass.android.navigation.BrowseTarget(7, enchantId))
+                },
+            )
+        }
+    }
+}
+
+@Composable
+private fun ConnectDisconnectedCard(
+    state: ConnectionState,
+    onScanQr: () -> Unit,
+    onReconnect: () -> Unit,
+) {
+    ResultCard {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            SpyglassIconImage(
+                PixelIcons.Waypoints,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.size(28.dp),
+            )
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    "Stream Minecraft world data from your PC",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    "Both devices on the same WiFi",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+
+        Spacer(Modifier.height(12.dp))
+
+        Button(
+            onClick = onScanQr,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+        ) {
+            Text("Scan QR Code")
+        }
+        Spacer(Modifier.height(4.dp))
+        OutlinedButton(
+            onClick = onReconnect,
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text("Reconnect to Last Device")
+        }
+
+        if (state is ConnectionState.Error) {
+            Spacer(Modifier.height(8.dp))
+            Text(
+                state.message,
+                style = MaterialTheme.typography.bodySmall,
+                color = Color(0xFFF44336),
+            )
+        }
+    }
+}
+
+@Composable
+private fun ConnectStatusBar(state: ConnectionState) {
+    val deviceName = (state as? ConnectionState.Connected)?.deviceName ?: ""
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Emerald.copy(alpha = 0.1f), RoundedCornerShape(8.dp))
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .size(8.dp)
+                .background(Emerald, CircleShape),
+        )
+        Text(
+            "Connected" + if (deviceName.isNotEmpty()) " to $deviceName" else "",
+            style = MaterialTheme.typography.labelSmall,
+            color = Emerald,
+            modifier = Modifier.weight(1f),
+        )
+    }
+}
+
+@Composable
+private fun ConnectWorldSelector(
+    worlds: List<WorldInfo>,
+    selectedWorld: String?,
+    onSelectWorld: (String) -> Unit,
+    onDisconnect: () -> Unit,
+) {
+    ResultCard {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                "Select a World",
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.weight(1f),
+            )
+            Text(
+                "Disconnect",
+                style = MaterialTheme.typography.labelSmall,
+                color = Color(0xFFF44336),
+                modifier = Modifier.clickable { onDisconnect() },
+            )
+        }
+        Spacer(Modifier.height(8.dp))
+        worlds.forEach { world ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onSelectWorld(world.folderName) }
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                SpyglassIconImage(PixelIcons.Biome, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(world.displayName, style = MaterialTheme.typography.bodyMedium)
+                    Text(
+                        "${world.gameMode.replaceFirstChar { it.uppercase() }} • ${world.difficulty.replaceFirstChar { it.uppercase() }}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
+        if (worlds.isEmpty()) {
+            Text(
+                "No worlds found",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+@Composable
+private fun ConnectWorldHeader(
+    worlds: List<WorldInfo>,
+    selectedWorld: String?,
+    onSelectWorld: (String) -> Unit,
+    onDisconnect: () -> Unit,
+) {
+    val currentWorld = worlds.firstOrNull { it.folderName == selectedWorld }
+    var expanded by remember { mutableStateOf(false) }
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        SpyglassIconImage(PixelIcons.Biome, contentDescription = null, tint = Emerald, modifier = Modifier.size(20.dp))
+        Box(modifier = Modifier.weight(1f)) {
+            Text(
+                currentWorld?.displayName ?: "Unknown World",
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.clickable { expanded = true },
+            )
+            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                worlds.forEach { world ->
+                    DropdownMenuItem(
+                        text = { Text(world.displayName) },
+                        onClick = {
+                            expanded = false
+                            onSelectWorld(world.folderName)
+                        },
+                    )
+                }
+            }
+        }
+        Text(
+            "Disconnect",
+            style = MaterialTheme.typography.labelSmall,
+            color = Color(0xFFF44336),
+            modifier = Modifier.clickable { onDisconnect() },
+        )
+    }
+}
+
+@Composable
+private fun connectTabs() = listOf(
+    SpyglassTab("Character", PixelIcons.Mob),
+    SpyglassTab("Inventory", PixelIcons.Item),
+    SpyglassTab("Ender Chest", PixelIcons.Enchant),
+    SpyglassTab("Chests", PixelIcons.Search),
+    SpyglassTab("Map", PixelIcons.Biome),
+)
+
+@Composable
+private fun ConnectTabHub(
+    viewModel: ConnectViewModel,
+    playerData: PlayerData?,
+    playerSkin: Bitmap?,
+    playerName: String?,
+    gearAnalysis: GearAnalysis?,
+    onBrowseItem: (String) -> Unit,
+    onBrowseEnchant: (String) -> Unit,
+) {
+    var selectedTab by remember { mutableIntStateOf(0) }
+
+    SpyglassTabRow(
+        tabs = connectTabs(),
+        selectedIndex = selectedTab,
+        onSelect = { selectedTab = it },
+    )
+    HorizontalDivider()
+
+    when (selectedTab) {
+        0 -> CharacterTab(
+            playerData = playerData,
+            playerSkin = playerSkin,
+            playerName = playerName,
+            gearAnalysis = gearAnalysis,
+            onBrowseItem = onBrowseItem,
+            onBrowseEnchant = onBrowseEnchant,
+        )
+        1 -> InventoryContent(playerData = playerData)
+        2 -> EnderChestContent(playerData = playerData)
+        3 -> ChestFinderContent(viewModel = viewModel)
+        4 -> MapContent(viewModel = viewModel)
+    }
+}
+
+private val UpgradeOrange = Color(0xFFFF9800)
+
+@Composable
+private fun CharacterTab(
+    playerData: PlayerData?,
+    playerSkin: Bitmap?,
+    playerName: String?,
+    gearAnalysis: GearAnalysis?,
+    onBrowseItem: (String) -> Unit,
+    onBrowseEnchant: (String) -> Unit,
+) {
+    if (playerData == null) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(32.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text("No player data", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        return
+    }
+
+    Column(
+        modifier = Modifier.padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        // ── Player header ──
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(64.dp)
+                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp)),
+                contentAlignment = Alignment.Center,
+            ) {
+                if (playerSkin != null) {
+                    Image(
+                        bitmap = playerSkin.asImageBitmap(),
+                        contentDescription = "Player skin",
+                        modifier = Modifier
+                            .size(56.dp)
+                            .clip(RoundedCornerShape(4.dp)),
+                        contentScale = ContentScale.Fit,
+                    )
+                } else {
+                    SpyglassIconImage(
+                        PixelIcons.Mob,
+                        contentDescription = "Player",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(32.dp),
+                    )
+                }
+            }
+
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    playerName ?: "Unknown Player",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    playerData.dimension.replace("_", " ").replaceFirstChar { it.uppercase() },
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+                Text(
+                    "${playerData.posX.toInt()}, ${playerData.posY.toInt()}, ${playerData.posZ.toInt()}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+
+        // ── Stat cards ──
+        ResultCard {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                ConnectStatColumn("Health", "${playerData.health.toInt()} / 20")
+                ConnectStatColumn("Food", "${playerData.foodLevel} / 20")
+                ConnectStatColumn("XP", "${playerData.xpLevel}")
+            }
+        }
+
+        // ── Equipment Analysis ──
+        Text(
+            "Equipment Analysis",
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.primary,
+        )
+
+        if (gearAnalysis != null) {
+            gearAnalysis.slots.forEach { slotAnalysis ->
+                GearSlotCard(
+                    slotAnalysis = slotAnalysis,
+                    onBrowseItem = onBrowseItem,
+                    onBrowseEnchant = onBrowseEnchant,
+                )
+            }
+        } else {
+            ResultCard {
+                Text(
+                    "Analyzing gear...",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+    }
+}
+
+private fun slotLabel(slotType: SlotType): String = when (slotType) {
+    SlotType.HEAD -> "Head"
+    SlotType.CHEST -> "Chest"
+    SlotType.LEGS -> "Legs"
+    SlotType.FEET -> "Feet"
+    SlotType.MAIN_HAND -> "Main Hand"
+    SlotType.OFF_HAND -> "Off Hand"
+}
+
+private fun formatItemName(id: String): String =
+    id.replace("_", " ").split(" ").joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
+
+private fun romanNumeral(level: Int): String = when (level) {
+    1 -> "I"; 2 -> "II"; 3 -> "III"; 4 -> "IV"; 5 -> "V"
+    else -> level.toString()
+}
+
+@Composable
+private fun GearSlotCard(
+    slotAnalysis: SlotAnalysis,
+    onBrowseItem: (String) -> Unit,
+    onBrowseEnchant: (String) -> Unit,
+) {
+    ResultCard {
+        val item = slotAnalysis.item
+
+        if (item != null) {
+            // ── Has item ──
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.clickable { onBrowseItem(item.id) },
+            ) {
+                val tex = ItemTextures.get(item.id)
+                if (tex != null) {
+                    SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(24.dp))
+                    Spacer(Modifier.width(8.dp))
+                }
+                Text(
+                    item.customName ?: formatItemName(item.id),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+                Spacer(Modifier.weight(1f))
+                Text(
+                    slotLabel(slotAnalysis.slotType),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+
+            // Current enchants (at max level) — green
+            if (slotAnalysis.currentEnchants.isNotEmpty()) {
+                Spacer(Modifier.height(6.dp))
+                slotAnalysis.currentEnchants.forEach { info ->
+                    Text(
+                        "${info.name} ${romanNumeral(info.level)}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Emerald,
+                        modifier = Modifier
+                            .clickable { onBrowseEnchant(info.id) }
+                            .padding(vertical = 1.dp),
+                    )
+                }
+            }
+
+            // Upgradeable enchants — orange
+            if (slotAnalysis.upgradeableEnchants.isNotEmpty()) {
+                Spacer(Modifier.height(4.dp))
+                slotAnalysis.upgradeableEnchants.forEach { info ->
+                    Text(
+                        "${info.name} ${romanNumeral(info.level)} \u2192 ${romanNumeral(info.maxLevel)}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = UpgradeOrange,
+                        modifier = Modifier
+                            .clickable { onBrowseEnchant(info.id) }
+                            .padding(vertical = 1.dp),
+                    )
+                }
+            }
+
+            // Missing enchants — muted chips
+            if (slotAnalysis.missingEnchants.isNotEmpty()) {
+                Spacer(Modifier.height(4.dp))
+                @OptIn(ExperimentalLayoutApi::class)
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    slotAnalysis.missingEnchants.forEach { enchant ->
+                        Text(
+                            "+ ${enchant.name}",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier
+                                .background(
+                                    MaterialTheme.colorScheme.surfaceVariant,
+                                    RoundedCornerShape(4.dp),
+                                )
+                                .clickable { onBrowseEnchant(enchant.id) }
+                                .padding(horizontal = 6.dp, vertical = 2.dp),
+                        )
+                    }
+                }
+            }
+
+            // Tier upgrade
+            if (slotAnalysis.tierUpgrade != null) {
+                Spacer(Modifier.height(6.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.clickable { onBrowseItem(slotAnalysis.tierUpgrade.id) },
+                ) {
+                    SpyglassIconImage(
+                        PixelIcons.Anvil,
+                        contentDescription = null,
+                        tint = PotionBlue,
+                        modifier = Modifier.size(14.dp),
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(
+                        "Upgrade to ${slotAnalysis.tierUpgrade.name} \u2192",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = PotionBlue,
+                    )
+                }
+            }
+        } else {
+            // ── Empty slot ──
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    slotLabel(slotAnalysis.slotType),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Spacer(Modifier.weight(1f))
+                Text(
+                    "Empty",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            if (slotAnalysis.tierUpgrade != null) {
+                Spacer(Modifier.height(4.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.clickable { onBrowseItem(slotAnalysis.tierUpgrade.id) },
+                ) {
+                    val tex = ItemTextures.get(slotAnalysis.tierUpgrade.id)
+                    if (tex != null) {
+                        SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(6.dp))
+                    }
+                    Text(
+                        "Suggested: ${slotAnalysis.tierUpgrade.name} \u2192",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = PotionBlue,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ConnectStatColumn(label: String, value: String) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(value, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary)
+        Text(label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 

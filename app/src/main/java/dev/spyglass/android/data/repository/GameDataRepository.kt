@@ -39,6 +39,7 @@ class GameDataRepository(context: Context) {
     // Enchants
     fun searchEnchants(q: String): Flow<List<EnchantEntity>>     = if (q.isBlank()) db.enchantDao().all() else db.enchantDao().search(q)
     fun enchantsForTarget(target: String): Flow<List<EnchantEntity>> = db.enchantDao().forTarget(target)
+    suspend fun enchantsForTargetOnce(target: String): List<EnchantEntity> = db.enchantDao().forTargetOnce(target)
 
     // Potions
     fun searchPotions(q: String): Flow<List<PotionEntity>>  = if (q.isBlank()) db.potionDao().all() else db.potionDao().search(q)
