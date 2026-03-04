@@ -20,6 +20,17 @@ private data class VersionData(val version: String, val date: String, val highli
 
 private val VERSIONS = listOf(
     VersionData(
+        version = "v1.0-alpha.6",
+        date = "March 2026",
+        highlights = listOf(
+            "Spyglass Connect: Player Statistics — view lifetime stats pulled from your Minecraft save (blocks mined, mobs killed, distance walked, play time, and more)",
+            "Spyglass Connect: Advancements Roadmap — interactive tree showing completed, available, and locked advancements across all 5 tabs",
+            "Statistics auto-format distance (cm to blocks/km), time (ticks to hours/minutes), and large numbers with commas",
+            "Advancements merge bundled metadata with live save data — filter by tab, see progress bar, and track what's next",
+            "Offline caching for both Statistics and Advancements — viewable even when disconnected from PC",
+        ),
+    ),
+    VersionData(
         version = "v1.0-alpha.5",
         date = "March 2026",
         highlights = listOf(

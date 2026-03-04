@@ -23,11 +23,13 @@ Connect to the **[Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect
 | Feature | Description |
 |---------|-------------|
 | **QR Pairing** | Scan a QR code to connect — auto-reconnects whenever you're on the same WiFi |
-| **Character Viewer** | See your full equipment — armor, weapons, tools, and enchantments |
+| **Character Viewer** | See your full equipment — armor, weapons, tools, and enchantments with upgrade recommendations |
 | **Inventory Viewer** | Browse your complete inventory, armor, offhand, and ender chest |
 | **Chest Finder** | Search for any item across all containers in the world — chests, barrels, shulker boxes, hoppers |
 | **Structure Locator** | Find villages, temples, monuments, strongholds, and more with coordinates and distance |
 | **Overhead Map** | Interactive terrain map with structure markers and player position |
+| **Player Statistics** | Lifetime stats pulled from your save — blocks mined, mobs killed, distance walked, play time |
+| **Advancements Roadmap** | Interactive tree showing completed, available, and locked advancements across all 5 tabs |
 
 Fully encrypted (ECDH + AES-256-GCM). Auto-reconnects via mDNS.
 
