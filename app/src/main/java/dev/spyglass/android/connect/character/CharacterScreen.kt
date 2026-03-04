@@ -5,7 +5,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
@@ -111,33 +113,21 @@ private fun CharacterContent(
     }
 
     Column(
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        // ── IGN + UUID ──
-        Text("IGN", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-        Text(
-            playerName ?: "Unknown Player",
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
-        Text("UUID", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-        Text(
-            playerData.playerUuid ?: "—",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-
-        // ── Skin + Armor row ──
+        // ── Avatar + Info row ──
         Row(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.Top,
         ) {
-            // Body render
+            // Body render (256dp, dungeons pose)
             Box(
                 modifier = Modifier
-                    .height(128.dp)
-                    .widthIn(min = 64.dp)
+                    .height(256.dp)
+                    .widthIn(min = 128.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(if (playerBodySkin == null) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent),
                 contentAlignment = Alignment.Center,
@@ -146,7 +136,7 @@ private fun CharacterContent(
                     Image(
                         bitmap = playerBodySkin.asImageBitmap(),
                         contentDescription = "Player body",
-                        modifier = Modifier.height(128.dp),
+                        modifier = Modifier.height(256.dp),
                         contentScale = ContentScale.Fit,
                     )
                 } else {
@@ -154,20 +144,35 @@ private fun CharacterContent(
                         PixelIcons.Mob,
                         contentDescription = "Player",
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(32.dp),
+                        modifier = Modifier.size(48.dp),
                     )
                 }
             }
 
-            // Armor boxes
-            val armorSlotTypes = listOf(SlotType.HEAD, SlotType.CHEST, SlotType.LEGS, SlotType.FEET)
-            val armorSlotLabels = mapOf(
-                SlotType.HEAD to "Head",
-                SlotType.CHEST to "Chest",
-                SlotType.LEGS to "Legs",
-                SlotType.FEET to "Feet",
-            )
-            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            // Right side: IGN, UUID, then armor boxes
+            Column(
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                // IGN
+                Text("IGN", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(
+                    playerName ?: "Unknown Player",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+
+                // UUID
+                Text("UUID", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(
+                    playerData.playerUuid ?: "—",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+
+                Spacer(Modifier.height(8.dp))
+
+                // Armor boxes
+                val armorSlotTypes = listOf(SlotType.HEAD, SlotType.CHEST, SlotType.LEGS, SlotType.FEET)
                 armorSlotTypes.forEach { slotType ->
                     val slotAnalysis = gearAnalysis?.slots?.find { it.slotType == slotType }
                     Box(
@@ -180,20 +185,8 @@ private fun CharacterContent(
                         if (itemId != null) {
                             val tex = ItemTextures.get(itemId)
                             if (tex != null) {
-                                SpyglassIconImage(tex, contentDescription = armorSlotLabels[slotType], modifier = Modifier.size(32.dp))
-                            } else {
-                                Text(
-                                    armorSlotLabels[slotType] ?: "",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
+                                SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(32.dp))
                             }
-                        } else {
-                            Text(
-                                armorSlotLabels[slotType] ?: "",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
                         }
                     }
                 }

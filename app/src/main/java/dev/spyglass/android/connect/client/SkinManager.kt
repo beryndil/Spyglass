@@ -51,14 +51,14 @@ object SkinManager {
         }
     }
 
-    /** Fetch full body render from Starlight SkinAPI. */
+    /** Fetch full body render from Starlight SkinAPI (dungeons pose). */
     suspend fun fetchBodyRender(playerName: String): Bitmap? {
         if (playerName == cachedPlayerName && cachedBodyBitmap != null) return cachedBodyBitmap
 
         return withContext(Dispatchers.IO) {
             try {
                 val request = Request.Builder()
-                    .url("https://starlightskins.lunareclipse.studio/render/default/$playerName/full")
+                    .url("https://starlightskins.lunareclipse.studio/render/dungeons/$playerName/full")
                     .build()
                 client.newCall(request).execute().use { response ->
                     if (!response.isSuccessful) return@withContext null
