@@ -54,7 +54,7 @@ jobs:
 
       - name: Generate release tag
         id: tag
-        run: echo "tag=v$(date +'%Y.%m%d.%H%M')" >> "$GITHUB_OUTPUT"
+        run: echo "tag=v$(TZ='America/Chicago' date +'%Y.%m%d.%H%M')" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
