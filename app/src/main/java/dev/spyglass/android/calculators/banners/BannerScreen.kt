@@ -288,8 +288,6 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
             PatternItemsSection()
             LoomPatternsSection()
             DyeColorsSection()
-            AdvancementsSection()
-            StatisticsSection()
         }
 
         Spacer(Modifier.height(8.dp))
@@ -431,100 +429,5 @@ private fun DyeColorsSection() {
             "\u2022 Banners can have up to 6 pattern layers\n\u2022 Pattern items are NOT consumed when used\n\u2022 You can copy a banner by placing it + blank banner in a crafting grid\n\u2022 Banners can be placed on shields at a crafting table",
             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-    }
-}
-
-@Composable
-private fun AdvancementsSection() {
-    SectionHeader("Related Advancements")
-    ResultCard {
-        Text(
-            "Minecraft advancements involving banners or banner-related mechanics.",
-            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
-        )
-    }
-    ResultCard {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text("Voluntary Exile", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-            CategoryBadge(label = "Adventure", color = Emerald)
-        }
-        Spacer(Modifier.height(4.dp))
-        Text(
-            "Kill a raid captain. Maybe consider staying away from villages for the time being...",
-            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        SpyglassDivider()
-        StatRow("Type", "Task")
-        StatRow("Requirement", "Kill a raid captain carrying an Ominous Banner")
-        StatRow("Parent", "Adventure")
-    }
-    ResultCard {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text("Hero of the Village", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-            CategoryBadge(label = "Adventure", color = Emerald)
-        }
-        Spacer(Modifier.height(4.dp))
-        Text(
-            "Successfully defend a village from a raid.",
-            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        SpyglassDivider()
-        StatRow("Type", "Challenge")
-        StatRow("Requirement", "Complete a raid (triggered by Bad Omen from Ominous Banner)")
-        StatRow("Parent", "Voluntary Exile")
-        StatRow("XP Reward", "100")
-    }
-}
-
-@Composable
-private fun StatisticsSection() {
-    SectionHeader("Banner Statistics")
-    ResultCard {
-        Text(
-            "Game data and facts about banners from Minecraft Java Edition.",
-            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
-        )
-        SpyglassDivider()
-        Text("BLOCK PROPERTIES", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-        Spacer(Modifier.height(4.dp))
-        StatRow("Hardness", "1.0")
-        StatRow("Blast Resistance", "1.0")
-        StatRow("Stack Size", "16")
-        StatRow("Tool", "Axe (any)")
-        StatRow("Flammable", "Yes (burns for 15 seconds as fuel)")
-        StatRow("Luminance", "0")
-        SpyglassDivider()
-        Text("PATTERN COUNTS", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-        Spacer(Modifier.height(4.dp))
-        StatRow("Base Colors", "16")
-        StatRow("Loom Patterns", "32 (no item required)")
-        StatRow("Special Patterns", "10 (require banner pattern item)")
-        StatRow("Total Patterns", "42")
-        StatRow("Max Layers", "6 per banner")
-        SpyglassDivider()
-        Text("INTERACTIONS", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-        Spacer(Modifier.height(4.dp))
-        StatRow("Map Marker", "Right-click a banner on a map to mark it")
-        StatRow("Shield", "Combine banner + shield at crafting table")
-        StatRow("Copying", "Banner + blank banner in crafting grid")
-        StatRow("Cleaning", "Use cauldron to remove the top pattern layer")
-        StatRow("Wall Placement", "Can be placed on block sides as wall banners")
-        SpyglassDivider()
-        Text("SPECIAL BANNERS", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-        Spacer(Modifier.height(4.dp))
-        StatRow("Ominous Banner", "Carried by raid captains (6 pre-applied layers)")
-        StatRow("Illager Banner", "Same as Ominous Banner, drops from captains")
-        SpyglassDivider()
-        Text("TRACKED STATISTIC", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-        Spacer(Modifier.height(4.dp))
-        StatRow("clean_banner", "Times banners cleaned in a cauldron")
     }
 }
