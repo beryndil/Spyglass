@@ -70,7 +70,7 @@ fun MapContent(viewModel: ConnectViewModel) {
     var offsetX by remember { mutableFloatStateOf(0f) }
     var offsetY by remember { mutableFloatStateOf(0f) }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         // Dimension switcher + center button
         Row(
             modifier = Modifier
@@ -109,7 +109,8 @@ fun MapContent(viewModel: ConnectViewModel) {
         // Map canvas
         Box(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
+                .height(400.dp)
                 .pointerInput(Unit) {
                     detectTransformGestures { _, pan, zoom, _ ->
                         scale = (scale * zoom).coerceIn(1f, 16f)

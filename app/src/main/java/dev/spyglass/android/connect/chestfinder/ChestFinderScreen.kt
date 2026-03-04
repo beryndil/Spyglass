@@ -2,8 +2,6 @@ package dev.spyglass.android.connect.chestfinder
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -56,7 +54,7 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
     val results by finderState.results.collectAsStateWithLifecycle()
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         // Search bar
         OutlinedTextField(
             value = query,
@@ -83,7 +81,9 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
 
         if (query.isNotBlank() && hits.isEmpty()) {
             Box(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(32.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
@@ -92,16 +92,24 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
                 )
             }
         } else {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                items(hits) { hit ->
+                hits.take(15).forEach { hit ->
                     SearchHitCard(
                         hit = hit,
                         playerX = playerData?.posX ?: 0.0,
                         playerZ = playerData?.posZ ?: 0.0,
+                    )
+                }
+                if (hits.size > 15) {
+                    Text(
+                        "Showing 15 of ${hits.size} results — refine your search",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }

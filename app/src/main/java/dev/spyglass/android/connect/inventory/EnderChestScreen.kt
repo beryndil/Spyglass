@@ -1,8 +1,6 @@
 package dev.spyglass.android.connect.inventory
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
@@ -49,7 +47,7 @@ fun EnderChestContent(playerData: PlayerData?) {
     val player = playerData
 
     if (player == null || player.enderChest.isEmpty()) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
             Text("No ender chest data", color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         return
@@ -57,8 +55,7 @@ fun EnderChestContent(playerData: PlayerData?) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .fillMaxWidth()
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {

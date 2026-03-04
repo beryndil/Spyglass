@@ -1,8 +1,6 @@
 package dev.spyglass.android.connect.inventory
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
@@ -51,7 +49,7 @@ fun InventoryContent(playerData: PlayerData?) {
     val player = playerData
 
     if (player == null) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
             Text("No player data", color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         return
@@ -59,8 +57,7 @@ fun InventoryContent(playerData: PlayerData?) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .fillMaxWidth()
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
