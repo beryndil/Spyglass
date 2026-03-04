@@ -101,7 +101,7 @@ Connect to the **[Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect
 
 Spyglass displays ads via Google AdMob and may collect anonymous analytics and crash reports with your consent. No personal information is ever shared. All game data is stored locally on your device.
 
-[Read our full Privacy Policy](https://dev-vulx.github.io/Spyglass/privacy-policy.html)
+[Read our full Privacy Policy](https://dev-vulx.github.io/Spyglass/privacy-policy/)
 
 ---
 

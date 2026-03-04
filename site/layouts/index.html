@@ -1,0 +1,54 @@
+{{ define "main" }}
+
+<!-- Hero -->
+<section class="hero">
+  <img class="hero-icon" src="{{ "images/spyglass-icon.webp" | relURL }}" alt="Spyglass app icon" width="96" height="96">
+  <h1>Spyglass</h1>
+  <p>{{ .Site.Params.tagline }}. Browse a complete Minecraft Java Edition database — blocks, items, recipes, mobs, biomes, enchantments, potions, structures, and trades. Plus 19 calculators for building and enchanting.</p>
+</section>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stat"><span class="stat-num">{{ .Site.Params.blocks | lang.FormatNumber 0 }}</span><span class="stat-label">Blocks</span></div>
+  <div class="stat"><span class="stat-num">{{ .Site.Params.items | lang.FormatNumber 0 }}</span><span class="stat-label">Items</span></div>
+  <div class="stat"><span class="stat-num">{{ .Site.Params.recipes | lang.FormatNumber 0 }}</span><span class="stat-label">Recipes</span></div>
+  <div class="stat"><span class="stat-num">{{ .Site.Params.mobs }}</span><span class="stat-label">Mobs</span></div>
+  <div class="stat"><span class="stat-num">{{ .Site.Params.trades }}</span><span class="stat-label">Trades</span></div>
+  <div class="stat"><span class="stat-num">{{ .Site.Params.biomes }}</span><span class="stat-label">Biomes</span></div>
+  <div class="stat"><span class="stat-num">{{ .Site.Params.enchantments }}</span><span class="stat-label">Enchantments</span></div>
+  <div class="stat"><span class="stat-num">{{ .Site.Params.potions }}</span><span class="stat-label">Potions</span></div>
+</div>
+
+<!-- Feature Highlights -->
+<section class="section">
+  <h2 class="section-title">Everything You Need</h2>
+  <div class="feature-grid">
+    <div class="card">
+      <h3>Browse</h3>
+      <p>Search and filter across 13 categories with pixel-art textures and deep cross-linking. Tap any item, mob, biome, or structure to explore.</p>
+    </div>
+    <div class="card">
+      <h3>Calculators</h3>
+      <p>19 built-in tools — block fill, smelting fuel, storage conversion, nether coordinates, shape builder, enchant optimizer, and more.</p>
+    </div>
+    <div class="card">
+      <h3>Connect</h3>
+      <p>Pair with the desktop companion to view your inventory, find chests, locate structures, and explore an overhead map — all from your phone.</p>
+    </div>
+    <div class="card">
+      <h3>Offline-First</h3>
+      <p>All game data is bundled with the app and works without internet. Background sync keeps data fresh when you're online.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>Get Spyglass</h2>
+  <p>Free. No account required.</p>
+  <br>
+  <a href="{{ .Site.Params.downloadURL }}" class="btn btn-primary" rel="noopener">Download APK</a>
+  <p class="cta-note">Android 8.0+ &middot; ~30 MB &middot; Free</p>
+</section>
+
+{{ end }}
