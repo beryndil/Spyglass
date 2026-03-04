@@ -19,6 +19,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ConnectViewModel
+import timber.log.Timber
 import dev.spyglass.android.connect.PlayerData
 import dev.spyglass.android.connect.gear.GearAnalysis
 import dev.spyglass.android.connect.gear.SlotAnalysis
@@ -38,6 +39,18 @@ fun CharacterScreen(
     val playerSkin by viewModel.playerSkin.collectAsStateWithLifecycle()
     val playerName by viewModel.playerName.collectAsStateWithLifecycle()
     val gearAnalysis by viewModel.gearAnalysis.collectAsStateWithLifecycle()
+
+    // Always request fresh player data when screen opens
+    LaunchedEffect(Unit) {
+        Timber.d("CharacterScreen: requesting player data (current=${playerData != null})")
+        viewModel.requestPlayerData()
+        // Retry once after delay if data still missing
+        kotlinx.coroutines.delay(3000)
+        if (viewModel.playerData.value == null) {
+            Timber.d("CharacterScreen: retrying player data request")
+            viewModel.requestPlayerData()
+        }
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Top bar
@@ -81,7 +94,15 @@ private fun CharacterContent(
                 .padding(32.dp),
             contentAlignment = Alignment.Center,
         ) {
-            Text("No player data", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    strokeWidth = 2.dp,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+                Spacer(Modifier.height(12.dp))
+                Text("Loading player data...", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
         }
         return
     }
