@@ -18,6 +18,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -183,14 +185,19 @@ private fun CharacterContent(
                     overflow = TextOverflow.Ellipsis,
                 )
 
-                // UUID
+                // UUID (tap to copy)
                 Text("UUID", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                val uuid = playerData.playerUuid ?: "—"
+                val clipboardManager = LocalClipboardManager.current
                 Text(
-                    playerData.playerUuid ?: "—",
+                    uuid,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.clickable {
+                        clipboardManager.setText(AnnotatedString(uuid))
+                    },
                 )
 
                 Spacer(Modifier.weight(1f))
