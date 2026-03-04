@@ -21,6 +21,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ConnectViewModel
+import dev.spyglass.android.connect.OfflineIndicator
+import dev.spyglass.android.connect.client.ConnectionState
 import timber.log.Timber
 import dev.spyglass.android.connect.PlayerData
 import dev.spyglass.android.connect.gear.GearAnalysis
@@ -37,21 +39,26 @@ fun CharacterScreen(
     onBack: () -> Unit,
     onBrowseTarget: (BrowseTarget) -> Unit = {},
 ) {
+    val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
     val playerSkin by viewModel.playerSkin.collectAsStateWithLifecycle()
     val playerBodySkin by viewModel.playerBodySkin.collectAsStateWithLifecycle()
     val playerName by viewModel.playerName.collectAsStateWithLifecycle()
     val gearAnalysis by viewModel.gearAnalysis.collectAsStateWithLifecycle()
+    val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
+    val isConnected = connectionState.isConnected
 
-    // Always request fresh player data when screen opens
-    LaunchedEffect(Unit) {
-        Timber.d("CharacterScreen: requesting player data (current=${playerData != null})")
-        viewModel.requestPlayerData()
-        // Retry once after delay if data still missing
-        kotlinx.coroutines.delay(3000)
-        if (viewModel.playerData.value == null) {
-            Timber.d("CharacterScreen: retrying player data request")
+    // Request fresh player data when screen opens (only if connected)
+    LaunchedEffect(isConnected) {
+        if (isConnected) {
+            Timber.d("CharacterScreen: requesting player data (current=${playerData != null})")
             viewModel.requestPlayerData()
+            // Retry once after delay if data still missing
+            kotlinx.coroutines.delay(3000)
+            if (viewModel.playerData.value == null) {
+                Timber.d("CharacterScreen: retrying player data request")
+                viewModel.requestPlayerData()
+            }
         }
     }
 
@@ -70,12 +77,17 @@ fun CharacterScreen(
             Text("Character", style = MaterialTheme.typography.titleMedium)
         }
 
+        if (!isConnected && lastUpdated != null) {
+            OfflineIndicator(lastUpdated, modifier = Modifier.padding(horizontal = 16.dp))
+        }
+
         CharacterContent(
             playerData = playerData,
             playerSkin = playerSkin,
             playerBodySkin = playerBodySkin,
             playerName = playerName,
             gearAnalysis = gearAnalysis,
+            isOffline = !isConnected,
             onBrowseItem = { itemId -> onBrowseTarget(BrowseTarget(1, itemId)) },
             onBrowseEnchant = { enchantId -> onBrowseTarget(BrowseTarget(7, enchantId)) },
         )
@@ -89,6 +101,7 @@ private fun CharacterContent(
     playerBodySkin: Bitmap?,
     playerName: String?,
     gearAnalysis: GearAnalysis?,
+    isOffline: Boolean = false,
     onBrowseItem: (String) -> Unit,
     onBrowseEnchant: (String) -> Unit,
 ) {
@@ -100,13 +113,17 @@ private fun CharacterContent(
             contentAlignment = Alignment.Center,
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(24.dp),
-                    strokeWidth = 2.dp,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-                Spacer(Modifier.height(12.dp))
-                Text("Loading player data...", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (isOffline) {
+                    Text("No cached player data", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                } else {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        strokeWidth = 2.dp,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                    Spacer(Modifier.height(12.dp))
+                    Text("Loading player data...", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
             }
         }
         return

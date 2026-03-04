@@ -555,6 +555,8 @@ private fun HomeConnectSection(
     SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
     Spacer(Modifier.height(8.dp))
 
+    val hasCachedData = selectedWorld != null
+
     when {
         // ── Disconnected / Error ──
         state is ConnectionState.Disconnected || state is ConnectionState.Error -> {
@@ -563,6 +565,13 @@ private fun HomeConnectSection(
                 onScanQr = onScanQr,
                 onReconnect = { connectViewModel.tryReconnect() },
             )
+            // Show quick links for cached offline data
+            if (hasCachedData) {
+                Spacer(Modifier.height(8.dp))
+                QuickLinkGrid(CONNECT_LINKS.map { it.first }) { index ->
+                    onConnectNav(CONNECT_LINKS[index].second)
+                }
+            }
         }
 
         // ── Connecting / Pairing / Reconnecting ──

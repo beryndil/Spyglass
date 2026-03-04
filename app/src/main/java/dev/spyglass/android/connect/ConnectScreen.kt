@@ -28,6 +28,7 @@ fun ConnectScreen(
     viewModel: ConnectViewModel,
     onScanQr: () -> Unit,
     onBack: () -> Unit,
+    onCharacter: () -> Unit = {},
     onInventory: () -> Unit = {},
     onEnderChest: () -> Unit = {},
     onChestFinder: () -> Unit = {},
@@ -76,8 +77,14 @@ fun ConnectScreen(
                     // Not connected — show pairing controls
                     DisconnectedContent(
                         state = state,
+                        hasCachedData = selectedWorld != null,
                         onScanQr = onScanQr,
                         onReconnect = { viewModel.tryReconnect() },
+                        onCharacter = onCharacter,
+                        onInventory = onInventory,
+                        onEnderChest = onEnderChest,
+                        onChestFinder = onChestFinder,
+                        onMap = onMap,
                     )
                 }
 
@@ -152,8 +159,14 @@ private fun ConnectionStatusCard(state: ConnectionState) {
 @Composable
 private fun DisconnectedContent(
     state: ConnectionState,
+    hasCachedData: Boolean = false,
     onScanQr: () -> Unit,
     onReconnect: () -> Unit,
+    onCharacter: () -> Unit = {},
+    onInventory: () -> Unit = {},
+    onEnderChest: () -> Unit = {},
+    onChestFinder: () -> Unit = {},
+    onMap: () -> Unit = {},
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         // Scan QR button
@@ -177,6 +190,25 @@ private fun DisconnectedContent(
             Icon(Icons.Filled.Refresh, contentDescription = null, modifier = Modifier.size(20.dp))
             Spacer(Modifier.width(8.dp))
             Text("Reconnect to Last Device")
+        }
+
+        // Cached data quick links
+        if (hasCachedData) {
+            SectionHeader("Cached Data (Offline)")
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                ConnectQuickLink("Character", PixelIcons.Mob, Modifier.weight(1f), onClick = onCharacter)
+                ConnectQuickLink("Inventory", PixelIcons.Item, Modifier.weight(1f), onClick = onInventory)
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                ConnectQuickLink("Ender Chest", PixelIcons.Enchant, Modifier.weight(1f), onClick = onEnderChest)
+                ConnectQuickLink("Map", PixelIcons.Biome, Modifier.weight(1f), onClick = onMap)
+            }
         }
 
         // Instructions

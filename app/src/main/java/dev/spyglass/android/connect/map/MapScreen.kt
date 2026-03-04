@@ -23,7 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.MapTile
+import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.StructureLocation
+import dev.spyglass.android.connect.client.ConnectionState
 
 /**
  * Canvas-based overhead map: receives base64 PNG tiles from desktop,
@@ -59,11 +61,20 @@ fun MapContent(viewModel: ConnectViewModel) {
     val mapData by mapState.mapData.collectAsStateWithLifecycle()
     val structures by viewModel.structures.collectAsStateWithLifecycle()
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
+    val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
+    val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
+    val isConnected = connectionState.isConnected
 
-    // Request initial data
-    LaunchedEffect(Unit) {
-        mapState.requestAroundPlayer()
-        viewModel.requestStructures()
+    // Request initial data only when connected
+    LaunchedEffect(isConnected) {
+        if (isConnected) {
+            mapState.requestAroundPlayer()
+            viewModel.requestStructures()
+        }
+    }
+
+    if (!isConnected && lastUpdated != null) {
+        OfflineIndicator(lastUpdated, modifier = Modifier.padding(horizontal = 16.dp))
     }
 
     var scale by remember { mutableFloatStateOf(4f) }
@@ -90,18 +101,22 @@ fun MapContent(viewModel: ConnectViewModel) {
                 }
                 FilterChip(
                     selected = selected,
-                    onClick = { mapState.switchDimension(dim) },
+                    onClick = { if (isConnected) mapState.switchDimension(dim) },
+                    enabled = isConnected,
                     label = { Text(label, style = MaterialTheme.typography.labelSmall) },
                     modifier = Modifier.padding(horizontal = 2.dp),
                 )
             }
 
-            IconButton(onClick = {
-                offsetX = 0f
-                offsetY = 0f
-                scale = 4f
-                mapState.requestAroundPlayer()
-            }) {
+            IconButton(
+                onClick = {
+                    offsetX = 0f
+                    offsetY = 0f
+                    scale = 4f
+                    if (isConnected) mapState.requestAroundPlayer()
+                },
+                enabled = isConnected,
+            ) {
                 Icon(Icons.Filled.MyLocation, contentDescription = "Center on player")
             }
         }

@@ -68,9 +68,25 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private val _gearAnalysis = MutableStateFlow<GearAnalysis?>(null)
     val gearAnalysis: StateFlow<GearAnalysis?> = _gearAnalysis
 
+    private val _lastUpdated = MutableStateFlow<Long?>(null)
+    val lastUpdated: StateFlow<Long?> = _lastUpdated
+
     private val repo by lazy { GameDataRepository.get(getApplication()) }
 
     init {
+        // Load cached data on startup
+        viewModelScope.launch(Dispatchers.IO) {
+            val meta = ConnectCache.loadMeta(getApplication())
+            if (meta != null) {
+                _worlds.value = meta.worlds
+                _selectedWorld.value = meta.selectedWorld
+                val world = meta.selectedWorld
+                if (world != null) {
+                    loadCachedWorldData(world)
+                }
+            }
+        }
+
         // Listen for incoming messages
         viewModelScope.launch {
             client.messages.collect { message ->
@@ -110,6 +126,12 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     if (name != null) {
                         _playerBodySkin.value = SkinManager.fetchBodyRender(name)
                     }
+                    // Cache skins after fetching
+                    val world = _selectedWorld.value
+                    if (world != null) {
+                        _playerSkin.value?.let { ConnectCache.saveSkinAvatar(getApplication(), world, it) }
+                        _playerBodySkin.value?.let { ConnectCache.saveSkinBody(getApplication(), world, it) }
+                    }
                 } else {
                     _playerSkin.value = null
                     _playerBodySkin.value = null
@@ -147,6 +169,17 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 }
             }
         }
+    }
+
+    /** Load cached data for a world into StateFlows. */
+    private suspend fun loadCachedWorldData(worldFolder: String) {
+        val ctx = getApplication<Application>()
+        ConnectCache.loadPlayerData(ctx, worldFolder)?.let { _playerData.value = it }
+        ConnectCache.loadStructures(ctx, worldFolder)?.let { _structures.value = it }
+        ConnectCache.loadMapData(ctx, worldFolder)?.let { _mapTiles.value = it }
+        ConnectCache.loadSkinAvatar(ctx, worldFolder)?.let { _playerSkin.value = it }
+        ConnectCache.loadSkinBody(ctx, worldFolder)?.let { _playerBodySkin.value = it }
+        ConnectCache.loadLastUpdated(ctx, worldFolder)?.let { _lastUpdated.value = it }
     }
 
     /** Connect via QR pairing data. */
@@ -266,8 +299,19 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     /** Select a world on the desktop. */
     fun selectWorld(folderName: String) {
         _selectedWorld.value = folderName
-        val payload = json.encodeToJsonElement(SelectWorldPayload(folderName))
-        client.sendRequest(MessageType.SELECT_WORLD, payload)
+        // Save meta with new selection
+        viewModelScope.launch(Dispatchers.IO) {
+            ConnectCache.saveMeta(
+                getApplication(),
+                ConnectCache.CacheMeta(selectedWorld = folderName, worlds = _worlds.value),
+            )
+            // Load cached data for newly selected world (shows instantly while fresh data loads)
+            loadCachedWorldData(folderName)
+        }
+        if (connectionState.value.isConnected) {
+            val payload = json.encodeToJsonElement(SelectWorldPayload(folderName))
+            client.sendRequest(MessageType.SELECT_WORLD, payload)
+        }
     }
 
     /** Request player data for the selected world. */
@@ -311,6 +355,20 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         ConnectService.stop(getApplication())
         mdnsDiscovery?.stopDiscovery()
         client.disconnect()
+        // Only clear transient data — keep cached data in StateFlows for offline viewing
+        SkinManager.clear()
+        _searchResults.value = null
+    }
+
+    /** Unpair (disconnect + clear stored device + clear cache). */
+    fun unpair() {
+        CrashReporter.log("User unpair")
+        wasConnected = false
+        reconnectJob?.cancel()
+        ConnectService.stop(getApplication())
+        mdnsDiscovery?.stopDiscovery()
+        client.disconnect()
+        // Clear all StateFlows
         _worlds.value = emptyList()
         _playerData.value = null
         _playerSkin.value = null
@@ -322,13 +380,10 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         _structures.value = emptyList()
         _mapTiles.value = null
         _selectedWorld.value = null
-    }
-
-    /** Unpair (disconnect + clear stored device). */
-    fun unpair() {
-        disconnect()
+        _lastUpdated.value = null
         viewModelScope.launch {
             PairingStore.clear(getApplication())
+            ConnectCache.deleteAll(getApplication())
         }
     }
 
@@ -341,10 +396,28 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     val payload = json.decodeFromJsonElement(WorldListPayload.serializer(), message.payload)
                     Timber.d("World list: ${payload.worlds.size} worlds")
                     _worlds.value = payload.worlds
+                    // Cache meta
+                    viewModelScope.launch(Dispatchers.IO) {
+                        ConnectCache.saveMeta(
+                            getApplication(),
+                            ConnectCache.CacheMeta(selectedWorld = _selectedWorld.value, worlds = payload.worlds),
+                        )
+                    }
                 }
                 MessageType.PLAYER_DATA -> {
                     val payload = json.decodeFromJsonElement(PlayerData.serializer(), message.payload)
+                    val changed = _playerData.value != payload
                     _playerData.value = payload
+                    // Cache only if data changed
+                    if (changed) {
+                        val world = _selectedWorld.value
+                        if (world != null) {
+                            viewModelScope.launch(Dispatchers.IO) {
+                                ConnectCache.savePlayerData(getApplication(), world, payload)
+                                _lastUpdated.value = System.currentTimeMillis()
+                            }
+                        }
+                    }
                 }
                 MessageType.SEARCH_RESULTS -> {
                     val payload = json.decodeFromJsonElement(SearchResultsPayload.serializer(), message.payload)
@@ -352,11 +425,29 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 }
                 MessageType.STRUCTURE_LOCATIONS -> {
                     val payload = json.decodeFromJsonElement(StructureLocationsPayload.serializer(), message.payload)
+                    val changed = _structures.value != payload.structures
                     _structures.value = payload.structures
+                    if (changed) {
+                        val world = _selectedWorld.value
+                        if (world != null) {
+                            viewModelScope.launch(Dispatchers.IO) {
+                                ConnectCache.saveStructures(getApplication(), world, payload.structures)
+                            }
+                        }
+                    }
                 }
                 MessageType.MAP_RENDER -> {
                     val payload = json.decodeFromJsonElement(MapRenderPayload.serializer(), message.payload)
+                    val changed = _mapTiles.value != payload
                     _mapTiles.value = payload
+                    if (changed) {
+                        val world = _selectedWorld.value
+                        if (world != null) {
+                            viewModelScope.launch(Dispatchers.IO) {
+                                ConnectCache.saveMapData(getApplication(), world, payload)
+                            }
+                        }
+                    }
                 }
                 MessageType.WORLD_CHANGED -> {
                     // Re-request data for the selected world

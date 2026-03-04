@@ -11,7 +11,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.ItemStack
+import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.PlayerData
+import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.core.ui.SectionHeader
 
 /**
@@ -23,7 +25,10 @@ fun InventoryScreen(
     viewModel: ConnectViewModel,
     onBack: () -> Unit,
 ) {
+    val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
+    val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
+    val isConnected = connectionState.isConnected
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Top bar
@@ -40,17 +45,25 @@ fun InventoryScreen(
             Text("Inventory", style = MaterialTheme.typography.titleMedium)
         }
 
-        InventoryContent(playerData = playerData)
+        if (!isConnected && lastUpdated != null) {
+            OfflineIndicator(lastUpdated, modifier = Modifier.padding(horizontal = 16.dp))
+            Spacer(Modifier.height(8.dp))
+        }
+
+        InventoryContent(playerData = playerData, isOffline = !isConnected)
     }
 }
 
 @Composable
-fun InventoryContent(playerData: PlayerData?) {
+fun InventoryContent(playerData: PlayerData?, isOffline: Boolean = false) {
     val player = playerData
 
     if (player == null) {
         Box(modifier = Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
-            Text("No player data", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(
+                if (isOffline) "No cached inventory data" else "No player data",
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
         return
     }
