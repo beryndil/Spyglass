@@ -120,8 +120,8 @@ a:hover { text-decoration: underline; }
   padding: 4rem 1rem 3rem;
 }
 .hero-icon {
-  width: 96px;
-  height: 96px;
+  width: 192px;
+  height: 192px;
   margin: 0 auto 1.5rem;
 }
 .hero h1 {
