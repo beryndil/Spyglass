@@ -22,6 +22,7 @@ object SkinManager {
 
     private var cachedUuid: String? = null
     private var cachedBitmap: Bitmap? = null
+    private var cachedBodyBitmap: Bitmap? = null
     private var cachedPlayerName: String? = null
 
     suspend fun fetchSkin(uuid: String): Bitmap? {
@@ -45,6 +46,31 @@ object SkinManager {
                 }
             } catch (e: Exception) {
                 Timber.d(e, "Failed to fetch skin for $uuid")
+                null
+            }
+        }
+    }
+
+    /** Fetch full body render from Crafatar. */
+    suspend fun fetchBodyRender(uuid: String): Bitmap? {
+        if (uuid == cachedUuid && cachedBodyBitmap != null) return cachedBodyBitmap
+
+        return withContext(Dispatchers.IO) {
+            try {
+                val request = Request.Builder()
+                    .url("https://crafatar.com/renders/body/$uuid?size=128&overlay")
+                    .build()
+                client.newCall(request).execute().use { response ->
+                    if (!response.isSuccessful) return@withContext null
+                    val bytes = response.body?.bytes() ?: return@withContext null
+                    val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                    if (bitmap != null) {
+                        cachedBodyBitmap = bitmap
+                    }
+                    bitmap
+                }
+            } catch (e: Exception) {
+                Timber.d(e, "Failed to fetch body render for $uuid")
                 null
             }
         }
@@ -80,6 +106,7 @@ object SkinManager {
     fun clear() {
         cachedUuid = null
         cachedBitmap = null
+        cachedBodyBitmap = null
         cachedPlayerName = null
     }
 }

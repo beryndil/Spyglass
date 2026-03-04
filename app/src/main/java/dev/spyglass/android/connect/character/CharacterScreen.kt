@@ -37,6 +37,7 @@ fun CharacterScreen(
 ) {
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
     val playerSkin by viewModel.playerSkin.collectAsStateWithLifecycle()
+    val playerBodySkin by viewModel.playerBodySkin.collectAsStateWithLifecycle()
     val playerName by viewModel.playerName.collectAsStateWithLifecycle()
     val gearAnalysis by viewModel.gearAnalysis.collectAsStateWithLifecycle()
 
@@ -70,6 +71,7 @@ fun CharacterScreen(
         CharacterContent(
             playerData = playerData,
             playerSkin = playerSkin,
+            playerBodySkin = playerBodySkin,
             playerName = playerName,
             gearAnalysis = gearAnalysis,
             onBrowseItem = { itemId -> onBrowseTarget(BrowseTarget(1, itemId)) },
@@ -82,6 +84,7 @@ fun CharacterScreen(
 private fun CharacterContent(
     playerData: PlayerData?,
     playerSkin: Bitmap?,
+    playerBodySkin: Bitmap?,
     playerName: String?,
     gearAnalysis: GearAnalysis?,
     onBrowseItem: (String) -> Unit,
@@ -111,24 +114,39 @@ private fun CharacterContent(
         modifier = Modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        // ── Player header ──
+        // ── IGN + UUID ──
+        Text("IGN", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+        Text(
+            playerName ?: "Unknown Player",
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+        Text("UUID", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+        Text(
+            playerData.playerUuid ?: "—",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+
+        // ── Skin + Armor row ──
         Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            // Body render
             Box(
                 modifier = Modifier
-                    .size(64.dp)
-                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp)),
+                    .height(128.dp)
+                    .widthIn(min = 64.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(if (playerBodySkin == null) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent),
                 contentAlignment = Alignment.Center,
             ) {
-                if (playerSkin != null) {
+                if (playerBodySkin != null) {
                     Image(
-                        bitmap = playerSkin.asImageBitmap(),
-                        contentDescription = "Player skin",
-                        modifier = Modifier
-                            .size(56.dp)
-                            .clip(RoundedCornerShape(4.dp)),
+                        bitmap = playerBodySkin.asImageBitmap(),
+                        contentDescription = "Player body",
+                        modifier = Modifier.height(128.dp),
                         contentScale = ContentScale.Fit,
                     )
                 } else {
@@ -141,24 +159,53 @@ private fun CharacterContent(
                 }
             }
 
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    playerName ?: "Unknown Player",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    playerData.dimension.replace("_", " ").replaceFirstChar { it.uppercase() },
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-                Text(
-                    "${playerData.posX.toInt()}, ${playerData.posY.toInt()}, ${playerData.posZ.toInt()}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+            // Armor boxes
+            val armorSlotTypes = listOf(SlotType.HEAD, SlotType.CHEST, SlotType.LEGS, SlotType.FEET)
+            val armorSlotLabels = mapOf(
+                SlotType.HEAD to "Head",
+                SlotType.CHEST to "Chest",
+                SlotType.LEGS to "Legs",
+                SlotType.FEET to "Feet",
+            )
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                armorSlotTypes.forEach { slotType ->
+                    val slotAnalysis = gearAnalysis?.slots?.find { it.slotType == slotType }
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp)
+                            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(6.dp)),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        val itemId = slotAnalysis?.item?.id
+                        if (itemId != null) {
+                            val tex = ItemTextures.get(itemId)
+                            if (tex != null) {
+                                SpyglassIconImage(tex, contentDescription = armorSlotLabels[slotType], modifier = Modifier.size(32.dp))
+                            } else {
+                                Text(
+                                    armorSlotLabels[slotType] ?: "",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
+                        } else {
+                            Text(
+                                armorSlotLabels[slotType] ?: "",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                }
             }
         }
+
+        // ── Dimension + coords ──
+        Text(
+            "${playerData.dimension.replace("_", " ").replaceFirstChar { it.uppercase() }} · ${playerData.posX.toInt()}, ${playerData.posY.toInt()}, ${playerData.posZ.toInt()}",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
 
         // ── Stat cards ──
         ResultCard {

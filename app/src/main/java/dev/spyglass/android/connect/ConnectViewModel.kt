@@ -59,6 +59,9 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private val _playerSkin = MutableStateFlow<Bitmap?>(null)
     val playerSkin: StateFlow<Bitmap?> = _playerSkin
 
+    private val _playerBodySkin = MutableStateFlow<Bitmap?>(null)
+    val playerBodySkin: StateFlow<Bitmap?> = _playerBodySkin
+
     private val _playerName = MutableStateFlow<String?>(null)
     val playerName: StateFlow<String?> = _playerName
 
@@ -98,12 +101,14 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 if (uuid != null) {
                     _playerName.value = data.playerName
                     _playerSkin.value = SkinManager.fetchSkin(uuid)
+                    _playerBodySkin.value = SkinManager.fetchBodyRender(uuid)
                     // Fall back to Mojang API if desktop didn't provide name
                     if (_playerName.value == null) {
                         _playerName.value = SkinManager.fetchPlayerName(uuid)
                     }
                 } else {
                     _playerSkin.value = null
+                    _playerBodySkin.value = null
                     _playerName.value = data?.playerName
                 }
             }
@@ -305,6 +310,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         _worlds.value = emptyList()
         _playerData.value = null
         _playerSkin.value = null
+        _playerBodySkin.value = null
         _playerName.value = null
         _gearAnalysis.value = null
         SkinManager.clear()
