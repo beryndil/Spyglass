@@ -1,6 +1,8 @@
 package dev.spyglass.android.connect
 
 import android.Manifest
+import android.os.Handler
+import android.os.Looper
 import android.util.Base64
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,6 +32,7 @@ import com.google.zxing.common.HybridBinarizer
 import kotlinx.serialization.json.Json
 import timber.log.Timber
 import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * QR scanner screen using CameraX + ZXing for barcode decoding.
@@ -42,6 +45,8 @@ fun QrScannerScreen(
 ) {
     var hasCameraPermission by remember { mutableStateOf(false) }
     var scanError by remember { mutableStateOf<String?>(null) }
+    val context = LocalContext.current
+    val mainHandler = remember { Handler(Looper.getMainLooper()) }
 
     val permissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(),
@@ -51,6 +56,18 @@ fun QrScannerScreen(
 
     LaunchedEffect(Unit) {
         permissionLauncher.launch(Manifest.permission.CAMERA)
+    }
+
+    // Unbind camera when leaving this screen
+    DisposableEffect(Unit) {
+        onDispose {
+            try {
+                val cameraProvider = ProcessCameraProvider.getInstance(context).get()
+                cameraProvider.unbindAll()
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to unbind camera on dispose")
+            }
+        }
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -79,6 +96,7 @@ fun QrScannerScreen(
             ) {
                 CameraPreviewWithAnalysis(
                     onQrDecoded = { data ->
+                        // Already on main thread via mainHandler post in analyzer
                         try {
                             // Try raw JSON first, then Base64-wrapped JSON
                             val jsonStr = if (data.trimStart().startsWith("{")) {
@@ -160,7 +178,8 @@ fun QrScannerScreen(
 private fun CameraPreviewWithAnalysis(onQrDecoded: (String) -> Unit) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
-    var decoded by remember { mutableStateOf(false) }
+    val decoded = remember { AtomicBoolean(false) }
+    val mainHandler = remember { Handler(Looper.getMainLooper()) }
 
     AndroidView(
         factory = { ctx ->
@@ -180,7 +199,7 @@ private fun CameraPreviewWithAnalysis(onQrDecoded: (String) -> Unit) {
                     .also { analysis ->
                         val executor = Executors.newSingleThreadExecutor()
                         analysis.setAnalyzer(executor) { imageProxy ->
-                            if (decoded) {
+                            if (decoded.get()) {
                                 imageProxy.close()
                                 return@setAnalyzer
                             }
@@ -205,8 +224,12 @@ private fun CameraPreviewWithAnalysis(onQrDecoded: (String) -> Unit) {
                                     setHints(mapOf(DecodeHintType.POSSIBLE_FORMATS to listOf(BarcodeFormat.QR_CODE)))
                                 }.decode(binaryBitmap)
 
-                                decoded = true
-                                onQrDecoded(result.text)
+                                if (decoded.compareAndSet(false, true)) {
+                                    // Post to main thread for Compose state and navigation
+                                    mainHandler.post {
+                                        onQrDecoded(result.text)
+                                    }
+                                }
                             } catch (_: NotFoundException) {
                                 // No QR code found in this frame
                             } catch (e: Exception) {

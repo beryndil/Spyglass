@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <base-config cleartextTrafficPermitted="false">
+    <!-- Spyglass Connect uses cleartext WebSocket (ws://) on local WiFi.
+         All messages are encrypted at the app level with AES-256-GCM,
+         so transport-level TLS is not required for LAN communication. -->
+    <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
             <certificates src="system" />
         </trust-anchors>
     </base-config>
-
-    <!-- Spyglass Connect: allow cleartext WebSocket on private LAN IPs
-         (app-level encryption via AES-256-GCM is applied on top) -->
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">10.0.0.0</domain>
-        <domain includeSubdomains="true">172.16.0.0</domain>
-        <domain includeSubdomains="true">192.168.0.0</domain>
-    </domain-config>
 </network-security-config>

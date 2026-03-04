@@ -197,9 +197,15 @@ fun AppNavGraph() {
                 QrScannerScreen(
                     onPairingDataScanned = { pairingData ->
                         connectViewModel.connectFromQr(pairingData)
-                        navController.popBackStack()
+                        if (navController.currentDestination?.route == "connect_scan") {
+                            navController.popBackStack()
+                        }
                     },
-                    onBack = { navController.popBackStack() },
+                    onBack = {
+                        if (navController.currentDestination?.route == "connect_scan") {
+                            navController.popBackStack()
+                        }
+                    },
                 )
             }
             composable("connect_inventory") {
