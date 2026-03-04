@@ -1,7 +1,28 @@
 ---
 title: "Features"
-description: "Explore everything Spyglass offers — 13 browse categories, 19 calculators, global search, 15 themes, offline-first data, and automatic sync."
+description: "Explore everything Spyglass offers — Spyglass Connect, 13 browse categories, 19 calculators, global search, 15 themes, offline-first data, and automatic sync."
 subtitle: "Everything in Spyglass, at a glance."
+---
+
+> **Alpha Software** — Spyglass and Spyglass Connect are in active development. Expect bugs, missing features, and rough edges.
+
+## Spyglass Connect
+
+Pair your phone with the [Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect) desktop companion to access your Minecraft world data over local WiFi. No cloud servers, no accounts — everything stays on your network.
+
+| Feature | Description |
+|---------|-------------|
+| **QR Pairing** | Scan a QR code to connect — auto-reconnects whenever you're on the same WiFi |
+| **Character Viewer** | See your full equipment — armor, weapons, tools, and enchantments |
+| **Inventory Viewer** | Browse your complete inventory, armor, offhand, and ender chest |
+| **Chest Finder** | Search for any item across all containers — chests, barrels, shulker boxes, hoppers |
+| **Structure Locator** | Find villages, temples, monuments, strongholds, and more with coordinates and distance |
+| **Overhead Map** | Interactive terrain map with structure markers and player position |
+
+Fully encrypted (ECDH + AES-256-GCM). Auto-reconnects via mDNS.
+
+[Learn more about Connect](/connect/)
+
 ---
 
 ## Browse

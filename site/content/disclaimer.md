@@ -4,6 +4,8 @@ description: "Spyglass is not affiliated with Mojang Studios or Microsoft. Minec
 subtitle: "Legal notices and attributions."
 ---
 
+> **Alpha Software** — Spyglass and Spyglass Connect are in active development. Expect bugs, missing features, and rough edges.
+
 ## Not Affiliated with Mojang
 
 **Spyglass is not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft.** Minecraft is a trademark of Mojang Studios. All game data, names, and images are used for informational and reference purposes only.

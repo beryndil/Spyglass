@@ -1,12 +1,37 @@
 # Spyglass
 
-**Your Minecraft companion for crafting, building, and exploring.**
+**Your Minecraft world, on your phone.**
 
-Spyglass is an Android reference app for Minecraft Java Edition 1.21.4. Browse a complete database of blocks, items, recipes, mobs, biomes, enchantments, potions, structures, and villager trades — plus specialized calculators for building and enchanting. All game data is bundled with the app and works offline.
+> **Alpha Software** — Spyglass and Spyglass Connect are in active development. Expect bugs, missing features, and rough edges.
+
+Spyglass is an Android companion app for Minecraft Java Edition 1.21.4. Pair it with [Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect) on your desktop to view your inventory, find items in any chest, locate structures, and explore an overhead map — all streamed over local WiFi with end-to-end encryption.
+
+Beyond Connect, Spyglass includes a complete offline database of blocks, items, recipes, mobs, biomes, enchantments, potions, structures, and trades — plus 19 calculators for building and enchanting.
+
+**[Visit the Website](https://dev-vulx.github.io/Spyglass/)**
 
 ## Disclaimer
 
 **Spyglass is not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft.** Minecraft is a trademark of Mojang Studios. All game data is used for informational purposes only.
+
+---
+
+## Spyglass Connect
+
+Connect to the **[Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect)** desktop companion app to access your Minecraft world data from your phone over local WiFi. No cloud servers, no accounts — everything stays on your network.
+
+| Feature | Description |
+|---------|-------------|
+| **QR Pairing** | Scan a QR code to connect — auto-reconnects whenever you're on the same WiFi |
+| **Character Viewer** | See your full equipment — armor, weapons, tools, and enchantments |
+| **Inventory Viewer** | Browse your complete inventory, armor, offhand, and ender chest |
+| **Chest Finder** | Search for any item across all containers in the world — chests, barrels, shulker boxes, hoppers |
+| **Structure Locator** | Find villages, temples, monuments, strongholds, and more with coordinates and distance |
+| **Overhead Map** | Interactive terrain map with structure markers and player position |
+
+Fully encrypted (ECDH + AES-256-GCM). Auto-reconnects via mDNS.
+
+**Requires:** [Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect) running on your PC (Windows, macOS, or Linux), same WiFi network.
 
 ---
 
@@ -22,25 +47,27 @@ Spyglass is an Android reference app for Minecraft Java Edition 1.21.4. Browse a
 
 ---
 
-## Features
+## Browse
 
-### Browse
-
-Search and filter across 9 categories with pixel-art textures and deep cross-linking — tap any item, mob, biome, or structure to jump to its detail page.
+Search and filter across 13 categories with pixel-art textures and deep cross-linking — tap any item, mob, biome, or structure to jump to its detail page.
 
 | Category | Count | Highlights |
 |----------|-------|------------|
-| Blocks | 1,167 | Hardness, required tool, drops, flammability |
-| Items | 502 | Durability, how to obtain, crafting recipes, ingredient chain calculator |
-| Recipes | 1,240 | Shaped, shapeless, smelting, smithing — with visual crafting grids |
-| Mobs | 81 | Health, XP, drops, spawn biomes and structures |
-| Trades | 231 | All 13 villager professions + wandering trader, levels 1-5 |
-| Biomes | 65 | Temperature, precipitation, resources, structures, mobs |
+| Blocks | 1,167 | Hardness, blast resistance, required tool & tier, drops, flammability |
+| Items | 502 | Durability, stack size, how to obtain, crafting recipes, renewable flag |
+| Recipes | 1,291 | Shaped, shapeless, smelting, blasting, smoking, campfire, stonecutting, loom |
+| Mobs | 81 | Health, attack damage, XP, spawn biomes, structured loot tables |
+| Trades | 231 | All 13 villager professions + wandering trader, levels 1–5 |
+| Biomes | 65 | Temperature, precipitation, structures, mobs, building palette |
 | Structures | 25 | How to find, loot tables, unique blocks, mobs |
 | Enchantments | 43 | Max level, rarity, incompatibilities, treasure/curse flags |
-| Potions | 46 | Effects, duration, step-by-step brewing paths |
+| Potions | 130 | Base, splash, and lingering — effects, duration, brewing paths |
+| Commands | 85 | Full Java Edition command reference with syntax and usage |
+| Advancements | 125 | All 5 tabs — requirements, rewards, parent chains |
 
-### Calculators
+## Calculators
+
+19 built-in tools for building and planning.
 
 | Calculator | What it does |
 |------------|-------------|
@@ -48,26 +75,13 @@ Search and filter across 9 categories with pixel-art textures and deep cross-lin
 | **Smelting** | Fuel requirements with efficiency ratings for every fuel type |
 | **Storage** | Convert quantities to stacks, chests, shulker boxes, and compressed blocks |
 | **Nether Tools** | Coordinate converter (1:8 ratio), obsidian calculator, portal tracker |
-| **Shapes** | Layer-by-layer visualization for spheres, cylinders, cones, and tori |
+| **Shapes** | Layer-by-layer visualization for spheres, cylinders, cones, pyramids, and tori |
 | **Enchanting** | Optimal anvil combining order to minimize XP cost |
+| And 13 more... | Cauldron, composting, crop growth, durability, experience, firework, hopper, light level, map scale, note block, potion brewing, redstone signal |
 
-### Global Search
+## Global Search
 
-Real-time search across all 9 categories simultaneously. Tap any result to jump directly to its detail page.
-
-### Spyglass Connect
-
-Connect to the **[Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect)** desktop companion app to access your Minecraft world data from your phone over local WiFi.
-
-| Feature | Description |
-|---------|-------------|
-| **QR Pairing** | Scan a QR code to connect — auto-reconnects after that |
-| **Inventory Viewer** | See your full inventory, armor, offhand, and ender chest |
-| **Chest Finder** | Search for any item across all containers in the world |
-| **Structure Locator** | Find villages, temples, monuments, and more |
-| **Overhead Map** | Terrain map with structure markers and player position |
-
-**Requires:** [Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect) running on your PC, same WiFi network.
+Real-time search across all categories simultaneously. Tap any result to jump directly to its detail page.
 
 ---
 
