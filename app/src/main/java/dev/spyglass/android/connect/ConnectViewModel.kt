@@ -75,21 +75,9 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             }
         }
 
-        // Fetch player skin + name when UUID is available, compute gear analysis
+        // Compute gear analysis immediately when player data arrives
         viewModelScope.launch {
             _playerData.collectLatest { data ->
-                val uuid = data?.playerUuid
-                if (uuid != null) {
-                    _playerSkin.value = SkinManager.fetchSkin(uuid)
-                    // Prefer desktop-provided name, fall back to Mojang API
-                    _playerName.value = data.playerName
-                        ?: SkinManager.fetchPlayerName(uuid)
-                } else {
-                    _playerSkin.value = null
-                    _playerName.value = data?.playerName
-                }
-
-                // Compute gear analysis
                 if (data != null) {
                     try {
                         _gearAnalysis.value = GearAnalyzer.analyze(data, repo)
@@ -99,6 +87,24 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     }
                 } else {
                     _gearAnalysis.value = null
+                }
+            }
+        }
+
+        // Fetch player skin + name when UUID is available (separate coroutine — doesn't block gear analysis)
+        viewModelScope.launch {
+            _playerData.collectLatest { data ->
+                val uuid = data?.playerUuid
+                if (uuid != null) {
+                    _playerName.value = data.playerName
+                    _playerSkin.value = SkinManager.fetchSkin(uuid)
+                    // Fall back to Mojang API if desktop didn't provide name
+                    if (_playerName.value == null) {
+                        _playerName.value = SkinManager.fetchPlayerName(uuid)
+                    }
+                } else {
+                    _playerSkin.value = null
+                    _playerName.value = data?.playerName
                 }
             }
         }

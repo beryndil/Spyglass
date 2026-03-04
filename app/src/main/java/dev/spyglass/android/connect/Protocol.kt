@@ -51,6 +51,8 @@ data class WorldInfo(
     val lastPlayed: Long = 0,
     val seed: Long = 0,
     val dataVersion: Int = 0,
+    val isModded: Boolean = false,
+    val modLoader: String? = null,
 )
 
 @Serializable
