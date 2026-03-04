@@ -76,9 +76,14 @@ fun AppNavGraph() {
     val showBars = currentRoute !in SUB_ROUTES
 
     fun navigateTo(route: String) {
-        navController.navigate(route) {
-            popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-            launchSingleTop = true
+        try {
+            navController.navigate(route) {
+                popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                launchSingleTop = true
+                restoreState = true
+            }
+        } catch (_: IllegalStateException) {
+            // Back stack entry may not exist yet during rapid navigation — safe to ignore
         }
     }
 
