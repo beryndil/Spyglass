@@ -324,10 +324,12 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Handle an incoming message from the desktop. */
     private fun handleMessage(message: SpyglassMessage) {
+        Timber.d("Received ${message.type}")
         try {
             when (message.type) {
                 MessageType.WORLD_LIST -> {
                     val payload = json.decodeFromJsonElement(WorldListPayload.serializer(), message.payload)
+                    Timber.d("World list: ${payload.worlds.size} worlds")
                     _worlds.value = payload.worlds
                 }
                 MessageType.PLAYER_DATA -> {

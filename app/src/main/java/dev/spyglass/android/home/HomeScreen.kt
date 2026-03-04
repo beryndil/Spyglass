@@ -4,8 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -35,22 +33,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import android.graphics.Bitmap
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import dev.spyglass.android.connect.*
 import dev.spyglass.android.connect.client.ConnectionState
-import dev.spyglass.android.connect.gear.GearAnalysis
-import dev.spyglass.android.connect.gear.SlotAnalysis
-import dev.spyglass.android.connect.gear.SlotType
-import dev.spyglass.android.connect.gear.EnchantInfo
-import dev.spyglass.android.connect.chestfinder.ChestFinderContent
-import dev.spyglass.android.connect.inventory.EnderChestContent
-import dev.spyglass.android.connect.inventory.InventoryContent
-import dev.spyglass.android.connect.map.MapContent
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import timber.log.Timber
@@ -160,6 +145,7 @@ fun HomeScreen(
     onSearch: () -> Unit,
     connectViewModel: ConnectViewModel? = null,
     onScanQr: () -> Unit = {},
+    onConnectNav: (String) -> Unit = {},
 ) {
     val onBrowseTab: (Int) -> Unit = { tab -> onBrowseTarget(dev.spyglass.android.navigation.BrowseTarget(tab, "")) }
     val context = LocalContext.current
@@ -219,6 +205,7 @@ fun HomeScreen(
                     connectViewModel = connectViewModel,
                     onScanQr = onScanQr,
                     onBrowseTarget = onBrowseTarget,
+                    onConnectNav = onConnectNav,
                 )
             }
         }
@@ -546,19 +533,24 @@ private fun HomeTodoRow(todo: TodoEntity, onToggle: () -> Unit) {
 
 // ── Spyglass Connect hub ─────────────────────────────────────────────────────
 
+private val CONNECT_LINKS = listOf(
+    QuickLink(PixelIcons.Mob,     "Character")    to "connect_character",
+    QuickLink(PixelIcons.Item,    "Inventory")     to "connect_inventory",
+    QuickLink(PixelIcons.Enchant, "Ender Chest")   to "connect_enderchest",
+    QuickLink(PixelIcons.Search,  "Chest Finder")  to "connect_chestfinder",
+    QuickLink(PixelIcons.Biome,   "World Map")     to "connect_map",
+)
+
 @Composable
 private fun HomeConnectSection(
     connectViewModel: ConnectViewModel,
     onScanQr: () -> Unit,
     onBrowseTarget: (dev.spyglass.android.navigation.BrowseTarget) -> Unit = {},
+    onConnectNav: (String) -> Unit = {},
 ) {
     val state by connectViewModel.connectionState.collectAsStateWithLifecycle()
     val worlds by connectViewModel.worlds.collectAsStateWithLifecycle()
-    val playerData by connectViewModel.playerData.collectAsStateWithLifecycle()
     val selectedWorld by connectViewModel.selectedWorld.collectAsStateWithLifecycle()
-    val playerSkin by connectViewModel.playerSkin.collectAsStateWithLifecycle()
-    val playerName by connectViewModel.playerName.collectAsStateWithLifecycle()
-    val gearAnalysis by connectViewModel.gearAnalysis.collectAsStateWithLifecycle()
 
     SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
     Spacer(Modifier.height(8.dp))
@@ -623,19 +615,9 @@ private fun HomeConnectSection(
                 onDisconnect = { connectViewModel.disconnect() },
             )
             Spacer(Modifier.height(8.dp))
-            ConnectTabHub(
-                viewModel = connectViewModel,
-                playerData = playerData,
-                playerSkin = playerSkin,
-                playerName = playerName,
-                gearAnalysis = gearAnalysis,
-                onBrowseItem = { itemId ->
-                    onBrowseTarget(dev.spyglass.android.navigation.BrowseTarget(1, itemId))
-                },
-                onBrowseEnchant = { enchantId ->
-                    onBrowseTarget(dev.spyglass.android.navigation.BrowseTarget(7, enchantId))
-                },
-            )
+            QuickLinkGrid(CONNECT_LINKS.map { it.first }) { index ->
+                onConnectNav(CONNECT_LINKS[index].second)
+            }
         }
     }
 }
@@ -751,17 +733,27 @@ private fun ConnectWorldSelector(
         }
         Spacer(Modifier.height(8.dp))
         worlds.forEach { world ->
+            val isModded = world.isModded
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onSelectWorld(world.folderName) }
+                    .then(if (isModded) Modifier else Modifier.clickable { onSelectWorld(world.folderName) })
                     .padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                SpyglassIconImage(PixelIcons.Biome, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                SpyglassIconImage(
+                    PixelIcons.Globe,
+                    contentDescription = null,
+                    tint = if (isModded) MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f) else MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(20.dp),
+                )
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(world.displayName, style = MaterialTheme.typography.bodyMedium)
+                    Text(
+                        world.displayName + if (isModded) " (Modded)" else "",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = if (isModded) MaterialTheme.colorScheme.onSurfaceVariant else Color.Unspecified,
+                    )
                     Text(
                         "${world.gameMode.replaceFirstChar { it.uppercase() }} • ${world.difficulty.replaceFirstChar { it.uppercase() }}",
                         style = MaterialTheme.typography.bodySmall,
@@ -795,7 +787,7 @@ private fun ConnectWorldHeader(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        SpyglassIconImage(PixelIcons.Biome, contentDescription = null, tint = Emerald, modifier = Modifier.size(20.dp))
+        SpyglassIconImage(PixelIcons.Globe, contentDescription = null, tint = Emerald, modifier = Modifier.size(20.dp))
         Box(modifier = Modifier.weight(1f)) {
             Text(
                 currentWorld?.displayName ?: "Unknown World",
@@ -824,333 +816,4 @@ private fun ConnectWorldHeader(
     }
 }
 
-@Composable
-private fun connectTabs() = listOf(
-    SpyglassTab("Character", PixelIcons.Mob),
-    SpyglassTab("Inventory", PixelIcons.Item),
-    SpyglassTab("Ender Chest", PixelIcons.Enchant),
-    SpyglassTab("Chests", PixelIcons.Search),
-    SpyglassTab("Map", PixelIcons.Biome),
-)
-
-@Composable
-private fun ConnectTabHub(
-    viewModel: ConnectViewModel,
-    playerData: PlayerData?,
-    playerSkin: Bitmap?,
-    playerName: String?,
-    gearAnalysis: GearAnalysis?,
-    onBrowseItem: (String) -> Unit,
-    onBrowseEnchant: (String) -> Unit,
-) {
-    var selectedTab by remember { mutableIntStateOf(0) }
-
-    SpyglassTabRow(
-        tabs = connectTabs(),
-        selectedIndex = selectedTab,
-        onSelect = { selectedTab = it },
-    )
-    HorizontalDivider()
-
-    when (selectedTab) {
-        0 -> CharacterTab(
-            playerData = playerData,
-            playerSkin = playerSkin,
-            playerName = playerName,
-            gearAnalysis = gearAnalysis,
-            onBrowseItem = onBrowseItem,
-            onBrowseEnchant = onBrowseEnchant,
-        )
-        1 -> InventoryContent(playerData = playerData)
-        2 -> EnderChestContent(playerData = playerData)
-        3 -> ChestFinderContent(viewModel = viewModel)
-        4 -> MapContent(viewModel = viewModel)
-    }
-}
-
-private val UpgradeOrange = Color(0xFFFF9800)
-
-@Composable
-private fun CharacterTab(
-    playerData: PlayerData?,
-    playerSkin: Bitmap?,
-    playerName: String?,
-    gearAnalysis: GearAnalysis?,
-    onBrowseItem: (String) -> Unit,
-    onBrowseEnchant: (String) -> Unit,
-) {
-    if (playerData == null) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(32.dp),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text("No player data", color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-        return
-    }
-
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
-        // ── Player header ──
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(64.dp)
-                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp)),
-                contentAlignment = Alignment.Center,
-            ) {
-                if (playerSkin != null) {
-                    Image(
-                        bitmap = playerSkin.asImageBitmap(),
-                        contentDescription = "Player skin",
-                        modifier = Modifier
-                            .size(56.dp)
-                            .clip(RoundedCornerShape(4.dp)),
-                        contentScale = ContentScale.Fit,
-                    )
-                } else {
-                    SpyglassIconImage(
-                        PixelIcons.Mob,
-                        contentDescription = "Player",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(32.dp),
-                    )
-                }
-            }
-
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    playerName ?: "Unknown Player",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    playerData.dimension.replace("_", " ").replaceFirstChar { it.uppercase() },
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-                Text(
-                    "${playerData.posX.toInt()}, ${playerData.posY.toInt()}, ${playerData.posZ.toInt()}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
-
-        // ── Stat cards ──
-        ResultCard {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-            ) {
-                ConnectStatColumn("Health", "${playerData.health.toInt()} / 20")
-                ConnectStatColumn("Food", "${playerData.foodLevel} / 20")
-                ConnectStatColumn("XP", "${playerData.xpLevel}")
-            }
-        }
-
-        // ── Equipment Analysis ──
-        Text(
-            "Equipment Analysis",
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.primary,
-        )
-
-        if (gearAnalysis != null) {
-            gearAnalysis.slots.forEach { slotAnalysis ->
-                GearSlotCard(
-                    slotAnalysis = slotAnalysis,
-                    onBrowseItem = onBrowseItem,
-                    onBrowseEnchant = onBrowseEnchant,
-                )
-            }
-        } else {
-            ResultCard {
-                Text(
-                    "Analyzing gear...",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
-    }
-}
-
-private fun slotLabel(slotType: SlotType): String = when (slotType) {
-    SlotType.HEAD -> "Head"
-    SlotType.CHEST -> "Chest"
-    SlotType.LEGS -> "Legs"
-    SlotType.FEET -> "Feet"
-    SlotType.MAIN_HAND -> "Main Hand"
-    SlotType.OFF_HAND -> "Off Hand"
-}
-
-private fun formatItemName(id: String): String =
-    id.replace("_", " ").split(" ").joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
-
-private fun romanNumeral(level: Int): String = when (level) {
-    1 -> "I"; 2 -> "II"; 3 -> "III"; 4 -> "IV"; 5 -> "V"
-    else -> level.toString()
-}
-
-@Composable
-private fun GearSlotCard(
-    slotAnalysis: SlotAnalysis,
-    onBrowseItem: (String) -> Unit,
-    onBrowseEnchant: (String) -> Unit,
-) {
-    ResultCard {
-        val item = slotAnalysis.item
-
-        if (item != null) {
-            // ── Has item ──
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.clickable { onBrowseItem(item.id) },
-            ) {
-                val tex = ItemTextures.get(item.id)
-                if (tex != null) {
-                    SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(24.dp))
-                    Spacer(Modifier.width(8.dp))
-                }
-                Text(
-                    item.customName ?: formatItemName(item.id),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-                Spacer(Modifier.weight(1f))
-                Text(
-                    slotLabel(slotAnalysis.slotType),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-
-            // Current enchants (at max level) — green
-            if (slotAnalysis.currentEnchants.isNotEmpty()) {
-                Spacer(Modifier.height(6.dp))
-                slotAnalysis.currentEnchants.forEach { info ->
-                    Text(
-                        "${info.name} ${romanNumeral(info.level)}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Emerald,
-                        modifier = Modifier
-                            .clickable { onBrowseEnchant(info.id) }
-                            .padding(vertical = 1.dp),
-                    )
-                }
-            }
-
-            // Upgradeable enchants — orange
-            if (slotAnalysis.upgradeableEnchants.isNotEmpty()) {
-                Spacer(Modifier.height(4.dp))
-                slotAnalysis.upgradeableEnchants.forEach { info ->
-                    Text(
-                        "${info.name} ${romanNumeral(info.level)} \u2192 ${romanNumeral(info.maxLevel)}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = UpgradeOrange,
-                        modifier = Modifier
-                            .clickable { onBrowseEnchant(info.id) }
-                            .padding(vertical = 1.dp),
-                    )
-                }
-            }
-
-            // Missing enchants — muted chips
-            if (slotAnalysis.missingEnchants.isNotEmpty()) {
-                Spacer(Modifier.height(4.dp))
-                @OptIn(ExperimentalLayoutApi::class)
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    slotAnalysis.missingEnchants.forEach { enchant ->
-                        Text(
-                            "+ ${enchant.name}",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier
-                                .background(
-                                    MaterialTheme.colorScheme.surfaceVariant,
-                                    RoundedCornerShape(4.dp),
-                                )
-                                .clickable { onBrowseEnchant(enchant.id) }
-                                .padding(horizontal = 6.dp, vertical = 2.dp),
-                        )
-                    }
-                }
-            }
-
-            // Tier upgrade
-            if (slotAnalysis.tierUpgrade != null) {
-                Spacer(Modifier.height(6.dp))
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.clickable { onBrowseItem(slotAnalysis.tierUpgrade.id) },
-                ) {
-                    SpyglassIconImage(
-                        PixelIcons.Anvil,
-                        contentDescription = null,
-                        tint = PotionBlue,
-                        modifier = Modifier.size(14.dp),
-                    )
-                    Spacer(Modifier.width(4.dp))
-                    Text(
-                        "Upgrade to ${slotAnalysis.tierUpgrade.name} \u2192",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = PotionBlue,
-                    )
-                }
-            }
-        } else {
-            // ── Empty slot ──
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    slotLabel(slotAnalysis.slotType),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Spacer(Modifier.weight(1f))
-                Text(
-                    "Empty",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            if (slotAnalysis.tierUpgrade != null) {
-                Spacer(Modifier.height(4.dp))
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.clickable { onBrowseItem(slotAnalysis.tierUpgrade.id) },
-                ) {
-                    val tex = ItemTextures.get(slotAnalysis.tierUpgrade.id)
-                    if (tex != null) {
-                        SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(18.dp))
-                        Spacer(Modifier.width(6.dp))
-                    }
-                    Text(
-                        "Suggested: ${slotAnalysis.tierUpgrade.name} \u2192",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = PotionBlue,
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun ConnectStatColumn(label: String, value: String) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(value, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary)
-        Text(label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-    }
-}
 

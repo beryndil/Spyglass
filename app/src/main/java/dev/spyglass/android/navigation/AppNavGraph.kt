@@ -31,6 +31,11 @@ import dev.spyglass.android.home.HomeScreen
 import dev.spyglass.android.changelog.ChangelogScreen
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.QrScannerScreen
+import dev.spyglass.android.connect.character.CharacterScreen
+import dev.spyglass.android.connect.inventory.InventoryScreen
+import dev.spyglass.android.connect.inventory.EnderChestScreen
+import dev.spyglass.android.connect.chestfinder.ChestFinderScreen
+import dev.spyglass.android.connect.map.MapScreen
 import dev.spyglass.android.disclaimer.DisclaimerScreen
 import dev.spyglass.android.feedback.FeedbackScreen
 import dev.spyglass.android.license.LicenseScreen
@@ -52,7 +57,8 @@ val TOP_DESTINATIONS = listOf(TopDest.Home, TopDest.Browse, TopDest.Calculators,
 
 private val SUB_ROUTES = setOf(
     "about", "settings", "changelog", "feedback", "license", "disclaimer",
-    "connect_scan",
+    "connect_scan", "connect_character", "connect_inventory",
+    "connect_enderchest", "connect_chestfinder", "connect_map",
 )
 
 /** Pending navigation target from Search -> Browse */
@@ -120,6 +126,9 @@ fun AppNavGraph() {
                     connectViewModel = connectViewModel,
                     onScanQr = {
                         navController.navigate("connect_scan") { launchSingleTop = true }
+                    },
+                    onConnectNav = { route ->
+                        navController.navigate(route) { launchSingleTop = true }
                     },
                 )
             }
@@ -194,6 +203,42 @@ fun AppNavGraph() {
                             navController.popBackStack()
                         }
                     },
+                )
+            }
+
+            // ── Spyglass Connect — sub-screens ──
+            composable("connect_character") {
+                CharacterScreen(
+                    viewModel = connectViewModel,
+                    onBack = { navController.popBackStack() },
+                    onBrowseTarget = { target ->
+                        pendingTarget = target
+                        navigateTo(TopDest.Browse.route)
+                    },
+                )
+            }
+            composable("connect_inventory") {
+                InventoryScreen(
+                    viewModel = connectViewModel,
+                    onBack = { navController.popBackStack() },
+                )
+            }
+            composable("connect_enderchest") {
+                EnderChestScreen(
+                    viewModel = connectViewModel,
+                    onBack = { navController.popBackStack() },
+                )
+            }
+            composable("connect_chestfinder") {
+                ChestFinderScreen(
+                    viewModel = connectViewModel,
+                    onBack = { navController.popBackStack() },
+                )
+            }
+            composable("connect_map") {
+                MapScreen(
+                    viewModel = connectViewModel,
+                    onBack = { navController.popBackStack() },
                 )
             }
         }
