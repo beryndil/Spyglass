@@ -194,83 +194,109 @@ fun HomeScreen(
         repo?.incompleteTodoCount()?.collect { value = it } ?: return@produceState
     }
 
-    // LazyColumn — only visible sections compose on first frame
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp),
-        contentPadding = PaddingValues(vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp),
-    ) {
-        // ── A. Header / Branding ──
-        item(key = "header") {
-            HomeHeader()
-        }
+    // When connected with a world selected, the Connect hub has scrollable tab content
+    // (LazyColumn, verticalScroll, Canvas) that can't nest inside a LazyColumn item.
+    // Render it outside the LazyColumn with bounded height instead.
+    val connectState by connectViewModel?.connectionState?.collectAsStateWithLifecycle()
+        ?: remember { mutableStateOf(dev.spyglass.android.connect.client.ConnectionState.Disconnected) }
+    val connectSelectedWorld by connectViewModel?.selectedWorld?.collectAsStateWithLifecycle()
+        ?: remember { mutableStateOf<String?>(null) }
+    val showFullConnectHub = connectViewModel != null && connectState.isConnected && connectSelectedWorld != null
 
-        // ── Search ──
-        item(key = "search") {
-            HomeSearchBar(onSearch = onSearch)
-        }
-
-        // ── Connect hub ──
-        if (connectViewModel != null) {
-            item(key = "connect") {
-                HomeConnectSection(
-                    connectViewModel = connectViewModel,
-                    onScanQr = onScanQr,
-                    onBrowseTarget = onBrowseTarget,
-                )
-            }
-        }
-
-        // ── B. Todo list ──
-        item(key = "todo") {
-            HomeTodoSection(
-                todoCount = todoCount,
-                todoPreview = todoPreview,
-                onCalcTab = onCalcTab,
-                onToggle = { todoId, completed ->
-                    repo?.let { r -> scope.launch { r.toggleTodoCompleted(todoId, completed) } }
-                },
+    if (showFullConnectHub) {
+        // ── Full Connect hub — outside LazyColumn for proper scrollable nesting ──
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp)
+                .padding(top = 16.dp),
+        ) {
+            HomeConnectSection(
+                connectViewModel = connectViewModel!!,
+                onScanQr = onScanQr,
+                onBrowseTarget = onBrowseTarget,
+                modifier = Modifier.weight(1f),
             )
         }
+    } else {
+        // ── Normal LazyColumn — only visible sections compose on first frame ──
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            contentPadding = PaddingValues(vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            // ── A. Header / Branding ──
+            item(key = "header") {
+                HomeHeader()
+            }
 
-        // ── B2. Favorites on Home ──
-        if (prefs.showFavoritesOnHome && favorites.isNotEmpty()) {
-            item(key = "favorites") {
-                HomeFavoritesSection(
-                    favorites = favorites,
-                    onBrowseTab = onBrowseTab,
+            // ── Search ──
+            item(key = "search") {
+                HomeSearchBar(onSearch = onSearch)
+            }
+
+            // ── Connect hub (inline — disconnected / connecting / world selector only) ──
+            if (connectViewModel != null) {
+                item(key = "connect") {
+                    HomeConnectSection(
+                        connectViewModel = connectViewModel,
+                        onScanQr = onScanQr,
+                        onBrowseTarget = onBrowseTarget,
+                    )
+                }
+            }
+
+            // ── B. Todo list ──
+            item(key = "todo") {
+                HomeTodoSection(
+                    todoCount = todoCount,
+                    todoPreview = todoPreview,
+                    onCalcTab = onCalcTab,
+                    onToggle = { todoId, completed ->
+                        repo?.let { r -> scope.launch { r.toggleTodoCompleted(todoId, completed) } }
+                    },
                 )
             }
-        }
 
-        // ── C. Quick Access — Tools ──
-        item(key = "tools") {
-            SectionHeader(stringResource(R.string.home_tools), icon = PixelIcons.Anvil)
-            Spacer(Modifier.height(8.dp))
-            QuickLinkGrid(CALC_LINKS.map { it.first }) { index -> onCalcTab(CALC_LINKS[index].second) }
-        }
-
-        // ── D. Tip of the Day ──
-        if (prefs.showTipOfDay) {
-            item(key = "tip") {
-                HomeTipSection(tip = tips[tipIndex])
+            // ── B2. Favorites on Home ──
+            if (prefs.showFavoritesOnHome && favorites.isNotEmpty()) {
+                item(key = "favorites") {
+                    HomeFavoritesSection(
+                        favorites = favorites,
+                        onBrowseTab = onBrowseTab,
+                    )
+                }
             }
-        }
 
-        // ── E. Quick Access — Browse ──
-        item(key = "browse") {
-            HomeBrowseSection(onBrowseTab = onBrowseTab)
-        }
+            // ── C. Quick Access — Tools ──
+            item(key = "tools") {
+                SectionHeader(stringResource(R.string.home_tools), icon = PixelIcons.Anvil)
+                Spacer(Modifier.height(8.dp))
+                QuickLinkGrid(CALC_LINKS.map { it.first }) { index -> onCalcTab(CALC_LINKS[index].second) }
+            }
 
-        // ── F. News ──
-        item(key = "news") {
-            HomeNewsSection()
-        }
+            // ── D. Tip of the Day ──
+            if (prefs.showTipOfDay) {
+                item(key = "tip") {
+                    HomeTipSection(tip = tips[tipIndex])
+                }
+            }
 
-        item(key = "bottom_spacer") {
-            Spacer(Modifier.height(8.dp))
+            // ── E. Quick Access — Browse ──
+            item(key = "browse") {
+                HomeBrowseSection(onBrowseTab = onBrowseTab)
+            }
+
+            // ── F. News ──
+            item(key = "news") {
+                HomeNewsSection()
+            }
+
+            item(key = "bottom_spacer") {
+                Spacer(Modifier.height(8.dp))
+            }
         }
     }
 }
@@ -551,6 +577,7 @@ private fun HomeConnectSection(
     connectViewModel: ConnectViewModel,
     onScanQr: () -> Unit,
     onBrowseTarget: (dev.spyglass.android.navigation.BrowseTarget) -> Unit = {},
+    modifier: Modifier = Modifier,
 ) {
     val state by connectViewModel.connectionState.collectAsStateWithLifecycle()
     val worlds by connectViewModel.worlds.collectAsStateWithLifecycle()
@@ -560,82 +587,84 @@ private fun HomeConnectSection(
     val playerName by connectViewModel.playerName.collectAsStateWithLifecycle()
     val gearAnalysis by connectViewModel.gearAnalysis.collectAsStateWithLifecycle()
 
-    SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
-    Spacer(Modifier.height(8.dp))
+    Column(modifier = modifier) {
+        SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
+        Spacer(Modifier.height(8.dp))
 
-    when {
-        // ── Disconnected / Error ──
-        state is ConnectionState.Disconnected || state is ConnectionState.Error -> {
-            ConnectDisconnectedCard(
-                state = state,
-                onScanQr = onScanQr,
-                onReconnect = { connectViewModel.tryReconnect() },
-            )
-        }
+        when {
+            // ── Disconnected / Error ──
+            state is ConnectionState.Disconnected || state is ConnectionState.Error -> {
+                ConnectDisconnectedCard(
+                    state = state,
+                    onScanQr = onScanQr,
+                    onReconnect = { connectViewModel.tryReconnect() },
+                )
+            }
 
-        // ── Connecting / Pairing / Reconnecting ──
-        !state.isConnected -> {
-            ResultCard {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        strokeWidth = 2.dp,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    Text(
-                        state.statusText,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface,
-                    )
+            // ── Connecting / Pairing / Reconnecting ──
+            !state.isConnected -> {
+                ResultCard {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            strokeWidth = 2.dp,
+                            color = MaterialTheme.colorScheme.primary,
+                        )
+                        Text(
+                            state.statusText,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+                    }
                 }
             }
-        }
 
-        // ── Connected, no world selected ──
-        state.isConnected && selectedWorld == null -> {
-            ConnectStatusBar(state)
-            Spacer(Modifier.height(8.dp))
-            ConnectWorldSelector(
-                worlds = worlds,
-                selectedWorld = null,
-                onSelectWorld = {
-                    connectViewModel.selectWorld(it)
-                    connectViewModel.requestPlayerData()
-                },
-                onDisconnect = { connectViewModel.disconnect() },
-            )
-        }
+            // ── Connected, no world selected ──
+            state.isConnected && selectedWorld == null -> {
+                ConnectStatusBar(state)
+                Spacer(Modifier.height(8.dp))
+                ConnectWorldSelector(
+                    worlds = worlds,
+                    selectedWorld = null,
+                    onSelectWorld = {
+                        connectViewModel.selectWorld(it)
+                        connectViewModel.requestPlayerData()
+                    },
+                    onDisconnect = { connectViewModel.disconnect() },
+                )
+            }
 
-        // ── Connected, world selected — full hub ──
-        state.isConnected -> {
-            ConnectStatusBar(state)
-            Spacer(Modifier.height(8.dp))
-            ConnectWorldHeader(
-                worlds = worlds,
-                selectedWorld = selectedWorld,
-                onSelectWorld = {
-                    connectViewModel.selectWorld(it)
-                    connectViewModel.requestPlayerData()
-                },
-                onDisconnect = { connectViewModel.disconnect() },
-            )
-            Spacer(Modifier.height(8.dp))
-            ConnectTabHub(
-                viewModel = connectViewModel,
-                playerData = playerData,
-                playerSkin = playerSkin,
-                playerName = playerName,
-                gearAnalysis = gearAnalysis,
-                onBrowseItem = { itemId ->
-                    onBrowseTarget(dev.spyglass.android.navigation.BrowseTarget(1, itemId))
-                },
-                onBrowseEnchant = { enchantId ->
-                    onBrowseTarget(dev.spyglass.android.navigation.BrowseTarget(7, enchantId))
-                },
-            )
+            // ── Connected, world selected — full hub ──
+            state.isConnected -> {
+                ConnectStatusBar(state)
+                Spacer(Modifier.height(8.dp))
+                ConnectWorldHeader(
+                    worlds = worlds,
+                    selectedWorld = selectedWorld,
+                    onSelectWorld = {
+                        connectViewModel.selectWorld(it)
+                        connectViewModel.requestPlayerData()
+                    },
+                    onDisconnect = { connectViewModel.disconnect() },
+                )
+                Spacer(Modifier.height(8.dp))
+                ConnectTabHub(
+                    viewModel = connectViewModel,
+                    playerData = playerData,
+                    playerSkin = playerSkin,
+                    playerName = playerName,
+                    gearAnalysis = gearAnalysis,
+                    onBrowseItem = { itemId ->
+                        onBrowseTarget(dev.spyglass.android.navigation.BrowseTarget(1, itemId))
+                    },
+                    onBrowseEnchant = { enchantId ->
+                        onBrowseTarget(dev.spyglass.android.navigation.BrowseTarget(7, enchantId))
+                    },
+                )
+            }
         }
     }
 }
