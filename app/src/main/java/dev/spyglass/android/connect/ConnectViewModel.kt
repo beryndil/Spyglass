@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dev.spyglass.android.connect.client.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
@@ -23,6 +24,10 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     val client = SpyglassClient()
     private val reconnectManager = ReconnectManager()
     private var mdnsDiscovery: MdnsDiscovery? = null
+    private var reconnectJob: Job? = null
+
+    /** Whether we've been connected at least once (to know if reconnect makes sense). */
+    private var wasConnected = false
 
     // ── Observable state ─────────────────────────────────────────────────────
 
@@ -54,16 +59,30 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             }
         }
 
-        // Monitor connection state — start/stop foreground service
+        // Monitor connection state — start/stop foreground service + auto-reconnect
         viewModelScope.launch {
             client.connectionState.collect { state ->
                 when (state) {
                     is ConnectionState.Connected -> {
+                        wasConnected = true
                         reconnectManager.reset()
+                        reconnectJob?.cancel()
                         ConnectService.start(getApplication(), state.deviceName)
                     }
-                    is ConnectionState.Error, ConnectionState.Disconnected -> {
-                        ConnectService.stop(getApplication())
+                    is ConnectionState.Error -> {
+                        // Auto-reconnect on unexpected disconnect
+                        if (wasConnected && !client.wasUserDisconnect) {
+                            startAutoReconnect()
+                        } else {
+                            ConnectService.stop(getApplication())
+                        }
+                    }
+                    is ConnectionState.Disconnected -> {
+                        if (wasConnected && !client.wasUserDisconnect) {
+                            startAutoReconnect()
+                        } else {
+                            ConnectService.stop(getApplication())
+                        }
                     }
                     else -> {}
                 }
@@ -73,6 +92,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Connect via QR pairing data. */
     fun connectFromQr(pairingData: QrPairingData) {
+        reconnectJob?.cancel()
         viewModelScope.launch(Dispatchers.IO) {
             client.connect(pairingData.ip, pairingData.port)
 
@@ -97,24 +117,83 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    /** Try reconnecting to a previously paired device. */
+    /** Auto-reconnect with exponential backoff using stored pairing info. */
+    private fun startAutoReconnect() {
+        // Don't start if already reconnecting
+        if (reconnectJob?.isActive == true) return
+
+        reconnectJob = viewModelScope.launch(Dispatchers.IO) {
+            val device = PairingStore.load(getApplication()) ?: run {
+                Timber.d("No paired device stored, can't auto-reconnect")
+                ConnectService.stop(getApplication())
+                return@launch
+            }
+
+            reconnectManager.reset()
+            while (reconnectManager.waitForNextRetry()) {
+                val attempt = reconnectManager.currentAttempt
+                Timber.d("Auto-reconnect attempt $attempt to ${device.ip}:${device.port}")
+                client.setReconnecting(attempt)
+
+                client.connect(device.ip, device.port)
+
+                // Wait for result
+                val result = client.connectionState.first {
+                    it is ConnectionState.Pairing || it is ConnectionState.Connected || it is ConnectionState.Error
+                }
+
+                if (result is ConnectionState.Pairing) {
+                    // Re-pair with stored key
+                    val deviceName = "${Build.MANUFACTURER} ${Build.MODEL}"
+                    client.sendPairRequest(deviceName, device.publicKey)
+
+                    // Wait for pairing result
+                    val paired = client.connectionState.first {
+                        it is ConnectionState.Connected || it is ConnectionState.Error
+                    }
+                    if (paired is ConnectionState.Connected) {
+                        Timber.d("Auto-reconnect succeeded on attempt $attempt")
+                        return@launch
+                    }
+                } else if (result is ConnectionState.Connected) {
+                    Timber.d("Auto-reconnect succeeded on attempt $attempt")
+                    return@launch
+                }
+
+                Timber.d("Auto-reconnect attempt $attempt failed")
+            }
+
+            // Exhausted all attempts
+            Timber.d("Auto-reconnect exhausted after ${reconnectManager.currentAttempt} attempts")
+            client.setError("Lost connection to PC")
+            ConnectService.stop(getApplication())
+        }
+    }
+
+    /** Try reconnecting to a previously paired device (user-initiated). */
     fun tryReconnect() {
+        wasConnected = false // Reset so auto-reconnect doesn't fire on first failure
+        reconnectJob?.cancel()
         viewModelScope.launch(Dispatchers.IO) {
             val device = PairingStore.load(getApplication()) ?: return@launch
 
-            // Try stored IP first
             client.connect(device.ip, device.port)
 
-            // If that fails, try mDNS discovery
-            client.connectionState
-                .filter { it is ConnectionState.Error }
-                .first()
+            // Wait for result
+            val result = client.connectionState.first {
+                it is ConnectionState.Pairing || it is ConnectionState.Error
+            }
 
-            // Start mDNS discovery as fallback
-            mdnsDiscovery = MdnsDiscovery(getApplication())
-            mdnsDiscovery?.startDiscovery { ip, port ->
-                viewModelScope.launch(Dispatchers.IO) {
-                    client.connect(ip, port)
+            if (result is ConnectionState.Pairing) {
+                val deviceName = "${Build.MANUFACTURER} ${Build.MODEL}"
+                client.sendPairRequest(deviceName, device.publicKey)
+            } else {
+                // Try mDNS discovery as fallback
+                mdnsDiscovery = MdnsDiscovery(getApplication())
+                mdnsDiscovery?.startDiscovery { ip, port ->
+                    viewModelScope.launch(Dispatchers.IO) {
+                        client.connect(ip, port)
+                    }
                 }
             }
         }
@@ -162,6 +241,8 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Disconnect and clean up. */
     fun disconnect() {
+        wasConnected = false
+        reconnectJob?.cancel()
         ConnectService.stop(getApplication())
         mdnsDiscovery?.stopDiscovery()
         client.disconnect()
@@ -221,6 +302,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     override fun onCleared() {
         super.onCleared()
+        reconnectJob?.cancel()
         mdnsDiscovery?.stopDiscovery()
         client.disconnect()
     }

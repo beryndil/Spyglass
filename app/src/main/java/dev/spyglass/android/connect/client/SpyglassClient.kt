@@ -37,8 +37,12 @@ class SpyglassClient {
     private val _messages = MutableSharedFlow<SpyglassMessage>(extraBufferCapacity = 64)
     val messages: SharedFlow<SpyglassMessage> = _messages
 
+    /** Whether the last disconnect was user-initiated. */
+    private var userDisconnect = false
+
     /** Connect to the desktop WebSocket server. */
     fun connect(ip: String, port: Int) {
+        userDisconnect = false
         _connectionState.value = ConnectionState.Connecting(ip, port)
 
         val request = Request.Builder()
@@ -86,7 +90,11 @@ class SpyglassClient {
             override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
                 Timber.d("WebSocket closing: $code $reason")
                 webSocket.close(1000, null)
-                _connectionState.value = ConnectionState.Disconnected
+                if (!userDisconnect) {
+                    _connectionState.value = ConnectionState.Error("Connection closed: $reason")
+                } else {
+                    _connectionState.value = ConnectionState.Disconnected
+                }
             }
 
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
@@ -134,8 +142,9 @@ class SpyglassClient {
         return requestId
     }
 
-    /** Disconnect from the desktop. */
+    /** Disconnect from the desktop (user-initiated). */
     fun disconnect() {
+        userDisconnect = true
         webSocket?.close(1000, "Client disconnect")
         webSocket = null
         _connectionState.value = ConnectionState.Disconnected
@@ -144,4 +153,17 @@ class SpyglassClient {
     /** Check if currently connected. */
     val isConnected: Boolean
         get() = _connectionState.value is ConnectionState.Connected
+
+    /** Whether the last disconnect was user-initiated (not an unexpected drop). */
+    val wasUserDisconnect: Boolean get() = userDisconnect
+
+    /** Set a reconnecting state (called by ViewModel during auto-reconnect). */
+    fun setReconnecting(attempt: Int) {
+        _connectionState.value = ConnectionState.Reconnecting(attempt)
+    }
+
+    /** Set an error state (called by ViewModel when reconnect is exhausted). */
+    fun setError(message: String) {
+        _connectionState.value = ConnectionState.Error(message)
+    }
 }
