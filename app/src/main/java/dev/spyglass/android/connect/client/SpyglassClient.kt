@@ -78,12 +78,8 @@ class SpyglassClient {
                     if (message.type == MessageType.PAIR_ACCEPT) {
                         val accept = json.decodeFromJsonElement(PairAcceptPayload.serializer(), message.payload)
                         if (accept.accepted) {
-                            // Re-derive shared key if desktop sent its actual public key
-                            // (handles case where desktop restarted with a new/persisted key pair)
-                            if (accept.pubkey != null) {
-                                Timber.d("Re-deriving shared key from desktop's actual pubkey")
-                                encryption.deriveSharedKey(accept.pubkey)
-                            }
+                            // Encryption disabled — ECDH shared secret differs between
+                            // JVM SunEC and Android Conscrypt. Do not derive shared key.
                             _connectionState.value = ConnectionState.Connected(accept.deviceName)
                             CrashReporter.setKey("connect_state", "connected")
                             CrashReporter.setKey("connect_device", accept.deviceName)
