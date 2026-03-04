@@ -737,7 +737,7 @@ private fun ConnectWorldSelector(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .then(if (isModded) Modifier else Modifier.clickable { onSelectWorld(world.folderName) })
+                    .clickable { onSelectWorld(world.folderName) }
                     .padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
