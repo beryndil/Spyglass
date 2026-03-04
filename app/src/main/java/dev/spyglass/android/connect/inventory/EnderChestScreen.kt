@@ -34,8 +34,6 @@ fun EnderChestScreen(
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
 
-    var tappedItem by remember { mutableStateOf<ItemStack?>(null) }
-
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
             modifier = Modifier
@@ -55,18 +53,9 @@ fun EnderChestScreen(
             Spacer(Modifier.height(8.dp))
         }
 
-        tappedItem?.let { item ->
-            ItemNameBar(
-                item = item,
-                modifier = Modifier.padding(horizontal = 16.dp),
-            )
-            Spacer(Modifier.height(4.dp))
-        }
-
         EnderChestContent(
             playerData = playerData,
             isOffline = !isConnected,
-            onTapItem = { tappedItem = it },
             onLongPressItem = { onBrowseTarget(BrowseTarget(1, it.id)) },
         )
     }
@@ -76,7 +65,6 @@ fun EnderChestScreen(
 fun EnderChestContent(
     playerData: PlayerData?,
     isOffline: Boolean = false,
-    onTapItem: ((ItemStack) -> Unit)? = null,
     onLongPressItem: ((ItemStack) -> Unit)? = null,
 ) {
     val player = playerData
@@ -104,25 +92,8 @@ fun EnderChestContent(
             startSlot = 0,
             endSlot = 26,
             columns = 9,
-            onTapItem = onTapItem,
             onLongPressItem = onLongPressItem,
         )
     }
 }
 
-@Composable
-private fun ItemNameBar(item: ItemStack, modifier: Modifier = Modifier) {
-    val name = item.customName ?: formatItemName(item.id)
-    val countText = if (item.count > 1) " x${item.count}" else ""
-    Text(
-        text = "$name$countText",
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.primary,
-    )
-}
-
-private fun formatItemName(id: String): String =
-    id.replace("_", " ").split(" ").joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }

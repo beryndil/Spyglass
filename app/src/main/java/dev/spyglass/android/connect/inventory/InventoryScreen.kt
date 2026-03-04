@@ -34,9 +34,6 @@ fun InventoryScreen(
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
 
-    // Item name tooltip
-    var tappedItem by remember { mutableStateOf<ItemStack?>(null) }
-
     Column(modifier = Modifier.fillMaxSize()) {
         // Top bar
         Row(
@@ -57,19 +54,9 @@ fun InventoryScreen(
             Spacer(Modifier.height(8.dp))
         }
 
-        // Item name bar
-        tappedItem?.let { item ->
-            ItemNameBar(
-                item = item,
-                modifier = Modifier.padding(horizontal = 16.dp),
-            )
-            Spacer(Modifier.height(4.dp))
-        }
-
         InventoryContent(
             playerData = playerData,
             isOffline = !isConnected,
-            onTapItem = { tappedItem = it },
             onLongPressItem = { onBrowseTarget(BrowseTarget(1, it.id)) },
         )
     }
@@ -79,7 +66,6 @@ fun InventoryScreen(
 fun InventoryContent(
     playerData: PlayerData?,
     isOffline: Boolean = false,
-    onTapItem: ((ItemStack) -> Unit)? = null,
     onLongPressItem: ((ItemStack) -> Unit)? = null,
 ) {
     val player = playerData
@@ -111,7 +97,6 @@ fun InventoryContent(
             startSlot = 100,
             endSlot = 104,
             columns = 5,
-            onTapItem = onTapItem,
             onLongPressItem = onLongPressItem,
         )
         Row(
@@ -135,7 +120,7 @@ fun InventoryContent(
             startSlot = 0,
             endSlot = 8,
             columns = 9,
-            onTapItem = onTapItem,
+            selectedSlot = player.selectedSlot,
             onLongPressItem = onLongPressItem,
         )
 
@@ -146,7 +131,6 @@ fun InventoryContent(
             startSlot = 9,
             endSlot = 35,
             columns = 9,
-            onTapItem = onTapItem,
             onLongPressItem = onLongPressItem,
         )
     }
@@ -158,7 +142,7 @@ fun InventoryGrid(
     startSlot: Int,
     endSlot: Int,
     columns: Int,
-    onTapItem: ((ItemStack) -> Unit)? = null,
+    selectedSlot: Int? = null,
     onLongPressItem: ((ItemStack) -> Unit)? = null,
 ) {
     val slotCount = endSlot - startSlot + 1
@@ -179,7 +163,7 @@ fun InventoryGrid(
                         InventorySlotView(
                             item = item,
                             modifier = Modifier.weight(1f),
-                            onTap = onTapItem,
+                            isSelected = selectedSlot != null && slot == selectedSlot,
                             onLongPress = onLongPressItem,
                         )
                     }
@@ -189,19 +173,3 @@ fun InventoryGrid(
     }
 }
 
-@Composable
-private fun ItemNameBar(item: ItemStack, modifier: Modifier = Modifier) {
-    val name = item.customName ?: formatItemName(item.id)
-    val countText = if (item.count > 1) " x${item.count}" else ""
-    Text(
-        text = "$name$countText",
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.primary,
-    )
-}
-
-private fun formatItemName(id: String): String =
-    id.replace("_", " ").split(" ").joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
