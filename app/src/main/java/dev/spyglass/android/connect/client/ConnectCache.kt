@@ -133,6 +133,58 @@ object ConnectCache {
             }
         }
 
+    // ── Stats ──────────────────────────────────────────────────────────────────
+
+    suspend fun saveStats(context: Context, worldFolder: String, data: PlayerStatsPayload) =
+        withContext(Dispatchers.IO) {
+            try {
+                val dir = worldDir(context, worldFolder)
+                dir.mkdirs()
+                File(dir, "stats.json").writeText(json.encodeToString(data))
+                saveLastUpdated(context, worldFolder)
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to save stats cache")
+            }
+        }
+
+    suspend fun loadStats(context: Context, worldFolder: String): PlayerStatsPayload? =
+        withContext(Dispatchers.IO) {
+            try {
+                val file = File(worldDir(context, worldFolder), "stats.json")
+                if (!file.exists()) return@withContext null
+                json.decodeFromString<PlayerStatsPayload>(file.readText())
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to load stats cache")
+                null
+            }
+        }
+
+    // ── Advancements ──────────────────────────────────────────────────────────
+
+    suspend fun saveAdvancements(context: Context, worldFolder: String, data: PlayerAdvancementsPayload) =
+        withContext(Dispatchers.IO) {
+            try {
+                val dir = worldDir(context, worldFolder)
+                dir.mkdirs()
+                File(dir, "advancements.json").writeText(json.encodeToString(data))
+                saveLastUpdated(context, worldFolder)
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to save advancements cache")
+            }
+        }
+
+    suspend fun loadAdvancements(context: Context, worldFolder: String): PlayerAdvancementsPayload? =
+        withContext(Dispatchers.IO) {
+            try {
+                val file = File(worldDir(context, worldFolder), "advancements.json")
+                if (!file.exists()) return@withContext null
+                json.decodeFromString<PlayerAdvancementsPayload>(file.readText())
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to load advancements cache")
+                null
+            }
+        }
+
     // ── Skin Bitmaps ─────────────────────────────────────────────────────────
 
     suspend fun saveSkinAvatar(context: Context, worldFolder: String, bitmap: Bitmap) =

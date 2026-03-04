@@ -68,6 +68,12 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private val _gearAnalysis = MutableStateFlow<GearAnalysis?>(null)
     val gearAnalysis: StateFlow<GearAnalysis?> = _gearAnalysis
 
+    private val _playerStats = MutableStateFlow<PlayerStatsPayload?>(null)
+    val playerStats: StateFlow<PlayerStatsPayload?> = _playerStats
+
+    private val _playerAdvancements = MutableStateFlow<PlayerAdvancementsPayload?>(null)
+    val playerAdvancements: StateFlow<PlayerAdvancementsPayload?> = _playerAdvancements
+
     private val _lastUpdated = MutableStateFlow<Long?>(null)
     val lastUpdated: StateFlow<Long?> = _lastUpdated
 
@@ -177,6 +183,8 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         ConnectCache.loadPlayerData(ctx, worldFolder)?.let { _playerData.value = it }
         ConnectCache.loadStructures(ctx, worldFolder)?.let { _structures.value = it }
         ConnectCache.loadMapData(ctx, worldFolder)?.let { _mapTiles.value = it }
+        ConnectCache.loadStats(ctx, worldFolder)?.let { _playerStats.value = it }
+        ConnectCache.loadAdvancements(ctx, worldFolder)?.let { _playerAdvancements.value = it }
         ConnectCache.loadSkinAvatar(ctx, worldFolder)?.let { _playerSkin.value = it }
         ConnectCache.loadSkinBody(ctx, worldFolder)?.let { _playerBodySkin.value = it }
         ConnectCache.loadLastUpdated(ctx, worldFolder)?.let { _lastUpdated.value = it }
@@ -337,6 +345,16 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         client.sendRequest(MessageType.REQUEST_MAP, payload)
     }
 
+    /** Request player statistics. */
+    fun requestStats() {
+        client.sendRequest(MessageType.REQUEST_STATS)
+    }
+
+    /** Request player advancements. */
+    fun requestAdvancements() {
+        client.sendRequest(MessageType.REQUEST_ADVANCEMENTS)
+    }
+
     /** Search for items in chests. */
     fun searchItems(query: String) {
         if (query.isBlank()) {
@@ -380,6 +398,8 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         _playerBodySkin.value = null
         _playerName.value = null
         _gearAnalysis.value = null
+        _playerStats.value = null
+        _playerAdvancements.value = null
         SkinManager.clear()
         _searchResults.value = null
         _structures.value = emptyList()
@@ -450,6 +470,34 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                         if (world != null) {
                             viewModelScope.launch(Dispatchers.IO) {
                                 ConnectCache.saveMapData(getApplication(), world, payload)
+                            }
+                        }
+                    }
+                }
+                MessageType.PLAYER_STATS -> {
+                    val payload = json.decodeFromJsonElement(PlayerStatsPayload.serializer(), message.payload)
+                    val changed = _playerStats.value != payload
+                    _playerStats.value = payload
+                    if (changed) {
+                        val world = _selectedWorld.value
+                        if (world != null) {
+                            viewModelScope.launch(Dispatchers.IO) {
+                                ConnectCache.saveStats(getApplication(), world, payload)
+                                _lastUpdated.value = System.currentTimeMillis()
+                            }
+                        }
+                    }
+                }
+                MessageType.PLAYER_ADVANCEMENTS -> {
+                    val payload = json.decodeFromJsonElement(PlayerAdvancementsPayload.serializer(), message.payload)
+                    val changed = _playerAdvancements.value != payload
+                    _playerAdvancements.value = payload
+                    if (changed) {
+                        val world = _selectedWorld.value
+                        if (world != null) {
+                            viewModelScope.launch(Dispatchers.IO) {
+                                ConnectCache.saveAdvancements(getApplication(), world, payload)
+                                _lastUpdated.value = System.currentTimeMillis()
                             }
                         }
                     }

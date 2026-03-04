@@ -538,11 +538,13 @@ private fun HomeTodoRow(todo: TodoEntity, onToggle: () -> Unit) {
 // ── Spyglass Connect hub ─────────────────────────────────────────────────────
 
 private val CONNECT_LINKS = listOf(
-    QuickLink(PixelIcons.Mob,     "Character")    to "connect_character",
-    QuickLink(PixelIcons.Item,    "Inventory")     to "connect_inventory",
-    QuickLink(PixelIcons.Enchant, "Ender Chest")   to "connect_enderchest",
-    QuickLink(PixelIcons.Search,  "Chest Finder")  to "connect_chestfinder",
-    QuickLink(PixelIcons.Biome,   "World Map")     to "connect_map",
+    QuickLink(PixelIcons.Mob,         "Character")    to "connect_character",
+    QuickLink(PixelIcons.Item,        "Inventory")     to "connect_inventory",
+    QuickLink(PixelIcons.Enchant,     "Ender Chest")   to "connect_enderchest",
+    QuickLink(PixelIcons.Search,      "Chest Finder")  to "connect_chestfinder",
+    QuickLink(PixelIcons.Biome,       "World Map")     to "connect_map",
+    QuickLink(PixelIcons.Anvil,       "Statistics")    to "connect_statistics",
+    QuickLink(PixelIcons.Advancement, "Advancements")  to "connect_advancements",
 )
 
 @Composable
