@@ -34,6 +34,27 @@ fun MapScreen(
     viewModel: ConnectViewModel,
     onBack: () -> Unit,
 ) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        // Top bar
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .statusBarsPadding()
+                .padding(horizontal = 8.dp, vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(onClick = onBack) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+            }
+            Text("World Map", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+        }
+
+        MapContent(viewModel = viewModel)
+    }
+}
+
+@Composable
+fun MapContent(viewModel: ConnectViewModel) {
     val mapState = remember { MapState(viewModel) }
     val mapData by mapState.mapData.collectAsStateWithLifecycle()
     val structures by viewModel.structures.collectAsStateWithLifecycle()
@@ -50,20 +71,14 @@ fun MapScreen(
     var offsetY by remember { mutableFloatStateOf(0f) }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        // Top bar
+        // Dimension switcher + center button
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .statusBarsPadding()
-                .padding(horizontal = 8.dp, vertical = 4.dp),
+                .padding(horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End,
         ) {
-            IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-            }
-            Text("World Map", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
-
-            // Dimension switcher
             val dimensions = listOf("overworld", "the_nether", "the_end")
             dimensions.forEach { dim ->
                 val selected = mapState.currentDimension == dim

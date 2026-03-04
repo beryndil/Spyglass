@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.ItemStack
+import dev.spyglass.android.connect.PlayerData
 import dev.spyglass.android.core.ui.SectionHeader
 
 /**
@@ -25,7 +26,6 @@ fun InventoryScreen(
     onBack: () -> Unit,
 ) {
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
-    val player = playerData
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Top bar
@@ -42,78 +42,85 @@ fun InventoryScreen(
             Text("Inventory", style = MaterialTheme.typography.titleMedium)
         }
 
-        if (player == null) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("No player data", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        InventoryContent(playerData = playerData)
+    }
+}
+
+@Composable
+fun InventoryContent(playerData: PlayerData?) {
+    val player = playerData
+
+    if (player == null) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text("No player data", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        return
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        // Armor + Offhand
+        SectionHeader("Equipment")
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+        ) {
+            // Armor: slots 103 (head) → 100 (feet)
+            val armorSlots = listOf(103, 102, 101, 100)
+            armorSlots.forEach { slot ->
+                val item = player.armor.firstOrNull { it.slot == slot }
+                    ?: player.inventory.firstOrNull { it.slot == slot }
+                InventorySlotView(item = item)
             }
-            return
+            Spacer(Modifier.width(16.dp))
+            // Offhand
+            InventorySlotView(item = player.offhand)
         }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+        // Labels
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
         ) {
-            // Armor + Offhand
-            SectionHeader("Equipment")
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-            ) {
-                // Armor: slots 103 (head) → 100 (feet)
-                val armorSlots = listOf(103, 102, 101, 100)
-                armorSlots.forEach { slot ->
-                    val item = player.armor.firstOrNull { it.slot == slot }
-                        ?: player.inventory.firstOrNull { it.slot == slot }
-                    InventorySlotView(item = item)
-                }
-                Spacer(Modifier.width(16.dp))
-                // Offhand
-                InventorySlotView(item = player.offhand)
-            }
-
-            // Labels
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-            ) {
-                listOf("Head", "Chest", "Legs", "Feet").forEach {
-                    Text(
-                        it,
-                        modifier = Modifier.width(48.dp),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-                Spacer(Modifier.width(16.dp))
+            listOf("Head", "Chest", "Legs", "Feet").forEach {
                 Text(
-                    "Off",
+                    it,
                     modifier = Modifier.width(48.dp),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-
-            // Hotbar (slots 0-8)
-            SectionHeader("Hotbar")
-            InventoryGrid(
-                items = player.inventory,
-                startSlot = 0,
-                endSlot = 8,
-                columns = 9,
-            )
-
-            // Main inventory (slots 9-35)
-            SectionHeader("Inventory")
-            InventoryGrid(
-                items = player.inventory,
-                startSlot = 9,
-                endSlot = 35,
-                columns = 9,
+            Spacer(Modifier.width(16.dp))
+            Text(
+                "Off",
+                modifier = Modifier.width(48.dp),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
+
+        // Hotbar (slots 0-8)
+        SectionHeader("Hotbar")
+        InventoryGrid(
+            items = player.inventory,
+            startSlot = 0,
+            endSlot = 8,
+            columns = 9,
+        )
+
+        // Main inventory (slots 9-35)
+        SectionHeader("Inventory")
+        InventoryGrid(
+            items = player.inventory,
+            startSlot = 9,
+            endSlot = 35,
+            columns = 9,
+        )
     }
 }
 

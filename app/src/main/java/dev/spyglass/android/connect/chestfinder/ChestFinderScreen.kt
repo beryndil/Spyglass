@@ -29,12 +29,6 @@ fun ChestFinderScreen(
     viewModel: ConnectViewModel,
     onBack: () -> Unit,
 ) {
-    val scope = rememberCoroutineScope()
-    val finderState = remember { ChestFinderState(viewModel, scope) }
-    val query by finderState.query.collectAsStateWithLifecycle()
-    val results by finderState.results.collectAsStateWithLifecycle()
-    val playerData by viewModel.playerData.collectAsStateWithLifecycle()
-
     Column(modifier = Modifier.fillMaxSize()) {
         // Top bar
         Row(
@@ -50,6 +44,19 @@ fun ChestFinderScreen(
             Text("Chest Finder", style = MaterialTheme.typography.titleMedium)
         }
 
+        ChestFinderContent(viewModel = viewModel)
+    }
+}
+
+@Composable
+fun ChestFinderContent(viewModel: ConnectViewModel) {
+    val scope = rememberCoroutineScope()
+    val finderState = remember { ChestFinderState(viewModel, scope) }
+    val query by finderState.query.collectAsStateWithLifecycle()
+    val results by finderState.results.collectAsStateWithLifecycle()
+    val playerData by viewModel.playerData.collectAsStateWithLifecycle()
+
+    Column(modifier = Modifier.fillMaxSize()) {
         // Search bar
         OutlinedTextField(
             value = query,

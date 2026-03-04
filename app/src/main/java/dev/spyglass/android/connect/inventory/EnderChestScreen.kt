@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ConnectViewModel
+import dev.spyglass.android.connect.PlayerData
 import dev.spyglass.android.core.ui.SectionHeader
 
 /**
@@ -24,7 +25,6 @@ fun EnderChestScreen(
     onBack: () -> Unit,
 ) {
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
-    val player = playerData
 
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
@@ -40,27 +40,34 @@ fun EnderChestScreen(
             Text("Ender Chest", style = MaterialTheme.typography.titleMedium)
         }
 
-        if (player == null || player.enderChest.isEmpty()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("No ender chest data", color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-            return
-        }
+        EnderChestContent(playerData = playerData)
+    }
+}
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            SectionHeader("Ender Chest (${player.enderChest.size} items)")
-            InventoryGrid(
-                items = player.enderChest,
-                startSlot = 0,
-                endSlot = 26,
-                columns = 9,
-            )
+@Composable
+fun EnderChestContent(playerData: PlayerData?) {
+    val player = playerData
+
+    if (player == null || player.enderChest.isEmpty()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text("No ender chest data", color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
+        return
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        SectionHeader("Ender Chest (${player.enderChest.size} items)")
+        InventoryGrid(
+            items = player.enderChest,
+            startSlot = 0,
+            endSlot = 26,
+            columns = 9,
+        )
     }
 }
