@@ -54,23 +54,16 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             }
         }
 
-        // Monitor connection state for auto-reconnection
+        // Monitor connection state — start/stop foreground service
         viewModelScope.launch {
             client.connectionState.collect { state ->
                 when (state) {
                     is ConnectionState.Connected -> {
                         reconnectManager.reset()
-                        // Save paired device
-                        val device = PairingStore.PairedDevice(
-                            ip = "", // Will be filled from pairing
-                            port = 0,
-                            deviceName = state.deviceName,
-                            publicKey = client.encryption.getPublicKeyBase64(),
-                        )
-                        // Auto-reconnect is handled elsewhere
+                        ConnectService.start(getApplication(), state.deviceName)
                     }
                     is ConnectionState.Error, ConnectionState.Disconnected -> {
-                        // Try reconnecting if we were previously connected
+                        ConnectService.stop(getApplication())
                     }
                     else -> {}
                 }
@@ -169,6 +162,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Disconnect and clean up. */
     fun disconnect() {
+        ConnectService.stop(getApplication())
         mdnsDiscovery?.stopDiscovery()
         client.disconnect()
         _worlds.value = emptyList()

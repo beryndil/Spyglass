@@ -4,10 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- Spyglass Connect: LAN discovery + QR scanning -->
+    <!-- Spyglass Connect: LAN discovery + QR scanning + background connection -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
@@ -31,6 +34,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Spyglass Connect foreground service (keeps WebSocket alive in background) -->
+        <service
+            android:name=".connect.client.ConnectService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" />
 
         <!-- AdMob app ID (test ID by default, overridden via local.properties) -->
         <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
