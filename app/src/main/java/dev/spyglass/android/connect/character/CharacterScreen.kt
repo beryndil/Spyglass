@@ -28,6 +28,7 @@ import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.client.ConnectionState
 import timber.log.Timber
 import dev.spyglass.android.connect.PlayerData
+import kotlinx.coroutines.launch
 import dev.spyglass.android.connect.gear.EnchantRecommendation
 import dev.spyglass.android.connect.gear.GearAnalysis
 import dev.spyglass.android.connect.gear.SlotAnalysis
@@ -51,6 +52,7 @@ fun CharacterScreen(
     val gearAnalysis by viewModel.gearAnalysis.collectAsStateWithLifecycle()
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
+    val scope = rememberCoroutineScope()
 
     // Request fresh player data when screen opens (only if connected)
     LaunchedEffect(isConnected) {
@@ -92,7 +94,12 @@ fun CharacterScreen(
             playerName = playerName,
             gearAnalysis = gearAnalysis,
             isOffline = !isConnected,
-            onBrowseItem = { itemId -> onBrowseTarget(BrowseTarget(1, itemId)) },
+            onBrowseItem = { itemId ->
+                scope.launch {
+                    val tab = viewModel.resolveBrowseTab(itemId)
+                    onBrowseTarget(BrowseTarget(tab, itemId))
+                }
+            },
             onBrowseEnchant = { enchantId -> onBrowseTarget(BrowseTarget(7, enchantId)) },
         )
     }

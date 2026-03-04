@@ -347,6 +347,11 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         client.sendRequest(MessageType.SEARCH_ITEMS, payload)
     }
 
+    /** Resolve whether an inventory item ID belongs to Blocks (tab 0) or Items (tab 1). */
+    suspend fun resolveBrowseTab(id: String): Int {
+        return if (repo.blockById(id) != null) 0 else 1
+    }
+
     /** Disconnect and clean up. */
     fun disconnect() {
         CrashReporter.log("User disconnect")

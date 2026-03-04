@@ -18,6 +18,7 @@ import dev.spyglass.android.connect.PlayerData
 import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.core.ui.SectionHeader
 import dev.spyglass.android.navigation.BrowseTarget
+import kotlinx.coroutines.launch
 
 /**
  * Player inventory display: 36-slot grid (9 columns x 4 rows) + 4 armor + 1 offhand.
@@ -33,6 +34,7 @@ fun InventoryScreen(
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
+    val scope = rememberCoroutineScope()
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Top bar
@@ -57,7 +59,12 @@ fun InventoryScreen(
         InventoryContent(
             playerData = playerData,
             isOffline = !isConnected,
-            onLongPressItem = { onBrowseTarget(BrowseTarget(1, it.id)) },
+            onLongPressItem = { item ->
+                scope.launch {
+                    val tab = viewModel.resolveBrowseTab(item.id)
+                    onBrowseTarget(BrowseTarget(tab, item.id))
+                }
+            },
         )
     }
 }
