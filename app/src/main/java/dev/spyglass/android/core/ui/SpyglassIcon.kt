@@ -1,7 +1,10 @@
 package dev.spyglass.android.core.ui
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.PorterDuff
+import androidx.core.content.ContextCompat
 import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import androidx.annotation.DrawableRes
@@ -88,8 +91,7 @@ fun SpyglassIconImage(
             val maskBitmap = remember(icon.mask) {
                 when (val m = icon.mask) {
                     is SpyglassIcon.FileBitmap -> TextureManager.getCachedBitmap(m.file)
-                    is SpyglassIcon.Drawable ->
-                        BitmapFactory.decodeResource(context.resources, m.resId)
+                    is SpyglassIcon.Drawable -> vectorToBitmap(context, m.resId)
                     else -> null
                 }
             }
@@ -123,4 +125,16 @@ fun SpyglassIconImage(
             }
         }
     }
+}
+
+/** Convert a vector drawable resource to a bitmap (BitmapFactory can't decode XML vectors). */
+private fun vectorToBitmap(context: android.content.Context, @DrawableRes resId: Int): Bitmap? {
+    val drawable = ContextCompat.getDrawable(context, resId) ?: return null
+    val w = drawable.intrinsicWidth.coerceAtLeast(1)
+    val h = drawable.intrinsicHeight.coerceAtLeast(1)
+    val bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+    drawable.setBounds(0, 0, w, h)
+    drawable.draw(canvas)
+    return bitmap
 }

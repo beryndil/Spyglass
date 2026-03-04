@@ -69,6 +69,12 @@ object BlockTextures {
             return TextureManager.resolveOrBundled("block_coral_block_bk") ?: resolveById("prismarine")
         }
 
+        // Potted plants → use the plant's texture
+        if (blockId.startsWith("potted_")) {
+            val plant = blockId.removePrefix("potted_")
+            return get(plant)
+        }
+
         return null
     }
 
