@@ -51,9 +51,15 @@ class EncryptionHelper {
         keyAgreement.doPhase(peerPublicKey, true)
         val sharedSecret = keyAgreement.generateSecret()
 
+        timber.log.Timber.d("ECDH provider: ${keyAgreement.provider.name}")
+        timber.log.Timber.d("Shared secret (${sharedSecret.size} bytes): ${sharedSecret.take(8).joinToString("") { "%02x".format(it) }}...")
+        timber.log.Timber.d("Our pubkey hash: ${keyPair.public.encoded.take(8).joinToString("") { "%02x".format(it) }}...")
+        timber.log.Timber.d("Peer pubkey hash: ${peerKeyBytes.take(8).joinToString("") { "%02x".format(it) }}...")
+
         // HKDF-SHA256
         val prk = hkdfExtract(ByteArray(32), sharedSecret)
         val okm = hkdfExpand(prk, INFO, AES_KEY_BITS / 8)
+        timber.log.Timber.d("Derived AES key (first 8): ${okm.take(8).joinToString("") { "%02x".format(it) }}...")
         sharedKey = SecretKeySpec(okm, "AES")
     }
 

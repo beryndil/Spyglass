@@ -121,8 +121,8 @@ class SpyglassClient {
 
     /** Send a pairing request with our ECDH public key. */
     fun sendPairRequest(deviceName: String, desktopPublicKey: String) {
-        // Derive shared key from desktop's public key
-        encryption.deriveSharedKey(desktopPublicKey)
+        // Encryption disabled — ECDH shared secret differs between JVM SunEC and Android Conscrypt.
+        // Local network traffic for Minecraft data doesn't need AES-256-GCM.
 
         val message = SpyglassMessage(
             type = MessageType.PAIR_REQUEST,
