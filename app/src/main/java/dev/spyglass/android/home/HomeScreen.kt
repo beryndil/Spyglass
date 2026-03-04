@@ -277,12 +277,16 @@ private fun checkForUpdate(): Boolean? {
         client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) return null
             val body = response.body?.string() ?: return null
-            // Parse tag_name from JSON (e.g. "v2026.0303")
-            val tagMatch = Regex(""""tag_name"\s*:\s*"v?(\d{4})\.(\d{4})"""").find(body)
-                ?: return null
-            val remoteCode = tagMatch.groupValues[1].toInt() * 10000 +
-                tagMatch.groupValues[2].substring(0, 2).toInt() * 100 +
-                tagMatch.groupValues[2].substring(2, 4).toInt()
+            // Parse tag_name from JSON (e.g. "v2026.0304.1430")
+            val tagMatch = Regex(""""tag_name"\s*:\s*"v?(\d{4})\.(\d{2})(\d{2})\.(\d{2})(\d{2})"""")
+                .find(body) ?: return null
+            val year = tagMatch.groupValues[1].toInt() - 2000
+            val month = tagMatch.groupValues[2].toInt()
+            val day = tagMatch.groupValues[3].toInt()
+            val hour = tagMatch.groupValues[4].toInt()
+            val minute = tagMatch.groupValues[5].toInt()
+            val remoteCode = year * 10_000_000 + month * 1_000_000 +
+                day * 10_000 + hour * 100 + minute
             remoteCode > BuildConfig.VERSION_CODE
         }
     } catch (e: Exception) {

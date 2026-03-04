@@ -22,11 +22,13 @@ if (file("google-services.json").exists()) {
     apply(plugin = libs.plugins.firebase.perf.get().pluginId)
 }
 
-// CalVer: versionCode = YYYYMMDD, versionName = "YYYY.MMDD.HHmm-alpha"
+// CalVer: versionCode = YYMMDDHHmm (fits Int), versionName = "YYYY.MMDD.HHmm-alpha"
 val calVerDate: Calendar = Calendar.getInstance()
-val calVerCode = calVerDate.get(Calendar.YEAR) * 10000 +
-    (calVerDate.get(Calendar.MONTH) + 1) * 100 +
-    calVerDate.get(Calendar.DAY_OF_MONTH)
+val calVerCode = (calVerDate.get(Calendar.YEAR) - 2000) * 10_000_000 +
+    (calVerDate.get(Calendar.MONTH) + 1) * 1_000_000 +
+    calVerDate.get(Calendar.DAY_OF_MONTH) * 10_000 +
+    calVerDate.get(Calendar.HOUR_OF_DAY) * 100 +
+    calVerDate.get(Calendar.MINUTE)
 val calVerName = "%d.%02d%02d.%02d%02d-alpha".format(
     calVerDate.get(Calendar.YEAR),
     calVerDate.get(Calendar.MONTH) + 1,
