@@ -221,12 +221,20 @@ fun AppNavGraph() {
                 InventoryScreen(
                     viewModel = connectViewModel,
                     onBack = { navController.popBackStack() },
+                    onBrowseTarget = { target ->
+                        pendingTarget = target
+                        navigateTo(TopDest.Browse.route)
+                    },
                 )
             }
             composable("connect_enderchest") {
                 EnderChestScreen(
                     viewModel = connectViewModel,
                     onBack = { navController.popBackStack() },
+                    onBrowseTarget = { target ->
+                        pendingTarget = target
+                        navigateTo(TopDest.Browse.route)
+                    },
                 )
             }
             composable("connect_chestfinder") {

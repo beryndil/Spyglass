@@ -1,6 +1,8 @@
 package dev.spyglass.android.connect.inventory
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
@@ -15,20 +17,25 @@ import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.PlayerData
 import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.core.ui.SectionHeader
+import dev.spyglass.android.navigation.BrowseTarget
 
 /**
  * Player inventory display: 36-slot grid (9 columns x 4 rows) + 4 armor + 1 offhand.
- * Uses the existing ItemTextures system via InventorySlotView.
+ * Tap shows item name, long-press opens item card.
  */
 @Composable
 fun InventoryScreen(
     viewModel: ConnectViewModel,
     onBack: () -> Unit,
+    onBrowseTarget: (BrowseTarget) -> Unit = {},
 ) {
     val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
+
+    // Item name tooltip
+    var tappedItem by remember { mutableStateOf<ItemStack?>(null) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Top bar
@@ -50,12 +57,31 @@ fun InventoryScreen(
             Spacer(Modifier.height(8.dp))
         }
 
-        InventoryContent(playerData = playerData, isOffline = !isConnected)
+        // Item name bar
+        tappedItem?.let { item ->
+            ItemNameBar(
+                item = item,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+            Spacer(Modifier.height(4.dp))
+        }
+
+        InventoryContent(
+            playerData = playerData,
+            isOffline = !isConnected,
+            onTapItem = { tappedItem = it },
+            onLongPressItem = { onBrowseTarget(BrowseTarget(1, it.id)) },
+        )
     }
 }
 
 @Composable
-fun InventoryContent(playerData: PlayerData?, isOffline: Boolean = false) {
+fun InventoryContent(
+    playerData: PlayerData?,
+    isOffline: Boolean = false,
+    onTapItem: ((ItemStack) -> Unit)? = null,
+    onLongPressItem: ((ItemStack) -> Unit)? = null,
+) {
     val player = playerData
 
     if (player == null) {
@@ -71,47 +97,35 @@ fun InventoryContent(playerData: PlayerData?, isOffline: Boolean = false) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         // Armor + Offhand
         SectionHeader("Equipment")
+        InventoryGrid(
+            items = player.armor.ifEmpty {
+                // Fall back to inventory armor slots
+                player.inventory.filter { it.slot in 100..103 }
+            } + listOfNotNull(player.offhand?.copy(slot = 104)),
+            startSlot = 100,
+            endSlot = 104,
+            columns = 5,
+            onTapItem = onTapItem,
+            onLongPressItem = onLongPressItem,
+        )
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.spacedBy(2.dp),
         ) {
-            // Armor: slots 103 (head) → 100 (feet)
-            val armorSlots = listOf(103, 102, 101, 100)
-            armorSlots.forEach { slot ->
-                val item = player.armor.firstOrNull { it.slot == slot }
-                    ?: player.inventory.firstOrNull { it.slot == slot }
-                InventorySlotView(item = item)
-            }
-            Spacer(Modifier.width(16.dp))
-            // Offhand
-            InventorySlotView(item = player.offhand)
-        }
-
-        // Labels
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-        ) {
-            listOf("Head", "Chest", "Legs", "Feet").forEach {
+            listOf("Head", "Chest", "Legs", "Feet", "Off").forEach {
                 Text(
                     it,
-                    modifier = Modifier.width(48.dp),
+                    modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-            Spacer(Modifier.width(16.dp))
-            Text(
-                "Off",
-                modifier = Modifier.width(48.dp),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
         }
 
         // Hotbar (slots 0-8)
@@ -121,6 +135,8 @@ fun InventoryContent(playerData: PlayerData?, isOffline: Boolean = false) {
             startSlot = 0,
             endSlot = 8,
             columns = 9,
+            onTapItem = onTapItem,
+            onLongPressItem = onLongPressItem,
         )
 
         // Main inventory (slots 9-35)
@@ -130,6 +146,8 @@ fun InventoryContent(playerData: PlayerData?, isOffline: Boolean = false) {
             startSlot = 9,
             endSlot = 35,
             columns = 9,
+            onTapItem = onTapItem,
+            onLongPressItem = onLongPressItem,
         )
     }
 }
@@ -140,26 +158,50 @@ fun InventoryGrid(
     startSlot: Int,
     endSlot: Int,
     columns: Int,
+    onTapItem: ((ItemStack) -> Unit)? = null,
+    onLongPressItem: ((ItemStack) -> Unit)? = null,
 ) {
     val slotCount = endSlot - startSlot + 1
     val rows = (slotCount + columns - 1) / columns
 
-    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
         for (row in 0 until rows) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 for (col in 0 until columns) {
                     val slot = startSlot + row * columns + col
                     if (slot > endSlot) {
-                        Spacer(Modifier.size(48.dp))
+                        Spacer(Modifier.weight(1f))
                     } else {
                         val item = items.firstOrNull { it.slot == slot }
-                        InventorySlotView(item = item)
+                        InventorySlotView(
+                            item = item,
+                            modifier = Modifier.weight(1f),
+                            onTap = onTapItem,
+                            onLongPress = onLongPressItem,
+                        )
                     }
                 }
             }
         }
     }
 }
+
+@Composable
+private fun ItemNameBar(item: ItemStack, modifier: Modifier = Modifier) {
+    val name = item.customName ?: formatItemName(item.id)
+    val countText = if (item.count > 1) " x${item.count}" else ""
+    Text(
+        text = "$name$countText",
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.primary,
+    )
+}
+
+private fun formatItemName(id: String): String =
+    id.replace("_", " ").split(" ").joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
