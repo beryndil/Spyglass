@@ -124,7 +124,6 @@ a:hover { text-decoration: underline; }
   height: 96px;
   border-radius: 20px;
   margin: 0 auto 1.5rem;
-  box-shadow: 0 4px 24px rgba(201, 168, 76, 0.15);
 }
 .hero h1 {
   font-size: 2.5rem;
@@ -137,6 +136,92 @@ a:hover { text-decoration: underline; }
   max-width: 540px;
   margin: 0 auto;
 }
+
+/* ── Connect Hero ─────────────────────────────────── */
+.connect-hero {
+  padding: 5rem 1rem 3.5rem;
+  background: radial-gradient(ellipse at 50% 0%, rgba(171,71,188,0.12) 0%, transparent 70%);
+}
+.connect-hero .hero-icon {
+  box-shadow: 0 4px 32px rgba(171, 71, 188, 0.25);
+}
+.connect-accent { color: #AB47BC; }
+.hero-lead {
+  font-size: 1.35rem;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+.btn-connect {
+  background: #AB47BC;
+  color: #fff;
+}
+.btn-connect:hover { background: #9C27B0; }
+.btn-outline-connect {
+  border: 2px solid #AB47BC;
+  color: #AB47BC;
+  background: transparent;
+}
+.btn-outline-connect:hover {
+  background: #AB47BC;
+  color: #fff;
+}
+
+/* ── Steps Row ────────────────────────────────────── */
+.steps-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+@media (min-width: 640px) {
+  .steps-row { grid-template-columns: repeat(3, 1fr); }
+}
+.step-card {
+  text-align: center;
+  padding: 1.5rem;
+}
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #AB47BC;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
+}
+.step-card h3 {
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+.step-card p {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+/* ── Connect Cards ────────────────────────────────── */
+.connect-card h3 { color: #AB47BC; }
+.connect-card { border-color: rgba(171, 71, 188, 0.2); }
+
+/* ── Section Sub ──────────────────────────────────── */
+.section-sub {
+  text-align: center;
+  color: var(--text-dim);
+  max-width: 540px;
+  margin: -1rem auto 2rem;
+}
+.also-section { border-top: 1px solid var(--border); }
+.also-section .stats-bar { border: none; }
 
 /* ── Buttons ──────────────────────────────────────── */
 .btn {
