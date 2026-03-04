@@ -217,7 +217,9 @@ fun BrowseListItem(
         }
         if (trailing != null) {
             Spacer(Modifier.width(8.dp))
-            trailing()
+            Box(modifier = Modifier.widthIn(max = 140.dp)) {
+                trailing()
+            }
         }
     }
 }
