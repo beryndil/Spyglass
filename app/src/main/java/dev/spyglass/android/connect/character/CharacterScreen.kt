@@ -26,6 +26,7 @@ import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.client.ConnectionState
 import timber.log.Timber
 import dev.spyglass.android.connect.PlayerData
+import dev.spyglass.android.connect.gear.EnchantRecommendation
 import dev.spyglass.android.connect.gear.GearAnalysis
 import dev.spyglass.android.connect.gear.SlotAnalysis
 import dev.spyglass.android.connect.gear.SlotType
@@ -353,28 +354,13 @@ private fun GearSlotCard(
                 }
             }
 
-            // Missing enchants — muted chips
+            // Missing enchants — grouped recommendations
             if (slotAnalysis.missingEnchants.isNotEmpty()) {
                 Spacer(Modifier.height(4.dp))
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    slotAnalysis.missingEnchants.forEach { enchant ->
-                        Text(
-                            "+ ${enchant.name}",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier
-                                .background(
-                                    MaterialTheme.colorScheme.surfaceVariant,
-                                    RoundedCornerShape(4.dp),
-                                )
-                                .clickable { onBrowseEnchant(enchant.id) }
-                                .padding(horizontal = 6.dp, vertical = 2.dp),
-                        )
-                    }
-                }
+                EnchantRecommendations(
+                    recommendations = slotAnalysis.missingEnchants,
+                    onBrowseEnchant = onBrowseEnchant,
+                )
             }
 
             // Tier upgrade
@@ -431,6 +417,45 @@ private fun GearSlotCard(
                     )
                 }
             }
+
+            // Enchant recommendations for the suggested item
+            if (slotAnalysis.missingEnchants.isNotEmpty()) {
+                Spacer(Modifier.height(4.dp))
+                EnchantRecommendations(
+                    recommendations = slotAnalysis.missingEnchants,
+                    onBrowseEnchant = onBrowseEnchant,
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun EnchantRecommendations(
+    recommendations: List<EnchantRecommendation>,
+    onBrowseEnchant: (String) -> Unit,
+) {
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        recommendations.forEach { rec ->
+            val label = rec.enchants.joinToString(" / ") { e ->
+                if (e.maxLevel > 1) "${e.name} ${romanNumeral(e.maxLevel)}" else e.name
+            }
+            Text(
+                "+ $label",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .background(
+                        MaterialTheme.colorScheme.surfaceVariant,
+                        RoundedCornerShape(4.dp),
+                    )
+                    .clickable { onBrowseEnchant(rec.enchants.first().id) }
+                    .padding(horizontal = 6.dp, vertical = 2.dp),
+            )
         }
     }
 }

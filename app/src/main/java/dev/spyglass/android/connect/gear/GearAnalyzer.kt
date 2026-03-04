@@ -18,7 +18,7 @@ data class SlotAnalysis(
     val item: ItemStack?,
     val itemEntity: ItemEntity?,
     val currentEnchants: List<EnchantInfo>,
-    val missingEnchants: List<EnchantEntity>,
+    val missingEnchants: List<EnchantRecommendation>,
     val upgradeableEnchants: List<EnchantInfo>,
     val tierUpgrade: ItemEntity?,
 )
@@ -28,6 +28,11 @@ data class EnchantInfo(
     val name: String,
     val level: Int,
     val maxLevel: Int,
+)
+
+/** A group of enchant recommendations. Size 1 = standalone; 2+ = mutually exclusive (pick one). */
+data class EnchantRecommendation(
+    val enchants: List<EnchantEntity>,
 )
 
 object GearAnalyzer {
@@ -48,11 +53,11 @@ object GearAnalyzer {
     private val TOOL_SUFFIXES = listOf("sword", "pickaxe", "axe", "shovel", "hoe")
 
     private val DEFAULT_SUGGESTIONS = mapOf(
-        SlotType.HEAD to "diamond_helmet",
-        SlotType.CHEST to "diamond_chestplate",
-        SlotType.LEGS to "diamond_leggings",
-        SlotType.FEET to "diamond_boots",
-        SlotType.MAIN_HAND to "diamond_sword",
+        SlotType.HEAD to "netherite_helmet",
+        SlotType.CHEST to "netherite_chestplate",
+        SlotType.LEGS to "netherite_leggings",
+        SlotType.FEET to "netherite_boots",
+        SlotType.MAIN_HAND to "netherite_sword",
         SlotType.OFF_HAND to "shield",
     )
 
@@ -85,15 +90,19 @@ object GearAnalyzer {
         repo: GameDataRepository,
     ): SlotAnalysis {
         if (item == null) {
-            // Empty slot — suggest default
+            // Empty slot — suggest best-in-slot + all applicable enchants
             val suggestedId = DEFAULT_SUGGESTIONS[slotType]
             val suggestedItem = suggestedId?.let { repo.itemById(it) }
+            val recommendations = if (suggestedItem != null) {
+                val applicable = collectApplicableEnchants(suggestedItem, repo)
+                buildRecommendations(applicable)
+            } else emptyList()
             return SlotAnalysis(
                 slotType = slotType,
                 item = null,
                 itemEntity = null,
                 currentEnchants = emptyList(),
-                missingEnchants = emptyList(),
+                missingEnchants = recommendations,
                 upgradeableEnchants = emptyList(),
                 tierUpgrade = suggestedItem,
             )
@@ -120,7 +129,6 @@ object GearAnalyzer {
 
         val currentEnchants = mutableListOf<EnchantInfo>()
         val upgradeableEnchants = mutableListOf<EnchantInfo>()
-        val missingEnchants = mutableListOf<EnchantEntity>()
 
         // Classify present enchants
         for (enchData in item.enchantments) {
@@ -137,13 +145,8 @@ object GearAnalyzer {
             }
         }
 
-        // Find missing (applicable but absent, excluding curses and incompatible)
-        for (enchant in applicableEnchants) {
-            if (enchant.id in presentIds) continue
-            if (enchant.isCurse) continue
-            if (enchant.id in incompatibleIds) continue
-            missingEnchants.add(enchant)
-        }
+        // Build grouped recommendations for missing enchants
+        val missingEnchants = buildRecommendations(applicableEnchants, presentIds, incompatibleIds)
 
         val tierUpgrade = findTierUpgrade(item.id, slotType, repo)
 
@@ -183,6 +186,58 @@ object GearAnalyzer {
         } catch (_: Exception) {
             emptyList()
         }
+    }
+
+    private val RARITY_ORDER = mapOf(
+        "common" to 0,
+        "uncommon" to 1,
+        "rare" to 2,
+        "very_rare" to 3,
+    )
+
+    /**
+     * Build grouped enchant recommendations from applicable enchants.
+     * Groups mutually exclusive enchants together (e.g., Protection / Fire Prot / Blast Prot).
+     * Sorted by importance: common rarity first, non-treasure before treasure.
+     */
+    private fun buildRecommendations(
+        applicable: List<EnchantEntity>,
+        presentIds: Set<String> = emptySet(),
+        incompatibleWithPresent: Set<String> = emptySet(),
+    ): List<EnchantRecommendation> {
+        val candidates = applicable.filter {
+            !it.isCurse && it.id !in presentIds && it.id !in incompatibleWithPresent
+        }
+
+        val used = mutableSetOf<String>()
+        val groups = mutableListOf<EnchantRecommendation>()
+
+        // Sort: common (most essential) first, non-treasure before treasure, then by name
+        val sorted = candidates.sortedWith(compareBy(
+            { RARITY_ORDER[it.rarity] ?: 99 },
+            { if (it.isTreasure) 1 else 0 },
+            { it.name },
+        ))
+
+        for (enchant in sorted) {
+            if (enchant.id in used) continue
+            used.add(enchant.id)
+
+            // Find mutually exclusive alternatives
+            val incompatible = parseIncompatible(enchant.incompatibleJson)
+            val alts = incompatible
+                .mapNotNull { altId -> candidates.find { it.id == altId } }
+                .filter { it.id !in used }
+                .sortedBy { it.name }
+
+            alts.forEach { used.add(it.id) }
+
+            groups.add(EnchantRecommendation(
+                enchants = listOf(enchant) + alts,
+            ))
+        }
+
+        return groups
     }
 
     private suspend fun findTierUpgrade(
