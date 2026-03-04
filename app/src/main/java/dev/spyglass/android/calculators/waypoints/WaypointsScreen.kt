@@ -117,59 +117,62 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
     var showCreateDialog by remember { mutableStateOf(false) }
     var editingWaypoint by remember { mutableStateOf<WaypointEntity?>(null) }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            OutlinedTextField(
-                value = query, onValueChange = vm::setQuery,
-                placeholder = { Text("Search waypoints\u2026", color = MaterialTheme.colorScheme.secondary) },
-                leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
-                singleLine = true,
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
-                modifier = Modifier.weight(1f),
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        item {
+            TabIntroHeader(
+                icon = PixelIcons.Waypoints,
+                title = "Waypoints",
+                description = "Save and organize coordinates for your important Minecraft locations.",
+                stat = "${waypoints.size} waypoints",
             )
-            Spacer(Modifier.width(8.dp))
-            FilledTonalButton(
-                onClick = { showCreateDialog = true },
-                colors = ButtonDefaults.filledTonalButtonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f), contentColor = MaterialTheme.colorScheme.primary),
+        }
+
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(Icons.Default.Add, contentDescription = "New waypoint", modifier = Modifier.size(18.dp))
+                OutlinedTextField(
+                    value = query, onValueChange = vm::setQuery,
+                    placeholder = { Text("Search waypoints\u2026", color = MaterialTheme.colorScheme.secondary, maxLines = 1) },
+                    leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
+                    modifier = Modifier.weight(1f).heightIn(max = 52.dp),
+                )
+                Spacer(Modifier.width(8.dp))
+                FilledTonalButton(
+                    onClick = { showCreateDialog = true },
+                    colors = ButtonDefaults.filledTonalButtonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f), contentColor = MaterialTheme.colorScheme.primary),
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "New waypoint", modifier = Modifier.size(18.dp))
+                }
             }
         }
 
-        FlowRow(
-            modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            FilterChip(
-                selected = categoryFilter == "all",
-                onClick = { vm.setCategoryFilter("all") },
-                label = { Text(stringResource(R.string.all), style = MaterialTheme.typography.labelSmall) },
-            )
-            CATEGORIES.forEach { cat ->
+        item {
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
                 FilterChip(
-                    selected = categoryFilter == cat,
-                    onClick = { vm.setCategoryFilter(cat) },
-                    label = { Text(categoryLabel(cat), style = MaterialTheme.typography.labelSmall) },
+                    selected = categoryFilter == "all",
+                    onClick = { vm.setCategoryFilter("all") },
+                    label = { Text(stringResource(R.string.all), style = MaterialTheme.typography.labelSmall) },
                 )
+                CATEGORIES.forEach { cat ->
+                    FilterChip(
+                        selected = categoryFilter == cat,
+                        onClick = { vm.setCategoryFilter(cat) },
+                        label = { Text(categoryLabel(cat), style = MaterialTheme.typography.labelSmall) },
+                    )
+                }
             }
         }
-
-        LazyColumn(
-            contentPadding = PaddingValues(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            item {
-                TabIntroHeader(
-                    icon = PixelIcons.Waypoints,
-                    title = "Waypoints",
-                    description = "Save and organize coordinates for your important Minecraft locations.",
-                    stat = "${waypoints.size} waypoints",
-                )
-            }
 
             if (waypoints.isEmpty()) {
                 item {
@@ -222,7 +225,6 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
             }
             item { Spacer(Modifier.height(8.dp)) }
         }
-    }
 
     if (showCreateDialog) {
         WaypointDialog(
