@@ -51,14 +51,14 @@ object SkinManager {
         }
     }
 
-    /** Fetch full body render from Crafatar. */
-    suspend fun fetchBodyRender(uuid: String): Bitmap? {
-        if (uuid == cachedUuid && cachedBodyBitmap != null) return cachedBodyBitmap
+    /** Fetch full body render from Starlight SkinAPI. */
+    suspend fun fetchBodyRender(playerName: String): Bitmap? {
+        if (playerName == cachedPlayerName && cachedBodyBitmap != null) return cachedBodyBitmap
 
         return withContext(Dispatchers.IO) {
             try {
                 val request = Request.Builder()
-                    .url("https://crafatar.com/renders/body/$uuid?size=128&overlay")
+                    .url("https://starlightskins.lunareclipse.studio/render/default/$playerName/full")
                     .build()
                 client.newCall(request).execute().use { response ->
                     if (!response.isSuccessful) return@withContext null
@@ -70,7 +70,7 @@ object SkinManager {
                     bitmap
                 }
             } catch (e: Exception) {
-                Timber.d(e, "Failed to fetch body render for $uuid")
+                Timber.d(e, "Failed to fetch body render for $playerName")
                 null
             }
         }

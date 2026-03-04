@@ -101,10 +101,14 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 if (uuid != null) {
                     _playerName.value = data.playerName
                     _playerSkin.value = SkinManager.fetchSkin(uuid)
-                    _playerBodySkin.value = SkinManager.fetchBodyRender(uuid)
                     // Fall back to Mojang API if desktop didn't provide name
                     if (_playerName.value == null) {
                         _playerName.value = SkinManager.fetchPlayerName(uuid)
+                    }
+                    // Fetch body render using player name (Starlight SkinAPI)
+                    val name = _playerName.value
+                    if (name != null) {
+                        _playerBodySkin.value = SkinManager.fetchBodyRender(name)
                     }
                 } else {
                     _playerSkin.value = null
