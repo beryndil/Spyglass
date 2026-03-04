@@ -53,11 +53,11 @@ object GearAnalyzer {
     private val TOOL_SUFFIXES = listOf("sword", "pickaxe", "axe", "shovel", "hoe")
 
     private val DEFAULT_SUGGESTIONS = mapOf(
-        SlotType.HEAD to "netherite_helmet",
-        SlotType.CHEST to "netherite_chestplate",
-        SlotType.LEGS to "netherite_leggings",
-        SlotType.FEET to "netherite_boots",
-        SlotType.MAIN_HAND to "netherite_sword",
+        SlotType.HEAD to "leather_helmet",
+        SlotType.CHEST to "leather_chestplate",
+        SlotType.LEGS to "leather_leggings",
+        SlotType.FEET to "leather_boots",
+        SlotType.MAIN_HAND to "wooden_sword",
         SlotType.OFF_HAND to "shield",
     )
 
@@ -90,7 +90,7 @@ object GearAnalyzer {
         repo: GameDataRepository,
     ): SlotAnalysis {
         if (item == null) {
-            // Empty slot — suggest best-in-slot + all applicable enchants
+            // Empty slot — suggest first-tier gear + all applicable enchants
             val suggestedId = DEFAULT_SUGGESTIONS[slotType]
             val suggestedItem = suggestedId?.let { repo.itemById(it) }
             val recommendations = if (suggestedItem != null) {
@@ -269,12 +269,7 @@ object GearAnalyzer {
         val currentTier = tiers.indexOfFirst { itemId == "${it}_$suffix" }
         if (currentTier < 0 || currentTier >= tiers.lastIndex) return null
 
-        // Try the next tier up
-        for (i in (currentTier + 1)..tiers.lastIndex) {
-            val nextId = "${tiers[i]}_$suffix"
-            val nextItem = repo.itemById(nextId)
-            if (nextItem != null) return nextItem
-        }
-        return null
+        val nextId = "${tiers[currentTier + 1]}_$suffix"
+        return repo.itemById(nextId)
     }
 }
