@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ConnectViewModel
@@ -168,6 +169,7 @@ private fun CharacterContent(
 
             // Right side: IGN, UUID, then armor boxes
             Column(
+                modifier = Modifier.height(256.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 // IGN
@@ -184,9 +186,11 @@ private fun CharacterContent(
                     playerData.playerUuid ?: "—",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
                 )
 
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.weight(1f))
 
                 // Armor boxes
                 val armorSlotTypes = listOf(SlotType.HEAD, SlotType.CHEST, SlotType.LEGS, SlotType.FEET)
@@ -194,7 +198,7 @@ private fun CharacterContent(
                     val slotAnalysis = gearAnalysis?.slots?.find { it.slotType == slotType }
                     Box(
                         modifier = Modifier
-                            .size(48.dp)
+                            .size(44.dp)
                             .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(6.dp)),
                         contentAlignment = Alignment.Center,
                     ) {
