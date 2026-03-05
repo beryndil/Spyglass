@@ -106,8 +106,15 @@ class SpyglassApp : Application() {
                 }
             }
 
-            // Enroll periodic sync worker (every 12 hours, requires network)
-            DataSyncWorker.enqueue(this)
+            // Enroll periodic sync worker — respect saved frequency and offline mode
+            val syncPrefs = kotlinx.coroutines.runBlocking {
+                dataStore.data.first()
+            }
+            val offlineMode = syncPrefs[PreferenceKeys.OFFLINE_MODE] ?: false
+            if (!offlineMode) {
+                val hours = syncPrefs[PreferenceKeys.SYNC_FREQUENCY_HOURS] ?: 12
+                DataSyncWorker.enqueue(this, hours)
+            }
         } finally {
             Trace.endSection()
         }
