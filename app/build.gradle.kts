@@ -121,6 +121,7 @@ play {
         serviceAccountCredentials.set(file(saPath))
     }
     track.set("internal")
+    releaseStatus.set(com.github.triplet.gradle.androidpublisher.ReleaseStatus.DRAFT)
     defaultToAppBundles.set(true)
 }
 
