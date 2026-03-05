@@ -27,6 +27,13 @@ object PreferenceKeys {
     val CONSENT_SHOWN           = booleanPreferencesKey("consent_shown")
     val AD_PERSONALIZATION_CONSENT = booleanPreferencesKey("ad_personalization_consent")
 
+    // Appearance & Accessibility
+    val HAPTIC_FEEDBACK         = booleanPreferencesKey("haptic_feedback")
+    val REDUCE_ANIMATIONS       = booleanPreferencesKey("reduce_animations")
+
+    // Data & Sync
+    val SYNC_FREQUENCY_HOURS    = intPreferencesKey("sync_frequency_hours")
+
     // Spyglass Connect
     val CONNECT_PAIRED_DEVICE   = stringPreferencesKey("connect_paired_device")
     val CONNECT_AUTO_RECONNECT  = booleanPreferencesKey("connect_auto_reconnect")

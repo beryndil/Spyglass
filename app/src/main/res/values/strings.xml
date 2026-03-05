@@ -99,6 +99,32 @@
     <string name="settings_delete_data_message">This will permanently delete all your todos, notes, waypoints, shopping lists, favorites, and advancement progress. This cannot be undone.</string>
     <string name="settings_delete_data_confirm">Delete Everything</string>
 
+    <!-- Settings — Appearance -->
+    <string name="settings_haptic_feedback">Haptic Feedback</string>
+    <string name="settings_haptic_feedback_desc">Vibrate on taps and interactions</string>
+    <string name="settings_reduce_animations">Reduce Animations</string>
+    <string name="settings_reduce_animations_desc">Minimize motion throughout the app</string>
+
+    <!-- Settings — Data & Storage -->
+    <string name="settings_data_storage">Data &amp; Storage</string>
+    <string name="settings_sync_frequency">Sync Frequency</string>
+    <string name="settings_sync_frequency_desc">How often to check for updated game data</string>
+    <string name="settings_clear_cache">Clear Image Cache</string>
+    <string name="settings_clear_cache_desc">Free up space by removing cached textures</string>
+    <string name="settings_cache_cleared">Cache cleared</string>
+    <string name="settings_storage_usage">Storage Usage</string>
+
+    <!-- Settings — Quick Links -->
+    <string name="settings_quick_links">Quick Links</string>
+    <string name="settings_rate_app">Rate on Play Store</string>
+    <string name="settings_rate_app_desc">Leave a review to support Spyglass</string>
+    <string name="settings_send_feedback">Send Feedback</string>
+    <string name="settings_send_feedback_desc">Report bugs or request features</string>
+    <string name="settings_about">About Spyglass</string>
+    <string name="settings_about_desc">Version info, credits, and licenses</string>
+    <string name="settings_app_permissions">App Permissions</string>
+    <string name="settings_app_permissions_desc">Review permissions in system settings</string>
+
     <!-- About Screen -->
     <string name="about_app_title">Spyglass</string>
     <string name="about_version">v%s</string>

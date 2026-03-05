@@ -6,11 +6,14 @@ import androidx.lifecycle.viewModelScope
 import dev.spyglass.android.core.FirebaseHelper
 import dev.spyglass.android.core.VersionFilterState
 import dev.spyglass.android.core.ui.DEFAULT_THEME
+import dev.spyglass.android.core.ui.TextureManager
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.data.sync.DataSyncWorker
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.io.File
 
 class SettingsViewModel(app: Application) : AndroidViewModel(app) {
     private val store = app.dataStore
@@ -131,5 +134,43 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun deleteAllUserData() = viewModelScope.launch {
         repo.deleteAllUserData()
+    }
+
+    // Appearance & Accessibility
+    val hapticFeedback: StateFlow<Boolean> = store.data
+        .map { it[PreferenceKeys.HAPTIC_FEEDBACK] ?: true }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
+
+    val reduceAnimations: StateFlow<Boolean> = store.data
+        .map { it[PreferenceKeys.REDUCE_ANIMATIONS] ?: false }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    fun setHapticFeedback(enabled: Boolean) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.HAPTIC_FEEDBACK] = enabled }
+    }
+
+    fun setReduceAnimations(enabled: Boolean) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.REDUCE_ANIMATIONS] = enabled }
+    }
+
+    // Data & Sync
+    val syncFrequencyHours: StateFlow<Int> = store.data
+        .map { it[PreferenceKeys.SYNC_FREQUENCY_HOURS] ?: 12 }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 12)
+
+    fun setSyncFrequencyHours(hours: Int) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.SYNC_FREQUENCY_HOURS] = hours }
+        DataSyncWorker.enqueue(getApplication(), hours)
+    }
+
+    /** Returns total size of downloaded textures in bytes. */
+    fun getTextureStorageBytes(): Long {
+        val dir = File(getApplication<Application>().filesDir, "textures")
+        if (!dir.exists()) return 0L
+        return dir.walkTopDown().filter { it.isFile }.sumOf { it.length() }
+    }
+
+    fun clearTextureCache() = viewModelScope.launch {
+        TextureManager.delete(getApplication())
     }
 }

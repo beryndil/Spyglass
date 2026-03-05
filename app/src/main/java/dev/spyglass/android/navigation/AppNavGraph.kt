@@ -187,6 +187,12 @@ fun AppNavGraph() {
                         navController.popBackStack()
                         navigateTo(TopDest.Calculators.route)
                     },
+                    onAbout = {
+                        navController.navigate("about") { launchSingleTop = true }
+                    },
+                    onFeedback = {
+                        navController.navigate("feedback") { launchSingleTop = true }
+                    },
                 )
             }
             composable("changelog") { ChangelogScreen(onBack = { navController.popBackStack() }) }

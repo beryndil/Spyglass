@@ -1,5 +1,8 @@
 package dev.spyglass.android.settings
 
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -14,10 +17,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.ui.platform.LocalUriHandler
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
@@ -46,11 +50,19 @@ private fun toolTabNames() = listOf(
     stringResource(R.string.calc_tab_loot),
 )
 
+private fun formatBytes(bytes: Long): String = when {
+    bytes < 1024 -> "$bytes B"
+    bytes < 1024 * 1024 -> "%.1f KB".format(bytes / 1024.0)
+    else -> "%.1f MB".format(bytes / (1024.0 * 1024.0))
+}
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SettingsScreen(
     onBack: () -> Unit = {},
     onCalcTab: (Int) -> Unit = {},
+    onAbout: () -> Unit = {},
+    onFeedback: () -> Unit = {},
     vm: SettingsViewModel = viewModel(),
 ) {
     val defaultBrowseTab    by vm.defaultBrowseTab.collectAsStateWithLifecycle()
@@ -66,11 +78,17 @@ fun SettingsScreen(
     val analyticsConsent    by vm.analyticsConsent.collectAsStateWithLifecycle()
     val crashConsent        by vm.crashConsent.collectAsStateWithLifecycle()
     val adPersonalizationConsent by vm.adPersonalizationConsent.collectAsStateWithLifecycle()
+    val hapticFeedback      by vm.hapticFeedback.collectAsStateWithLifecycle()
+    val reduceAnimations    by vm.reduceAnimations.collectAsStateWithLifecycle()
+    val syncFrequencyHours  by vm.syncFrequencyHours.collectAsStateWithLifecycle()
+    val textureState        by TextureManager.state.collectAsStateWithLifecycle()
 
     val uriHandler = LocalUriHandler.current
+    val context = LocalContext.current
 
     var showDeleteConfirm by remember { mutableStateOf(false) }
     var versionExpanded by remember { mutableStateOf(false) }
+    var storageBytes by remember { mutableStateOf(vm.getTextureStorageBytes()) }
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -248,51 +266,37 @@ fun SettingsScreen(
             }
         }
 
-        // ── Toggles ─────────────────────────────────────────────────────
+        // ── Display Toggles ─────────────────────────────────────────────
         item(key = "display") {
             SectionHeader(stringResource(R.string.settings_display))
             ResultCard {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(stringResource(R.string.settings_tip_of_day), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                        Text(stringResource(R.string.settings_tip_of_day_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
-                    }
-                    Switch(
-                        checked = showTipOfDay,
-                        onCheckedChange = vm::setShowTipOfDay,
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = MaterialTheme.colorScheme.primary,
-                            checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                            uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                            uncheckedTrackColor = MaterialTheme.colorScheme.outline,
-                        ),
-                    )
-                }
+                SettingsToggle(
+                    title = stringResource(R.string.settings_tip_of_day),
+                    description = stringResource(R.string.settings_tip_of_day_desc),
+                    checked = showTipOfDay,
+                    onCheckedChange = vm::setShowTipOfDay,
+                )
                 SpyglassDivider()
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(stringResource(R.string.settings_favorites_on_home), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                        Text(stringResource(R.string.settings_favorites_on_home_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
-                    }
-                    Switch(
-                        checked = showFavoritesOnHome,
-                        onCheckedChange = vm::setShowFavoritesOnHome,
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = MaterialTheme.colorScheme.primary,
-                            checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                            uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                            uncheckedTrackColor = MaterialTheme.colorScheme.outline,
-                        ),
-                    )
-                }
+                SettingsToggle(
+                    title = stringResource(R.string.settings_favorites_on_home),
+                    description = stringResource(R.string.settings_favorites_on_home_desc),
+                    checked = showFavoritesOnHome,
+                    onCheckedChange = vm::setShowFavoritesOnHome,
+                )
+                SpyglassDivider()
+                SettingsToggle(
+                    title = stringResource(R.string.settings_haptic_feedback),
+                    description = stringResource(R.string.settings_haptic_feedback_desc),
+                    checked = hapticFeedback,
+                    onCheckedChange = vm::setHapticFeedback,
+                )
+                SpyglassDivider()
+                SettingsToggle(
+                    title = stringResource(R.string.settings_reduce_animations),
+                    description = stringResource(R.string.settings_reduce_animations_desc),
+                    checked = reduceAnimations,
+                    onCheckedChange = vm::setReduceAnimations,
+                )
             }
         }
 
@@ -300,26 +304,12 @@ fun SettingsScreen(
         item(key = "clock") {
             SectionHeader(stringResource(R.string.settings_game_clock))
             ResultCard {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(stringResource(R.string.settings_game_clock), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                        Text(stringResource(R.string.settings_game_clock_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
-                    }
-                    Switch(
-                        checked = gameClockEnabled,
-                        onCheckedChange = vm::setGameClockEnabled,
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = MaterialTheme.colorScheme.primary,
-                            checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                            uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                            uncheckedTrackColor = MaterialTheme.colorScheme.outline,
-                        ),
-                    )
-                }
+                SettingsToggle(
+                    title = stringResource(R.string.settings_game_clock),
+                    description = stringResource(R.string.settings_game_clock_desc),
+                    checked = gameClockEnabled,
+                    onCheckedChange = vm::setGameClockEnabled,
+                )
                 SpyglassDivider()
                 Text(
                     stringResource(R.string.settings_configure_clock),
@@ -327,6 +317,60 @@ fun SettingsScreen(
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable { onCalcTab(9) },
                 )
+            }
+        }
+
+        // ── Data & Storage ────────────────────────────────────────────────
+        item(key = "data_storage") {
+            SectionHeader(stringResource(R.string.settings_data_storage))
+            ResultCard {
+                // Sync frequency
+                Text(
+                    stringResource(R.string.settings_sync_frequency),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    stringResource(R.string.settings_sync_frequency_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    val options = listOf(1 to "1h", 6 to "6h", 12 to "12h", 24 to "24h")
+                    options.forEach { (hours, label) ->
+                        FilterChip(
+                            selected = syncFrequencyHours == hours,
+                            onClick = { vm.setSyncFrequencyHours(hours) },
+                            label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                        )
+                    }
+                }
+
+                SpyglassDivider()
+
+                // Storage usage
+                Text(
+                    stringResource(R.string.settings_storage_usage),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    "Downloaded textures: ${formatBytes(storageBytes)}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                if (textureState == TextureManager.TextureState.DOWNLOADED) {
+                    Spacer(Modifier.height(4.dp))
+                    TextButton(onClick = {
+                        vm.clearTextureCache()
+                        storageBytes = 0L
+                    }) {
+                        Text(stringResource(R.string.settings_clear_cache), color = MaterialTheme.colorScheme.primary)
+                    }
+                }
             }
         }
 
@@ -397,68 +441,26 @@ fun SettingsScreen(
         item(key = "privacy") {
             SectionHeader(stringResource(R.string.settings_privacy))
             ResultCard {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(stringResource(R.string.consent_analytics), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                        Text(stringResource(R.string.consent_analytics_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
-                    }
-                    Switch(
-                        checked = analyticsConsent,
-                        onCheckedChange = vm::setAnalyticsConsent,
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = MaterialTheme.colorScheme.primary,
-                            checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                            uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                            uncheckedTrackColor = MaterialTheme.colorScheme.outline,
-                        ),
-                    )
-                }
+                SettingsToggle(
+                    title = stringResource(R.string.consent_analytics),
+                    description = stringResource(R.string.consent_analytics_desc),
+                    checked = analyticsConsent,
+                    onCheckedChange = vm::setAnalyticsConsent,
+                )
                 SpyglassDivider()
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(stringResource(R.string.consent_crash_reports), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                        Text(stringResource(R.string.consent_crash_reports_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
-                    }
-                    Switch(
-                        checked = crashConsent,
-                        onCheckedChange = vm::setCrashConsent,
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = MaterialTheme.colorScheme.primary,
-                            checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                            uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                            uncheckedTrackColor = MaterialTheme.colorScheme.outline,
-                        ),
-                    )
-                }
+                SettingsToggle(
+                    title = stringResource(R.string.consent_crash_reports),
+                    description = stringResource(R.string.consent_crash_reports_desc),
+                    checked = crashConsent,
+                    onCheckedChange = vm::setCrashConsent,
+                )
                 SpyglassDivider()
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(stringResource(R.string.consent_personalized_ads), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                        Text(stringResource(R.string.consent_personalized_ads_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
-                    }
-                    Switch(
-                        checked = adPersonalizationConsent,
-                        onCheckedChange = vm::setAdPersonalizationConsent,
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = MaterialTheme.colorScheme.primary,
-                            checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                            uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                            uncheckedTrackColor = MaterialTheme.colorScheme.outline,
-                        ),
-                    )
-                }
+                SettingsToggle(
+                    title = stringResource(R.string.consent_personalized_ads),
+                    description = stringResource(R.string.consent_personalized_ads_desc),
+                    checked = adPersonalizationConsent,
+                    onCheckedChange = vm::setAdPersonalizationConsent,
+                )
                 SpyglassDivider()
                 TextButton(onClick = { showDeleteConfirm = true }) {
                     Text(stringResource(R.string.settings_delete_data), color = Red400)
@@ -471,6 +473,87 @@ fun SettingsScreen(
                     modifier = Modifier.clickable {
                         uriHandler.openUri("https://dev-vulx.github.io/Spyglass/privacy-policy.html")
                     },
+                )
+            }
+        }
+
+        // ── Quick Links ──────────────────────────────────────────────────
+        item(key = "quick_links") {
+            SectionHeader(stringResource(R.string.settings_quick_links))
+            ResultCard {
+                Text(
+                    text = stringResource(R.string.settings_rate_app),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            uriHandler.openUri("https://play.google.com/store/apps/details?id=dev.spyglass.android")
+                        }
+                        .padding(vertical = 6.dp),
+                )
+                Text(
+                    stringResource(R.string.settings_rate_app_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+
+                SpyglassDivider()
+
+                Text(
+                    text = stringResource(R.string.settings_send_feedback),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onFeedback() }
+                        .padding(vertical = 6.dp),
+                )
+                Text(
+                    stringResource(R.string.settings_send_feedback_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+
+                SpyglassDivider()
+
+                Text(
+                    text = stringResource(R.string.settings_about),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onAbout() }
+                        .padding(vertical = 6.dp),
+                )
+                Text(
+                    stringResource(R.string.settings_about_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+
+                SpyglassDivider()
+
+                Text(
+                    text = stringResource(R.string.settings_app_permissions),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            context.startActivity(
+                                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                    data = Uri.fromParts("package", context.packageName, null)
+                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                }
+                            )
+                        }
+                        .padding(vertical = 6.dp),
+                )
+                Text(
+                    stringResource(R.string.settings_app_permissions_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
                 )
             }
         }
@@ -502,6 +585,35 @@ fun SettingsScreen(
                 }
             },
             containerColor = MaterialTheme.colorScheme.surface,
+        )
+    }
+}
+
+@Composable
+private fun SettingsToggle(
+    title: String,
+    description: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(title, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+            Text(description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+        }
+        Switch(
+            checked = checked,
+            onCheckedChange = onCheckedChange,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = MaterialTheme.colorScheme.primary,
+                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
+                uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
+                uncheckedTrackColor = MaterialTheme.colorScheme.outline,
+            ),
         )
     }
 }
