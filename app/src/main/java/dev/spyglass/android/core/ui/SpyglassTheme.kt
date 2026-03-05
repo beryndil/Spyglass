@@ -198,6 +198,17 @@ val ThemePresets: Map<String, SpyglassColors> = mapOf(
         onSurfaceVariant = Color(0xFF544B5A),
         onSurface       = Color(0xFF28222E),
     ),
+    "pink" to buildTheme(
+        isDark          = false,
+        bg              = Color(0xFFFCEFF5),
+        surface         = Color(0xFFF2E3EB),
+        surfaceVariant  = Color(0xFFE8D7DF),
+        surfaceCard     = Color(0xFFEDDDE5),
+        outline         = Color(0xFFCFBFC7),
+        secondary       = Color(0xFF7A6670),
+        onSurfaceVariant = Color(0xFF5E4A54),
+        onSurface       = Color(0xFF2E1E26),
+    ),
     "sandstone" to buildTheme(
         isDark          = false,
         bg              = Color(0xFFE8DCC8),
@@ -282,12 +293,13 @@ val ThemeInfoMap: Map<String, ThemeInfo> = mapOf(
     "sandstone"   to ThemeInfo("Sandstone",   Color(0xFFE8DCC8), isDark = false),
     "cherry"      to ThemeInfo("Cherry",      Color(0xFFF5E8EE), isDark = false),
     "amethyst"    to ThemeInfo("Amethyst",    Color(0xFFEDE4F2), isDark = false),
+    "pink"        to ThemeInfo("Pink",        Color(0xFFFCEFF5), isDark = false),
 )
 
 val ThemeOrder = listOf(
     "obsidian", "deepslate", "spruce", "warped", "crimson",
     "prismarine", "copper", "mycelium", "chorus", "shulker",
-    "end_stone", "birch", "sandstone", "cherry", "amethyst",
+    "end_stone", "birch", "sandstone", "cherry", "amethyst", "pink",
 )
 
 const val DEFAULT_THEME = "obsidian"

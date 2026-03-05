@@ -69,14 +69,12 @@ fun CalculatorsScreen(
         context.dataStore.data.map { it[PreferenceKeys.DEFAULT_TOOL_TAB] ?: 0 }
     }.collectAsStateWithLifecycle(initialValue = 0)
 
-    var selectedTab by remember { mutableIntStateOf(initialTab ?: 0) }
+    var selectedTab by remember { mutableIntStateOf(initialTab ?: defaultTab) }
 
-    // Apply default from prefs only once on first composition when no explicit initialTab
-    var defaultApplied by remember { mutableStateOf(false) }
+    // Apply default from prefs when no explicit initialTab
     LaunchedEffect(defaultTab) {
-        if (!defaultApplied && initialTab == null) {
+        if (initialTab == null) {
             selectedTab = defaultTab
-            defaultApplied = true
         }
     }
 

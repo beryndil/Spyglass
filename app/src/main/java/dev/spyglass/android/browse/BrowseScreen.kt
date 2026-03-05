@@ -64,14 +64,12 @@ fun BrowseScreen(
         context.dataStore.data.map { it[PreferenceKeys.DEFAULT_BROWSE_TAB] ?: 0 }
     }.collectAsStateWithLifecycle(initialValue = 0)
 
-    var tab by remember { mutableIntStateOf(initialTarget?.tab ?: 0) }
+    var tab by remember { mutableIntStateOf(initialTarget?.tab ?: defaultTab) }
 
-    // Apply default from prefs only once on first composition when no explicit initialTarget
-    var defaultApplied by remember { mutableStateOf(false) }
+    // Apply default from prefs when no explicit initialTarget
     LaunchedEffect(defaultTab) {
-        if (!defaultApplied && initialTarget == null) {
+        if (initialTarget == null) {
             tab = defaultTab
-            defaultApplied = true
         }
     }
 
