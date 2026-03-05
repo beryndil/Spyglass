@@ -169,7 +169,7 @@ private fun CharacterContent(
                     )
                 } else {
                     SpyglassIconImage(
-                        PixelIcons.Mob,
+                        PixelIcons.Steve,
                         contentDescription = "Player",
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(48.dp),
