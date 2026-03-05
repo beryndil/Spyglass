@@ -19,3 +19,6 @@ sdk.dir=/home/YOUR_USERNAME/Android/Sdk
 # AdMob (defaults to test IDs if omitted — set these for production builds):
 # ADMOB_APP_ID=ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX
 # ADMOB_BANNER_ID=ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX
+
+# Google Play API (for automated publishing via Gradle Play Publisher):
+# PLAY_SERVICE_ACCOUNT_JSON=/path/to/service-account-key.json

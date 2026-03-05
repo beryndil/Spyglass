@@ -14,6 +14,7 @@ plugins {
     alias(libs.plugins.firebase.perf) apply false
     alias(libs.plugins.baselineprofile)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.play.publisher)
 }
 
 // Conditionally apply Firebase plugins when google-services.json exists
@@ -112,6 +113,15 @@ android {
 
 baselineProfile {
     automaticGenerationDuringBuild = false
+}
+
+play {
+    val saPath = localProps.getProperty("PLAY_SERVICE_ACCOUNT_JSON", "")
+    if (saPath.isNotBlank()) {
+        serviceAccountCredentials.set(file(saPath))
+    }
+    track.set("internal")
+    defaultToAppBundles.set(true)
 }
 
 dependencies {
