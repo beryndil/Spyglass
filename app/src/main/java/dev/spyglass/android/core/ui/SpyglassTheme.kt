@@ -266,6 +266,17 @@ val ThemePresets: Map<String, SpyglassColors> = mapOf(
         onSurfaceVariant = Color(0xFFB8A6AE),
         onSurface       = Color(0xFFE4D4DC),
     ),
+    "magenta" to buildTheme(
+        isDark          = true,
+        bg              = Color(0xFF2A0E22),
+        surface         = Color(0xFF3A1C32),
+        surfaceVariant  = Color(0xFF4A2A42),
+        surfaceCard     = Color(0xFF42223A),
+        outline         = Color(0xFF5E3852),
+        secondary       = Color(0xFF8E6882),
+        onSurfaceVariant = Color(0xFFBE98B2),
+        onSurface       = Color(0xFFEED4E6),
+    ),
     "shulker" to buildTheme(
         isDark          = true,
         bg              = Color(0xFF302840),
@@ -289,6 +300,7 @@ val ThemeInfoMap: Map<String, ThemeInfo> = mapOf(
     "copper"      to ThemeInfo("Copper",      Color(0xFF342A20), isDark = true),
     "mycelium"    to ThemeInfo("Mycelium",    Color(0xFF2E2832), isDark = true),
     "chorus"      to ThemeInfo("Chorus",      Color(0xFF3A2832), isDark = true),
+    "magenta"     to ThemeInfo("Magenta",     Color(0xFF2A0E22), isDark = true),
     "shulker"     to ThemeInfo("Shulker",     Color(0xFF302840), isDark = true),
     "end_stone"   to ThemeInfo("End Stone",   Color(0xFFF0EBE0), isDark = false),
     "birch"       to ThemeInfo("Birch",       Color(0xFFF5F2EB), isDark = false),
@@ -300,7 +312,7 @@ val ThemeInfoMap: Map<String, ThemeInfo> = mapOf(
 
 val ThemeOrder = listOf(
     "obsidian", "deepslate", "spruce", "warped", "crimson",
-    "prismarine", "copper", "mycelium", "chorus", "shulker",
+    "prismarine", "copper", "mycelium", "chorus", "magenta", "shulker",
     "end_stone", "birch", "sandstone", "cherry", "amethyst", "pink",
 )
 
