@@ -104,6 +104,19 @@
     <string name="settings_haptic_feedback_desc">Vibrate on taps and interactions</string>
     <string name="settings_reduce_animations">Reduce Animations</string>
     <string name="settings_reduce_animations_desc">Minimize motion throughout the app</string>
+    <string name="settings_dynamic_color">Dynamic Color</string>
+    <string name="settings_dynamic_color_desc">Use your wallpaper colors (Android 12+)</string>
+    <string name="settings_high_contrast">High Contrast</string>
+    <string name="settings_high_contrast_desc">Increase contrast for better readability</string>
+    <string name="settings_startup_tab">Default Startup Screen</string>
+    <string name="settings_startup_tab_desc">Which screen opens when you launch the app</string>
+
+    <!-- Settings — Security -->
+    <string name="settings_security">Security</string>
+    <string name="settings_app_lock">App Lock</string>
+    <string name="settings_app_lock_desc">Require biometric or PIN to open the app</string>
+    <string name="settings_app_lock_title">Unlock Spyglass</string>
+    <string name="settings_app_lock_subtitle">Authenticate to continue</string>
 
     <!-- Settings — Data & Storage -->
     <string name="settings_data_storage">Data &amp; Storage</string>
@@ -113,6 +126,8 @@
     <string name="settings_clear_cache_desc">Free up space by removing cached textures</string>
     <string name="settings_cache_cleared">Cache cleared</string>
     <string name="settings_storage_usage">Storage Usage</string>
+    <string name="settings_offline_mode">Offline Mode</string>
+    <string name="settings_offline_mode_desc">Disable background data sync</string>
 
     <!-- Settings — Quick Links -->
     <string name="settings_quick_links">Quick Links</string>
@@ -122,6 +137,8 @@
     <string name="settings_send_feedback_desc">Report bugs or request features</string>
     <string name="settings_about">About Spyglass</string>
     <string name="settings_about_desc">Version info, credits, and licenses</string>
+    <string name="settings_changelog">View Changelog</string>
+    <string name="settings_changelog_desc">See what changed in recent updates</string>
     <string name="settings_app_permissions">App Permissions</string>
     <string name="settings_app_permissions_desc">Review permissions in system settings</string>
 

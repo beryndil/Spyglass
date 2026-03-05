@@ -145,6 +145,18 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         .map { it[PreferenceKeys.REDUCE_ANIMATIONS] ?: false }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
 
+    val dynamicColor: StateFlow<Boolean> = store.data
+        .map { it[PreferenceKeys.DYNAMIC_COLOR] ?: false }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    val highContrast: StateFlow<Boolean> = store.data
+        .map { it[PreferenceKeys.HIGH_CONTRAST] ?: false }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    val defaultStartupTab: StateFlow<Int> = store.data
+        .map { it[PreferenceKeys.DEFAULT_STARTUP_TAB] ?: 0 }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+
     fun setHapticFeedback(enabled: Boolean) = viewModelScope.launch {
         store.edit { it[PreferenceKeys.HAPTIC_FEEDBACK] = enabled }
     }
@@ -153,14 +165,48 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         store.edit { it[PreferenceKeys.REDUCE_ANIMATIONS] = enabled }
     }
 
+    fun setDynamicColor(enabled: Boolean) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.DYNAMIC_COLOR] = enabled }
+    }
+
+    fun setHighContrast(enabled: Boolean) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.HIGH_CONTRAST] = enabled }
+    }
+
+    fun setDefaultStartupTab(tab: Int) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.DEFAULT_STARTUP_TAB] = tab }
+    }
+
+    // Security
+    val appLockEnabled: StateFlow<Boolean> = store.data
+        .map { it[PreferenceKeys.APP_LOCK_ENABLED] ?: false }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    fun setAppLockEnabled(enabled: Boolean) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.APP_LOCK_ENABLED] = enabled }
+    }
+
     // Data & Sync
     val syncFrequencyHours: StateFlow<Int> = store.data
         .map { it[PreferenceKeys.SYNC_FREQUENCY_HOURS] ?: 12 }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 12)
 
+    val offlineMode: StateFlow<Boolean> = store.data
+        .map { it[PreferenceKeys.OFFLINE_MODE] ?: false }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
     fun setSyncFrequencyHours(hours: Int) = viewModelScope.launch {
         store.edit { it[PreferenceKeys.SYNC_FREQUENCY_HOURS] = hours }
         DataSyncWorker.enqueue(getApplication(), hours)
+    }
+
+    fun setOfflineMode(enabled: Boolean) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.OFFLINE_MODE] = enabled }
+        if (enabled) {
+            DataSyncWorker.cancel(getApplication())
+        } else {
+            DataSyncWorker.enqueue(getApplication(), syncFrequencyHours.value)
+        }
     }
 
     /** Returns total size of downloaded textures in bytes. */

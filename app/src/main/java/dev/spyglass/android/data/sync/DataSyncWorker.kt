@@ -49,5 +49,10 @@ class DataSyncWorker(
 
             Timber.d("DataSyncWorker: periodic sync enrolled (every %dh)", intervalHours)
         }
+
+        fun cancel(context: Context) {
+            WorkManager.getInstance(context).cancelUniqueWork(WORK_NAME)
+            Timber.d("DataSyncWorker: periodic sync cancelled (offline mode)")
+        }
     }
 }

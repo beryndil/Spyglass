@@ -191,6 +191,10 @@ dependencies {
     implementation(libs.camerax.lifecycle)
     implementation(libs.camerax.view)
 
+    // Biometric
+    implementation(libs.biometric)
+    implementation(libs.appcompat)
+
     // Baseline Profiles
     implementation(libs.profileinstaller)
 

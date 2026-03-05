@@ -1,10 +1,12 @@
 package dev.spyglass.android.core.ui
 
+import android.os.Build
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
@@ -305,16 +307,58 @@ val ThemeOrder = listOf(
 const val DEFAULT_THEME = "obsidian"
 
 @Composable
-fun SpyglassTheme(theme: String = DEFAULT_THEME, isWideScreen: Boolean = false, content: @Composable () -> Unit) {
+fun SpyglassTheme(
+    theme: String = DEFAULT_THEME,
+    isWideScreen: Boolean = false,
+    dynamicColor: Boolean = false,
+    highContrast: Boolean = false,
+    content: @Composable () -> Unit,
+) {
     val colors = ThemePresets[theme] ?: ThemePresets.getValue(DEFAULT_THEME)
+    val isDark = ThemeInfoMap[theme]?.isDark ?: true
+
+    val scheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val ctx = LocalContext.current
+            val dynamic = if (isDark) dynamicDarkColorScheme(ctx) else dynamicLightColorScheme(ctx)
+            if (highContrast) applyHighContrast(dynamic, isDark) else dynamic
+        }
+        highContrast -> applyHighContrast(colors.scheme, isDark)
+        else -> colors.scheme
+    }
+
+    val cardColor = if (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        scheme.surfaceVariant
+    } else {
+        colors.surfaceCard
+    }
+
     CompositionLocalProvider(
-        LocalSurfaceCard provides colors.surfaceCard,
+        LocalSurfaceCard provides cardColor,
         LocalIsWideScreen provides isWideScreen,
     ) {
         MaterialTheme(
-            colorScheme = colors.scheme,
+            colorScheme = scheme,
             typography  = SpyglassTypography,
             content     = content,
+        )
+    }
+}
+
+private fun applyHighContrast(scheme: ColorScheme, isDark: Boolean): ColorScheme {
+    return if (isDark) {
+        scheme.copy(
+            onSurface = Color.White,
+            onSurfaceVariant = Color(0xFFE0E0E0),
+            onBackground = Color.White,
+            outline = Color(0xFF888888),
+        )
+    } else {
+        scheme.copy(
+            onSurface = Color.Black,
+            onSurfaceVariant = Color(0xFF1A1A1A),
+            onBackground = Color.Black,
+            outline = Color(0xFF555555),
         )
     }
 }

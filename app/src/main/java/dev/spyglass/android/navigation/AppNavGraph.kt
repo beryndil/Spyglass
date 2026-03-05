@@ -70,6 +70,20 @@ data class BrowseTarget(val tab: Int, val id: String)
 @Composable
 fun AppNavGraph() {
     val context = LocalContext.current
+
+    val defaultStartupTab by remember {
+        context.dataStore.data.map { it[PreferenceKeys.DEFAULT_STARTUP_TAB] ?: 0 }
+    }.collectAsStateWithLifecycle(initialValue = 0)
+
+    val startDest = remember(defaultStartupTab) {
+        when (defaultStartupTab) {
+            1 -> TopDest.Browse.route
+            2 -> TopDest.Calculators.route
+            3 -> TopDest.Search.route
+            else -> TopDest.Home.route
+        }
+    }
+
     val navController = remember {
         NavHostController(context).apply {
             navigatorProvider.addNavigator(ComposeNavigator())
@@ -112,7 +126,7 @@ fun AppNavGraph() {
     ) { innerPadding ->
         NavHost(
             navController    = navController,
-            startDestination = TopDest.Home.route,
+            startDestination = startDest,
             modifier         = Modifier.padding(innerPadding),
         ) {
             composable(TopDest.Home.route) {
@@ -192,6 +206,9 @@ fun AppNavGraph() {
                     },
                     onFeedback = {
                         navController.navigate("feedback") { launchSingleTop = true }
+                    },
+                    onChangelog = {
+                        navController.navigate("changelog") { launchSingleTop = true }
                     },
                 )
             }

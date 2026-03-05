@@ -45,6 +45,8 @@ detekt = "1.23.8"
 play-publisher = "3.11.0"
 zxing-android-embedded = "4.3.0"
 camerax = "1.4.1"
+biometric = "1.2.0-alpha05"
+appcompat = "1.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -120,6 +122,10 @@ camerax-core = { group = "androidx.camera", name = "camera-core", version.ref = 
 camerax-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "camerax" }
 camerax-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax" }
 camerax-view = { group = "androidx.camera", name = "camera-view", version.ref = "camerax" }
+
+# Biometric
+biometric = { group = "androidx.biometric", name = "biometric", version.ref = "biometric" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }

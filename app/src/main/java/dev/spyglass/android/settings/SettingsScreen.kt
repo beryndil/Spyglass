@@ -2,6 +2,7 @@ package dev.spyglass.android.settings
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -63,6 +64,7 @@ fun SettingsScreen(
     onCalcTab: (Int) -> Unit = {},
     onAbout: () -> Unit = {},
     onFeedback: () -> Unit = {},
+    onChangelog: () -> Unit = {},
     vm: SettingsViewModel = viewModel(),
 ) {
     val defaultBrowseTab    by vm.defaultBrowseTab.collectAsStateWithLifecycle()
@@ -80,7 +82,12 @@ fun SettingsScreen(
     val adPersonalizationConsent by vm.adPersonalizationConsent.collectAsStateWithLifecycle()
     val hapticFeedback      by vm.hapticFeedback.collectAsStateWithLifecycle()
     val reduceAnimations    by vm.reduceAnimations.collectAsStateWithLifecycle()
+    val dynamicColor        by vm.dynamicColor.collectAsStateWithLifecycle()
+    val highContrast        by vm.highContrast.collectAsStateWithLifecycle()
+    val defaultStartupTab   by vm.defaultStartupTab.collectAsStateWithLifecycle()
+    val appLockEnabled      by vm.appLockEnabled.collectAsStateWithLifecycle()
     val syncFrequencyHours  by vm.syncFrequencyHours.collectAsStateWithLifecycle()
+    val offlineMode         by vm.offlineMode.collectAsStateWithLifecycle()
     val textureState        by TextureManager.state.collectAsStateWithLifecycle()
 
     val uriHandler = LocalUriHandler.current
@@ -142,6 +149,26 @@ fun SettingsScreen(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
+
+                SpyglassDivider()
+
+                // Dynamic Color (Material You) — Android 12+ only
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    SettingsToggle(
+                        title = stringResource(R.string.settings_dynamic_color),
+                        description = stringResource(R.string.settings_dynamic_color_desc),
+                        checked = dynamicColor,
+                        onCheckedChange = vm::setDynamicColor,
+                    )
+                    SpyglassDivider()
+                }
+
+                SettingsToggle(
+                    title = stringResource(R.string.settings_high_contrast),
+                    description = stringResource(R.string.settings_high_contrast_desc),
+                    checked = highContrast,
+                    onCheckedChange = vm::setHighContrast,
+                )
             }
         }
 
@@ -155,7 +182,6 @@ fun SettingsScreen(
                     color = MaterialTheme.colorScheme.secondary,
                 )
 
-                // Edition toggle
                 Text("Edition", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                 TogglePill(
                     options = listOf("Java", "Bedrock"),
@@ -163,7 +189,6 @@ fun SettingsScreen(
                     onSelect = { vm.setMinecraftEdition(if (it == 1) "bedrock" else "java") },
                 )
 
-                // Version dropdown
                 val versions = if (minecraftEdition == "bedrock") MinecraftVersions.BEDROCK_VERSIONS else MinecraftVersions.JAVA_VERSIONS
                 val displayVersion = minecraftVersion.ifBlank { "Latest" }
                 Text("Version", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
@@ -185,7 +210,6 @@ fun SettingsScreen(
                     }
                 }
 
-                // Filter mode
                 Text("Filter Mode", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -202,7 +226,6 @@ fun SettingsScreen(
                 }
             }
 
-            // Version info card
             val selectedVersion = minecraftVersion.ifBlank { MinecraftVersions.JAVA_VERSIONS.last() }
             val updateInfo = remember(selectedVersion) { MinecraftUpdates.forVersion(selectedVersion) }
             if (updateInfo != null) {
@@ -215,6 +238,36 @@ fun SettingsScreen(
                     icon = updateInfo.icon,
                     changelog = updateInfo.changelog,
                 )
+            }
+        }
+
+        // ── Default Startup Screen ──────────────────────────────────────
+        item(key = "startup_tab") {
+            SectionHeader(stringResource(R.string.settings_startup_tab))
+            ResultCard {
+                Text(
+                    stringResource(R.string.settings_startup_tab_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    val tabs = listOf(
+                        stringResource(R.string.nav_home),
+                        stringResource(R.string.nav_browse),
+                        stringResource(R.string.nav_tools),
+                        stringResource(R.string.nav_search),
+                    )
+                    tabs.forEachIndexed { i, name ->
+                        FilterChip(
+                            selected = defaultStartupTab == i,
+                            onClick = { vm.setDefaultStartupTab(i) },
+                            label = { Text(name, style = MaterialTheme.typography.labelSmall) },
+                        )
+                    }
+                }
             }
         }
 
@@ -320,20 +373,43 @@ fun SettingsScreen(
             }
         }
 
+        // ── Security ────────────────────────────────────────────────────
+        item(key = "security") {
+            SectionHeader(stringResource(R.string.settings_security))
+            ResultCard {
+                SettingsToggle(
+                    title = stringResource(R.string.settings_app_lock),
+                    description = stringResource(R.string.settings_app_lock_desc),
+                    checked = appLockEnabled,
+                    onCheckedChange = vm::setAppLockEnabled,
+                )
+            }
+        }
+
         // ── Data & Storage ────────────────────────────────────────────────
         item(key = "data_storage") {
             SectionHeader(stringResource(R.string.settings_data_storage))
             ResultCard {
+                // Offline mode
+                SettingsToggle(
+                    title = stringResource(R.string.settings_offline_mode),
+                    description = stringResource(R.string.settings_offline_mode_desc),
+                    checked = offlineMode,
+                    onCheckedChange = vm::setOfflineMode,
+                )
+
+                SpyglassDivider()
+
                 // Sync frequency
                 Text(
                     stringResource(R.string.settings_sync_frequency),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = if (offlineMode) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
                     stringResource(R.string.settings_sync_frequency_desc),
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = if (offlineMode) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.secondary,
                 )
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -343,7 +419,8 @@ fun SettingsScreen(
                     options.forEach { (hours, label) ->
                         FilterChip(
                             selected = syncFrequencyHours == hours,
-                            onClick = { vm.setSyncFrequencyHours(hours) },
+                            onClick = { if (!offlineMode) vm.setSyncFrequencyHours(hours) },
+                            enabled = !offlineMode,
                             label = { Text(label, style = MaterialTheme.typography.labelSmall) },
                         )
                     }
@@ -481,79 +558,43 @@ fun SettingsScreen(
         item(key = "quick_links") {
             SectionHeader(stringResource(R.string.settings_quick_links))
             ResultCard {
-                Text(
-                    text = stringResource(R.string.settings_rate_app),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            uriHandler.openUri("https://play.google.com/store/apps/details?id=dev.spyglass.android")
-                        }
-                        .padding(vertical = 6.dp),
+                SettingsLink(
+                    title = stringResource(R.string.settings_rate_app),
+                    description = stringResource(R.string.settings_rate_app_desc),
+                    onClick = {
+                        uriHandler.openUri("https://play.google.com/store/apps/details?id=dev.spyglass.android")
+                    },
                 )
-                Text(
-                    stringResource(R.string.settings_rate_app_desc),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-
                 SpyglassDivider()
-
-                Text(
-                    text = stringResource(R.string.settings_send_feedback),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onFeedback() }
-                        .padding(vertical = 6.dp),
+                SettingsLink(
+                    title = stringResource(R.string.settings_send_feedback),
+                    description = stringResource(R.string.settings_send_feedback_desc),
+                    onClick = onFeedback,
                 )
-                Text(
-                    stringResource(R.string.settings_send_feedback_desc),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-
                 SpyglassDivider()
-
-                Text(
-                    text = stringResource(R.string.settings_about),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onAbout() }
-                        .padding(vertical = 6.dp),
+                SettingsLink(
+                    title = stringResource(R.string.settings_changelog),
+                    description = stringResource(R.string.settings_changelog_desc),
+                    onClick = onChangelog,
                 )
-                Text(
-                    stringResource(R.string.settings_about_desc),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-
                 SpyglassDivider()
-
-                Text(
-                    text = stringResource(R.string.settings_app_permissions),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            context.startActivity(
-                                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                    data = Uri.fromParts("package", context.packageName, null)
-                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                }
-                            )
-                        }
-                        .padding(vertical = 6.dp),
+                SettingsLink(
+                    title = stringResource(R.string.settings_about),
+                    description = stringResource(R.string.settings_about_desc),
+                    onClick = onAbout,
                 )
-                Text(
-                    stringResource(R.string.settings_app_permissions_desc),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
+                SpyglassDivider()
+                SettingsLink(
+                    title = stringResource(R.string.settings_app_permissions),
+                    description = stringResource(R.string.settings_app_permissions_desc),
+                    onClick = {
+                        context.startActivity(
+                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                data = Uri.fromParts("package", context.packageName, null)
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            }
+                        )
+                    },
                 )
             }
         }
@@ -615,5 +656,22 @@ private fun SettingsToggle(
                 uncheckedTrackColor = MaterialTheme.colorScheme.outline,
             ),
         )
+    }
+}
+
+@Composable
+private fun SettingsLink(
+    title: String,
+    description: String,
+    onClick: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 6.dp),
+    ) {
+        Text(title, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary)
+        Text(description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
     }
 }

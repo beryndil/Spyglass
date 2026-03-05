@@ -30,9 +30,16 @@ object PreferenceKeys {
     // Appearance & Accessibility
     val HAPTIC_FEEDBACK         = booleanPreferencesKey("haptic_feedback")
     val REDUCE_ANIMATIONS       = booleanPreferencesKey("reduce_animations")
+    val DYNAMIC_COLOR           = booleanPreferencesKey("dynamic_color")
+    val HIGH_CONTRAST           = booleanPreferencesKey("high_contrast")
+    val DEFAULT_STARTUP_TAB     = intPreferencesKey("default_startup_tab")
+
+    // Security
+    val APP_LOCK_ENABLED        = booleanPreferencesKey("app_lock_enabled")
 
     // Data & Sync
     val SYNC_FREQUENCY_HOURS    = intPreferencesKey("sync_frequency_hours")
+    val OFFLINE_MODE            = booleanPreferencesKey("offline_mode")
 
     // Spyglass Connect
     val CONNECT_PAIRED_DEVICE   = stringPreferencesKey("connect_paired_device")
