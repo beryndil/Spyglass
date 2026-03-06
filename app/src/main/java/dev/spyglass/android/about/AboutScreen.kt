@@ -94,7 +94,10 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}, onDisclaime
                 Text(
                     text = stringResource(R.string.about_author),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.clickable {
+                        uriHandler.openUri("https://hardknocks.university/developer.html")
+                    },
                 )
                 Spacer(Modifier.height(8.dp))
                 SpyglassIconImage(
@@ -104,7 +107,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}, onDisclaime
                     tint = Color.Unspecified,
                 )
                 Spacer(Modifier.height(12.dp))
-                val coffeeUrl = "https://buymeacoffee.com/beryndil"
+                val coffeeUrl = "https://hardknocks.university/developer.html"
                 Column(
                     modifier = Modifier
                         .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(8.dp))
