@@ -19,7 +19,7 @@ import dev.spyglass.android.core.ReviewHelper
 import dev.spyglass.android.core.ui.ConsentDialog
 import dev.spyglass.android.core.ui.DEFAULT_THEME
 import dev.spyglass.android.core.ui.SpyglassTheme
-import dev.spyglass.android.navigation.AppNavGraph
+import dev.spyglass.android.core.shell.ShellNavGraph
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.flow.first
@@ -93,7 +93,7 @@ class MainActivity : FragmentActivity() {
 
                 val unlocked by isUnlocked
                 if (unlocked) {
-                    AppNavGraph()
+                    ShellNavGraph()
                 }
             }
         }

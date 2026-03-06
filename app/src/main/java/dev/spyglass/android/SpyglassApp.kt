@@ -6,6 +6,11 @@ import android.os.StrictMode
 import android.os.Trace
 import com.google.android.gms.ads.MobileAds
 import dev.spyglass.android.core.FirebaseHelper
+import dev.spyglass.android.core.module.ConnectModule
+import dev.spyglass.android.core.module.CoreModule
+import dev.spyglass.android.core.module.DatabaseModule
+import dev.spyglass.android.core.module.ModuleRegistry
+import dev.spyglass.android.core.module.ToolsModule
 import dev.spyglass.android.core.ui.TextureManager
 import dev.spyglass.android.data.repository.GameDataRepository
 import dev.spyglass.android.data.seed.DataSeeder
@@ -53,6 +58,12 @@ class SpyglassApp : Application() {
                 Timber.e(throwable, "Uncaught exception on thread %s", thread.name)
                 defaultHandler?.uncaughtException(thread, throwable)
             }
+
+            // Register all modules (order determines priority)
+            ModuleRegistry.register(CoreModule)
+            ModuleRegistry.register(ConnectModule)
+            ModuleRegistry.register(DatabaseModule)
+            ModuleRegistry.register(ToolsModule)
 
             // Pre-warm database, seed data, init textures — all on IO to avoid ANR
             appScope.launch(Dispatchers.IO) {
