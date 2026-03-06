@@ -26,8 +26,10 @@ import dev.spyglass.android.data.db.entities.TodoEntity
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.PriorityHigh
+import androidx.datastore.preferences.core.edit
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import kotlinx.coroutines.Dispatchers
@@ -242,7 +244,14 @@ fun HomeScreen(
         // ── D. Tip of the Day ──
         if (prefs.showTipOfDay) {
             item(key = "tip") {
-                HomeTipSection(tip = tips[tipIndex])
+                HomeTipSection(
+                    tip = tips[tipIndex],
+                    onDismiss = {
+                        scope.launch {
+                            context.dataStore.edit { it[PreferenceKeys.SHOW_TIP_OF_DAY] = false }
+                        }
+                    },
+                )
             }
         }
 
@@ -430,12 +439,16 @@ private fun HomeFavoritesSection(
 }
 
 @Composable
-private fun HomeTipSection(tip: String) {
+private fun HomeTipSection(tip: String, onDismiss: () -> Unit) {
     ResultCard {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(Icons.Filled.PriorityHigh, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
             Spacer(Modifier.width(8.dp))
             Text(stringResource(R.string.home_did_you_know), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Spacer(Modifier.weight(1f))
+            IconButton(onClick = onDismiss, modifier = Modifier.size(24.dp)) {
+                Icon(Icons.Filled.Close, contentDescription = "Hide tips", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
+            }
         }
         Spacer(Modifier.height(8.dp))
         Text(
