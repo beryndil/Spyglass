@@ -30,8 +30,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
+import androidx.activity.ComponentActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.connect.ConnectViewModel
@@ -83,7 +85,7 @@ object ConnectModule : SpyglassModule {
     override fun navRoutes(): List<ModuleRoute> {
         return listOf(
             ModuleRoute("connect_scan") { _, nav ->
-                val connectViewModel: ConnectViewModel = viewModel()
+                val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
                 QrScannerScreen(
                     onPairingDataScanned = { pairingData ->
                         connectViewModel.connectFromQr(pairingData)
@@ -93,7 +95,7 @@ object ConnectModule : SpyglassModule {
                 )
             },
             ModuleRoute("connect_character") { _, nav ->
-                val connectViewModel: ConnectViewModel = viewModel()
+                val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
                 CharacterScreen(
                     viewModel = connectViewModel,
                     onBack = { nav.navigateBack() },
@@ -101,7 +103,7 @@ object ConnectModule : SpyglassModule {
                 )
             },
             ModuleRoute("connect_inventory") { _, nav ->
-                val connectViewModel: ConnectViewModel = viewModel()
+                val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
                 InventoryScreen(
                     viewModel = connectViewModel,
                     onBack = { nav.navigateBack() },
@@ -109,7 +111,7 @@ object ConnectModule : SpyglassModule {
                 )
             },
             ModuleRoute("connect_enderchest") { _, nav ->
-                val connectViewModel: ConnectViewModel = viewModel()
+                val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
                 EnderChestScreen(
                     viewModel = connectViewModel,
                     onBack = { nav.navigateBack() },
@@ -117,28 +119,28 @@ object ConnectModule : SpyglassModule {
                 )
             },
             ModuleRoute("connect_chestfinder") { _, nav ->
-                val connectViewModel: ConnectViewModel = viewModel()
+                val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
                 ChestFinderScreen(
                     viewModel = connectViewModel,
                     onBack = { nav.navigateBack() },
                 )
             },
             ModuleRoute("connect_map") { _, nav ->
-                val connectViewModel: ConnectViewModel = viewModel()
+                val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
                 MapScreen(
                     viewModel = connectViewModel,
                     onBack = { nav.navigateBack() },
                 )
             },
             ModuleRoute("connect_statistics") { _, nav ->
-                val connectViewModel: ConnectViewModel = viewModel()
+                val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
                 StatisticsScreen(
                     viewModel = connectViewModel,
                     onBack = { nav.navigateBack() },
                 )
             },
             ModuleRoute("connect_advancements") { _, nav ->
-                val connectViewModel: ConnectViewModel = viewModel()
+                val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
                 AdvancementsScreen(
                     viewModel = connectViewModel,
                     onBack = { nav.navigateBack() },
@@ -155,7 +157,7 @@ object ConnectModule : SpyglassModule {
 
     @Composable
     private fun ConnectHomeContent(scope: HomeSectionScope) {
-        val connectViewModel: ConnectViewModel = viewModel()
+        val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
         val state by connectViewModel.connectionState.collectAsStateWithLifecycle()
         val worlds by connectViewModel.worlds.collectAsStateWithLifecycle()
         val selectedWorld by connectViewModel.selectedWorld.collectAsStateWithLifecycle()
