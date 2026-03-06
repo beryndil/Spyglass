@@ -74,10 +74,10 @@ import kotlinx.coroutines.launch
  * Database module — owns Room database, DAOs, entities, seeder, sync,
  * repository, all Browse screens, and favorites.
  */
-object DatabaseModule : SpyglassModule {
+object BrowseModule : SpyglassModule {
 
-    override val id = "database"
-    override val name = "Game Database"
+    override val id = "browse"
+    override val name = "Browse"
     override val icon: SpyglassIcon = PixelIcons.Browse
     override val priority = 10
     override val canDisable = true

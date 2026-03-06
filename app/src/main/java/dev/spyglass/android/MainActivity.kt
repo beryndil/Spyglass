@@ -25,8 +25,6 @@ import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-
 class MainActivity : FragmentActivity() {
 
     private val isUnlocked = mutableStateOf(false)
@@ -39,15 +37,21 @@ class MainActivity : FragmentActivity() {
         // Track app opens and prompt for review after 10 launches (one-time)
         ReviewHelper.trackOpenAndPrompt(this)
 
-        // Check if app lock is enabled
-        val appLockEnabled = runBlocking {
-            dataStore.data.map { it[PreferenceKeys.APP_LOCK_ENABLED] ?: false }.first()
-        }
+        // Check if app lock is enabled — read async to avoid blocking main thread.
+        // UI stays locked (isUnlocked=false) until check completes; biometric prompt
+        // shows on top if needed, so no visible flash.
+        kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
+            val appLockEnabled = try {
+                dataStore.data.map { it[PreferenceKeys.APP_LOCK_ENABLED] ?: false }.first()
+            } catch (_: Exception) { false }
 
-        if (appLockEnabled) {
-            promptBiometric()
-        } else {
-            isUnlocked.value = true
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                if (appLockEnabled) {
+                    promptBiometric()
+                } else {
+                    isUnlocked.value = true
+                }
+            }
         }
 
         setContent {

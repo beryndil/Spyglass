@@ -8,11 +8,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.core.module.HomeSection
 import dev.spyglass.android.core.module.HomeSectionScope
 import dev.spyglass.android.core.module.ModuleRegistry
@@ -25,7 +26,10 @@ import dev.spyglass.android.core.module.ModuleRegistry
 fun ShellHomeScreen(scope: HomeSectionScope) {
     val context = LocalContext.current
 
-    val sections by produceState(emptyList<HomeSection>()) {
+    // Re-read enabled modules whenever a module is toggled
+    val revision by ModuleRegistry.revision.collectAsStateWithLifecycle()
+
+    val sections by produceState(emptyList<HomeSection>(), revision) {
         value = ModuleRegistry.enabledModules(context)
             .flatMap { it.homeSections() }
             .sortedBy { it.weight }

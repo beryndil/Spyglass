@@ -8,7 +8,7 @@ import com.google.android.gms.ads.MobileAds
 import dev.spyglass.android.core.FirebaseHelper
 import dev.spyglass.android.core.module.ConnectModule
 import dev.spyglass.android.core.module.CoreModule
-import dev.spyglass.android.core.module.DatabaseModule
+import dev.spyglass.android.core.module.BrowseModule
 import dev.spyglass.android.core.module.ModuleRegistry
 import dev.spyglass.android.core.module.ToolsModule
 import dev.spyglass.android.core.ui.TextureManager
@@ -38,15 +38,24 @@ class SpyglassApp : Application() {
             if (BuildConfig.DEBUG) {
                 Timber.plant(Timber.DebugTree())
 
+                // Note: StrictMode detectAll() is intentionally NOT used here.
+                // AdMob SDK repeatedly accesses WindowManager from Application context,
+                // which generates hundreds of IncorrectContextUseViolation stack traces
+                // per second with penaltyLog(), burning CPU and flooding logcat.
+                // Note: detectDiskReads/Writes disabled — penaltyLog() floods logcat
+                // and burns CPU during startup (AdMob, DataStore, Room all do disk I/O).
+                // Use Android Studio profiler for targeted disk-access audits instead.
                 StrictMode.setThreadPolicy(
                     StrictMode.ThreadPolicy.Builder()
-                        .detectAll()
+                        .detectNetwork()
                         .penaltyLog()
                         .build()
                 )
                 StrictMode.setVmPolicy(
                     StrictMode.VmPolicy.Builder()
-                        .detectAll()
+                        .detectLeakedClosableObjects()
+                        .detectLeakedRegistrationObjects()
+                        .detectLeakedSqlLiteObjects()
                         .penaltyLog()
                         .build()
                 )
@@ -62,7 +71,7 @@ class SpyglassApp : Application() {
             // Register all modules (order determines priority)
             ModuleRegistry.register(CoreModule)
             ModuleRegistry.register(ConnectModule)
-            ModuleRegistry.register(DatabaseModule)
+            ModuleRegistry.register(BrowseModule)
             ModuleRegistry.register(ToolsModule)
 
             // Pre-warm database, seed data, init textures — all on IO to avoid ANR
@@ -91,8 +100,14 @@ class SpyglassApp : Application() {
                 }
             }
 
-            // Read consent and conditionally enable Firebase
+            // Initialize Firebase manually (ContentProvider auto-init removed for faster startup)
+            // then read consent and conditionally enable collection
             appScope.launch(Dispatchers.IO) {
+                try {
+                    com.google.firebase.FirebaseApp.initializeApp(this@SpyglassApp)
+                } catch (e: Exception) {
+                    Timber.w(e, "Firebase init failed")
+                }
                 try {
                     val crashConsent = dataStore.data
                         .map { it[PreferenceKeys.CRASH_CONSENT] ?: false }
@@ -106,8 +121,8 @@ class SpyglassApp : Application() {
                 }
             }
 
-            // Initialize AdMob SDK (must run on main thread per Google docs)
-            appScope.launch {
+            // Initialize AdMob SDK on IO — disk-heavy init must not block main thread
+            appScope.launch(Dispatchers.IO) {
                 try {
                     MobileAds.initialize(this@SpyglassApp) {
                         Timber.d("MobileAds init complete: %s", it.adapterStatusMap)
@@ -117,14 +132,18 @@ class SpyglassApp : Application() {
                 }
             }
 
-            // Enroll periodic sync worker — respect saved frequency and offline mode
-            val syncPrefs = kotlinx.coroutines.runBlocking {
-                dataStore.data.first()
-            }
-            val offlineMode = syncPrefs[PreferenceKeys.OFFLINE_MODE] ?: false
-            if (!offlineMode) {
-                val hours = syncPrefs[PreferenceKeys.SYNC_FREQUENCY_HOURS] ?: 12
-                DataSyncWorker.enqueue(this, hours)
+            // Enroll periodic sync worker — read prefs on IO to avoid blocking main thread
+            appScope.launch(Dispatchers.IO) {
+                try {
+                    val syncPrefs = dataStore.data.first()
+                    val offlineMode = syncPrefs[PreferenceKeys.OFFLINE_MODE] ?: false
+                    if (!offlineMode) {
+                        val hours = syncPrefs[PreferenceKeys.SYNC_FREQUENCY_HOURS] ?: 12
+                        DataSyncWorker.enqueue(this@SpyglassApp, hours)
+                    }
+                } catch (e: Exception) {
+                    Timber.w(e, "Failed to read sync preferences")
+                }
             }
         } finally {
             Trace.endSection()

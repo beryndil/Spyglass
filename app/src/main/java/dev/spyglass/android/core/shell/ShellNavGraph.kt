@@ -80,22 +80,26 @@ fun ShellNavGraph() {
         context.dataStore.data.map { it[PreferenceKeys.DEFAULT_STARTUP_TAB] ?: 0 }
     }.collectAsStateWithLifecycle(initialValue = 0)
 
-    // Collect bottom nav items from all enabled modules
-    val moduleBottomNavItems by produceState(emptyList<BottomNavItem>()) {
+    // Re-read enabled modules whenever a module is toggled
+    val revision by ModuleRegistry.revision.collectAsStateWithLifecycle()
+
+    val enabledModules by produceState(ModuleRegistry.modules, revision) {
         value = ModuleRegistry.enabledModules(context)
-            .flatMap { it.bottomNavItems() }
-            .sortedBy { it.priority }
     }
 
-    // Collect all module routes
-    val moduleRoutes by produceState(emptyList<ModuleRoute>()) {
-        value = ModuleRegistry.enabledModules(context)
-            .flatMap { it.navRoutes() }
+    val moduleBottomNavItems = remember(enabledModules) {
+        enabledModules.flatMap { it.bottomNavItems() }.sortedBy { it.priority }
+    }
+
+    // Routes include ALL modules so nav graph is stable (avoids crashes when
+    // navigating to a route that was removed mid-session).
+    val moduleRoutes = remember {
+        ModuleRegistry.modules.flatMap { it.navRoutes() }
     }
 
     // Build destinations: Home is always first, then module-contributed tabs, then Search
-    val homeItem = ShellDestination("home", R.string.nav_home, PixelIcons.Blocks, 0)
-    val searchItem = ShellDestination("search", R.string.nav_search, PixelIcons.Search, 100)
+    val homeItem = remember { ShellDestination("home", R.string.nav_home, PixelIcons.Blocks, 0) }
+    val searchItem = remember { ShellDestination("search", R.string.nav_search, PixelIcons.Search, 100) }
 
     val destinations = remember(moduleBottomNavItems) {
         buildList {

@@ -14,6 +14,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Spyglass"
+rootProject.name = "Spyglass Connect"
 include(":app")
 include(":benchmark")

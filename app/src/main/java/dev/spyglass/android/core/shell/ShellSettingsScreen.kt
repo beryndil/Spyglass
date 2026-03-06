@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -47,7 +48,10 @@ fun ShellSettingsScreen(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-    val sections by produceState(emptyList<SettingsSection>()) {
+    // Re-read when a module is toggled
+    val revision by ModuleRegistry.revision.collectAsStateWithLifecycle()
+
+    val sections by produceState(emptyList<SettingsSection>(), revision) {
         value = ModuleRegistry.enabledModules(context)
             .flatMap { it.settingsSections() }
             .sortedBy { it.weight }
@@ -55,7 +59,7 @@ fun ShellSettingsScreen(
 
     // Module enable/disable states
     val modules = ModuleRegistry.modules
-    val moduleStates by produceState(emptyMap<String, Boolean>()) {
+    val moduleStates by produceState(emptyMap<String, Boolean>(), revision) {
         val map = mutableMapOf<String, Boolean>()
         modules.forEach { m ->
             map[m.id] = ModuleRegistry.isEnabled(context, m)
@@ -80,40 +84,41 @@ fun ShellSettingsScreen(
             SectionHeader(stringResource(R.string.settings))
         }
 
-        // ── Module Management ──
-        item(key = "modules") {
-            SectionHeader("Modules")
-            ResultCard {
-                Text(
-                    "Enable or disable app features",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-                modules.forEach { module ->
-                    val enabled = moduleStates[module.id] ?: true
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
+        // ── Module Management (only toggleable modules) ──
+        val toggleableModules = modules.filter { it.canDisable }
+        if (toggleableModules.isNotEmpty()) {
+            item(key = "modules") {
+                SectionHeader("Modules")
+                ResultCard {
+                    Text(
+                        "Enable or disable app features",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                    toggleableModules.forEachIndexed { index, module ->
+                        val enabled = moduleStates[module.id] ?: true
                         Row(
+                            modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.weight(1f),
+                            horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
-                            SpyglassIconImage(
-                                module.icon,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier,
-                            )
-                            Spacer(Modifier.height(4.dp))
-                            Text(
-                                module.name,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface,
-                            )
-                        }
-                        if (module.canDisable) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.weight(1f),
+                            ) {
+                                SpyglassIconImage(
+                                    module.icon,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier,
+                                )
+                                Spacer(Modifier.height(4.dp))
+                                Text(
+                                    module.name,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                )
+                            }
                             Switch(
                                 checked = enabled,
                                 onCheckedChange = { newEnabled ->
@@ -128,16 +133,10 @@ fun ShellSettingsScreen(
                                     uncheckedTrackColor = MaterialTheme.colorScheme.outline,
                                 ),
                             )
-                        } else {
-                            Text(
-                                "Required",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.secondary,
-                            )
                         }
-                    }
-                    if (module != modules.last()) {
-                        SpyglassDivider()
+                        if (index < toggleableModules.lastIndex) {
+                            SpyglassDivider()
+                        }
                     }
                 }
             }

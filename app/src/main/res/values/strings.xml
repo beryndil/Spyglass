@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Spyglass</string>
+    <string name="app_name">Spyglass Connect</string>
 
     <!-- Common -->
     <string name="back">Back</string>
@@ -33,10 +33,10 @@
     <string name="nav_browse">Browse</string>
     <string name="nav_tools">Tools</string>
     <string name="nav_search">Search</string>
-    <string name="top_bar_title">SPYGLASS</string>
+    <string name="top_bar_title">SPYGLASS CONNECT</string>
 
     <!-- Home Screen -->
-    <string name="home_welcome">Welcome to Spyglass</string>
+    <string name="home_welcome">Welcome to Spyglass Connect</string>
     <string name="home_update_available">Update Available</string>
     <string name="home_subtitle">Your Minecraft companion for crafting, building, and exploring</string>
     <string name="home_minecraft_version">Minecraft Java 1.21.4</string>
@@ -60,7 +60,7 @@
 
     <!-- Consent Dialog -->
     <string name="consent_title">Privacy &amp; Data Collection</string>
-    <string name="consent_body">Spyglass can collect anonymous data to help improve the app. No personal information is ever shared.</string>
+    <string name="consent_body">Spyglass Connect can collect anonymous data to help improve the app. No personal information is ever shared.</string>
     <string name="consent_accept_all">Accept All</string>
     <string name="consent_decline_all">Decline All</string>
     <string name="consent_customize">Customize</string>
@@ -115,7 +115,7 @@
     <string name="settings_security">Security</string>
     <string name="settings_app_lock">App Lock</string>
     <string name="settings_app_lock_desc">Require biometric or PIN to open the app</string>
-    <string name="settings_app_lock_title">Unlock Spyglass</string>
+    <string name="settings_app_lock_title">Unlock Spyglass Connect</string>
     <string name="settings_app_lock_subtitle">Authenticate to continue</string>
 
     <!-- Settings — Data & Storage -->
@@ -132,10 +132,10 @@
     <!-- Settings — Quick Links -->
     <string name="settings_quick_links">Quick Links</string>
     <string name="settings_rate_app">Rate on Play Store</string>
-    <string name="settings_rate_app_desc">Leave a review to support Spyglass</string>
+    <string name="settings_rate_app_desc">Leave a review to support Spyglass Connect</string>
     <string name="settings_send_feedback">Send Feedback</string>
     <string name="settings_send_feedback_desc">Report bugs or request features</string>
-    <string name="settings_about">About Spyglass</string>
+    <string name="settings_about">About Spyglass Connect</string>
     <string name="settings_about_desc">Version info, credits, and licenses</string>
     <string name="settings_changelog">View Changelog</string>
     <string name="settings_changelog_desc">See what changed in recent updates</string>
@@ -143,11 +143,11 @@
     <string name="settings_app_permissions_desc">Review permissions in system settings</string>
 
     <!-- About Screen -->
-    <string name="about_app_title">Spyglass</string>
+    <string name="about_app_title">Spyglass Connect</string>
     <string name="about_version">v%s</string>
     <string name="about_companion">A Minecraft companion tool.</string>
     <string name="about_author">by Beryndil</string>
-    <string name="about_enjoy">Enjoy SpyGlass?</string>
+    <string name="about_enjoy">Enjoy Spyglass Connect?</string>
     <string name="about_coffee">Buy Me a Cup of Coffee</string>
     <string name="about_disclaimer">Not affiliated with Mojang Studios or Microsoft.</string>
     <string name="about_game_data">Game Data</string>
@@ -164,20 +164,20 @@
     <string name="about_github">GitHub</string>
     <string name="about_copyright">\u00A9 2026 Beryndil. All rights reserved.</string>
     <string name="about_privacy">Privacy</string>
-    <string name="about_privacy_text">All game data is stored locally on your device. Spyglass displays ads via Google AdMob and may collect anonymous analytics and crash reports with your consent. No personal information is ever shared.</string>
+    <string name="about_privacy_text">All game data is stored locally on your device. Spyglass Connect displays ads via Google AdMob and may collect anonymous analytics and crash reports with your consent. No personal information is ever shared.</string>
     <string name="about_report_bug">Report a Bug</string>
     <string name="about_request_feature">Request a Feature</string>
 
     <!-- Disclaimer Screen -->
     <string name="disclaimer_title">Legal Disclaimer</string>
-    <string name="disclaimer_body">Spyglass is an unofficial, fan-made companion application for Minecraft: Java Edition.\n\nThis app is NOT an official Minecraft product. It is NOT approved by or associated with Mojang Studios, Microsoft Corporation, or any of their subsidiaries or affiliates.\n\n\"Minecraft\" is a trademark of Mojang Studios. All Minecraft-related content, including but not limited to game data, item names, mob names, biome names, and block names, is the intellectual property of Mojang Studios.\n\nAll game data displayed in this application is sourced from publicly available information on the Minecraft Wiki and official Mojang resources. This app does not modify, interact with, or connect to Minecraft game servers in any way.\n\nPixel art textures used in this app are from the \"Pixel Perfection\" resource pack by XSSheep, licensed under CC BY-SA 4.0. Entity icons are from the \"Entity-Icons\" project, licensed under CC0 1.0.\n\nThis application is provided \"as is\" without warranty of any kind. The developer assumes no responsibility for any issues arising from the use of this application.</string>
+    <string name="disclaimer_body">Spyglass Connect is an unofficial, fan-made companion application for Minecraft: Java Edition.\n\nThis app is NOT an official Minecraft product. It is NOT approved by or associated with Mojang Studios, Microsoft Corporation, or any of their subsidiaries or affiliates.\n\n\"Minecraft\" is a trademark of Mojang Studios. All Minecraft-related content, including but not limited to game data, item names, mob names, biome names, and block names, is the intellectual property of Mojang Studios.\n\nAll game data displayed in this application is sourced from publicly available information on the Minecraft Wiki and official Mojang resources. This app does not modify, interact with, or connect to Minecraft game servers in any way.\n\nPixel art textures used in this app are from the \"Pixel Perfection\" resource pack by XSSheep, licensed under CC BY-SA 4.0. Entity icons are from the \"Entity-Icons\" project, licensed under CC0 1.0.\n\nThis application is provided \"as is\" without warranty of any kind. The developer assumes no responsibility for any issues arising from the use of this application.</string>
 
     <!-- License Screen -->
     <string name="license_title">License</string>
     <string name="license_full_name">Proprietary Software License</string>
     <string name="license_copyright">\u00A9 2026 Beryndil. All rights reserved.</string>
     <string name="license_permitted_use">Permitted Use</string>
-    <string name="license_permitted_use_desc">You are granted a non-exclusive, non-transferable, revocable license to use the Spyglass application as distributed through official release channels for personal, non-commercial purposes.</string>
+    <string name="license_permitted_use_desc">You are granted a non-exclusive, non-transferable, revocable license to use the Spyglass Connect application as distributed through official release channels for personal, non-commercial purposes.</string>
     <string name="license_restrictions">Restrictions</string>
     <string name="license_restriction_copy">You may not copy, reproduce, or duplicate the source code or application.</string>
     <string name="license_restriction_modify">You may not modify, adapt, translate, or create derivative works.</string>
@@ -193,7 +193,7 @@
     <string name="feedback_report_bug">Report a Bug</string>
     <string name="feedback_request_feature">Request a Feature</string>
     <string name="feedback_rate">Rate on Play Store</string>
-    <string name="feedback_thanks">Your feedback helps make Spyglass better for everyone. Thank you!</string>
+    <string name="feedback_thanks">Your feedback helps make Spyglass Connect better for everyone. Thank you!</string>
 
     <!-- Changelog Screen -->
     <string name="changelog_title">Changelog</string>

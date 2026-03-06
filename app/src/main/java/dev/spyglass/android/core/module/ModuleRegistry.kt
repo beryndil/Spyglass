@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import dev.spyglass.android.settings.dataStore
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
@@ -17,6 +20,13 @@ object ModuleRegistry {
 
     /** All registered modules, regardless of enabled state. */
     val modules: List<SpyglassModule> get() = _modules.toList()
+
+    /**
+     * Incremented each time a module is toggled. Observe this to reactively
+     * recompute enabled modules in Compose.
+     */
+    private val _revision = MutableStateFlow(0)
+    val revision: StateFlow<Int> = _revision.asStateFlow()
 
     /** Register a module. Call from [SpyglassApp.onCreate]. */
     fun register(module: SpyglassModule) {
@@ -50,6 +60,7 @@ object ModuleRegistry {
         val key = booleanPreferencesKey("module_enabled_${module.id}")
         context.dataStore.edit { it[key] = enabled }
         if (enabled) module.onEnabled() else module.onDisabled()
+        _revision.value++
     }
 
     /** Initialize all registered modules. Call from Application.onCreate. */
