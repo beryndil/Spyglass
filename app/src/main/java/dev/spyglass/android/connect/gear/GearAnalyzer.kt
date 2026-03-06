@@ -40,7 +40,8 @@ object GearAnalyzer {
     private val json = Json { ignoreUnknownKeys = true }
 
     // Material tier hierarchies
-    private val ARMOR_TIERS = listOf("leather", "chainmail", "iron", "diamond", "netherite")
+    // Chainmail skipped — too difficult to obtain (mob drops only, no crafting recipe)
+    private val ARMOR_TIERS = listOf("leather", "copper", "iron", "diamond", "netherite")
     private val TOOL_TIERS = listOf("wooden", "stone", "iron", "diamond", "netherite")
 
     private val ARMOR_SLOT_SUFFIXES = mapOf(
@@ -260,13 +261,22 @@ object GearAnalyzer {
         return null
     }
 
+    // Chainmail maps to copper tier for upgrade purposes (both upgrade to iron)
+    private val TIER_ALIASES = mapOf("chainmail" to "copper")
+
     private suspend fun findNextTier(
         itemId: String,
         suffix: String,
         tiers: List<String>,
         repo: GameDataRepository,
     ): ItemEntity? {
-        val currentTier = tiers.indexOfFirst { itemId == "${it}_$suffix" }
+        var currentTier = tiers.indexOfFirst { itemId == "${it}_$suffix" }
+        // Check aliases (e.g. chainmail → copper tier)
+        if (currentTier < 0) {
+            val prefix = itemId.removeSuffix("_$suffix")
+            val alias = TIER_ALIASES[prefix]
+            if (alias != null) currentTier = tiers.indexOf(alias)
+        }
         if (currentTier < 0 || currentTier >= tiers.lastIndex) return null
 
         val nextId = "${tiers[currentTier + 1]}_$suffix"
