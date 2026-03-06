@@ -52,11 +52,11 @@ jobs:
         run: ./gradlew bundleRelease
 
       - name: Decode Play service account
-        if: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
+        if: secrets.PLAY_SERVICE_ACCOUNT_JSON != ''
         run: echo "${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}" | base64 -d > play-service-account.json
 
       - name: Publish AAB to Google Play (internal)
-        if: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
+        if: secrets.PLAY_SERVICE_ACCOUNT_JSON != ''
         run: |
           echo "PLAY_SERVICE_ACCOUNT_JSON=play-service-account.json" >> local.properties
           ./gradlew publishReleaseBundle
