@@ -34,6 +34,8 @@ sealed interface SpyglassIcon {
     data class Potion(val color: Color) : SpyglassIcon
     /** Bitmap loaded from a file on disk (downloaded textures). */
     data class FileBitmap(val file: File) : SpyglassIcon
+    /** In-memory bitmap (e.g., player skin head). */
+    data class BitmapIcon(val bitmap: Bitmap) : SpyglassIcon
     /** Material texture clipped to a shape mask with a frame overlay (e.g., button). */
     data class Overlay(val texture: SpyglassIcon, val mask: SpyglassIcon, val frame: SpyglassIcon) : SpyglassIcon
 }
@@ -85,6 +87,15 @@ fun SpyglassIconImage(
                     filterQuality = FilterQuality.None, // Pixel art — nearest-neighbor
                 )
             }
+        }
+        is SpyglassIcon.BitmapIcon -> {
+            Image(
+                bitmap = icon.bitmap.asImageBitmap(),
+                contentDescription = contentDescription,
+                modifier = modifier,
+                contentScale = ContentScale.Fit,
+                filterQuality = FilterQuality.None,
+            )
         }
         is SpyglassIcon.Overlay -> {
             val context = LocalContext.current

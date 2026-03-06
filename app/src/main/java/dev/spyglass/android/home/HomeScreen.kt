@@ -537,15 +537,22 @@ private fun HomeTodoRow(todo: TodoEntity, onToggle: () -> Unit) {
 
 // ── Spyglass Connect hub ─────────────────────────────────────────────────────
 
-private val CONNECT_LINKS = listOf(
-    QuickLink(PixelIcons.Steve,       "Character")    to "connect_character",
-    QuickLink(PixelIcons.Item,        "Inventory")     to "connect_inventory",
-    QuickLink(PixelIcons.Enchant,     "Ender Chest")   to "connect_enderchest",
-    QuickLink(PixelIcons.Search,      "Chest Finder")  to "connect_chestfinder",
-    QuickLink(PixelIcons.Biome,       "World Map")     to "connect_map",
-    QuickLink(PixelIcons.Anvil,       "Statistics")    to "connect_statistics",
-    QuickLink(PixelIcons.Advancement, "Advancements")  to "connect_advancements",
-)
+private fun connectLinks(playerSkin: android.graphics.Bitmap?): List<Pair<QuickLink, String>> {
+    val characterIcon: SpyglassIcon = if (playerSkin != null) {
+        SpyglassIcon.BitmapIcon(playerSkin)
+    } else {
+        PixelIcons.Steve
+    }
+    return listOf(
+        QuickLink(characterIcon,          "Character")    to "connect_character",
+        QuickLink(PixelIcons.Item,        "Inventory")     to "connect_inventory",
+        QuickLink(PixelIcons.Enchant,     "Ender Chest")   to "connect_enderchest",
+        QuickLink(PixelIcons.Search,      "Chest Finder")  to "connect_chestfinder",
+        QuickLink(PixelIcons.Biome,       "World Map")     to "connect_map",
+        QuickLink(PixelIcons.Anvil,       "Statistics")    to "connect_statistics",
+        QuickLink(PixelIcons.Advancement, "Advancements")  to "connect_advancements",
+    )
+}
 
 @Composable
 private fun HomeConnectSection(
@@ -557,6 +564,8 @@ private fun HomeConnectSection(
     val state by connectViewModel.connectionState.collectAsStateWithLifecycle()
     val worlds by connectViewModel.worlds.collectAsStateWithLifecycle()
     val selectedWorld by connectViewModel.selectedWorld.collectAsStateWithLifecycle()
+    val playerSkin by connectViewModel.playerSkin.collectAsStateWithLifecycle()
+    val links = connectLinks(playerSkin)
 
     SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
     Spacer(Modifier.height(8.dp))
@@ -574,8 +583,8 @@ private fun HomeConnectSection(
             // Show quick links for cached offline data
             if (hasCachedData) {
                 Spacer(Modifier.height(8.dp))
-                QuickLinkGrid(CONNECT_LINKS.map { it.first }) { index ->
-                    onConnectNav(CONNECT_LINKS[index].second)
+                QuickLinkGrid(links.map { it.first }) { index ->
+                    onConnectNav(links[index].second)
                 }
             }
         }
@@ -630,8 +639,8 @@ private fun HomeConnectSection(
                 onDisconnect = { connectViewModel.disconnect() },
             )
             Spacer(Modifier.height(8.dp))
-            QuickLinkGrid(CONNECT_LINKS.map { it.first }) { index ->
-                onConnectNav(CONNECT_LINKS[index].second)
+            QuickLinkGrid(links.map { it.first }) { index ->
+                onConnectNav(links[index].second)
             }
         }
     }
