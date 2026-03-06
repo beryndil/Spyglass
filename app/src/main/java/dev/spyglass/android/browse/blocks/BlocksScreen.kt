@@ -29,10 +29,12 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
+import dev.spyglass.android.core.MechanicsInfo
 import dev.spyglass.android.core.VersionAvailability
 import dev.spyglass.android.core.VersionFilterState
 import dev.spyglass.android.core.applyVersionFilter
 import dev.spyglass.android.core.checkAvailability
+import dev.spyglass.android.core.checkMechanicsChanged
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
@@ -388,7 +390,7 @@ fun BlocksScreen(
                         enter = expandVertically(),
                         exit = shrinkVertically(),
                     ) {
-                        BlockDetailContent(b, allRecipes, structures, vm, onItemTap, onBiomeTap, onTradeTap, onStructureTap, addedIn)
+                        BlockDetailContent(b, allRecipes, structures, vm, onItemTap, onBiomeTap, onTradeTap, onStructureTap, tag, vFilter)
                     }
                 }
             }
@@ -416,7 +418,8 @@ private fun BlockDetailContent(
     onBiomeTap: (String) -> Unit,
     onTradeTap: (String) -> Unit,
     onStructureTap: (String) -> Unit,
-    addedInVersion: String = "",
+    tag: VersionTagEntity? = null,
+    vFilter: VersionFilterState = VersionFilterState(),
 ) {
     val recipesForItem  by vm.recipesForItem(block.id).collectAsStateWithLifecycle(initialValue = emptyList())
     val recipesUsingItem by vm.recipesUsingItem(block.id).collectAsStateWithLifecycle(initialValue = emptyList())
@@ -425,9 +428,9 @@ private fun BlockDetailContent(
         // ── Minecraft ID ──
         MinecraftIdRow(block.id)
 
-        // ── Version info ──
-        if (addedInVersion.isNotBlank()) {
-            StatRow("Added in Java Edition", addedInVersion)
+        // ── Version & Edition info ──
+        if (tag != null) {
+            VersionEditionSection(tag, vFilter)
         }
 
         // ── Description ──

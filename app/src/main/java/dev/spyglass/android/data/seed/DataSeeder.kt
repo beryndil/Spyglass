@@ -18,7 +18,7 @@ import java.io.File
  */
 object DataSeeder {
 
-    private const val CURRENT_DATA_VERSION = 20
+    private const val CURRENT_DATA_VERSION = 21
     private const val PREFS_NAME = "spyglass_seed"
     private const val KEY_DATA_VERSION = "data_version"
 
@@ -271,6 +271,8 @@ object DataSeeder {
         val addedInJava: String = "", val removedInJava: String = "",
         val addedInBedrock: String = "", val removedInBedrock: String = "",
         val javaOnly: Boolean = false, val bedrockOnly: Boolean = false,
+        val mechanicsChangedInJava: String = "", val mechanicsChangedInBedrock: String = "",
+        val mechanicsChangeNotes: String = "",
     )
 
     // ── Seed helpers ──────────────────────────────────────────────────────────
@@ -448,7 +450,8 @@ object DataSeeder {
         val items = json.decodeFromString<List<VersionTagJson>>(raw)
         db.versionTagDao().insertAll(items.map {
             VersionTagEntity(it.entityType, it.entityId, it.addedInJava, it.removedInJava,
-                it.addedInBedrock, it.removedInBedrock, it.javaOnly, it.bedrockOnly)
+                it.addedInBedrock, it.removedInBedrock, it.javaOnly, it.bedrockOnly,
+                it.mechanicsChangedInJava, it.mechanicsChangedInBedrock, it.mechanicsChangeNotes)
         })
     }
 }

@@ -32,7 +32,7 @@ import dev.spyglass.android.data.db.entities.*
         ShoppingListItemEntity::class,
         TodoEntity::class,
     ],
-    version = 25,
+    version = 26,
     exportSchema = true,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
@@ -57,6 +57,14 @@ abstract class SpyglassDatabase : RoomDatabase() {
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null
+
+        private val MIGRATION_25_26 = object : Migration(25, 26) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE version_tags ADD COLUMN mechanicsChangedInJava TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE version_tags ADD COLUMN mechanicsChangedInBedrock TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE version_tags ADD COLUMN mechanicsChangeNotes TEXT NOT NULL DEFAULT ''")
+            }
+        }
 
         private val MIGRATION_24_25 = object : Migration(24, 25) {
             override fun migrate(db: SupportSQLiteDatabase) {
@@ -256,7 +264,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
                             SpyglassDatabase::class.java,
                             "spyglass.db",
                         )
-                            .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21, MIGRATION_21_22, MIGRATION_22_23, MIGRATION_23_24, MIGRATION_24_25)
+                            .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21, MIGRATION_21_22, MIGRATION_22_23, MIGRATION_23_24, MIGRATION_24_25, MIGRATION_25_26)
                             .build()
                     } finally {
                         Trace.endSection()

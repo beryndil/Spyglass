@@ -215,4 +215,7 @@ data class VersionTagEntity(
     val removedInBedrock: String = "",
     val javaOnly: Boolean = false,
     val bedrockOnly: Boolean = false,
+    val mechanicsChangedInJava: String = "",
+    val mechanicsChangedInBedrock: String = "",
+    val mechanicsChangeNotes: String = "",
 )

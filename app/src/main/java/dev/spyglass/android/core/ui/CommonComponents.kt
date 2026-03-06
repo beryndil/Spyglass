@@ -16,7 +16,10 @@ import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import dev.spyglass.android.core.VersionFilterState
+import dev.spyglass.android.core.checkMechanicsChanged
 import dev.spyglass.android.data.ItemTags
+import dev.spyglass.android.data.db.entities.VersionTagEntity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
@@ -669,6 +672,79 @@ fun SortButton(
                             modifier = Modifier.size(18.dp),
                         )
                     } } else null,
+                )
+            }
+        }
+    }
+}
+
+// ── Version & Edition section for detail cards ────────────────────────────────
+
+private val AmberWarning = Color(0xFFFF8F00)
+
+@Composable
+fun VersionEditionSection(tag: VersionTagEntity, filter: VersionFilterState) {
+    val isJava = filter.edition == "java"
+    val addedJava = tag.addedInJava.ifBlank { "1.0" }
+    val addedBedrock = tag.addedInBedrock.ifBlank { null }
+
+    // Edition badge
+    val editionLabel = when {
+        tag.javaOnly -> "Java Only"
+        tag.bedrockOnly -> "Bedrock Only"
+        else -> "Both Editions"
+    }
+    val editionColor = when {
+        tag.javaOnly -> PotionBlue
+        tag.bedrockOnly -> Emerald
+        else -> Color(0xFF78909C)
+    }
+
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text("Java $addedJava", style = MaterialTheme.typography.bodySmall, color = PotionBlue)
+                if (addedBedrock != null && !tag.javaOnly) {
+                    Text("Bedrock $addedBedrock", style = MaterialTheme.typography.bodySmall, color = Emerald)
+                }
+            }
+        }
+        Text(
+            editionLabel,
+            style = MaterialTheme.typography.labelSmall,
+            color = editionColor,
+            modifier = Modifier
+                .background(editionColor.copy(alpha = 0.12f), RoundedCornerShape(4.dp))
+                .padding(horizontal = 6.dp, vertical = 1.dp),
+        )
+    }
+
+    // Mechanics change warning (only when version filter is active)
+    val mechInfo = checkMechanicsChanged(tag, filter)
+    if (mechInfo != null) {
+        Spacer(Modifier.height(4.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(AmberWarning.copy(alpha = 0.1f), RoundedCornerShape(6.dp))
+                .border(0.5.dp, AmberWarning.copy(alpha = 0.3f), RoundedCornerShape(6.dp))
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column {
+                Text(
+                    "Mechanics changed in ${mechInfo.version}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = AmberWarning,
+                )
+                Text(
+                    mechInfo.notes,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }

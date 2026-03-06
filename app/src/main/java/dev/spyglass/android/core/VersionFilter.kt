@@ -22,6 +22,12 @@ enum class VersionAvailability {
     WRONG_EDITION,
 }
 
+data class MechanicsInfo(
+    val changed: Boolean,
+    val version: String,
+    val notes: String,
+)
+
 fun checkAvailability(
     tag: VersionTagEntity?,
     filter: VersionFilterState,
@@ -47,6 +53,28 @@ fun checkAvailability(
     }
 
     return VersionAvailability.AVAILABLE
+}
+
+/**
+ * Checks whether this entity's mechanics were changed between its introduction
+ * and the selected filter version. Returns non-null if relevant.
+ */
+fun checkMechanicsChanged(
+    tag: VersionTagEntity?,
+    filter: VersionFilterState,
+): MechanicsInfo? {
+    if (tag == null || filter.mode == "show_all" || filter.version.isBlank()) return null
+    val isJava = filter.edition == "java"
+    val mechVersion = if (isJava) tag.mechanicsChangedInJava else tag.mechanicsChangedInBedrock
+    if (mechVersion.isBlank() || tag.mechanicsChangeNotes.isBlank()) return null
+
+    val addedIn = if (isJava) tag.addedInJava else tag.addedInBedrock
+    // Only relevant if mechanics changed after introduction and within selected version range
+    if (addedIn.isNotBlank() && MinecraftVersions.compare(mechVersion, addedIn) <= 0) return null
+    if (MinecraftVersions.compare(filter.version, mechVersion) >= 0) {
+        return MechanicsInfo(changed = true, version = mechVersion, notes = tag.mechanicsChangeNotes)
+    }
+    return null
 }
 
 /** Creates a VersionFilterState flow from a DataStore. */

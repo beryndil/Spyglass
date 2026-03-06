@@ -30,6 +30,7 @@ import dev.spyglass.android.core.VersionAvailability
 import dev.spyglass.android.core.VersionFilterState
 import dev.spyglass.android.core.applyVersionFilter
 import dev.spyglass.android.core.checkAvailability
+import dev.spyglass.android.core.checkMechanicsChanged
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
@@ -398,6 +399,8 @@ fun ItemsScreen(
                             onBiomeTap = onBiomeTap,
                             onEnchantTap = onEnchantTap,
                             entityLinkIndex = entityLinkIndex,
+                            versionTag = tag,
+                            versionFilter = vFilter,
                         )
                     }
                 }
@@ -429,6 +432,8 @@ private fun ItemDetailCard(
     onBiomeTap: (String) -> Unit,
     onEnchantTap: (String) -> Unit,
     entityLinkIndex: EntityLinkIndex,
+    versionTag: VersionTagEntity? = null,
+    versionFilter: VersionFilterState = VersionFilterState(),
 ) {
     val recipesFor  by vm.recipesForItem(item.id).collectAsStateWithLifecycle(initialValue = emptyList())
     val recipesUsing by vm.recipesUsingItem(item.id).collectAsStateWithLifecycle(initialValue = emptyList())
@@ -467,6 +472,11 @@ private fun ItemDetailCard(
 
         // Minecraft ID
         MinecraftIdRow(item.id)
+
+        // Version & Edition info
+        if (versionTag != null) {
+            VersionEditionSection(versionTag, versionFilter)
+        }
 
         // Description
         if (item.description.isNotEmpty()) {
