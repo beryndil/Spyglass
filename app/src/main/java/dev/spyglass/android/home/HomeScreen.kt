@@ -598,45 +598,68 @@ private fun HomeConnectSection(
     when {
         // ── Disconnected / Error ──
         state is ConnectionState.Disconnected || state is ConnectionState.Error -> {
-            ConnectDisconnectedCard(
-                state = state,
-                onScanQr = onScanQr,
-                onReconnect = { connectViewModel.tryReconnect() },
-            )
-            // Show quick links for cached offline data
             if (hasCachedData) {
-                Spacer(Modifier.height(8.dp))
+                // Has cached data — show quick links with subtle status line
                 QuickLinkGrid(links.map { it.first }) { index ->
                     onConnectNav(links[index].second)
                 }
+                Spacer(Modifier.height(6.dp))
+                ConnectStatusLine(
+                    state = state,
+                    worlds = worlds,
+                    selectedWorld = selectedWorld,
+                    onSelectWorld = {},
+                    onDisconnect = {},
+                    onReconnect = { connectViewModel.tryReconnect() },
+                )
+            } else {
+                // No cached data — show pairing card
+                ConnectDisconnectedCard(
+                    state = state,
+                    onScanQr = onScanQr,
+                    onReconnect = { connectViewModel.tryReconnect() },
+                )
             }
         }
 
         // ── Connecting / Pairing / Reconnecting ──
         !state.isConnected -> {
-            ResultCard {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        strokeWidth = 2.dp,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    Text(
-                        state.statusText,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface,
-                    )
+            if (hasCachedData) {
+                // Has cached data — show quick links with reconnecting status
+                QuickLinkGrid(links.map { it.first }) { index ->
+                    onConnectNav(links[index].second)
+                }
+                Spacer(Modifier.height(6.dp))
+                ConnectStatusLine(
+                    state = state,
+                    worlds = worlds,
+                    selectedWorld = selectedWorld,
+                    onSelectWorld = {},
+                    onDisconnect = {},
+                )
+            } else {
+                ResultCard {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            strokeWidth = 2.dp,
+                            color = MaterialTheme.colorScheme.primary,
+                        )
+                        Text(
+                            state.statusText,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+                    }
                 }
             }
         }
 
         // ── Connected, no world selected ──
         state.isConnected && selectedWorld == null -> {
-            ConnectStatusBar(state)
-            Spacer(Modifier.height(8.dp))
             ConnectWorldSelector(
                 worlds = worlds,
                 selectedWorld = null,
@@ -650,9 +673,12 @@ private fun HomeConnectSection(
 
         // ── Connected, world selected — full hub ──
         state.isConnected -> {
-            ConnectStatusBar(state)
-            Spacer(Modifier.height(8.dp))
-            ConnectWorldHeader(
+            QuickLinkGrid(links.map { it.first }) { index ->
+                onConnectNav(links[index].second)
+            }
+            Spacer(Modifier.height(6.dp))
+            ConnectStatusLine(
+                state = state,
                 worlds = worlds,
                 selectedWorld = selectedWorld,
                 onSelectWorld = {
@@ -661,10 +687,6 @@ private fun HomeConnectSection(
                 },
                 onDisconnect = { connectViewModel.disconnect() },
             )
-            Spacer(Modifier.height(8.dp))
-            QuickLinkGrid(links.map { it.first }) { index ->
-                onConnectNav(links[index].second)
-            }
         }
     }
 }
@@ -729,27 +751,100 @@ private fun ConnectDisconnectedCard(
 }
 
 @Composable
-private fun ConnectStatusBar(state: ConnectionState) {
-    val deviceName = (state as? ConnectionState.Connected)?.deviceName ?: ""
+private fun ConnectStatusLine(
+    state: ConnectionState,
+    worlds: List<WorldInfo>,
+    selectedWorld: String?,
+    onSelectWorld: (String) -> Unit,
+    onDisconnect: () -> Unit,
+    onReconnect: (() -> Unit)? = null,
+) {
+    val currentWorld = worlds.firstOrNull { it.folderName == selectedWorld }
+    var expanded by remember { mutableStateOf(false) }
+
+    val (color, label) = when {
+        state.isConnected -> Emerald to "Connected to"
+        state is ConnectionState.Reconnecting -> Color(0xFFFFC107) to "Reconnecting"
+        state is ConnectionState.Connecting || state is ConnectionState.Pairing -> Color(0xFFFFC107) to "Connecting"
+        state is ConnectionState.Error -> Color(0xFFF44336) to "Disconnected"
+        else -> Color(0xFFF44336) to "Disconnected"
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Emerald.copy(alpha = 0.1f), RoundedCornerShape(8.dp))
-            .padding(horizontal = 12.dp, vertical = 8.dp),
+            .padding(horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Box(
             modifier = Modifier
-                .size(8.dp)
-                .background(Emerald, CircleShape),
+                .size(6.dp)
+                .background(color, CircleShape),
         )
         Text(
-            "Connected" + if (deviceName.isNotEmpty()) " to $deviceName" else "",
+            label,
             style = MaterialTheme.typography.labelSmall,
-            color = Emerald,
-            modifier = Modifier.weight(1f),
+            color = color,
         )
+        if (currentWorld != null && state.isConnected) {
+            SpyglassIconImage(
+                PixelIcons.Globe,
+                contentDescription = null,
+                tint = color,
+                modifier = Modifier.size(14.dp),
+            )
+            Box {
+                Text(
+                    currentWorld.displayName,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = color,
+                    modifier = if (worlds.size > 1) Modifier.clickable { expanded = true } else Modifier,
+                )
+                if (worlds.size > 1) {
+                    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                        worlds.forEach { world ->
+                            DropdownMenuItem(
+                                text = { Text(world.displayName) },
+                                onClick = {
+                                    expanded = false
+                                    onSelectWorld(world.folderName)
+                                },
+                            )
+                        }
+                    }
+                }
+            }
+        } else if (currentWorld != null) {
+            // Disconnected/reconnecting but have cached world name
+            SpyglassIconImage(
+                PixelIcons.Globe,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(14.dp),
+            )
+            Text(
+                currentWorld.displayName,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        Spacer(Modifier.weight(1f))
+        if (state.isConnected) {
+            Text(
+                "Disconnect",
+                style = MaterialTheme.typography.labelSmall,
+                color = Color(0xFFF44336).copy(alpha = 0.7f),
+                modifier = Modifier.clickable { onDisconnect() },
+            )
+        } else if (onReconnect != null && (state is ConnectionState.Disconnected || state is ConnectionState.Error)) {
+            Text(
+                "Reconnect",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable { onReconnect() },
+            )
+        }
     }
 }
 
@@ -819,48 +914,5 @@ private fun ConnectWorldSelector(
     }
 }
 
-@Composable
-private fun ConnectWorldHeader(
-    worlds: List<WorldInfo>,
-    selectedWorld: String?,
-    onSelectWorld: (String) -> Unit,
-    onDisconnect: () -> Unit,
-) {
-    val currentWorld = worlds.firstOrNull { it.folderName == selectedWorld }
-    var expanded by remember { mutableStateOf(false) }
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        SpyglassIconImage(PixelIcons.Globe, contentDescription = null, tint = Emerald, modifier = Modifier.size(20.dp))
-        Box(modifier = Modifier.weight(1f)) {
-            Text(
-                currentWorld?.displayName ?: "Unknown World",
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.clickable { expanded = true },
-            )
-            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                worlds.forEach { world ->
-                    DropdownMenuItem(
-                        text = { Text(world.displayName) },
-                        onClick = {
-                            expanded = false
-                            onSelectWorld(world.folderName)
-                        },
-                    )
-                }
-            }
-        }
-        Text(
-            "Disconnect",
-            style = MaterialTheme.typography.labelSmall,
-            color = Color(0xFFF44336),
-            modifier = Modifier.clickable { onDisconnect() },
-        )
-    }
-}
 
 
