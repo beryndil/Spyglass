@@ -20,6 +20,17 @@ private data class VersionData(val version: String, val date: String, val highli
 
 private val VERSIONS = listOf(
     VersionData(
+        version = "v1.0-alpha.7",
+        date = "March 2026",
+        highlights = listOf(
+            "Modular architecture — Connect, Browse, and Tools are now independent modules that can be toggled on/off in Settings",
+            "Cold start optimization — MobileAds, Firebase, and DataStore reads moved off main thread for faster launch",
+            "Rebranded to Spyglass Connect throughout the app",
+            "All links updated to hardknocks.university",
+            "Developer page linked from About screen",
+        ),
+    ),
+    VersionData(
         version = "v1.0-alpha.6",
         date = "March 2026",
         highlights = listOf(
