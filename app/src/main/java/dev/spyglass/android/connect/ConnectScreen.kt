@@ -38,6 +38,8 @@ fun ConnectScreen(
     val worlds by viewModel.worlds.collectAsStateWithLifecycle()
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
     val selectedWorld by viewModel.selectedWorld.collectAsStateWithLifecycle()
+    val playerList by viewModel.playerList.collectAsStateWithLifecycle()
+    val selectedPlayerUuid by viewModel.selectedPlayerUuid.collectAsStateWithLifecycle()
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Top bar
@@ -94,7 +96,10 @@ fun ConnectScreen(
                         worlds = worlds,
                         selectedWorld = selectedWorld,
                         playerData = playerData,
+                        playerList = playerList,
+                        selectedPlayerUuid = selectedPlayerUuid,
                         onSelectWorld = { viewModel.selectWorld(it) },
+                        onSelectPlayer = { viewModel.selectPlayer(it) },
                         onRequestPlayer = { viewModel.requestPlayerData() },
                         onInventory = onInventory,
                         onEnderChest = onEnderChest,
@@ -243,7 +248,10 @@ private fun ConnectedContent(
     worlds: List<WorldInfo>,
     selectedWorld: String?,
     playerData: PlayerData?,
+    playerList: List<PlayerSummary>,
+    selectedPlayerUuid: String?,
     onSelectWorld: (String) -> Unit,
+    onSelectPlayer: (String?) -> Unit,
     onRequestPlayer: () -> Unit,
     onInventory: () -> Unit,
     onEnderChest: () -> Unit,
@@ -301,6 +309,16 @@ private fun ConnectedContent(
         }
     }
 
+    // Player selector (only shown when multiple players exist)
+    if (playerList.size > 1 && selectedWorld != null) {
+        Spacer(Modifier.height(4.dp))
+        PlayerSelector(
+            players = playerList,
+            selectedUuid = selectedPlayerUuid,
+            onSelectPlayer = onSelectPlayer,
+        )
+    }
+
     // Player summary (when world selected)
     if (playerData != null && selectedWorld != null) {
         Spacer(Modifier.height(8.dp))
@@ -355,6 +373,86 @@ private fun StatColumn(label: String, value: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(value, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary)
         Text(label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+}
+
+@Composable
+private fun PlayerSelector(
+    players: List<PlayerSummary>,
+    selectedUuid: String?,
+    onSelectPlayer: (String?) -> Unit,
+) {
+    var showFairPlayWarning by remember { mutableStateOf(false) }
+    val hasMultipleNonOwner = players.count { !it.isOwner } > 0
+
+    SectionHeader("Players (${players.size})")
+
+    if (hasMultipleNonOwner) {
+        ResultCard {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Icon(
+                    Icons.Filled.Warning,
+                    contentDescription = null,
+                    tint = Color(0xFFFFC107),
+                    modifier = Modifier.size(18.dp),
+                )
+                Text(
+                    "Viewing other players' data may not align with fair play on multiplayer worlds.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+        Spacer(Modifier.height(4.dp))
+    }
+
+    players.forEach { player ->
+        val isSelected = player.uuid == (selectedUuid ?: players.firstOrNull { it.isOwner }?.uuid)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                    else Color.Transparent,
+                    RoundedCornerShape(8.dp),
+                )
+                .border(
+                    if (isSelected) 1.dp else 0.dp,
+                    if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
+                    RoundedCornerShape(8.dp),
+                )
+                .clickable { onSelectPlayer(player.uuid) }
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                Icons.Filled.Person,
+                contentDescription = null,
+                tint = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(24.dp),
+            )
+            Spacer(Modifier.width(12.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    player.name ?: player.uuid.take(8),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                if (player.isOwner) {
+                    Text(
+                        "World Owner",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
+            }
+            if (isSelected) {
+                Icon(Icons.Filled.Check, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+            }
+        }
     }
 }
 

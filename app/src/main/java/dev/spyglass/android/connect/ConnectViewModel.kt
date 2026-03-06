@@ -74,6 +74,12 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private val _playerAdvancements = MutableStateFlow<PlayerAdvancementsPayload?>(null)
     val playerAdvancements: StateFlow<PlayerAdvancementsPayload?> = _playerAdvancements
 
+    private val _playerList = MutableStateFlow<List<PlayerSummary>>(emptyList())
+    val playerList: StateFlow<List<PlayerSummary>> = _playerList
+
+    private val _selectedPlayerUuid = MutableStateFlow<String?>(null)
+    val selectedPlayerUuid: StateFlow<String?> = _selectedPlayerUuid
+
     private val _lastUpdated = MutableStateFlow<Long?>(null)
     val lastUpdated: StateFlow<Long?> = _lastUpdated
 
@@ -316,15 +322,37 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             // Load cached data for newly selected world (shows instantly while fresh data loads)
             loadCachedWorldData(folderName)
         }
+        _selectedPlayerUuid.value = null // Reset player selection on world change
+        _playerList.value = emptyList()
         if (connectionState.value.isConnected) {
             val payload = json.encodeToJsonElement(SelectWorldPayload(folderName))
             client.sendRequest(MessageType.SELECT_WORLD, payload)
+            requestPlayerList()
         }
     }
 
-    /** Request player data for the selected world. */
+    /** Request player data for the selected world (optionally for a specific player). */
     fun requestPlayerData() {
-        client.sendRequest(MessageType.REQUEST_PLAYER)
+        val uuid = _selectedPlayerUuid.value
+        if (uuid != null) {
+            val payload = json.encodeToJsonElement(RequestPlayerPayload(uuid))
+            client.sendRequest(MessageType.REQUEST_PLAYER, payload)
+        } else {
+            client.sendRequest(MessageType.REQUEST_PLAYER)
+        }
+    }
+
+    /** Request the list of all players in the selected world. */
+    fun requestPlayerList() {
+        client.sendRequest(MessageType.REQUEST_PLAYER_LIST)
+    }
+
+    /** Select a specific player by UUID and refresh their data. */
+    fun selectPlayer(uuid: String?) {
+        _selectedPlayerUuid.value = uuid
+        if (connectionState.value.isConnected) {
+            requestPlayerData()
+        }
     }
 
     /** Request chest contents scan. */
@@ -400,6 +428,8 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         _gearAnalysis.value = null
         _playerStats.value = null
         _playerAdvancements.value = null
+        _playerList.value = emptyList()
+        _selectedPlayerUuid.value = null
         SkinManager.clear()
         _searchResults.value = null
         _structures.value = emptyList()
@@ -434,7 +464,13 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                         Timber.d("Re-selecting world after reconnect: $currentWorld")
                         val selectPayload = json.encodeToJsonElement(SelectWorldPayload(currentWorld))
                         client.sendRequest(MessageType.SELECT_WORLD, selectPayload)
+                        requestPlayerList()
                     }
+                }
+                MessageType.PLAYER_LIST -> {
+                    val payload = json.decodeFromJsonElement(PlayerListPayload.serializer(), message.payload)
+                    Timber.d("Player list: ${payload.players.size} players")
+                    _playerList.value = payload.players
                 }
                 MessageType.PLAYER_DATA -> {
                     val payload = json.decodeFromJsonElement(PlayerData.serializer(), message.payload)
