@@ -83,7 +83,7 @@ fun ConsentDialog(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
-                        uriHandler.openUri("https://dev-vulx.github.io/Spyglass/privacy-policy.html")
+                        uriHandler.openUri("https://beryndil.github.io/Spyglass/privacy-policy.html")
                     },
                 )
             }

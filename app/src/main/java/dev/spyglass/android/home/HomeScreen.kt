@@ -271,7 +271,7 @@ private fun checkForUpdate(): Boolean? {
             .readTimeout(5, TimeUnit.SECONDS)
             .build()
         val request = Request.Builder()
-            .url("https://api.github.com/repos/Dev-VulX/Spyglass/releases/latest")
+            .url("https://api.github.com/repos/beryndil/Spyglass/releases/latest")
             .header("Accept", "application/vnd.github.v3+json")
             .build()
         client.newCall(request).execute().use { response ->

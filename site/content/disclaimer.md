@@ -41,4 +41,4 @@ Spyglass includes third-party assets used under their respective open licenses:
 
 ## Contact
 
-If you have questions or concerns, please open an issue on our [GitHub repository](https://github.com/Dev-VulX/Spyglass/issues).
+If you have questions or concerns, please open an issue on our [GitHub repository](https://github.com/beryndil/Spyglass/issues).

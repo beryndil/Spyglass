@@ -4,11 +4,11 @@
 
 > **Alpha Software** — Spyglass and Spyglass Connect are in active development. Expect bugs, missing features, and rough edges.
 
-Spyglass is an Android companion app for Minecraft Java Edition 1.21.4. Pair it with [Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect) on your desktop to view your inventory, find items in any chest, locate structures, and explore an overhead map — all streamed over local WiFi with end-to-end encryption.
+Spyglass is an Android companion app for Minecraft Java Edition 1.21.4. Pair it with [Spyglass Connect](https://github.com/beryndil/Spyglass-Connect) on your desktop to view your inventory, find items in any chest, locate structures, and explore an overhead map — all streamed over local WiFi with end-to-end encryption.
 
 Beyond Connect, Spyglass includes a complete offline database of blocks, items, recipes, mobs, biomes, enchantments, potions, structures, and trades — plus 19 calculators for building and enchanting.
 
-**[Visit the Website](https://dev-vulx.github.io/Spyglass/)**
+**[Visit the Website](https://beryndil.github.io/Spyglass/)**
 
 ## Disclaimer
 
@@ -18,7 +18,7 @@ Beyond Connect, Spyglass includes a complete offline database of blocks, items, 
 
 ## Spyglass Connect
 
-Connect to the **[Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect)** desktop companion app to access your Minecraft world data from your phone over local WiFi. No cloud servers, no accounts — everything stays on your network.
+Connect to the **[Spyglass Connect](https://github.com/beryndil/Spyglass-Connect)** desktop companion app to access your Minecraft world data from your phone over local WiFi. No cloud servers, no accounts — everything stays on your network.
 
 | Feature | Description |
 |---------|-------------|
@@ -33,13 +33,13 @@ Connect to the **[Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect
 
 Fully encrypted (ECDH + AES-256-GCM). Auto-reconnects via mDNS.
 
-**Requires:** [Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect) running on your PC (Windows, macOS, or Linux), same WiFi network.
+**Requires:** [Spyglass Connect](https://github.com/beryndil/Spyglass-Connect) running on your PC (Windows, macOS, or Linux), same WiFi network.
 
 ---
 
 ## Download
 
-**[Download the latest APK from Releases](https://github.com/Dev-VulX/Spyglass/releases/latest)**
+**[Download the latest APK from Releases](https://github.com/beryndil/Spyglass/releases/latest)**
 
 1. Open the link on your Android device
 2. Download `app-release.apk`
@@ -95,8 +95,8 @@ Real-time search across all categories simultaneously. Tap any result to jump di
 
 ## Related Projects
 
-- **[Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect)** — Desktop companion app (reads your Minecraft saves, streams to phone)
-- **[Spyglass-Data](https://github.com/Dev-VulX/Spyglass-Data)** — Minecraft reference data (auto-synced to app)
+- **[Spyglass Connect](https://github.com/beryndil/Spyglass-Connect)** — Desktop companion app (reads your Minecraft saves, streams to phone)
+- **[Spyglass-Data](https://github.com/beryndil/Spyglass-Data)** — Minecraft reference data (auto-synced to app)
 
 ---
 
@@ -117,7 +117,7 @@ Real-time search across all categories simultaneously. Tap any result to jump di
 
 Spyglass displays ads via Google AdMob and may collect anonymous analytics and crash reports with your consent. No personal information is ever shared. All game data is stored locally on your device.
 
-[Read our full Privacy Policy](https://dev-vulx.github.io/Spyglass/privacy-policy/)
+[Read our full Privacy Policy](https://beryndil.github.io/Spyglass/privacy-policy/)
 
 ---
 

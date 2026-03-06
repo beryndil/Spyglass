@@ -504,11 +504,11 @@ fun SettingsScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Text(
-                    "github.com/Dev-VulX/Spyglass-Connect",
+                    "github.com/beryndil/Spyglass-Connect",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
-                        uriHandler.openUri("https://github.com/Dev-VulX/Spyglass-Connect")
+                        uriHandler.openUri("https://github.com/beryndil/Spyglass-Connect")
                     },
                 )
             }
@@ -548,7 +548,7 @@ fun SettingsScreen(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
-                        uriHandler.openUri("https://dev-vulx.github.io/Spyglass/privacy-policy.html")
+                        uriHandler.openUri("https://beryndil.github.io/Spyglass/privacy-policy.html")
                     },
                 )
             }

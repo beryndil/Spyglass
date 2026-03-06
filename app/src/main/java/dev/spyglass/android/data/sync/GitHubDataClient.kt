@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
  */
 object GitHubDataClient {
 
-    private const val OWNER = "Dev-VulX"
+    private const val OWNER = "beryndil"
     private const val REPO = "Spyglass-Data"
     private const val BRANCH = "main"
     private const val BASE_URL =

@@ -11,7 +11,7 @@ cssClass: "connect-page"
 
 Spyglass Connect is a desktop companion app that reads your Minecraft Java Edition save files and streams the data to your phone over local WiFi. No cloud servers, no accounts — everything stays on your network.
 
-**[Get Spyglass Connect for Desktop](https://github.com/Dev-VulX/Spyglass-Connect)**
+**[Get Spyglass Connect for Desktop](https://github.com/beryndil/Spyglass-Connect)**
 
 ## How It Works
 
@@ -45,6 +45,6 @@ An interactive terrain map showing structure markers, your player position, and 
 
 ## Requirements
 
-- [Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect) running on your PC
+- [Spyglass Connect](https://github.com/beryndil/Spyglass-Connect) running on your PC
 - Both devices on the same WiFi network
 - Minecraft Java Edition save files accessible on your PC

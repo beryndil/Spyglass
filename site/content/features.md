@@ -8,7 +8,7 @@ subtitle: "Everything in Spyglass, at a glance."
 
 ## Spyglass Connect
 
-Pair your phone with the [Spyglass Connect](https://github.com/Dev-VulX/Spyglass-Connect) desktop companion to access your Minecraft world data over local WiFi. No cloud servers, no accounts — everything stays on your network.
+Pair your phone with the [Spyglass Connect](https://github.com/beryndil/Spyglass-Connect) desktop companion to access your Minecraft world data over local WiFi. No cloud servers, no accounts — everything stays on your network.
 
 | Feature | Description |
 |---------|-------------|
@@ -83,4 +83,4 @@ All game data is bundled with the app and works without an internet connection. 
 
 ## Data Sync
 
-Spyglass automatically syncs with the [Spyglass-Data](https://github.com/Dev-VulX/Spyglass-Data) repository. A manifest tracks per-file versions so only changed data is downloaded — keeping the app up to date without large downloads.
+Spyglass automatically syncs with the [Spyglass-Data](https://github.com/beryndil/Spyglass-Data) repository. A manifest tracks per-file versions so only changed data is downloaded — keeping the app up to date without large downloads.

@@ -73,4 +73,4 @@ We may update this policy from time to time. Changes will be posted on this page
 
 ## 12. Contact
 
-If you have questions about this privacy policy, please open an issue on our [GitHub repository](https://github.com/Dev-VulX/Spyglass/issues).
+If you have questions about this privacy policy, please open an issue on our [GitHub repository](https://github.com/beryndil/Spyglass/issues).
