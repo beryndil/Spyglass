@@ -37,6 +37,9 @@ object PreferenceKeys {
     // Security
     val APP_LOCK_ENABLED        = booleanPreferencesKey("app_lock_enabled")
 
+    // Content Filtering
+    val HIDE_UNOBTAINABLE_BLOCKS = booleanPreferencesKey("hide_unobtainable_blocks")
+
     // Data & Sync
     val SYNC_FREQUENCY_HOURS    = intPreferencesKey("sync_frequency_hours")
     val OFFLINE_MODE            = booleanPreferencesKey("offline_mode")

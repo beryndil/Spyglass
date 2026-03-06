@@ -43,6 +43,7 @@ import dev.spyglass.android.data.db.entities.RecipeEntity
 import dev.spyglass.android.data.db.entities.StructureEntity
 import dev.spyglass.android.data.db.entities.VersionTagEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -123,17 +124,24 @@ class BlocksViewModel(app: Application) : AndroidViewModel(app) {
         .map { it.toTagMap() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
+    private val hideUnobtainable: StateFlow<Boolean> = app.dataStore.data
+        .map { it[PreferenceKeys.HIDE_UNOBTAINABLE_BLOCKS] ?: false }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
     val blocks: StateFlow<List<BlockEntity>> = combine(
-        _query.debounce(200), _category, _sortKey
-    ) { q, cat, sort -> Triple(q, cat, sort) }
-    .flatMapLatest { (q, cat, sort) ->
+        _query.debounce(200), _category, _sortKey, hideUnobtainable
+    ) { q, cat, sort, hide -> arrayOf(q, cat, sort, hide) }
+    .flatMapLatest { args ->
+        val q = args[0] as String; val cat = args[1] as String
+        val sort = args[2] as String; val hide = args[3] as Boolean
         val flow = if (cat == "all") repo.searchBlocks(q) else repo.blocksByCategory(cat)
         flow.map { list ->
+            val filtered = if (hide) list.filter { it.isObtainable } else list
             when (sort) {
-                "hardness" -> list.sortedByDescending { it.hardness }
-                "blast_resistance" -> list.sortedByDescending { it.blastResistance }
-                "light_level" -> list.sortedByDescending { it.lightLevel }
-                else -> list
+                "hardness" -> filtered.sortedByDescending { it.hardness }
+                "blast_resistance" -> filtered.sortedByDescending { it.blastResistance }
+                "light_level" -> filtered.sortedByDescending { it.lightLevel }
+                else -> filtered
             }
         }
     }.applyVersionFilter(versionFilter, versionTags, "block") { it.id }

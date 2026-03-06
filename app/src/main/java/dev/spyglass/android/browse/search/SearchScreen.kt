@@ -20,6 +20,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.db.entities.*
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.settings.PreferenceKeys
+import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.async
@@ -34,15 +36,18 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
     private val _query = MutableStateFlow("")
     val query: StateFlow<String> = _query.asStateFlow()
 
-    val results: StateFlow<List<SearchResult>> = _query
-        .debounce(300)
-        .mapLatest { q ->
+    private val hideUnobtainable: StateFlow<Boolean> = app.dataStore.data
+        .map { it[PreferenceKeys.HIDE_UNOBTAINABLE_BLOCKS] ?: false }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    val results: StateFlow<List<SearchResult>> = combine(_query.debounce(300), hideUnobtainable) { q, hide -> q to hide }
+        .mapLatest { (q, hide) ->
             if (q.length < 2) return@mapLatest emptyList()
-            searchAll(q)
+            searchAll(q, hide)
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    private suspend fun searchAll(q: String): List<SearchResult> = coroutineScope {
+    private suspend fun searchAll(q: String, hideUnobtainable: Boolean): List<SearchResult> = coroutineScope {
         val blocks       = async { repo.searchBlocksOnce(q) }
         val recipes      = async { repo.searchRecipesOnce(q) }
         val mobs         = async { repo.searchMobsOnce(q) }
@@ -56,7 +61,10 @@ class SearchViewModel(app: Application) : AndroidViewModel(app) {
         val commands     = async { repo.searchCommandsOnce(q) }
 
         buildList {
-            addAll(blocks.await().map { SearchResult("Block", it.id, it.name, it.category) })
+            val blockList = blocks.await().let { list ->
+                if (hideUnobtainable) list.filter { it.isObtainable } else list
+            }
+            addAll(blockList.map { SearchResult("Block", it.id, it.name, it.category) })
             addAll(recipes.await().map { SearchResult("Recipe", it.outputItem, it.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { c -> c.uppercase() }, it.type.replace('_', ' ')) })
             addAll(mobs.await().map { SearchResult("Mob", it.id, it.name, it.category) })
             addAll(biomes.await().map { SearchResult("Biome", it.id, it.name, it.category) })

@@ -177,6 +177,15 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         store.edit { it[PreferenceKeys.DEFAULT_STARTUP_TAB] = tab }
     }
 
+    // Content Filtering
+    val hideUnobtainableBlocks: StateFlow<Boolean> = store.data
+        .map { it[PreferenceKeys.HIDE_UNOBTAINABLE_BLOCKS] ?: false }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    fun setHideUnobtainableBlocks(enabled: Boolean) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.HIDE_UNOBTAINABLE_BLOCKS] = enabled }
+    }
+
     // Security
     val appLockEnabled: StateFlow<Boolean> = store.data
         .map { it[PreferenceKeys.APP_LOCK_ENABLED] ?: false }
