@@ -249,7 +249,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}, onDisclaime
         item(key = "feedback") {
             SectionHeader(stringResource(R.string.feedback))
             ResultCard {
-                val issuesUrl = "https://github.com/beryndil/spyglass-android/issues"
+                val issuesUrl = "https://github.com/beryndil/Spyglass/issues"
                 Text(
                     text = stringResource(R.string.about_report_bug),
                     style = MaterialTheme.typography.bodyLarge,

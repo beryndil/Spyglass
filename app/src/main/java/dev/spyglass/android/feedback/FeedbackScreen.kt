@@ -21,7 +21,7 @@ import dev.spyglass.android.core.ui.*
 @Composable
 fun FeedbackScreen(onBack: () -> Unit = {}) {
     val uriHandler = LocalUriHandler.current
-    val issuesUrl = "https://github.com/beryndil/spyglass-android/issues"
+    val issuesUrl = "https://github.com/beryndil/Spyglass/issues"
 
     Column(
         modifier = Modifier
