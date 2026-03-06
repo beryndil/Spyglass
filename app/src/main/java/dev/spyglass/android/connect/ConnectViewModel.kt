@@ -428,6 +428,13 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                             ConnectCache.CacheMeta(selectedWorld = _selectedWorld.value, worlds = payload.worlds),
                         )
                     }
+                    // Re-select world after reconnect (desktop forgets selection on new session)
+                    val currentWorld = _selectedWorld.value
+                    if (currentWorld != null && connectionState.value.isConnected) {
+                        Timber.d("Re-selecting world after reconnect: $currentWorld")
+                        val selectPayload = json.encodeToJsonElement(SelectWorldPayload(currentWorld))
+                        client.sendRequest(MessageType.SELECT_WORLD, selectPayload)
+                    }
                 }
                 MessageType.PLAYER_DATA -> {
                     val payload = json.decodeFromJsonElement(PlayerData.serializer(), message.payload)
