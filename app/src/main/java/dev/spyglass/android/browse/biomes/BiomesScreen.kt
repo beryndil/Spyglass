@@ -41,6 +41,8 @@ import dev.spyglass.android.data.db.entities.BiomeEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.VersionTagEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import androidx.compose.ui.platform.LocalContext
+import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -475,7 +477,11 @@ private fun BiomeDetailCard(
         }
 
         // Cross-links to tool tabs
-        val isLibrarianBiome = biome.id in LIBRARIAN_BIOME_IDS
+        val context = LocalContext.current
+        val showExperimental by remember {
+            context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: true }
+        }.collectAsStateWithLifecycle(initialValue = true)
+        val isLibrarianBiome = showExperimental && biome.id in LIBRARIAN_BIOME_IDS
         val hasStructures = structures.isNotEmpty()
         if (isLibrarianBiome || hasStructures) {
             HorizontalDivider(color = textColor.copy(alpha = 0.2f), thickness = 0.5.dp)

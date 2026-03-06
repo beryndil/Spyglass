@@ -160,9 +160,16 @@ object ToolsModule : SpyglassModule {
 
     @Composable
     private fun QuickToolsSection(scope: HomeSectionScope) {
+        val context = LocalContext.current
+        val showExperimental by remember {
+            context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: true }
+        }.collectAsStateWithLifecycle(initialValue = true)
+        val calcLinks = remember(showExperimental) {
+            if (showExperimental) ALL_CALC_LINKS else ALL_CALC_LINKS.filter { !it.experimental }
+        }
         SectionHeader(stringResource(R.string.home_tools), icon = PixelIcons.Anvil)
         Spacer(Modifier.height(8.dp))
-        QuickLinkGrid(CALC_LINKS.map { it.first }) { index -> scope.navigateToCalcTab(CALC_LINKS[index].second) }
+        QuickLinkGrid(calcLinks.map { it.link }) { index -> scope.navigateToCalcTab(calcLinks[index].tabIndex) }
     }
 
     // ── Settings composables ────────────────────────────────────────────────
@@ -248,21 +255,23 @@ object ToolsModule : SpyglassModule {
         val iconTint: Color = Color.Unspecified,
     )
 
-    private val CALC_LINKS = listOf(
-        QuickLink(PixelIcons.Todo, "Todo List") to 0,
-        QuickLink(PixelIcons.Storage, "Shopping Lists") to 1,
-        QuickLink(PixelIcons.Bookmark, "Notes") to 11,
-        QuickLink(PixelIcons.Waypoints, "Waypoints", Emerald) to 12,
-        QuickLink(PixelIcons.Fill, "Block Fill") to 3,
-        QuickLink(PixelIcons.Shapes, "Shapes") to 4,
-        QuickLink(PixelIcons.Maze, "Maze Maker") to 5,
-        QuickLink(PixelIcons.Storage, "Storage") to 6,
-        QuickLink(PixelIcons.Anvil, "Enchanting") to 2,
-        QuickLink(PixelIcons.Smelt, "Smelting") to 7,
-        QuickLink(PixelIcons.Enchant, "Librarian Guide") to 14,
-        QuickLink(PixelIcons.Torch, "Light Spacing") to 10,
-        QuickLink(PixelIcons.Nether, "Nether Portal") to 8,
-        QuickLink(PixelIcons.Clock, "Game Clock") to 9,
+    private data class CalcLink(val link: QuickLink, val tabIndex: Int, val experimental: Boolean = false)
+
+    private val ALL_CALC_LINKS = listOf(
+        CalcLink(QuickLink(PixelIcons.Todo, "Todo List"), 0),
+        CalcLink(QuickLink(PixelIcons.Storage, "Shopping Lists"), 1),
+        CalcLink(QuickLink(PixelIcons.Bookmark, "Notes"), 11),
+        CalcLink(QuickLink(PixelIcons.Waypoints, "Waypoints", Emerald), 12),
+        CalcLink(QuickLink(PixelIcons.Fill, "Block Fill"), 3),
+        CalcLink(QuickLink(PixelIcons.Shapes, "Shapes"), 4),
+        CalcLink(QuickLink(PixelIcons.Maze, "Maze Maker"), 5),
+        CalcLink(QuickLink(PixelIcons.Storage, "Storage"), 6),
+        CalcLink(QuickLink(PixelIcons.Anvil, "Enchanting"), 2),
+        CalcLink(QuickLink(PixelIcons.Smelt, "Smelting"), 7),
+        CalcLink(QuickLink(PixelIcons.Enchant, "Librarian Guide"), 14, experimental = true),
+        CalcLink(QuickLink(PixelIcons.Torch, "Light Spacing"), 10),
+        CalcLink(QuickLink(PixelIcons.Nether, "Nether Portal"), 8),
+        CalcLink(QuickLink(PixelIcons.Clock, "Game Clock"), 9),
     )
 
     @Composable

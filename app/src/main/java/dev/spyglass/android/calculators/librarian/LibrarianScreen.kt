@@ -5,7 +5,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.spyglass.android.core.ui.*
 
@@ -67,8 +69,30 @@ fun LibrarianScreen() {
         TabIntroHeader(
             icon = PixelIcons.Enchant,
             title = "Librarian Guide",
-            description = "Librarian enchantments are biome-locked in 1.21+. Find the right biome for the enchantment you need.",
+            description = "Librarian enchantments are biome-locked when the Villager Trade Rebalance data pack is enabled. Find the right biome for the enchantment you need.",
         )
+
+        // Experimental notice
+        ResultCard {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text("⚗", style = MaterialTheme.typography.titleMedium)
+                Column {
+                    Text(
+                        "Experimental Feature",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color(0xFFFFC107),
+                    )
+                    Text(
+                        "Requires the Villager Trade Rebalance data pack. Not active in default gameplay.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        }
 
         // ── Biome Filter ──
         SectionHeader("Select Biome")

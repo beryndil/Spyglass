@@ -36,28 +36,44 @@ import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.flow.map
 
-@Composable
-private fun calcTabs() = listOf(
-    SpyglassTab(stringResource(R.string.calc_tab_todo),        PixelIcons.Todo),        // 0 — daily planning
-    SpyglassTab(stringResource(R.string.calc_tab_shopping),    PixelIcons.Storage),      // 1 — list management
-    SpyglassTab(stringResource(R.string.calc_tab_enchanting),  PixelIcons.Anvil),        // 2 — optimizer
-    SpyglassTab(stringResource(R.string.calc_tab_fill),        PixelIcons.Fill),         // 3 — building
-    SpyglassTab(stringResource(R.string.calc_tab_shapes),      PixelIcons.Shapes),       // 4 — building
-    SpyglassTab(stringResource(R.string.calc_tab_maze),        PixelIcons.Maze),          // 5 — building
-    SpyglassTab(stringResource(R.string.calc_tab_storage),     PixelIcons.Storage),      // 6 — building
-    SpyglassTab(stringResource(R.string.calc_tab_smelt),       PixelIcons.Smelt),        // 7 — resources
-    SpyglassTab(stringResource(R.string.calc_tab_nether),      PixelIcons.Nether),       // 8 — travel
-    SpyglassTab(stringResource(R.string.calc_tab_game_clock),  PixelIcons.Clock),         // 9 — day/night cycle
-    SpyglassTab(stringResource(R.string.calc_tab_light),       PixelIcons.Torch),         // 10 — light spacing
-    SpyglassTab(stringResource(R.string.calc_tab_notes),       PixelIcons.Bookmark),      // 11 — user notes
-    SpyglassTab(stringResource(R.string.calc_tab_waypoints),   PixelIcons.Waypoints),     // 12 — coordinate saver
-    SpyglassTab(stringResource(R.string.calc_tab_redstone),    PixelIcons.Blocks),        // 13 — signal strength
-    SpyglassTab(stringResource(R.string.calc_tab_librarian),   PixelIcons.Enchant),       // 14 — biome enchantments
-    SpyglassTab(stringResource(R.string.calc_tab_food),        PixelIcons.Item),          // 15 — food & saturation
-    SpyglassTab(stringResource(R.string.calc_tab_banners),     PixelIcons.Blocks),        // 16 — banner patterns
-    SpyglassTab(stringResource(R.string.calc_tab_trims),       PixelIcons.Item),          // 17 — armor trims
-    SpyglassTab(stringResource(R.string.calc_tab_loot),        PixelIcons.Structure),     // 18 — structure loot
+/** Stable string key for each calculator tab — decoupled from visual index. */
+private data class CalcTabEntry(
+    val key: String,
+    val tab: SpyglassTab,
+    val experimental: Boolean = false,
 )
+
+@Composable
+private fun allCalcTabs() = listOf(
+    CalcTabEntry("todo",       SpyglassTab(stringResource(R.string.calc_tab_todo),        PixelIcons.Todo)),
+    CalcTabEntry("shopping",   SpyglassTab(stringResource(R.string.calc_tab_shopping),    PixelIcons.Storage)),
+    CalcTabEntry("enchanting", SpyglassTab(stringResource(R.string.calc_tab_enchanting),  PixelIcons.Anvil)),
+    CalcTabEntry("fill",       SpyglassTab(stringResource(R.string.calc_tab_fill),        PixelIcons.Fill)),
+    CalcTabEntry("shapes",     SpyglassTab(stringResource(R.string.calc_tab_shapes),      PixelIcons.Shapes)),
+    CalcTabEntry("maze",       SpyglassTab(stringResource(R.string.calc_tab_maze),        PixelIcons.Maze)),
+    CalcTabEntry("storage",    SpyglassTab(stringResource(R.string.calc_tab_storage),     PixelIcons.Storage)),
+    CalcTabEntry("smelt",      SpyglassTab(stringResource(R.string.calc_tab_smelt),       PixelIcons.Smelt)),
+    CalcTabEntry("nether",     SpyglassTab(stringResource(R.string.calc_tab_nether),      PixelIcons.Nether)),
+    CalcTabEntry("clock",      SpyglassTab(stringResource(R.string.calc_tab_game_clock),  PixelIcons.Clock)),
+    CalcTabEntry("light",      SpyglassTab(stringResource(R.string.calc_tab_light),       PixelIcons.Torch)),
+    CalcTabEntry("notes",      SpyglassTab(stringResource(R.string.calc_tab_notes),       PixelIcons.Bookmark)),
+    CalcTabEntry("waypoints",  SpyglassTab(stringResource(R.string.calc_tab_waypoints),   PixelIcons.Waypoints)),
+    CalcTabEntry("redstone",   SpyglassTab(stringResource(R.string.calc_tab_redstone),    PixelIcons.Blocks)),
+    CalcTabEntry("librarian",  SpyglassTab(stringResource(R.string.calc_tab_librarian),   PixelIcons.Enchant), experimental = true),
+    CalcTabEntry("food",       SpyglassTab(stringResource(R.string.calc_tab_food),        PixelIcons.Item)),
+    CalcTabEntry("banners",    SpyglassTab(stringResource(R.string.calc_tab_banners),     PixelIcons.Blocks)),
+    CalcTabEntry("trims",      SpyglassTab(stringResource(R.string.calc_tab_trims),       PixelIcons.Item)),
+    CalcTabEntry("loot",       SpyglassTab(stringResource(R.string.calc_tab_loot),        PixelIcons.Structure)),
+)
+
+/** Map legacy integer tab index → stable key for external callers (HomeScreen, etc.) */
+fun calcTabKey(legacyIndex: Int): String = when (legacyIndex) {
+    0 -> "todo"; 1 -> "shopping"; 2 -> "enchanting"; 3 -> "fill"; 4 -> "shapes"
+    5 -> "maze"; 6 -> "storage"; 7 -> "smelt"; 8 -> "nether"; 9 -> "clock"
+    10 -> "light"; 11 -> "notes"; 12 -> "waypoints"; 13 -> "redstone"; 14 -> "librarian"
+    15 -> "food"; 16 -> "banners"; 17 -> "trims"; 18 -> "loot"
+    else -> "todo"
+}
 
 @Composable
 fun CalculatorsScreen(
@@ -69,24 +85,39 @@ fun CalculatorsScreen(
         context.dataStore.data.map { it[PreferenceKeys.DEFAULT_TOOL_TAB] ?: 0 }
     }.collectAsStateWithLifecycle(initialValue = 0)
 
-    var selectedTab by remember { mutableIntStateOf(initialTab ?: defaultTab) }
+    val showExperimental by remember {
+        context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: true }
+    }.collectAsStateWithLifecycle(initialValue = true)
 
-    // Apply default from prefs when no explicit initialTab
-    LaunchedEffect(defaultTab) {
-        if (initialTab == null) {
-            selectedTab = defaultTab
-        }
+    val allTabs = allCalcTabs()
+    val visibleTabs = remember(allTabs, showExperimental) {
+        if (showExperimental) allTabs else allTabs.filter { !it.experimental }
     }
 
+    // Resolve the target key from legacy index
+    val targetKey = when {
+        initialTab != null -> calcTabKey(initialTab)
+        else -> calcTabKey(defaultTab)
+    }
+
+    var selectedKey by remember { mutableStateOf(targetKey) }
+
+    // React to external navigation
     LaunchedEffect(initialTab) {
-        if (initialTab != null) selectedTab = initialTab
+        if (initialTab != null) selectedKey = calcTabKey(initialTab)
     }
+    LaunchedEffect(defaultTab) {
+        if (initialTab == null) selectedKey = calcTabKey(defaultTab)
+    }
+
+    // Resolve visual index from key
+    val selectedIndex = visibleTabs.indexOfFirst { it.key == selectedKey }.coerceAtLeast(0)
 
     Column(modifier = Modifier.fillMaxSize()) {
         SpyglassTabRow(
-            tabs          = calcTabs(),
-            selectedIndex = selectedTab,
-            onSelect      = { selectedTab = it },
+            tabs          = visibleTabs.map { it.tab },
+            selectedIndex = selectedIndex,
+            onSelect      = { idx -> selectedKey = visibleTabs[idx].key },
         )
         HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp)
 
@@ -97,26 +128,26 @@ fun CalculatorsScreen(
             val onStructureTap: (String) -> Unit = { structureId ->
                 onBrowseTarget(BrowseTarget(6, structureId))
             }
-            when (selectedTab) {
-                0 -> TodoScreen()
-                1 -> ShoppingScreen()
-                2 -> AnvilScreen()
-                3 -> BlockFillScreen()
-                4 -> ShapesScreen()
-                5 -> MazeScreen()
-                6 -> StorageScreen()
-                7 -> SmeltingScreen()
-                8 -> NetherScreen()
-                9 -> ClockScreen()
-                10 -> LightScreen()
-                11 -> NotesScreen()
-                12 -> WaypointsScreen()
-                13 -> RedstoneScreen()
-                14 -> LibrarianScreen()
-                15 -> FoodScreen()
-                16 -> BannerScreen()
-                17 -> TrimScreen(onStructureTap = onStructureTap)
-                18 -> LootScreen(onStructureTap = onStructureTap)
+            when (selectedKey) {
+                "todo"       -> TodoScreen()
+                "shopping"   -> ShoppingScreen()
+                "enchanting" -> AnvilScreen()
+                "fill"       -> BlockFillScreen()
+                "shapes"     -> ShapesScreen()
+                "maze"       -> MazeScreen()
+                "storage"    -> StorageScreen()
+                "smelt"      -> SmeltingScreen()
+                "nether"     -> NetherScreen()
+                "clock"      -> ClockScreen()
+                "light"      -> LightScreen()
+                "notes"      -> NotesScreen()
+                "waypoints"  -> WaypointsScreen()
+                "redstone"   -> RedstoneScreen()
+                "librarian"  -> LibrarianScreen()
+                "food"       -> FoodScreen()
+                "banners"    -> BannerScreen()
+                "trims"      -> TrimScreen(onStructureTap = onStructureTap)
+                "loot"       -> LootScreen(onStructureTap = onStructureTap)
             }
         }
     }

@@ -86,6 +86,7 @@ fun SettingsScreen(
     val highContrast        by vm.highContrast.collectAsStateWithLifecycle()
     val defaultStartupTab   by vm.defaultStartupTab.collectAsStateWithLifecycle()
     val hideUnobtainable    by vm.hideUnobtainableBlocks.collectAsStateWithLifecycle()
+    val showExperimental    by vm.showExperimental.collectAsStateWithLifecycle()
     val appLockEnabled      by vm.appLockEnabled.collectAsStateWithLifecycle()
     val syncFrequencyHours  by vm.syncFrequencyHours.collectAsStateWithLifecycle()
     val offlineMode         by vm.offlineMode.collectAsStateWithLifecycle()
@@ -343,6 +344,13 @@ fun SettingsScreen(
                     description = stringResource(R.string.settings_hide_unobtainable_desc),
                     checked = hideUnobtainable,
                     onCheckedChange = vm::setHideUnobtainableBlocks,
+                )
+                SpyglassDivider()
+                SettingsToggle(
+                    title = stringResource(R.string.settings_show_experimental),
+                    description = stringResource(R.string.settings_show_experimental_desc),
+                    checked = showExperimental,
+                    onCheckedChange = vm::setShowExperimental,
                 )
                 SpyglassDivider()
                 SettingsToggle(

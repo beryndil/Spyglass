@@ -79,26 +79,32 @@ private fun browseLinks() = listOf(
 )
 
 // Pair: QuickLink to calculator-tab index (allows visual reordering independent of tab order)
-private val CALC_LINKS = listOf(
+private data class CalcLink(
+    val link: QuickLink,
+    val tabIndex: Int,
+    val experimental: Boolean = false,
+)
+
+private val ALL_CALC_LINKS = listOf(
     // ── Planning & Organization ──
-    QuickLink(PixelIcons.Todo,      "Todo List")              to 0,
-    QuickLink(PixelIcons.Storage,   "Shopping Lists")         to 1,
-    QuickLink(PixelIcons.Bookmark,  "Notes")                  to 11,
-    QuickLink(PixelIcons.Waypoints, "Waypoints",    Emerald)  to 12,
+    CalcLink(QuickLink(PixelIcons.Todo,      "Todo List"),              0),
+    CalcLink(QuickLink(PixelIcons.Storage,   "Shopping Lists"),         1),
+    CalcLink(QuickLink(PixelIcons.Bookmark,  "Notes"),                  11),
+    CalcLink(QuickLink(PixelIcons.Waypoints, "Waypoints",    Emerald), 12),
     // ── Building & Design ──
-    QuickLink(PixelIcons.Fill,      "Block Fill")             to 3,
-    QuickLink(PixelIcons.Shapes,    "Shapes")                 to 4,
-    QuickLink(PixelIcons.Maze,      "Maze Maker")             to 5,
-    QuickLink(PixelIcons.Storage,   "Storage")                to 6,
+    CalcLink(QuickLink(PixelIcons.Fill,      "Block Fill"),             3),
+    CalcLink(QuickLink(PixelIcons.Shapes,    "Shapes"),                 4),
+    CalcLink(QuickLink(PixelIcons.Maze,      "Maze Maker"),             5),
+    CalcLink(QuickLink(PixelIcons.Storage,   "Storage"),                6),
     // ── Crafting & Resources ──
-    QuickLink(PixelIcons.Anvil,     "Enchanting")             to 2,
-    QuickLink(PixelIcons.Smelt,     "Smelting")               to 7,
+    CalcLink(QuickLink(PixelIcons.Anvil,     "Enchanting"),             2),
+    CalcLink(QuickLink(PixelIcons.Smelt,     "Smelting"),               7),
     // ── Reference ──
-    QuickLink(PixelIcons.Enchant,   "Librarian Guide")        to 14,
-    QuickLink(PixelIcons.Torch,     "Light Spacing")          to 10,
+    CalcLink(QuickLink(PixelIcons.Enchant,   "Librarian Guide"),       14, experimental = true),
+    CalcLink(QuickLink(PixelIcons.Torch,     "Light Spacing"),          10),
     // ── World & Navigation ──
-    QuickLink(PixelIcons.Nether,    "Nether Portal")          to 8,
-    QuickLink(PixelIcons.Clock,     "Game Clock")             to 9,
+    CalcLink(QuickLink(PixelIcons.Nether,    "Nether Portal"),          8),
+    CalcLink(QuickLink(PixelIcons.Clock,     "Game Clock"),             9),
 )
 
 // ── Browse tab index for favorite types ─────────────────────────────────────
@@ -136,6 +142,7 @@ private fun iconForFavorite(type: String, id: String): SpyglassIcon = when (type
 private data class HomePrefs(
     val showTipOfDay: Boolean = true,
     val showFavoritesOnHome: Boolean = false,
+    val showExperimental: Boolean = true,
     val loaded: Boolean = false,
 )
 
@@ -163,6 +170,7 @@ fun HomeScreen(
             HomePrefs(
                 showTipOfDay = p[PreferenceKeys.SHOW_TIP_OF_DAY] ?: true,
                 showFavoritesOnHome = p[PreferenceKeys.SHOW_FAVORITES_ON_HOME] ?: false,
+                showExperimental = p[PreferenceKeys.SHOW_EXPERIMENTAL] ?: true,
                 loaded = true,
             )
         }
@@ -246,9 +254,12 @@ fun HomeScreen(
 
         // ── C. Quick Access — Tools ──
         item(key = "tools") {
+            val calcLinks = remember(prefs.showExperimental) {
+                if (prefs.showExperimental) ALL_CALC_LINKS else ALL_CALC_LINKS.filter { !it.experimental }
+            }
             SectionHeader(stringResource(R.string.home_tools), icon = PixelIcons.Anvil)
             Spacer(Modifier.height(8.dp))
-            QuickLinkGrid(CALC_LINKS.map { it.first }) { index -> onCalcTab(CALC_LINKS[index].second) }
+            QuickLinkGrid(calcLinks.map { it.link }) { index -> onCalcTab(calcLinks[index].tabIndex) }
         }
 
         // ── D. Tip of the Day ──

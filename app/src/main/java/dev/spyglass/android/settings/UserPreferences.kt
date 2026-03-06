@@ -39,6 +39,7 @@ object PreferenceKeys {
 
     // Content Filtering
     val HIDE_UNOBTAINABLE_BLOCKS = booleanPreferencesKey("hide_unobtainable_blocks")
+    val SHOW_EXPERIMENTAL        = booleanPreferencesKey("show_experimental")
 
     // Data & Sync
     val SYNC_FREQUENCY_HOURS    = intPreferencesKey("sync_frequency_hours")

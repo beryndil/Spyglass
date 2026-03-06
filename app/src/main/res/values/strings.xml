@@ -102,6 +102,8 @@
     <!-- Settings — Appearance -->
     <string name="settings_hide_unobtainable">Hide Creative-Only Blocks</string>
     <string name="settings_hide_unobtainable_desc">Hide blocks that can\'t be obtained in Survival mode</string>
+    <string name="settings_show_experimental">Show Experimental Features</string>
+    <string name="settings_show_experimental_desc">Include features from Minecraft experimental data packs (e.g. Librarian trade rebalance)</string>
     <string name="settings_haptic_feedback">Haptic Feedback</string>
     <string name="settings_haptic_feedback_desc">Vibrate on taps and interactions</string>
     <string name="settings_reduce_animations">Reduce Animations</string>

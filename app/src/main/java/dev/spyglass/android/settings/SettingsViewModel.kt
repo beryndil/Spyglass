@@ -186,6 +186,14 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         store.edit { it[PreferenceKeys.HIDE_UNOBTAINABLE_BLOCKS] = enabled }
     }
 
+    val showExperimental: StateFlow<Boolean> = store.data
+        .map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: true }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
+
+    fun setShowExperimental(enabled: Boolean) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.SHOW_EXPERIMENTAL] = enabled }
+    }
+
     // Security
     val appLockEnabled: StateFlow<Boolean> = store.data
         .map { it[PreferenceKeys.APP_LOCK_ENABLED] ?: false }

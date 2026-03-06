@@ -35,6 +35,8 @@ import dev.spyglass.android.data.db.entities.EnchantEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.VersionTagEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import androidx.compose.ui.platform.LocalContext
+import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -197,6 +199,10 @@ fun EnchantsScreen(
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
+    val showExperimental by remember {
+        context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: true }
+    }.collectAsStateWithLifecycle(initialValue = true)
 
     // Show snackbar when incompatible enchant warning fires
     LaunchedEffect(warning) {
@@ -271,15 +277,17 @@ fun EnchantsScreen(
                     description = "All enchantments by target, rarity, and compatibility",
                     stat = "${enchants.size} enchantments",
                 )
-                Text(
-                    "Open Librarian Guide \u2192",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = PotionBlue,
-                    textDecoration = TextDecoration.Underline,
-                    modifier = Modifier
-                        .clickable { onCalcTab(14) }
-                        .padding(top = 4.dp),
-                )
+                if (showExperimental) {
+                    Text(
+                        "Open Librarian Guide \u2192",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = PotionBlue,
+                        textDecoration = TextDecoration.Underline,
+                        modifier = Modifier
+                            .clickable { onCalcTab(14) }
+                            .padding(top = 4.dp),
+                    )
+                }
             }
             if (favoriteEnchants.isNotEmpty()) {
                 item(key = "fav_header") {
