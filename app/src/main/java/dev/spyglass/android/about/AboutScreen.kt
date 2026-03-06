@@ -236,7 +236,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}, onDisclaime
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
-                        uriHandler.openUri("https://beryndil.github.io/Spyglass/privacy-policy.html")
+                        uriHandler.openUri("https://hardknocks.university/privacy-policy.html")
                     },
                 )
             }

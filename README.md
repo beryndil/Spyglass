@@ -8,7 +8,7 @@ Spyglass is an Android companion app for Minecraft Java Edition 1.21.4. Pair it 
 
 Beyond Connect, Spyglass includes a complete offline database of blocks, items, recipes, mobs, biomes, enchantments, potions, structures, and trades — plus 19 calculators for building and enchanting.
 
-**[Visit the Website](https://beryndil.github.io/Spyglass/)**
+**[Visit the Website](https://hardknocks.university/)**
 
 ## Disclaimer
 
@@ -117,7 +117,7 @@ Real-time search across all categories simultaneously. Tap any result to jump di
 
 Spyglass displays ads via Google AdMob and may collect anonymous analytics and crash reports with your consent. No personal information is ever shared. All game data is stored locally on your device.
 
-[Read our full Privacy Policy](https://beryndil.github.io/Spyglass/privacy-policy/)
+[Read our full Privacy Policy](https://hardknocks.university/privacy-policy/)
 
 ---
 
