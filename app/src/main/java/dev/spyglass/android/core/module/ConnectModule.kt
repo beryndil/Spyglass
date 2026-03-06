@@ -262,11 +262,11 @@ object ConnectModule : SpyglassModule {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
-                "github.com/beryndil/Spyglass-Connect",
+                "hardknocks.university",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.clickable {
-                    uriHandler.openUri("https://github.com/beryndil/Spyglass-Connect")
+                    uriHandler.openUri("https://hardknocks.university")
                 },
             )
         }
