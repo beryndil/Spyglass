@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -148,6 +149,7 @@ fun HomeScreen(
     connectViewModel: ConnectViewModel? = null,
     onScanQr: () -> Unit = {},
     onConnectNav: (String) -> Unit = {},
+    scrollToTopTrigger: Int = 0,
 ) {
     val onBrowseTab: (Int) -> Unit = { tab -> onBrowseTarget(dev.spyglass.android.navigation.BrowseTarget(tab, "")) }
     val context = LocalContext.current
@@ -182,8 +184,16 @@ fun HomeScreen(
         repo?.incompleteTodoCount()?.collect { value = it } ?: return@produceState
     }
 
+    val listState = rememberLazyListState()
+
+    // Scroll to top when tab is re-tapped
+    LaunchedEffect(scrollToTopTrigger) {
+        if (scrollToTopTrigger > 0) listState.animateScrollToItem(0)
+    }
+
     // LazyColumn — only visible sections compose on first frame
     LazyColumn(
+        state = listState,
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp),

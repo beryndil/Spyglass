@@ -10,7 +10,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.compose.DialogNavigator
@@ -94,16 +93,22 @@ fun AppNavGraph() {
     var pendingCalcTab by remember { mutableStateOf<Int?>(null) }
     val connectViewModel: ConnectViewModel = viewModel()
 
+    // Scroll-to-top trigger — increments when user re-taps the current tab
+    var scrollToTopTrigger by remember { mutableIntStateOf(0) }
+
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
     val showBars = currentRoute !in SUB_ROUTES
 
     fun navigateTo(route: String) {
         try {
+            if (currentRoute == route) {
+                // Already on this tab — scroll to top
+                scrollToTopTrigger++
+                return
+            }
             navController.navigate(route) {
-                popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                 launchSingleTop = true
-                restoreState = true
             }
         } catch (_: IllegalStateException) {
             // Back stack entry may not exist yet during rapid navigation — safe to ignore
@@ -118,7 +123,7 @@ fun AppNavGraph() {
         bottomBar = {
             Column(Modifier.navigationBarsPadding()) {
                 if (showBars) {
-                    BottomNavBar(navController)
+                    BottomNavBar(navController) { route -> navigateTo(route) }
                 }
                 AdBanner()
             }
@@ -147,6 +152,7 @@ fun AppNavGraph() {
                     onConnectNav = { route ->
                         navController.navigate(route) { launchSingleTop = true }
                     },
+                    scrollToTopTrigger = scrollToTopTrigger,
                 )
             }
             composable(TopDest.Calculators.route) {
@@ -174,10 +180,7 @@ fun AppNavGraph() {
             composable(TopDest.Search.route) {
                 SearchScreen(onResultTap = { tab, id ->
                     pendingTarget = BrowseTarget(tab, id)
-                    navController.navigate(TopDest.Browse.route) {
-                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                        launchSingleTop = true
-                    }
+                    navigateTo(TopDest.Browse.route)
                 })
             }
             composable("about") {
@@ -383,7 +386,7 @@ private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> U
 // -- Bottom nav --
 
 @Composable
-fun BottomNavBar(navController: NavHostController) {
+fun BottomNavBar(navController: NavHostController, onTabSelected: (String) -> Unit) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDest   = backStackEntry?.destination
 
@@ -391,13 +394,7 @@ fun BottomNavBar(navController: NavHostController) {
         TOP_DESTINATIONS.forEach { dest ->
             NavigationBarItem(
                 selected = currentDest?.hierarchy?.any { it.route == dest.route } == true,
-                onClick  = {
-                    navController.navigate(dest.route) {
-                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                        launchSingleTop = true
-                        restoreState    = true
-                    }
-                },
+                onClick  = { onTabSelected(dest.route) },
                 icon  = { SpyglassIconImage(dest.icon, contentDescription = stringResource(dest.labelResId), modifier = Modifier.size(24.dp)) },
                 label = { Text(stringResource(dest.labelResId)) },
                 colors = NavigationBarItemDefaults.colors(
