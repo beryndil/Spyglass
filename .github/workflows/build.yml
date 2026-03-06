@@ -38,14 +38,12 @@ jobs:
 
       - name: Write signing properties
         run: |
-          cat >> local.properties <<EOF
-          RELEASE_STORE_FILE=release.jks
-          RELEASE_STORE_PASSWORD=${{ secrets.RELEASE_STORE_PASSWORD }}
-          RELEASE_KEY_ALIAS=${{ secrets.RELEASE_KEY_ALIAS }}
-          RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}
-          ADMOB_APP_ID=${{ secrets.ADMOB_APP_ID }}
-          ADMOB_BANNER_ID=${{ secrets.ADMOB_BANNER_ID }}
-          EOF
+          echo "RELEASE_STORE_FILE=release.jks" >> local.properties
+          echo "RELEASE_STORE_PASSWORD=${{ secrets.RELEASE_STORE_PASSWORD }}" >> local.properties
+          echo "RELEASE_KEY_ALIAS=${{ secrets.RELEASE_KEY_ALIAS }}" >> local.properties
+          echo "RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}" >> local.properties
+          echo "ADMOB_APP_ID=${{ secrets.ADMOB_APP_ID }}" >> local.properties
+          echo "ADMOB_BANNER_ID=${{ secrets.ADMOB_BANNER_ID }}" >> local.properties
 
       - name: Build release APK
         run: ./gradlew assembleRelease
