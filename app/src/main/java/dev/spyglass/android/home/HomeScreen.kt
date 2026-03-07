@@ -832,7 +832,7 @@ private fun ConnectStatusLine(
                 statusLabel,
                 style = MaterialTheme.typography.labelSmall,
                 color = statusColor,
-                modifier = if (!isInProgress) Modifier.clickable { statusMenuExpanded = true } else Modifier,
+                modifier = Modifier.clickable { statusMenuExpanded = true },
             )
             DropdownMenu(
                 expanded = statusMenuExpanded,
@@ -861,6 +861,14 @@ private fun ConnectStatusLine(
                         onClick = {
                             statusMenuExpanded = false
                             onReconnect()
+                        },
+                    )
+                } else if (isInProgress) {
+                    DropdownMenuItem(
+                        text = { Text("Cancel") },
+                        onClick = {
+                            statusMenuExpanded = false
+                            onDisconnect()
                         },
                     )
                 }

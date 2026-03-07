@@ -440,7 +440,7 @@ object ConnectModule : SpyglassModule {
                     statusLabel,
                     style = MaterialTheme.typography.labelSmall,
                     color = statusColor,
-                    modifier = if (!isInProgress) Modifier.clickable { statusMenuExpanded = true } else Modifier,
+                    modifier = Modifier.clickable { statusMenuExpanded = true },
                 )
                 DropdownMenu(
                     expanded = statusMenuExpanded,
@@ -469,6 +469,14 @@ object ConnectModule : SpyglassModule {
                             onClick = {
                                 statusMenuExpanded = false
                                 onReconnect()
+                            },
+                        )
+                    } else if (isInProgress) {
+                        DropdownMenuItem(
+                            text = { Text("Cancel") },
+                            onClick = {
+                                statusMenuExpanded = false
+                                onDisconnect()
                             },
                         )
                     }
