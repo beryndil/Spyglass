@@ -30,6 +30,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private val reconnectManager = ReconnectManager()
     private var mdnsDiscovery: MdnsDiscovery? = null
     private var reconnectJob: Job? = null
+    private val logTree = ConnectLogTree(client)
 
     /** Whether we've been connected at least once (to know if reconnect makes sense). */
     private var wasConnected = false
@@ -95,6 +96,9 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private val repo by lazy { GameDataRepository.get(getApplication()) }
 
     init {
+        // Plant the log tree so warnings/errors/crashes are captured and sent to desktop
+        Timber.plant(logTree)
+
         // Load cached data on startup
         viewModelScope.launch(Dispatchers.IO) {
             val meta = ConnectCache.loadMeta(getApplication())
@@ -171,6 +175,10 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                         reconnectManager.reset()
                         reconnectJob?.cancel()
                         ConnectService.start(getApplication(), state.deviceName)
+                        // Send any crash logs saved from previous sessions
+                        viewModelScope.launch(Dispatchers.IO) { sendPendingCrashLogs() }
+                        // Flush any buffered log entries to desktop
+                        logTree.flush()
                     }
                     is ConnectionState.Error -> {
                         // Auto-reconnect on unexpected disconnect
@@ -448,6 +456,19 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
+    /** Send any crash logs saved to disk from previous sessions. */
+    private fun sendPendingCrashLogs() {
+        val entries = CrashLogStore.loadAndClear(getApplication())
+        if (entries.isEmpty()) return
+        Timber.i("Sending ${entries.size} pending crash log(s) to desktop")
+        try {
+            val payload = json.encodeToJsonElement(DeviceLogPayload(entries))
+            client.sendRequest(MessageType.DEVICE_LOG, payload)
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to send pending crash logs")
+        }
+    }
+
     /** Disconnect and clean up. */
     fun disconnect() {
         CrashReporter.log("User disconnect")
@@ -635,6 +656,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     override fun onCleared() {
         super.onCleared()
+        Timber.uproot(logTree)
         reconnectJob?.cancel()
         mdnsDiscovery?.stopDiscovery()
         client.disconnect()

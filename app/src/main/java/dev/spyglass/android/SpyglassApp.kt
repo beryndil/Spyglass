@@ -64,6 +64,10 @@ class SpyglassApp : Application() {
             // Global uncaught exception handler — logs via Timber then delegates
             val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
             Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+                // Save crash to disk so it can be sent to desktop on next connect
+                dev.spyglass.android.connect.client.CrashLogStore.saveCrash(
+                    this@SpyglassApp, thread.name, throwable
+                )
                 Timber.e(throwable, "Uncaught exception on thread %s", thread.name)
                 defaultHandler?.uncaughtException(thread, throwable)
             }
