@@ -457,9 +457,10 @@ object MinecraftUpdates {
         ),
     )
 
-    /** Returns the update info for a given version string, or null if not found. */
+    /** Returns the update info for a given version string, falling back to the major version. */
     fun forVersion(version: String): MinecraftUpdate? =
         JAVA_UPDATES.find { it.version == version }
+            ?: JAVA_UPDATES.find { version.startsWith(it.version + ".") }
 
     /** Returns the latest update. */
     fun latest(): MinecraftUpdate = JAVA_UPDATES.last()
