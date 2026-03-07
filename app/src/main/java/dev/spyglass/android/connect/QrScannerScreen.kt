@@ -62,8 +62,15 @@ fun QrScannerScreen(
     DisposableEffect(Unit) {
         onDispose {
             try {
-                val cameraProvider = ProcessCameraProvider.getInstance(context).get()
-                cameraProvider.unbindAll()
+                val future = ProcessCameraProvider.getInstance(context)
+                if (future.isDone) {
+                    future.get().unbindAll()
+                } else {
+                    future.addListener(
+                        { try { future.get().unbindAll() } catch (_: Exception) {} },
+                        ContextCompat.getMainExecutor(context),
+                    )
+                }
             } catch (e: Exception) {
                 Timber.w(e, "Failed to unbind camera on dispose")
             }
