@@ -100,13 +100,14 @@
     "entityId": "acacia_wood",
     "addedInJava": "1.7",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Stripped variant"
+    "mechanicsChangeNotes": "Stripped variant",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
     "entityId": "activator_rail",
     "addedInJava": "1.5",
-    "addedInBedrock": "0.8",
+    "addedInBedrock": "0.14",
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -162,21 +163,24 @@
     "entityId": "andesite_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
     "entityId": "andesite_stairs",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
     "entityId": "andesite_wall",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Wall connections update"
+    "mechanicsChangeNotes": "Wall connections update",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
@@ -279,14 +283,16 @@
     "entityId": "bamboo_mosaic_slab",
     "addedInJava": "1.20",
     "mechanicsChangedInJava": "1.20",
-    "mechanicsChangeNotes": "Bamboo mosaic variant"
+    "mechanicsChangeNotes": "Bamboo mosaic variant",
+    "addedInBedrock": "1.20"
   },
   {
     "entityType": "block",
     "entityId": "bamboo_mosaic_stairs",
     "addedInJava": "1.20",
     "mechanicsChangedInJava": "1.20",
-    "mechanicsChangeNotes": "Bamboo mosaic variant"
+    "mechanicsChangeNotes": "Bamboo mosaic variant",
+    "addedInBedrock": "1.20"
   },
   {
     "entityType": "block",
@@ -349,7 +355,8 @@
     "entityId": "barrier",
     "addedInJava": "1.8",
     "mechanicsChangedInJava": "1.17",
-    "mechanicsChangeNotes": "Light block alternative"
+    "mechanicsChangeNotes": "Light block alternative",
+    "addedInBedrock": "1.18"
   },
   {
     "entityType": "block",
@@ -496,14 +503,16 @@
     "entityId": "birch_slab",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Waterloggable"
+    "mechanicsChangeNotes": "Waterloggable",
+    "addedInBedrock": "0.8"
   },
   {
     "entityType": "block",
     "entityId": "birch_stairs",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Waterloggable"
+    "mechanicsChangeNotes": "Waterloggable",
+    "addedInBedrock": "0.8"
   },
   {
     "entityType": "block",
@@ -518,7 +527,8 @@
     "entityId": "birch_wood",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Stripped variant"
+    "mechanicsChangeNotes": "Stripped variant",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -572,7 +582,7 @@
     "entityType": "block",
     "entityId": "black_shulker_box",
     "addedInJava": "1.11",
-    "addedInBedrock": "1.0",
+    "addedInBedrock": "1.1",
     "mechanicsChangedInJava": "1.21.5",
     "mechanicsChangeNotes": "Tooltip shows contents"
   },
@@ -715,7 +725,7 @@
     "entityType": "block",
     "entityId": "blue_shulker_box",
     "addedInJava": "1.11",
-    "addedInBedrock": "1.0",
+    "addedInBedrock": "1.1",
     "mechanicsChangedInJava": "1.21.5",
     "mechanicsChangeNotes": "Tooltip shows contents"
   },
@@ -755,7 +765,8 @@
     "entityId": "bone_block",
     "addedInJava": "1.10",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Fossil generation"
+    "mechanicsChangeNotes": "Fossil generation",
+    "addedInBedrock": "0.16"
   },
   {
     "entityType": "block",
@@ -882,13 +893,14 @@
     "entityType": "block",
     "entityId": "brown_mushroom_block",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Silk Touch behavior"
+    "mechanicsChangeNotes": "Silk Touch behavior",
+    "addedInBedrock": "0.1"
   },
   {
     "entityType": "block",
     "entityId": "brown_shulker_box",
     "addedInJava": "1.11",
-    "addedInBedrock": "1.0",
+    "addedInBedrock": "1.1",
     "mechanicsChangedInJava": "1.21.5",
     "mechanicsChangeNotes": "Tooltip shows contents"
   },
@@ -944,7 +956,8 @@
     "entityId": "bubble_coral_block",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Dies outside water"
+    "mechanicsChangeNotes": "Dies outside water",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -966,7 +979,7 @@
     "entityType": "block",
     "entityId": "bush",
     "addedInJava": "1.21.5",
-    "addedInBedrock": "1.21.60",
+    "addedInBedrock": "1.21.70",
     "mechanicsChangedInJava": "1.21.5",
     "mechanicsChangeNotes": "Decorative foliage"
   },
@@ -981,7 +994,7 @@
     "entityType": "block",
     "entityId": "cactus_flower",
     "addedInJava": "1.21.5",
-    "addedInBedrock": "1.21.60",
+    "addedInBedrock": "1.21.70",
     "mechanicsChangedInJava": "1.21.5",
     "mechanicsChangeNotes": "Grows on cacti; pink dye"
   },
@@ -1037,7 +1050,8 @@
     "entityId": "carved_pumpkin",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Separated from pumpkin"
+    "mechanicsChangeNotes": "Separated from pumpkin",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -1051,7 +1065,8 @@
     "entityId": "cave_air",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Cave generation"
+    "mechanicsChangeNotes": "Cave generation",
+    "addedInBedrock": "1.18"
   },
   {
     "entityType": "block",
@@ -1241,14 +1256,16 @@
     "entityId": "chiseled_sandstone",
     "addedInJava": "1.2",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipe"
+    "mechanicsChangeNotes": "Stonecutter recipe",
+    "addedInBedrock": "0.6"
   },
   {
     "entityType": "block",
     "entityId": "chiseled_stone_bricks",
     "addedInJava": "1.2",
     "mechanicsChangedInJava": "1.21.5",
-    "mechanicsChangeNotes": "Lodestone recipe change"
+    "mechanicsChangeNotes": "Lodestone recipe change",
+    "addedInBedrock": "0.6"
   },
   {
     "entityType": "block",
@@ -1286,7 +1303,8 @@
     "entityType": "block",
     "entityId": "clay",
     "mechanicsChangedInJava": "1.19",
-    "mechanicsChangeNotes": "Mud/packed mud system"
+    "mechanicsChangeNotes": "Mud/packed mud system",
+    "addedInBedrock": "0.1"
   },
   {
     "entityType": "block",
@@ -1377,7 +1395,8 @@
     "entityId": "cobblestone_wall",
     "addedInJava": "1.4",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Connection changes"
+    "mechanicsChangeNotes": "Connection changes",
+    "addedInBedrock": "0.8"
   },
   {
     "entityType": "block",
@@ -1391,14 +1410,16 @@
     "entityId": "cocoa",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Jungle tree growth"
+    "mechanicsChangeNotes": "Jungle tree growth",
+    "addedInBedrock": "0.9"
   },
   {
     "entityType": "block",
     "entityId": "command_block",
     "addedInJava": "1.4",
     "mechanicsChangedInJava": "1.9",
-    "mechanicsChangeNotes": "Chain/repeating variants"
+    "mechanicsChangeNotes": "Chain/repeating variants",
+    "addedInBedrock": "0.16"
   },
   {
     "entityType": "block",
@@ -1516,7 +1537,8 @@
     "entityType": "block",
     "entityId": "cracked_stone_bricks",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Smelting recipe"
+    "mechanicsChangeNotes": "Smelting recipe",
+    "addedInBedrock": "0.6"
   },
   {
     "entityType": "block",
@@ -1546,7 +1568,8 @@
     "entityId": "creeper_head",
     "addedInJava": "1.4",
     "mechanicsChangedInJava": "1.20",
-    "mechanicsChangeNotes": "Note block interaction"
+    "mechanicsChangeNotes": "Note block interaction",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "block",
@@ -1713,21 +1736,24 @@
     "entityId": "cut_red_sandstone_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
     "entityId": "cut_sandstone",
     "addedInJava": "1.2",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Slab variant"
+    "mechanicsChangeNotes": "Slab variant",
+    "addedInBedrock": "0.6"
   },
   {
     "entityType": "block",
     "entityId": "cut_sandstone_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
@@ -1781,7 +1807,7 @@
     "entityType": "block",
     "entityId": "cyan_shulker_box",
     "addedInJava": "1.11",
-    "addedInBedrock": "1.0",
+    "addedInBedrock": "1.1",
     "mechanicsChangedInJava": "1.21.5",
     "mechanicsChangeNotes": "Tooltip shows contents"
   },
@@ -1924,7 +1950,8 @@
     "entityId": "dark_oak_wood",
     "addedInJava": "1.7",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Stripped variant"
+    "mechanicsChangeNotes": "Stripped variant",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -1969,14 +1996,16 @@
     "entityId": "dead_brain_coral_block",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Dead variant"
+    "mechanicsChangeNotes": "Dead variant",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
     "entityId": "dead_brain_coral_fan",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Dried state"
+    "mechanicsChangeNotes": "Dried state",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -1991,14 +2020,16 @@
     "entityId": "dead_bubble_coral_block",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Dead variant"
+    "mechanicsChangeNotes": "Dead variant",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
     "entityId": "dead_bubble_coral_fan",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Dried state"
+    "mechanicsChangeNotes": "Dried state",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -2020,14 +2051,16 @@
     "entityId": "dead_fire_coral_block",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Dead variant"
+    "mechanicsChangeNotes": "Dead variant",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
     "entityId": "dead_fire_coral_fan",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Dried state"
+    "mechanicsChangeNotes": "Dried state",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -2042,14 +2075,16 @@
     "entityId": "dead_horn_coral_block",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Dead variant"
+    "mechanicsChangeNotes": "Dead variant",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
     "entityId": "dead_horn_coral_fan",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Dried state"
+    "mechanicsChangeNotes": "Dried state",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -2064,14 +2099,16 @@
     "entityId": "dead_tube_coral_block",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Dead variant"
+    "mechanicsChangeNotes": "Dead variant",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
     "entityId": "dead_tube_coral_fan",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Dried state"
+    "mechanicsChangeNotes": "Dried state",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -2251,21 +2288,24 @@
     "entityId": "diorite_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
     "entityId": "diorite_stairs",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
     "entityId": "diorite_wall",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Wall connections update"
+    "mechanicsChangeNotes": "Wall connections update",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
@@ -2279,7 +2319,8 @@
     "entityId": "dirt_path",
     "addedInJava": "1.9",
     "mechanicsChangedInJava": "1.17",
-    "mechanicsChangeNotes": "Renamed to Dirt Path"
+    "mechanicsChangeNotes": "Renamed to Dirt Path",
+    "addedInBedrock": "0.11"
   },
   {
     "entityType": "block",
@@ -2293,7 +2334,8 @@
     "entityId": "dragon_head",
     "addedInJava": "1.9",
     "mechanicsChangedInJava": "1.20",
-    "mechanicsChangeNotes": "Note block interaction"
+    "mechanicsChangeNotes": "Note block interaction",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "block",
@@ -2324,14 +2366,16 @@
     "entityId": "emerald_block",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Beacon base"
+    "mechanicsChangeNotes": "Beacon base",
+    "addedInBedrock": "0.9"
   },
   {
     "entityType": "block",
     "entityId": "emerald_ore",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.17",
-    "mechanicsChangeNotes": "Deepslate variant"
+    "mechanicsChangeNotes": "Deepslate variant",
+    "addedInBedrock": "0.9"
   },
   {
     "entityType": "block",
@@ -2345,13 +2389,15 @@
     "entityId": "end_gateway",
     "addedInJava": "1.9",
     "mechanicsChangedInJava": "1.9",
-    "mechanicsChangeNotes": "End dimension teleportation"
+    "mechanicsChangeNotes": "End dimension teleportation",
+    "addedInBedrock": "1.0"
   },
   {
     "entityType": "block",
     "entityId": "end_portal",
     "mechanicsChangedInJava": "1.0",
-    "mechanicsChangeNotes": "No major changes"
+    "mechanicsChangeNotes": "No major changes",
+    "addedInBedrock": "1.0"
   },
   {
     "entityType": "block",
@@ -2380,21 +2426,24 @@
     "entityId": "end_stone_brick_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
     "entityId": "end_stone_brick_stairs",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
     "entityId": "end_stone_brick_wall",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Wall connections update"
+    "mechanicsChangeNotes": "Wall connections update",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
@@ -2409,14 +2458,16 @@
     "entityId": "ender_chest",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.21.4",
-    "mechanicsChangeNotes": "Drops obsidian without silk touch"
+    "mechanicsChangeNotes": "Drops obsidian without silk touch",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "block",
     "entityId": "exposed_chiseled_copper",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -2431,28 +2482,32 @@
     "entityId": "exposed_copper_bulb",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "exposed_copper_door",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "exposed_copper_grate",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "exposed_copper_trapdoor",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -2496,7 +2551,8 @@
     "entityType": "block",
     "entityId": "fire",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Soul fire variant"
+    "mechanicsChangeNotes": "Soul fire variant",
+    "addedInBedrock": "0.1"
   },
   {
     "entityType": "block",
@@ -2511,7 +2567,8 @@
     "entityId": "fire_coral_block",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Dies outside water"
+    "mechanicsChangeNotes": "Dies outside water",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -2525,7 +2582,7 @@
     "entityType": "block",
     "entityId": "firefly_bush",
     "addedInJava": "1.21.5",
-    "addedInBedrock": "1.21.60",
+    "addedInBedrock": "1.21.70",
     "mechanicsChangedInJava": "1.21.11",
     "mechanicsChangeNotes": "Idle sounds when exposed"
   },
@@ -2574,7 +2631,8 @@
     "entityId": "frosted_ice",
     "addedInJava": "1.9",
     "mechanicsChangedInJava": "1.9",
-    "mechanicsChangeNotes": "Frost Walker only"
+    "mechanicsChangeNotes": "Frost Walker only",
+    "addedInBedrock": "1.0"
   },
   {
     "entityType": "block",
@@ -2602,7 +2660,8 @@
     "entityType": "block",
     "entityId": "glass_pane",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Waterloggable; stained variants"
+    "mechanicsChangeNotes": "Waterloggable; stained variants",
+    "addedInBedrock": "0.3"
   },
   {
     "entityType": "block",
@@ -2654,21 +2713,24 @@
     "entityId": "granite_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
     "entityId": "granite_stairs",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
     "entityId": "granite_wall",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Wall connections update"
+    "mechanicsChangeNotes": "Wall connections update",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
@@ -2935,7 +2997,8 @@
     "entityId": "horn_coral_block",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Dies outside water"
+    "mechanicsChangeNotes": "Dies outside water",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -2957,7 +3020,8 @@
     "entityId": "infested_chiseled_stone_bricks",
     "addedInJava": "1.7",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Silverfish spawning"
+    "mechanicsChangeNotes": "Silverfish spawning",
+    "addedInBedrock": "0.9"
   },
   {
     "entityType": "block",
@@ -2971,7 +3035,8 @@
     "entityId": "infested_cracked_stone_bricks",
     "addedInJava": "1.7",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Silverfish spawning"
+    "mechanicsChangeNotes": "Silverfish spawning",
+    "addedInBedrock": "0.9"
   },
   {
     "entityType": "block",
@@ -2986,7 +3051,8 @@
     "entityId": "infested_mossy_stone_bricks",
     "addedInJava": "1.7",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Silverfish spawning"
+    "mechanicsChangeNotes": "Silverfish spawning",
+    "addedInBedrock": "0.9"
   },
   {
     "entityType": "block",
@@ -3034,7 +3100,7 @@
     "entityType": "block",
     "entityId": "iron_trapdoor",
     "addedInJava": "1.8",
-    "addedInBedrock": "0.12",
+    "addedInBedrock": "0.13",
     "mechanicsChangedInJava": "1.21.5",
     "mechanicsChangeNotes": "New metal sounds"
   },
@@ -3050,7 +3116,8 @@
     "entityId": "jigsaw",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Structure generation"
+    "mechanicsChangeNotes": "Structure generation",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
@@ -3071,7 +3138,7 @@
     "entityType": "block",
     "entityId": "jungle_door",
     "addedInJava": "1.8",
-    "addedInBedrock": "1.4",
+    "addedInBedrock": "0.13",
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterlogging"
   },
@@ -3079,7 +3146,7 @@
     "entityType": "block",
     "entityId": "jungle_fence",
     "addedInJava": "1.8",
-    "addedInBedrock": "0.15",
+    "addedInBedrock": "0.10",
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Connection changes"
   },
@@ -3087,7 +3154,7 @@
     "entityType": "block",
     "entityId": "jungle_fence_gate",
     "addedInJava": "1.8",
-    "addedInBedrock": "0.15",
+    "addedInBedrock": "0.10",
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterlogging"
   },
@@ -3152,14 +3219,16 @@
     "entityId": "jungle_slab",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Waterloggable"
+    "mechanicsChangeNotes": "Waterloggable",
+    "addedInBedrock": "0.8"
   },
   {
     "entityType": "block",
     "entityId": "jungle_stairs",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Waterloggable"
+    "mechanicsChangeNotes": "Waterloggable",
+    "addedInBedrock": "0.8"
   },
   {
     "entityType": "block",
@@ -3174,7 +3243,8 @@
     "entityId": "jungle_wood",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Stripped variant"
+    "mechanicsChangeNotes": "Stripped variant",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -3203,7 +3273,9 @@
     "entityType": "block",
     "entityId": "lapis_ore",
     "mechanicsChangedInJava": "1.17",
-    "mechanicsChangeNotes": "Deepslate variant"
+    "mechanicsChangeNotes": "Deepslate variant",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.1"
   },
   {
     "entityType": "block",
@@ -3225,13 +3297,15 @@
     "entityType": "block",
     "entityId": "lava",
     "mechanicsChangedInJava": "1.17",
-    "mechanicsChangeNotes": "Generates deeper; copper smelting"
+    "mechanicsChangeNotes": "Generates deeper; copper smelting",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.1"
   },
   {
     "entityType": "block",
     "entityId": "leaf_litter",
     "addedInJava": "1.21.5",
-    "addedInBedrock": "1.21.60",
+    "addedInBedrock": "1.21.70",
     "mechanicsChangedInJava": "1.21.5",
     "mechanicsChangeNotes": "1-4 stacking; forest floor"
   },
@@ -3255,7 +3329,8 @@
     "entityId": "light",
     "addedInJava": "1.17",
     "mechanicsChangedInJava": "1.17",
-    "mechanicsChangeNotes": "Invisible light 0-15"
+    "mechanicsChangeNotes": "Invisible light 0-15",
+    "addedInBedrock": "1.18"
   },
   {
     "entityType": "block",
@@ -3665,7 +3740,8 @@
     "entityId": "magma_block",
     "addedInJava": "1.10",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Bubble column interaction"
+    "mechanicsChangeNotes": "Bubble column interaction",
+    "addedInBedrock": "1.1"
   },
   {
     "entityType": "block",
@@ -3759,7 +3835,7 @@
     "entityType": "block",
     "entityId": "mangrove_sign",
     "addedInJava": "1.19",
-    "addedInBedrock": "1.10",
+    "addedInBedrock": "1.19",
     "mechanicsChangedInJava": "1.19",
     "mechanicsChangeNotes": "Mangrove wood set"
   },
@@ -3838,48 +3914,56 @@
     "entityId": "mossy_cobblestone_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.9"
   },
   {
     "entityType": "block",
     "entityId": "mossy_cobblestone_stairs",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.9"
   },
   {
     "entityType": "block",
     "entityId": "mossy_cobblestone_wall",
     "addedInJava": "1.4",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Connection changes"
+    "mechanicsChangeNotes": "Connection changes",
+    "addedInBedrock": "0.8"
   },
   {
     "entityType": "block",
     "entityId": "mossy_stone_brick_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.9"
   },
   {
     "entityType": "block",
     "entityId": "mossy_stone_brick_stairs",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.9"
   },
   {
     "entityType": "block",
     "entityId": "mossy_stone_brick_wall",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Wall connections update"
+    "mechanicsChangeNotes": "Wall connections update",
+    "addedInBedrock": "1.9"
   },
   {
     "entityType": "block",
     "entityId": "mossy_stone_bricks",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Crafting recipe; wall variant"
+    "mechanicsChangeNotes": "Crafting recipe; wall variant",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.4"
   },
   {
     "entityType": "block",
@@ -3933,7 +4017,9 @@
     "entityType": "block",
     "entityId": "mushroom_stem",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Separate block ID"
+    "mechanicsChangeNotes": "Separate block ID",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.9"
   },
   {
     "entityType": "block",
@@ -3969,7 +4055,8 @@
     "entityId": "nether_brick_wall",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Wall connections update"
+    "mechanicsChangeNotes": "Wall connections update",
+    "addedInBedrock": "1.9"
   },
   {
     "entityType": "block",
@@ -3998,7 +4085,8 @@
     "entityId": "nether_quartz_ore",
     "addedInJava": "1.5",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Nether generation changes"
+    "mechanicsChangeNotes": "Nether generation changes",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "block",
@@ -4020,7 +4108,8 @@
     "entityId": "nether_wart_block",
     "addedInJava": "1.10",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Crimson forest generation"
+    "mechanicsChangeNotes": "Crimson forest generation",
+    "addedInBedrock": "1.1"
   },
   {
     "entityType": "block",
@@ -4056,7 +4145,9 @@
     "entityType": "block",
     "entityId": "oak_door",
     "mechanicsChangedInJava": "1.8",
-    "mechanicsChangeNotes": "All wood types added"
+    "mechanicsChangeNotes": "All wood types added",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.1"
   },
   {
     "entityType": "block",
@@ -4120,7 +4211,8 @@
     "entityId": "oak_slab",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Waterloggable"
+    "mechanicsChangeNotes": "Waterloggable",
+    "addedInBedrock": "0.1"
   },
   {
     "entityType": "block",
@@ -4141,7 +4233,8 @@
     "entityId": "oak_wood",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Stripped variant"
+    "mechanicsChangeNotes": "Stripped variant",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -4282,7 +4375,8 @@
     "entityId": "oxidized_chiseled_copper",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -4297,28 +4391,32 @@
     "entityId": "oxidized_copper_bulb",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "oxidized_copper_door",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "oxidized_copper_grate",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "oxidized_copper_trapdoor",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -4501,7 +4599,8 @@
     "entityId": "pale_oak_wood",
     "addedInJava": "1.21.4",
     "mechanicsChangedInJava": "1.21.4",
-    "mechanicsChangeNotes": "6-sided log"
+    "mechanicsChangeNotes": "6-sided log",
+    "addedInBedrock": "1.21.50"
   },
   {
     "entityType": "block",
@@ -4524,7 +4623,8 @@
     "entityId": "petrified_oak_slab",
     "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Legacy slab; stone properties"
+    "mechanicsChangeNotes": "Legacy slab; stone properties",
+    "addedInJava": "1.0"
   },
   {
     "entityType": "block",
@@ -4657,7 +4757,8 @@
     "entityId": "player_head",
     "addedInJava": "1.4",
     "mechanicsChangedInJava": "1.20",
-    "mechanicsChangeNotes": "Note block interaction"
+    "mechanicsChangeNotes": "Note block interaction",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "block",
@@ -4688,14 +4789,16 @@
     "entityId": "polished_andesite_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
     "entityId": "polished_andesite_stairs",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
@@ -4830,14 +4933,16 @@
     "entityId": "polished_diorite_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
     "entityId": "polished_diorite_stairs",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
@@ -4852,14 +4957,16 @@
     "entityId": "polished_granite_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
     "entityId": "polished_granite_stairs",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
@@ -4874,26 +4981,29 @@
     "entityId": "polished_tuff_slab",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Full tuff building set"
+    "mechanicsChangeNotes": "Full tuff building set",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "polished_tuff_stairs",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Full tuff building set"
+    "mechanicsChangeNotes": "Full tuff building set",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "polished_tuff_wall",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Full tuff building set"
+    "mechanicsChangeNotes": "Full tuff building set",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "poppy",
-    "addedInJava": "1.7",
+    "addedInJava": "1.0",
     "addedInBedrock": "0.1",
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Renamed from Rose"
@@ -4917,7 +5027,7 @@
     "entityType": "block",
     "entityId": "prismarine",
     "addedInJava": "1.8",
-    "addedInBedrock": "1.4",
+    "addedInBedrock": "0.16",
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Slab/stair/wall variants"
   },
@@ -4926,20 +5036,22 @@
     "entityId": "prismarine_brick_slab",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Waterloggable"
+    "mechanicsChangeNotes": "Waterloggable",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
     "entityId": "prismarine_brick_stairs",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Waterloggable"
+    "mechanicsChangeNotes": "Waterloggable",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
     "entityId": "prismarine_bricks",
     "addedInJava": "1.8",
-    "addedInBedrock": "1.4",
+    "addedInBedrock": "0.16",
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Slab/stair variants"
   },
@@ -4948,21 +5060,24 @@
     "entityId": "prismarine_slab",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Waterloggable"
+    "mechanicsChangeNotes": "Waterloggable",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
     "entityId": "prismarine_stairs",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Waterloggable"
+    "mechanicsChangeNotes": "Waterloggable",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
     "entityId": "prismarine_wall",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Wall connections update"
+    "mechanicsChangeNotes": "Wall connections update",
+    "addedInBedrock": "1.9"
   },
   {
     "entityType": "block",
@@ -5094,7 +5209,7 @@
     "entityType": "block",
     "entityId": "quartz_block",
     "addedInJava": "1.5",
-    "addedInBedrock": "0.1",
+    "addedInBedrock": "0.6",
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Smooth variant; stonecutter"
   },
@@ -5118,7 +5233,7 @@
     "entityType": "block",
     "entityId": "quartz_slab",
     "addedInJava": "1.5",
-    "addedInBedrock": "0.1",
+    "addedInBedrock": "0.7",
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Smooth variant"
   },
@@ -5126,7 +5241,7 @@
     "entityType": "block",
     "entityId": "quartz_stairs",
     "addedInJava": "1.5",
-    "addedInBedrock": "0.1",
+    "addedInBedrock": "0.6",
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Smooth variant"
   },
@@ -5142,21 +5257,24 @@
     "entityId": "raw_copper_block",
     "addedInJava": "1.17",
     "mechanicsChangedInJava": "1.17",
-    "mechanicsChangeNotes": "Storage block"
+    "mechanicsChangeNotes": "Storage block",
+    "addedInBedrock": "1.17"
   },
   {
     "entityType": "block",
     "entityId": "raw_gold_block",
     "addedInJava": "1.17",
     "mechanicsChangedInJava": "1.17",
-    "mechanicsChangeNotes": "Storage block"
+    "mechanicsChangeNotes": "Storage block",
+    "addedInBedrock": "1.17"
   },
   {
     "entityType": "block",
     "entityId": "raw_iron_block",
     "addedInJava": "1.17",
     "mechanicsChangedInJava": "1.17",
-    "mechanicsChangeNotes": "Storage block"
+    "mechanicsChangeNotes": "Storage block",
+    "addedInBedrock": "1.17"
   },
   {
     "entityType": "block",
@@ -5216,35 +5334,41 @@
     "entityType": "block",
     "entityId": "red_mushroom_block",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Silk Touch behavior"
+    "mechanicsChangeNotes": "Silk Touch behavior",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.9"
   },
   {
     "entityType": "block",
     "entityId": "red_nether_brick_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.9"
   },
   {
     "entityType": "block",
     "entityId": "red_nether_brick_stairs",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.9"
   },
   {
     "entityType": "block",
     "entityId": "red_nether_brick_wall",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Wall connections update"
+    "mechanicsChangeNotes": "Wall connections update",
+    "addedInBedrock": "1.9"
   },
   {
     "entityType": "block",
     "entityId": "red_nether_bricks",
     "addedInJava": "1.10",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Slab/stair/wall"
+    "mechanicsChangeNotes": "Slab/stair/wall",
+    "addedInBedrock": "1.1"
   },
   {
     "entityType": "block",
@@ -5258,7 +5382,7 @@
     "entityType": "block",
     "entityId": "red_sandstone",
     "addedInJava": "1.8",
-    "addedInBedrock": "0.9",
+    "addedInBedrock": "0.14",
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Slab/stair/wall; smooth variant"
   },
@@ -5266,7 +5390,7 @@
     "entityType": "block",
     "entityId": "red_sandstone_slab",
     "addedInJava": "1.8",
-    "addedInBedrock": "0.1",
+    "addedInBedrock": "0.14",
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -5274,7 +5398,7 @@
     "entityType": "block",
     "entityId": "red_sandstone_stairs",
     "addedInJava": "1.8",
-    "addedInBedrock": "0.1",
+    "addedInBedrock": "0.14",
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -5283,7 +5407,8 @@
     "entityId": "red_sandstone_wall",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Wall connections update"
+    "mechanicsChangeNotes": "Wall connections update",
+    "addedInBedrock": "1.9"
   },
   {
     "entityType": "block",
@@ -5336,7 +5461,7 @@
     "entityType": "block",
     "entityId": "redstone_block",
     "addedInJava": "1.5",
-    "addedInBedrock": "0.14",
+    "addedInBedrock": "0.11",
     "mechanicsChangedInJava": "1.5",
     "mechanicsChangeNotes": "Continuous power source"
   },
@@ -5593,7 +5718,8 @@
     "entityId": "skeleton_skull",
     "addedInJava": "1.4",
     "mechanicsChangedInJava": "1.20",
-    "mechanicsChangeNotes": "Note block interaction"
+    "mechanicsChangeNotes": "Note block interaction",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "block",
@@ -5640,14 +5766,16 @@
     "entityId": "smooth_quartz_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
     "entityId": "smooth_quartz_stairs",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
@@ -5662,14 +5790,16 @@
     "entityId": "smooth_red_sandstone_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
     "entityId": "smooth_red_sandstone_stairs",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
@@ -5684,14 +5814,16 @@
     "entityId": "smooth_sandstone_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
     "entityId": "smooth_sandstone_stairs",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
@@ -5705,7 +5837,8 @@
     "entityType": "block",
     "entityId": "smooth_stone_slab",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipe"
+    "mechanicsChangeNotes": "Stonecutter recipe",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
@@ -5780,7 +5913,8 @@
     "entityType": "block",
     "entityId": "spawner",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Trial spawner variant"
+    "mechanicsChangeNotes": "Trial spawner variant",
+    "addedInBedrock": "0.9"
   },
   {
     "entityType": "block",
@@ -5887,14 +6021,16 @@
     "entityId": "spruce_slab",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Waterloggable"
+    "mechanicsChangeNotes": "Waterloggable",
+    "addedInBedrock": "0.8"
   },
   {
     "entityType": "block",
     "entityId": "spruce_stairs",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Waterloggable"
+    "mechanicsChangeNotes": "Waterloggable",
+    "addedInBedrock": "0.8"
   },
   {
     "entityType": "block",
@@ -5909,7 +6045,8 @@
     "entityId": "spruce_wood",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Stripped variant"
+    "mechanicsChangeNotes": "Stripped variant",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -5937,7 +6074,8 @@
     "entityId": "stone_brick_wall",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Wall connections update"
+    "mechanicsChangeNotes": "Wall connections update",
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "block",
@@ -5965,14 +6103,16 @@
     "entityId": "stone_slab",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "0.1"
   },
   {
     "entityType": "block",
     "entityId": "stone_stairs",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Stonecutter recipes"
+    "mechanicsChangeNotes": "Stonecutter recipes",
+    "addedInBedrock": "0.3"
   },
   {
     "entityType": "block",
@@ -5997,7 +6137,8 @@
     "entityId": "stripped_acacia_wood",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Hanging sign crafting"
+    "mechanicsChangeNotes": "Hanging sign crafting",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -6020,7 +6161,8 @@
     "entityId": "stripped_birch_wood",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Hanging sign crafting"
+    "mechanicsChangeNotes": "Hanging sign crafting",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -6043,14 +6185,16 @@
     "entityId": "stripped_crimson_hyphae",
     "addedInJava": "1.16",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Stripped variant"
+    "mechanicsChangeNotes": "Stripped variant",
+    "addedInBedrock": "1.16"
   },
   {
     "entityType": "block",
     "entityId": "stripped_crimson_stem",
     "addedInJava": "1.16",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Stripped variant"
+    "mechanicsChangeNotes": "Stripped variant",
+    "addedInBedrock": "1.16"
   },
   {
     "entityType": "block",
@@ -6065,7 +6209,8 @@
     "entityId": "stripped_dark_oak_wood",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Hanging sign crafting"
+    "mechanicsChangeNotes": "Hanging sign crafting",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -6080,7 +6225,8 @@
     "entityId": "stripped_jungle_wood",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Hanging sign crafting"
+    "mechanicsChangeNotes": "Hanging sign crafting",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -6111,21 +6257,24 @@
     "entityId": "stripped_oak_wood",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Hanging sign crafting"
+    "mechanicsChangeNotes": "Hanging sign crafting",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
     "entityId": "stripped_pale_oak_log",
     "addedInJava": "1.21.4",
     "mechanicsChangedInJava": "1.21.4",
-    "mechanicsChangeNotes": "Stripped variant"
+    "mechanicsChangeNotes": "Stripped variant",
+    "addedInBedrock": "1.21.50"
   },
   {
     "entityType": "block",
     "entityId": "stripped_pale_oak_wood",
     "addedInJava": "1.21.4",
     "mechanicsChangedInJava": "1.21.4",
-    "mechanicsChangeNotes": "Hanging sign crafting"
+    "mechanicsChangeNotes": "Hanging sign crafting",
+    "addedInBedrock": "1.21.50"
   },
   {
     "entityType": "block",
@@ -6140,35 +6289,40 @@
     "entityId": "stripped_spruce_wood",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Hanging sign crafting"
+    "mechanicsChangeNotes": "Hanging sign crafting",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
     "entityId": "stripped_warped_hyphae",
     "addedInJava": "1.16",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Stripped variant"
+    "mechanicsChangeNotes": "Stripped variant",
+    "addedInBedrock": "1.16"
   },
   {
     "entityType": "block",
     "entityId": "stripped_warped_stem",
     "addedInJava": "1.16",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Stripped variant"
+    "mechanicsChangeNotes": "Stripped variant",
+    "addedInBedrock": "1.16"
   },
   {
     "entityType": "block",
     "entityId": "structure_block",
     "addedInJava": "1.9",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Load/save/corner modes"
+    "mechanicsChangeNotes": "Load/save/corner modes",
+    "addedInBedrock": "1.2"
   },
   {
     "entityType": "block",
     "entityId": "structure_void",
     "addedInJava": "1.10",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Jigsaw integration"
+    "mechanicsChangeNotes": "Jigsaw integration",
+    "addedInBedrock": "1.2"
   },
   {
     "entityType": "block",
@@ -6316,7 +6470,8 @@
     "entityId": "tube_coral_block",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Dies outside water"
+    "mechanicsChangeNotes": "Dies outside water",
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "block",
@@ -6339,21 +6494,24 @@
     "entityId": "tuff_brick_slab",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Full tuff building set"
+    "mechanicsChangeNotes": "Full tuff building set",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "tuff_brick_stairs",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Full tuff building set"
+    "mechanicsChangeNotes": "Full tuff building set",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "tuff_brick_wall",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Full tuff building set"
+    "mechanicsChangeNotes": "Full tuff building set",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -6431,7 +6589,8 @@
     "entityId": "void_air",
     "addedInJava": "1.13",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Below bedrock"
+    "mechanicsChangeNotes": "Below bedrock",
+    "addedInBedrock": "1.18"
   },
   {
     "entityType": "block",
@@ -6573,14 +6732,16 @@
     "entityType": "block",
     "entityId": "water",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Waterlogging system added"
+    "mechanicsChangeNotes": "Waterlogging system added",
+    "addedInBedrock": "0.1"
   },
   {
     "entityType": "block",
     "entityId": "waxed_chiseled_copper",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -6595,28 +6756,32 @@
     "entityId": "waxed_copper_bulb",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "waxed_copper_door",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "waxed_copper_grate",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "waxed_copper_trapdoor",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -6647,7 +6812,8 @@
     "entityId": "waxed_exposed_chiseled_copper",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -6662,28 +6828,32 @@
     "entityId": "waxed_exposed_copper_bulb",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "waxed_exposed_copper_door",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "waxed_exposed_copper_grate",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "waxed_exposed_copper_trapdoor",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -6714,7 +6884,8 @@
     "entityId": "waxed_oxidized_chiseled_copper",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -6729,28 +6900,32 @@
     "entityId": "waxed_oxidized_copper_bulb",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "waxed_oxidized_copper_door",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "waxed_oxidized_copper_grate",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "waxed_oxidized_copper_trapdoor",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -6781,7 +6956,8 @@
     "entityId": "waxed_weathered_chiseled_copper",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -6796,28 +6972,32 @@
     "entityId": "waxed_weathered_copper_bulb",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "waxed_weathered_copper_door",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "waxed_weathered_copper_grate",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "waxed_weathered_copper_trapdoor",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "Waxed copper variant"
+    "mechanicsChangeNotes": "Waxed copper variant",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -6848,7 +7028,8 @@
     "entityId": "weathered_chiseled_copper",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -6863,28 +7044,32 @@
     "entityId": "weathered_copper_bulb",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "weathered_copper_door",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "weathered_copper_grate",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
     "entityId": "weathered_copper_trapdoor",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
-    "mechanicsChangeNotes": "New copper building blocks"
+    "mechanicsChangeNotes": "New copper building blocks",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "block",
@@ -6923,7 +7108,8 @@
     "entityId": "wet_sponge",
     "addedInJava": "1.8",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Drying mechanics"
+    "mechanicsChangeNotes": "Drying mechanics",
+    "addedInBedrock": "0.1"
   },
   {
     "entityType": "block",
@@ -7144,7 +7330,8 @@
     "entityId": "zombie_head",
     "addedInJava": "1.4",
     "mechanicsChangedInJava": "1.20",
-    "mechanicsChangeNotes": "Note block interaction"
+    "mechanicsChangeNotes": "Note block interaction",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "enchant",
@@ -7177,7 +7364,7 @@
     "entityType": "enchant",
     "entityId": "channeling",
     "addedInJava": "1.13",
-    "addedInBedrock": "1.2"
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "enchant",
@@ -7232,7 +7419,7 @@
     "entityType": "enchant",
     "entityId": "impaling",
     "addedInJava": "1.13",
-    "addedInBedrock": "1.2"
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "enchant",
@@ -7254,7 +7441,7 @@
     "entityType": "enchant",
     "entityId": "loyalty",
     "addedInJava": "1.13",
-    "addedInBedrock": "1.2"
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "enchant",
@@ -7329,7 +7516,7 @@
     "entityType": "enchant",
     "entityId": "riptide",
     "addedInJava": "1.13",
-    "addedInBedrock": "1.2"
+    "addedInBedrock": "1.4"
   },
   {
     "entityType": "enchant",
@@ -7415,7 +7602,8 @@
     "entityType": "item",
     "entityId": "apple",
     "mechanicsChangedInJava": "1.9",
-    "mechanicsChangeNotes": "Saturation/hunger values adjusted"
+    "mechanicsChangeNotes": "Saturation/hunger values adjusted",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "item",
@@ -7578,13 +7766,15 @@
     "entityType": "item",
     "entityId": "bone",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "No major changes"
+    "mechanicsChangeNotes": "No major changes",
+    "addedInBedrock": "0.3"
   },
   {
     "entityType": "item",
     "entityId": "bone_meal",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Composter output; many new interactions"
+    "mechanicsChangeNotes": "Composter output; many new interactions",
+    "addedInBedrock": "0.3"
   },
   {
     "entityType": "item",
@@ -7642,7 +7832,8 @@
     "entityType": "item",
     "entityId": "brick",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Decoration pot crafting"
+    "mechanicsChangeNotes": "Decoration pot crafting",
+    "addedInBedrock": "0.5"
   },
   {
     "entityType": "item",
@@ -7704,7 +7895,8 @@
     "entityId": "carrot_on_a_stick",
     "addedInJava": "1.4",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Warped fungus on a stick variant"
+    "mechanicsChangeNotes": "Warped fungus on a stick variant",
+    "addedInBedrock": "0.15"
   },
   {
     "entityType": "item",
@@ -7746,7 +7938,8 @@
     "entityType": "item",
     "entityId": "charcoal",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Separate item from coal"
+    "mechanicsChangeNotes": "Separate item from coal",
+    "addedInBedrock": "0.3"
   },
   {
     "entityType": "item",
@@ -7783,7 +7976,8 @@
     "entityType": "item",
     "entityId": "clay_ball",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Mason villager trading"
+    "mechanicsChangeNotes": "Mason villager trading",
+    "addedInBedrock": "0.3"
   },
   {
     "entityType": "item",
@@ -7811,7 +8005,8 @@
     "entityType": "item",
     "entityId": "cocoa_beans",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Dye standardization"
+    "mechanicsChangeNotes": "Dye standardization",
+    "addedInBedrock": "0.9"
   },
   {
     "entityType": "item",
@@ -7854,7 +8049,8 @@
     "entityId": "cooked_mutton",
     "addedInJava": "1.8",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Campfire cooking"
+    "mechanicsChangeNotes": "Campfire cooking",
+    "addedInBedrock": "0.13"
   },
   {
     "entityType": "item",
@@ -7868,7 +8064,8 @@
     "entityId": "cooked_rabbit",
     "addedInJava": "1.8",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Campfire cooking"
+    "mechanicsChangeNotes": "Campfire cooking",
+    "addedInBedrock": "0.13"
   },
   {
     "entityType": "item",
@@ -7882,7 +8079,8 @@
     "entityType": "item",
     "entityId": "cookie",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Village trading"
+    "mechanicsChangeNotes": "Village trading",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "item",
@@ -7905,7 +8103,8 @@
     "entityId": "copper_nugget",
     "addedInJava": "1.21.11",
     "mechanicsChangedInJava": "1.21.11",
-    "mechanicsChangeNotes": "Smelting copper items"
+    "mechanicsChangeNotes": "Smelting copper items",
+    "addedInBedrock": "1.21"
   },
   {
     "entityType": "item",
@@ -8053,7 +8252,8 @@
     "entityId": "disc_fragment_5",
     "addedInJava": "1.19",
     "mechanicsChangedInJava": "1.19",
-    "mechanicsChangeNotes": "Music Disc 5 crafting"
+    "mechanicsChangeNotes": "Music Disc 5 crafting",
+    "addedInBedrock": "1.19"
   },
   {
     "entityType": "item",
@@ -8107,7 +8307,8 @@
     "entityId": "emerald",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Village currency"
+    "mechanicsChangeNotes": "Village currency",
+    "addedInBedrock": "0.9"
   },
   {
     "entityType": "item",
@@ -8122,7 +8323,8 @@
     "entityId": "enchanted_golden_apple",
     "addedInJava": "1.3",
     "mechanicsChangedInJava": "1.9",
-    "mechanicsChangeNotes": "Uncraftable; loot only"
+    "mechanicsChangeNotes": "Uncraftable; loot only",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "item",
@@ -8363,7 +8565,8 @@
     "entityType": "item",
     "entityId": "golden_apple",
     "mechanicsChangedInJava": "1.9",
-    "mechanicsChangeNotes": "Enchanted variant separated"
+    "mechanicsChangeNotes": "Enchanted variant separated",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "item",
@@ -8384,7 +8587,8 @@
     "entityId": "golden_carrot",
     "addedInJava": "1.4",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Breeding item"
+    "mechanicsChangeNotes": "Breeding item",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "item",
@@ -8501,7 +8705,8 @@
     "entityId": "happy_ghast_spawn_egg",
     "addedInJava": "1.21.6",
     "mechanicsChangedInJava": "1.21.6",
-    "mechanicsChangeNotes": "Flying mount"
+    "mechanicsChangeNotes": "Flying mount",
+    "addedInBedrock": "1.21.70"
   },
   {
     "entityType": "item",
@@ -8571,7 +8776,8 @@
     "entityType": "item",
     "entityId": "ink_sac",
     "mechanicsChangedInJava": "1.17",
-    "mechanicsChangeNotes": "Glow ink sac variant"
+    "mechanicsChangeNotes": "Glow ink sac variant",
+    "addedInBedrock": "0.1"
   },
   {
     "entityType": "item",
@@ -8643,7 +8849,8 @@
     "entityId": "iron_nugget",
     "addedInJava": "1.11",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Smelting chain items"
+    "mechanicsChangeNotes": "Smelting chain items",
+    "addedInBedrock": "1.1"
   },
   {
     "entityType": "item",
@@ -8710,7 +8917,8 @@
     "entityType": "item",
     "entityId": "lapis_lazuli",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Enchanting cost"
+    "mechanicsChangeNotes": "Enchanting cost",
+    "addedInBedrock": "0.9"
   },
   {
     "entityType": "item",
@@ -8760,7 +8968,8 @@
     "entityId": "leather_horse_armor",
     "addedInJava": "1.14",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Dyeable; craftable"
+    "mechanicsChangeNotes": "Dyeable; craftable",
+    "addedInBedrock": "0.15"
   },
   {
     "entityType": "item",
@@ -9032,14 +9241,16 @@
     "entityId": "nether_brick",
     "addedInJava": "1.5",
     "mechanicsChangedInJava": "1.16",
-    "mechanicsChangeNotes": "Cracked/chiseled crafting"
+    "mechanicsChangeNotes": "Cracked/chiseled crafting",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "item",
     "entityId": "nether_star",
     "addedInJava": "1.4",
     "mechanicsChangedInJava": "1.4",
-    "mechanicsChangeNotes": "Beacon crafting"
+    "mechanicsChangeNotes": "Beacon crafting",
+    "addedInBedrock": "0.16"
   },
   {
     "entityType": "item",
@@ -9257,7 +9468,8 @@
     "entityId": "pitcher_pod",
     "addedInJava": "1.20",
     "mechanicsChangedInJava": "1.20",
-    "mechanicsChangeNotes": "Sniffer digging"
+    "mechanicsChangeNotes": "Sniffer digging",
+    "addedInBedrock": "1.20"
   },
   {
     "entityType": "item",
@@ -9311,14 +9523,16 @@
     "entityId": "prismarine_crystals",
     "addedInJava": "1.8",
     "mechanicsChangedInJava": "1.8",
-    "mechanicsChangeNotes": "Sea lantern crafting"
+    "mechanicsChangeNotes": "Sea lantern crafting",
+    "addedInBedrock": "0.16"
   },
   {
     "entityType": "item",
     "entityId": "prismarine_shard",
     "addedInJava": "1.8",
     "mechanicsChangedInJava": "1.13",
-    "mechanicsChangeNotes": "Conduit crafting"
+    "mechanicsChangeNotes": "Conduit crafting",
+    "addedInBedrock": "0.16"
   },
   {
     "entityType": "item",
@@ -9349,7 +9563,8 @@
     "entityId": "pumpkin_pie",
     "addedInJava": "1.4",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Village trading"
+    "mechanicsChangeNotes": "Village trading",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "item",
@@ -9378,21 +9593,24 @@
     "entityId": "rabbit_foot",
     "addedInJava": "1.8",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Brewing; loot table changes"
+    "mechanicsChangeNotes": "Brewing; loot table changes",
+    "addedInBedrock": "0.13"
   },
   {
     "entityType": "item",
     "entityId": "rabbit_hide",
     "addedInJava": "1.8",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Leather crafting"
+    "mechanicsChangeNotes": "Leather crafting",
+    "addedInBedrock": "0.13"
   },
   {
     "entityType": "item",
     "entityId": "rabbit_stew",
     "addedInJava": "1.8",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "No major changes"
+    "mechanicsChangeNotes": "No major changes",
+    "addedInBedrock": "0.13"
   },
   {
     "entityType": "item",
@@ -9468,7 +9686,8 @@
     "entityType": "item",
     "entityId": "rotten_flesh",
     "mechanicsChangedInJava": "1.14",
-    "mechanicsChangeNotes": "Cleric trading"
+    "mechanicsChangeNotes": "Cleric trading",
+    "addedInBedrock": "0.11"
   },
   {
     "entityType": "item",
@@ -9576,7 +9795,8 @@
     "entityType": "item",
     "entityId": "slime_ball",
     "mechanicsChangedInJava": "1.21.6",
-    "mechanicsChangeNotes": "Removed from lead recipe"
+    "mechanicsChangeNotes": "Removed from lead recipe",
+    "addedInBedrock": "0.12"
   },
   {
     "entityType": "item",
@@ -9772,7 +9992,8 @@
     "entityId": "torchflower_seeds",
     "addedInJava": "1.20",
     "mechanicsChangedInJava": "1.20",
-    "mechanicsChangeNotes": "Sniffer digging"
+    "mechanicsChangeNotes": "Sniffer digging",
+    "addedInBedrock": "1.20"
   },
   {
     "entityType": "item",
@@ -10139,13 +10360,13 @@
     "entityType": "mob",
     "entityId": "glow_squid",
     "addedInJava": "1.17",
-    "addedInBedrock": "1.16"
+    "addedInBedrock": "1.17"
   },
   {
     "entityType": "mob",
     "entityId": "goat",
     "addedInJava": "1.17",
-    "addedInBedrock": "1.16"
+    "addedInBedrock": "1.17"
   },
   {
     "entityType": "mob",
@@ -10244,7 +10465,7 @@
     "entityType": "mob",
     "entityId": "pillager",
     "addedInJava": "1.14",
-    "addedInBedrock": "1.9"
+    "addedInBedrock": "1.10"
   },
   {
     "entityType": "mob",
@@ -10386,7 +10607,7 @@
     "entityType": "mob",
     "entityId": "wandering_trader",
     "addedInJava": "1.14",
-    "addedInBedrock": "1.10"
+    "addedInBedrock": "1.11"
   },
   {
     "entityType": "mob",
