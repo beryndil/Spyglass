@@ -184,10 +184,6 @@ object ConnectModule : SpyglassModule {
 
             // ── Has cached data (any connection state) — data-first ──
             hasCachedData -> {
-                QuickLinkGrid(links.map { it.first }) { index ->
-                    scope.navigateTo(links[index].second)
-                }
-                Spacer(Modifier.height(6.dp))
                 ConnectStatusLine(
                     state = state,
                     worlds = worlds,
@@ -200,6 +196,10 @@ object ConnectModule : SpyglassModule {
                     onScanQr = { scope.navigateToScanQr() },
                     onReconnect = { connectViewModel.tryReconnect() },
                 )
+                Spacer(Modifier.height(6.dp))
+                QuickLinkGrid(links.map { it.first }) { index ->
+                    scope.navigateTo(links[index].second)
+                }
             }
 
             // ── No cached data (any state) — show pairing card or connecting spinner ──
