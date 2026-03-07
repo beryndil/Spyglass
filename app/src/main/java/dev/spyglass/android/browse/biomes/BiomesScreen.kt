@@ -479,7 +479,7 @@ private fun BiomeDetailCard(
         // Cross-links to tool tabs
         val context = LocalContext.current
         val showExperimental by remember {
-            context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: true }
+            context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: false }
         }.collectAsStateWithLifecycle(initialValue = true)
         val isLibrarianBiome = showExperimental && biome.id in LIBRARIAN_BIOME_IDS
         val hasStructures = structures.isNotEmpty()

@@ -170,7 +170,7 @@ fun HomeScreen(
             HomePrefs(
                 showTipOfDay = p[PreferenceKeys.SHOW_TIP_OF_DAY] ?: true,
                 showFavoritesOnHome = p[PreferenceKeys.SHOW_FAVORITES_ON_HOME] ?: false,
-                showExperimental = p[PreferenceKeys.SHOW_EXPERIMENTAL] ?: true,
+                showExperimental = p[PreferenceKeys.SHOW_EXPERIMENTAL] ?: false,
                 loaded = true,
             )
         }

@@ -86,7 +86,7 @@ fun CalculatorsScreen(
     }.collectAsStateWithLifecycle(initialValue = 0)
 
     val showExperimental by remember {
-        context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: true }
+        context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: false }
     }.collectAsStateWithLifecycle(initialValue = true)
 
     val allTabs = allCalcTabs()

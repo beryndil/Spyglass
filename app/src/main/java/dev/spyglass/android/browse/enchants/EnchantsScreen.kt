@@ -201,7 +201,7 @@ fun EnchantsScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
     val showExperimental by remember {
-        context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: true }
+        context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: false }
     }.collectAsStateWithLifecycle(initialValue = true)
 
     // Show snackbar when incompatible enchant warning fires

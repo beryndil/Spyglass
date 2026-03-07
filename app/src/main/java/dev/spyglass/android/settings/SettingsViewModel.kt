@@ -187,7 +187,7 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     val showExperimental: StateFlow<Boolean> = store.data
-        .map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: true }
+        .map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: false }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
 
     fun setShowExperimental(enabled: Boolean) = viewModelScope.launch {

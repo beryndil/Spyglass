@@ -162,7 +162,7 @@ object ToolsModule : SpyglassModule {
     private fun QuickToolsSection(scope: HomeSectionScope) {
         val context = LocalContext.current
         val showExperimental by remember {
-            context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: true }
+            context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: false }
         }.collectAsStateWithLifecycle(initialValue = true)
         val calcLinks = remember(showExperimental) {
             if (showExperimental) ALL_CALC_LINKS else ALL_CALC_LINKS.filter { !it.experimental }
