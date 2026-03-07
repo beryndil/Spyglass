@@ -23,10 +23,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PriorityHigh
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -34,6 +40,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -67,6 +74,7 @@ import dev.spyglass.android.home.TipsLoader
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
@@ -216,13 +224,31 @@ object CoreModule : SpyglassModule {
             allTips.filter { it.edition == "both" || it.edition == edition }.map { it.text }
         }
         if (tips.isEmpty()) return
-        val tipIndex = remember { Calendar.getInstance().get(Calendar.DAY_OF_YEAR) % tips.size }
+        val startIndex = remember { Calendar.getInstance().get(Calendar.DAY_OF_YEAR) % tips.size }
+        var tipIndex by remember { mutableIntStateOf(startIndex) }
+        var menuExpanded by remember { mutableStateOf(false) }
+        val scope = rememberCoroutineScope()
 
         ResultCard {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Filled.PriorityHigh, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                 Spacer(Modifier.width(8.dp))
                 Text(stringResource(R.string.home_did_you_know), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.weight(1f))
+                Box {
+                    IconButton(onClick = { menuExpanded = true }, modifier = Modifier.size(24.dp)) {
+                        Icon(Icons.Default.MoreVert, contentDescription = "Tip options", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
+                    }
+                    DropdownMenu(expanded = menuExpanded, onDismissRequest = { menuExpanded = false }) {
+                        DropdownMenuItem(
+                            text = { Text("Disable tips") },
+                            onClick = {
+                                menuExpanded = false
+                                scope.launch { context.dataStore.edit { it[PreferenceKeys.SHOW_TIP_OF_DAY] = false } }
+                            },
+                        )
+                    }
+                }
             }
             Spacer(Modifier.height(8.dp))
             Text(
@@ -230,6 +256,24 @@ object CoreModule : SpyglassModule {
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+            Spacer(Modifier.height(8.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                IconButton(
+                    onClick = { tipIndex = Math.floorMod(tipIndex - 1, tips.size) },
+                    modifier = Modifier.size(32.dp),
+                ) {
+                    Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "Previous tip", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                }
+                IconButton(
+                    onClick = { tipIndex = (tipIndex + 1) % tips.size },
+                    modifier = Modifier.size(32.dp),
+                ) {
+                    Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "Next tip", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                }
+            }
         }
     }
 
