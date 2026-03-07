@@ -90,6 +90,9 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private val _pets = MutableStateFlow<List<PetData>>(emptyList())
     val pets: StateFlow<List<PetData>> = _pets
 
+    private val _chestContents = MutableStateFlow<ChestContentsPayload?>(null)
+    val chestContents: StateFlow<ChestContentsPayload?> = _chestContents
+
     private val _comparePlayerData = MutableStateFlow<PlayerData?>(null)
     val comparePlayerData: StateFlow<PlayerData?> = _comparePlayerData
 
@@ -444,6 +447,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         _playerList.value = emptyList()
         _selectedPlayerUuid.value = null
         _searchResults.value = null
+        _chestContents.value = null
         _structures.value = emptyList()
         _mapTiles.value = null
         _selectedWorld.value = null
@@ -503,6 +507,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         _selectedPlayerUuid.value = null
         SkinManager.clear()
         _searchResults.value = null
+        _chestContents.value = null
         _structures.value = emptyList()
         _mapTiles.value = null
         _selectedWorld.value = null
@@ -566,6 +571,10 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                             }
                         }
                     }
+                }
+                MessageType.CHEST_CONTENTS -> {
+                    val payload = json.decodeFromJsonElement(ChestContentsPayload.serializer(), message.payload)
+                    _chestContents.value = payload
                 }
                 MessageType.SEARCH_RESULTS -> {
                     val payload = json.decodeFromJsonElement(SearchResultsPayload.serializer(), message.payload)
