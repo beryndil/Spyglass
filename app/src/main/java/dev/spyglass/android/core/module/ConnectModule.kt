@@ -60,6 +60,7 @@ import dev.spyglass.android.core.ui.SpyglassIconImage
 import dev.spyglass.android.navigation.BrowseTarget
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextButton
+import kotlinx.coroutines.launch
 
 /**
  * Connect module — owns WebSocket client, QR scanner, mDNS discovery,
@@ -275,6 +276,58 @@ object ConnectModule : SpyglassModule {
     @Composable
     private fun ConnectSettingsContent() {
         val uriHandler = LocalUriHandler.current
+        val context = LocalContext.current
+        val connectViewModel: ConnectViewModel = viewModel(context as ComponentActivity)
+        val worlds by connectViewModel.worlds.collectAsStateWithLifecycle()
+        val scope = androidx.compose.runtime.rememberCoroutineScope()
+
+        var cachedWorlds by remember { mutableStateOf<List<String>>(emptyList()) }
+        var showClearAllDialog by remember { mutableStateOf(false) }
+        var worldToDelete by remember { mutableStateOf<String?>(null) }
+
+        // Load cached world list
+        androidx.compose.runtime.LaunchedEffect(Unit) {
+            cachedWorlds = dev.spyglass.android.connect.client.ConnectCache.listCachedWorlds(context)
+        }
+
+        if (showClearAllDialog) {
+            AlertDialog(
+                onDismissRequest = { showClearAllDialog = false },
+                title = { Text("Clear All Data") },
+                text = { Text("Clear all cached Connect data for every world? Your device pairing will be kept.") },
+                confirmButton = {
+                    TextButton(onClick = {
+                        showClearAllDialog = false
+                        connectViewModel.clearCachedData()
+                        cachedWorlds = emptyList()
+                    }) { Text("Clear All") }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showClearAllDialog = false }) { Text("Cancel") }
+                },
+            )
+        }
+
+        worldToDelete?.let { world ->
+            AlertDialog(
+                onDismissRequest = { worldToDelete = null },
+                title = { Text("Clear World Data") },
+                text = { Text("Clear cached data for \"$world\"?") },
+                confirmButton = {
+                    TextButton(onClick = {
+                        val w = world
+                        worldToDelete = null
+                        scope.launch {
+                            dev.spyglass.android.connect.client.ConnectCache.deleteWorld(context, w)
+                            cachedWorlds = dev.spyglass.android.connect.client.ConnectCache.listCachedWorlds(context)
+                        }
+                    }) { Text("Clear") }
+                },
+                dismissButton = {
+                    TextButton(onClick = { worldToDelete = null }) { Text("Cancel") }
+                },
+            )
+        }
 
         SectionHeader("Spyglass Connect")
         ResultCard {
@@ -303,6 +356,57 @@ object ConnectModule : SpyglassModule {
                     uriHandler.openUri("https://hardknocks.university")
                 },
             )
+        }
+
+        // ── Cached Data Management ──
+        if (cachedWorlds.isNotEmpty()) {
+            Spacer(Modifier.height(12.dp))
+            Text(
+                "Cached Data",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.primary,
+            )
+            ResultCard {
+                cachedWorlds.forEach { world ->
+                    val displayName = worlds.firstOrNull { it.folderName == world }?.displayName ?: world
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        SpyglassIconImage(
+                            PixelIcons.Globe,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(16.dp),
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            displayName,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.weight(1f),
+                        )
+                        Text(
+                            "Clear",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = Color(0xFFF44336),
+                            modifier = Modifier.clickable { worldToDelete = world },
+                        )
+                    }
+                }
+                SpyglassDivider()
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    "Clear All Data",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Color(0xFFF44336),
+                    modifier = Modifier
+                        .clickable { showClearAllDialog = true }
+                        .padding(vertical = 4.dp),
+                )
+            }
         }
     }
 

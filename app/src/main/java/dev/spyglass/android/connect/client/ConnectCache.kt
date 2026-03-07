@@ -288,6 +288,21 @@ object ConnectCache {
             }
         }
 
+    // ── Listing ──────────────────────────────────────────────────────────────
+
+    suspend fun listCachedWorlds(context: Context): List<String> = withContext(Dispatchers.IO) {
+        try {
+            val dir = connectDir(context)
+            if (!dir.isDirectory) return@withContext emptyList()
+            dir.listFiles { f -> f.isDirectory }
+                ?.map { it.name }
+                ?: emptyList()
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to list cached worlds")
+            emptyList()
+        }
+    }
+
     // ── Cleanup ──────────────────────────────────────────────────────────────
 
     suspend fun deleteWorld(context: Context, worldFolder: String) = withContext(Dispatchers.IO) {
