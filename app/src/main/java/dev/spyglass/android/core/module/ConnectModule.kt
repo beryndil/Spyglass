@@ -166,11 +166,12 @@ object ConnectModule : SpyglassModule {
         val links = connectLinks(playerSkin)
         val hasCachedData = selectedWorld != null
 
+        SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
+        Spacer(Modifier.height(8.dp))
+
         when {
             // ── Connected, no world selected ──
             state.isConnected && selectedWorld == null -> {
-                SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
-                Spacer(Modifier.height(8.dp))
                 WorldSelector(
                     worlds = worlds,
                     onSelectWorld = {
@@ -203,8 +204,6 @@ object ConnectModule : SpyglassModule {
 
             // ── No cached data (any state) — show pairing card or connecting spinner ──
             else -> {
-                SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
-                Spacer(Modifier.height(8.dp))
                 if (!state.isConnected && state !is ConnectionState.Disconnected && state !is ConnectionState.Error) {
                     ResultCard {
                         Row(
