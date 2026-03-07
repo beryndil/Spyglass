@@ -643,23 +643,13 @@ private fun HomeConnectSection(
     val playerSkin by connectViewModel.playerSkin.collectAsStateWithLifecycle()
     val links = connectLinks(playerSkin)
 
-    SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
-    Spacer(Modifier.height(8.dp))
-
     val hasCachedData = selectedWorld != null
-    var showReconnectCard by remember { mutableStateOf(false) }
-
-    // Auto-collapse reconnect card when connection state changes away from disconnected
-    LaunchedEffect(state) {
-        if (state.isConnected || state is ConnectionState.Reconnecting ||
-            state is ConnectionState.Connecting || state is ConnectionState.Pairing) {
-            showReconnectCard = false
-        }
-    }
 
     when {
         // ── Connected, no world selected ──
         state.isConnected && selectedWorld == null -> {
+            SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
+            Spacer(Modifier.height(8.dp))
             ConnectWorldSelector(
                 worlds = worlds,
                 selectedWorld = null,
@@ -685,21 +675,16 @@ private fun HomeConnectSection(
                     connectViewModel.selectWorld(it)
                     connectViewModel.requestPlayerData()
                 },
-                onToggleReconnect = { showReconnectCard = !showReconnectCard },
-                reconnectExpanded = showReconnectCard,
+                onDisconnect = { connectViewModel.disconnect() },
+                onScanQr = onScanQr,
+                onReconnect = { connectViewModel.tryReconnect() },
             )
-            if (showReconnectCard) {
-                Spacer(Modifier.height(8.dp))
-                ConnectDisconnectedCard(
-                    state = state,
-                    onScanQr = onScanQr,
-                    onReconnect = { connectViewModel.tryReconnect() },
-                )
-            }
         }
 
         // ── No cached data (any state) — show pairing card or connecting spinner ──
         else -> {
+            SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
+            Spacer(Modifier.height(8.dp))
             if (!state.isConnected && state !is ConnectionState.Disconnected && state !is ConnectionState.Error) {
                 // Actively connecting/pairing — show spinner
                 ResultCard {
@@ -724,6 +709,7 @@ private fun HomeConnectSection(
                     state = state,
                     onScanQr = onScanQr,
                     onReconnect = { connectViewModel.tryReconnect() },
+                    showReconnect = false,
                 )
             }
         }
@@ -735,6 +721,7 @@ private fun ConnectDisconnectedCard(
     state: ConnectionState,
     onScanQr: () -> Unit,
     onReconnect: () -> Unit,
+    showReconnect: Boolean = true,
 ) {
     ResultCard {
         Row(
@@ -770,12 +757,14 @@ private fun ConnectDisconnectedCard(
         ) {
             Text("Scan QR Code")
         }
-        Spacer(Modifier.height(4.dp))
-        OutlinedButton(
-            onClick = onReconnect,
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text("Reconnect to Last Device")
+        if (showReconnect) {
+            Spacer(Modifier.height(4.dp))
+            OutlinedButton(
+                onClick = onReconnect,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text("Reconnect to Last Device")
+            }
         }
 
         if (state is ConnectionState.Error) {
@@ -795,20 +784,23 @@ private fun ConnectStatusLine(
     worlds: List<WorldInfo>,
     selectedWorld: String?,
     onSelectWorld: (String) -> Unit,
-    onToggleReconnect: () -> Unit,
-    reconnectExpanded: Boolean = false,
+    onDisconnect: () -> Unit,
+    onScanQr: () -> Unit,
+    onReconnect: () -> Unit,
 ) {
     val currentWorld = worlds.firstOrNull { it.folderName == selectedWorld }
-    var expanded by remember { mutableStateOf(false) }
+    var worldMenuExpanded by remember { mutableStateOf(false) }
+    var statusMenuExpanded by remember { mutableStateOf(false) }
+
+    val isInProgress = state is ConnectionState.Reconnecting ||
+        state is ConnectionState.Connecting || state is ConnectionState.Pairing
+    val isDisconnected = state is ConnectionState.Disconnected || state is ConnectionState.Error
 
     val (statusColor, statusLabel) = when {
         state.isConnected -> Emerald to "Connected"
-        state is ConnectionState.Reconnecting -> Color(0xFFFFC107) to "Reconnecting"
-        state is ConnectionState.Connecting || state is ConnectionState.Pairing -> Color(0xFFFFC107) to "Connecting"
-        else -> Color(0xFFF44336) to "Disconnected"
+        isInProgress -> Color(0xFFFFC107) to if (state is ConnectionState.Reconnecting) "Reconnecting" else "Connecting"
+        else -> Color(0xFFF44336) to "Reconnect"
     }
-
-    val isDisconnected = state is ConnectionState.Disconnected || state is ConnectionState.Error
 
     Row(
         modifier = Modifier
@@ -817,7 +809,7 @@ private fun ConnectStatusLine(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        // Left side: globe icon + world name (+ dropdown if connected with multiple worlds)
+        // Left side: globe icon + world name
         if (currentWorld != null) {
             SpyglassIconImage(
                 PixelIcons.Globe,
@@ -825,44 +817,82 @@ private fun ConnectStatusLine(
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(14.dp),
             )
-            if (state.isConnected && worlds.size > 1) {
-                Box {
-                    Text(
-                        currentWorld.displayName,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.clickable { expanded = true },
-                    )
-                    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                        worlds.forEach { world ->
-                            DropdownMenuItem(
-                                text = { Text(world.displayName) },
-                                onClick = {
-                                    expanded = false
-                                    onSelectWorld(world.folderName)
-                                },
-                            )
-                        }
-                    }
-                }
-            } else {
-                Text(
-                    currentWorld.displayName,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
+            Text(
+                currentWorld.displayName,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
 
         Spacer(Modifier.weight(1f))
 
-        // Right side: colored status text (tappable when disconnected)
-        Text(
-            statusLabel,
-            style = MaterialTheme.typography.labelSmall,
-            color = statusColor,
-            modifier = if (isDisconnected) Modifier.clickable { onToggleReconnect() } else Modifier,
-        )
+        // Right side: tappable status indicator with dropdown menu
+        Box {
+            Text(
+                statusLabel,
+                style = MaterialTheme.typography.labelSmall,
+                color = statusColor,
+                modifier = if (!isInProgress) Modifier.clickable { statusMenuExpanded = true } else Modifier,
+            )
+            DropdownMenu(
+                expanded = statusMenuExpanded,
+                onDismissRequest = { statusMenuExpanded = false },
+            ) {
+                if (state.isConnected) {
+                    if (worlds.size > 1) {
+                        DropdownMenuItem(
+                            text = { Text("Switch World") },
+                            onClick = {
+                                statusMenuExpanded = false
+                                worldMenuExpanded = true
+                            },
+                        )
+                    }
+                    DropdownMenuItem(
+                        text = { Text("Disconnect") },
+                        onClick = {
+                            statusMenuExpanded = false
+                            onDisconnect()
+                        },
+                    )
+                } else if (isDisconnected) {
+                    DropdownMenuItem(
+                        text = { Text("Reconnect") },
+                        onClick = {
+                            statusMenuExpanded = false
+                            onReconnect()
+                        },
+                    )
+                }
+                DropdownMenuItem(
+                    text = { Text("Scan New Device") },
+                    onClick = {
+                        statusMenuExpanded = false
+                        onScanQr()
+                    },
+                )
+            }
+        }
+    }
+
+    // World switcher dropdown (shown after selecting "Switch World")
+    if (worldMenuExpanded && worlds.size > 1) {
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.TopEnd) {
+            DropdownMenu(
+                expanded = worldMenuExpanded,
+                onDismissRequest = { worldMenuExpanded = false },
+            ) {
+                worlds.forEach { world ->
+                    DropdownMenuItem(
+                        text = { Text(world.displayName) },
+                        onClick = {
+                            worldMenuExpanded = false
+                            onSelectWorld(world.folderName)
+                        },
+                    )
+                }
+            }
+        }
     }
 }
 
