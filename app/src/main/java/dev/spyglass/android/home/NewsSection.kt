@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -98,6 +100,7 @@ private fun NewsImage(imageName: String) {
  * Renders simple Markdown inline formatting: **bold**, *italic*, [links](url).
  * Uses modern LinkAnnotation API (no deprecated ClickableText).
  */
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun MarkdownText(
     markdown: String,
@@ -108,7 +111,12 @@ private fun MarkdownText(
     val annotatedString = remember(markdown, color, linkColor) {
         parseMarkdown(markdown, color, linkColor)
     }
-    Text(text = annotatedString, style = style)
+    // focusProperties prevents LinkAnnotation from stealing focus and auto-scrolling the LazyColumn
+    Text(
+        text = annotatedString,
+        style = style,
+        modifier = Modifier.focusProperties { canFocus = false },
+    )
 }
 
 private fun parseMarkdown(
