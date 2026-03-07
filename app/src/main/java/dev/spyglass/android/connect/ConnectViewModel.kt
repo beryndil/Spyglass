@@ -34,6 +34,9 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     /** Whether we've been connected at least once (to know if reconnect makes sense). */
     private var wasConnected = false
 
+    /** Whether we've already re-sent select_world for this session (prevents loop). */
+    private var worldReselected = false
+
     // ── Observable state ─────────────────────────────────────────────────────
 
     val connectionState: StateFlow<ConnectionState> = client.connectionState
@@ -158,6 +161,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 when (state) {
                     is ConnectionState.Connected -> {
                         wasConnected = true
+                        worldReselected = false
                         reconnectManager.reset()
                         reconnectJob?.cancel()
                         ConnectService.start(getApplication(), state.deviceName)
@@ -460,7 +464,8 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     }
                     // Re-select world after reconnect (desktop forgets selection on new session)
                     val currentWorld = _selectedWorld.value
-                    if (currentWorld != null && connectionState.value.isConnected) {
+                    if (currentWorld != null && connectionState.value.isConnected && !worldReselected) {
+                        worldReselected = true
                         Timber.d("Re-selecting world after reconnect: $currentWorld")
                         val selectPayload = json.encodeToJsonElement(SelectWorldPayload(currentWorld))
                         client.sendRequest(MessageType.SELECT_WORLD, selectPayload)
