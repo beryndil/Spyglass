@@ -86,6 +86,12 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private val _lastUpdated = MutableStateFlow<Long?>(null)
     val lastUpdated: StateFlow<Long?> = _lastUpdated
 
+    private val _pets = MutableStateFlow<List<PetData>>(emptyList())
+    val pets: StateFlow<List<PetData>> = _pets
+
+    private val _comparePlayerData = MutableStateFlow<PlayerData?>(null)
+    val comparePlayerData: StateFlow<PlayerData?> = _comparePlayerData
+
     private val repo by lazy { GameDataRepository.get(getApplication()) }
 
     init {
@@ -198,6 +204,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         ConnectCache.loadSkinAvatar(ctx, worldFolder)?.let { _playerSkin.value = it }
         ConnectCache.loadSkinBody(ctx, worldFolder)?.let { _playerBodySkin.value = it }
         ConnectCache.loadLastUpdated(ctx, worldFolder)?.let { _lastUpdated.value = it }
+        ConnectCache.loadPets(ctx, worldFolder)?.let { _pets.value = it }
     }
 
     /** Connect via QR pairing data. */
@@ -387,6 +394,20 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         client.sendRequest(MessageType.REQUEST_ADVANCEMENTS)
     }
 
+    /** Request pets list. */
+    fun requestPets() {
+        client.sendRequest(MessageType.REQUEST_PETS)
+    }
+
+    /** Request a second player's data for comparison. */
+    private var pendingCompareUuid: String? = null
+
+    fun requestComparePlayer(uuid: String) {
+        pendingCompareUuid = uuid
+        val payload = json.encodeToJsonElement(RequestPlayerPayload(uuid))
+        client.sendRequest(MessageType.REQUEST_PLAYER, payload)
+    }
+
     /** Search for items in chests. */
     fun searchItems(query: String) {
         if (query.isBlank()) {
@@ -400,6 +421,31 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     /** Resolve whether an inventory item ID belongs to Blocks (tab 0) or Items (tab 1). */
     suspend fun resolveBrowseTab(id: String): Int {
         return if (repo.blockById(id) != null) 0 else 1
+    }
+
+    /** Clear cached data without unpairing. */
+    fun clearCachedData() {
+        _worlds.value = emptyList()
+        _playerData.value = null
+        _playerSkin.value = null
+        _playerBodySkin.value = null
+        _playerName.value = null
+        _gearAnalysis.value = null
+        _playerStats.value = null
+        _playerAdvancements.value = null
+        _playerList.value = emptyList()
+        _selectedPlayerUuid.value = null
+        _searchResults.value = null
+        _structures.value = emptyList()
+        _mapTiles.value = null
+        _selectedWorld.value = null
+        _lastUpdated.value = null
+        _pets.value = emptyList()
+        _comparePlayerData.value = null
+        SkinManager.clear()
+        viewModelScope.launch(Dispatchers.IO) {
+            ConnectCache.deleteAll(getApplication())
+        }
     }
 
     /** Disconnect and clean up. */
@@ -440,6 +486,8 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         _mapTiles.value = null
         _selectedWorld.value = null
         _lastUpdated.value = null
+        _pets.value = emptyList()
+        _comparePlayerData.value = null
         viewModelScope.launch {
             PairingStore.clear(getApplication())
             ConnectCache.deleteAll(getApplication())
@@ -479,15 +527,21 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 }
                 MessageType.PLAYER_DATA -> {
                     val payload = json.decodeFromJsonElement(PlayerData.serializer(), message.payload)
-                    val changed = _playerData.value != payload
-                    _playerData.value = payload
-                    // Cache only if data changed
-                    if (changed) {
-                        val world = _selectedWorld.value
-                        if (world != null) {
-                            viewModelScope.launch(Dispatchers.IO) {
-                                ConnectCache.savePlayerData(getApplication(), world, payload)
-                                _lastUpdated.value = System.currentTimeMillis()
+                    // Route to compare if this is the compare player's data
+                    val compareUuid = pendingCompareUuid
+                    if (compareUuid != null && payload.playerUuid.equals(compareUuid, ignoreCase = true)) {
+                        _comparePlayerData.value = payload
+                        pendingCompareUuid = null
+                    } else {
+                        val changed = _playerData.value != payload
+                        _playerData.value = payload
+                        if (changed) {
+                            val world = _selectedWorld.value
+                            if (world != null) {
+                                viewModelScope.launch(Dispatchers.IO) {
+                                    ConnectCache.savePlayerData(getApplication(), world, payload)
+                                    _lastUpdated.value = System.currentTimeMillis()
+                                }
                             }
                         }
                     }
@@ -545,6 +599,20 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                         if (world != null) {
                             viewModelScope.launch(Dispatchers.IO) {
                                 ConnectCache.saveAdvancements(getApplication(), world, payload)
+                                _lastUpdated.value = System.currentTimeMillis()
+                            }
+                        }
+                    }
+                }
+                MessageType.PETS_LIST -> {
+                    val payload = json.decodeFromJsonElement(PetsListPayload.serializer(), message.payload)
+                    val changed = _pets.value != payload.pets
+                    _pets.value = payload.pets
+                    if (changed) {
+                        val world = _selectedWorld.value
+                        if (world != null) {
+                            viewModelScope.launch(Dispatchers.IO) {
+                                ConnectCache.savePets(getApplication(), world, payload.pets)
                                 _lastUpdated.value = System.currentTimeMillis()
                             }
                         }

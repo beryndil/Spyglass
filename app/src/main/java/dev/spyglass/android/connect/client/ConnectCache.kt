@@ -262,6 +262,32 @@ object ConnectCache {
             }
         }
 
+    // ── Pets ─────────────────────────────────────────────────────────────────
+
+    suspend fun savePets(context: Context, worldFolder: String, pets: List<PetData>) =
+        withContext(Dispatchers.IO) {
+            try {
+                val dir = worldDir(context, worldFolder)
+                dir.mkdirs()
+                File(dir, "pets.json").writeText(json.encodeToString(pets))
+                saveLastUpdated(context, worldFolder)
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to save pets cache")
+            }
+        }
+
+    suspend fun loadPets(context: Context, worldFolder: String): List<PetData>? =
+        withContext(Dispatchers.IO) {
+            try {
+                val file = File(worldDir(context, worldFolder), "pets.json")
+                if (!file.exists()) return@withContext null
+                json.decodeFromString<List<PetData>>(file.readText())
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to load pets cache")
+                null
+            }
+        }
+
     // ── Cleanup ──────────────────────────────────────────────────────────────
 
     suspend fun deleteWorld(context: Context, worldFolder: String) = withContext(Dispatchers.IO) {

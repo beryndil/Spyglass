@@ -1,0 +1,157 @@
+package dev.spyglass.android.connect.players
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.spyglass.android.connect.ConnectViewModel
+import dev.spyglass.android.connect.PlayerSummary
+import dev.spyglass.android.core.ui.*
+
+@Composable
+fun PlayersScreen(
+    viewModel: ConnectViewModel,
+    onBack: () -> Unit,
+    onSelectPlayer: (String) -> Unit,
+    onCompare: (String) -> Unit,
+) {
+    val playerList by viewModel.playerList.collectAsStateWithLifecycle()
+    val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
+    val isConnected = connectionState.isConnected
+
+    LaunchedEffect(isConnected) {
+        if (isConnected) viewModel.requestPlayerList()
+    }
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .statusBarsPadding()
+                .padding(horizontal = 8.dp, vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(onClick = onBack) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+            }
+            Text("Players", style = MaterialTheme.typography.titleMedium)
+        }
+
+        if (playerList.isEmpty()) {
+            Box(
+                modifier = Modifier.fillMaxWidth().padding(32.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                if (isConnected) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
+                        Spacer(Modifier.height(12.dp))
+                        Text("Loading players...", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                } else {
+                    Text("No player data available", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+            return
+        }
+
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            playerList.forEach { player ->
+                PlayerCard(
+                    player = player,
+                    onTap = { onSelectPlayer(player.uuid) },
+                    onCompare = { onCompare(player.uuid) },
+                    showCompare = playerList.size > 1,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun PlayerCard(
+    player: PlayerSummary,
+    onTap: () -> Unit,
+    onCompare: () -> Unit,
+    showCompare: Boolean,
+) {
+    ResultCard {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onTap() },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            SpyglassIconImage(
+                PixelIcons.Steve,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(28.dp),
+            )
+            Column(modifier = Modifier.weight(1f)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        player.name ?: "Unknown",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                    if (player.isOwner) {
+                        Spacer(Modifier.width(6.dp))
+                        Text(
+                            "Owner",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = Emerald,
+                        )
+                    }
+                }
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    Text(
+                        "\u2764 ${player.health.toInt()}/20",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Text(
+                        "\uD83C\uDF56 ${player.foodLevel}/20",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Text(
+                        "XP ${player.xpLevel}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Text(
+                    "${player.dimension.replace("_", " ").replaceFirstChar { it.uppercase() }} · ${player.posX.toInt()}, ${player.posY.toInt()}, ${player.posZ.toInt()}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+        if (showCompare) {
+            Spacer(Modifier.height(4.dp))
+            Text(
+                "Compare",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable { onCompare() },
+            )
+        }
+    }
+}

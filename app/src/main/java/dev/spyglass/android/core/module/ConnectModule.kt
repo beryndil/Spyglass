@@ -46,6 +46,9 @@ import dev.spyglass.android.connect.chestfinder.ChestFinderScreen
 import dev.spyglass.android.connect.map.MapScreen
 import dev.spyglass.android.connect.statistics.StatisticsScreen
 import dev.spyglass.android.connect.advancements.AdvancementsScreen
+import dev.spyglass.android.connect.players.PlayersScreen
+import dev.spyglass.android.connect.players.CompareScreen
+import dev.spyglass.android.connect.pets.PetsScreen
 import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.core.ui.Emerald
 import dev.spyglass.android.core.ui.PixelIcons
@@ -55,6 +58,8 @@ import dev.spyglass.android.core.ui.SpyglassDivider
 import dev.spyglass.android.core.ui.SpyglassIcon
 import dev.spyglass.android.core.ui.SpyglassIconImage
 import dev.spyglass.android.navigation.BrowseTarget
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
 
 /**
  * Connect module — owns WebSocket client, QR scanner, mDNS discovery,
@@ -146,6 +151,35 @@ object ConnectModule : SpyglassModule {
                     onBack = { nav.navigateBack() },
                 )
             },
+            ModuleRoute("connect_players") { _, nav ->
+                val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
+                PlayersScreen(
+                    viewModel = connectViewModel,
+                    onBack = { nav.navigateBack() },
+                    onSelectPlayer = { uuid ->
+                        connectViewModel.selectPlayer(uuid)
+                        nav.navigateTo("connect_character")
+                    },
+                    onCompare = { uuid ->
+                        connectViewModel.requestComparePlayer(uuid)
+                        nav.navigateTo("connect_compare")
+                    },
+                )
+            },
+            ModuleRoute("connect_compare") { _, nav ->
+                val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
+                CompareScreen(
+                    viewModel = connectViewModel,
+                    onBack = { nav.navigateBack() },
+                )
+            },
+            ModuleRoute("connect_pets") { _, nav ->
+                val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
+                PetsScreen(
+                    viewModel = connectViewModel,
+                    onBack = { nav.navigateBack() },
+                )
+            },
         )
     }
 
@@ -162,8 +196,9 @@ object ConnectModule : SpyglassModule {
         val worlds by connectViewModel.worlds.collectAsStateWithLifecycle()
         val selectedWorld by connectViewModel.selectedWorld.collectAsStateWithLifecycle()
         val playerSkin by connectViewModel.playerSkin.collectAsStateWithLifecycle()
+        val playerList by connectViewModel.playerList.collectAsStateWithLifecycle()
 
-        val links = connectLinks(playerSkin)
+        val links = connectLinks(playerSkin, playerList.size)
         val hasCachedData = selectedWorld != null
 
         SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
@@ -195,6 +230,7 @@ object ConnectModule : SpyglassModule {
                     onDisconnect = { connectViewModel.disconnect() },
                     onScanQr = { scope.navigateToScanQr() },
                     onReconnect = { connectViewModel.tryReconnect() },
+                    onClearData = { connectViewModel.clearCachedData() },
                 )
                 Spacer(Modifier.height(6.dp))
                 QuickLinkGrid(links.map { it.first }) { index ->
@@ -278,21 +314,28 @@ object ConnectModule : SpyglassModule {
         val iconTint: Color = Color.Unspecified,
     )
 
-    private fun connectLinks(playerSkin: android.graphics.Bitmap?): List<Pair<QuickLink, String>> {
+    private fun connectLinks(
+        playerSkin: android.graphics.Bitmap?,
+        playerCount: Int = 1,
+    ): List<Pair<QuickLink, String>> {
         val characterIcon: SpyglassIcon = if (playerSkin != null) {
             SpyglassIcon.BitmapIcon(playerSkin)
         } else {
             PixelIcons.Steve
         }
-        return listOf(
-            QuickLink(characterIcon, "Character") to "connect_character",
-            QuickLink(PixelIcons.Item, "Inventory") to "connect_inventory",
-            QuickLink(PixelIcons.Enchant, "Ender Chest") to "connect_enderchest",
-            QuickLink(PixelIcons.Search, "Chest Finder") to "connect_chestfinder",
-            QuickLink(PixelIcons.Biome, "World Map") to "connect_map",
-            QuickLink(PixelIcons.Anvil, "Statistics") to "connect_statistics",
-            QuickLink(PixelIcons.Advancement, "Advancements") to "connect_advancements",
-        )
+        return buildList {
+            add(QuickLink(characterIcon, "Character") to "connect_character")
+            add(QuickLink(PixelIcons.Item, "Inventory") to "connect_inventory")
+            add(QuickLink(PixelIcons.Enchant, "Ender Chest") to "connect_enderchest")
+            add(QuickLink(PixelIcons.Search, "Chest Finder") to "connect_chestfinder")
+            add(QuickLink(PixelIcons.Biome, "World Map") to "connect_map")
+            add(QuickLink(PixelIcons.Mob, "Pets") to "connect_pets")
+            if (playerCount > 1) {
+                add(QuickLink(PixelIcons.Steve, "Players") to "connect_players")
+            }
+            add(QuickLink(PixelIcons.Anvil, "Statistics") to "connect_statistics")
+            add(QuickLink(PixelIcons.Advancement, "Advancements") to "connect_advancements")
+        }
     }
 
     @Composable
@@ -394,10 +437,12 @@ object ConnectModule : SpyglassModule {
         onDisconnect: () -> Unit,
         onScanQr: () -> Unit,
         onReconnect: () -> Unit,
+        onClearData: () -> Unit = {},
     ) {
         val currentWorld = worlds.firstOrNull { it.folderName == selectedWorld }
         var worldMenuExpanded by remember { mutableStateOf(false) }
         var statusMenuExpanded by remember { mutableStateOf(false) }
+        var showClearDataDialog by remember { mutableStateOf(false) }
 
         val isInProgress = state is ConnectionState.Reconnecting ||
             state is ConnectionState.Connecting || state is ConnectionState.Pairing
@@ -409,6 +454,23 @@ object ConnectModule : SpyglassModule {
             else -> Color(0xFFF44336) to "Reconnect"
         }
 
+        if (showClearDataDialog) {
+            AlertDialog(
+                onDismissRequest = { showClearDataDialog = false },
+                title = { Text("Clear Data") },
+                text = { Text("Clear all cached Connect data? Your device pairing will be kept.") },
+                confirmButton = {
+                    TextButton(onClick = {
+                        showClearDataDialog = false
+                        onClearData()
+                    }) { Text("Clear") }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showClearDataDialog = false }) { Text("Cancel") }
+                },
+            )
+        }
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -416,19 +478,48 @@ object ConnectModule : SpyglassModule {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
-            // Left side: globe icon + world name
+            // Left side: globe icon + world name (clickable to switch worlds)
             if (currentWorld != null) {
-                SpyglassIconImage(
-                    PixelIcons.Globe,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.size(14.dp),
-                )
-                Text(
-                    currentWorld.displayName,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+                Box {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        modifier = if (state.isConnected && worlds.size > 1) {
+                            Modifier.clickable { worldMenuExpanded = true }
+                        } else {
+                            Modifier
+                        },
+                    ) {
+                        SpyglassIconImage(
+                            PixelIcons.Globe,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(14.dp),
+                        )
+                        Text(
+                            currentWorld.displayName,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    // World switcher dropdown anchored to world name
+                    if (worldMenuExpanded && worlds.size > 1) {
+                        DropdownMenu(
+                            expanded = worldMenuExpanded,
+                            onDismissRequest = { worldMenuExpanded = false },
+                        ) {
+                            worlds.forEach { world ->
+                                DropdownMenuItem(
+                                    text = { Text(world.displayName) },
+                                    onClick = {
+                                        worldMenuExpanded = false
+                                        onSelectWorld(world.folderName)
+                                    },
+                                )
+                            }
+                        }
+                    }
+                }
             }
 
             Spacer(Modifier.weight(1f))
@@ -486,26 +577,14 @@ object ConnectModule : SpyglassModule {
                             onScanQr()
                         },
                     )
-                }
-            }
-        }
-
-        // World switcher dropdown (shown after selecting "Switch World")
-        if (worldMenuExpanded && worlds.size > 1) {
-            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.TopEnd) {
-                DropdownMenu(
-                    expanded = worldMenuExpanded,
-                    onDismissRequest = { worldMenuExpanded = false },
-                ) {
-                    worlds.forEach { world ->
-                        DropdownMenuItem(
-                            text = { Text(world.displayName) },
-                            onClick = {
-                                worldMenuExpanded = false
-                                onSelectWorld(world.folderName)
-                            },
-                        )
-                    }
+                    SpyglassDivider()
+                    DropdownMenuItem(
+                        text = { Text("Clear Data", color = Color(0xFFF44336)) },
+                        onClick = {
+                            statusMenuExpanded = false
+                            showClearDataDialog = true
+                        },
+                    )
                 }
             }
         }

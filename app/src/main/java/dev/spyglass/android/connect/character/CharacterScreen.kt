@@ -27,6 +27,7 @@ import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.client.ConnectionState
 import timber.log.Timber
+import dev.spyglass.android.connect.ActiveEffect
 import dev.spyglass.android.connect.PlayerData
 import kotlinx.coroutines.launch
 import dev.spyglass.android.connect.gear.EnchantRecommendation
@@ -240,6 +241,41 @@ private fun CharacterContent(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
+        // ── Death + Spawn locations ──
+        if (playerData.lastDeathLocation != null || playerData.spawnLocation != null) {
+            ResultCard {
+                if (playerData.lastDeathLocation != null) {
+                    val loc = playerData.lastDeathLocation
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        SpyglassIconImage(PixelIcons.Mob, contentDescription = null, tint = Color(0xFFF44336), modifier = Modifier.size(16.dp))
+                        Text(
+                            "Last Death: ${loc.x}, ${loc.y}, ${loc.z} (${loc.dimension.replace("_", " ").replaceFirstChar { it.uppercase() }})",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+                    }
+                }
+                if (playerData.spawnLocation != null) {
+                    val loc = playerData.spawnLocation
+                    if (playerData.lastDeathLocation != null) Spacer(Modifier.height(4.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        SpyglassIconImage(PixelIcons.Structure, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
+                        Text(
+                            "Spawn: ${loc.x}, ${loc.y}, ${loc.z}${if (playerData.spawnForced) " (Forced)" else ""}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+                    }
+                }
+            }
+        }
+
         // ── Stat cards ──
         ResultCard {
             Row(
@@ -250,6 +286,16 @@ private fun CharacterContent(
                 StatColumn("Food", "${playerData.foodLevel} / 20")
                 StatColumn("XP", "${playerData.xpLevel}")
             }
+        }
+
+        // ── Active Effects ──
+        if (playerData.activeEffects.isNotEmpty()) {
+            Text(
+                "Active Effects",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.primary,
+            )
+            ActiveEffectsSection(playerData.activeEffects)
         }
 
         // ── Equipment Analysis ──
@@ -440,6 +486,48 @@ private fun GearSlotCard(
                     onBrowseEnchant = onBrowseEnchant,
                 )
             }
+        }
+    }
+}
+
+private val HARMFUL_EFFECTS = setOf(
+    "slowness", "mining_fatigue", "instant_damage", "nausea", "blindness",
+    "hunger", "weakness", "poison", "wither", "levitation", "unluck",
+    "bad_omen", "darkness", "infested", "oozing", "weaving", "wind_charged",
+)
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun ActiveEffectsSection(effects: List<ActiveEffect>) {
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        effects.forEach { effect ->
+            val isHarmful = effect.id in HARMFUL_EFFECTS
+            val bgColor = if (isHarmful) Color(0x33F44336) else Color(0x334CAF50)
+            val textColor = if (isHarmful) Color(0xFFF44336) else Emerald
+
+            val name = effect.id.replace("_", " ").split(" ")
+                .joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
+            val level = if (effect.amplifier > 0) " ${romanNumeral(effect.amplifier + 1)}" else ""
+            val duration = if (effect.duration <= 0 || effect.duration > 999999) {
+                " \u221E"
+            } else {
+                val totalSec = effect.duration / 20
+                val min = totalSec / 60
+                val sec = totalSec % 60
+                " ${min}:%02d".format(sec)
+            }
+
+            Text(
+                "$name$level$duration",
+                style = MaterialTheme.typography.labelSmall,
+                color = textColor,
+                modifier = Modifier
+                    .background(bgColor, RoundedCornerShape(4.dp))
+                    .padding(horizontal = 6.dp, vertical = 3.dp),
+            )
         }
     }
 }
