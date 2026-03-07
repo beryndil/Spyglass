@@ -148,7 +148,7 @@
 
     <!-- About Screen -->
     <string name="about_app_title">Spyglass Connect</string>
-    <string name="about_version">v%s</string>
+    <string name="about_version">%s</string>
     <string name="about_companion">A Minecraft companion tool.</string>
     <string name="about_author">by Beryndil</string>
     <string name="about_enjoy">Enjoy Spyglass Connect?</string>

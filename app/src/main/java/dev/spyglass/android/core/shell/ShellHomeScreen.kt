@@ -44,6 +44,11 @@ fun ShellHomeScreen(scope: HomeSectionScope, scrollToTopTrigger: Int = 0) {
         if (scrollToTopTrigger > 0) listState.animateScrollToItem(0)
     }
 
+    // Ensure list starts at top when sections first load
+    LaunchedEffect(sections.isNotEmpty()) {
+        if (sections.isNotEmpty()) listState.scrollToItem(0)
+    }
+
     LazyColumn(
         state = listState,
         modifier = Modifier
