@@ -47,7 +47,20 @@ jobs:
 
       - name: Generate build timestamp
         id: ts
-        run: echo "stamp=$(TZ='America/Chicago' date +'%Y.%m%d.%H%M')" >> "$GITHUB_OUTPUT"
+        run: |
+          YEAR=$(TZ='America/Chicago' date +'%Y')
+          declare -A ZODIAC=(
+            [2024]=WoodDragon [2025]=WoodSnake
+            [2026]=FireHorse [2027]=FireGoat
+            [2028]=EarthMonkey [2029]=EarthRooster
+            [2030]=MetalDog [2031]=MetalPig
+            [2032]=WaterRat [2033]=WaterOx
+            [2034]=WoodTiger [2035]=WoodRabbit
+          )
+          NAME=${ZODIAC[$YEAR]}
+          STAMP="${NAME}.$(TZ='America/Chicago' date +'%m%d.%H%M')"
+          echo "stamp=${STAMP}" >> "$GITHUB_OUTPUT"
+          echo "tag=${STAMP}-a" >> "$GITHUB_OUTPUT"
 
       - name: Build release APK
         run: ./gradlew assembleRelease
@@ -75,7 +88,7 @@ jobs:
 
       - name: Generate release tag
         id: tag
-        run: echo "tag=v${{ steps.ts.outputs.stamp }}" >> "$GITHUB_OUTPUT"
+        run: echo "tag=${{ steps.ts.outputs.tag }}" >> "$GITHUB_OUTPUT"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2

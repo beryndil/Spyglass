@@ -55,7 +55,7 @@ object DataSyncManager {
         // 2. Load local manifest
         var localManifest = loadLocalManifest(context)
 
-        Timber.d("DataSync: local v%d, remote v%d", localManifest.version, remoteManifest.version)
+        Timber.d("DataSync: local v%s, remote v%s", localManifest.version, remoteManifest.version)
 
         // 3. Determine which tables have changed (compare per-table versions)
         val changed = remoteManifest.changedTables(localManifest)
@@ -93,7 +93,7 @@ object DataSyncManager {
                 localManifest = localManifest.withVersion(table, remoteManifest.versionOf(table))
                 saveLocalManifest(context, localManifest)
 
-                Timber.d("DataSync: updated %s to version %d", table, remoteManifest.versionOf(table))
+                Timber.d("DataSync: updated %s to version %s", table, remoteManifest.versionOf(table))
             }
         }
 
@@ -104,7 +104,7 @@ object DataSyncManager {
                 saveToInternalStorage(context, "texture_map.json", textureMapJson)
                 TextureManager.loadTextureMaps(context)
                 localManifest = localManifest.copy(textureMap = remoteManifest.textureMap)
-                Timber.d("DataSync: updated texture_map to version %d", remoteManifest.textureMap)
+                Timber.d("DataSync: updated texture_map to version %s", remoteManifest.textureMap)
             }
         }
 
@@ -114,14 +114,14 @@ object DataSyncManager {
             if (newsJson != null) {
                 saveToInternalStorage(context, "news.json", newsJson)
                 localManifest = localManifest.copy(news = remoteManifest.news)
-                Timber.d("DataSync: updated news to version %d", remoteManifest.news)
+                Timber.d("DataSync: updated news to version %s", remoteManifest.news)
             }
         }
 
         // 7. Flag texture update if textures are already downloaded and remote is newer
         if (remoteManifest.hasTextureUpdate(localManifest) &&
             TextureManager.state.value == TextureManager.TextureState.DOWNLOADED) {
-            Timber.d("DataSync: texture update available (local=%d, remote=%d)",
+            Timber.d("DataSync: texture update available (local=%s, remote=%s)",
                 localManifest.textures, remoteManifest.textures)
             // Auto-update textures in background
             TextureManager.download(context)
@@ -132,7 +132,7 @@ object DataSyncManager {
         localManifest = localManifest.copy(version = remoteManifest.version)
         saveLocalManifest(context, localManifest)
 
-        Timber.d("DataSync: sync complete, now at v%d", remoteManifest.version)
+        Timber.d("DataSync: sync complete, now at v%s", remoteManifest.version)
     }
 
     /** Saves JSON content to internal storage at minecraft/{fileName}. */

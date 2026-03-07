@@ -8,12 +8,12 @@ class DataManifestTest {
     @Test
     fun jsonRoundTrip() {
         val original = DataManifest(
-            version = 1,
-            blocks = 100, mobs = 200, biomes = 300,
-            enchants = 400, potions = 500, trades = 600,
-            recipes = 700, structures = 800, items = 900,
-            advancements = 1000, commands = 1100,
-            textures = 1200, textureMap = 1300, news = 1400,
+            version = "FireHorse.0303.0500",
+            blocks = "FireHorse.0303.0500", mobs = "FireHorse.0302.1319", biomes = "FireHorse.0301.0800",
+            enchants = "FireHorse.0301.0800", potions = "FireHorse.0302.1319", trades = "FireHorse.0302.1430",
+            recipes = "FireHorse.0303.0500", structures = "FireHorse.0301.0800", items = "FireHorse.0303.0500",
+            advancements = "FireHorse.0301.0800", commands = "FireHorse.0301.0800",
+            textures = "FireHorse.0302.2227", textureMap = "FireHorse.0303.1800", news = "FireHorse.0302.1319",
             checksums = mapOf("blocks.json" to "abc123"),
         )
         val json = DataManifest.toJson(original)
@@ -23,16 +23,15 @@ class DataManifestTest {
 
     @Test
     fun unknownKeysIgnored() {
-        val json = """{"blocks":42,"unknown_field":"hello","extra":999}"""
+        val json = """{"blocks":"FireHorse.0302.1319","unknown_field":"hello","extra":999}"""
         val m = DataManifest.fromJson(json)
-        assertEquals(42L, m.blocks)
-        // should not crash
+        assertEquals("FireHorse.0302.1319", m.blocks)
     }
 
     @Test
     fun changedTables_detectsDifferences() {
-        val a = DataManifest(blocks = 1, mobs = 1)
-        val b = DataManifest(blocks = 2, mobs = 3)
+        val a = DataManifest(blocks = "FireHorse.0301.0800", mobs = "FireHorse.0301.0800")
+        val b = DataManifest(blocks = "FireHorse.0302.1319", mobs = "FireHorse.0303.0500")
         val changed = a.changedTables(b)
         assertTrue("blocks" in changed)
         assertTrue("mobs" in changed)
@@ -41,66 +40,70 @@ class DataManifestTest {
 
     @Test
     fun changedTables_identical() {
-        val m = DataManifest(blocks = 5, mobs = 5)
+        val m = DataManifest(blocks = "FireHorse.0303.0500", mobs = "FireHorse.0303.0500")
         assertTrue(m.changedTables(m).isEmpty())
     }
 
     @Test
     fun withVersion_updatesCorrectField() {
         val m = DataManifest()
-        val updated = m.withVersion("blocks", 42)
-        assertEquals(42L, updated.blocks)
-        assertEquals(0L, updated.mobs)
+        val updated = m.withVersion("blocks", "FireHorse.0303.0500")
+        assertEquals("FireHorse.0303.0500", updated.blocks)
+        assertEquals("", updated.mobs)
     }
 
     @Test
     fun withVersion_unknownTable_returnsUnchanged() {
-        val m = DataManifest(blocks = 10)
-        val same = m.withVersion("nonexistent", 999)
+        val m = DataManifest(blocks = "FireHorse.0301.0800")
+        val same = m.withVersion("nonexistent", "FireHorse.0303.0500")
         assertEquals(m, same)
     }
 
     @Test
     fun versionOf_knownTables() {
         val m = DataManifest(
-            blocks = 10, mobs = 20, biomes = 30,
-            enchants = 40, potions = 50, trades = 60,
-            recipes = 70, structures = 80, items = 90,
-            advancements = 100, commands = 110,
+            blocks = "v1", mobs = "v2", biomes = "v3",
+            enchants = "v4", potions = "v5", trades = "v6",
+            recipes = "v7", structures = "v8", items = "v9",
+            advancements = "v10", commands = "v11",
         )
-        assertEquals(10L, m.versionOf("blocks"))
-        assertEquals(20L, m.versionOf("mobs"))
-        assertEquals(30L, m.versionOf("biomes"))
-        assertEquals(40L, m.versionOf("enchants"))
-        assertEquals(50L, m.versionOf("potions"))
-        assertEquals(60L, m.versionOf("trades"))
-        assertEquals(70L, m.versionOf("recipes"))
-        assertEquals(80L, m.versionOf("structures"))
-        assertEquals(90L, m.versionOf("items"))
-        assertEquals(100L, m.versionOf("advancements"))
-        assertEquals(110L, m.versionOf("commands"))
+        assertEquals("v1", m.versionOf("blocks"))
+        assertEquals("v2", m.versionOf("mobs"))
+        assertEquals("v3", m.versionOf("biomes"))
+        assertEquals("v4", m.versionOf("enchants"))
+        assertEquals("v5", m.versionOf("potions"))
+        assertEquals("v6", m.versionOf("trades"))
+        assertEquals("v7", m.versionOf("recipes"))
+        assertEquals("v8", m.versionOf("structures"))
+        assertEquals("v9", m.versionOf("items"))
+        assertEquals("v10", m.versionOf("advancements"))
+        assertEquals("v11", m.versionOf("commands"))
     }
 
     @Test
-    fun versionOf_unknownTable_returnsZero() {
-        assertEquals(0L, DataManifest().versionOf("unknown"))
+    fun versionOf_unknownTable_returnsEmpty() {
+        assertEquals("", DataManifest().versionOf("unknown"))
     }
 
     @Test
     fun effectiveVersion_returnsMax() {
-        val m = DataManifest(blocks = 5, recipes = 100, commands = 50)
-        assertEquals(100L, m.effectiveVersion)
+        val m = DataManifest(
+            blocks = "FireHorse.0301.0800",
+            recipes = "FireHorse.0303.0500",
+            commands = "FireHorse.0302.1319",
+        )
+        assertEquals("FireHorse.0303.0500", m.effectiveVersion)
     }
 
     @Test
-    fun effectiveVersion_allZero() {
-        assertEquals(0L, DataManifest().effectiveVersion)
+    fun effectiveVersion_allEmpty() {
+        assertEquals("", DataManifest().effectiveVersion)
     }
 
     @Test
     fun hasTextureUpdate() {
-        val remote = DataManifest(textures = 10)
-        val local = DataManifest(textures = 5)
+        val remote = DataManifest(textures = "FireHorse.0303.0500")
+        val local = DataManifest(textures = "FireHorse.0302.1319")
         assertTrue(remote.hasTextureUpdate(local))
         assertFalse(local.hasTextureUpdate(remote))
         assertFalse(remote.hasTextureUpdate(remote))
@@ -108,23 +111,23 @@ class DataManifestTest {
 
     @Test
     fun hasTextureMapUpdate() {
-        val remote = DataManifest(textureMap = 10)
-        val local = DataManifest(textureMap = 5)
+        val remote = DataManifest(textureMap = "FireHorse.0303.0500")
+        val local = DataManifest(textureMap = "FireHorse.0302.1319")
         assertTrue(remote.hasTextureMapUpdate(local))
         assertFalse(local.hasTextureMapUpdate(remote))
     }
 
     @Test
     fun hasNewsUpdate() {
-        val remote = DataManifest(news = 10)
-        val local = DataManifest(news = 5)
+        val remote = DataManifest(news = "FireHorse.0303.0500")
+        val local = DataManifest(news = "FireHorse.0302.1319")
         assertTrue(remote.hasNewsUpdate(local))
         assertFalse(local.hasNewsUpdate(remote))
     }
 
     @Test
     fun checksumsDefault_emptyMap() {
-        val json = """{"blocks":1}"""
+        val json = """{"blocks":"FireHorse.0301.0800"}"""
         val m = DataManifest.fromJson(json)
         assertTrue(m.checksums.isEmpty())
     }
@@ -132,12 +135,31 @@ class DataManifestTest {
     @Test
     fun minimalJson_allDefaults() {
         val m = DataManifest.fromJson("{}")
-        assertEquals(0L, m.version)
-        assertEquals(0L, m.blocks)
-        assertEquals(0L, m.mobs)
-        assertEquals(0L, m.textures)
-        assertEquals(0L, m.textureMap)
-        assertEquals(0L, m.news)
+        assertEquals("", m.version)
+        assertEquals("", m.blocks)
+        assertEquals("", m.mobs)
+        assertEquals("", m.textures)
+        assertEquals("", m.textureMap)
+        assertEquals("", m.news)
         assertTrue(m.checksums.isEmpty())
+    }
+
+    @Test
+    fun compareVersions_ordering() {
+        assertTrue(DataManifest.compareVersions("FireHorse.0303.0500", "FireHorse.0302.1319") > 0)
+        assertTrue(DataManifest.compareVersions("FireHorse.0302.1319", "FireHorse.0303.0500") < 0)
+        assertEquals(0, DataManifest.compareVersions("FireHorse.0303.0500", "FireHorse.0303.0500"))
+    }
+
+    @Test
+    fun compareVersions_differentYears() {
+        assertTrue(DataManifest.compareVersions("FireGoat.0301.0000", "FireHorse.0301.0000") > 0)
+    }
+
+    @Test
+    fun compareVersions_emptyStrings() {
+        assertTrue(DataManifest.compareVersions("FireHorse.0303.0500", "") > 0)
+        assertTrue(DataManifest.compareVersions("", "FireHorse.0303.0500") < 0)
+        assertEquals(0, DataManifest.compareVersions("", ""))
     }
 }

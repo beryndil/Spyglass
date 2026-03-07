@@ -146,8 +146,8 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}, onDisclaime
         item(key = "game_data") {
             SectionHeader(stringResource(R.string.about_game_data))
             ResultCard {
-                StatRow(stringResource(R.string.about_data_version), formatDataVersion(manifest?.effectiveVersion ?: 0L))
-                StatRow("Images Version", formatDataVersion(manifest?.textures ?: 0L))
+                StatRow(stringResource(R.string.about_data_version), manifest?.effectiveVersion?.ifEmpty { "—" } ?: "—")
+                StatRow("Images Version", manifest?.textures?.ifEmpty { "—" } ?: "—")
             }
         }
 
@@ -276,13 +276,3 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}, onDisclaime
     }
 }
 
-/** Formats a YYMMDDHHMM Long (e.g. 2603021319) as "2026.0302.1319". */
-private fun formatDataVersion(v: Long): String {
-    if (v < 1_000_000_000) return v.toString() // legacy int format
-    val yy = v / 100_000_000
-    val mm = (v / 1_000_000) % 100
-    val dd = (v / 10_000) % 100
-    val hh = (v / 100) % 100
-    val min = v % 100
-    return "20%02d.%02d%02d.%02d%02d".format(yy, mm, dd, hh, min)
-}

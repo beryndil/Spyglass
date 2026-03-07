@@ -307,10 +307,18 @@ private fun checkForUpdate(): Boolean? {
         client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) return null
             val body = response.body?.string() ?: return null
-            // Parse tag_name from JSON (e.g. "v2026.0304.1430")
-            val tagMatch = Regex(""""tag_name"\s*:\s*"v?(\d{4})\.(\d{2})(\d{2})\.(\d{2})(\d{2})"""")
+            // Parse tag_name from JSON (e.g. "FireHorse.0304.1430-a")
+            val zodiacYears = mapOf(
+                "WoodDragon" to 2024, "WoodSnake" to 2025,
+                "FireHorse" to 2026, "FireGoat" to 2027,
+                "EarthMonkey" to 2028, "EarthRooster" to 2029,
+                "MetalDog" to 2030, "MetalPig" to 2031,
+                "WaterRat" to 2032, "WaterOx" to 2033,
+                "WoodTiger" to 2034, "WoodRabbit" to 2035,
+            )
+            val tagMatch = Regex(""""tag_name"\s*:\s*"([A-Za-z]+)\.(\d{2})(\d{2})\.(\d{2})(\d{2})-a"""")
                 .find(body) ?: return null
-            val year = tagMatch.groupValues[1].toInt() - 2000
+            val year = (zodiacYears[tagMatch.groupValues[1]] ?: return null) - 2000
             val month = tagMatch.groupValues[2].toInt()
             val day = tagMatch.groupValues[3].toInt()
             val hour = tagMatch.groupValues[4].toInt()

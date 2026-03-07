@@ -24,26 +24,41 @@ if (file("google-services.json").exists()) {
     apply(plugin = libs.plugins.firebase.perf.get().pluginId)
 }
 
-// CalVer: versionCode = YYMMDDHHmm (fits Int), versionName = "YYYY.MMDD.HHmm-alpha"
-// CI passes BUILD_TIMESTAMP env var so the APK version matches the release tag exactly.
-// Local builds fall back to Calendar.getInstance().
+// CalVer: versionCode = YYMMDDHHmm (fits Int), versionName = "ZodiacName.MMDD.HHmm-a"
+// Chinese Zodiac Element+Animal names map to years (cutover Jan 1, not Lunar New Year).
+// CI passes BUILD_TIMESTAMP env var (e.g. "FireHorse.0307.0806") so the APK version matches
+// the release tag exactly. Local builds fall back to Calendar.getInstance().
+val ZODIAC_NAMES = mapOf(
+    2024 to "WoodDragon", 2025 to "WoodSnake",
+    2026 to "FireHorse", 2027 to "FireGoat",
+    2028 to "EarthMonkey", 2029 to "EarthRooster",
+    2030 to "MetalDog", 2031 to "MetalPig",
+    2032 to "WaterRat", 2033 to "WaterOx",
+    2034 to "WoodTiger", 2035 to "WoodRabbit",
+)
+val ZODIAC_YEARS = ZODIAC_NAMES.entries.associate { (k, v) -> v to k }
+
 fun computeCalVer(): Pair<Int, String> {
-    val ts = System.getenv("BUILD_TIMESTAMP") // "YYYY.MMDD.HHmm" from CI
+    val ts = System.getenv("BUILD_TIMESTAMP") // "FireHorse.0307.0806" from CI
     if (ts != null) {
         val parts = ts.split(".", limit = 3)
-        val yyyy = parts[0].toInt(); val mo = parts[1].substring(0, 2).toInt()
-        val dd = parts[1].substring(2, 4).toInt(); val hh = parts[2].substring(0, 2).toInt()
+        val yyyy = ZODIAC_YEARS[parts[0]] ?: error("Unknown zodiac: ${parts[0]}")
+        val mo = parts[1].substring(0, 2).toInt()
+        val dd = parts[1].substring(2, 4).toInt()
+        val hh = parts[2].substring(0, 2).toInt()
         val mi = parts[2].substring(2, 4).toInt()
-        return ((yyyy - 2000) * 10_000_000 + mo * 1_000_000 + dd * 10_000 + hh * 100 + mi) to "$ts-alpha"
+        return ((yyyy - 2000) * 10_000_000 + mo * 1_000_000 + dd * 10_000 + hh * 100 + mi) to "$ts-a"
     }
     val d = Calendar.getInstance(TimeZone.getTimeZone("America/Chicago"))
-    val code = (d.get(Calendar.YEAR) - 2000) * 10_000_000 +
+    val year = d.get(Calendar.YEAR)
+    val zodiac = ZODIAC_NAMES[year] ?: error("No zodiac name for year $year")
+    val code = (year - 2000) * 10_000_000 +
         (d.get(Calendar.MONTH) + 1) * 1_000_000 +
         d.get(Calendar.DAY_OF_MONTH) * 10_000 +
         d.get(Calendar.HOUR_OF_DAY) * 100 +
         d.get(Calendar.MINUTE)
-    val name = "%d.%02d%02d.%02d%02d-alpha".format(
-        d.get(Calendar.YEAR), d.get(Calendar.MONTH) + 1,
+    val name = "%s.%02d%02d.%02d%02d-a".format(
+        zodiac, d.get(Calendar.MONTH) + 1,
         d.get(Calendar.DAY_OF_MONTH), d.get(Calendar.HOUR_OF_DAY), d.get(Calendar.MINUTE),
     )
     return code to name
