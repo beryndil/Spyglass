@@ -369,6 +369,10 @@ object CoreModule : SpyglassModule {
             context.dataStore.data.map { it[PreferenceKeys.REDUCE_ANIMATIONS] ?: false }
         }.collectAsStateWithLifecycle(initialValue = false)
 
+        val showExperimental by remember {
+            context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: false }
+        }.collectAsStateWithLifecycle(initialValue = false)
+
         SectionHeader(stringResource(R.string.settings_display))
         ResultCard {
             SettingsToggle(
@@ -383,6 +387,13 @@ object CoreModule : SpyglassModule {
                 description = stringResource(R.string.settings_favorites_on_home_desc),
                 checked = showFavoritesOnHome,
                 onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.SHOW_FAVORITES_ON_HOME] = !showFavoritesOnHome } } },
+            )
+            SpyglassDivider()
+            SettingsToggle(
+                title = stringResource(R.string.settings_show_experimental),
+                description = stringResource(R.string.settings_show_experimental_desc),
+                checked = showExperimental,
+                onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.SHOW_EXPERIMENTAL] = !showExperimental } } },
             )
             SpyglassDivider()
             SettingsToggle(
