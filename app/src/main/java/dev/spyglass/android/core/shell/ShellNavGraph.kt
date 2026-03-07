@@ -22,6 +22,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
@@ -126,6 +127,9 @@ fun ShellNavGraph() {
     var pendingCalcTab by remember { mutableStateOf<Int?>(null) }
     val connectViewModel: ConnectViewModel = viewModel()
 
+    // Scroll-to-top trigger — increments when user re-taps the current tab
+    var scrollToTopTrigger by remember { mutableIntStateOf(0) }
+
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
 
@@ -139,6 +143,11 @@ fun ShellNavGraph() {
 
     fun navigateToTop(route: String) {
         try {
+            if (currentRoute == route) {
+                scrollToTopTrigger++
+                return
+            }
+            if (route == "home") scrollToTopTrigger++
             navController.navigate(route) {
                 popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                 launchSingleTop = true
@@ -201,7 +210,9 @@ fun ShellNavGraph() {
         bottomBar = {
             Column(Modifier.navigationBarsPadding()) {
                 if (showBars) {
-                    ShellBottomNavBar(navController, destinations)
+                    ShellBottomNavBar(navController, destinations) { route ->
+                        navigateToTop(route)
+                    }
                 }
                 AdBanner()
             }
@@ -214,7 +225,7 @@ fun ShellNavGraph() {
         ) {
             // Home
             composable("home") {
-                ShellHomeScreen(homeSectionScope)
+                ShellHomeScreen(homeSectionScope, scrollToTopTrigger)
             }
 
             // Search — provided by DatabaseModule or fallback
@@ -358,6 +369,7 @@ private fun ShellTopBar(navController: NavHostController, onClockTap: () -> Unit
 private fun ShellBottomNavBar(
     navController: NavHostController,
     destinations: List<ShellDestination>,
+    onNavigate: (String) -> Unit,
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDest = backStackEntry?.destination
@@ -366,13 +378,7 @@ private fun ShellBottomNavBar(
         destinations.forEach { dest ->
             NavigationBarItem(
                 selected = currentDest?.hierarchy?.any { it.route == dest.route } == true,
-                onClick = {
-                    navController.navigate(dest.route) {
-                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                },
+                onClick = { onNavigate(dest.route) },
                 icon = {
                     SpyglassIconImage(
                         dest.icon,

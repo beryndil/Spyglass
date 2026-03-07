@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
@@ -23,7 +25,7 @@ import dev.spyglass.android.core.module.ModuleRegistry
  * sorts by weight, and renders them in a LazyColumn.
  */
 @Composable
-fun ShellHomeScreen(scope: HomeSectionScope) {
+fun ShellHomeScreen(scope: HomeSectionScope, scrollToTopTrigger: Int = 0) {
     val context = LocalContext.current
 
     // Re-read enabled modules whenever a module is toggled
@@ -35,7 +37,15 @@ fun ShellHomeScreen(scope: HomeSectionScope) {
             .sortedBy { it.weight }
     }
 
+    val listState = rememberLazyListState()
+
+    // Scroll to top when tab is re-tapped
+    LaunchedEffect(scrollToTopTrigger) {
+        if (scrollToTopTrigger > 0) listState.animateScrollToItem(0)
+    }
+
     LazyColumn(
+        state = listState,
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp),
