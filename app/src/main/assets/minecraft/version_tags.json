@@ -99,7 +99,6 @@
     "entityType": "block",
     "entityId": "acacia_wood",
     "addedInJava": "1.7",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Stripped variant"
   },
@@ -162,7 +161,6 @@
     "entityType": "block",
     "entityId": "andesite_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -170,7 +168,6 @@
     "entityType": "block",
     "entityId": "andesite_stairs",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -178,7 +175,6 @@
     "entityType": "block",
     "entityId": "andesite_wall",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Wall connections update"
   },
@@ -282,7 +278,6 @@
     "entityType": "block",
     "entityId": "bamboo_mosaic_slab",
     "addedInJava": "1.20",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.20",
     "mechanicsChangeNotes": "Bamboo mosaic variant"
   },
@@ -290,7 +285,6 @@
     "entityType": "block",
     "entityId": "bamboo_mosaic_stairs",
     "addedInJava": "1.20",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.20",
     "mechanicsChangeNotes": "Bamboo mosaic variant"
   },
@@ -354,7 +348,6 @@
     "entityType": "block",
     "entityId": "barrier",
     "addedInJava": "1.8",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.17",
     "mechanicsChangeNotes": "Light block alternative"
   },
@@ -502,7 +495,6 @@
     "entityType": "block",
     "entityId": "birch_slab",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -510,7 +502,6 @@
     "entityType": "block",
     "entityId": "birch_stairs",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -526,7 +517,6 @@
     "entityType": "block",
     "entityId": "birch_wood",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Stripped variant"
   },
@@ -764,7 +754,6 @@
     "entityType": "block",
     "entityId": "bone_block",
     "addedInJava": "1.10",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Fossil generation"
   },
@@ -824,7 +813,6 @@
     "entityType": "block",
     "entityId": "brick_wall",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Wall connections update"
   },
@@ -893,7 +881,6 @@
   {
     "entityType": "block",
     "entityId": "brown_mushroom_block",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Silk Touch behavior"
   },
@@ -956,7 +943,6 @@
     "entityType": "block",
     "entityId": "bubble_coral_block",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Dies outside water"
   },
@@ -1050,7 +1036,6 @@
     "entityType": "block",
     "entityId": "carved_pumpkin",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Separated from pumpkin"
   },
@@ -1065,7 +1050,6 @@
     "entityType": "block",
     "entityId": "cave_air",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Cave generation"
   },
@@ -1256,7 +1240,6 @@
     "entityType": "block",
     "entityId": "chiseled_sandstone",
     "addedInJava": "1.2",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipe"
   },
@@ -1264,7 +1247,6 @@
     "entityType": "block",
     "entityId": "chiseled_stone_bricks",
     "addedInJava": "1.2",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21.5",
     "mechanicsChangeNotes": "Lodestone recipe change"
   },
@@ -1303,7 +1285,6 @@
   {
     "entityType": "block",
     "entityId": "clay",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.19",
     "mechanicsChangeNotes": "Mud/packed mud system"
   },
@@ -1395,7 +1376,6 @@
     "entityType": "block",
     "entityId": "cobblestone_wall",
     "addedInJava": "1.4",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Connection changes"
   },
@@ -1410,7 +1390,6 @@
     "entityType": "block",
     "entityId": "cocoa",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Jungle tree growth"
   },
@@ -1418,7 +1397,6 @@
     "entityType": "block",
     "entityId": "command_block",
     "addedInJava": "1.4",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.9",
     "mechanicsChangeNotes": "Chain/repeating variants"
   },
@@ -1537,7 +1515,6 @@
   {
     "entityType": "block",
     "entityId": "cracked_stone_bricks",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Smelting recipe"
   },
@@ -1568,7 +1545,6 @@
     "entityType": "block",
     "entityId": "creeper_head",
     "addedInJava": "1.4",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.20",
     "mechanicsChangeNotes": "Note block interaction"
   },
@@ -1736,7 +1712,6 @@
     "entityType": "block",
     "entityId": "cut_red_sandstone_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -1744,7 +1719,6 @@
     "entityType": "block",
     "entityId": "cut_sandstone",
     "addedInJava": "1.2",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Slab variant"
   },
@@ -1752,7 +1726,6 @@
     "entityType": "block",
     "entityId": "cut_sandstone_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -1950,7 +1923,6 @@
     "entityType": "block",
     "entityId": "dark_oak_wood",
     "addedInJava": "1.7",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Stripped variant"
   },
@@ -1966,7 +1938,6 @@
     "entityType": "block",
     "entityId": "dark_prismarine_slab",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -1974,7 +1945,6 @@
     "entityType": "block",
     "entityId": "dark_prismarine_stairs",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -1998,7 +1968,6 @@
     "entityType": "block",
     "entityId": "dead_brain_coral_block",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Dead variant"
   },
@@ -2006,7 +1975,6 @@
     "entityType": "block",
     "entityId": "dead_brain_coral_fan",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Dried state"
   },
@@ -2022,7 +1990,6 @@
     "entityType": "block",
     "entityId": "dead_bubble_coral_block",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Dead variant"
   },
@@ -2030,7 +1997,6 @@
     "entityType": "block",
     "entityId": "dead_bubble_coral_fan",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Dried state"
   },
@@ -2053,7 +2019,6 @@
     "entityType": "block",
     "entityId": "dead_fire_coral_block",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Dead variant"
   },
@@ -2061,7 +2026,6 @@
     "entityType": "block",
     "entityId": "dead_fire_coral_fan",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Dried state"
   },
@@ -2077,7 +2041,6 @@
     "entityType": "block",
     "entityId": "dead_horn_coral_block",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Dead variant"
   },
@@ -2085,7 +2048,6 @@
     "entityType": "block",
     "entityId": "dead_horn_coral_fan",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Dried state"
   },
@@ -2101,7 +2063,6 @@
     "entityType": "block",
     "entityId": "dead_tube_coral_block",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Dead variant"
   },
@@ -2109,7 +2070,6 @@
     "entityType": "block",
     "entityId": "dead_tube_coral_fan",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Dried state"
   },
@@ -2290,7 +2250,6 @@
     "entityType": "block",
     "entityId": "diorite_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -2298,7 +2257,6 @@
     "entityType": "block",
     "entityId": "diorite_stairs",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -2306,7 +2264,6 @@
     "entityType": "block",
     "entityId": "diorite_wall",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Wall connections update"
   },
@@ -2321,7 +2278,6 @@
     "entityType": "block",
     "entityId": "dirt_path",
     "addedInJava": "1.9",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.17",
     "mechanicsChangeNotes": "Renamed to Dirt Path"
   },
@@ -2336,7 +2292,6 @@
     "entityType": "block",
     "entityId": "dragon_head",
     "addedInJava": "1.9",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.20",
     "mechanicsChangeNotes": "Note block interaction"
   },
@@ -2368,7 +2323,6 @@
     "entityType": "block",
     "entityId": "emerald_block",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Beacon base"
   },
@@ -2376,7 +2330,6 @@
     "entityType": "block",
     "entityId": "emerald_ore",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.17",
     "mechanicsChangeNotes": "Deepslate variant"
   },
@@ -2391,14 +2344,12 @@
     "entityType": "block",
     "entityId": "end_gateway",
     "addedInJava": "1.9",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.9",
     "mechanicsChangeNotes": "End dimension teleportation"
   },
   {
     "entityType": "block",
     "entityId": "end_portal",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.0",
     "mechanicsChangeNotes": "No major changes"
   },
@@ -2428,7 +2379,6 @@
     "entityType": "block",
     "entityId": "end_stone_brick_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -2436,7 +2386,6 @@
     "entityType": "block",
     "entityId": "end_stone_brick_stairs",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -2444,7 +2393,6 @@
     "entityType": "block",
     "entityId": "end_stone_brick_wall",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Wall connections update"
   },
@@ -2460,7 +2408,6 @@
     "entityType": "block",
     "entityId": "ender_chest",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21.4",
     "mechanicsChangeNotes": "Drops obsidian without silk touch"
   },
@@ -2468,7 +2415,6 @@
     "entityType": "block",
     "entityId": "exposed_chiseled_copper",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -2484,7 +2430,6 @@
     "entityType": "block",
     "entityId": "exposed_copper_bulb",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -2492,7 +2437,6 @@
     "entityType": "block",
     "entityId": "exposed_copper_door",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -2500,7 +2444,6 @@
     "entityType": "block",
     "entityId": "exposed_copper_grate",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -2508,7 +2451,6 @@
     "entityType": "block",
     "entityId": "exposed_copper_trapdoor",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -2553,7 +2495,6 @@
   {
     "entityType": "block",
     "entityId": "fire",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Soul fire variant"
   },
@@ -2569,7 +2510,6 @@
     "entityType": "block",
     "entityId": "fire_coral_block",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Dies outside water"
   },
@@ -2633,7 +2573,6 @@
     "entityType": "block",
     "entityId": "frosted_ice",
     "addedInJava": "1.9",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.9",
     "mechanicsChangeNotes": "Frost Walker only"
   },
@@ -2662,7 +2601,6 @@
   {
     "entityType": "block",
     "entityId": "glass_pane",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable; stained variants"
   },
@@ -2715,7 +2653,6 @@
     "entityType": "block",
     "entityId": "granite_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -2723,7 +2660,6 @@
     "entityType": "block",
     "entityId": "granite_stairs",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -2731,7 +2667,6 @@
     "entityType": "block",
     "entityId": "granite_wall",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Wall connections update"
   },
@@ -2999,7 +2934,6 @@
     "entityType": "block",
     "entityId": "horn_coral_block",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Dies outside water"
   },
@@ -3022,7 +2956,6 @@
     "entityType": "block",
     "entityId": "infested_chiseled_stone_bricks",
     "addedInJava": "1.7",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Silverfish spawning"
   },
@@ -3037,7 +2970,6 @@
     "entityType": "block",
     "entityId": "infested_cracked_stone_bricks",
     "addedInJava": "1.7",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Silverfish spawning"
   },
@@ -3053,7 +2985,6 @@
     "entityType": "block",
     "entityId": "infested_mossy_stone_bricks",
     "addedInJava": "1.7",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Silverfish spawning"
   },
@@ -3118,7 +3049,6 @@
     "entityType": "block",
     "entityId": "jigsaw",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Structure generation"
   },
@@ -3221,7 +3151,6 @@
     "entityType": "block",
     "entityId": "jungle_slab",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -3229,7 +3158,6 @@
     "entityType": "block",
     "entityId": "jungle_stairs",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -3245,7 +3173,6 @@
     "entityType": "block",
     "entityId": "jungle_wood",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Stripped variant"
   },
@@ -3275,7 +3202,6 @@
   {
     "entityType": "block",
     "entityId": "lapis_ore",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.17",
     "mechanicsChangeNotes": "Deepslate variant"
   },
@@ -3298,7 +3224,6 @@
   {
     "entityType": "block",
     "entityId": "lava",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.17",
     "mechanicsChangeNotes": "Generates deeper; copper smelting"
   },
@@ -3329,7 +3254,6 @@
     "entityType": "block",
     "entityId": "light",
     "addedInJava": "1.17",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.17",
     "mechanicsChangeNotes": "Invisible light 0-15"
   },
@@ -3740,7 +3664,6 @@
     "entityType": "block",
     "entityId": "magma_block",
     "addedInJava": "1.10",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Bubble column interaction"
   },
@@ -3914,7 +3837,6 @@
     "entityType": "block",
     "entityId": "mossy_cobblestone_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -3922,7 +3844,6 @@
     "entityType": "block",
     "entityId": "mossy_cobblestone_stairs",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -3930,7 +3851,6 @@
     "entityType": "block",
     "entityId": "mossy_cobblestone_wall",
     "addedInJava": "1.4",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Connection changes"
   },
@@ -3938,7 +3858,6 @@
     "entityType": "block",
     "entityId": "mossy_stone_brick_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -3946,7 +3865,6 @@
     "entityType": "block",
     "entityId": "mossy_stone_brick_stairs",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -3954,14 +3872,12 @@
     "entityType": "block",
     "entityId": "mossy_stone_brick_wall",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Wall connections update"
   },
   {
     "entityType": "block",
     "entityId": "mossy_stone_bricks",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Crafting recipe; wall variant"
   },
@@ -4016,7 +3932,6 @@
   {
     "entityType": "block",
     "entityId": "mushroom_stem",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Separate block ID"
   },
@@ -4053,7 +3968,6 @@
     "entityType": "block",
     "entityId": "nether_brick_wall",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Wall connections update"
   },
@@ -4083,7 +3997,6 @@
     "entityType": "block",
     "entityId": "nether_quartz_ore",
     "addedInJava": "1.5",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Nether generation changes"
   },
@@ -4106,7 +4019,6 @@
     "entityType": "block",
     "entityId": "nether_wart_block",
     "addedInJava": "1.10",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Crimson forest generation"
   },
@@ -4143,7 +4055,6 @@
   {
     "entityType": "block",
     "entityId": "oak_door",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.8",
     "mechanicsChangeNotes": "All wood types added"
   },
@@ -4208,7 +4119,6 @@
     "entityType": "block",
     "entityId": "oak_slab",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -4230,7 +4140,6 @@
     "entityType": "block",
     "entityId": "oak_wood",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Stripped variant"
   },
@@ -4372,7 +4281,6 @@
     "entityType": "block",
     "entityId": "oxidized_chiseled_copper",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -4388,7 +4296,6 @@
     "entityType": "block",
     "entityId": "oxidized_copper_bulb",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -4396,7 +4303,6 @@
     "entityType": "block",
     "entityId": "oxidized_copper_door",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -4404,7 +4310,6 @@
     "entityType": "block",
     "entityId": "oxidized_copper_grate",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -4412,7 +4317,6 @@
     "entityType": "block",
     "entityId": "oxidized_copper_trapdoor",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -4596,7 +4500,6 @@
     "entityType": "block",
     "entityId": "pale_oak_wood",
     "addedInJava": "1.21.4",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21.4",
     "mechanicsChangeNotes": "6-sided log"
   },
@@ -4753,7 +4656,6 @@
     "entityType": "block",
     "entityId": "player_head",
     "addedInJava": "1.4",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.20",
     "mechanicsChangeNotes": "Note block interaction"
   },
@@ -4785,7 +4687,6 @@
     "entityType": "block",
     "entityId": "polished_andesite_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -4793,7 +4694,6 @@
     "entityType": "block",
     "entityId": "polished_andesite_stairs",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -4929,7 +4829,6 @@
     "entityType": "block",
     "entityId": "polished_diorite_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -4937,7 +4836,6 @@
     "entityType": "block",
     "entityId": "polished_diorite_stairs",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -4953,7 +4851,6 @@
     "entityType": "block",
     "entityId": "polished_granite_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -4961,7 +4858,6 @@
     "entityType": "block",
     "entityId": "polished_granite_stairs",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -4977,7 +4873,6 @@
     "entityType": "block",
     "entityId": "polished_tuff_slab",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Full tuff building set"
   },
@@ -4985,7 +4880,6 @@
     "entityType": "block",
     "entityId": "polished_tuff_stairs",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Full tuff building set"
   },
@@ -4993,7 +4887,6 @@
     "entityType": "block",
     "entityId": "polished_tuff_wall",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Full tuff building set"
   },
@@ -5032,7 +4925,6 @@
     "entityType": "block",
     "entityId": "prismarine_brick_slab",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -5040,7 +4932,6 @@
     "entityType": "block",
     "entityId": "prismarine_brick_stairs",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -5056,7 +4947,6 @@
     "entityType": "block",
     "entityId": "prismarine_slab",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -5064,7 +4954,6 @@
     "entityType": "block",
     "entityId": "prismarine_stairs",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -5072,7 +4961,6 @@
     "entityType": "block",
     "entityId": "prismarine_wall",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Wall connections update"
   },
@@ -5253,7 +5141,6 @@
     "entityType": "block",
     "entityId": "raw_copper_block",
     "addedInJava": "1.17",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.17",
     "mechanicsChangeNotes": "Storage block"
   },
@@ -5261,7 +5148,6 @@
     "entityType": "block",
     "entityId": "raw_gold_block",
     "addedInJava": "1.17",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.17",
     "mechanicsChangeNotes": "Storage block"
   },
@@ -5269,7 +5155,6 @@
     "entityType": "block",
     "entityId": "raw_iron_block",
     "addedInJava": "1.17",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.17",
     "mechanicsChangeNotes": "Storage block"
   },
@@ -5330,7 +5215,6 @@
   {
     "entityType": "block",
     "entityId": "red_mushroom_block",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Silk Touch behavior"
   },
@@ -5338,7 +5222,6 @@
     "entityType": "block",
     "entityId": "red_nether_brick_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -5346,7 +5229,6 @@
     "entityType": "block",
     "entityId": "red_nether_brick_stairs",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -5354,7 +5236,6 @@
     "entityType": "block",
     "entityId": "red_nether_brick_wall",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Wall connections update"
   },
@@ -5362,7 +5243,6 @@
     "entityType": "block",
     "entityId": "red_nether_bricks",
     "addedInJava": "1.10",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Slab/stair/wall"
   },
@@ -5402,7 +5282,6 @@
     "entityType": "block",
     "entityId": "red_sandstone_wall",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Wall connections update"
   },
@@ -5603,7 +5482,6 @@
     "entityType": "block",
     "entityId": "sandstone_wall",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Wall connections update"
   },
@@ -5714,7 +5592,6 @@
     "entityType": "block",
     "entityId": "skeleton_skull",
     "addedInJava": "1.4",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.20",
     "mechanicsChangeNotes": "Note block interaction"
   },
@@ -5762,7 +5639,6 @@
     "entityType": "block",
     "entityId": "smooth_quartz_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -5770,7 +5646,6 @@
     "entityType": "block",
     "entityId": "smooth_quartz_stairs",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -5786,7 +5661,6 @@
     "entityType": "block",
     "entityId": "smooth_red_sandstone_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -5794,7 +5668,6 @@
     "entityType": "block",
     "entityId": "smooth_red_sandstone_stairs",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -5810,7 +5683,6 @@
     "entityType": "block",
     "entityId": "smooth_sandstone_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -5818,7 +5690,6 @@
     "entityType": "block",
     "entityId": "smooth_sandstone_stairs",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -5833,7 +5704,6 @@
   {
     "entityType": "block",
     "entityId": "smooth_stone_slab",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipe"
   },
@@ -5909,7 +5779,6 @@
   {
     "entityType": "block",
     "entityId": "spawner",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Trial spawner variant"
   },
@@ -6017,7 +5886,6 @@
     "entityType": "block",
     "entityId": "spruce_slab",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -6025,7 +5893,6 @@
     "entityType": "block",
     "entityId": "spruce_stairs",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterloggable"
   },
@@ -6041,7 +5908,6 @@
     "entityType": "block",
     "entityId": "spruce_wood",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Stripped variant"
   },
@@ -6070,7 +5936,6 @@
     "entityType": "block",
     "entityId": "stone_brick_wall",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Wall connections update"
   },
@@ -6099,7 +5964,6 @@
     "entityType": "block",
     "entityId": "stone_slab",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -6107,7 +5971,6 @@
     "entityType": "block",
     "entityId": "stone_stairs",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Stonecutter recipes"
   },
@@ -6133,7 +5996,6 @@
     "entityType": "block",
     "entityId": "stripped_acacia_wood",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Hanging sign crafting"
   },
@@ -6157,7 +6019,6 @@
     "entityType": "block",
     "entityId": "stripped_birch_wood",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Hanging sign crafting"
   },
@@ -6181,7 +6042,6 @@
     "entityType": "block",
     "entityId": "stripped_crimson_hyphae",
     "addedInJava": "1.16",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Stripped variant"
   },
@@ -6189,7 +6049,6 @@
     "entityType": "block",
     "entityId": "stripped_crimson_stem",
     "addedInJava": "1.16",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Stripped variant"
   },
@@ -6205,7 +6064,6 @@
     "entityType": "block",
     "entityId": "stripped_dark_oak_wood",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Hanging sign crafting"
   },
@@ -6221,7 +6079,6 @@
     "entityType": "block",
     "entityId": "stripped_jungle_wood",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Hanging sign crafting"
   },
@@ -6253,7 +6110,6 @@
     "entityType": "block",
     "entityId": "stripped_oak_wood",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Hanging sign crafting"
   },
@@ -6261,7 +6117,6 @@
     "entityType": "block",
     "entityId": "stripped_pale_oak_log",
     "addedInJava": "1.21.4",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21.4",
     "mechanicsChangeNotes": "Stripped variant"
   },
@@ -6269,7 +6124,6 @@
     "entityType": "block",
     "entityId": "stripped_pale_oak_wood",
     "addedInJava": "1.21.4",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21.4",
     "mechanicsChangeNotes": "Hanging sign crafting"
   },
@@ -6285,7 +6139,6 @@
     "entityType": "block",
     "entityId": "stripped_spruce_wood",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Hanging sign crafting"
   },
@@ -6293,7 +6146,6 @@
     "entityType": "block",
     "entityId": "stripped_warped_hyphae",
     "addedInJava": "1.16",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Stripped variant"
   },
@@ -6301,7 +6153,6 @@
     "entityType": "block",
     "entityId": "stripped_warped_stem",
     "addedInJava": "1.16",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Stripped variant"
   },
@@ -6309,7 +6160,6 @@
     "entityType": "block",
     "entityId": "structure_block",
     "addedInJava": "1.9",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Load/save/corner modes"
   },
@@ -6317,7 +6167,6 @@
     "entityType": "block",
     "entityId": "structure_void",
     "addedInJava": "1.10",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Jigsaw integration"
   },
@@ -6466,7 +6315,6 @@
     "entityType": "block",
     "entityId": "tube_coral_block",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Dies outside water"
   },
@@ -6490,7 +6338,6 @@
     "entityType": "block",
     "entityId": "tuff_brick_slab",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Full tuff building set"
   },
@@ -6498,7 +6345,6 @@
     "entityType": "block",
     "entityId": "tuff_brick_stairs",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Full tuff building set"
   },
@@ -6506,7 +6352,6 @@
     "entityType": "block",
     "entityId": "tuff_brick_wall",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Full tuff building set"
   },
@@ -6585,7 +6430,6 @@
     "entityType": "block",
     "entityId": "void_air",
     "addedInJava": "1.13",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Below bedrock"
   },
@@ -6728,7 +6572,6 @@
   {
     "entityType": "block",
     "entityId": "water",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Waterlogging system added"
   },
@@ -6736,7 +6579,6 @@
     "entityType": "block",
     "entityId": "waxed_chiseled_copper",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6752,7 +6594,6 @@
     "entityType": "block",
     "entityId": "waxed_copper_bulb",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6760,7 +6601,6 @@
     "entityType": "block",
     "entityId": "waxed_copper_door",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6768,7 +6608,6 @@
     "entityType": "block",
     "entityId": "waxed_copper_grate",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6776,7 +6615,6 @@
     "entityType": "block",
     "entityId": "waxed_copper_trapdoor",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6808,7 +6646,6 @@
     "entityType": "block",
     "entityId": "waxed_exposed_chiseled_copper",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6824,7 +6661,6 @@
     "entityType": "block",
     "entityId": "waxed_exposed_copper_bulb",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6832,7 +6668,6 @@
     "entityType": "block",
     "entityId": "waxed_exposed_copper_door",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6840,7 +6675,6 @@
     "entityType": "block",
     "entityId": "waxed_exposed_copper_grate",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6848,7 +6682,6 @@
     "entityType": "block",
     "entityId": "waxed_exposed_copper_trapdoor",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6880,7 +6713,6 @@
     "entityType": "block",
     "entityId": "waxed_oxidized_chiseled_copper",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6896,7 +6728,6 @@
     "entityType": "block",
     "entityId": "waxed_oxidized_copper_bulb",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6904,7 +6735,6 @@
     "entityType": "block",
     "entityId": "waxed_oxidized_copper_door",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6912,7 +6742,6 @@
     "entityType": "block",
     "entityId": "waxed_oxidized_copper_grate",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6920,7 +6749,6 @@
     "entityType": "block",
     "entityId": "waxed_oxidized_copper_trapdoor",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6952,7 +6780,6 @@
     "entityType": "block",
     "entityId": "waxed_weathered_chiseled_copper",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6968,7 +6795,6 @@
     "entityType": "block",
     "entityId": "waxed_weathered_copper_bulb",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6976,7 +6802,6 @@
     "entityType": "block",
     "entityId": "waxed_weathered_copper_door",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6984,7 +6809,6 @@
     "entityType": "block",
     "entityId": "waxed_weathered_copper_grate",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -6992,7 +6816,6 @@
     "entityType": "block",
     "entityId": "waxed_weathered_copper_trapdoor",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "Waxed copper variant"
   },
@@ -7024,7 +6847,6 @@
     "entityType": "block",
     "entityId": "weathered_chiseled_copper",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -7040,7 +6862,6 @@
     "entityType": "block",
     "entityId": "weathered_copper_bulb",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -7048,7 +6869,6 @@
     "entityType": "block",
     "entityId": "weathered_copper_door",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -7056,7 +6876,6 @@
     "entityType": "block",
     "entityId": "weathered_copper_grate",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -7064,7 +6883,6 @@
     "entityType": "block",
     "entityId": "weathered_copper_trapdoor",
     "addedInJava": "1.21",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21",
     "mechanicsChangeNotes": "New copper building blocks"
   },
@@ -7104,7 +6922,6 @@
     "entityType": "block",
     "entityId": "wet_sponge",
     "addedInJava": "1.8",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Drying mechanics"
   },
@@ -7326,9 +7143,249 @@
     "entityType": "block",
     "entityId": "zombie_head",
     "addedInJava": "1.4",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.20",
     "mechanicsChangeNotes": "Note block interaction"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "aqua_affinity",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "bane_of_arthropods",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "binding_curse",
+    "addedInJava": "1.11",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "blast_protection",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "breach",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "channeling",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "density",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "depth_strider",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "efficiency",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "feather_falling",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "fire_aspect",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "fire_protection",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "flame",
+    "addedInJava": "1.1",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "fortune",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "frost_walker",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.1"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "impaling",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "infinity",
+    "addedInJava": "1.1",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "knockback",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "looting",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "loyalty",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "luck_of_the_sea",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "lunge",
+    "addedInJava": "1.21.11",
+    "addedInBedrock": "1.21.130"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "lure",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "mending",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.1"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "multishot",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.8"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "piercing",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.8"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "power",
+    "addedInJava": "1.1",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "projectile_protection",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "protection",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "punch",
+    "addedInJava": "1.1",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "quick_charge",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.8"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "respiration",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "riptide",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "sharpness",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "silk_touch",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "smite",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "soul_speed",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "sweeping_edge",
+    "addedInJava": "1.11",
+    "javaOnly": true
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "swift_sneak",
+    "addedInJava": "1.19",
+    "addedInBedrock": "1.19"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "thorns",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "unbreaking",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "vanishing_curse",
+    "addedInJava": "1.11",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "enchant",
+    "entityId": "wind_burst",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
   },
   {
     "entityType": "item",
@@ -7357,7 +7414,6 @@
   {
     "entityType": "item",
     "entityId": "apple",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.9",
     "mechanicsChangeNotes": "Saturation/hunger values adjusted"
   },
@@ -7521,14 +7577,12 @@
   {
     "entityType": "item",
     "entityId": "bone",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "No major changes"
   },
   {
     "entityType": "item",
     "entityId": "bone_meal",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Composter output; many new interactions"
   },
@@ -7587,7 +7641,6 @@
   {
     "entityType": "item",
     "entityId": "brick",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Decoration pot crafting"
   },
@@ -7650,7 +7703,6 @@
     "entityType": "item",
     "entityId": "carrot_on_a_stick",
     "addedInJava": "1.4",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Warped fungus on a stick variant"
   },
@@ -7693,7 +7745,6 @@
   {
     "entityType": "item",
     "entityId": "charcoal",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Separate item from coal"
   },
@@ -7731,7 +7782,6 @@
   {
     "entityType": "item",
     "entityId": "clay_ball",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Mason villager trading"
   },
@@ -7760,7 +7810,6 @@
   {
     "entityType": "item",
     "entityId": "cocoa_beans",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Dye standardization"
   },
@@ -7804,7 +7853,6 @@
     "entityType": "item",
     "entityId": "cooked_mutton",
     "addedInJava": "1.8",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Campfire cooking"
   },
@@ -7819,7 +7867,6 @@
     "entityType": "item",
     "entityId": "cooked_rabbit",
     "addedInJava": "1.8",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Campfire cooking"
   },
@@ -7834,7 +7881,6 @@
   {
     "entityType": "item",
     "entityId": "cookie",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Village trading"
   },
@@ -7858,7 +7904,6 @@
     "entityType": "item",
     "entityId": "copper_nugget",
     "addedInJava": "1.21.11",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21.11",
     "mechanicsChangeNotes": "Smelting copper items"
   },
@@ -8007,7 +8052,6 @@
     "entityType": "item",
     "entityId": "disc_fragment_5",
     "addedInJava": "1.19",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.19",
     "mechanicsChangeNotes": "Music Disc 5 crafting"
   },
@@ -8062,7 +8106,6 @@
     "entityType": "item",
     "entityId": "emerald",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Village currency"
   },
@@ -8078,7 +8121,6 @@
     "entityType": "item",
     "entityId": "enchanted_golden_apple",
     "addedInJava": "1.3",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.9",
     "mechanicsChangeNotes": "Uncraftable; loot only"
   },
@@ -8320,7 +8362,6 @@
   {
     "entityType": "item",
     "entityId": "golden_apple",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.9",
     "mechanicsChangeNotes": "Enchanted variant separated"
   },
@@ -8342,7 +8383,6 @@
     "entityType": "item",
     "entityId": "golden_carrot",
     "addedInJava": "1.4",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Breeding item"
   },
@@ -8460,7 +8500,6 @@
     "entityType": "item",
     "entityId": "happy_ghast_spawn_egg",
     "addedInJava": "1.21.6",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21.6",
     "mechanicsChangeNotes": "Flying mount"
   },
@@ -8531,7 +8570,6 @@
   {
     "entityType": "item",
     "entityId": "ink_sac",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.17",
     "mechanicsChangeNotes": "Glow ink sac variant"
   },
@@ -8604,7 +8642,6 @@
     "entityType": "item",
     "entityId": "iron_nugget",
     "addedInJava": "1.11",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Smelting chain items"
   },
@@ -8672,7 +8709,6 @@
   {
     "entityType": "item",
     "entityId": "lapis_lazuli",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Enchanting cost"
   },
@@ -8723,7 +8759,6 @@
     "entityType": "item",
     "entityId": "leather_horse_armor",
     "addedInJava": "1.14",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Dyeable; craftable"
   },
@@ -8996,7 +9031,6 @@
     "entityType": "item",
     "entityId": "nether_brick",
     "addedInJava": "1.5",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.16",
     "mechanicsChangeNotes": "Cracked/chiseled crafting"
   },
@@ -9004,7 +9038,6 @@
     "entityType": "item",
     "entityId": "nether_star",
     "addedInJava": "1.4",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.4",
     "mechanicsChangeNotes": "Beacon crafting"
   },
@@ -9223,7 +9256,6 @@
     "entityType": "item",
     "entityId": "pitcher_pod",
     "addedInJava": "1.20",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.20",
     "mechanicsChangeNotes": "Sniffer digging"
   },
@@ -9278,7 +9310,6 @@
     "entityType": "item",
     "entityId": "prismarine_crystals",
     "addedInJava": "1.8",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.8",
     "mechanicsChangeNotes": "Sea lantern crafting"
   },
@@ -9286,7 +9317,6 @@
     "entityType": "item",
     "entityId": "prismarine_shard",
     "addedInJava": "1.8",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.13",
     "mechanicsChangeNotes": "Conduit crafting"
   },
@@ -9318,7 +9348,6 @@
     "entityType": "item",
     "entityId": "pumpkin_pie",
     "addedInJava": "1.4",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Village trading"
   },
@@ -9348,7 +9377,6 @@
     "entityType": "item",
     "entityId": "rabbit_foot",
     "addedInJava": "1.8",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Brewing; loot table changes"
   },
@@ -9356,7 +9384,6 @@
     "entityType": "item",
     "entityId": "rabbit_hide",
     "addedInJava": "1.8",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Leather crafting"
   },
@@ -9364,7 +9391,6 @@
     "entityType": "item",
     "entityId": "rabbit_stew",
     "addedInJava": "1.8",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "No major changes"
   },
@@ -9441,7 +9467,6 @@
   {
     "entityType": "item",
     "entityId": "rotten_flesh",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Cleric trading"
   },
@@ -9550,7 +9575,6 @@
   {
     "entityType": "item",
     "entityId": "slime_ball",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.21.6",
     "mechanicsChangeNotes": "Removed from lead recipe"
   },
@@ -9747,7 +9771,6 @@
     "entityType": "item",
     "entityId": "torchflower_seeds",
     "addedInJava": "1.20",
-    "javaOnly": true,
     "mechanicsChangedInJava": "1.20",
     "mechanicsChangeNotes": "Sniffer digging"
   },
@@ -9957,5 +9980,5574 @@
     "addedInBedrock": "0.7",
     "mechanicsChangedInJava": "1.14",
     "mechanicsChangeNotes": "Dye standardization"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "allay",
+    "addedInJava": "1.19",
+    "addedInBedrock": "1.19"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "armadillo",
+    "addedInJava": "1.20.5",
+    "addedInBedrock": "1.20.80"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "axolotl",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "bat",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.11"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "bee",
+    "addedInJava": "1.15",
+    "addedInBedrock": "1.14"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "blaze",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "bogged",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "breeze",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "camel",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "cat",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.8"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "cave_spider",
+    "addedInBedrock": "0.11"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "chicken",
+    "addedInBedrock": "0.3"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "cod",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "cow",
+    "addedInBedrock": "0.3"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "creaking",
+    "addedInJava": "1.21.2",
+    "addedInBedrock": "1.21.50"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "creeper",
+    "addedInBedrock": "0.3"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "dolphin",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "donkey",
+    "addedInJava": "1.6",
+    "addedInBedrock": "0.15"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "drowned",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.5"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "elder_guardian",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "ender_dragon",
+    "addedInBedrock": "1.0"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "enderman",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "endermite",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.0"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "evoker",
+    "addedInJava": "1.11",
+    "addedInBedrock": "1.1"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "fox",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.13"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "frog",
+    "addedInJava": "1.19",
+    "addedInBedrock": "1.19"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "ghast",
+    "addedInBedrock": "0.11"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "glow_squid",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "goat",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "guardian",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "hoglin",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "horse",
+    "addedInJava": "1.6",
+    "addedInBedrock": "0.15"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "husk",
+    "addedInJava": "1.10",
+    "addedInBedrock": "0.15"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "iron_golem",
+    "addedInJava": "1.2",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "llama",
+    "addedInJava": "1.11",
+    "addedInBedrock": "1.1"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "magma_cube",
+    "addedInBedrock": "0.11"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "mooshroom",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "mule",
+    "addedInJava": "1.6",
+    "addedInBedrock": "0.15"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "ocelot",
+    "addedInJava": "1.2",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "panda",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.8"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "parrot",
+    "addedInJava": "1.12",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "phantom",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.6"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "pig",
+    "addedInBedrock": "0.2"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "piglin",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "piglin_brute",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "pillager",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.9"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "polar_bear",
+    "addedInJava": "1.10",
+    "addedInBedrock": "1.0"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "pufferfish",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "rabbit",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.13"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "ravager",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.10"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "salmon",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "sheep",
+    "addedInBedrock": "0.2"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "shulker",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "silverfish",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "skeleton",
+    "addedInBedrock": "0.3"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "skeleton_horse",
+    "addedInJava": "1.6",
+    "addedInBedrock": "0.15"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "slime",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "sniffer",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "snow_golem",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "spider",
+    "addedInBedrock": "0.3"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "squid",
+    "addedInBedrock": "0.11"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "stray",
+    "addedInJava": "1.10",
+    "addedInBedrock": "0.15"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "strider",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "tadpole",
+    "addedInJava": "1.19",
+    "addedInBedrock": "1.19"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "trader_llama",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.10"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "tropical_fish",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "turtle",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.5"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "vex",
+    "addedInJava": "1.11",
+    "addedInBedrock": "1.1"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "villager",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "vindicator",
+    "addedInJava": "1.11",
+    "addedInBedrock": "1.1"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "wandering_trader",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.10"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "warden",
+    "addedInJava": "1.19",
+    "addedInBedrock": "1.19"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "witch",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.14"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "wither",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "wither_skeleton",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "wolf",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "zoglin",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "zombie",
+    "addedInBedrock": "0.2"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "zombie_horse",
+    "addedInJava": "1.6",
+    "addedInBedrock": "0.15"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "zombie_villager",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "mob",
+    "entityId": "zombified_piglin",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "acacia_boat",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "acacia_button",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "acacia_chest_boat",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "acacia_door",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "acacia_fence",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "acacia_fence_gate",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "acacia_planks",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "acacia_pressure_plate",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "acacia_sign",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "acacia_trapdoor",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "acacia_wood",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "activator_rail",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "amethyst_block",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "andesite_slab",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "andesite_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "andesite_stairs",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "andesite_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "andesite_wall",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "andesite_wall_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "anvil",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "armor_stand",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "baked_potato_from_campfire_cooking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "baked_potato_from_smoking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_block",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_button",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_chest_raft",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_door",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_fence",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_fence_gate",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_mosaic",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_mosaic_slab",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_mosaic_stairs",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_planks",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_pressure_plate",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_raft",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_sign",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_slab",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_stairs",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bamboo_trapdoor",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "barrel",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "beacon",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "beehive",
+    "addedInJava": "1.15"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "beetroot_soup",
+    "addedInJava": "1.9"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "birch_boat",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "birch_button",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "birch_chest_boat",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "birch_door",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "birch_fence",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "birch_fence_gate",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "birch_planks",
+    "addedInJava": "1.2"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "birch_pressure_plate",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "birch_sign",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "birch_slab",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "birch_stairs",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "birch_trapdoor",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "birch_wood",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "black_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "black_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "black_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "black_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "black_dye",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "black_dye_from_wither_rose",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "black_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "black_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "black_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "black_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "black_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blackstone_slab",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blackstone_slab_from_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blackstone_stairs",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blackstone_stairs_from_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blackstone_wall",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blackstone_wall_from_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blast_furnace",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blue_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blue_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blue_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blue_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blue_dye",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blue_dye_from_cornflower",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blue_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blue_ice",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blue_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blue_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blue_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "blue_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bone_block",
+    "addedInJava": "1.10"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bordure_indented_banner_pattern",
+    "addedInJava": "1.21.2"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brick_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brick_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brick_wall",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brick_wall_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brown_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brown_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brown_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brown_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brown_dye",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brown_dye_from_cocoa_beans",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brown_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brown_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brown_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brown_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brown_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "brush",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "bundle",
+    "addedInJava": "1.21.2"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "campfire",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "carrot_on_a_stick",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cartography_table",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "carved_pumpkin",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chain",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cherry_boat",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cherry_button",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cherry_chest_boat",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cherry_door",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cherry_fence",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cherry_fence_gate",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cherry_planks",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cherry_pressure_plate",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cherry_sign",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cherry_slab",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cherry_stairs",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cherry_trapdoor",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cherry_wood",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_bookshelf",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_copper",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_copper_from_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_copper_from_cut_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_deepslate",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_deepslate_from_polished_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_deepslate_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_nether_bricks",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_nether_bricks_from_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_polished_blackstone",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_polished_blackstone_from_blackstone_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_polished_blackstone_from_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_quartz_block_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_red_sandstone_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_resin_bricks",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_resin_bricks_from_stonecutting",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_sandstone",
+    "addedInJava": "1.2"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_sandstone_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_stone_bricks",
+    "addedInJava": "1.2"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_stone_bricks_from_stone_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_stone_bricks_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_tuff",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_tuff_bricks",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_tuff_bricks_from_polished_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_tuff_bricks_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_tuff_bricks_from_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_tuff_from_polished_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "chiseled_tuff_from_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "coal_block",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "coal_from_blasting_deepslate_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "coal_from_blasting_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cobbled_deepslate_slab",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cobbled_deepslate_slab_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cobbled_deepslate_stairs",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cobbled_deepslate_stairs_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cobbled_deepslate_wall",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cobbled_deepslate_wall_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cobblestone_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cobblestone_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cobblestone_wall",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cobblestone_wall_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "comparator",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "composter",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "conduit",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_beef_from_campfire_cooking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_beef_from_smoking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_chicken_from_campfire_cooking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_chicken_from_smoking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_cod_from_campfire_cooking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_cod_from_smoking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_mutton",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_mutton_from_campfire_cooking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_mutton_from_smoking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_porkchop_from_campfire_cooking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_porkchop_from_smoking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_rabbit",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_rabbit_from_campfire_cooking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_rabbit_from_smoking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_salmon",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_salmon_from_campfire_cooking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cooked_salmon_from_smoking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "copper_block",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "copper_bulb",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "copper_door",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "copper_grate",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "copper_grate_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "copper_ingot_from_blasting_deepslate_ore",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "copper_ingot_from_blasting_ore",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "copper_ingot_from_blasting_raw_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "copper_ingot_from_block",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "copper_ingot_from_deepslate_ore",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "copper_ingot_from_ore",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "copper_ingot_from_raw",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "copper_trapdoor",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cracked_deepslate_bricks",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cracked_deepslate_tiles",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cracked_nether_bricks",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cracked_polished_blackstone_bricks",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "crafter",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "crimson_button",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "crimson_door",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "crimson_fence",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "crimson_fence_gate",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "crimson_hyphae",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "crimson_planks",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "crimson_pressure_plate",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "crimson_sign",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "crimson_slab",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "crimson_stairs",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "crimson_trapdoor",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "crossbow",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cut_copper_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cut_copper_slab",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cut_copper_slab_from_copper_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cut_copper_slab_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cut_copper_stairs",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cut_copper_stairs_from_copper_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cut_copper_stairs_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cut_red_sandstone_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cut_sandstone",
+    "addedInJava": "1.2"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cut_sandstone_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cyan_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cyan_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cyan_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cyan_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cyan_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cyan_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cyan_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cyan_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "cyan_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_oak_boat",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_oak_button",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_oak_chest_boat",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_oak_door",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_oak_fence",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_oak_fence_gate",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_oak_planks",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_oak_pressure_plate",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_oak_sign",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_oak_trapdoor",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_oak_wood",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_prismarine",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_prismarine_slab",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_prismarine_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_prismarine_stairs",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dark_prismarine_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "daylight_detector",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "decorated_pot",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_brick_slab",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_brick_slab_from_cobbled_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_brick_slab_from_polished_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_brick_slab_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_brick_stairs",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_brick_stairs_from_cobbled_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_brick_stairs_from_polished_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_brick_stairs_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_brick_wall",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_brick_wall_from_cobbled_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_brick_wall_from_polished_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_brick_wall_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_bricks",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_bricks_from_cobbled_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_bricks_from_polished_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_from_cobbled",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_slab",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_slab_from_cobbled_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_slab_from_deepslate_bricks_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_slab_from_polished_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_slab_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_stairs",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_stairs_from_cobbled_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_stairs_from_deepslate_bricks_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_stairs_from_polished_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_stairs_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_wall",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_wall_from_cobbled_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_wall_from_deepslate_bricks_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_wall_from_polished_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tile_wall_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tiles",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tiles_from_cobbled_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tiles_from_deepslate_bricks_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "deepslate_tiles_from_polished_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "diamond_from_blasting_deepslate_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "diamond_from_blasting_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "diorite_slab",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "diorite_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "diorite_stairs",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "diorite_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "diorite_wall",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "diorite_wall_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dried_kelp",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dried_kelp_block",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dried_kelp_from_campfire_cooking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dried_kelp_from_smoking",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dripstone_block",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "dropper",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "emerald_block",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "emerald_from_blasting_deepslate_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "emerald_from_blasting_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "emerald_from_block",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "emerald_from_deepslate_ore",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "emerald_from_ore",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "end_crystal",
+    "addedInJava": "1.9"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "end_rod",
+    "addedInJava": "1.9"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "end_stone_brick_slab",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "end_stone_brick_slab_from_end_stone_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "end_stone_brick_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "end_stone_brick_stairs",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "end_stone_brick_stairs_from_end_stone_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "end_stone_brick_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "end_stone_brick_wall",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "end_stone_brick_wall_from_end_stone_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "end_stone_brick_wall_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "end_stone_bricks",
+    "addedInJava": "1.9"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "end_stone_bricks_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "ender_chest",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "exposed_chiseled_copper",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "exposed_chiseled_copper_from_exposed_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "exposed_chiseled_copper_from_exposed_cut_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "exposed_copper_bulb",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "exposed_copper_grate",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "exposed_copper_grate_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "exposed_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "exposed_cut_copper_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "exposed_cut_copper_slab",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "exposed_cut_copper_slab_from_exposed_copper_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "exposed_cut_copper_slab_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "exposed_cut_copper_stairs",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "exposed_cut_copper_stairs_from_exposed_copper_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "exposed_cut_copper_stairs_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "field_masoned_banner_pattern",
+    "addedInJava": "1.21.2"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "fire_charge",
+    "addedInJava": "1.2"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "firework_rocket",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "firework_star",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "fletching_table",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "flower_banner_pattern",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "flower_pot",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "glow_item_frame",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "gold_ingot_from_blasting_deepslate_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "gold_ingot_from_blasting_nether_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "gold_ingot_from_blasting_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "gold_ingot_from_blasting_raw_gold",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "golden_carrot",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "granite_slab",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "granite_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "granite_stairs",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "granite_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "granite_wall",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "granite_wall_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "gray_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "gray_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "gray_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "gray_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "gray_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "gray_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "gray_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "gray_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "gray_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "green_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "green_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "green_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "green_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "green_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "green_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "green_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "green_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "green_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "grindstone",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hanging_sign_acacia",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hanging_sign_bamboo",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hanging_sign_birch",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hanging_sign_cherry",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hanging_sign_crimson",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hanging_sign_dark_oak",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hanging_sign_jungle",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hanging_sign_mangrove",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hanging_sign_oak",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hanging_sign_pale_oak",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hanging_sign_spruce",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hanging_sign_warped",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hay_block",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "heavy_weighted_pressure_plate",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "honey_block",
+    "addedInJava": "1.15"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "honeycomb_block",
+    "addedInJava": "1.15"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hopper",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "hopper_minecart",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "iron_ingot_from_blasting_deepslate_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "iron_ingot_from_blasting_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "iron_ingot_from_blasting_raw_iron",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "iron_nugget_from_ingot",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "iron_trapdoor",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "item_frame",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "jungle_boat",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "jungle_button",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "jungle_chest_boat",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "jungle_door",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "jungle_fence",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "jungle_fence_gate",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "jungle_planks",
+    "addedInJava": "1.2"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "jungle_pressure_plate",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "jungle_sign",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "jungle_slab",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "jungle_stairs",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "jungle_trapdoor",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "jungle_wood",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lantern",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lapis_lazuli_from_blasting_deepslate_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lapis_lazuli_from_blasting_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lead",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "leather_horse_armor",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lectern",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_blue_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_blue_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_blue_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_blue_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_blue_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_blue_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_blue_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_blue_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_blue_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_gray_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_gray_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_gray_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_gray_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_gray_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_gray_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_gray_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_gray_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_gray_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "light_weighted_pressure_plate",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lightning_rod",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lime_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lime_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lime_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lime_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lime_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lime_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lime_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lime_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lime_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "lodestone",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_base",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_border",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_bricks",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_circle",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_creeper_charge",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_cross",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_curly_border",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_diagonal_left",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_diagonal_right",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_diagonal_up_left",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_diagonal_up_right",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_flow",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_flower_charge",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_gradient",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_gradient_up",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_guster",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_half_horizontal",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_half_horizontal_bottom",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_half_vertical",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_half_vertical_right",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_per_bend",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_per_bend_inverted",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_per_bend_sinister",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_per_bend_sinister_inverted",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_per_fess",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_per_fess_inverted",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_per_pale",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_per_pale_inverted",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_rhombus",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_saltire",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_skull_charge",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_small_stripes",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_snout",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_square_bottom_left",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_square_bottom_right",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_square_top_left",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_square_top_right",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_straight_cross",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_stripe_bottom",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_stripe_center",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_stripe_downleft",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_stripe_downright",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_stripe_left",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_stripe_middle",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_stripe_right",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_stripe_top",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_thing",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_triangle_bottom",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_triangle_top",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_triangles_bottom",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "loom_triangles_top",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mace",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "magenta_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "magenta_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "magenta_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "magenta_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "magenta_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "magenta_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "magenta_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "magenta_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "magenta_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "magma_block",
+    "addedInJava": "1.10"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mangrove_boat",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mangrove_button",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mangrove_chest_boat",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mangrove_door",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mangrove_fence",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mangrove_fence_gate",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mangrove_planks",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mangrove_pressure_plate",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mangrove_sign",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mangrove_slab",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mangrove_stairs",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mangrove_trapdoor",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mangrove_wood",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mossy_cobblestone_slab",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mossy_cobblestone_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mossy_cobblestone_stairs",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mossy_cobblestone_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mossy_cobblestone_wall",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mossy_cobblestone_wall_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mossy_stone_brick_slab",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mossy_stone_brick_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mossy_stone_brick_stairs",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mossy_stone_brick_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mossy_stone_brick_wall",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mossy_stone_brick_wall_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mud_brick_slab",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mud_brick_slab_from_stonecutting",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mud_brick_stairs",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mud_brick_stairs_from_stonecutting",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mud_brick_wall",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mud_brick_wall_from_stonecutting",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "mud_bricks",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "muddy_mangrove_roots",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "music_disc_5",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "nether_brick_from_netherrack",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "nether_brick_slab",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "nether_brick_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "nether_brick_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "nether_brick_wall",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "nether_brick_wall_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "nether_wart_block",
+    "addedInJava": "1.10"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "netherite_axe",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "netherite_block",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "netherite_boots",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "netherite_chestplate",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "netherite_helmet",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "netherite_hoe",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "netherite_ingot",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "netherite_ingot_from_block",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "netherite_leggings",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "netherite_pickaxe",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "netherite_scrap_from_blasting_debris",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "netherite_scrap_from_debris",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "netherite_shovel",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "netherite_sword",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oak_button",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oak_chest_boat",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oak_slab",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oak_wood",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "observer",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "orange_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "orange_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "orange_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "orange_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "orange_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "orange_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "orange_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "orange_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "orange_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oxidized_chiseled_copper",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oxidized_chiseled_copper_from_oxidized_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oxidized_chiseled_copper_from_oxidized_cut_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oxidized_copper_bulb",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oxidized_copper_grate",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oxidized_copper_grate_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oxidized_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oxidized_cut_copper_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oxidized_cut_copper_slab",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oxidized_cut_copper_slab_from_oxidized_copper_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oxidized_cut_copper_slab_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oxidized_cut_copper_stairs",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oxidized_cut_copper_stairs_from_oxidized_copper_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "oxidized_cut_copper_stairs_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "packed_ice",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "packed_mud",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pale_oak_boat",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pale_oak_button",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pale_oak_chest_boat",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pale_oak_door",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pale_oak_fence",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pale_oak_fence_gate",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pale_oak_planks",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pale_oak_pressure_plate",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pale_oak_sign",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pale_oak_slab",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pale_oak_stairs",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pale_oak_trapdoor",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pale_oak_wood",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pink_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pink_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pink_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pink_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pink_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pink_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pink_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pink_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pink_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_andesite",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_andesite_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_andesite_slab",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_andesite_slab_from_andesite_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_andesite_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_andesite_stairs",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_andesite_stairs_from_andesite_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_andesite_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_brick_slab",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_brick_slab_from_blackstone_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_brick_slab_from_polished_blackstone_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_brick_slab_from_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_brick_stairs",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_brick_stairs_from_blackstone_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_brick_stairs_from_polished_blackstone_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_brick_stairs_from_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_brick_wall",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_brick_wall_from_blackstone_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_brick_wall_from_polished_blackstone_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_brick_wall_from_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_bricks",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_bricks_from_blackstone_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_bricks_from_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_button",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_from_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_pressure_plate",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_slab",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_slab_from_blackstone_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_slab_from_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_stairs",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_stairs_from_blackstone_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_stairs_from_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_wall",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_wall_from_blackstone_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_blackstone_wall_from_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_deepslate",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_deepslate_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_deepslate_slab",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_deepslate_slab_from_cobbled_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_deepslate_slab_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_deepslate_stairs",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_deepslate_stairs_from_cobbled_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_deepslate_stairs_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_deepslate_wall",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_deepslate_wall_from_cobbled_deepslate_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_deepslate_wall_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_diorite",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_diorite_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_diorite_slab",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_diorite_slab_from_diorite_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_diorite_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_diorite_stairs",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_diorite_stairs_from_diorite_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_diorite_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_granite",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_granite_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_granite_slab",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_granite_slab_from_granite_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_granite_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_granite_stairs",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_granite_stairs_from_granite_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_granite_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_tuff",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_tuff_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_tuff_slab",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_tuff_slab_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_tuff_slab_from_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_tuff_stairs",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_tuff_stairs_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_tuff_stairs_from_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_tuff_wall",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_tuff_wall_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "polished_tuff_wall_from_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "popped_chorus_fruit_from_chorus_fruit",
+    "addedInJava": "1.9"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "prismarine",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "prismarine_brick_slab",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "prismarine_brick_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "prismarine_brick_stairs",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "prismarine_brick_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "prismarine_bricks",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "prismarine_slab",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "prismarine_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "prismarine_stairs",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "prismarine_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "prismarine_wall",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "prismarine_wall_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "pumpkin_pie",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purple_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purple_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purple_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purple_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purple_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purple_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purple_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purple_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purple_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purpur_block",
+    "addedInJava": "1.9"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purpur_pillar",
+    "addedInJava": "1.9"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purpur_pillar_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purpur_slab",
+    "addedInJava": "1.9"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purpur_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purpur_stairs",
+    "addedInJava": "1.9"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "purpur_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "quartz_block",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "quartz_bricks",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "quartz_bricks_from_stonecutting",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "quartz_from_blasting_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "quartz_from_ore",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "quartz_pillar",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "quartz_pillar_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "quartz_slab",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "quartz_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "quartz_stairs",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "quartz_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "rabbit_stew",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "raw_copper_block",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "raw_copper_from_block",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "raw_gold_block",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "raw_gold_from_block",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "raw_iron_block",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "raw_iron_from_block",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "recovery_compass",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_nether_brick_slab",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_nether_brick_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_nether_brick_stairs",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_nether_brick_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_nether_brick_wall",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_nether_brick_wall_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_nether_bricks",
+    "addedInJava": "1.10"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_sandstone_from_sand",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_sandstone_slab",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_sandstone_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_sandstone_stairs",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_sandstone_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_sandstone_wall",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_sandstone_wall_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "red_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "redstone_block",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "redstone_from_blasting_deepslate_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "redstone_from_blasting_ore",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "redstone_lamp",
+    "addedInJava": "1.2"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "resin_block",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "resin_brick_from_smelting",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "resin_brick_slab",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "resin_brick_slab_from_stonecutting",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "resin_brick_stairs",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "resin_brick_stairs_from_stonecutting",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "resin_brick_wall",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "resin_brick_wall_from_stonecutting",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "resin_bricks",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "resin_clump_from_block",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "respawn_anchor",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "sandstone_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "sandstone_stairs",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "sandstone_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "sandstone_wall",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "sandstone_wall_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "scaffolding",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "sea_lantern",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "shield",
+    "addedInJava": "1.9"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "skull_banner_pattern",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "slime_block",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smelt_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_basalt_from_basalt",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_quartz_from_quartz_block",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_quartz_slab",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_quartz_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_quartz_stairs",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_quartz_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_red_sandstone_from_red_sandstone",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_red_sandstone_slab",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_red_sandstone_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_red_sandstone_stairs",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_red_sandstone_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_sandstone_from_sandstone",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_sandstone_slab",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_sandstone_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_sandstone_stairs",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_sandstone_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_stone",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "smooth_stone_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "soul_campfire",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "soul_lantern",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "soul_torch",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spectral_arrow",
+    "addedInJava": "1.9"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spruce_boat",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spruce_button",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spruce_chest_boat",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spruce_door",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spruce_fence",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spruce_fence_gate",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spruce_planks",
+    "addedInJava": "1.2"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spruce_pressure_plate",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spruce_sign",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spruce_slab",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spruce_stairs",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spruce_trapdoor",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spruce_wood",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "spyglass",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stone_brick_slab_from_stone_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stone_brick_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stone_brick_stairs_from_stone_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stone_brick_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stone_brick_wall",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stone_brick_wall_from_stone_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stone_brick_wall_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stone_bricks_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stone_slab",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stone_slab_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stone_stairs",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stone_stairs_from_stonecutting",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stonecutter",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stripped_acacia_wood",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stripped_birch_wood",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stripped_cherry_wood",
+    "addedInJava": "1.20"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stripped_crimson_hyphae",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stripped_dark_oak_wood",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stripped_jungle_wood",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stripped_mangrove_wood",
+    "addedInJava": "1.19"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stripped_oak_wood",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stripped_pale_oak_wood",
+    "addedInJava": "1.21.4"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stripped_spruce_wood",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "stripped_warped_hyphae",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "suspicious_stew",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "target",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tinted_glass",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tipped_arrow",
+    "addedInJava": "1.9"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tnt_minecart",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "trapped_chest",
+    "addedInJava": "1.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tripwire_hook",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_brick_slab",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_brick_slab_from_polished_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_brick_slab_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_brick_slab_from_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_brick_stairs",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_brick_stairs_from_polished_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_brick_stairs_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_brick_stairs_from_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_brick_wall",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_brick_wall_from_polished_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_brick_wall_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_brick_wall_from_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_bricks",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_bricks_from_polished_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_bricks_from_tuff_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_slab",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_slab_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_stairs",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_stairs_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_wall",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "tuff_wall_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "turtle_helmet",
+    "addedInJava": "1.13"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "warped_button",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "warped_door",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "warped_fence",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "warped_fence_gate",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "warped_fungus_on_a_stick",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "warped_hyphae",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "warped_planks",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "warped_pressure_plate",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "warped_sign",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "warped_slab",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "warped_stairs",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "warped_trapdoor",
+    "addedInJava": "1.16"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_chiseled_copper",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_chiseled_copper_from_waxed_copper_block_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_chiseled_copper_from_waxed_cut_copper_slab",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_chiseled_copper_from_waxed_cut_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_copper_block",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_copper_bulb",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_copper_bulb_from_crafting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_copper_door",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_copper_grate",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_copper_grate_from_crafting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_copper_grate_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_copper_trapdoor",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_cut_copper_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_cut_copper_from_waxed_copper_block",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_cut_copper_slab",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_cut_copper_slab_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_cut_copper_slab_from_waxed_copper_block_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_cut_copper_slab_from_waxed_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_cut_copper_stairs",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_cut_copper_stairs_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_cut_copper_stairs_from_waxed_copper_block_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_cut_copper_stairs_from_waxed_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_chiseled_copper",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_chiseled_copper_from_slab",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_chiseled_copper_from_waxed_exposed_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_chiseled_copper_from_waxed_exposed_cut_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_copper_bulb",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_copper_bulb_from_crafting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_copper_door",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_copper_grate",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_copper_grate_from_crafting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_copper_grate_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_copper_trapdoor",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_cut_copper_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_cut_copper_from_waxed_exposed_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_cut_copper_slab",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_cut_copper_slab_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_cut_copper_slab_from_waxed_exposed_copper_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_cut_copper_slab_from_waxed_exposed_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_cut_copper_stairs",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_cut_copper_stairs_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_cut_copper_stairs_from_waxed_exposed_copper_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_exposed_cut_copper_stairs_from_waxed_exposed_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_chiseled_copper",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_chiseled_copper_from_slab",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_chiseled_copper_from_waxed_oxidized_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_chiseled_copper_from_waxed_oxidized_cut_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_copper_bulb",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_copper_bulb_from_crafting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_copper_door",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_copper_grate",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_copper_grate_from_crafting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_copper_grate_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_copper_trapdoor",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_cut_copper_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_cut_copper_from_waxed_oxidized_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_cut_copper_slab",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_cut_copper_slab_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_cut_copper_slab_from_waxed_oxidized_copper_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_cut_copper_slab_from_waxed_oxidized_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_cut_copper_stairs",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_cut_copper_stairs_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_cut_copper_stairs_from_waxed_oxidized_copper_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_oxidized_cut_copper_stairs_from_waxed_oxidized_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_chiseled_copper",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_chiseled_copper_from_slab",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_chiseled_copper_from_waxed_weathered_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_chiseled_copper_from_waxed_weathered_cut_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_copper_bulb",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_copper_bulb_from_crafting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_copper_door",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_copper_grate",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_copper_grate_from_crafting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_copper_grate_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_copper_trapdoor",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_cut_copper_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_cut_copper_from_waxed_weathered_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_cut_copper_slab",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_cut_copper_slab_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_cut_copper_slab_from_waxed_weathered_copper_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_cut_copper_slab_from_waxed_weathered_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_cut_copper_stairs",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_cut_copper_stairs_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_cut_copper_stairs_from_waxed_weathered_copper_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "waxed_weathered_cut_copper_stairs_from_waxed_weathered_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "weathered_chiseled_copper",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "weathered_chiseled_copper_from_weathered_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "weathered_chiseled_copper_from_weathered_cut_copper_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "weathered_copper_bulb",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "weathered_copper_grate",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "weathered_copper_grate_from_stonecutting",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "weathered_cut_copper",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "weathered_cut_copper_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "weathered_cut_copper_slab",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "weathered_cut_copper_slab_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "weathered_cut_copper_slab_from_weathered_copper_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "weathered_cut_copper_stairs",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "weathered_cut_copper_stairs_from_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "weathered_cut_copper_stairs_from_weathered_copper_stonecutting",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "white_banner",
+    "addedInJava": "1.8"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "white_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "white_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "white_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "white_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "white_dye",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "white_dye_from_bone_meal",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "white_dye_from_lily_of_the_valley",
+    "addedInJava": "1.14"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "white_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "white_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "white_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "white_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "white_terracotta",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "wind_charge",
+    "addedInJava": "1.21"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "wolf_armor",
+    "addedInJava": "1.20.5"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "writable_book",
+    "addedInJava": "1.3"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "yellow_bed",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "yellow_candle",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "yellow_carpet",
+    "addedInJava": "1.6"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "yellow_concrete_powder",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "yellow_glazed_terracotta",
+    "addedInJava": "1.12"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "yellow_shulker_box",
+    "addedInJava": "1.11"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "yellow_stained_glass",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "yellow_stained_glass_pane",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "recipe",
+    "entityId": "yellow_terracotta",
+    "addedInJava": "1.6"
   }
 ]
