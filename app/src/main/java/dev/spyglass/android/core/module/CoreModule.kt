@@ -64,7 +64,6 @@ import dev.spyglass.android.core.ui.SpyglassIconImage
 import dev.spyglass.android.core.ui.TextureManager
 import dev.spyglass.android.core.ui.ThemeInfoMap
 import dev.spyglass.android.core.ui.ThemeOrder
-import dev.spyglass.android.home.HomeNewsSection
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.Dispatchers
@@ -96,7 +95,6 @@ object CoreModule : SpyglassModule {
         HomeSection("header", 0) { HeaderSection() },
         HomeSection("search", 5) { scope -> SearchBarSection(scope) },
         HomeSection("tip", 50) { TipOfDaySection() },
-        HomeSection("news", 90) { NewsSection() },
     )
 
     // ── Settings sections ───────────────────────────────────────────────────
@@ -225,11 +223,6 @@ object CoreModule : SpyglassModule {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-    }
-
-    @Composable
-    private fun NewsSection() {
-        HomeNewsSection()
     }
 
     // ── Settings section composables ────────────────────────────────────────

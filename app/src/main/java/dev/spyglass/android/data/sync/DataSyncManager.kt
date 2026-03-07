@@ -39,7 +39,7 @@ object DataSyncManager {
      * 2. Compare with local manifest
      * 3. Download changed files
      * 4. Re-seed affected tables
-     * 5. Handle texture + news updates
+     * 5. Handle texture updates
      * 6. Persist updated manifest
      */
     suspend fun sync(context: Context) {
@@ -108,17 +108,7 @@ object DataSyncManager {
             }
         }
 
-        // 6. Sync news.json if version changed
-        if (remoteManifest.hasNewsUpdate(localManifest)) {
-            val newsJson = GitHubDataClient.fetchDataFile("news.json")
-            if (newsJson != null) {
-                saveToInternalStorage(context, "news.json", newsJson)
-                localManifest = localManifest.copy(news = remoteManifest.news)
-                Timber.d("DataSync: updated news to version %s", remoteManifest.news)
-            }
-        }
-
-        // 7. Flag texture update if textures are already downloaded and remote is newer
+        // 6. Flag texture update if textures are already downloaded and remote is newer
         if (remoteManifest.hasTextureUpdate(localManifest) &&
             TextureManager.state.value == TextureManager.TextureState.DOWNLOADED) {
             Timber.d("DataSync: texture update available (local=%s, remote=%s)",

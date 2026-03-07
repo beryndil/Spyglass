@@ -280,11 +280,6 @@ fun HomeScreen(
             HomeBrowseSection(onBrowseTab = onBrowseTab)
         }
 
-        // ── F. News ──
-        item(key = "news") {
-            HomeNewsSection()
-        }
-
         item(key = "bottom_spacer") {
             Spacer(Modifier.height(8.dp))
         }
