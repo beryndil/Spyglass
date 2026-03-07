@@ -36,7 +36,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import androidx.compose.foundation.shape.CircleShape
 import dev.spyglass.android.connect.*
 import dev.spyglass.android.connect.client.ConnectionState
 import okhttp3.OkHttpClient
@@ -613,26 +612,49 @@ private fun HomeConnectSection(
     Spacer(Modifier.height(8.dp))
 
     val hasCachedData = selectedWorld != null
+    var showReconnectCard by remember { mutableStateOf(false) }
+
+    // Auto-collapse reconnect card when connection state changes away from disconnected
+    LaunchedEffect(state) {
+        if (state.isConnected || state is ConnectionState.Reconnecting ||
+            state is ConnectionState.Connecting || state is ConnectionState.Pairing) {
+            showReconnectCard = false
+        }
+    }
 
     when {
-        // ── Disconnected / Error ──
-        state is ConnectionState.Disconnected || state is ConnectionState.Error -> {
-            if (hasCachedData) {
-                // Has cached data — show quick links with subtle status line
-                QuickLinkGrid(links.map { it.first }) { index ->
-                    onConnectNav(links[index].second)
-                }
-                Spacer(Modifier.height(6.dp))
-                ConnectStatusLine(
-                    state = state,
-                    worlds = worlds,
-                    selectedWorld = selectedWorld,
-                    onSelectWorld = {},
-                    onDisconnect = {},
-                    onReconnect = { connectViewModel.tryReconnect() },
-                )
-            } else {
-                // No cached data — show pairing card
+        // ── Connected, no world selected ──
+        state.isConnected && selectedWorld == null -> {
+            ConnectWorldSelector(
+                worlds = worlds,
+                selectedWorld = null,
+                onSelectWorld = {
+                    connectViewModel.selectWorld(it)
+                    connectViewModel.requestPlayerData()
+                },
+                onDisconnect = { connectViewModel.disconnect() },
+            )
+        }
+
+        // ── Has cached data (any connection state) — data-first ──
+        hasCachedData -> {
+            QuickLinkGrid(links.map { it.first }) { index ->
+                onConnectNav(links[index].second)
+            }
+            Spacer(Modifier.height(6.dp))
+            ConnectStatusLine(
+                state = state,
+                worlds = worlds,
+                selectedWorld = selectedWorld,
+                onSelectWorld = {
+                    connectViewModel.selectWorld(it)
+                    connectViewModel.requestPlayerData()
+                },
+                onToggleReconnect = { showReconnectCard = !showReconnectCard },
+                reconnectExpanded = showReconnectCard,
+            )
+            if (showReconnectCard) {
+                Spacer(Modifier.height(8.dp))
                 ConnectDisconnectedCard(
                     state = state,
                     onScanQr = onScanQr,
@@ -641,22 +663,10 @@ private fun HomeConnectSection(
             }
         }
 
-        // ── Connecting / Pairing / Reconnecting ──
-        !state.isConnected -> {
-            if (hasCachedData) {
-                // Has cached data — show quick links with reconnecting status
-                QuickLinkGrid(links.map { it.first }) { index ->
-                    onConnectNav(links[index].second)
-                }
-                Spacer(Modifier.height(6.dp))
-                ConnectStatusLine(
-                    state = state,
-                    worlds = worlds,
-                    selectedWorld = selectedWorld,
-                    onSelectWorld = {},
-                    onDisconnect = {},
-                )
-            } else {
+        // ── No cached data (any state) — show pairing card or connecting spinner ──
+        else -> {
+            if (!state.isConnected && state !is ConnectionState.Disconnected && state !is ConnectionState.Error) {
+                // Actively connecting/pairing — show spinner
                 ResultCard {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -674,38 +684,13 @@ private fun HomeConnectSection(
                         )
                     }
                 }
+            } else {
+                ConnectDisconnectedCard(
+                    state = state,
+                    onScanQr = onScanQr,
+                    onReconnect = { connectViewModel.tryReconnect() },
+                )
             }
-        }
-
-        // ── Connected, no world selected ──
-        state.isConnected && selectedWorld == null -> {
-            ConnectWorldSelector(
-                worlds = worlds,
-                selectedWorld = null,
-                onSelectWorld = {
-                    connectViewModel.selectWorld(it)
-                    connectViewModel.requestPlayerData()
-                },
-                onDisconnect = { connectViewModel.disconnect() },
-            )
-        }
-
-        // ── Connected, world selected — full hub ──
-        state.isConnected -> {
-            QuickLinkGrid(links.map { it.first }) { index ->
-                onConnectNav(links[index].second)
-            }
-            Spacer(Modifier.height(6.dp))
-            ConnectStatusLine(
-                state = state,
-                worlds = worlds,
-                selectedWorld = selectedWorld,
-                onSelectWorld = {
-                    connectViewModel.selectWorld(it)
-                    connectViewModel.requestPlayerData()
-                },
-                onDisconnect = { connectViewModel.disconnect() },
-            )
         }
     }
 }
@@ -775,19 +760,20 @@ private fun ConnectStatusLine(
     worlds: List<WorldInfo>,
     selectedWorld: String?,
     onSelectWorld: (String) -> Unit,
-    onDisconnect: () -> Unit,
-    onReconnect: (() -> Unit)? = null,
+    onToggleReconnect: () -> Unit,
+    reconnectExpanded: Boolean = false,
 ) {
     val currentWorld = worlds.firstOrNull { it.folderName == selectedWorld }
     var expanded by remember { mutableStateOf(false) }
 
-    val (color, label) = when {
-        state.isConnected -> Emerald to "Connected to"
+    val (statusColor, statusLabel) = when {
+        state.isConnected -> Emerald to "Connected"
         state is ConnectionState.Reconnecting -> Color(0xFFFFC107) to "Reconnecting"
         state is ConnectionState.Connecting || state is ConnectionState.Pairing -> Color(0xFFFFC107) to "Connecting"
-        state is ConnectionState.Error -> Color(0xFFF44336) to "Disconnected"
         else -> Color(0xFFF44336) to "Disconnected"
     }
+
+    val isDisconnected = state is ConnectionState.Disconnected || state is ConnectionState.Error
 
     Row(
         modifier = Modifier
@@ -796,31 +782,22 @@ private fun ConnectStatusLine(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        Box(
-            modifier = Modifier
-                .size(6.dp)
-                .background(color, CircleShape),
-        )
-        Text(
-            label,
-            style = MaterialTheme.typography.labelSmall,
-            color = color,
-        )
-        if (currentWorld != null && state.isConnected) {
+        // Left side: globe icon + world name (+ dropdown if connected with multiple worlds)
+        if (currentWorld != null) {
             SpyglassIconImage(
                 PixelIcons.Globe,
                 contentDescription = null,
-                tint = color,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(14.dp),
             )
-            Box {
-                Text(
-                    currentWorld.displayName,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = color,
-                    modifier = if (worlds.size > 1) Modifier.clickable { expanded = true } else Modifier,
-                )
-                if (worlds.size > 1) {
+            if (state.isConnected && worlds.size > 1) {
+                Box {
+                    Text(
+                        currentWorld.displayName,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.clickable { expanded = true },
+                    )
                     DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                         worlds.forEach { world ->
                             DropdownMenuItem(
@@ -833,37 +810,24 @@ private fun ConnectStatusLine(
                         }
                     }
                 }
+            } else {
+                Text(
+                    currentWorld.displayName,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
-        } else if (currentWorld != null) {
-            // Disconnected/reconnecting but have cached world name
-            SpyglassIconImage(
-                PixelIcons.Globe,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.size(14.dp),
-            )
-            Text(
-                currentWorld.displayName,
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
         }
+
         Spacer(Modifier.weight(1f))
-        if (state.isConnected) {
-            Text(
-                "Disconnect",
-                style = MaterialTheme.typography.labelSmall,
-                color = Color(0xFFF44336).copy(alpha = 0.7f),
-                modifier = Modifier.clickable { onDisconnect() },
-            )
-        } else if (onReconnect != null && (state is ConnectionState.Disconnected || state is ConnectionState.Error)) {
-            Text(
-                "Reconnect",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable { onReconnect() },
-            )
-        }
+
+        // Right side: colored status text (tappable when disconnected)
+        Text(
+            statusLabel,
+            style = MaterialTheme.typography.labelSmall,
+            color = statusColor,
+            modifier = if (isDisconnected) Modifier.clickable { onToggleReconnect() } else Modifier,
+        )
     }
 }
 
