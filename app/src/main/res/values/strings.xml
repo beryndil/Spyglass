@@ -244,38 +244,4 @@
     <string name="calc_tab_banners">Banners</string>
     <string name="calc_tab_trims">Trims</string>
     <string name="calc_tab_loot">Loot</string>
-
-    <!-- Tips (string-array for localization) -->
-    <string-array name="tips">
-        <item>Foxes can pick up items with their mouths. Breed two foxes and the baby will trust you and bring you whatever it picks up.</item>
-        <item>You can place torches on furnaces and crafting tables to save wall space in tight builds.</item>
-        <item>Holding a shield blocks melee attacks and projectiles. It also reduces explosion damage and knockback from Creepers and TNT.</item>
-        <item>Piglins will trade you items for gold ingots, but they attack immediately if you open a chest in the Nether near them.</item>
-        <item>A single water source placed at the center of a 9x9 farm hydrates every block in range.</item>
-        <item>Putting a campfire under a beehive lets you harvest honey without angering the bees.</item>
-        <item>Fortune III on a hoe gives you more seeds and other drops from crops.</item>
-        <item>You can use a Name Tag to name a mob \'Dinnerbone\' or \'Grumm\' to flip it upside down.</item>
-        <item>Scaffolding is the fastest way to ascend and descend tall builds - just hold jump or sneak.</item>
-        <item>Soul Speed boots let you walk faster on soul sand and soul soil but they take durability damage.</item>
-        <item>Cats scare away Creepers and Phantoms, making them the best pet for base defense.</item>
-        <item>A Smithing Table with a Netherite Upgrade template converts diamond gear without losing enchantments.</item>
-        <item>Efficiency V on a pickaxe with a Haste II beacon mines stone almost instantly.</item>
-        <item>Zombies and Skeletons burn in sunlight, but not if they\'re wearing a helmet.</item>
-        <item>Sweet berries slow down all mobs that walk through them, including the Warden.</item>
-        <item>Tridents with Riptide let you fly through rain - combine with Elytra for long-distance travel.</item>
-        <item>Shulker boxes keep their contents when broken, making them portable storage.</item>
-        <item>You can cure a Zombie Villager by throwing a Splash Potion of Weakness and feeding it a Golden Apple.</item>
-        <item>Composters turn excess crops and plant matter into bone meal for more farming.</item>
-        <item>Silk Touch on a pickaxe lets you pick up spawners… just kidding. But it does work on glass and ice.</item>
-        <item>A Redstone comparator can read the fill level of containers like chests and barrels.</item>
-        <item>Endermen can\'t teleport if they\'re in a boat or minecart.</item>
-        <item>Dolphins give you a speed boost in water if you swim near them.</item>
-        <item>The Warden is not meant to be fought - it has 500 HP and deals massive damage. Sneak past it.</item>
-        <item>You can put banners on shields at a crafting table to display your custom design.</item>
-        <item>Mending repairs your gear using XP orbs, making it the most valuable enchantment for tools.</item>
-        <item>Respawn anchors work in the Nether like beds work in the Overworld. Beds explode in the Nether.</item>
-        <item>Place blue ice blocks in a long track and ride a boat on top for ultra-fast travel - faster than minecarts or sprinting.</item>
-        <item>A Looting III sword gives more drops from mobs, including rare drops like Wither Skeleton skulls.</item>
-        <item>Copper blocks oxidize over time, changing color from orange to teal. Wax them with honeycomb to freeze the look.</item>
-    </string-array>
 </resources>

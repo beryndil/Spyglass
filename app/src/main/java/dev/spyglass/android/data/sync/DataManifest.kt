@@ -28,6 +28,7 @@ data class DataManifest(
     val textures: String = "",
     @SerialName("texture_map") val textureMap: String = "",
     val news: String = "",
+    val tips: String = "",
     /** Optional SHA-256 checksums per file. Empty map when server doesn't provide them. */
     val checksums: Map<String, String> = emptyMap(),
 ) {
@@ -94,6 +95,9 @@ data class DataManifest(
 
     /** True when remote news version is higher than local. */
     fun hasNewsUpdate(local: DataManifest): Boolean = compareVersions(news, local.news) > 0
+
+    /** True when remote tips version is higher than local. */
+    fun hasTipsUpdate(local: DataManifest): Boolean = compareVersions(tips, local.tips) > 0
 
     companion object {
         private val json = Json { ignoreUnknownKeys = true }

@@ -44,7 +44,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -64,6 +63,7 @@ import dev.spyglass.android.core.ui.SpyglassIconImage
 import dev.spyglass.android.core.ui.TextureManager
 import dev.spyglass.android.core.ui.ThemeInfoMap
 import dev.spyglass.android.core.ui.ThemeOrder
+import dev.spyglass.android.home.TipsLoader
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.Dispatchers
@@ -207,7 +207,15 @@ object CoreModule : SpyglassModule {
 
         if (!showTip) return
 
-        val tips = stringArrayResource(R.array.tips)
+        val edition by remember {
+            context.dataStore.data.map { it[PreferenceKeys.MINECRAFT_EDITION] ?: "java" }
+        }.collectAsStateWithLifecycle(initialValue = "java")
+
+        val tips = remember(edition) {
+            val allTips = TipsLoader.load(context)
+            allTips.filter { it.edition == "both" || it.edition == edition }.map { it.text }
+        }
+        if (tips.isEmpty()) return
         val tipIndex = remember { Calendar.getInstance().get(Calendar.DAY_OF_YEAR) % tips.size }
 
         ResultCard {

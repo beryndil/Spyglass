@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -27,9 +26,12 @@ import dev.spyglass.android.data.db.entities.TodoEntity
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PriorityHigh
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.datastore.preferences.core.edit
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
@@ -43,9 +45,6 @@ import okhttp3.Request
 import timber.log.Timber
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
-
-// ── Minecraft tips / Did You Know ───────────────────────────────────────────
-// Tips are loaded from string-array resource for localization support
 
 // ── Quick link data ─────────────────────────────────────────────────────────
 
@@ -142,6 +141,7 @@ private data class HomePrefs(
     val showTipOfDay: Boolean = true,
     val showFavoritesOnHome: Boolean = false,
     val showExperimental: Boolean = true,
+    val minecraftEdition: String = "java",
     val loaded: Boolean = false,
 )
 
@@ -160,8 +160,6 @@ fun HomeScreen(
     val onBrowseTab: (Int) -> Unit = { tab -> onBrowseTarget(dev.spyglass.android.navigation.BrowseTarget(tab, "")) }
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val tips = stringArrayResource(R.array.tips)
-    val tipIndex = remember { Calendar.getInstance().get(Calendar.DAY_OF_YEAR) % tips.size }
 
     // Single DataStore collector
     val prefs by remember {
@@ -170,10 +168,19 @@ fun HomeScreen(
                 showTipOfDay = p[PreferenceKeys.SHOW_TIP_OF_DAY] ?: true,
                 showFavoritesOnHome = p[PreferenceKeys.SHOW_FAVORITES_ON_HOME] ?: false,
                 showExperimental = p[PreferenceKeys.SHOW_EXPERIMENTAL] ?: false,
+                minecraftEdition = p[PreferenceKeys.MINECRAFT_EDITION] ?: "java",
                 loaded = true,
             )
         }
     }.collectAsStateWithLifecycle(initialValue = HomePrefs())
+
+    // Load and filter tips by edition
+    val filteredTips = remember(prefs.minecraftEdition) {
+        val allTips = TipsLoader.load(context)
+        val edition = prefs.minecraftEdition
+        allTips.filter { it.edition == "both" || it.edition == edition }.map { it.text }
+    }
+    val tipStartIndex = remember { Calendar.getInstance().get(Calendar.DAY_OF_YEAR) }
 
     // Async repo access — avoids blocking main thread if database isn't ready yet
     val repo by produceState<GameDataRepository?>(null) {
@@ -262,11 +269,12 @@ fun HomeScreen(
         }
 
         // ── D. Tip of the Day ──
-        if (prefs.showTipOfDay) {
+        if (prefs.showTipOfDay && filteredTips.isNotEmpty()) {
             item(key = "tip") {
                 HomeTipSection(
-                    tip = tips[tipIndex],
-                    onDismiss = {
+                    tips = filteredTips,
+                    startIndex = tipStartIndex % filteredTips.size,
+                    onDisable = {
                         scope.launch {
                             context.dataStore.edit { it[PreferenceKeys.SHOW_TIP_OF_DAY] = false }
                         }
@@ -462,23 +470,55 @@ private fun HomeFavoritesSection(
 }
 
 @Composable
-private fun HomeTipSection(tip: String, onDismiss: () -> Unit) {
+private fun HomeTipSection(tips: List<String>, startIndex: Int, onDisable: () -> Unit) {
+    var tipIndex by remember { mutableIntStateOf(startIndex) }
+    var menuExpanded by remember { mutableStateOf(false) }
+
     ResultCard {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(Icons.Filled.PriorityHigh, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
             Spacer(Modifier.width(8.dp))
             Text(stringResource(R.string.home_did_you_know), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.weight(1f))
-            IconButton(onClick = onDismiss, modifier = Modifier.size(24.dp)) {
-                Icon(Icons.Filled.Close, contentDescription = "Hide tips", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
+            Box {
+                IconButton(onClick = { menuExpanded = true }, modifier = Modifier.size(24.dp)) {
+                    Icon(Icons.Default.MoreVert, contentDescription = "Tip options", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
+                }
+                DropdownMenu(expanded = menuExpanded, onDismissRequest = { menuExpanded = false }) {
+                    DropdownMenuItem(
+                        text = { Text("Disable tips") },
+                        onClick = {
+                            menuExpanded = false
+                            onDisable()
+                        },
+                    )
+                }
             }
         }
         Spacer(Modifier.height(8.dp))
         Text(
-            tip,
+            tips[tipIndex],
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+        Spacer(Modifier.height(8.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            IconButton(
+                onClick = { tipIndex = Math.floorMod(tipIndex - 1, tips.size) },
+                modifier = Modifier.size(32.dp),
+            ) {
+                Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "Previous tip", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+            }
+            IconButton(
+                onClick = { tipIndex = (tipIndex + 1) % tips.size },
+                modifier = Modifier.size(32.dp),
+            ) {
+                Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "Next tip", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+            }
+        }
     }
 }
 

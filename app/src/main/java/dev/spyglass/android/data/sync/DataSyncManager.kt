@@ -118,6 +118,16 @@ object DataSyncManager {
             localManifest = localManifest.copy(textures = remoteManifest.textures)
         }
 
+        // 7. Sync tips.json if version changed
+        if (remoteManifest.hasTipsUpdate(localManifest)) {
+            val tipsJson = GitHubDataClient.fetchDataFile("tips.json")
+            if (tipsJson != null) {
+                saveToInternalStorage(context, "tips.json", tipsJson)
+                localManifest = localManifest.copy(tips = remoteManifest.tips)
+                Timber.d("DataSync: updated tips to version %s", remoteManifest.tips)
+            }
+        }
+
         // Update top-level version
         localManifest = localManifest.copy(version = remoteManifest.version)
         saveLocalManifest(context, localManifest)
