@@ -22,17 +22,10 @@ import dev.spyglass.android.data.db.entities.*
         StructureEntity::class,
         ItemEntity::class,
         AdvancementEntity::class,
-        AdvancementProgressEntity::class,
-        NoteEntity::class,
-        WaypointEntity::class,
         CommandEntity::class,
         VersionTagEntity::class,
-        FavoriteEntity::class,
-        ShoppingListEntity::class,
-        ShoppingListItemEntity::class,
-        TodoEntity::class,
     ],
-    version = 26,
+    version = 27,
     exportSchema = true,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
@@ -46,17 +39,24 @@ abstract class SpyglassDatabase : RoomDatabase() {
     abstract fun structureDao():    StructureDao
     abstract fun itemDao():          ItemDao
     abstract fun advancementDao():  AdvancementDao
-    abstract fun advancementProgressDao(): AdvancementProgressDao
-    abstract fun noteDao():         NoteDao
-    abstract fun waypointDao():     WaypointDao
     abstract fun commandDao():      CommandDao
     abstract fun versionTagDao():   VersionTagDao
-    abstract fun favoriteDao():     FavoriteDao
-    abstract fun shoppingListDao(): ShoppingListDao
-    abstract fun todoDao():         TodoDao
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null
+
+        // Migration 26→27: drop user data tables (moved to spyglass_user.db)
+        private val MIGRATION_26_27 = object : Migration(26, 27) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("DROP TABLE IF EXISTS notes")
+                db.execSQL("DROP TABLE IF EXISTS waypoints")
+                db.execSQL("DROP TABLE IF EXISTS favorites")
+                db.execSQL("DROP TABLE IF EXISTS shopping_list_items")
+                db.execSQL("DROP TABLE IF EXISTS shopping_lists")
+                db.execSQL("DROP TABLE IF EXISTS todos")
+                db.execSQL("DROP TABLE IF EXISTS advancement_progress")
+            }
+        }
 
         private val MIGRATION_25_26 = object : Migration(25, 26) {
             override fun migrate(db: SupportSQLiteDatabase) {
@@ -147,6 +147,8 @@ abstract class SpyglassDatabase : RoomDatabase() {
                 db.execSQL("ALTER TABLE advancements ADD COLUMN relatedBiomes TEXT NOT NULL DEFAULT ''")
                 db.execSQL("ALTER TABLE advancements ADD COLUMN dimension TEXT NOT NULL DEFAULT ''")
                 db.execSQL("ALTER TABLE advancements ADD COLUMN xpReward TEXT NOT NULL DEFAULT ''")
+                // advancement_progress stays in old DB for migration chain;
+                // it will be dropped in 26→27 after data is moved to UserDatabase.
                 db.execSQL("""
                     CREATE TABLE IF NOT EXISTS advancement_progress (
                         advancementId TEXT NOT NULL PRIMARY KEY,
@@ -264,7 +266,16 @@ abstract class SpyglassDatabase : RoomDatabase() {
                             SpyglassDatabase::class.java,
                             "spyglass.db",
                         )
-                            .addMigrations(MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20, MIGRATION_20_21, MIGRATION_21_22, MIGRATION_22_23, MIGRATION_23_24, MIGRATION_24_25, MIGRATION_25_26)
+                            .addMigrations(
+                                MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17,
+                                MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20,
+                                MIGRATION_20_21, MIGRATION_21_22, MIGRATION_22_23,
+                                MIGRATION_23_24, MIGRATION_24_25, MIGRATION_25_26,
+                                MIGRATION_26_27,
+                            )
+                            // Game data can always be rebuilt from bundled assets or sync.
+                            // This ensures the app never crashes due to a missing migration.
+                            .fallbackToDestructiveMigration()
                             .build()
                     } finally {
                         Trace.endSection()

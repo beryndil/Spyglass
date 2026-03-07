@@ -4,14 +4,21 @@ import android.content.Context
 import android.os.Trace
 import androidx.room.withTransaction
 import dev.spyglass.android.data.db.SpyglassDatabase
+import dev.spyglass.android.data.db.UserDatabase
 import dev.spyglass.android.data.db.entities.*
 import kotlinx.coroutines.flow.Flow
 
 /**
  * Single source of truth for all game data queries.
  * ViewModels depend only on this class, never on DAOs directly.
+ *
+ * Game data lives in [SpyglassDatabase] (spyglass.db) — rebuildable from assets.
+ * User data lives in [UserDatabase] (spyglass_user.db) — never destroyed by game updates.
  */
 class GameDataRepository(context: Context) {
+    // UserDatabase must init first to migrate data from old spyglass.db before
+    // SpyglassDatabase migration 26→27 drops user tables from the game DB.
+    private val userDb = UserDatabase.get(context)
     private val db = SpyglassDatabase.get(context)
 
     // Blocks
@@ -56,20 +63,20 @@ class GameDataRepository(context: Context) {
     fun advancementsByCategory(cat: String): Flow<List<AdvancementEntity>> = db.advancementDao().byCategory(cat)
     suspend fun advancementById(id: String): AdvancementEntity? = db.advancementDao().byId(id)
 
-    // Advancement Progress
-    fun advancementCompletedIds(): Flow<List<String>> = db.advancementProgressDao().completedIds()
-    fun advancementCompletedCount(): Flow<Int> = db.advancementProgressDao().completedCount()
+    // Advancement Progress (user data)
+    fun advancementCompletedIds(): Flow<List<String>> = userDb.advancementProgressDao().completedIds()
+    fun advancementCompletedCount(): Flow<Int> = userDb.advancementProgressDao().completedCount()
     suspend fun toggleAdvancementCompleted(id: String, completed: Boolean) {
-        db.withTransaction {
-            val existing = db.advancementProgressDao().byId(id)
+        userDb.withTransaction {
+            val existing = userDb.advancementProgressDao().byId(id)
             if (existing != null) {
-                db.advancementProgressDao().setCompleted(id, completed, if (completed) System.currentTimeMillis() else null)
+                userDb.advancementProgressDao().setCompleted(id, completed, if (completed) System.currentTimeMillis() else null)
             } else {
-                db.advancementProgressDao().upsert(AdvancementProgressEntity(id, completed, if (completed) System.currentTimeMillis() else null))
+                userDb.advancementProgressDao().upsert(AdvancementProgressEntity(id, completed, if (completed) System.currentTimeMillis() else null))
             }
         }
     }
-    suspend fun resetAllAdvancementProgress() { db.advancementProgressDao().deleteAll() }
+    suspend fun resetAllAdvancementProgress() { userDb.advancementProgressDao().deleteAll() }
 
     // Items
     fun searchItems(q: String): Flow<List<ItemEntity>>       = if (q.isBlank()) db.itemDao().all() else db.itemDao().search(q)
@@ -77,29 +84,29 @@ class GameDataRepository(context: Context) {
     suspend fun itemById(id: String): ItemEntity?            = db.itemDao().byId(id)
     fun itemCountFlow(): Flow<Int> = db.itemDao().countFlow()
 
-    // Notes
-    fun allNotes(): Flow<List<NoteEntity>>                   = db.noteDao().all()
-    fun searchNotes(q: String): Flow<List<NoteEntity>>       = if (q.isBlank()) db.noteDao().all() else db.noteDao().search(q)
-    fun notesByLabel(label: String): Flow<List<NoteEntity>>  = db.noteDao().byLabel(label)
-    fun allNoteLabels(): Flow<List<String>>                  = db.noteDao().allLabels()
-    suspend fun noteById(id: Long): NoteEntity?              = db.noteDao().byId(id)
-    suspend fun createNote(note: NoteEntity): Long           = db.noteDao().insert(note)
+    // Notes (user data)
+    fun allNotes(): Flow<List<NoteEntity>>                   = userDb.noteDao().all()
+    fun searchNotes(q: String): Flow<List<NoteEntity>>       = if (q.isBlank()) userDb.noteDao().all() else userDb.noteDao().search(q)
+    fun notesByLabel(label: String): Flow<List<NoteEntity>>  = userDb.noteDao().byLabel(label)
+    fun allNoteLabels(): Flow<List<String>>                  = userDb.noteDao().allLabels()
+    suspend fun noteById(id: Long): NoteEntity?              = userDb.noteDao().byId(id)
+    suspend fun createNote(note: NoteEntity): Long           = userDb.noteDao().insert(note)
     suspend fun updateNote(id: Long, title: String, label: String, content: String) {
-        db.noteDao().update(id, title, label, content, System.currentTimeMillis())
+        userDb.noteDao().update(id, title, label, content, System.currentTimeMillis())
     }
-    suspend fun deleteNote(id: Long)                         { db.noteDao().delete(id) }
+    suspend fun deleteNote(id: Long)                         { userDb.noteDao().delete(id) }
 
-    // Waypoints
-    fun allWaypoints(): Flow<List<WaypointEntity>>                     = db.waypointDao().all()
-    fun searchWaypoints(q: String): Flow<List<WaypointEntity>>         = if (q.isBlank()) db.waypointDao().all() else db.waypointDao().search(q)
-    fun waypointsByCategory(cat: String): Flow<List<WaypointEntity>>   = db.waypointDao().byCategory(cat)
-    fun waypointsByDimension(dim: String): Flow<List<WaypointEntity>>  = db.waypointDao().byDimension(dim)
-    suspend fun waypointById(id: Long): WaypointEntity?                = db.waypointDao().byId(id)
-    suspend fun createWaypoint(waypoint: WaypointEntity): Long         = db.waypointDao().insert(waypoint)
+    // Waypoints (user data)
+    fun allWaypoints(): Flow<List<WaypointEntity>>                     = userDb.waypointDao().all()
+    fun searchWaypoints(q: String): Flow<List<WaypointEntity>>         = if (q.isBlank()) userDb.waypointDao().all() else userDb.waypointDao().search(q)
+    fun waypointsByCategory(cat: String): Flow<List<WaypointEntity>>   = userDb.waypointDao().byCategory(cat)
+    fun waypointsByDimension(dim: String): Flow<List<WaypointEntity>>  = userDb.waypointDao().byDimension(dim)
+    suspend fun waypointById(id: Long): WaypointEntity?                = userDb.waypointDao().byId(id)
+    suspend fun createWaypoint(waypoint: WaypointEntity): Long         = userDb.waypointDao().insert(waypoint)
     suspend fun updateWaypoint(id: Long, name: String, x: Int, y: Int, z: Int, dimension: String, category: String, color: String, notes: String) {
-        db.waypointDao().update(id, name, x, y, z, dimension, category, color, notes)
+        userDb.waypointDao().update(id, name, x, y, z, dimension, category, color, notes)
     }
-    suspend fun deleteWaypoint(id: Long)                               { db.waypointDao().delete(id) }
+    suspend fun deleteWaypoint(id: Long)                               { userDb.waypointDao().delete(id) }
 
     // Version Tags
     fun versionTagsByType(type: String): Flow<List<VersionTagEntity>> = db.versionTagDao().byType(type)
@@ -123,62 +130,62 @@ class GameDataRepository(context: Context) {
     fun commandsByCategory(cat: String): Flow<List<CommandEntity>> = db.commandDao().byCategory(cat)
     suspend fun commandById(id: String): CommandEntity?      = db.commandDao().byId(id)
 
-    // Favorites
-    fun allFavorites(): Flow<List<FavoriteEntity>>            = db.favoriteDao().all()
-    fun favoritesByType(type: String): Flow<List<FavoriteEntity>> = db.favoriteDao().byType(type)
-    fun allFavoriteIds(): Flow<List<String>>                  = db.favoriteDao().allIds()
-    fun isFavorite(id: String): Flow<Boolean>                 = db.favoriteDao().isFavorite(id)
-    suspend fun insertFavorite(fav: FavoriteEntity)           { db.favoriteDao().insert(fav) }
-    suspend fun deleteFavorite(id: String)                    { db.favoriteDao().delete(id) }
-    suspend fun deleteAllFavorites()                          { db.favoriteDao().deleteAll() }
+    // Favorites (user data)
+    fun allFavorites(): Flow<List<FavoriteEntity>>            = userDb.favoriteDao().all()
+    fun favoritesByType(type: String): Flow<List<FavoriteEntity>> = userDb.favoriteDao().byType(type)
+    fun allFavoriteIds(): Flow<List<String>>                  = userDb.favoriteDao().allIds()
+    fun isFavorite(id: String): Flow<Boolean>                 = userDb.favoriteDao().isFavorite(id)
+    suspend fun insertFavorite(fav: FavoriteEntity)           { userDb.favoriteDao().insert(fav) }
+    suspend fun deleteFavorite(id: String)                    { userDb.favoriteDao().delete(id) }
+    suspend fun deleteAllFavorites()                          { userDb.favoriteDao().deleteAll() }
 
-    // Shopping lists
-    fun allShoppingLists(): Flow<List<ShoppingListEntity>>    = db.shoppingListDao().allLists()
-    suspend fun createShoppingList(name: String): Long        = db.shoppingListDao().insertList(ShoppingListEntity(name = name))
-    suspend fun renameShoppingList(listId: Long, name: String) { db.shoppingListDao().renameList(listId, name) }
-    suspend fun deleteShoppingList(listId: Long)              { db.shoppingListDao().deleteList(listId) }
-    fun shoppingListItems(listId: Long): Flow<List<ShoppingListItemEntity>> = db.shoppingListDao().itemsForList(listId)
+    // Shopping lists (user data)
+    fun allShoppingLists(): Flow<List<ShoppingListEntity>>    = userDb.shoppingListDao().allLists()
+    suspend fun createShoppingList(name: String): Long        = userDb.shoppingListDao().insertList(ShoppingListEntity(name = name))
+    suspend fun renameShoppingList(listId: Long, name: String) { userDb.shoppingListDao().renameList(listId, name) }
+    suspend fun deleteShoppingList(listId: Long)              { userDb.shoppingListDao().deleteList(listId) }
+    fun shoppingListItems(listId: Long): Flow<List<ShoppingListItemEntity>> = userDb.shoppingListDao().itemsForList(listId)
     suspend fun addToShoppingList(listId: Long, itemId: String, itemName: String, quantity: Int) {
-        db.withTransaction {
-            val existing = db.shoppingListDao().findItem(listId, itemId)
+        userDb.withTransaction {
+            val existing = userDb.shoppingListDao().findItem(listId, itemId)
             if (existing != null) {
-                db.shoppingListDao().updateItemQuantity(existing.id, existing.quantity + quantity)
+                userDb.shoppingListDao().updateItemQuantity(existing.id, existing.quantity + quantity)
             } else {
-                db.shoppingListDao().insertItem(
+                userDb.shoppingListDao().insertItem(
                     ShoppingListItemEntity(listId = listId, itemId = itemId, itemName = itemName, quantity = quantity)
                 )
             }
         }
     }
-    suspend fun updateShoppingItemQuantity(id: Long, quantity: Int) { db.shoppingListDao().updateItemQuantity(id, quantity) }
-    suspend fun setShoppingItemChecked(id: Long, checked: Boolean)  { db.shoppingListDao().setItemChecked(id, checked) }
-    suspend fun deleteShoppingItem(id: Long)                        { db.shoppingListDao().deleteItem(id) }
+    suspend fun updateShoppingItemQuantity(id: Long, quantity: Int) { userDb.shoppingListDao().updateItemQuantity(id, quantity) }
+    suspend fun setShoppingItemChecked(id: Long, checked: Boolean)  { userDb.shoppingListDao().setItemChecked(id, checked) }
+    suspend fun deleteShoppingItem(id: Long)                        { userDb.shoppingListDao().deleteItem(id) }
 
-    // Todos
-    fun allTodos(): Flow<List<TodoEntity>>                          = db.todoDao().all()
-    fun incompleteTodos(): Flow<List<TodoEntity>>                   = db.todoDao().incomplete()
-    fun incompleteTodosPreview(limit: Int = 3): Flow<List<TodoEntity>> = db.todoDao().incompletePreview(limit)
-    fun incompleteTodoCount(): Flow<Int>                            = db.todoDao().incompleteCount()
-    suspend fun createTodo(todo: TodoEntity): Long                  = db.todoDao().insert(todo)
+    // Todos (user data)
+    fun allTodos(): Flow<List<TodoEntity>>                          = userDb.todoDao().all()
+    fun incompleteTodos(): Flow<List<TodoEntity>>                   = userDb.todoDao().incomplete()
+    fun incompleteTodosPreview(limit: Int = 3): Flow<List<TodoEntity>> = userDb.todoDao().incompletePreview(limit)
+    fun incompleteTodoCount(): Flow<Int>                            = userDb.todoDao().incompleteCount()
+    suspend fun createTodo(todo: TodoEntity): Long                  = userDb.todoDao().insert(todo)
     suspend fun toggleTodoCompleted(id: Long, completed: Boolean) {
-        db.todoDao().setCompleted(id, completed, if (completed) System.currentTimeMillis() else null)
+        userDb.todoDao().setCompleted(id, completed, if (completed) System.currentTimeMillis() else null)
     }
-    suspend fun updateTodoTitle(id: Long, title: String)            { db.todoDao().updateTitle(id, title) }
-    suspend fun linkTodo(id: Long, linkedType: String?, linkedId: Long?) { db.todoDao().setLink(id, linkedType, linkedId) }
-    suspend fun deleteTodo(id: Long)                                { db.todoDao().delete(id) }
-    suspend fun deleteCompletedTodos()                              { db.todoDao().deleteCompleted() }
-    fun todosForLink(type: String, id: Long): Flow<List<TodoEntity>> = db.todoDao().findByLink(type, id)
+    suspend fun updateTodoTitle(id: Long, title: String)            { userDb.todoDao().updateTitle(id, title) }
+    suspend fun linkTodo(id: Long, linkedType: String?, linkedId: Long?) { userDb.todoDao().setLink(id, linkedType, linkedId) }
+    suspend fun deleteTodo(id: Long)                                { userDb.todoDao().delete(id) }
+    suspend fun deleteCompletedTodos()                              { userDb.todoDao().deleteCompleted() }
+    fun todosForLink(type: String, id: Long): Flow<List<TodoEntity>> = userDb.todoDao().findByLink(type, id)
 
     // Delete all user-generated data (todos, notes, waypoints, shopping lists, favorites, advancement progress)
     suspend fun deleteAllUserData() {
-        db.withTransaction {
-            db.todoDao().deleteAll()
-            db.noteDao().deleteAll()
-            db.waypointDao().deleteAll()
-            db.shoppingListDao().deleteAllItems()
-            db.shoppingListDao().deleteAllLists()
-            db.favoriteDao().deleteAll()
-            db.advancementProgressDao().deleteAll()
+        userDb.withTransaction {
+            userDb.todoDao().deleteAll()
+            userDb.noteDao().deleteAll()
+            userDb.waypointDao().deleteAll()
+            userDb.shoppingListDao().deleteAllItems()
+            userDb.shoppingListDao().deleteAllLists()
+            userDb.favoriteDao().deleteAll()
+            userDb.advancementProgressDao().deleteAll()
         }
     }
 
