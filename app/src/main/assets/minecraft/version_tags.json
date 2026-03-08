@@ -15938,5 +15938,405 @@
     "entityId": "woodland_mansion",
     "addedInJava": "1.11",
     "addedInBedrock": "1.1"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "badlands",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "bamboo_jungle",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.11"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "basalt_deltas",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "beach",
+    "addedInJava": "1.1",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "birch_forest",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "cherry_grove",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "cold_ocean",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "crimson_forest",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "dark_forest",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "deep_cold_ocean",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "deep_dark",
+    "addedInJava": "1.19",
+    "addedInBedrock": "1.19"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "deep_frozen_ocean",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "deep_lukewarm_ocean",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "deep_ocean",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "desert",
+    "addedInJava": "",
+    "addedInBedrock": "0.1"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "dripstone_caves",
+    "addedInJava": "1.18",
+    "addedInBedrock": "1.18"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "end_barrens",
+    "addedInJava": "1.13",
+    "javaOnly": true
+  },
+  {
+    "entityType": "biome",
+    "entityId": "end_highlands",
+    "addedInJava": "1.13",
+    "javaOnly": true
+  },
+  {
+    "entityType": "biome",
+    "entityId": "end_midlands",
+    "addedInJava": "1.13",
+    "javaOnly": true
+  },
+  {
+    "entityType": "biome",
+    "entityId": "eroded_badlands",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "flower_forest",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "forest",
+    "addedInJava": "",
+    "addedInBedrock": "0.1"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "frozen_ocean",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.9",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Re-added with icebergs after removal in 1.7"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "frozen_peaks",
+    "addedInJava": "1.18",
+    "addedInBedrock": "1.18"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "frozen_river",
+    "addedInJava": "",
+    "addedInBedrock": "0.1"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "grove",
+    "addedInJava": "1.18",
+    "addedInBedrock": "1.18"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "ice_spikes",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "jagged_peaks",
+    "addedInJava": "1.18",
+    "addedInBedrock": "1.18"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "jungle",
+    "addedInJava": "1.2",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "lukewarm_ocean",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "lush_caves",
+    "addedInJava": "1.18",
+    "addedInBedrock": "1.18"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "mangrove_swamp",
+    "addedInJava": "1.19",
+    "addedInBedrock": "1.19"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "meadow",
+    "addedInJava": "1.18",
+    "addedInBedrock": "1.18"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "mushroom_fields",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "nether_wastes",
+    "addedInJava": "",
+    "addedInBedrock": "0.12",
+    "mechanicsChangedInJava": "1.16",
+    "mechanicsChangeNotes": "Split into five Nether biomes; renamed from Hell/Nether"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "ocean",
+    "addedInJava": "",
+    "addedInBedrock": "0.1"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "old_growth_birch_forest",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "old_growth_pine_taiga",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "old_growth_spruce_taiga",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "pale_garden",
+    "addedInJava": "1.21.4",
+    "addedInBedrock": "1.21.50"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "plains",
+    "addedInJava": "",
+    "addedInBedrock": "0.1"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "river",
+    "addedInJava": "",
+    "addedInBedrock": "0.1"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "savanna",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "savanna_plateau",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "small_end_islands",
+    "addedInJava": "1.13",
+    "javaOnly": true
+  },
+  {
+    "entityType": "biome",
+    "entityId": "snowy_beach",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "snowy_plains",
+    "addedInJava": "",
+    "addedInBedrock": "0.1"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "snowy_slopes",
+    "addedInJava": "1.18",
+    "addedInBedrock": "1.18"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "snowy_taiga",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "soul_sand_valley",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "sparse_jungle",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "stony_peaks",
+    "addedInJava": "1.18",
+    "addedInBedrock": "1.18"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "stony_shore",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "sunflower_plains",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "swamp",
+    "addedInJava": "",
+    "addedInBedrock": "0.9",
+    "mechanicsChangedInJava": "1.19",
+    "mechanicsChangeNotes": "New swamp trees, mud blocks, and mangrove variant split off"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "taiga",
+    "addedInJava": "",
+    "addedInBedrock": "0.1"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "the_end",
+    "addedInJava": "1.0",
+    "addedInBedrock": "1.0",
+    "mechanicsChangedInJava": "1.9",
+    "mechanicsChangeNotes": "Added outer End islands, End cities, chorus plants, and ender dragon respawning"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "the_void",
+    "addedInJava": "1.9",
+    "javaOnly": true
+  },
+  {
+    "entityType": "biome",
+    "entityId": "warm_ocean",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "warped_forest",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "windswept_forest",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "windswept_gravelly_hills",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "windswept_hills",
+    "addedInJava": "",
+    "addedInBedrock": "0.9",
+    "mechanicsChangedInJava": "1.7",
+    "mechanicsChangeNotes": "Added emerald ore generation and llama spawning"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "windswept_savanna",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "biome",
+    "entityId": "wooded_badlands",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
   }
 ]
