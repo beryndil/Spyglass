@@ -61,7 +61,7 @@ fun rememberHapticClick(): () -> Unit {
             if (enabled) {
                 @Suppress("DEPRECATION")
                 view.performHapticFeedback(
-                    HapticFeedbackConstants.CLOCK_TICK,
+                    HapticFeedbackConstants.CONTEXT_CLICK,
                     HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING,
                 )
             }
