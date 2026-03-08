@@ -2,6 +2,7 @@ package dev.spyglass.android.calculators.notes
 
 import android.app.Application
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
@@ -175,10 +176,11 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
                             }
                         },
                     )
+                    val reduceMotion = LocalReduceAnimations.current
                     AnimatedVisibility(
                         visible = isExpanded,
-                        enter = expandVertically(),
-                        exit = shrinkVertically(),
+                        enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
+                        exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
                         NoteDetailCard(
                             note = note,

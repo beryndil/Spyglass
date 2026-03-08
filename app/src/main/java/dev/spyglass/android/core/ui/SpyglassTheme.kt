@@ -37,6 +37,7 @@ val Emerald       = Color(0xFF66BB6A)
 val LocalSurfaceCard = compositionLocalOf { Color(0xFF211F1B) }
 val LocalIsWideScreen = compositionLocalOf { false }
 val LocalHapticEnabled = compositionLocalOf { true }
+val LocalReduceAnimations = compositionLocalOf { false }
 
 // ── Theme preset data ────────────────────────────────────────────────────────
 
@@ -329,6 +330,7 @@ fun SpyglassTheme(
     dynamicColor: Boolean = false,
     highContrast: Boolean = false,
     hapticEnabled: Boolean = true,
+    reduceAnimations: Boolean = false,
     fontScale: Int = 1,
     content: @Composable () -> Unit,
 ) {
@@ -355,6 +357,7 @@ fun SpyglassTheme(
         LocalSurfaceCard provides cardColor,
         LocalIsWideScreen provides isWideScreen,
         LocalHapticEnabled provides hapticEnabled,
+        LocalReduceAnimations provides reduceAnimations,
     ) {
         val scaledTypography = if (fontScale == 1) SpyglassTypography else {
             val factor = FontScaleOptions.getOrNull(fontScale)?.second ?: 1.0f

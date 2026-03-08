@@ -200,10 +200,14 @@ fun HomeScreen(
     }
 
     val listState = rememberLazyListState()
+    val reduceMotion = LocalReduceAnimations.current
 
     // Scroll to top when tab is re-tapped
     LaunchedEffect(scrollToTopTrigger) {
-        if (scrollToTopTrigger > 0) listState.animateScrollToItem(0)
+        if (scrollToTopTrigger > 0) {
+            if (reduceMotion) listState.scrollToItem(0)
+            else listState.animateScrollToItem(0)
+        }
     }
 
     // LazyColumn — only visible sections compose on first frame

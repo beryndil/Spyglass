@@ -1,6 +1,9 @@
 package dev.spyglass.android.calculators.clock
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -614,7 +617,8 @@ private fun ExpandableHelp(
                 color = MaterialTheme.colorScheme.secondary,
             )
         }
-        AnimatedVisibility(visible = expanded) {
+        val reduceMotion = LocalReduceAnimations.current
+        AnimatedVisibility(visible = expanded, enter = if (reduceMotion) expandVertically(snap()) else expandVertically(), exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically()) {
             Column(
                 modifier = Modifier.padding(top = 4.dp),
                 verticalArrangement = Arrangement.spacedBy(2.dp),

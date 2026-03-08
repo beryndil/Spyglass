@@ -13,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
+import dev.spyglass.android.core.ui.LocalReduceAnimations
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -38,10 +39,14 @@ fun ShellHomeScreen(scope: HomeSectionScope, scrollToTopTrigger: Int = 0) {
     }
 
     val listState = rememberLazyListState()
+    val reduceMotion = LocalReduceAnimations.current
 
     // Scroll to top when tab is re-tapped
     LaunchedEffect(scrollToTopTrigger) {
-        if (scrollToTopTrigger > 0) listState.animateScrollToItem(0)
+        if (scrollToTopTrigger > 0) {
+            if (reduceMotion) listState.scrollToItem(0)
+            else listState.animateScrollToItem(0)
+        }
     }
 
     // Ensure list starts at top when sections first load

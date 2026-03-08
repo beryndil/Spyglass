@@ -2,6 +2,7 @@ package dev.spyglass.android.browse.enchants
 
 import android.app.Application
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
@@ -371,10 +372,11 @@ fun EnchantsScreen(
                             }
                         },
                     )
+                    val reduceMotion = LocalReduceAnimations.current
                     AnimatedVisibility(
                         visible = isExpanded,
-                        enter = expandVertically(),
-                        exit = shrinkVertically(),
+                        enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
+                        exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
                         EnchantDetailCard(e, enchantIndex, listState, vm, entityLinkIndex, onItemTap, onMobTap, onBiomeTap, onStructureTap, onEnchantTap)
                     }
@@ -411,6 +413,7 @@ private fun EnchantDetailCard(
     onEnchantTap: (String) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
+    val reduceMotion = LocalReduceAnimations.current
     val incompatible = parseIncompatible(enchant.incompatibleJson)
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
@@ -452,7 +455,8 @@ private fun EnchantDetailCard(
                             val idx = enchantIndex[incompId]
                             if (idx != null) {
                                 scope.launch {
-                                    listState.animateScrollToItem(idx + 1) // +1 for intro header
+                                    if (reduceMotion) listState.scrollToItem(idx + 1)
+                                    else listState.animateScrollToItem(idx + 1) // +1 for intro header
                                 }
                             }
                         },

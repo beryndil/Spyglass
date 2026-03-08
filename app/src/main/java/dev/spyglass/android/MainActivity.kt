@@ -71,6 +71,10 @@ class MainActivity : FragmentActivity() {
                 .map { it[PreferenceKeys.HAPTIC_FEEDBACK] ?: true }
                 .collectAsStateWithLifecycle(initialValue = true)
 
+            val reduceAnimations by dataStore.data
+                .map { it[PreferenceKeys.REDUCE_ANIMATIONS] ?: false }
+                .collectAsStateWithLifecycle(initialValue = false)
+
             val fontScale by dataStore.data
                 .map { it[PreferenceKeys.FONT_SCALE] ?: 1 }
                 .collectAsStateWithLifecycle(initialValue = 1)
@@ -90,6 +94,7 @@ class MainActivity : FragmentActivity() {
                 dynamicColor = dynamicColor,
                 highContrast = highContrast,
                 hapticEnabled = hapticEnabled,
+                reduceAnimations = reduceAnimations,
                 fontScale = fontScale,
             ) {
                 if (!consentShown) {

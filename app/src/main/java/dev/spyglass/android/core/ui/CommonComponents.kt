@@ -8,6 +8,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -563,9 +564,10 @@ fun RotatingTagIcon(
         }
     }
 
+    val reduceMotion = LocalReduceAnimations.current
     Crossfade(
         targetState = index,
-        animationSpec = tween(400),
+        animationSpec = if (reduceMotion) snap() else tween(400),
         modifier = modifier,
         label = "tag_icon",
     ) { i ->

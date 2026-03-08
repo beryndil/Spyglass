@@ -2,6 +2,7 @@ package dev.spyglass.android.browse.potions
 
 import android.app.Application
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
@@ -314,10 +315,11 @@ fun PotionsScreen(
                             }
                         },
                     )
+                    val reduceMotion = LocalReduceAnimations.current
                     AnimatedVisibility(
                         visible = isExpanded,
-                        enter = expandVertically(),
-                        exit = shrinkVertically(),
+                        enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
+                        exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
                         PotionDetailCard(p, onItemTap)
                     }

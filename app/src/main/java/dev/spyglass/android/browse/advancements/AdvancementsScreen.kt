@@ -2,6 +2,7 @@ package dev.spyglass.android.browse.advancements
 
 import android.app.Application
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
@@ -276,6 +277,7 @@ fun AdvancementsScreen(
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
+    val reduceMotion = LocalReduceAnimations.current
     val hapticClick = rememberHapticClick()
     var showResetDialog by remember { mutableStateOf(false) }
     val isSearching = query.isNotBlank()
@@ -293,7 +295,10 @@ fun AdvancementsScreen(
                 .first { it.isNotEmpty() }
             vm.navigateToAdvancement(targetAdvancementId, advancements)
             val idx = flatTreeItems.indexOfFirst { it.first.id == targetAdvancementId }
-            if (idx >= 0) listState.animateScrollToItem(idx + 2) // offset for header + progress
+            if (idx >= 0) {
+                if (reduceMotion) listState.scrollToItem(idx + 2)
+                else listState.animateScrollToItem(idx + 2) // offset for header + progress
+            }
         }
     }
 
@@ -501,10 +506,11 @@ fun AdvancementsScreen(
                         }
                     }
                     // Detail card
+                    val reduceMotion = LocalReduceAnimations.current
                     AnimatedVisibility(
                         visible = isDetailExpanded,
-                        enter = expandVertically(),
-                        exit = shrinkVertically(),
+                        enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
+                        exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
                         AdvancementDetailCard(
                             adv = adv,
@@ -523,7 +529,8 @@ fun AdvancementsScreen(
                                 val idx = flatTreeItems.indexOfFirst { it.first.id == parentId }
                                 if (idx >= 0) {
                                     vm.viewModelScope.launch {
-                                        listState.animateScrollToItem(idx + 2)
+                                        if (reduceMotion) listState.scrollToItem(idx + 2)
+                                        else listState.animateScrollToItem(idx + 2)
                                     }
                                 }
                             },

@@ -2,6 +2,7 @@ package dev.spyglass.android.browse.structures
 
 import android.app.Application
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
@@ -231,10 +232,11 @@ fun StructuresScreen(
                 val isExpanded = s.id in expandedIds
                 Column(modifier = Modifier.alpha(vAlpha)) {
                     StructureListItem(s, isFavorite = s.id in favoriteIds, onToggleFavorite = { hapticConfirm(); vm.toggleFavorite(s.id, s.name) }, onClick = { vm.toggleExpanded(s.id) }, addedIn = addedIn, availability = availability)
+                    val reduceMotion = LocalReduceAnimations.current
                     AnimatedVisibility(
                         visible = isExpanded,
-                        enter = expandVertically(),
-                        exit = shrinkVertically(),
+                        enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
+                        exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
                         StructureDetailCard(s, onNavigateToMob, onNavigateToBiome, onItemTap, onCalcTab, entityLinkIndex, onEnchantTap)
                     }

@@ -1,6 +1,7 @@
 package dev.spyglass.android.calculators.anvil
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
@@ -188,7 +189,8 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                 Text("How Anvil Costs Work", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Text(if (showInfo) "\u25B2" else "\u25BC", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary)
             }
-            AnimatedVisibility(visible = showInfo, enter = expandVertically(), exit = shrinkVertically()) {
+            val reduceMotion = LocalReduceAnimations.current
+            AnimatedVisibility(visible = showInfo, enter = if (reduceMotion) expandVertically(snap()) else expandVertically(), exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically()) {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
                     Text("Prior-Work Penalty", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                     Text(
