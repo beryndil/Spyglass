@@ -93,8 +93,7 @@ object BrowseModule : SpyglassModule {
 
     override fun settingsSections(): List<SettingsSection> = listOf(
         SettingsSection("game_version", "Game Version", 15) { GameVersionContent() },
-        SettingsSection("browse_tab", "Default Browse Tab", 20) { BrowseTabContent() },
-        SettingsSection("favorites", "Favorites", 55) { FavoritesManagementContent() },
+        SettingsSection("browse_settings", "Browse", 20) { BrowseSettingsContent() },
     )
 
     // ── Nav routes ──────────────────────────────────────────────────────────
@@ -243,7 +242,7 @@ object BrowseModule : SpyglassModule {
 
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
-    private fun BrowseTabContent() {
+    private fun BrowseSettingsContent() {
         val context = LocalContext.current
         val scope = rememberCoroutineScope()
 
@@ -251,8 +250,16 @@ object BrowseModule : SpyglassModule {
             context.dataStore.data.map { it[PreferenceKeys.DEFAULT_BROWSE_TAB] ?: 0 }
         }.collectAsStateWithLifecycle(initialValue = 0)
 
-        SectionHeader(stringResource(R.string.settings_default_browse_tab))
+        val repo by androidx.compose.runtime.produceState<GameDataRepository?>(null) {
+            value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { GameDataRepository.get(context) }
+        }
+        val allFavorites by androidx.compose.runtime.produceState(emptyList<FavoriteEntity>(), repo) {
+            repo?.allFavorites()?.collect { value = it } ?: return@produceState
+        }
+
+        SectionHeader("Browse")
         ResultCard {
+            // Default browse tab
             Text(
                 stringResource(R.string.settings_browse_tab_desc),
                 style = MaterialTheme.typography.bodySmall,
@@ -270,23 +277,10 @@ object BrowseModule : SpyglassModule {
                     )
                 }
             }
-        }
-    }
 
-    @Composable
-    private fun FavoritesManagementContent() {
-        val context = LocalContext.current
-        val scope = rememberCoroutineScope()
+            SpyglassDivider()
 
-        val repo by androidx.compose.runtime.produceState<GameDataRepository?>(null) {
-            value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { GameDataRepository.get(context) }
-        }
-        val allFavorites by androidx.compose.runtime.produceState(emptyList<FavoriteEntity>(), repo) {
-            repo?.allFavorites()?.collect { value = it } ?: return@produceState
-        }
-
-        SectionHeader(stringResource(R.string.settings_favorites))
-        ResultCard {
+            // Favorites
             if (allFavorites.isEmpty()) {
                 Text(
                     stringResource(R.string.settings_no_favorites),

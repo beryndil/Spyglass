@@ -78,8 +78,7 @@ object ToolsModule : SpyglassModule {
     // ── Settings sections ───────────────────────────────────────────────────
 
     override fun settingsSections(): List<SettingsSection> = listOf(
-        SettingsSection("tool_tab", "Default Tool Tab", 25) { ToolTabContent() },
-        SettingsSection("clock", "Game Clock", 30) { scope -> GameClockContent(scope) },
+        SettingsSection("tools_settings", "Tools", 25) { scope -> ToolsSettingsContent(scope) },
     )
 
     // ── Nav routes ──────────────────────────────────────────────────────────
@@ -176,16 +175,21 @@ object ToolsModule : SpyglassModule {
 
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
-    private fun ToolTabContent() {
+    private fun ToolsSettingsContent(scope: SettingsSectionScope) {
         val context = LocalContext.current
-        val scope = rememberCoroutineScope()
+        val coroutineScope = rememberCoroutineScope()
 
         val defaultToolTab by remember {
             context.dataStore.data.map { it[PreferenceKeys.DEFAULT_TOOL_TAB] ?: 0 }
         }.collectAsStateWithLifecycle(initialValue = 0)
 
-        SectionHeader(stringResource(R.string.settings_default_tool_tab))
+        val gameClockEnabled by remember {
+            context.dataStore.data.map { it[PreferenceKeys.GAME_CLOCK_ENABLED] ?: false }
+        }.collectAsStateWithLifecycle(initialValue = false)
+
+        SectionHeader("Tools")
         ResultCard {
+            // Default tool tab
             Text(
                 stringResource(R.string.settings_tool_tab_desc),
                 style = MaterialTheme.typography.bodySmall,
@@ -198,25 +202,15 @@ object ToolsModule : SpyglassModule {
                 toolTabNames().forEachIndexed { i, name ->
                     FilterChip(
                         selected = defaultToolTab == i,
-                        onClick = { scope.launch { context.dataStore.edit { it[PreferenceKeys.DEFAULT_TOOL_TAB] = i } } },
+                        onClick = { coroutineScope.launch { context.dataStore.edit { it[PreferenceKeys.DEFAULT_TOOL_TAB] = i } } },
                         label = { Text(name, style = MaterialTheme.typography.labelSmall) },
                     )
                 }
             }
-        }
-    }
 
-    @Composable
-    private fun GameClockContent(scope: SettingsSectionScope) {
-        val context = LocalContext.current
-        val coroutineScope = rememberCoroutineScope()
+            SpyglassDivider()
 
-        val gameClockEnabled by remember {
-            context.dataStore.data.map { it[PreferenceKeys.GAME_CLOCK_ENABLED] ?: false }
-        }.collectAsStateWithLifecycle(initialValue = false)
-
-        SectionHeader(stringResource(R.string.settings_game_clock))
-        ResultCard {
+            // Game clock
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,

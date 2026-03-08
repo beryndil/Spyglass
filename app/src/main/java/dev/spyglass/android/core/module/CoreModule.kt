@@ -112,13 +112,10 @@ object CoreModule : SpyglassModule {
     // ── Settings sections ───────────────────────────────────────────────────
 
     override fun settingsSections(): List<SettingsSection> = listOf(
-        SettingsSection("theme", "Theme", 0) { ThemeSettingsContent() },
-        SettingsSection("startup_tab", "Startup Screen", 5) { StartupTabContent() },
-        SettingsSection("display", "Display", 10) { DisplayTogglesContent() },
-        SettingsSection("security", "Security", 60) { SecurityContent() },
-        SettingsSection("data_storage", "Data & Storage", 70) { DataStorageContent() },
-        SettingsSection("privacy", "Privacy & Data", 80) { PrivacyContent() },
-        SettingsSection("quick_links", "Quick Links", 90) { scope -> QuickLinksContent(scope) },
+        SettingsSection("appearance", "Appearance", 0) { AppearanceContent() },
+        SettingsSection("data_sync", "Data & Sync", 70) { DataSyncContent() },
+        SettingsSection("privacy_security", "Privacy & Security", 80) { PrivacySecurityContent() },
+        SettingsSection("about", "About", 90) { scope -> AboutContent(scope) },
     )
 
     // ── Nav routes ──────────────────────────────────────────────────────────
@@ -293,7 +290,7 @@ object CoreModule : SpyglassModule {
 
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
-    private fun ThemeSettingsContent() {
+    private fun AppearanceContent() {
         val context = LocalContext.current
         val scope = rememberCoroutineScope()
         val hapticClick = rememberHapticClick()
@@ -310,8 +307,37 @@ object CoreModule : SpyglassModule {
             context.dataStore.data.map { it[PreferenceKeys.HIGH_CONTRAST] ?: false }
         }.collectAsStateWithLifecycle(initialValue = false)
 
-        SectionHeader(stringResource(R.string.settings_theme))
+        val showTipOfDay by remember {
+            context.dataStore.data.map { it[PreferenceKeys.SHOW_TIP_OF_DAY] ?: true }
+        }.collectAsStateWithLifecycle(initialValue = true)
+
+        val showFavoritesOnHome by remember {
+            context.dataStore.data.map { it[PreferenceKeys.SHOW_FAVORITES_ON_HOME] ?: false }
+        }.collectAsStateWithLifecycle(initialValue = false)
+
+        val hapticFeedback by remember {
+            context.dataStore.data.map { it[PreferenceKeys.HAPTIC_FEEDBACK] ?: true }
+        }.collectAsStateWithLifecycle(initialValue = true)
+
+        val reduceAnimations by remember {
+            context.dataStore.data.map { it[PreferenceKeys.REDUCE_ANIMATIONS] ?: false }
+        }.collectAsStateWithLifecycle(initialValue = false)
+
+        val fontScale by remember {
+            context.dataStore.data.map { it[PreferenceKeys.FONT_SCALE] ?: 1 }
+        }.collectAsStateWithLifecycle(initialValue = 1)
+
+        val showExperimental by remember {
+            context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: false }
+        }.collectAsStateWithLifecycle(initialValue = false)
+
+        val defaultStartupTab by remember {
+            context.dataStore.data.map { it[PreferenceKeys.DEFAULT_STARTUP_TAB] ?: 0 }
+        }.collectAsStateWithLifecycle(initialValue = 0)
+
+        SectionHeader("Appearance")
         ResultCard {
+            // Theme
             Text(
                 stringResource(R.string.settings_background),
                 style = MaterialTheme.typography.bodyMedium,
@@ -366,22 +392,41 @@ object CoreModule : SpyglassModule {
                 checked = highContrast,
                 onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.HIGH_CONTRAST] = !highContrast } } },
             )
-        }
-    }
 
-    @OptIn(ExperimentalLayoutApi::class)
-    @Composable
-    private fun StartupTabContent() {
-        val context = LocalContext.current
-        val scope = rememberCoroutineScope()
-        val hapticClick = rememberHapticClick()
+            SpyglassDivider()
 
-        val defaultStartupTab by remember {
-            context.dataStore.data.map { it[PreferenceKeys.DEFAULT_STARTUP_TAB] ?: 0 }
-        }.collectAsStateWithLifecycle(initialValue = 0)
+            // Font size
+            Text(
+                stringResource(R.string.settings_font_size),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+            Text(
+                stringResource(R.string.settings_font_size_desc),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                FontScaleOptions.forEachIndexed { i, (label, _) ->
+                    FilterChip(
+                        selected = fontScale == i,
+                        onClick = { hapticClick(); scope.launch { context.dataStore.edit { it[PreferenceKeys.FONT_SCALE] = i } } },
+                        label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                    )
+                }
+            }
 
-        SectionHeader(stringResource(R.string.settings_startup_tab))
-        ResultCard {
+            SpyglassDivider()
+
+            // Startup screen
+            Text(
+                stringResource(R.string.settings_startup_tab),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
             Text(
                 stringResource(R.string.settings_startup_tab_desc),
                 style = MaterialTheme.typography.bodySmall,
@@ -405,41 +450,10 @@ object CoreModule : SpyglassModule {
                     )
                 }
             }
-        }
-    }
 
-    @OptIn(ExperimentalLayoutApi::class)
-    @Composable
-    private fun DisplayTogglesContent() {
-        val context = LocalContext.current
-        val scope = rememberCoroutineScope()
+            SpyglassDivider()
 
-        val showTipOfDay by remember {
-            context.dataStore.data.map { it[PreferenceKeys.SHOW_TIP_OF_DAY] ?: true }
-        }.collectAsStateWithLifecycle(initialValue = true)
-
-        val showFavoritesOnHome by remember {
-            context.dataStore.data.map { it[PreferenceKeys.SHOW_FAVORITES_ON_HOME] ?: false }
-        }.collectAsStateWithLifecycle(initialValue = false)
-
-        val hapticFeedback by remember {
-            context.dataStore.data.map { it[PreferenceKeys.HAPTIC_FEEDBACK] ?: true }
-        }.collectAsStateWithLifecycle(initialValue = true)
-
-        val reduceAnimations by remember {
-            context.dataStore.data.map { it[PreferenceKeys.REDUCE_ANIMATIONS] ?: false }
-        }.collectAsStateWithLifecycle(initialValue = false)
-
-        val fontScale by remember {
-            context.dataStore.data.map { it[PreferenceKeys.FONT_SCALE] ?: 1 }
-        }.collectAsStateWithLifecycle(initialValue = 1)
-
-        val showExperimental by remember {
-            context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: false }
-        }.collectAsStateWithLifecycle(initialValue = false)
-
-        SectionHeader(stringResource(R.string.settings_display))
-        ResultCard {
+            // Display toggles
             SettingsToggle(
                 title = stringResource(R.string.settings_tip_of_day),
                 description = stringResource(R.string.settings_tip_of_day_desc),
@@ -474,56 +488,12 @@ object CoreModule : SpyglassModule {
                 checked = reduceAnimations,
                 onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.REDUCE_ANIMATIONS] = !reduceAnimations } } },
             )
-            SpyglassDivider()
-            val hapticClick = rememberHapticClick()
-            Text(
-                stringResource(R.string.settings_font_size),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-            Text(
-                stringResource(R.string.settings_font_size_desc),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.secondary,
-            )
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-            ) {
-                FontScaleOptions.forEachIndexed { i, (label, _) ->
-                    FilterChip(
-                        selected = fontScale == i,
-                        onClick = { hapticClick(); scope.launch { context.dataStore.edit { it[PreferenceKeys.FONT_SCALE] = i } } },
-                        label = { Text(label, style = MaterialTheme.typography.labelSmall) },
-                    )
-                }
-            }
-        }
-    }
-
-    @Composable
-    private fun SecurityContent() {
-        val context = LocalContext.current
-        val scope = rememberCoroutineScope()
-
-        val appLockEnabled by remember {
-            context.dataStore.data.map { it[PreferenceKeys.APP_LOCK_ENABLED] ?: false }
-        }.collectAsStateWithLifecycle(initialValue = false)
-
-        SectionHeader(stringResource(R.string.settings_security))
-        ResultCard {
-            SettingsToggle(
-                title = stringResource(R.string.settings_app_lock),
-                description = stringResource(R.string.settings_app_lock_desc),
-                checked = appLockEnabled,
-                onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.APP_LOCK_ENABLED] = !appLockEnabled } } },
-            )
         }
     }
 
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
-    private fun DataStorageContent() {
+    private fun DataSyncContent() {
         val context = LocalContext.current
         val scope = rememberCoroutineScope()
         val hapticClick = rememberHapticClick()
@@ -546,8 +516,50 @@ object CoreModule : SpyglassModule {
             )
         }
 
-        SectionHeader(stringResource(R.string.settings_data_storage))
+        var syncing by remember { mutableStateOf(false) }
+
+        SectionHeader("Data & Sync")
         ResultCard {
+            // Sync Now
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text("Sync Now", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                    Text("Check for updated game data and textures", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                }
+                if (syncing) {
+                    androidx.compose.material3.CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        strokeWidth = 2.dp,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                } else {
+                    TextButton(
+                        onClick = {
+                            hapticClick()
+                            if (!offlineMode) {
+                                syncing = true
+                                scope.launch(Dispatchers.IO) {
+                                    try {
+                                        dev.spyglass.android.data.sync.DataSyncManager.sync(context)
+                                    } finally {
+                                        syncing = false
+                                    }
+                                }
+                            }
+                        },
+                        enabled = !offlineMode,
+                    ) {
+                        Text("Sync", color = if (offlineMode) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.primary)
+                    }
+                }
+            }
+
+            SpyglassDivider()
+
             SettingsToggle(
                 title = stringResource(R.string.settings_offline_mode),
                 description = stringResource(R.string.settings_offline_mode_desc),
@@ -621,7 +633,7 @@ object CoreModule : SpyglassModule {
     }
 
     @Composable
-    private fun PrivacyContent() {
+    private fun PrivacySecurityContent() {
         val context = LocalContext.current
         val scope = rememberCoroutineScope()
         val uriHandler = LocalUriHandler.current
@@ -641,8 +653,19 @@ object CoreModule : SpyglassModule {
             context.dataStore.data.map { it[PreferenceKeys.AD_PERSONALIZATION_CONSENT] ?: false }
         }.collectAsStateWithLifecycle(initialValue = false)
 
-        SectionHeader(stringResource(R.string.settings_privacy))
+        val appLockEnabled by remember {
+            context.dataStore.data.map { it[PreferenceKeys.APP_LOCK_ENABLED] ?: false }
+        }.collectAsStateWithLifecycle(initialValue = false)
+
+        SectionHeader("Privacy & Security")
         ResultCard {
+            SettingsToggle(
+                title = stringResource(R.string.settings_app_lock),
+                description = stringResource(R.string.settings_app_lock_desc),
+                checked = appLockEnabled,
+                onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.APP_LOCK_ENABLED] = !appLockEnabled } } },
+            )
+            SpyglassDivider()
             SettingsToggle(
                 title = stringResource(R.string.consent_analytics),
                 description = stringResource(R.string.consent_analytics_desc),
@@ -724,12 +747,18 @@ object CoreModule : SpyglassModule {
     }
 
     @Composable
-    private fun QuickLinksContent(scope: SettingsSectionScope) {
+    private fun AboutContent(scope: SettingsSectionScope) {
         val uriHandler = LocalUriHandler.current
         val context = LocalContext.current
 
-        SectionHeader(stringResource(R.string.settings_quick_links))
+        SectionHeader("About")
         ResultCard {
+            Text(
+                "Spyglass v${BuildConfig.VERSION_NAME}",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+            SpyglassDivider()
             SettingsLink(
                 title = stringResource(R.string.settings_rate_app),
                 description = stringResource(R.string.settings_rate_app_desc),
