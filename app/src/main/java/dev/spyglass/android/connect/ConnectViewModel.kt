@@ -113,6 +113,12 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     loadCachedWorldData(world)
                 }
             }
+
+            // Auto-connect to last paired device if available
+            val device = PairingStore.load(getApplication())
+            if (device != null) {
+                tryReconnect()
+            }
         }
 
         // Listen for incoming messages
