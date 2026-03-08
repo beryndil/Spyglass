@@ -636,7 +636,7 @@ private fun connectLinks(
     return buildList {
         add(QuickLink(characterIcon,          "Character")    to "connect_character")
         add(QuickLink(PixelIcons.Backpack,    "Inventory")     to "connect_inventory")
-        add(QuickLink(PixelIcons.Enchant,     "Ender Chest")   to "connect_enderchest")
+        add(QuickLink(PixelIcons.EnderChest,  "Ender Chest")   to "connect_enderchest")
         add(QuickLink(PixelIcons.Storage,     "Storage")       to "connect_chestfinder")
         add(QuickLink(PixelIcons.Biome,       "World Map")     to "connect_map")
         add(QuickLink(PixelIcons.Waypoints,   "Waypoints")     to "connect_waypoints")
