@@ -4,31 +4,31 @@
     android:viewportWidth="16"
     android:viewportHeight="16">
     <!-- Straps -->
-    <path android:fillColor="#5A3A1A"
+    <path android:fillColor="#1A3A5A"
         android:pathData="M4,1h2v3h-2z M10,1h2v3h-2z"/>
     <!-- Strap highlights -->
-    <path android:fillColor="#8B6940"
+    <path android:fillColor="#2A5A8B"
         android:pathData="M4,1h1v3h-1z M10,1h1v3h-1z"/>
     <!-- Main body outline -->
-    <path android:fillColor="#5A3A1A"
+    <path android:fillColor="#1A3A5A"
         android:pathData="M2,3h12v12h-12z"/>
     <!-- Main body fill -->
-    <path android:fillColor="#A06B30"
+    <path android:fillColor="#3070A0"
         android:pathData="M3,4h10v10h-10z"/>
     <!-- Top flap -->
-    <path android:fillColor="#8B6940"
+    <path android:fillColor="#2A5A8B"
         android:pathData="M3,4h10v3h-10z"/>
     <!-- Flap highlight -->
-    <path android:fillColor="#BC9862"
+    <path android:fillColor="#4A8ABC"
         android:pathData="M3,4h10v1h-10z"/>
     <!-- Flap divider -->
-    <path android:fillColor="#5A3A1A"
+    <path android:fillColor="#1A3A5A"
         android:pathData="M3,6h10v1h-10z"/>
     <!-- Front pocket -->
-    <path android:fillColor="#8B6940"
+    <path android:fillColor="#2A5A8B"
         android:pathData="M5,9h6v4h-6z"/>
     <!-- Pocket outline -->
-    <path android:fillColor="#5A3A1A"
+    <path android:fillColor="#1A3A5A"
         android:pathData="M5,9h6v1h-6z M5,9h1v4h-1z M10,9h1v4h-1z M5,12h6v1h-6z"/>
     <!-- Buckle -->
     <path android:fillColor="#C9A84C"
