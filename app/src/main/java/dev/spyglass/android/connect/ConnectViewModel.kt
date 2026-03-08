@@ -295,11 +295,44 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 Timber.d("Auto-reconnect attempt $attempt failed")
             }
 
-            // Exhausted all attempts
-            Timber.d("Auto-reconnect exhausted after ${reconnectManager.currentAttempt} attempts")
-            CrashReporter.log("Auto-reconnect exhausted")
-            client.setError("Lost connection to PC")
-            ConnectService.stop(getApplication())
+            // Exhausted IP-based attempts — try mDNS as last resort
+            Timber.d("IP retries exhausted, trying mDNS discovery")
+            CrashReporter.log("Auto-reconnect trying mDNS fallback")
+            val deviceName = "${Build.MANUFACTURER} ${Build.MODEL}"
+            mdnsDiscovery = MdnsDiscovery(getApplication())
+            var mdnsHandled = false
+            mdnsDiscovery?.startDiscovery { ip, port ->
+                if (mdnsHandled) return@startDiscovery
+                mdnsHandled = true
+                viewModelScope.launch(Dispatchers.IO) {
+                    client.connect(ip, port)
+                    val mdnsResult = client.connectionState.first {
+                        it is ConnectionState.Pairing || it is ConnectionState.Error
+                    }
+                    if (mdnsResult is ConnectionState.Pairing) {
+                        client.sendPairRequest(deviceName, device.publicKey)
+                        PairingStore.save(
+                            getApplication(),
+                            device.copy(ip = ip, port = port, lastConnected = System.currentTimeMillis()),
+                        )
+                        CrashReporter.log("Auto-reconnect succeeded via mDNS")
+                    } else {
+                        client.setError("Lost connection to PC")
+                        ConnectService.stop(getApplication())
+                    }
+                    mdnsDiscovery?.stopDiscovery()
+                }
+            }
+
+            // Give mDNS 10 seconds to find the desktop
+            kotlinx.coroutines.delay(10_000)
+            if (!mdnsHandled) {
+                mdnsDiscovery?.stopDiscovery()
+                Timber.d("Auto-reconnect exhausted (mDNS found nothing)")
+                CrashReporter.log("Auto-reconnect exhausted")
+                client.setError("Lost connection to PC")
+                ConnectService.stop(getApplication())
+            }
         }
     }
 
@@ -309,6 +342,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         reconnectJob?.cancel()
         viewModelScope.launch(Dispatchers.IO) {
             val device = PairingStore.load(getApplication()) ?: return@launch
+            val deviceName = "${Build.MANUFACTURER} ${Build.MODEL}"
 
             client.connect(device.ip, device.port)
 
@@ -318,14 +352,29 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             }
 
             if (result is ConnectionState.Pairing) {
-                val deviceName = "${Build.MANUFACTURER} ${Build.MODEL}"
                 client.sendPairRequest(deviceName, device.publicKey)
             } else {
-                // Try mDNS discovery as fallback
+                // Stored IP failed — try mDNS discovery as fallback
+                Timber.d("Stored IP failed, trying mDNS discovery")
                 mdnsDiscovery = MdnsDiscovery(getApplication())
                 mdnsDiscovery?.startDiscovery { ip, port ->
                     viewModelScope.launch(Dispatchers.IO) {
                         client.connect(ip, port)
+
+                        // Wait for WebSocket to open, then complete pairing
+                        val mdnsResult = client.connectionState.first {
+                            it is ConnectionState.Pairing || it is ConnectionState.Error
+                        }
+                        if (mdnsResult is ConnectionState.Pairing) {
+                            client.sendPairRequest(deviceName, device.publicKey)
+
+                            // Update stored IP so next reconnect is faster
+                            PairingStore.save(
+                                getApplication(),
+                                device.copy(ip = ip, port = port, lastConnected = System.currentTimeMillis()),
+                            )
+                        }
+                        mdnsDiscovery?.stopDiscovery()
                     }
                 }
             }
