@@ -2,13 +2,11 @@
 
 **Your Minecraft world, on your phone.**
 
-> **Alpha Software** — Spyglass and Spyglass Connect are in active development. Expect bugs, missing features, and rough edges.
-
 Spyglass is an Android companion app for Minecraft Java Edition 1.21.4. Pair it with [Spyglass Connect](https://github.com/beryndil/Spyglass-Connect) on your desktop to view your inventory, find items in any chest, locate structures, and explore an overhead map — all streamed over local WiFi with end-to-end encryption.
 
 Beyond Connect, Spyglass includes a complete offline database of blocks, items, recipes, mobs, biomes, enchantments, potions, structures, and trades — plus 19 calculators for building and enchanting.
 
-**[Visit the Website](https://hardknocks.university/)**
+**[Visit the Website](https://hardknocks.university/)** | **[Download Latest Release](https://github.com/beryndil/Spyglass/releases/latest)**
 
 ## Disclaimer
 
@@ -45,7 +43,7 @@ Fully encrypted (ECDH + AES-256-GCM). Auto-reconnects via mDNS.
 2. Download `app-release.apk`
 3. Tap the file to install (you may need to allow "Install from unknown sources")
 
-**Requirements:** Android 8.0+ (Oreo) | ~30 MB storage
+**Requirements:** Android 8.0+ (Oreo) | ~30 MB storage | Textures download ~1.3 MB on first launch
 
 ---
 
@@ -96,7 +94,19 @@ Real-time search across all categories simultaneously. Tap any result to jump di
 ## Related Projects
 
 - **[Spyglass Connect](https://github.com/beryndil/Spyglass-Connect)** — Desktop companion app (reads your Minecraft saves, streams to phone)
-- **[Spyglass-Data](https://github.com/beryndil/Spyglass-Data)** — Minecraft reference data (auto-synced to app)
+- **[Spyglass-Data](https://github.com/beryndil/Spyglass-Data)** — Minecraft reference data (auto-synced to app via [CDN](https://data.hardknocks.university))
+
+---
+
+## Infrastructure
+
+| Component | Details |
+|-----------|---------|
+| **Data CDN** | [data.hardknocks.university](https://data.hardknocks.university) — Cloudflare Pages edge-cached across 300+ global servers |
+| **Data Sync** | Background sync every 12h, downloads only changed files via per-file manifest versioning |
+| **Fallback** | Automatic fallback to GitHub raw if CDN is unreachable |
+| **Database** | Room with 18 indexes across 12 entities for fast search and filtering |
+| **Offline-First** | All game data bundled with the app — works without internet |
 
 ---
 

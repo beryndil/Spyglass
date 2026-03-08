@@ -4,8 +4,6 @@ description: "Explore everything Spyglass offers — Spyglass Connect, 13 browse
 subtitle: "Everything in Spyglass, at a glance."
 ---
 
-> **Alpha Software** — Spyglass and Spyglass Connect are in active development. Expect bugs, missing features, and rough edges.
-
 ## Spyglass Connect
 
 Pair your phone with the [Spyglass Connect](https://github.com/beryndil/Spyglass-Connect) desktop companion to access your Minecraft world data over local WiFi. No cloud servers, no accounts — everything stays on your network.
@@ -83,4 +81,11 @@ All game data is bundled with the app and works without an internet connection. 
 
 ## Data Sync
 
-Spyglass automatically syncs with the [Spyglass-Data](https://github.com/beryndil/Spyglass-Data) repository. A manifest tracks per-file versions so only changed data is downloaded — keeping the app up to date without large downloads.
+Spyglass automatically syncs game data via a global CDN ([data.hardknocks.university](https://data.hardknocks.university)), powered by Cloudflare Pages with edge caching across 300+ servers worldwide. A per-file manifest ensures only changed data is downloaded — keeping the app up to date without large downloads. If the CDN is unreachable, the app falls back to GitHub automatically.
+
+## Production-Ready
+
+- **18 database indexes** across 12 entities for fast search and filtering at scale
+- **Async I/O** throughout — no main-thread disk access, no ANR risk
+- **LAN-only connections** — Spyglass Connect validates private IP addresses before connecting
+- **Automatic updates** — the app checks the CDN for new versions and prompts you to update

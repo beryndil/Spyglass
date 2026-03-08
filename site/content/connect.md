@@ -5,8 +5,6 @@ subtitle: "Your Minecraft world, on your phone."
 cssClass: "connect-page"
 ---
 
-> **Alpha Software** — Spyglass Connect is in active development. Expect bugs, missing features, and rough edges.
-
 ## Overview
 
 Spyglass Connect is a desktop companion app that reads your Minecraft Java Edition save files and streams the data to your phone over local WiFi. No cloud servers, no accounts — everything stays on your network.
