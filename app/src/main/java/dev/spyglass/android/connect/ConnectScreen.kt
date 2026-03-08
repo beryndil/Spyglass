@@ -224,7 +224,7 @@ private fun DisconnectedContent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                ConnectQuickLink("Ender Chest", PixelIcons.EnderChest, Modifier.weight(1f), onClick = onEnderChest)
+                ConnectQuickLink("Ender Chest", PixelIcons.EnderChest, Modifier.weight(1f), tint = Color.Unspecified, onClick = onEnderChest)
                 ConnectQuickLink("Map", PixelIcons.Biome, Modifier.weight(1f), onClick = onMap)
             }
         }
@@ -349,7 +349,7 @@ private fun ConnectedContent(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             ConnectQuickLink("Inventory", PixelIcons.Backpack, Modifier.weight(1f), tint = Color.Unspecified, onClick = onInventory)
-            ConnectQuickLink("Ender Chest", PixelIcons.EnderChest, Modifier.weight(1f), onClick = onEnderChest)
+            ConnectQuickLink("Ender Chest", PixelIcons.EnderChest, Modifier.weight(1f), tint = Color.Unspecified, onClick = onEnderChest)
         }
         Spacer(Modifier.height(8.dp))
         Row(
