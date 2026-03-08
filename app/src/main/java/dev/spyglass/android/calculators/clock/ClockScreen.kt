@@ -23,6 +23,8 @@ import dev.spyglass.android.core.ui.*
 @Composable
 fun ClockScreen(vm: ClockViewModel = viewModel()) {
     val state by vm.state.collectAsStateWithLifecycle()
+    val hapticClick = rememberHapticClick()
+    val hapticConfirm = rememberHapticConfirm()
     var tickInput by remember { mutableStateOf("") }
     var showF3Help by remember { mutableStateOf(false) }
     var showQuickHelp by remember { mutableStateOf(false) }
@@ -75,6 +77,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                     )
                     Button(
                         onClick = {
+                            hapticClick()
                             vm.syncFromF3(tickInput)
                             tickInput = ""
                         },
@@ -104,7 +107,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     listOf("Sunrise", "Noon", "Sunset").forEach { event ->
                         OutlinedButton(
-                            onClick = { vm.syncManual(event) },
+                            onClick = { hapticClick(); vm.syncManual(event) },
                             colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.onSurface),
                             modifier = Modifier.weight(1f),
                         ) {
@@ -116,7 +119,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                 StatRow("Synced via", if (state.syncMethod == "f3") "F3 Debug" else "Quick Sync")
                 StatRow("Game time", state.timeString)
                 TextButton(
-                    onClick = vm::resetSync,
+                    onClick = { hapticConfirm(); vm.resetSync() },
                     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
                     modifier = Modifier.height(32.dp),
                 ) {
@@ -168,7 +171,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier
                             .clip(RoundedCornerShape(4.dp))
-                            .clickable { showDayDialog = true }
+                            .clickable { hapticClick(); showDayDialog = true }
                             .padding(horizontal = 4.dp),
                     )
                     Text(
@@ -229,7 +232,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                                     color = MaterialTheme.colorScheme.secondary,
                                     modifier = Modifier
                                         .clip(CircleShape)
-                                        .clickable { vm.removeEvent(event) }
+                                        .clickable { hapticConfirm(); vm.removeEvent(event) }
                                         .padding(4.dp),
                                 )
                             }
@@ -241,7 +244,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                 }
                 SpyglassDivider()
                 TextButton(
-                    onClick = { showAddDialog = true },
+                    onClick = { hapticClick(); showAddDialog = true },
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text("Add Event \u2192", color = MaterialTheme.colorScheme.primary)
@@ -368,6 +371,7 @@ private fun AddEventDialog(
     onAddCustom: (String, Long, String) -> Unit,
     onDismiss: () -> Unit,
 ) {
+    val hapticClick = rememberHapticClick()
     var selectedTab by remember { mutableIntStateOf(0) }
     var customName by remember { mutableStateOf("") }
     var customTick by remember { mutableStateOf("") }
@@ -388,7 +392,7 @@ private fun AddEventDialog(
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     FilterChip(
                         selected = selectedTab == 0,
-                        onClick = { selectedTab = 0 },
+                        onClick = { hapticClick(); selectedTab = 0 },
                         label = { Text("Predefined") },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
@@ -398,7 +402,7 @@ private fun AddEventDialog(
                     )
                     FilterChip(
                         selected = selectedTab == 1,
-                        onClick = { selectedTab = 1 },
+                        onClick = { hapticClick(); selectedTab = 1 },
                         label = { Text("Custom") },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
@@ -424,6 +428,7 @@ private fun AddEventDialog(
                                         .fillMaxWidth()
                                         .clip(RoundedCornerShape(8.dp))
                                         .clickable {
+                                            hapticClick()
                                             onAddPredefined(event.predefinedId!!)
                                         }
                                         .padding(vertical = 6.dp, horizontal = 4.dp),
@@ -489,7 +494,7 @@ private fun AddEventDialog(
                         listOf("green" to "Green", "gold" to "Gold", "red" to "Red").forEach { (value, label) ->
                             FilterChip(
                                 selected = customColor == value,
-                                onClick = { customColor = value },
+                                onClick = { hapticClick(); customColor = value },
                                 label = { Text(label) },
                                 leadingIcon = {
                                     Box(
@@ -509,6 +514,7 @@ private fun AddEventDialog(
                     }
                     Button(
                         onClick = {
+                            hapticClick()
                             val tick = customTick.toLongOrNull() ?: return@Button
                             onAddCustom(customName, tick, customColor)
                             customName = ""
@@ -529,7 +535,7 @@ private fun AddEventDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) {
+            TextButton(onClick = { hapticClick(); onDismiss() }) {
                 Text(stringResource(R.string.done), color = MaterialTheme.colorScheme.primary)
             }
         },
@@ -542,6 +548,7 @@ private fun SetDayDialog(
     onSetDay: (Long) -> Unit,
     onDismiss: () -> Unit,
 ) {
+    val hapticClick = rememberHapticClick()
     var dayInput by remember { mutableStateOf(currentDay.toString()) }
 
     AlertDialog(
@@ -566,6 +573,7 @@ private fun SetDayDialog(
         confirmButton = {
             TextButton(
                 onClick = {
+                    hapticClick()
                     val day = dayInput.toLongOrNull() ?: return@TextButton
                     onSetDay(day)
                 },
@@ -575,7 +583,7 @@ private fun SetDayDialog(
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
+            TextButton(onClick = { hapticClick(); onDismiss() }) {
                 Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.secondary)
             }
         },
@@ -589,11 +597,12 @@ private fun ExpandableHelp(
     onToggle: () -> Unit,
     content: @Composable ColumnScope.() -> Unit,
 ) {
+    val hapticClick = rememberHapticClick()
     Column {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onToggle() }
+                .clickable { hapticClick(); onToggle() }
                 .padding(vertical = 4.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,

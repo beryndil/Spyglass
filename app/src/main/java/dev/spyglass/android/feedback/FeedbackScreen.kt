@@ -21,6 +21,7 @@ import dev.spyglass.android.core.ui.*
 @Composable
 fun FeedbackScreen(onBack: () -> Unit = {}) {
     val uriHandler = LocalUriHandler.current
+    val hapticClick = rememberHapticClick()
     val issuesUrl = "https://github.com/beryndil/Spyglass/issues"
 
     Column(
@@ -30,7 +31,7 @@ fun FeedbackScreen(onBack: () -> Unit = {}) {
             .padding(horizontal = 16.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        IconButton(onClick = onBack) {
+        IconButton(onClick = { hapticClick(); onBack() }) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = stringResource(R.string.back),
@@ -45,7 +46,7 @@ fun FeedbackScreen(onBack: () -> Unit = {}) {
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { uriHandler.openUri("$issuesUrl/new?labels=bug") }
+                    .clickable { hapticClick(); uriHandler.openUri("$issuesUrl/new?labels=bug") }
                     .padding(vertical = 8.dp),
             )
             SpyglassDivider()
@@ -55,7 +56,7 @@ fun FeedbackScreen(onBack: () -> Unit = {}) {
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { uriHandler.openUri("$issuesUrl/new?labels=enhancement") }
+                    .clickable { hapticClick(); uriHandler.openUri("$issuesUrl/new?labels=enhancement") }
                     .padding(vertical = 8.dp),
             )
             SpyglassDivider()
@@ -65,7 +66,7 @@ fun FeedbackScreen(onBack: () -> Unit = {}) {
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { uriHandler.openUri("https://play.google.com/store/apps/details?id=dev.spyglass.android") }
+                    .clickable { hapticClick(); uriHandler.openUri("https://play.google.com/store/apps/details?id=dev.spyglass.android") }
                     .padding(vertical = 8.dp),
             )
         }

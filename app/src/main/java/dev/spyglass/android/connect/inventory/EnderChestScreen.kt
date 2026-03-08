@@ -17,6 +17,7 @@ import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.PlayerData
 import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.core.ui.SectionHeader
+import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.navigation.BrowseTarget
 import kotlinx.coroutines.launch
 
@@ -35,6 +36,7 @@ fun EnderChestScreen(
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
     val scope = rememberCoroutineScope()
+    val hapticClick = rememberHapticClick()
 
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
@@ -44,7 +46,7 @@ fun EnderChestScreen(
                 .padding(horizontal = 8.dp, vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(onClick = onBack) {
+            IconButton(onClick = { hapticClick(); onBack() }) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
             }
             Text("Ender Chest", style = MaterialTheme.typography.titleMedium)

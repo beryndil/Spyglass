@@ -109,6 +109,7 @@ class WaypointsViewModel(app: Application) : AndroidViewModel(app) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
+    val hapticClick = rememberHapticClick()
     val query by vm.query.collectAsStateWithLifecycle()
     val categoryFilter by vm.categoryFilter.collectAsStateWithLifecycle()
     val waypoints by vm.waypoints.collectAsStateWithLifecycle()
@@ -146,7 +147,7 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
                 )
                 Spacer(Modifier.width(8.dp))
                 FilledTonalButton(
-                    onClick = { showCreateDialog = true },
+                    onClick = { hapticClick(); showCreateDialog = true },
                     colors = ButtonDefaults.filledTonalButtonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f), contentColor = MaterialTheme.colorScheme.primary),
                 ) {
                     Icon(Icons.Default.Add, contentDescription = "New waypoint", modifier = Modifier.size(18.dp))
@@ -161,13 +162,13 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
             ) {
                 FilterChip(
                     selected = categoryFilter == "all",
-                    onClick = { vm.setCategoryFilter("all") },
+                    onClick = { hapticClick(); vm.setCategoryFilter("all") },
                     label = { Text(stringResource(R.string.all), style = MaterialTheme.typography.labelSmall) },
                 )
                 CATEGORIES.forEach { cat ->
                     FilterChip(
                         selected = categoryFilter == cat,
-                        onClick = { vm.setCategoryFilter(cat) },
+                        onClick = { hapticClick(); vm.setCategoryFilter(cat) },
                         label = { Text(categoryLabel(cat), style = MaterialTheme.typography.labelSmall) },
                     )
                 }
@@ -194,7 +195,7 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
                         supportingMaxLines = 1,
                         leadingIcon = PixelIcons.Waypoints,
                         leadingIconTint = wpColor,
-                        modifier = Modifier.clickable { vm.toggleExpanded(wp.id) },
+                        modifier = Modifier.clickable { hapticClick(); vm.toggleExpanded(wp.id) },
                         trailing = {
                             Column(horizontalAlignment = Alignment.End) {
                                 CategoryBadge(label = categoryLabel(wp.category), color = wpColor)
@@ -265,6 +266,8 @@ private fun WaypointDetailCard(
     onDelete: () -> Unit,
     onCreateLinkedWaypoint: (name: String, x: Int, y: Int, z: Int, dimension: String, category: String, color: String, notes: String) -> Unit,
 ) {
+    val hapticClick = rememberHapticClick()
+    val hapticConfirm = rememberHapticConfirm()
     var confirmDelete by remember { mutableStateOf(false) }
     var copied by remember { mutableStateOf(false) }
     val wpColor = waypointColor(wp.color)
@@ -294,6 +297,7 @@ private fun WaypointDetailCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
+                    hapticClick()
                     val cmd = "/tp @s ${wp.x} ${wp.y} ${wp.z}"
                     val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager ?: return@clickable
                     clipboard.setPrimaryClip(android.content.ClipData.newPlainText("TP Command", cmd))
@@ -336,6 +340,7 @@ private fun WaypointDetailCard(
             Spacer(Modifier.height(4.dp))
             TextButton(
                 onClick = {
+                    hapticClick()
                     onCreateLinkedWaypoint(
                         "${wp.name} (${dimensionLabel(convertedDim)})",
                         convertedX, wp.y, convertedZ,
@@ -362,22 +367,22 @@ private fun WaypointDetailCard(
         }
         SpyglassDivider()
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            TextButton(onClick = onEdit) {
+            TextButton(onClick = { hapticClick(); onEdit() }) {
                 Icon(Icons.Default.Edit, contentDescription = null, modifier = Modifier.size(16.dp))
                 Spacer(Modifier.width(4.dp))
                 Text(stringResource(R.string.edit))
             }
             if (!confirmDelete) {
-                TextButton(onClick = { confirmDelete = true }, colors = ButtonDefaults.textButtonColors(contentColor = Red400)) {
+                TextButton(onClick = { hapticConfirm(); confirmDelete = true }, colors = ButtonDefaults.textButtonColors(contentColor = Red400)) {
                     Icon(Icons.Default.Delete, contentDescription = null, modifier = Modifier.size(16.dp))
                     Spacer(Modifier.width(4.dp))
                     Text(stringResource(R.string.delete))
                 }
             } else {
-                TextButton(onClick = onDelete, colors = ButtonDefaults.textButtonColors(contentColor = Red400)) {
+                TextButton(onClick = { hapticConfirm(); onDelete() }, colors = ButtonDefaults.textButtonColors(contentColor = Red400)) {
                     Text(stringResource(R.string.confirm_delete))
                 }
-                TextButton(onClick = { confirmDelete = false }) {
+                TextButton(onClick = { hapticClick(); confirmDelete = false }) {
                     Text(stringResource(R.string.cancel))
                 }
             }
@@ -400,6 +405,7 @@ private fun WaypointDialog(
     onDismiss: () -> Unit,
     onSave: (name: String, x: Int, y: Int, z: Int, dimension: String, category: String, color: String, notes: String) -> Unit,
 ) {
+    val hapticClick = rememberHapticClick()
     var name by remember { mutableStateOf(initialName) }
     var x by remember { mutableStateOf(initialX) }
     var y by remember { mutableStateOf(initialY) }
@@ -455,7 +461,7 @@ private fun WaypointDialog(
                     DIMENSIONS.forEach { dim ->
                         FilterChip(
                             selected = dimension == dim,
-                            onClick = { dimension = dim },
+                            onClick = { hapticClick(); dimension = dim },
                             label = { Text(dimensionLabel(dim), style = MaterialTheme.typography.labelSmall) },
                         )
                     }
@@ -469,7 +475,7 @@ private fun WaypointDialog(
                     CATEGORIES.forEach { cat ->
                         FilterChip(
                             selected = category == cat,
-                            onClick = { category = cat },
+                            onClick = { hapticClick(); category = cat },
                             label = { Text(categoryLabel(cat), style = MaterialTheme.typography.labelSmall) },
                         )
                     }
@@ -483,7 +489,7 @@ private fun WaypointDialog(
                                 .size(if (color == c) 32.dp else 28.dp)
                                 .clip(CircleShape)
                                 .background(waypointColor(c))
-                                .clickable { color = c },
+                                .clickable { hapticClick(); color = c },
                         ) {
                             if (color == c) {
                                 Box(
@@ -509,12 +515,12 @@ private fun WaypointDialog(
         },
         confirmButton = {
             TextButton(
-                onClick = { onSave(name.trim(), x.toInt(), y.toInt(), z.toInt(), dimension, category, color, notes.trim()) },
+                onClick = { hapticClick(); onSave(name.trim(), x.toInt(), y.toInt(), z.toInt(), dimension, category, color, notes.trim()) },
                 enabled = canSave,
             ) { Text(stringResource(R.string.save), color = if (canSave) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+            TextButton(onClick = { hapticClick(); onDismiss() }) { Text(stringResource(R.string.cancel)) }
         },
     )
 }

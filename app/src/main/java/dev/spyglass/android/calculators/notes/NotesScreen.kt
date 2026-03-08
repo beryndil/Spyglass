@@ -81,6 +81,8 @@ class NotesViewModel(app: Application) : AndroidViewModel(app) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun NotesScreen(vm: NotesViewModel = viewModel()) {
+    val hapticClick = rememberHapticClick()
+    val hapticConfirm = rememberHapticConfirm()
     val query by vm.query.collectAsStateWithLifecycle()
     val labelFilter by vm.labelFilter.collectAsStateWithLifecycle()
     val notes by vm.notes.collectAsStateWithLifecycle()
@@ -106,7 +108,7 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
             )
             Spacer(Modifier.width(8.dp))
             FilledTonalButton(
-                onClick = { showCreateDialog = true },
+                onClick = { hapticClick(); showCreateDialog = true },
                 colors = ButtonDefaults.filledTonalButtonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f), contentColor = MaterialTheme.colorScheme.primary),
             ) {
                 Icon(Icons.Default.Add, contentDescription = "New note", modifier = Modifier.size(18.dp))
@@ -122,13 +124,13 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
             ) {
                 FilterChip(
                     selected = labelFilter == "all",
-                    onClick = { vm.setLabelFilter("all") },
+                    onClick = { hapticClick(); vm.setLabelFilter("all") },
                     label = { Text(stringResource(R.string.all), style = MaterialTheme.typography.labelSmall) },
                 )
                 labels.forEach { label ->
                     FilterChip(
                         selected = labelFilter == label,
-                        onClick = { vm.setLabelFilter(label) },
+                        onClick = { hapticClick(); vm.setLabelFilter(label) },
                         label = { Text(label, style = MaterialTheme.typography.labelSmall) },
                     )
                 }
@@ -166,7 +168,7 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
                         supporting = note.content.take(80).replace('\n', ' '),
                         supportingMaxLines = 1,
                         leadingIcon = PixelIcons.Bookmark,
-                        modifier = Modifier.clickable { vm.toggleExpanded(note.id) },
+                        modifier = Modifier.clickable { hapticClick(); vm.toggleExpanded(note.id) },
                         trailing = {
                             if (note.label.isNotBlank()) {
                                 CategoryBadge(label = note.label, color = MaterialTheme.colorScheme.primary)
@@ -225,6 +227,8 @@ private fun NoteDetailCard(
     onEdit: () -> Unit,
     onDelete: () -> Unit,
 ) {
+    val hapticClick = rememberHapticClick()
+    val hapticConfirm = rememberHapticConfirm()
     var confirmDelete by remember { mutableStateOf(false) }
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
@@ -239,22 +243,22 @@ private fun NoteDetailCard(
         StatRow("Updated", formatTimestamp(note.updatedAt))
         SpyglassDivider()
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            TextButton(onClick = onEdit) {
+            TextButton(onClick = { hapticClick(); onEdit() }) {
                 Icon(Icons.Default.Edit, contentDescription = null, modifier = Modifier.size(16.dp))
                 Spacer(Modifier.width(4.dp))
                 Text(stringResource(R.string.edit))
             }
             if (!confirmDelete) {
-                TextButton(onClick = { confirmDelete = true }, colors = ButtonDefaults.textButtonColors(contentColor = Red400)) {
+                TextButton(onClick = { hapticConfirm(); confirmDelete = true }, colors = ButtonDefaults.textButtonColors(contentColor = Red400)) {
                     Icon(Icons.Default.Delete, contentDescription = null, modifier = Modifier.size(16.dp))
                     Spacer(Modifier.width(4.dp))
                     Text(stringResource(R.string.delete))
                 }
             } else {
-                TextButton(onClick = onDelete, colors = ButtonDefaults.textButtonColors(contentColor = Red400)) {
+                TextButton(onClick = { hapticConfirm(); onDelete() }, colors = ButtonDefaults.textButtonColors(contentColor = Red400)) {
                     Text(stringResource(R.string.confirm_delete))
                 }
-                TextButton(onClick = { confirmDelete = false }) {
+                TextButton(onClick = { hapticClick(); confirmDelete = false }) {
                     Text(stringResource(R.string.cancel))
                 }
             }
@@ -273,6 +277,7 @@ private fun NoteDialog(
     onDismiss: () -> Unit,
     onSave: (title: String, label: String, content: String) -> Unit,
 ) {
+    val hapticClick = rememberHapticClick()
     var noteTitle by remember { mutableStateOf(initialTitle) }
     var noteLabel by remember { mutableStateOf(initialLabel) }
     var noteContent by remember { mutableStateOf(initialContent) }
@@ -306,7 +311,7 @@ private fun NoteDialog(
                         existingLabels.forEach { label ->
                             FilterChip(
                                 selected = noteLabel == label,
-                                onClick = { noteLabel = if (noteLabel == label) "" else label },
+                                onClick = { hapticClick(); noteLabel = if (noteLabel == label) "" else label },
                                 label = { Text(label, style = MaterialTheme.typography.labelSmall) },
                             )
                         }
@@ -325,12 +330,12 @@ private fun NoteDialog(
         },
         confirmButton = {
             TextButton(
-                onClick = { onSave(noteTitle.trim(), noteLabel.trim(), noteContent.trim()) },
+                onClick = { hapticClick(); onSave(noteTitle.trim(), noteLabel.trim(), noteContent.trim()) },
                 enabled = noteTitle.isNotBlank(),
             ) { Text(stringResource(R.string.save), color = MaterialTheme.colorScheme.primary) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
+            TextButton(onClick = { hapticClick(); onDismiss() }) { Text(stringResource(R.string.cancel)) }
         },
     )
 }

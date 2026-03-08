@@ -55,6 +55,8 @@ private val PATTERN_ITEMS = listOf(
 fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
     var showReference by remember { mutableStateOf(false) }
+    val hapticClick = rememberHapticClick()
+    val hapticConfirm = rememberHapticConfirm()
 
     Column(
         modifier = Modifier
@@ -117,7 +119,7 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
                     PATTERN_CATEGORIES.forEach { cat ->
                         FilterChip(
                             selected = s.selectedCategory == cat,
-                            onClick = { vm.setSelectedCategory(cat) },
+                            onClick = { hapticClick(); vm.setSelectedCategory(cat) },
                             label = {
                                 Text(
                                     cat.replaceFirstChar { it.uppercase() },
@@ -145,7 +147,7 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
                                         shape = RoundedCornerShape(4.dp),
                                     )
                                     .clip(RoundedCornerShape(4.dp))
-                                    .clickable { vm.setSelectedPattern(pattern) }
+                                    .clickable { hapticClick(); vm.setSelectedPattern(pattern) }
                                     .padding(2.dp),
                             ) {
                                 BannerPreview(
@@ -183,7 +185,7 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
 
                 // Add button
                 Button(
-                    onClick = { vm.addLayer() },
+                    onClick = { hapticClick(); vm.addLayer() },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 ) {
@@ -222,17 +224,17 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
                             color = MaterialTheme.colorScheme.onSurface,
                             modifier = Modifier.weight(1f),
                         )
-                        IconButton(onClick = { vm.moveLayerUp(index) }, modifier = Modifier.size(28.dp)) {
+                        IconButton(onClick = { hapticClick(); vm.moveLayerUp(index) }, modifier = Modifier.size(28.dp)) {
                             Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Move up",
                                 tint = if (index > 0) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.outline,
                                 modifier = Modifier.size(18.dp))
                         }
-                        IconButton(onClick = { vm.moveLayerDown(index) }, modifier = Modifier.size(28.dp)) {
+                        IconButton(onClick = { hapticClick(); vm.moveLayerDown(index) }, modifier = Modifier.size(28.dp)) {
                             Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Move down",
                                 tint = if (index < s.layers.size - 1) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.outline,
                                 modifier = Modifier.size(18.dp))
                         }
-                        IconButton(onClick = { vm.removeLayer(index) }, modifier = Modifier.size(28.dp)) {
+                        IconButton(onClick = { hapticConfirm(); vm.removeLayer(index) }, modifier = Modifier.size(28.dp)) {
                             Icon(Icons.Default.Close, contentDescription = "Remove",
                                 tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(16.dp))
                         }
@@ -242,7 +244,7 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
 
                 Spacer(Modifier.height(4.dp))
                 OutlinedButton(
-                    onClick = { vm.clearDesign() },
+                    onClick = { hapticConfirm(); vm.clearDesign() },
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error),
                 ) {
@@ -277,7 +279,7 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
 
         // ── Collapsible reference ───────────────────────────────────────
         OutlinedButton(
-            onClick = { showReference = !showReference },
+            onClick = { hapticClick(); showReference = !showReference },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.secondary),
         ) {
@@ -303,6 +305,7 @@ private fun ColorSwatch(
     onClick: () -> Unit,
     label: String,
 ) {
+    val hapticClick = rememberHapticClick()
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -314,7 +317,7 @@ private fun ColorSwatch(
                 shape = RoundedCornerShape(4.dp),
             )
             .clip(RoundedCornerShape(4.dp))
-            .clickable(onClick = onClick),
+            .clickable { hapticClick(); onClick() },
     ) {
         if (selected) {
             Icon(

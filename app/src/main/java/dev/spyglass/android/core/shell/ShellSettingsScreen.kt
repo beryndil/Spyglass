@@ -34,6 +34,8 @@ import dev.spyglass.android.core.ui.ResultCard
 import dev.spyglass.android.core.ui.SectionHeader
 import dev.spyglass.android.core.ui.SpyglassDivider
 import dev.spyglass.android.core.ui.SpyglassIconImage
+import dev.spyglass.android.core.ui.rememberHapticClick
+import dev.spyglass.android.core.ui.rememberHapticConfirm
 import kotlinx.coroutines.launch
 
 /**
@@ -47,6 +49,8 @@ fun ShellSettingsScreen(
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
+    val hapticClick = rememberHapticClick()
+    val hapticConfirm = rememberHapticConfirm()
 
     // Re-read when a module is toggled
     val revision by ModuleRegistry.revision.collectAsStateWithLifecycle()
@@ -74,7 +78,7 @@ fun ShellSettingsScreen(
     ) {
         // ── Back + Title ──
         item(key = "back") {
-            IconButton(onClick = onBack) {
+            IconButton(onClick = { hapticClick(); onBack() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.back),
@@ -122,6 +126,7 @@ fun ShellSettingsScreen(
                             Switch(
                                 checked = enabled,
                                 onCheckedChange = { newEnabled ->
+                                    hapticConfirm()
                                     coroutineScope.launch {
                                         ModuleRegistry.setEnabled(context, module.id, newEnabled)
                                     }

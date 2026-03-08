@@ -34,6 +34,8 @@ fun ConnectScreen(
     onChestFinder: () -> Unit = {},
     onMap: () -> Unit = {},
 ) {
+    val hapticClick = rememberHapticClick()
+    val hapticConfirm = rememberHapticConfirm()
     val state by viewModel.connectionState.collectAsStateWithLifecycle()
     val worlds by viewModel.worlds.collectAsStateWithLifecycle()
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
@@ -50,7 +52,7 @@ fun ConnectScreen(
                 .padding(horizontal = 8.dp, vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(onClick = onBack) {
+            IconButton(onClick = { hapticClick(); onBack() }) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
             }
             Text(
@@ -59,7 +61,7 @@ fun ConnectScreen(
                 modifier = Modifier.weight(1f),
             )
             if (state.isConnected) {
-                IconButton(onClick = { viewModel.disconnect() }) {
+                IconButton(onClick = { hapticConfirm(); viewModel.disconnect() }) {
                     Icon(Icons.Filled.LinkOff, contentDescription = "Disconnect", tint = Color(0xFFF44336))
                 }
             }
@@ -173,10 +175,11 @@ private fun DisconnectedContent(
     onChestFinder: () -> Unit = {},
     onMap: () -> Unit = {},
 ) {
+    val hapticClick = rememberHapticClick()
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         // Scan QR button
         Button(
-            onClick = onScanQr,
+            onClick = { hapticClick(); onScanQr() },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
@@ -189,7 +192,7 @@ private fun DisconnectedContent(
 
         // Reconnect button
         OutlinedButton(
-            onClick = onReconnect,
+            onClick = { hapticClick(); onReconnect() },
             modifier = Modifier.fillMaxWidth(),
         ) {
             Icon(Icons.Filled.Refresh, contentDescription = null, modifier = Modifier.size(20.dp))
@@ -258,6 +261,7 @@ private fun ConnectedContent(
     onChestFinder: () -> Unit,
     onMap: () -> Unit,
 ) {
+    val hapticClick = rememberHapticClick()
     // World selector
     if (worlds.isNotEmpty()) {
         SectionHeader("Select World")
@@ -277,6 +281,7 @@ private fun ConnectedContent(
                         RoundedCornerShape(8.dp),
                     )
                     .clickable {
+                        hapticClick()
                         onSelectWorld(world.folderName)
                         onRequestPlayer()
                     }
@@ -382,6 +387,7 @@ private fun PlayerSelector(
     selectedUuid: String?,
     onSelectPlayer: (String?) -> Unit,
 ) {
+    val hapticClick = rememberHapticClick()
     var showFairPlayWarning by remember { mutableStateOf(false) }
     val hasMultipleNonOwner = players.count { !it.isOwner } > 0
 
@@ -424,7 +430,7 @@ private fun PlayerSelector(
                     if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
                     RoundedCornerShape(8.dp),
                 )
-                .clickable { onSelectPlayer(player.uuid) }
+                .clickable { hapticClick(); onSelectPlayer(player.uuid) }
                 .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -463,11 +469,12 @@ private fun ConnectQuickLink(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
+    val hapticClick = rememberHapticClick()
     Row(
         modifier = modifier
             .background(LocalSurfaceCard.current, RoundedCornerShape(8.dp))
             .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
-            .clickable { onClick() }
+            .clickable { hapticClick(); onClick() }
             .padding(horizontal = 12.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {

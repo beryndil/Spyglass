@@ -14,6 +14,7 @@ import dev.spyglass.android.core.ui.*
 
 @Composable
 fun BlockFillScreen(vm: BlockFillViewModel = viewModel()) {
+    val hapticConfirm = rememberHapticConfirm()
     val s by vm.state.collectAsStateWithLifecycle()
 
     Column(
@@ -54,7 +55,7 @@ fun BlockFillScreen(vm: BlockFillViewModel = viewModel()) {
             ) {
                 Checkbox(
                     checked = s.hollow,
-                    onCheckedChange = { vm.toggleHollow() },
+                    onCheckedChange = { hapticConfirm(); vm.toggleHollow() },
                     colors = CheckboxDefaults.colors(checkedColor = MaterialTheme.colorScheme.primary, uncheckedColor = MaterialTheme.colorScheme.secondary, checkmarkColor = MaterialTheme.colorScheme.onPrimary),
                 )
                 Text("Hollow (shell only)", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)

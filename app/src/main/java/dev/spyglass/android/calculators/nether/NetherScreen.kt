@@ -20,6 +20,8 @@ import dev.spyglass.android.core.ui.*
 fun NetherScreen(vm: NetherViewModel = viewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
     var subTab by remember { mutableIntStateOf(0) }
+    val hapticClick = rememberHapticClick()
+    val hapticConfirm = rememberHapticConfirm()
 
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState()),
@@ -29,7 +31,7 @@ fun NetherScreen(vm: NetherViewModel = viewModel()) {
 
         TabRow(selectedTabIndex = subTab, containerColor = MaterialTheme.colorScheme.surfaceVariant) {
             listOf("Convert", "Obsidian", "Portals").forEachIndexed { i, t ->
-                Tab(selected = subTab == i, onClick = { subTab = i }, text = { Text(t) })
+                Tab(selected = subTab == i, onClick = { hapticClick(); subTab = i }, text = { Text(t) })
             }
         }
 
@@ -96,10 +98,12 @@ private fun ObsidianTab(s: NetherState, vm: NetherViewModel) {
 
 @Composable
 private fun PortalsTab(s: NetherState, vm: NetherViewModel) {
+    val hapticClick = rememberHapticClick()
+    val hapticConfirm = rememberHapticConfirm()
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         InputCard {
             SpyglassTextField(s.newPortalName, vm::setNewPortalName, "Portal name", keyboardType = androidx.compose.ui.text.input.KeyboardType.Text)
-            Button(onClick = vm::savePortal, modifier = Modifier.fillMaxWidth()) {
+            Button(onClick = { hapticClick(); vm.savePortal() }, modifier = Modifier.fillMaxWidth()) {
                 Text("Save current coordinates as portal")
             }
         }
@@ -115,7 +119,7 @@ private fun PortalsTab(s: NetherState, vm: NetherViewModel) {
                 ResultCard {
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                         Text(p.name, style = MaterialTheme.typography.titleMedium)
-                        IconButton(onClick = { vm.deletePortal(p) }) {
+                        IconButton(onClick = { hapticConfirm(); vm.deletePortal(p) }) {
                             Icon(Icons.Default.Delete, stringResource(R.string.delete), tint = MaterialTheme.colorScheme.secondary)
                         }
                     }

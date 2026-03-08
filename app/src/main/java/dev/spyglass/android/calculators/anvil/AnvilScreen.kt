@@ -48,6 +48,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
     val warning by vm.warningMessage.collectAsStateWithLifecycle()
     val available = vm.enchantsForCurrentItem()
     val snackbarHostState = remember { SnackbarHostState() }
+    val hapticClick = rememberHapticClick()
 
     LaunchedEffect(warning) {
         if (warning != null) {
@@ -71,7 +72,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                     val icon = ItemTextures.get(t.textureId())
                     FilterChip(
                         selected = s.selectedItem == t,
-                        onClick  = { vm.setItem(t) },
+                        onClick  = { hapticClick(); vm.setItem(t) },
                         label    = { Text(t.displayName(), style = MaterialTheme.typography.labelSmall) },
                         leadingIcon = if (icon != null) { { SpyglassIconImage(icon, contentDescription = null, modifier = Modifier.size(16.dp)) } } else null,
                     )
@@ -84,7 +85,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                     val icon = ItemTextures.get(t.textureId())
                     FilterChip(
                         selected = s.selectedItem == t,
-                        onClick  = { vm.setItem(t) },
+                        onClick  = { hapticClick(); vm.setItem(t) },
                         label    = { Text(t.displayName(), style = MaterialTheme.typography.labelSmall) },
                         leadingIcon = if (icon != null) { { SpyglassIconImage(icon, contentDescription = null, modifier = Modifier.size(16.dp)) } } else null,
                     )
@@ -97,7 +98,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                     val icon = ItemTextures.get(t.textureId())
                     FilterChip(
                         selected = s.selectedItem == t,
-                        onClick  = { vm.setItem(t) },
+                        onClick  = { hapticClick(); vm.setItem(t) },
                         label    = { Text(t.displayName(), style = MaterialTheme.typography.labelSmall) },
                         leadingIcon = if (icon != null) { { SpyglassIconImage(icon, contentDescription = null, modifier = Modifier.size(16.dp)) } } else null,
                     )
@@ -118,7 +119,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                 ) {
                     FilterChip(
                         selected = picked != null,
-                        onClick  = { vm.toggleEnchant(e) },
+                        onClick  = { hapticClick(); vm.toggleEnchant(e) },
                         enabled  = !incompatible,
                         label    = {
                             Text(
@@ -132,7 +133,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                         Spacer(Modifier.width(8.dp))
                         Row {
                             for (lvl in 1..e.maxLevel) {
-                                IconButton(onClick = { vm.setEnchantLevel(e.id, lvl) }, modifier = Modifier.size(32.dp)) {
+                                IconButton(onClick = { hapticClick(); vm.setEnchantLevel(e.id, lvl) }, modifier = Modifier.size(32.dp)) {
                                     val numeral = listOf("I","II","III","IV","V")[lvl - 1]
                                     Text(numeral, style = MaterialTheme.typography.labelSmall,
                                         color = if (picked.level == lvl) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
@@ -180,7 +181,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
         var showInfo by remember { mutableStateOf(false) }
         ResultCard {
             Row(
-                modifier = Modifier.fillMaxWidth().clickable { showInfo = !showInfo },
+                modifier = Modifier.fillMaxWidth().clickable { hapticClick(); showInfo = !showInfo },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {

@@ -94,6 +94,8 @@ fun SettingsScreen(
 
     val uriHandler = LocalUriHandler.current
     val context = LocalContext.current
+    val hapticClick = rememberHapticClick()
+    val hapticConfirm = rememberHapticConfirm()
 
     var showDeleteConfirm by remember { mutableStateOf(false) }
     var versionExpanded by remember { mutableStateOf(false) }
@@ -105,7 +107,7 @@ fun SettingsScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         item(key = "back") {
-            IconButton(onClick = onBack) {
+            IconButton(onClick = { hapticClick(); onBack() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.back),
@@ -142,7 +144,7 @@ fun SettingsScreen(
                                     color = borderColor,
                                     shape = CircleShape,
                                 )
-                                .clickable { vm.setBackgroundTheme(key) },
+                                .clickable { hapticClick(); vm.setBackgroundTheme(key) },
                         )
                     }
                 }
@@ -195,18 +197,18 @@ fun SettingsScreen(
                 val displayVersion = minecraftVersion.ifBlank { "Latest" }
                 Text("Version", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                 Box {
-                    OutlinedButton(onClick = { versionExpanded = true }) {
+                    OutlinedButton(onClick = { hapticClick(); versionExpanded = true }) {
                         Text(displayVersion, color = MaterialTheme.colorScheme.onSurface)
                     }
                     DropdownMenu(expanded = versionExpanded, onDismissRequest = { versionExpanded = false }) {
                         DropdownMenuItem(
                             text = { Text("Latest", color = if (minecraftVersion.isBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface) },
-                            onClick = { vm.setMinecraftVersion(""); versionExpanded = false },
+                            onClick = { hapticClick(); vm.setMinecraftVersion(""); versionExpanded = false },
                         )
                         versions.reversed().forEach { v ->
                             DropdownMenuItem(
                                 text = { Text(v, color = if (minecraftVersion == v) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface) },
-                                onClick = { vm.setMinecraftVersion(v); versionExpanded = false },
+                                onClick = { hapticClick(); vm.setMinecraftVersion(v); versionExpanded = false },
                             )
                         }
                     }
@@ -221,7 +223,7 @@ fun SettingsScreen(
                     modes.forEach { (key, label) ->
                         FilterChip(
                             selected = versionFilterMode == key,
-                            onClick = { vm.setVersionFilterMode(key) },
+                            onClick = { hapticClick(); vm.setVersionFilterMode(key) },
                             label = { Text(label, style = MaterialTheme.typography.labelSmall) },
                         )
                     }
@@ -265,7 +267,7 @@ fun SettingsScreen(
                     tabs.forEachIndexed { i, name ->
                         FilterChip(
                             selected = defaultStartupTab == i,
-                            onClick = { vm.setDefaultStartupTab(i) },
+                            onClick = { hapticClick(); vm.setDefaultStartupTab(i) },
                             label = { Text(name, style = MaterialTheme.typography.labelSmall) },
                         )
                     }
@@ -289,7 +291,7 @@ fun SettingsScreen(
                     browseTabNames().forEachIndexed { i, name ->
                         FilterChip(
                             selected = defaultBrowseTab == i,
-                            onClick = { vm.setDefaultBrowseTab(i) },
+                            onClick = { hapticClick(); vm.setDefaultBrowseTab(i) },
                             label = { Text(name, style = MaterialTheme.typography.labelSmall) },
                         )
                     }
@@ -313,7 +315,7 @@ fun SettingsScreen(
                     toolTabNames().forEachIndexed { i, name ->
                         FilterChip(
                             selected = defaultToolTab == i,
-                            onClick = { vm.setDefaultToolTab(i) },
+                            onClick = { hapticClick(); vm.setDefaultToolTab(i) },
                             label = { Text(name, style = MaterialTheme.typography.labelSmall) },
                         )
                     }
@@ -384,7 +386,7 @@ fun SettingsScreen(
                     stringResource(R.string.settings_configure_clock),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.clickable { onCalcTab(9) },
+                    modifier = Modifier.clickable { hapticClick(); onCalcTab(9) },
                 )
             }
         }
@@ -435,7 +437,7 @@ fun SettingsScreen(
                     options.forEach { (hours, label) ->
                         FilterChip(
                             selected = syncFrequencyHours == hours,
-                            onClick = { if (!offlineMode) vm.setSyncFrequencyHours(hours) },
+                            onClick = { hapticClick(); if (!offlineMode) vm.setSyncFrequencyHours(hours) },
                             enabled = !offlineMode,
                             label = { Text(label, style = MaterialTheme.typography.labelSmall) },
                         )
@@ -458,6 +460,7 @@ fun SettingsScreen(
                 if (textureState == TextureManager.TextureState.DOWNLOADED) {
                     Spacer(Modifier.height(4.dp))
                     TextButton(onClick = {
+                        hapticConfirm()
                         vm.clearTextureCache()
                         storageBytes = 0L
                     }) {
@@ -491,7 +494,7 @@ fun SettingsScreen(
                         )
                     }
                     SpyglassDivider()
-                    TextButton(onClick = vm::clearAllFavorites) {
+                    TextButton(onClick = { hapticConfirm(); vm.clearAllFavorites() }) {
                         Text(stringResource(R.string.settings_clear_all_favorites), color = Red400)
                     }
                 }
@@ -524,6 +527,7 @@ fun SettingsScreen(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
+                        hapticClick()
                         uriHandler.openUri("https://hardknocks.university")
                     },
                 )
@@ -555,7 +559,7 @@ fun SettingsScreen(
                     onCheckedChange = vm::setAdPersonalizationConsent,
                 )
                 SpyglassDivider()
-                TextButton(onClick = { showDeleteConfirm = true }) {
+                TextButton(onClick = { hapticConfirm(); showDeleteConfirm = true }) {
                     Text(stringResource(R.string.settings_delete_data), color = Red400)
                 }
                 SpyglassDivider()
@@ -564,6 +568,7 @@ fun SettingsScreen(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
+                        hapticClick()
                         uriHandler.openUri("https://hardknocks.university/privacy-policy.html")
                     },
                 )
@@ -630,6 +635,7 @@ fun SettingsScreen(
             },
             confirmButton = {
                 TextButton(onClick = {
+                    hapticConfirm()
                     vm.deleteAllUserData()
                     showDeleteConfirm = false
                 }) {
@@ -637,7 +643,7 @@ fun SettingsScreen(
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDeleteConfirm = false }) {
+                TextButton(onClick = { hapticClick(); showDeleteConfirm = false }) {
                     Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             },
@@ -653,6 +659,7 @@ private fun SettingsToggle(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
 ) {
+    val hapticConfirm = rememberHapticConfirm()
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -664,7 +671,7 @@ private fun SettingsToggle(
         }
         Switch(
             checked = checked,
-            onCheckedChange = onCheckedChange,
+            onCheckedChange = { hapticConfirm(); onCheckedChange(it) },
             colors = SwitchDefaults.colors(
                 checkedThumbColor = MaterialTheme.colorScheme.primary,
                 checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
@@ -681,10 +688,11 @@ private fun SettingsLink(
     description: String,
     onClick: () -> Unit,
 ) {
+    val hapticClick = rememberHapticClick()
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .clickable { hapticClick(); onClick() }
             .padding(vertical = 6.dp),
     ) {
         Text(title, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary)

@@ -70,6 +70,8 @@ import dev.spyglass.android.core.ui.SpyglassIconImage
 import dev.spyglass.android.core.ui.TextureManager
 import dev.spyglass.android.core.ui.ThemeInfoMap
 import dev.spyglass.android.core.ui.ThemeOrder
+import dev.spyglass.android.core.ui.rememberHapticClick
+import dev.spyglass.android.core.ui.rememberHapticConfirm
 import dev.spyglass.android.home.TipsLoader
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
@@ -149,6 +151,7 @@ object CoreModule : SpyglassModule {
 
     @Composable
     private fun HeaderSection() {
+        val hapticClick = rememberHapticClick()
         val updateAvailable by androidx.compose.runtime.produceState<Boolean?>(null) {
             value = kotlinx.coroutines.withContext(Dispatchers.IO) { checkForUpdate() }
         }
@@ -177,6 +180,7 @@ object CoreModule : SpyglassModule {
                     style = MaterialTheme.typography.labelMedium,
                     color = Color(0xFFD32F2F),
                     modifier = Modifier.clickable {
+                        hapticClick()
                         uriHandler.openUri("https://play.google.com/store/apps/details?id=dev.spyglass.android")
                     },
                 )
@@ -212,6 +216,7 @@ object CoreModule : SpyglassModule {
 
     @Composable
     private fun TipOfDaySection() {
+        val hapticClick = rememberHapticClick()
         val context = LocalContext.current
         val showTip by remember {
             context.dataStore.data.map { it[PreferenceKeys.SHOW_TIP_OF_DAY] ?: true }
@@ -240,13 +245,14 @@ object CoreModule : SpyglassModule {
                 Text(stringResource(R.string.home_did_you_know), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.weight(1f))
                 Box {
-                    IconButton(onClick = { menuExpanded = true }, modifier = Modifier.size(24.dp)) {
+                    IconButton(onClick = { hapticClick(); menuExpanded = true }, modifier = Modifier.size(24.dp)) {
                         Icon(Icons.Default.MoreVert, contentDescription = "Tip options", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
                     }
                     DropdownMenu(expanded = menuExpanded, onDismissRequest = { menuExpanded = false }) {
                         DropdownMenuItem(
                             text = { Text("Disable tips") },
                             onClick = {
+                                hapticClick()
                                 menuExpanded = false
                                 scope.launch { context.dataStore.edit { it[PreferenceKeys.SHOW_TIP_OF_DAY] = false } }
                             },
@@ -266,13 +272,13 @@ object CoreModule : SpyglassModule {
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 IconButton(
-                    onClick = { tipIndex = Math.floorMod(tipIndex - 1, tips.size) },
+                    onClick = { hapticClick(); tipIndex = Math.floorMod(tipIndex - 1, tips.size) },
                     modifier = Modifier.size(32.dp),
                 ) {
                     Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "Previous tip", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                 }
                 IconButton(
-                    onClick = { tipIndex = (tipIndex + 1) % tips.size },
+                    onClick = { hapticClick(); tipIndex = (tipIndex + 1) % tips.size },
                     modifier = Modifier.size(32.dp),
                 ) {
                     Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "Next tip", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
@@ -288,6 +294,7 @@ object CoreModule : SpyglassModule {
     private fun ThemeSettingsContent() {
         val context = LocalContext.current
         val scope = rememberCoroutineScope()
+        val hapticClick = rememberHapticClick()
 
         val backgroundTheme by remember {
             context.dataStore.data.map { it[PreferenceKeys.BACKGROUND_THEME] ?: DEFAULT_THEME }
@@ -327,6 +334,7 @@ object CoreModule : SpyglassModule {
                                 shape = CircleShape,
                             )
                             .clickable {
+                                hapticClick()
                                 scope.launch { context.dataStore.edit { it[PreferenceKeys.BACKGROUND_THEME] = key } }
                             },
                     )
@@ -364,6 +372,7 @@ object CoreModule : SpyglassModule {
     private fun StartupTabContent() {
         val context = LocalContext.current
         val scope = rememberCoroutineScope()
+        val hapticClick = rememberHapticClick()
 
         val defaultStartupTab by remember {
             context.dataStore.data.map { it[PreferenceKeys.DEFAULT_STARTUP_TAB] ?: 0 }
@@ -389,7 +398,7 @@ object CoreModule : SpyglassModule {
                 tabs.forEachIndexed { i, name ->
                     FilterChip(
                         selected = defaultStartupTab == i,
-                        onClick = { scope.launch { context.dataStore.edit { it[PreferenceKeys.DEFAULT_STARTUP_TAB] = i } } },
+                        onClick = { hapticClick(); scope.launch { context.dataStore.edit { it[PreferenceKeys.DEFAULT_STARTUP_TAB] = i } } },
                         label = { Text(name, style = MaterialTheme.typography.labelSmall) },
                     )
                 }
@@ -486,6 +495,8 @@ object CoreModule : SpyglassModule {
     private fun DataStorageContent() {
         val context = LocalContext.current
         val scope = rememberCoroutineScope()
+        val hapticClick = rememberHapticClick()
+        val hapticConfirm = rememberHapticConfirm()
 
         val offlineMode by remember {
             context.dataStore.data.map { it[PreferenceKeys.OFFLINE_MODE] ?: false }
@@ -541,6 +552,7 @@ object CoreModule : SpyglassModule {
                     FilterChip(
                         selected = syncFrequencyHours == hours,
                         onClick = {
+                            hapticClick()
                             if (!offlineMode) scope.launch {
                                 context.dataStore.edit { it[PreferenceKeys.SYNC_FREQUENCY_HOURS] = hours }
                                 DataSyncWorker.enqueue(context, hours)
@@ -567,6 +579,7 @@ object CoreModule : SpyglassModule {
             if (textureState == TextureManager.TextureState.DOWNLOADED) {
                 Spacer(Modifier.height(4.dp))
                 TextButton(onClick = {
+                    hapticConfirm()
                     scope.launch { TextureManager.delete(context) }
                     storageBytes = 0L
                 }) {
@@ -581,6 +594,8 @@ object CoreModule : SpyglassModule {
         val context = LocalContext.current
         val scope = rememberCoroutineScope()
         val uriHandler = LocalUriHandler.current
+        val hapticClick = rememberHapticClick()
+        val hapticConfirm = rememberHapticConfirm()
         var showDeleteConfirm by remember { mutableStateOf(false) }
 
         val analyticsConsent by remember {
@@ -634,7 +649,7 @@ object CoreModule : SpyglassModule {
                 },
             )
             SpyglassDivider()
-            TextButton(onClick = { showDeleteConfirm = true }) {
+            TextButton(onClick = { hapticConfirm(); showDeleteConfirm = true }) {
                 Text(stringResource(R.string.settings_delete_data), color = Red400)
             }
             SpyglassDivider()
@@ -643,6 +658,7 @@ object CoreModule : SpyglassModule {
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.clickable {
+                    hapticClick()
                     uriHandler.openUri("https://hardknocks.university/privacy-policy.html")
                 },
             )
@@ -657,6 +673,7 @@ object CoreModule : SpyglassModule {
                 },
                 confirmButton = {
                     TextButton(onClick = {
+                        hapticConfirm()
                         scope.launch {
                             dev.spyglass.android.data.repository.GameDataRepository.get(context).deleteAllUserData()
                         }
@@ -666,7 +683,7 @@ object CoreModule : SpyglassModule {
                     }
                 },
                 dismissButton = {
-                    TextButton(onClick = { showDeleteConfirm = false }) {
+                    TextButton(onClick = { hapticClick(); showDeleteConfirm = false }) {
                         Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 },
@@ -730,6 +747,7 @@ object CoreModule : SpyglassModule {
         checked: Boolean,
         onCheckedChange: (Boolean) -> Unit,
     ) {
+        val hapticConfirm = rememberHapticConfirm()
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -741,7 +759,7 @@ object CoreModule : SpyglassModule {
             }
             Switch(
                 checked = checked,
-                onCheckedChange = onCheckedChange,
+                onCheckedChange = { hapticConfirm(); onCheckedChange(it) },
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = MaterialTheme.colorScheme.primary,
                     checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
@@ -758,10 +776,11 @@ object CoreModule : SpyglassModule {
         description: String,
         onClick: () -> Unit,
     ) {
+        val hapticClick = rememberHapticClick()
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable(onClick = onClick)
+                .clickable { hapticClick(); onClick() }
                 .padding(vertical = 6.dp),
         ) {
             Text(title, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary)

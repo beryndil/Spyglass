@@ -54,6 +54,8 @@ private fun ListPicker(vm: ShoppingViewModel) {
     val lists by vm.allLists.collectAsStateWithLifecycle()
     var showDialog by remember { mutableStateOf(false) }
     var listToDelete by remember { mutableStateOf<Long?>(null) }
+    val hapticClick = rememberHapticClick()
+    val hapticConfirm = rememberHapticConfirm()
 
     LazyColumn(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
@@ -69,7 +71,7 @@ private fun ListPicker(vm: ShoppingViewModel) {
 
         item {
             Button(
-                onClick = { showDialog = true },
+                onClick = { hapticClick(); showDialog = true },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary),
                 modifier = Modifier.fillMaxWidth(),
             ) {
@@ -94,10 +96,10 @@ private fun ListPicker(vm: ShoppingViewModel) {
                 headline = list.name,
                 supporting = "Created ${formatDate(list.createdAt)}",
                 leadingIcon = PixelIcons.Storage,
-                modifier = Modifier.clickable { vm.selectList(list.id) },
+                modifier = Modifier.clickable { hapticClick(); vm.selectList(list.id) },
                 trailing = {
                     IconButton(
-                        onClick = { listToDelete = list.id },
+                        onClick = { hapticConfirm(); listToDelete = list.id },
                         modifier = Modifier.size(32.dp),
                     ) {
                         Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(18.dp))
@@ -125,12 +127,12 @@ private fun ListPicker(vm: ShoppingViewModel) {
             title = { Text("Delete list?", color = MaterialTheme.colorScheme.onSurface) },
             text = { Text("This will permanently remove this list and all its items.", color = MaterialTheme.colorScheme.onSurfaceVariant) },
             confirmButton = {
-                TextButton(onClick = { vm.deleteList(id); listToDelete = null }) {
+                TextButton(onClick = { hapticConfirm(); vm.deleteList(id); listToDelete = null }) {
                     Text(stringResource(R.string.delete), color = NetherRed)
                 }
             },
             dismissButton = {
-                TextButton(onClick = { listToDelete = null }) {
+                TextButton(onClick = { hapticClick(); listToDelete = null }) {
                     Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             },
@@ -143,6 +145,7 @@ private fun ListPicker(vm: ShoppingViewModel) {
 
 @Composable
 private fun ListDetail(vm: ShoppingViewModel) {
+    val hapticClick = rememberHapticClick()
     val listId by vm.selectedListId.collectAsStateWithLifecycle()
     val lists by vm.allLists.collectAsStateWithLifecycle()
     val items by vm.selectedListItems.collectAsStateWithLifecycle()
@@ -168,7 +171,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
                 modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                IconButton(onClick = { vm.selectList(null) }) {
+                IconButton(onClick = { hapticClick(); vm.selectList(null) }) {
                     Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back), tint = MaterialTheme.colorScheme.primary)
                 }
                 Text(
@@ -179,7 +182,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                IconButton(onClick = { showRenameDialog = true }, modifier = Modifier.size(32.dp)) {
+                IconButton(onClick = { hapticClick(); showRenameDialog = true }, modifier = Modifier.size(32.dp)) {
                     Icon(Icons.Default.Edit, contentDescription = "Rename list", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(18.dp))
                 }
                 Spacer(Modifier.width(4.dp))
@@ -232,6 +235,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
                     if (selectedId != null) {
                         IconButton(
                             onClick = {
+                                hapticClick()
                                 val qty = quantityInput.toIntOrNull() ?: 1
                                 if (qty in 1..10_000_000) {
                                     vm.addItem(selectedId!!, selectedName, qty)
@@ -259,6 +263,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clickable {
+                                        hapticClick()
                                         selectedId = id
                                         selectedName = name
                                         vm.setSearchQuery(name)
@@ -395,6 +400,8 @@ private fun ShoppingItemRow(
     onDelete: () -> Unit,
     onQuantityChange: (Int) -> Unit,
 ) {
+    val hapticClick = rememberHapticClick()
+    val hapticConfirm = rememberHapticConfirm()
     var editingQty by remember { mutableStateOf(false) }
     var qtyInput by remember(item.quantity) { mutableStateOf(item.quantity.toString()) }
 
@@ -403,13 +410,13 @@ private fun ShoppingItemRow(
             .fillMaxWidth()
             .background(LocalSurfaceCard.current, RoundedCornerShape(10.dp))
             .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(10.dp))
-            .clickable { onTap() }
+            .clickable { hapticClick(); onTap() }
             .padding(horizontal = 10.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Checkbox(
             checked = item.checked,
-            onCheckedChange = { onCheckedChange() },
+            onCheckedChange = { hapticConfirm(); onCheckedChange() },
             colors = CheckboxDefaults.colors(
                 checkedColor = MaterialTheme.colorScheme.primary,
                 uncheckedColor = MaterialTheme.colorScheme.secondary,
@@ -453,6 +460,7 @@ private fun ShoppingItemRow(
                     .padding(horizontal = 4.dp, vertical = 8.dp),
             )
             TextButton(onClick = {
+                hapticClick()
                 val qty = qtyInput.toIntOrNull()
                 if (qty != null && qty in 1..10_000_000) onQuantityChange(qty)
                 editingQty = false
@@ -468,7 +476,7 @@ private fun ShoppingItemRow(
                     .padding(horizontal = 2.dp),
             ) {
                 IconButton(
-                    onClick = { if (item.quantity > 1) onQuantityChange(item.quantity - 1) },
+                    onClick = { hapticClick(); if (item.quantity > 1) onQuantityChange(item.quantity - 1) },
                     modifier = Modifier.size(28.dp),
                 ) {
                     Text("\u2212", color = if (item.quantity > 1) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline, style = MaterialTheme.typography.titleMedium)
@@ -478,18 +486,18 @@ private fun ShoppingItemRow(
                     style = MaterialTheme.typography.titleMedium,
                     color = if (item.checked) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary,
                     modifier = Modifier
-                        .clickable { editingQty = true }
+                        .clickable { hapticClick(); editingQty = true }
                         .padding(horizontal = 6.dp),
                 )
                 IconButton(
-                    onClick = { onQuantityChange(item.quantity + 1) },
+                    onClick = { hapticClick(); onQuantityChange(item.quantity + 1) },
                     modifier = Modifier.size(28.dp),
                 ) {
                     Text("+", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleMedium)
                 }
             }
         }
-        IconButton(onClick = onDelete, modifier = Modifier.size(28.dp)) {
+        IconButton(onClick = { hapticConfirm(); onDelete() }, modifier = Modifier.size(28.dp)) {
             Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete), tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
         }
     }
@@ -559,6 +567,7 @@ private fun ItemBreakdown(
 
 @Composable
 private fun NewListDialog(onConfirm: (String) -> Unit, onDismiss: () -> Unit) {
+    val hapticClick = rememberHapticClick()
     var name by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -577,14 +586,14 @@ private fun NewListDialog(onConfirm: (String) -> Unit, onDismiss: () -> Unit) {
         },
         confirmButton = {
             TextButton(
-                onClick = { if (name.isNotBlank()) onConfirm(name.trim()) },
+                onClick = { hapticClick(); if (name.isNotBlank()) onConfirm(name.trim()) },
                 enabled = name.isNotBlank(),
             ) {
                 Text("Create", color = if (name.isNotBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            TextButton(onClick = { hapticClick(); onDismiss() }) { Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant) }
         },
         containerColor = MaterialTheme.colorScheme.surface,
     )
@@ -592,6 +601,7 @@ private fun NewListDialog(onConfirm: (String) -> Unit, onDismiss: () -> Unit) {
 
 @Composable
 private fun RenameDialog(currentName: String, onConfirm: (String) -> Unit, onDismiss: () -> Unit) {
+    val hapticClick = rememberHapticClick()
     var name by remember { mutableStateOf(currentName) }
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -609,14 +619,14 @@ private fun RenameDialog(currentName: String, onConfirm: (String) -> Unit, onDis
         },
         confirmButton = {
             TextButton(
-                onClick = { if (name.isNotBlank()) onConfirm(name.trim()) },
+                onClick = { hapticClick(); if (name.isNotBlank()) onConfirm(name.trim()) },
                 enabled = name.isNotBlank(),
             ) {
                 Text("Rename", color = if (name.isNotBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            TextButton(onClick = { hapticClick(); onDismiss() }) { Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant) }
         },
         containerColor = MaterialTheme.colorScheme.surface,
     )

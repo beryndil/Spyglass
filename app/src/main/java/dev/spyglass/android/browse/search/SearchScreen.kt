@@ -133,6 +133,7 @@ fun SearchScreen(
     onResultTap: (tab: Int, id: String) -> Unit = { _, _ -> },
     vm: SearchViewModel = viewModel(),
 ) {
+    val hapticClick = rememberHapticClick()
     val query   by vm.query.collectAsStateWithLifecycle()
     val results by vm.results.collectAsStateWithLifecycle()
 
@@ -164,7 +165,7 @@ fun SearchScreen(
                         supporting  = "",
                         leadingIcon = icon,
                         leadingIconTint = if (icon is SpyglassIcon.Drawable) androidx.compose.ui.graphics.Color.Unspecified else typeColor(r.type),
-                        modifier    = Modifier.clickable { onResultTap(browseTabForType(r.type), r.id) },
+                        modifier    = Modifier.clickable { hapticClick(); onResultTap(browseTabForType(r.type), r.id) },
                         trailing    = {
                             Column(horizontalAlignment = androidx.compose.ui.Alignment.End) {
                                 CategoryBadge(label = r.type, color = typeColor(r.type))
