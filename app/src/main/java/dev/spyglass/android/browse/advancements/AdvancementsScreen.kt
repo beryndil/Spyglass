@@ -592,6 +592,12 @@ private fun AdvancementDetailCard(
             Text(adv.hint, style = MaterialTheme.typography.bodyMedium, color = Emerald)
         }
 
+        // Tutorial section
+        if (adv.tutorial.isNotEmpty()) {
+            SectionHeader(title = "Tutorial")
+            Text(adv.tutorial, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+        }
+
         // Stats
         SectionHeader(title = "Stats")
         StatRow(stringResource(R.string.category), categoryLabel(adv.category))

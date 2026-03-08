@@ -71,7 +71,7 @@ private fun browseLinks() = listOf(
     QuickLink(PixelIcons.Enchant,   "Enchants",     EnderPurple)                                 to 7,
     QuickLink(PixelIcons.Potion,    "Potions",      PotionBlue)                                  to 8,
     // ── Progress & Info ──
-    QuickLink(PixelIcons.Advancement, "Advancements", Emerald)                                   to 9,
+    QuickLink(PixelIcons.Advancement, "Advances", Emerald)                                         to 9,
     QuickLink(PixelIcons.Command,   "Commands",     PotionBlue)                                  to 10,
     QuickLink(PixelIcons.Bookmark,  "Reference",    MaterialTheme.colorScheme.primary)           to 11,
     QuickLink(PixelIcons.Clock,     "Versions",     MaterialTheme.colorScheme.secondary)         to 12,
@@ -646,7 +646,7 @@ private fun connectLinks(
             add(QuickLink(PixelIcons.Steve,   "Players")       to "connect_players")
         }
         add(QuickLink(PixelIcons.Anvil,       "Statistics")    to "connect_statistics")
-        add(QuickLink(PixelIcons.Advancement, "Advancements")  to "connect_advancements")
+        add(QuickLink(PixelIcons.Advancement, "Advances")       to "connect_advancements")
     }
 }
 
