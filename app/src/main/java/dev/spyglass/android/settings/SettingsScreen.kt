@@ -119,10 +119,13 @@ fun SettingsScreen(
             SectionHeader(stringResource(R.string.settings))
         }
 
-        // ── Theme ───────────────────────────────────────────────────────
-        item(key = "theme") {
-            SectionHeader(stringResource(R.string.settings_theme))
+        // ══════════════════════════════════════════════════════════════════
+        // 1. APPEARANCE — theme, colors, font, haptics, animations
+        // ══════════════════════════════════════════════════════════════════
+        item(key = "appearance") {
+            SectionHeader("Appearance")
             ResultCard {
+                // Theme colors
                 Text(
                     stringResource(R.string.settings_background),
                     style = MaterialTheme.typography.bodyMedium,
@@ -175,12 +178,58 @@ fun SettingsScreen(
                     checked = highContrast,
                     onCheckedChange = vm::setHighContrast,
                 )
+
+                SpyglassDivider()
+
+                // Font size
+                Text(
+                    stringResource(R.string.settings_font_size),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    stringResource(R.string.settings_font_size_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    FontScaleOptions.forEachIndexed { i, (label, _) ->
+                        FilterChip(
+                            selected = fontScale == i,
+                            onClick = { hapticClick(); vm.setFontScale(i) },
+                            label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                        )
+                    }
+                }
+
+                SpyglassDivider()
+
+                SettingsToggle(
+                    title = stringResource(R.string.settings_haptic_feedback),
+                    description = stringResource(R.string.settings_haptic_feedback_desc),
+                    checked = hapticFeedback,
+                    onCheckedChange = vm::setHapticFeedback,
+                )
+
+                SpyglassDivider()
+
+                SettingsToggle(
+                    title = stringResource(R.string.settings_reduce_animations),
+                    description = stringResource(R.string.settings_reduce_animations_desc),
+                    checked = reduceAnimations,
+                    onCheckedChange = vm::setReduceAnimations,
+                )
             }
         }
 
-        // ── Game Version ────────────────────────────────────────────────
-        item(key = "game_version") {
-            SectionHeader("Game Version")
+        // ══════════════════════════════════════════════════════════════════
+        // 2. GAME SETTINGS — edition, version, filters, game clock
+        // ══════════════════════════════════════════════════════════════════
+        item(key = "game_settings") {
+            SectionHeader("Game Settings")
             ResultCard {
                 Text(
                     "Filter content by Minecraft edition and version",
@@ -230,6 +279,39 @@ fun SettingsScreen(
                         )
                     }
                 }
+
+                SpyglassDivider()
+
+                SettingsToggle(
+                    title = stringResource(R.string.settings_hide_unobtainable),
+                    description = stringResource(R.string.settings_hide_unobtainable_desc),
+                    checked = hideUnobtainable,
+                    onCheckedChange = vm::setHideUnobtainableBlocks,
+                )
+
+                SpyglassDivider()
+
+                SettingsToggle(
+                    title = stringResource(R.string.settings_show_experimental),
+                    description = stringResource(R.string.settings_show_experimental_desc),
+                    checked = showExperimental,
+                    onCheckedChange = vm::setShowExperimental,
+                )
+
+                SpyglassDivider()
+
+                SettingsToggle(
+                    title = stringResource(R.string.settings_game_clock),
+                    description = stringResource(R.string.settings_game_clock_desc),
+                    checked = gameClockEnabled,
+                    onCheckedChange = vm::setGameClockEnabled,
+                )
+                Text(
+                    stringResource(R.string.settings_configure_clock),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.clickable { hapticClick(); onCalcTab(9) },
+                )
             }
 
             val selectedVersion = minecraftVersion.ifBlank { MinecraftVersions.JAVA_VERSIONS.last() }
@@ -247,10 +329,18 @@ fun SettingsScreen(
             }
         }
 
-        // ── Default Startup Screen ──────────────────────────────────────
-        item(key = "startup_tab") {
-            SectionHeader(stringResource(R.string.settings_startup_tab))
+        // ══════════════════════════════════════════════════════════════════
+        // 3. DEFAULTS — startup screen, browse tab, tool tab, home screen
+        // ══════════════════════════════════════════════════════════════════
+        item(key = "defaults") {
+            SectionHeader("Defaults")
             ResultCard {
+                // Startup screen
+                Text(
+                    stringResource(R.string.settings_startup_tab),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
                 Text(
                     stringResource(R.string.settings_startup_tab_desc),
                     style = MaterialTheme.typography.bodySmall,
@@ -274,13 +364,15 @@ fun SettingsScreen(
                         )
                     }
                 }
-            }
-        }
 
-        // ── Default Browse Tab ──────────────────────────────────────────
-        item(key = "browse_tab") {
-            SectionHeader(stringResource(R.string.settings_default_browse_tab))
-            ResultCard {
+                SpyglassDivider()
+
+                // Default browse tab
+                Text(
+                    stringResource(R.string.settings_default_browse_tab),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
                 Text(
                     stringResource(R.string.settings_browse_tab_desc),
                     style = MaterialTheme.typography.bodySmall,
@@ -298,13 +390,15 @@ fun SettingsScreen(
                         )
                     }
                 }
-            }
-        }
 
-        // ── Default Tool Tab ────────────────────────────────────────────
-        item(key = "tool_tab") {
-            SectionHeader(stringResource(R.string.settings_default_tool_tab))
-            ResultCard {
+                SpyglassDivider()
+
+                // Default tool tab
+                Text(
+                    stringResource(R.string.settings_default_tool_tab),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
                 Text(
                     stringResource(R.string.settings_tool_tab_desc),
                     style = MaterialTheme.typography.bodySmall,
@@ -322,116 +416,33 @@ fun SettingsScreen(
                         )
                     }
                 }
-            }
-        }
 
-        // ── Display Toggles ─────────────────────────────────────────────
-        item(key = "display") {
-            SectionHeader(stringResource(R.string.settings_display))
-            ResultCard {
+                SpyglassDivider()
+
+                // Home screen toggles
                 SettingsToggle(
                     title = stringResource(R.string.settings_tip_of_day),
                     description = stringResource(R.string.settings_tip_of_day_desc),
                     checked = showTipOfDay,
                     onCheckedChange = vm::setShowTipOfDay,
                 )
+
                 SpyglassDivider()
+
                 SettingsToggle(
                     title = stringResource(R.string.settings_favorites_on_home),
                     description = stringResource(R.string.settings_favorites_on_home_desc),
                     checked = showFavoritesOnHome,
                     onCheckedChange = vm::setShowFavoritesOnHome,
                 )
-                SpyglassDivider()
-                SettingsToggle(
-                    title = stringResource(R.string.settings_hide_unobtainable),
-                    description = stringResource(R.string.settings_hide_unobtainable_desc),
-                    checked = hideUnobtainable,
-                    onCheckedChange = vm::setHideUnobtainableBlocks,
-                )
-                SpyglassDivider()
-                SettingsToggle(
-                    title = stringResource(R.string.settings_show_experimental),
-                    description = stringResource(R.string.settings_show_experimental_desc),
-                    checked = showExperimental,
-                    onCheckedChange = vm::setShowExperimental,
-                )
-                SpyglassDivider()
-                SettingsToggle(
-                    title = stringResource(R.string.settings_haptic_feedback),
-                    description = stringResource(R.string.settings_haptic_feedback_desc),
-                    checked = hapticFeedback,
-                    onCheckedChange = vm::setHapticFeedback,
-                )
-                SpyglassDivider()
-                SettingsToggle(
-                    title = stringResource(R.string.settings_reduce_animations),
-                    description = stringResource(R.string.settings_reduce_animations_desc),
-                    checked = reduceAnimations,
-                    onCheckedChange = vm::setReduceAnimations,
-                )
-                SpyglassDivider()
-                Text(
-                    stringResource(R.string.settings_font_size),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    stringResource(R.string.settings_font_size_desc),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    FontScaleOptions.forEachIndexed { i, (label, _) ->
-                        FilterChip(
-                            selected = fontScale == i,
-                            onClick = { hapticClick(); vm.setFontScale(i) },
-                            label = { Text(label, style = MaterialTheme.typography.labelSmall) },
-                        )
-                    }
-                }
             }
         }
 
-        // ── Game Clock ─────────────────────────────────────────────────────
-        item(key = "clock") {
-            SectionHeader(stringResource(R.string.settings_game_clock))
-            ResultCard {
-                SettingsToggle(
-                    title = stringResource(R.string.settings_game_clock),
-                    description = stringResource(R.string.settings_game_clock_desc),
-                    checked = gameClockEnabled,
-                    onCheckedChange = vm::setGameClockEnabled,
-                )
-                SpyglassDivider()
-                Text(
-                    stringResource(R.string.settings_configure_clock),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.clickable { hapticClick(); onCalcTab(9) },
-                )
-            }
-        }
-
-        // ── Security ────────────────────────────────────────────────────
-        item(key = "security") {
-            SectionHeader(stringResource(R.string.settings_security))
-            ResultCard {
-                SettingsToggle(
-                    title = stringResource(R.string.settings_app_lock),
-                    description = stringResource(R.string.settings_app_lock_desc),
-                    checked = appLockEnabled,
-                    onCheckedChange = vm::setAppLockEnabled,
-                )
-            }
-        }
-
-        // ── Data & Storage ────────────────────────────────────────────────
-        item(key = "data_storage") {
-            SectionHeader(stringResource(R.string.settings_data_storage))
+        // ══════════════════════════════════════════════════════════════════
+        // 4. DATA & SYNC — offline, sync, storage, Connect link
+        // ══════════════════════════════════════════════════════════════════
+        item(key = "data_sync") {
+            SectionHeader("Data & Sync")
             ResultCard {
                 // Offline mode
                 SettingsToggle(
@@ -446,7 +457,7 @@ fun SettingsScreen(
                 // Sync frequency
                 Text(
                     stringResource(R.string.settings_sync_frequency),
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = if (offlineMode) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
@@ -487,7 +498,7 @@ fun SettingsScreen(
                 // Storage usage
                 Text(
                     stringResource(R.string.settings_storage_usage),
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
@@ -505,63 +516,22 @@ fun SettingsScreen(
                         Text(stringResource(R.string.settings_clear_cache), color = MaterialTheme.colorScheme.primary)
                     }
                 }
-            }
-        }
 
-        // ── Favorites Management ────────────────────────────────────────
-        item(key = "favorites") {
-            SectionHeader(stringResource(R.string.settings_favorites))
-            ResultCard {
-                if (allFavorites.isEmpty()) {
-                    Text(
-                        stringResource(R.string.settings_no_favorites),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                } else {
-                    Text(
-                        stringResource(R.string.settings_favorites_count, allFavorites.size),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    allFavorites.forEach { fav ->
-                        Text(
-                            "\u2605  ${fav.displayName}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    SpyglassDivider()
-                    TextButton(onClick = { hapticConfirm(); vm.clearAllFavorites() }) {
-                        Text(stringResource(R.string.settings_clear_all_favorites), color = Red400)
-                    }
-                }
-            }
-        }
+                SpyglassDivider()
 
-        // ── Spyglass Connect ──────────────────────────────────────────
-        item(key = "connect") {
-            SectionHeader("Spyglass Connect")
-            ResultCard {
+                // Spyglass Connect link
                 Text(
-                    "Stream Minecraft world data from your PC over local WiFi",
+                    "Spyglass Connect",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    "Stream Minecraft world data from your PC over local WiFi. Pairing is managed from the Connect screen.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
-                Spacer(Modifier.height(8.dp))
                 Text(
-                    "Paired device info and connection settings are managed from the Connect screen.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Spacer(Modifier.height(8.dp))
-                Text(
-                    "Download Spyglass Connect for your computer:",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Text(
-                    "hardknocks.university",
+                    "Download for PC: hardknocks.university",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
@@ -572,35 +542,48 @@ fun SettingsScreen(
             }
         }
 
-        // ── Privacy & Data ─────────────────────────────────────────────
-        item(key = "privacy") {
-            SectionHeader(stringResource(R.string.settings_privacy))
+        // ══════════════════════════════════════════════════════════════════
+        // 5. PRIVACY & SECURITY — app lock, analytics, data deletion
+        // ══════════════════════════════════════════════════════════════════
+        item(key = "privacy_security") {
+            SectionHeader("Privacy & Security")
             ResultCard {
+                SettingsToggle(
+                    title = stringResource(R.string.settings_app_lock),
+                    description = stringResource(R.string.settings_app_lock_desc),
+                    checked = appLockEnabled,
+                    onCheckedChange = vm::setAppLockEnabled,
+                )
+
+                SpyglassDivider()
+
                 SettingsToggle(
                     title = stringResource(R.string.consent_analytics),
                     description = stringResource(R.string.consent_analytics_desc),
                     checked = analyticsConsent,
                     onCheckedChange = vm::setAnalyticsConsent,
                 )
+
                 SpyglassDivider()
+
                 SettingsToggle(
                     title = stringResource(R.string.consent_crash_reports),
                     description = stringResource(R.string.consent_crash_reports_desc),
                     checked = crashConsent,
                     onCheckedChange = vm::setCrashConsent,
                 )
+
                 SpyglassDivider()
+
                 SettingsToggle(
                     title = stringResource(R.string.consent_personalized_ads),
                     description = stringResource(R.string.consent_personalized_ads_desc),
                     checked = adPersonalizationConsent,
                     onCheckedChange = vm::setAdPersonalizationConsent,
                 )
+
                 SpyglassDivider()
-                TextButton(onClick = { hapticConfirm(); showDeleteConfirm = true }) {
-                    Text(stringResource(R.string.settings_delete_data), color = Red400)
-                }
-                SpyglassDivider()
+
                 Text(
                     text = stringResource(R.string.settings_privacy_policy),
                     style = MaterialTheme.typography.bodyMedium,
@@ -610,25 +593,25 @@ fun SettingsScreen(
                         uriHandler.openUri("https://hardknocks.university/privacy-policy.html")
                     },
                 )
+
+                SpyglassDivider()
+
+                TextButton(onClick = { hapticConfirm(); showDeleteConfirm = true }) {
+                    Text(stringResource(R.string.settings_delete_data), color = Red400)
+                }
             }
         }
 
-        // ── Quick Links ──────────────────────────────────────────────────
-        item(key = "quick_links") {
-            SectionHeader(stringResource(R.string.settings_quick_links))
+        // ══════════════════════════════════════════════════════════════════
+        // 6. ABOUT — links, favorites, feedback
+        // ══════════════════════════════════════════════════════════════════
+        item(key = "about") {
+            SectionHeader("About")
             ResultCard {
                 SettingsLink(
-                    title = stringResource(R.string.settings_rate_app),
-                    description = stringResource(R.string.settings_rate_app_desc),
-                    onClick = {
-                        uriHandler.openUri("https://play.google.com/store/apps/details?id=dev.spyglass.android")
-                    },
-                )
-                SpyglassDivider()
-                SettingsLink(
-                    title = stringResource(R.string.settings_send_feedback),
-                    description = stringResource(R.string.settings_send_feedback_desc),
-                    onClick = onFeedback,
+                    title = stringResource(R.string.settings_about),
+                    description = stringResource(R.string.settings_about_desc),
+                    onClick = onAbout,
                 )
                 SpyglassDivider()
                 SettingsLink(
@@ -638,9 +621,17 @@ fun SettingsScreen(
                 )
                 SpyglassDivider()
                 SettingsLink(
-                    title = stringResource(R.string.settings_about),
-                    description = stringResource(R.string.settings_about_desc),
-                    onClick = onAbout,
+                    title = stringResource(R.string.settings_send_feedback),
+                    description = stringResource(R.string.settings_send_feedback_desc),
+                    onClick = onFeedback,
+                )
+                SpyglassDivider()
+                SettingsLink(
+                    title = stringResource(R.string.settings_rate_app),
+                    description = stringResource(R.string.settings_rate_app_desc),
+                    onClick = {
+                        uriHandler.openUri("https://play.google.com/store/apps/details?id=dev.spyglass.android")
+                    },
                 )
                 SpyglassDivider()
                 SettingsLink(
@@ -655,6 +646,41 @@ fun SettingsScreen(
                         )
                     },
                 )
+            }
+        }
+
+        // Favorites management
+        item(key = "favorites") {
+            ResultCard {
+                Text(
+                    stringResource(R.string.settings_favorites),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                if (allFavorites.isEmpty()) {
+                    Text(
+                        stringResource(R.string.settings_no_favorites),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                } else {
+                    Text(
+                        stringResource(R.string.settings_favorites_count, allFavorites.size),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    allFavorites.forEach { fav ->
+                        Text(
+                            "\u2605  ${fav.displayName}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    SpyglassDivider()
+                    TextButton(onClick = { hapticConfirm(); vm.clearAllFavorites() }) {
+                        Text(stringResource(R.string.settings_clear_all_favorites), color = Red400)
+                    }
+                }
             }
         }
 
