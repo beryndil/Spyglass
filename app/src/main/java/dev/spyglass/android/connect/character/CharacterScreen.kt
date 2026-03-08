@@ -167,15 +167,20 @@ private fun CharacterContent(
                     .background(if (playerBodySkin == null) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent),
                 contentAlignment = Alignment.Center,
             ) {
-                if (playerBodySkin != null) {
-                    Image(
+                when {
+                    playerBodySkin != null -> Image(
                         bitmap = playerBodySkin.asImageBitmap(),
                         contentDescription = "Player body",
                         modifier = Modifier.fillMaxHeight(),
                         contentScale = ContentScale.Fit,
                     )
-                } else {
-                    SpyglassIconImage(
+                    playerSkin != null -> Image(
+                        bitmap = playerSkin.asImageBitmap(),
+                        contentDescription = "Player head",
+                        modifier = Modifier.size(64.dp),
+                        contentScale = ContentScale.Fit,
+                    )
+                    else -> SpyglassIconImage(
                         PixelIcons.Steve,
                         contentDescription = "Player",
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,

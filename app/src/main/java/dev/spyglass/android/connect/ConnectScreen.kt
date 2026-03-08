@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import android.graphics.Bitmap
 import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.core.ui.*
 
@@ -42,6 +43,7 @@ fun ConnectScreen(
     val selectedWorld by viewModel.selectedWorld.collectAsStateWithLifecycle()
     val playerList by viewModel.playerList.collectAsStateWithLifecycle()
     val selectedPlayerUuid by viewModel.selectedPlayerUuid.collectAsStateWithLifecycle()
+    val playerSkin by viewModel.playerSkin.collectAsStateWithLifecycle()
 
     DisposableEffect(Unit) {
         viewModel.setActiveScreen("connect")
@@ -87,6 +89,7 @@ fun ConnectScreen(
                     DisconnectedContent(
                         state = state,
                         hasCachedData = selectedWorld != null,
+                        playerSkin = playerSkin,
                         onScanQr = onScanQr,
                         onReconnect = { viewModel.tryReconnect() },
                         onCharacter = onCharacter,
@@ -172,6 +175,7 @@ private fun ConnectionStatusCard(state: ConnectionState) {
 private fun DisconnectedContent(
     state: ConnectionState,
     hasCachedData: Boolean = false,
+    playerSkin: Bitmap? = null,
     onScanQr: () -> Unit,
     onReconnect: () -> Unit,
     onCharacter: () -> Unit = {},
@@ -208,11 +212,12 @@ private fun DisconnectedContent(
         // Cached data quick links
         if (hasCachedData) {
             SectionHeader("Cached Data (Offline)")
+            val characterIcon: SpyglassIcon = if (playerSkin != null) SpyglassIcon.BitmapIcon(playerSkin) else PixelIcons.Steve
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                ConnectQuickLink("Character", PixelIcons.Mob, Modifier.weight(1f), onClick = onCharacter)
+                ConnectQuickLink("Character", characterIcon, Modifier.weight(1f), onClick = onCharacter)
                 ConnectQuickLink("Inventory", PixelIcons.Item, Modifier.weight(1f), onClick = onInventory)
             }
             Row(
