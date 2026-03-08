@@ -237,6 +237,8 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     /** Load cached data for a world into StateFlows. */
     private suspend fun loadCachedWorldData(worldFolder: String) {
         val ctx = getApplication<Application>()
+        // Load waypoints FIRST so autoPopulateWaypoints (triggered by playerData) merges correctly
+        ConnectCache.loadWaypoints(ctx, worldFolder)?.let { _connectWaypoints.value = it }
         ConnectCache.loadPlayerData(ctx, worldFolder)?.let { _playerData.value = it }
         ConnectCache.loadStructures(ctx, worldFolder)?.let { _structures.value = it }
         ConnectCache.loadMapData(ctx, worldFolder)?.let { _mapTiles.value = it }
@@ -246,7 +248,6 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         ConnectCache.loadSkinBody(ctx, worldFolder)?.let { _playerBodySkin.value = it }
         ConnectCache.loadLastUpdated(ctx, worldFolder)?.let { _lastUpdated.value = it }
         ConnectCache.loadPets(ctx, worldFolder)?.let { _pets.value = it }
-        ConnectCache.loadWaypoints(ctx, worldFolder)?.let { _connectWaypoints.value = it }
     }
 
     /** Connect via QR pairing data. */
@@ -452,6 +453,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             val payload = json.encodeToJsonElement(SelectWorldPayload(folderName))
             client.sendRequest(MessageType.SELECT_WORLD, payload)
             requestPlayerList()
+            requestPlayerData()
         }
     }
 
@@ -771,15 +773,20 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Auto-generate system waypoints from player data, preserving custom ones. */
     private fun autoPopulateWaypoints(data: PlayerData) {
+        Timber.d("autoPopulateWaypoints: worldSpawn=${data.worldSpawn != null}, spawnLocation=${data.spawnLocation != null}, lastDeath=${data.lastDeathLocation != null}")
         val current = _connectWaypoints.value.toMutableList()
 
-        fun upsertAuto(id: String, builder: () -> ConnectWaypoint?) {
-            val wp = builder() ?: return
+        fun upsertOrRemoveAuto(id: String, builder: () -> ConnectWaypoint?) {
+            val wp = builder()
             val idx = current.indexOfFirst { it.id == id }
-            if (idx >= 0) current[idx] = wp else current.add(wp)
+            if (wp != null) {
+                if (idx >= 0) current[idx] = wp else current.add(wp)
+            } else if (idx >= 0) {
+                current.removeAt(idx) // Remove stale auto waypoint
+            }
         }
 
-        upsertAuto(ConnectWaypoint.ID_WORLD_SPAWN) {
+        upsertOrRemoveAuto(ConnectWaypoint.ID_WORLD_SPAWN) {
             data.worldSpawn?.let {
                 ConnectWaypoint(
                     id = ConnectWaypoint.ID_WORLD_SPAWN,
@@ -792,7 +799,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             }
         }
 
-        upsertAuto(ConnectWaypoint.ID_RESPAWN) {
+        upsertOrRemoveAuto(ConnectWaypoint.ID_RESPAWN) {
             data.spawnLocation?.let {
                 val spawnType = if (it.dimension != "overworld" || data.spawnForced) "Respawn Anchor" else "Bed"
                 ConnectWaypoint(
@@ -807,7 +814,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             }
         }
 
-        upsertAuto(ConnectWaypoint.ID_DEATH) {
+        upsertOrRemoveAuto(ConnectWaypoint.ID_DEATH) {
             data.lastDeathLocation?.let {
                 ConnectWaypoint(
                     id = ConnectWaypoint.ID_DEATH,
@@ -820,6 +827,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             }
         }
 
+        Timber.d("Auto-populated waypoints: ${current.count { it.source == ConnectWaypoint.SOURCE_AUTO }} auto, ${current.count { it.source == ConnectWaypoint.SOURCE_CUSTOM }} custom")
         _connectWaypoints.value = current
         saveWaypointsToCache()
     }
