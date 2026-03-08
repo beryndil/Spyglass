@@ -9595,12 +9595,6 @@
   },
   {
     "entityType": "block",
-    "entityId": "waxed_weathered_lightning_rod",
-    "addedInJava": "1.17",
-    "addedInBedrock": "1.17"
-  },
-  {
-    "entityType": "block",
     "entityId": "weathered_chiseled_copper",
     "addedInJava": "1.21",
     "mechanicsChangedInJava": "1.21",
