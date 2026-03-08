@@ -531,12 +531,12 @@ fun SettingsScreen(
                     color = MaterialTheme.colorScheme.secondary,
                 )
                 Text(
-                    "Download for PC: hardknocks.university",
+                    "Download for PC: hardknocks.com/spyglass-connect",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
                         hapticClick()
-                        uriHandler.openUri("https://hardknocks.university")
+                        uriHandler.openUri("https://hardknocks.com/spyglass-connect")
                     },
                 )
             }

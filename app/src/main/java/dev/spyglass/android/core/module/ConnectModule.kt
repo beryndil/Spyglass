@@ -349,11 +349,11 @@ object ConnectModule : SpyglassModule {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Text(
-                "hardknocks.university",
+                "hardknocks.com/spyglass-connect",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.clickable {
-                    uriHandler.openUri("https://hardknocks.university")
+                    uriHandler.openUri("https://hardknocks.com/spyglass-connect")
                 },
             )
         }
