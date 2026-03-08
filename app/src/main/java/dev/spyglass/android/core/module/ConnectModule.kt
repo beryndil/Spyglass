@@ -52,6 +52,7 @@ import dev.spyglass.android.connect.pets.PetsScreen
 import dev.spyglass.android.connect.waypoints.ConnectWaypointsScreen
 import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.core.ui.Emerald
+import dev.spyglass.android.core.ui.MobTextures
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.ResultCard
 import dev.spyglass.android.core.ui.SectionHeader
@@ -442,7 +443,8 @@ object ConnectModule : SpyglassModule {
             add(QuickLink(PixelIcons.Search, "Chest Finder") to "connect_chestfinder")
             add(QuickLink(PixelIcons.Biome, "World Map") to "connect_map")
             add(QuickLink(PixelIcons.Waypoints, "Waypoints") to "connect_waypoints")
-            add(QuickLink(PixelIcons.Mob, "Pets") to "connect_pets")
+            val wolfIcon = MobTextures.get("wolf") ?: PixelIcons.Mob
+            add(QuickLink(wolfIcon, "Pets") to "connect_pets")
             if (playerCount > 1) {
                 add(QuickLink(PixelIcons.Steve, "Players") to "connect_players")
             }
