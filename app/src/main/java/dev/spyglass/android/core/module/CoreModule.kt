@@ -857,7 +857,7 @@ object CoreModule : SpyglassModule {
                 .readTimeout(5, TimeUnit.SECONDS)
                 .build()
             val request = Request.Builder()
-                .url("https://raw.githubusercontent.com/beryndil/Spyglass-Data/main/manifest.json")
+                .url("https://data.hardknocks.university/manifest.json")
                 .build()
             client.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) return null

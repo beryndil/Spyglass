@@ -8,15 +8,14 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 /**
- * Fetches data files from the GitHub repository via raw.githubusercontent.com.
+ * Fetches data files from the Spyglass CDN (Cloudflare Pages fronting Spyglass-Data).
+ * Fallback: raw.githubusercontent.com if CDN is unreachable.
  */
 object GitHubDataClient {
 
-    private const val OWNER = "beryndil"
-    private const val REPO = "Spyglass-Data"
-    private const val BRANCH = "main"
-    private const val BASE_URL =
-        "https://raw.githubusercontent.com/$OWNER/$REPO/$BRANCH"
+    private const val CDN_BASE_URL = "https://data.hardknocks.university"
+    private const val GITHUB_BASE_URL =
+        "https://raw.githubusercontent.com/beryndil/Spyglass-Data/main"
 
     private val client = OkHttpClient.Builder()
         .connectTimeout(15, TimeUnit.SECONDS)
@@ -26,7 +25,7 @@ object GitHubDataClient {
     /** Fetches the remote manifest.json. Returns null on network failure. */
     suspend fun fetchManifest(): DataManifest? = withContext(Dispatchers.IO) {
         try {
-            val body = fetch("$BASE_URL/manifest.json") ?: return@withContext null
+            val body = fetchWithFallback("manifest.json") ?: return@withContext null
             DataManifest.fromJson(body)
         } catch (e: Exception) {
             Timber.w(e, "Failed to parse remote manifest")
@@ -36,20 +35,32 @@ object GitHubDataClient {
 
     /** Fetches a data file by name (e.g. "blocks.json"). Returns null on failure. */
     suspend fun fetchDataFile(fileName: String): String? = withContext(Dispatchers.IO) {
-        fetch("$BASE_URL/$fileName")
+        fetchWithFallback(fileName)
     }
 
     /** Fetches a binary file (e.g. "textures.zip"). Returns null on failure. */
     suspend fun fetchBinaryFile(fileName: String): ByteArray? = withContext(Dispatchers.IO) {
-        fetchBytes("$BASE_URL/$fileName")
+        fetchBytesWithFallback(fileName)
+    }
+
+    /** Try CDN first, fall back to GitHub raw if CDN fails. */
+    private fun fetchWithFallback(path: String): String? {
+        return fetch("$CDN_BASE_URL/$path")
+            ?: fetch("$GITHUB_BASE_URL/$path").also {
+                if (it != null) Timber.d("CDN miss, fell back to GitHub for %s", path)
+            }
+    }
+
+    private fun fetchBytesWithFallback(path: String): ByteArray? {
+        return fetchBytes("$CDN_BASE_URL/$path")
+            ?: fetchBytes("$GITHUB_BASE_URL/$path").also {
+                if (it != null) Timber.d("CDN miss, fell back to GitHub for %s", path)
+            }
     }
 
     private fun fetch(url: String): String? {
         return try {
-            val request = Request.Builder()
-                .url(url)
-                .header("Cache-Control", "no-cache")
-                .build()
+            val request = Request.Builder().url(url).build()
             client.newCall(request).execute().use { response ->
                 if (response.isSuccessful) {
                     response.body?.string()
@@ -66,10 +77,7 @@ object GitHubDataClient {
 
     private fun fetchBytes(url: String): ByteArray? {
         return try {
-            val request = Request.Builder()
-                .url(url)
-                .header("Cache-Control", "no-cache")
-                .build()
+            val request = Request.Builder().url(url).build()
             client.newCall(request).execute().use { response ->
                 if (response.isSuccessful) {
                     response.body?.bytes()
