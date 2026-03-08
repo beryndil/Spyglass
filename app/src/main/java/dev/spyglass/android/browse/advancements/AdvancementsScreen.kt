@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -236,6 +237,15 @@ private fun categoryLabel(cat: String): String = when (cat) {
     "adventure" -> "Adventure"
     "husbandry" -> "Husbandry"
     else -> cat.replaceFirstChar { it.uppercase() }
+}
+
+private fun difficultyColor(difficulty: String): Color = when (difficulty) {
+    "trivial" -> Emerald
+    "easy" -> PotionBlue
+    "medium" -> Color(0xFFFFA726)
+    "hard" -> NetherRed
+    "expert" -> EnderPurple
+    else -> Color.Gray
 }
 
 private fun formatId(id: String): String =
@@ -484,6 +494,10 @@ fun AdvancementsScreen(
                                 else -> Emerald
                             }
                             CategoryBadge(label = typeLabel(adv.type), color = typeColor)
+                            if (adv.difficulty.isNotEmpty()) {
+                                Spacer(Modifier.height(2.dp))
+                                CategoryBadge(label = adv.difficulty.replaceFirstChar { it.uppercase() }, color = difficultyColor(adv.difficulty))
+                            }
                             if (hasChildren) {
                                 Spacer(Modifier.height(2.dp))
                                 val childCount = advancements.count { it.parent == adv.id }
@@ -602,6 +616,9 @@ private fun AdvancementDetailCard(
         SectionHeader(title = "Stats")
         StatRow(stringResource(R.string.category), categoryLabel(adv.category))
         StatRow(stringResource(R.string.type), typeLabel(adv.type))
+        if (adv.difficulty.isNotEmpty()) {
+            StatRow("Difficulty", adv.difficulty.replaceFirstChar { it.uppercase() })
+        }
         if (adv.dimension.isNotEmpty()) {
             StatRow(stringResource(R.string.dimension), adv.dimension.replaceFirstChar { it.uppercase() })
         }
