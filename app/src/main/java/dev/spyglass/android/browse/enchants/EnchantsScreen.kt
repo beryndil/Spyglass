@@ -375,7 +375,7 @@ fun EnchantsScreen(
                         enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
                         exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
-                        EnchantDetailCard(e, enchantIndex, listState, vm, entityLinkIndex, onItemTap, onMobTap, onBiomeTap, onStructureTap, onEnchantTap)
+                        EnchantDetailCard(e, enchantIndex, listState, vm, entityLinkIndex, onItemTap, onMobTap, onBiomeTap, onStructureTap, onEnchantTap, tag, vFilter)
                     }
                 }
             }
@@ -408,6 +408,8 @@ private fun EnchantDetailCard(
     onBiomeTap: (String) -> Unit,
     onStructureTap: (String) -> Unit,
     onEnchantTap: (String) -> Unit,
+    tag: VersionTagEntity? = null,
+    vFilter: VersionFilterState = VersionFilterState(),
 ) {
     val scope = rememberCoroutineScope()
     val reduceMotion = LocalReduceAnimations.current
@@ -415,6 +417,10 @@ private fun EnchantDetailCard(
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         MinecraftIdRow(enchant.id)
+
+        if (tag != null) {
+            VersionEditionSection(tag, vFilter)
+        }
 
         // Description
         if (enchant.description.isNotEmpty()) {

@@ -323,7 +323,7 @@ fun MobsScreen(
                         enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
                         exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
-                        MobDetailCard(m, onNavigateToBiome, onNavigateToStructure, onItemTap, onMobTap, onCalcTab, entityLinkIndex)
+                        MobDetailCard(m, onNavigateToBiome, onNavigateToStructure, onItemTap, onMobTap, onCalcTab, entityLinkIndex, tag, vFilter)
                     }
                 }
             }
@@ -340,12 +340,16 @@ fun MobsScreen(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onItemTap: (String) -> Unit, onMobTap: (String) -> Unit, onCalcTab: (Int) -> Unit, entityLinkIndex: EntityLinkIndex) {
+private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onItemTap: (String) -> Unit, onMobTap: (String) -> Unit, onCalcTab: (Int) -> Unit, entityLinkIndex: EntityLinkIndex, tag: VersionTagEntity? = null, vFilter: VersionFilterState = VersionFilterState()) {
     val drops  = parseStructuredDrops(mob.dropsJson)
     val biomes = parseBiomes(mob.spawnBiomesJson)
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         MinecraftIdRow(mob.id)
+
+        if (tag != null) {
+            VersionEditionSection(tag, vFilter)
+        }
 
         // Description
         if (mob.description.isNotEmpty()) {
