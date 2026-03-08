@@ -15770,5 +15770,173 @@
     "entityType": "recipe",
     "entityId": "yellow_terracotta",
     "addedInJava": "1.6"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "ancient_city",
+    "addedInJava": "1.19",
+    "addedInBedrock": "1.19"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "bastion_remnant",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "buried_treasure",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "desert_pyramid",
+    "addedInJava": "1.3",
+    "addedInBedrock": "0.13",
+    "mechanicsChangedInJava": "1.20",
+    "mechanicsChangeNotes": "Added suspicious sand archaeology"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "desert_well",
+    "addedInJava": "1.2",
+    "addedInBedrock": "0.9",
+    "mechanicsChangedInJava": "1.20",
+    "mechanicsChangeNotes": "Added suspicious sand archaeology"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "dungeon",
+    "addedInJava": "",
+    "addedInBedrock": "0.9",
+    "mechanicsChangedInJava": "1.18",
+    "mechanicsChangeNotes": "Generates more frequently, especially below Y=0"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "end_city",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "end_gateway",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "fossil",
+    "addedInJava": "1.10",
+    "addedInBedrock": "1.1"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "igloo",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "jungle_temple",
+    "addedInJava": "1.3",
+    "addedInBedrock": "0.15",
+    "mechanicsChangedInJava": "1.20",
+    "mechanicsChangeNotes": "Added wild armor trim smithing template"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "mineshaft",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.9",
+    "mechanicsChangedInJava": "1.10",
+    "mechanicsChangeNotes": "Mesa surface mineshafts with dark oak"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "nether_fortress",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12",
+    "mechanicsChangedInJava": "1.16",
+    "mechanicsChangeNotes": "More even distribution throughout Nether"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "nether_fossil",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "ocean_monument",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "ocean_ruins",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "pillager_outpost",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.10",
+    "mechanicsChangedInJava": "1.19",
+    "mechanicsChangeNotes": "Added allays in cages and goat horn loot"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "ruined_portal",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "shipwreck",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "stronghold",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "swamp_hut",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.14",
+    "mechanicsChangedInJava": "1.14",
+    "mechanicsChangeNotes": "Black cats now spawn with swamp huts"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "trail_ruins",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "trial_chambers",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "village",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.9",
+    "mechanicsChangedInJava": "1.14",
+    "mechanicsChangeNotes": "Complete overhaul in Village & Pillage update"
+  },
+  {
+    "entityType": "structure",
+    "entityId": "woodland_mansion",
+    "addedInJava": "1.11",
+    "addedInBedrock": "1.1"
   }
 ]

@@ -18,7 +18,7 @@ import java.io.File
  */
 object DataSeeder {
 
-    private const val CURRENT_DATA_VERSION = 22
+    private const val CURRENT_DATA_VERSION = 23
     private const val PREFS_NAME = "spyglass_seed"
     private const val KEY_DATA_VERSION = "data_version"
 
