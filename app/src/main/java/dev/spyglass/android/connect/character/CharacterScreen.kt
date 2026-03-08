@@ -161,7 +161,7 @@ private fun CharacterContent(
             // Body render (dungeons pose)
             Box(
                 modifier = Modifier
-                    .height(200.dp)
+                    .heightIn(min = 200.dp)
                     .widthIn(min = 100.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(if (playerBodySkin == null) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent),
@@ -186,7 +186,7 @@ private fun CharacterContent(
 
             // Right side: IGN, UUID, then armor boxes
             Column(
-                modifier = Modifier.height(200.dp),
+                modifier = Modifier.heightIn(min = 200.dp),
                 verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 // IGN
@@ -214,7 +214,7 @@ private fun CharacterContent(
                     },
                 )
 
-                Spacer(Modifier.weight(1f))
+                Spacer(Modifier.height(8.dp))
 
                 // Armor boxes — horizontal row
                 Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
