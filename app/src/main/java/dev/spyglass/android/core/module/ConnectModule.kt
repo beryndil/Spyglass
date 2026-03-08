@@ -449,7 +449,7 @@ object ConnectModule : SpyglassModule {
                 add(QuickLink(PixelIcons.Steve, "Players") to "connect_players")
             }
             add(QuickLink(PixelIcons.Anvil, "Statistics") to "connect_statistics")
-            add(QuickLink(PixelIcons.Advancement, "Advances") to "connect_advancements")
+            add(QuickLink(PixelIcons.Advancement, "Advancements") to "connect_advancements")
         }
     }
 
