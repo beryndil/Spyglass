@@ -41,8 +41,21 @@ class SpyglassClient {
     /** Whether the last disconnect was user-initiated. */
     private var userDisconnect = false
 
-    /** Connect to the desktop WebSocket server. */
+    /** Returns true if the IP is a private/LAN address (RFC 1918 + loopback). */
+    private fun isPrivateIp(ip: String): Boolean {
+        return ip.startsWith("10.") ||
+            ip.startsWith("192.168.") ||
+            ip.startsWith("172.") && ip.split(".").getOrNull(1)?.toIntOrNull()?.let { it in 16..31 } == true ||
+            ip.startsWith("127.") ||
+            ip == "localhost"
+    }
+
+    /** Connect to the desktop WebSocket server. Only allows private/LAN IPs. */
     fun connect(ip: String, port: Int) {
+        if (!isPrivateIp(ip)) {
+            _connectionState.value = ConnectionState.Error("Connection rejected: only local network IPs allowed")
+            return
+        }
         userDisconnect = false
         _connectionState.value = ConnectionState.Connecting(ip, port)
         CrashReporter.setKey("connect_state", "connecting")

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <!-- Spyglass Connect uses cleartext WebSocket (ws://) on local WiFi.
-         All messages are encrypted at the app level with AES-256-GCM,
-         so transport-level TLS is not required for LAN communication. -->
+    <!-- Cleartext required for Spyglass Connect WebSocket (ws://) on local WiFi.
+         Android domain-config cannot match IP addresses, so base-config must allow it.
+         All HTTPS APIs (GitHub, Firebase, AdMob) enforce TLS regardless of this setting.
+         Connect validates the target is a private IP before connecting. -->
     <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
             <certificates src="system" />

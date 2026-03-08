@@ -25,7 +25,7 @@ import dev.spyglass.android.data.db.entities.*
         CommandEntity::class,
         VersionTagEntity::class,
     ],
-    version = 27,
+    version = 28,
     exportSchema = true,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
@@ -44,6 +44,30 @@ abstract class SpyglassDatabase : RoomDatabase() {
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null
+
+        // Migration 27→28: add indexes on frequently queried columns
+        private val MIGRATION_27_28 = object : Migration(27, 28) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_blocks_name ON blocks(name)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_blocks_category ON blocks(category)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_recipes_outputItem ON recipes(outputItem)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_recipes_type ON recipes(type)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_mobs_name ON mobs(name)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_mobs_category ON mobs(category)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_biomes_name ON biomes(name)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_enchants_name ON enchants(name)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_potions_name ON potions(name)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_trades_profession ON trades(profession)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_structures_name ON structures(name)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_advancements_name ON advancements(name)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_advancements_category ON advancements(category)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_items_name ON items(name)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_items_category ON items(category)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_commands_name ON commands(name)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_commands_category ON commands(category)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_version_tags_entityType ON version_tags(entityType)")
+            }
+        }
 
         // Migration 26→27: drop user data tables (moved to spyglass_user.db)
         private val MIGRATION_26_27 = object : Migration(26, 27) {
@@ -271,7 +295,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
                                 MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20,
                                 MIGRATION_20_21, MIGRATION_21_22, MIGRATION_22_23,
                                 MIGRATION_23_24, MIGRATION_24_25, MIGRATION_25_26,
-                                MIGRATION_26_27,
+                                MIGRATION_26_27, MIGRATION_27_28,
                             )
                             // Game data can always be rebuilt from bundled assets or sync.
                             // This ensures the app never crashes due to a missing migration.

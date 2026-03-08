@@ -67,7 +67,11 @@ class ShapesViewModel : ViewModel() {
 
     private suspend fun doRecalc() {
         val s = _state.value
-        val r = s.radiusInput.toIntOrNull()?.takeIf { it in 1..100 } ?: return
+        val r = s.radiusInput.toIntOrNull()?.takeIf { it in 1..100 }
+        if (r == null) {
+            _state.update { it.copy(layers = emptyMap(), totalBlocks = 0, layerMin = 0, layerMax = 0, currentLayer = 0) }
+            return
+        }
         val thick = s.thickness.coerceIn(1, 3)
         val layers: Map<Int, Set<Pair<Int, Int>>> = when (s.shapeType) {
             ShapeType.CIRCLE   -> mapOf(0 to circleLayer(r))

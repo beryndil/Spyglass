@@ -82,10 +82,8 @@ class ShapesViewModelTest {
     fun invalidRadius_zero_noLayers() {
         vm.setShape(ShapeType.CIRCLE)
         vm.setRadius("0")
-        // doRecalc returns early without updating state; give Default dispatcher time to run
-        Thread.sleep(100)
 
-        val s = vm.state.value
+        val s = awaitState { it.layers.isEmpty() }
         assertTrue(s.layers.isEmpty())
         assertEquals(0, s.totalBlocks)
     }
@@ -94,9 +92,8 @@ class ShapesViewModelTest {
     fun invalidRadius_empty_noLayers() {
         vm.setShape(ShapeType.CIRCLE)
         vm.setRadius("")
-        Thread.sleep(100)
 
-        val s = vm.state.value
+        val s = awaitState { it.layers.isEmpty() }
         assertTrue(s.layers.isEmpty())
         assertEquals(0, s.totalBlocks)
     }

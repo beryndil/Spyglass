@@ -227,9 +227,9 @@ object CoreModule : SpyglassModule {
             context.dataStore.data.map { it[PreferenceKeys.MINECRAFT_EDITION] ?: "java" }
         }.collectAsStateWithLifecycle(initialValue = "java")
 
-        val tips = remember(edition) {
+        val tips by androidx.compose.runtime.produceState(emptyList<String>(), edition) {
             val allTips = TipsLoader.load(context)
-            allTips.filter { it.edition == "both" || it.edition == edition }.map { it.text }
+            value = allTips.filter { it.edition == "both" || it.edition == edition }.map { it.text }
         }
         if (tips.isEmpty()) return
         val startIndex = remember { Calendar.getInstance().get(Calendar.DAY_OF_YEAR) % tips.size }

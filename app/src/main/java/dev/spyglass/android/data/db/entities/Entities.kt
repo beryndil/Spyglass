@@ -1,9 +1,13 @@
 package dev.spyglass.android.data.db.entities
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "blocks")
+@Entity(
+    tableName = "blocks",
+    indices = [Index(value = ["name"]), Index(value = ["category"])],
+)
 data class BlockEntity(
     @PrimaryKey val id: String,          // e.g. "minecraft:stone"
     val name: String,
@@ -26,7 +30,10 @@ data class BlockEntity(
     val isObtainable: Boolean = true,
 )
 
-@Entity(tableName = "recipes")
+@Entity(
+    tableName = "recipes",
+    indices = [Index(value = ["outputItem"]), Index(value = ["type"])],
+)
 data class RecipeEntity(
     @PrimaryKey val id: String,
     val outputItem: String,
@@ -37,7 +44,10 @@ data class RecipeEntity(
     val xp: Float = 0f,                  // XP reward per smelt (smelting recipes only)
 )
 
-@Entity(tableName = "mobs")
+@Entity(
+    tableName = "mobs",
+    indices = [Index(value = ["name"]), Index(value = ["category"])],
+)
 data class MobEntity(
     @PrimaryKey val id: String,
     val name: String,
@@ -53,7 +63,10 @@ data class MobEntity(
     val attackDamage: String = "",   // "3" or "2-6" for variable damage
 )
 
-@Entity(tableName = "biomes")
+@Entity(
+    tableName = "biomes",
+    indices = [Index(value = ["name"])],
+)
 data class BiomeEntity(
     @PrimaryKey val id: String,
     val name: String,
@@ -68,7 +81,10 @@ data class BiomeEntity(
     val buildingPalette: String = "",   // comma-sep block IDs
 )
 
-@Entity(tableName = "enchants")
+@Entity(
+    tableName = "enchants",
+    indices = [Index(value = ["name"])],
+)
 data class EnchantEntity(
     @PrimaryKey val id: String,
     val name: String,
@@ -81,7 +97,10 @@ data class EnchantEntity(
     val isCurse: Boolean = false,
 )
 
-@Entity(tableName = "potions")
+@Entity(
+    tableName = "potions",
+    indices = [Index(value = ["name"])],
+)
 data class PotionEntity(
     @PrimaryKey val id: String,
     val name: String,
@@ -93,7 +112,10 @@ data class PotionEntity(
     val color: String = "",
 )
 
-@Entity(tableName = "trades")
+@Entity(
+    tableName = "trades",
+    indices = [Index(value = ["profession"])],
+)
 data class TradeEntity(
     @PrimaryKey(autoGenerate = true) val rowId: Long = 0,
     val profession: String,
@@ -108,7 +130,10 @@ data class TradeEntity(
     val maxUses: Int = 0,           // times available per restock
 )
 
-@Entity(tableName = "structures")
+@Entity(
+    tableName = "structures",
+    indices = [Index(value = ["name"])],
+)
 data class StructureEntity(
     @PrimaryKey val id: String,
     val name: String,
@@ -122,7 +147,10 @@ data class StructureEntity(
     val findMethod: String = "",
 )
 
-@Entity(tableName = "advancements")
+@Entity(
+    tableName = "advancements",
+    indices = [Index(value = ["name"]), Index(value = ["category"])],
+)
 data class AdvancementEntity(
     @PrimaryKey val id: String,
     val name: String,
@@ -147,7 +175,10 @@ data class AdvancementProgressEntity(
     val completedAt: Long? = null,
 )
 
-@Entity(tableName = "items")
+@Entity(
+    tableName = "items",
+    indices = [Index(value = ["name"]), Index(value = ["category"])],
+)
 data class ItemEntity(
     @PrimaryKey val id: String,
     val name: String,
@@ -195,7 +226,10 @@ data class WaypointEntity(
     val createdAt: Long,
 )
 
-@Entity(tableName = "commands")
+@Entity(
+    tableName = "commands",
+    indices = [Index(value = ["name"]), Index(value = ["category"])],
+)
 data class CommandEntity(
     @PrimaryKey val id: String,
     val name: String,
@@ -205,7 +239,11 @@ data class CommandEntity(
     val permissionLevel: Int = 2,
 )
 
-@Entity(tableName = "version_tags", primaryKeys = ["entityType", "entityId"])
+@Entity(
+    tableName = "version_tags",
+    primaryKeys = ["entityType", "entityId"],
+    indices = [Index(value = ["entityType"])],
+)
 data class VersionTagEntity(
     val entityType: String,          // "block", "item", "mob", etc.
     val entityId: String,            // matches PK of target table

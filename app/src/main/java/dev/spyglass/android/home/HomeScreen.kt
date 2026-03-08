@@ -175,11 +175,11 @@ fun HomeScreen(
         }
     }.collectAsStateWithLifecycle(initialValue = HomePrefs())
 
-    // Load and filter tips by edition
-    val filteredTips = remember(prefs.minecraftEdition) {
+    // Load and filter tips by edition (async to avoid main thread I/O)
+    val filteredTips by produceState(emptyList<String>(), prefs.minecraftEdition) {
         val allTips = TipsLoader.load(context)
         val edition = prefs.minecraftEdition
-        allTips.filter { it.edition == "both" || it.edition == edition }.map { it.text }
+        value = allTips.filter { it.edition == "both" || it.edition == edition }.map { it.text }
     }
     val tipStartIndex = remember { Calendar.getInstance().get(Calendar.DAY_OF_YEAR) }
 
