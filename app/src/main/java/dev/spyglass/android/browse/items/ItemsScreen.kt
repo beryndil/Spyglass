@@ -34,6 +34,8 @@ import dev.spyglass.android.core.checkMechanicsChanged
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.core.ui.rememberHapticConfirm
+import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.BiomeResourceMap
 import dev.spyglass.android.data.CompostData
 import dev.spyglass.android.data.db.entities.EnchantEntity
@@ -223,6 +225,8 @@ fun ItemsScreen(
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
+    val hapticConfirm = rememberHapticConfirm()
+    val hapticClick = rememberHapticClick()
     val itemSortOptions = remember { listOf(
         SortOption("Name A\u2192Z", "name"),
         SortOption("Durability \u2193", "durability"),
@@ -270,7 +274,7 @@ fun ItemsScreen(
                 val chipColor = if (c == "all") MaterialTheme.colorScheme.primary else categoryColor(c)
                 FilterChip(
                     selected = category == c,
-                    onClick = { vm.setCategory(c) },
+                    onClick = { hapticClick(); vm.setCategory(c) },
                     label = {
                         Text(
                             if (c == "all") stringResource(R.string.all) else c.replace('_', ' ').replaceFirstChar { it.uppercase() },
@@ -311,7 +315,7 @@ fun ItemsScreen(
                         leadingIcon = ItemTextures.get(fav.id) ?: PixelIcons.Item,
                         modifier = Modifier.clickable { vm.toggleExpanded(fav.id) },
                         trailing = {
-                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                            IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(
                                     Icons.Filled.Star,
                                     contentDescription = stringResource(R.string.favorite),
@@ -371,7 +375,7 @@ fun ItemsScreen(
                                 }
                                 Spacer(Modifier.width(6.dp))
                                 val isFav = item.id in favoriteIds
-                                IconButton(onClick = { vm.toggleFavorite(item.id, item.name) }, modifier = Modifier.size(32.dp)) {
+                                IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(item.id, item.name) }, modifier = Modifier.size(32.dp)) {
                                     Icon(
                                         Icons.Filled.Star,
                                         contentDescription = stringResource(R.string.favorite),

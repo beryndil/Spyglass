@@ -33,6 +33,8 @@ import dev.spyglass.android.core.checkAvailability
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.core.ui.rememberHapticConfirm
+import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.db.entities.CommandEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.VersionTagEntity
@@ -157,6 +159,8 @@ fun CommandsScreen(
     val sortKey by vm.sortKey.collectAsStateWithLifecycle()
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
+    val hapticConfirm = rememberHapticConfirm()
+    val hapticClick = rememberHapticClick()
 
     val sortOptions = remember {
         listOf(
@@ -196,7 +200,7 @@ fun CommandsScreen(
             listOf("all", "chat", "player", "entity", "world", "server", "operator", "debug").forEach { cat ->
                 FilterChip(
                     selected = category == cat,
-                    onClick = { vm.setCategory(cat) },
+                    onClick = { hapticClick(); vm.setCategory(cat) },
                     label = { Text(if (cat == "all") stringResource(R.string.all) else categoryLabel(cat), style = MaterialTheme.typography.labelSmall) },
                 )
             }
@@ -225,7 +229,7 @@ fun CommandsScreen(
                         supportingMaxLines = 1,
                         leadingIcon = PixelIcons.Command,
                         trailing = {
-                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                            IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(Icons.Filled.Star, contentDescription = stringResource(R.string.favorite), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             }
                         },
@@ -260,7 +264,7 @@ fun CommandsScreen(
                                 }
                                 Spacer(Modifier.width(4.dp))
                                 val isFav = cmd.id in favoriteIds
-                                IconButton(onClick = { vm.toggleFavorite(cmd.id, cmd.name) }, modifier = Modifier.size(32.dp)) {
+                                IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(cmd.id, cmd.name) }, modifier = Modifier.size(32.dp)) {
                                     Icon(
                                         Icons.Filled.Star,
                                         contentDescription = stringResource(R.string.favorite),

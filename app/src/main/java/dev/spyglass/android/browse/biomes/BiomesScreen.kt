@@ -36,6 +36,8 @@ import dev.spyglass.android.core.checkAvailability
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.core.ui.rememberHapticConfirm
+import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.BiomeResourceMap
 import dev.spyglass.android.data.db.entities.BiomeEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
@@ -163,6 +165,8 @@ fun BiomesScreen(
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val listState    = rememberLazyListState()
+    val hapticConfirm = rememberHapticConfirm()
+    val hapticClick = rememberHapticClick()
 
     // Auto-expand and scroll to target biome from cross-reference
     LaunchedEffect(targetBiomeId) {
@@ -208,7 +212,7 @@ fun BiomesScreen(
             items(BIOME_CATEGORIES, key = { it }) { c ->
                 FilterChip(
                     selected = category == c,
-                    onClick = { vm.setCategory(c) },
+                    onClick = { hapticClick(); vm.setCategory(c) },
                     label = {
                         Text(
                             if (c == "all") stringResource(R.string.all) else c.replaceFirstChar { it.uppercase() },
@@ -244,7 +248,7 @@ fun BiomesScreen(
                         leadingIcon = BiomeTextures.get(fav.id) ?: PixelIcons.Biome,
                         modifier = Modifier.clickable { vm.toggleExpanded(fav.id) },
                         trailing = {
-                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                            IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(
                                     Icons.Filled.Star,
                                     contentDescription = stringResource(R.string.favorite),
@@ -268,7 +272,7 @@ fun BiomesScreen(
                 val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val isExpanded = b.id in expandedIds
                 Column(modifier = Modifier.alpha(vAlpha)) {
-                    BiomeListItem(b, isFavorite = b.id in favoriteIds, onToggleFavorite = { vm.toggleFavorite(b.id, b.name) }, onClick = { vm.toggleExpanded(b.id) }, addedIn = addedIn, availability = availability)
+                    BiomeListItem(b, isFavorite = b.id in favoriteIds, onToggleFavorite = { hapticConfirm(); vm.toggleFavorite(b.id, b.name) }, onClick = { vm.toggleExpanded(b.id) }, addedIn = addedIn, availability = availability)
                     AnimatedVisibility(
                         visible = isExpanded,
                         enter = expandVertically(),

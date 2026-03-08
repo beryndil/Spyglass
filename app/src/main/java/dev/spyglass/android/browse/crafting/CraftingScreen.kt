@@ -31,6 +31,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.core.ui.rememberHapticConfirm
+import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.ItemTags
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.RecipeEntity
@@ -117,6 +119,8 @@ fun CraftingScreen(
     val favoriteIds     by vm.favoriteIds.collectAsStateWithLifecycle()
     val favoriteRecipes by vm.favoriteRecipes.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
+    val hapticConfirm = rememberHapticConfirm()
+    val hapticClick = rememberHapticClick()
 
     // Deduplicate recipes that differ only by tag-member variants
     val dedupedRecipes = remember(recipes) {
@@ -161,7 +165,7 @@ fun CraftingScreen(
             items(RECIPE_TYPES, key = { it }) { t ->
                 FilterChip(
                     selected = type == t,
-                    onClick = { vm.setType(t) },
+                    onClick = { hapticClick(); vm.setType(t) },
                     label = {
                         Text(
                             if (t == "all") stringResource(R.string.all) else t.replaceFirstChar { it.uppercase() },
@@ -197,7 +201,7 @@ fun CraftingScreen(
                         leadingIcon = ItemTextures.get(fav.id) ?: PixelIcons.Crafting,
                         modifier = Modifier.clickable { vm.toggleExpanded(fav.id) },
                         trailing = {
-                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                            IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(
                                     Icons.Filled.Star,
                                     contentDescription = stringResource(R.string.favorite),
@@ -220,7 +224,7 @@ fun CraftingScreen(
                         modifier    = Modifier.clickable { vm.toggleExpanded(r.id) },
                         trailing    = {
                             val isFav = r.id in favoriteIds
-                            IconButton(onClick = { vm.toggleFavorite(r.id, r.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { it.uppercase() }) }, modifier = Modifier.size(32.dp)) {
+                            IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(r.id, r.outputItem.substringAfterLast(':').replace('_', ' ').replaceFirstChar { it.uppercase() }) }, modifier = Modifier.size(32.dp)) {
                                 Icon(
                                     Icons.Filled.Star,
                                     contentDescription = stringResource(R.string.favorite),

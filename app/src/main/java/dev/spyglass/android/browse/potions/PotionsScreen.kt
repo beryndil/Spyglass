@@ -31,6 +31,8 @@ import dev.spyglass.android.core.checkAvailability
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.core.ui.rememberHapticConfirm
+import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.PotionEntity
 import dev.spyglass.android.data.db.entities.VersionTagEntity
@@ -185,6 +187,8 @@ fun PotionsScreen(
     val sortKey    by vm.sortKey.collectAsStateWithLifecycle()
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
+    val hapticConfirm = rememberHapticConfirm()
+    val hapticClick = rememberHapticClick()
 
     val sortOptions = remember {
         listOf(
@@ -218,7 +222,7 @@ fun PotionsScreen(
             items(POTION_CATEGORIES, key = { it }) { c ->
                 FilterChip(
                     selected = category == c,
-                    onClick = { vm.setCategory(c) },
+                    onClick = { hapticClick(); vm.setCategory(c) },
                     label = {
                         Text(
                             if (c == "all") stringResource(R.string.all) else c.replaceFirstChar { it.uppercase() },
@@ -253,7 +257,7 @@ fun PotionsScreen(
                         supportingMaxLines = 1,
                         leadingIcon = PotionTextures.get(fav.id) ?: PixelIcons.Potion,
                         trailing    = {
-                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                            IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(Icons.Filled.Star, contentDescription = stringResource(R.string.favorite), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             }
                         },
@@ -299,7 +303,7 @@ fun PotionsScreen(
                                 }
                                 Spacer(Modifier.width(4.dp))
                                 val isFav = p.id in favoriteIds
-                                IconButton(onClick = { vm.toggleFavorite(p.id, p.name) }, modifier = Modifier.size(32.dp)) {
+                                IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(p.id, p.name) }, modifier = Modifier.size(32.dp)) {
                                     Icon(
                                         Icons.Filled.Star,
                                         contentDescription = stringResource(R.string.favorite),

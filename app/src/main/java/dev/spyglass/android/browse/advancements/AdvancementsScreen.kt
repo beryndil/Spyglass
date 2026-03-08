@@ -38,6 +38,8 @@ import dev.spyglass.android.core.checkAvailability
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.core.ui.rememberHapticConfirm
+import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.db.entities.AdvancementEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.VersionTagEntity
@@ -273,6 +275,8 @@ fun AdvancementsScreen(
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
+    val hapticConfirm = rememberHapticConfirm()
+    val hapticClick = rememberHapticClick()
     var showResetDialog by remember { mutableStateOf(false) }
     val isSearching = query.isNotBlank()
 
@@ -339,7 +343,7 @@ fun AdvancementsScreen(
                     else categoryLabel(cat)
                 FilterChip(
                     selected = category == cat,
-                    onClick = { vm.setCategory(cat) },
+                    onClick = { hapticClick(); vm.setCategory(cat) },
                     label = { Text(chipLabel, style = MaterialTheme.typography.labelSmall) },
                 )
             }
@@ -395,7 +399,7 @@ fun AdvancementsScreen(
                         leadingIcon = PixelIcons.Advancement,
                         leadingIconTint = if (isComplete) Emerald else MaterialTheme.colorScheme.onSurfaceVariant,
                         trailing = {
-                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                            IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(Icons.Filled.Star, contentDescription = stringResource(R.string.favorite), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             }
                         },
@@ -487,7 +491,7 @@ fun AdvancementsScreen(
                         Spacer(Modifier.width(4.dp))
                         // Favorite star
                         val isFav = adv.id in favoriteIds
-                        IconButton(onClick = { vm.toggleFavorite(adv.id, adv.name) }, modifier = Modifier.size(28.dp)) {
+                        IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(adv.id, adv.name) }, modifier = Modifier.size(28.dp)) {
                             Icon(
                                 Icons.Filled.Star,
                                 contentDescription = stringResource(R.string.favorite),

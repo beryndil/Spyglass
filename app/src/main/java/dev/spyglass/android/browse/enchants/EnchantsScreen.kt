@@ -31,6 +31,8 @@ import dev.spyglass.android.core.checkAvailability
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.core.ui.rememberHapticConfirm
+import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.db.entities.EnchantEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.VersionTagEntity
@@ -198,6 +200,8 @@ fun EnchantsScreen(
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
+    val hapticConfirm = rememberHapticConfirm()
+    val hapticClick = rememberHapticClick()
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
     val showExperimental by remember {
@@ -259,7 +263,7 @@ fun EnchantsScreen(
         ) {
             listOf("all", "armor", "sword", "bow", "crossbow", "trident", "mace", "fishing_rod").forEach { t ->
                 val icon = targetIcon(t)
-                FilterChip(selected = target == t, onClick = { vm.setTarget(t) },
+                FilterChip(selected = target == t, onClick = { hapticClick(); vm.setTarget(t) },
                     label = { Text(if (t == "all") stringResource(R.string.all) else t.replace('_', ' ').replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) },
                     leadingIcon = if (icon != null) { { SpyglassIconImage(icon, contentDescription = null, modifier = Modifier.size(16.dp)) } } else null,
                 )
@@ -301,7 +305,7 @@ fun EnchantsScreen(
                         supportingMaxLines = 1,
                         leadingIcon = EnchantTextures.get(fav.id) ?: PixelIcons.Enchant,
                         trailing    = {
-                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                            IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(Icons.Filled.Star, contentDescription = stringResource(R.string.favorite), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             }
                         },
@@ -356,7 +360,7 @@ fun EnchantsScreen(
                                 }
                                 Spacer(Modifier.width(4.dp))
                                 val isFav = e.id in favoriteIds
-                                IconButton(onClick = { vm.toggleFavorite(e.id, e.name) }, modifier = Modifier.size(32.dp)) {
+                                IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(e.id, e.name) }, modifier = Modifier.size(32.dp)) {
                                     Icon(
                                         Icons.Filled.Star,
                                         contentDescription = stringResource(R.string.favorite),

@@ -32,6 +32,8 @@ import dev.spyglass.android.core.checkAvailability
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.core.ui.rememberHapticConfirm
+import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.StructureEntity
 import dev.spyglass.android.data.db.entities.VersionTagEntity
@@ -132,6 +134,8 @@ fun StructuresScreen(
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val listState    = rememberLazyListState()
+    val hapticConfirm = rememberHapticConfirm()
+    val hapticClick = rememberHapticClick()
 
     val dimensions = listOf("all", "overworld", "nether", "end")
 
@@ -173,7 +177,7 @@ fun StructuresScreen(
         Row(modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             dimensions.forEach { d ->
-                FilterChip(selected = dimension == d, onClick = { vm.setDimension(d) },
+                FilterChip(selected = dimension == d, onClick = { hapticClick(); vm.setDimension(d) },
                     label = { Text(if (d == "all") stringResource(R.string.all) else d.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) })
             }
         }
@@ -202,7 +206,7 @@ fun StructuresScreen(
                         leadingIcon = StructureTextures.get(fav.id) ?: PixelIcons.Structure,
                         modifier = Modifier.clickable { vm.toggleExpanded(fav.id) },
                         trailing = {
-                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                            IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(
                                     Icons.Filled.Star,
                                     contentDescription = stringResource(R.string.favorite),
@@ -226,7 +230,7 @@ fun StructuresScreen(
                 val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val isExpanded = s.id in expandedIds
                 Column(modifier = Modifier.alpha(vAlpha)) {
-                    StructureListItem(s, isFavorite = s.id in favoriteIds, onToggleFavorite = { vm.toggleFavorite(s.id, s.name) }, onClick = { vm.toggleExpanded(s.id) }, addedIn = addedIn, availability = availability)
+                    StructureListItem(s, isFavorite = s.id in favoriteIds, onToggleFavorite = { hapticConfirm(); vm.toggleFavorite(s.id, s.name) }, onClick = { vm.toggleExpanded(s.id) }, addedIn = addedIn, availability = availability)
                     AnimatedVisibility(
                         visible = isExpanded,
                         enter = expandVertically(),

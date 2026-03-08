@@ -24,6 +24,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.core.ui.rememberHapticConfirm
+import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.ItemTags
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.TradeEntity
@@ -160,6 +162,8 @@ fun TradesScreen(
     val trades     by vm.trades.collectAsStateWithLifecycle()
     val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
     val favoriteTrades by vm.favoriteTrades.collectAsStateWithLifecycle()
+    val hapticConfirm = rememberHapticConfirm()
+    val hapticClick = rememberHapticClick()
 
     // Auto-select profession when navigated from a job block
     LaunchedEffect(targetProfession) {
@@ -183,7 +187,7 @@ fun TradesScreen(
             modifier = Modifier.padding(bottom = 8.dp),
         ) {
             items(vm.professions, key = { it }) { p ->
-                FilterChip(selected = profession == p, onClick = { vm.setProfession(p) },
+                FilterChip(selected = profession == p, onClick = { hapticClick(); vm.setProfession(p) },
                     label = { Text(if (p == "all") stringResource(R.string.all) else p.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) })
             }
         }
@@ -222,7 +226,7 @@ fun TradesScreen(
                         supportingMaxLines = 1,
                         leadingIcon = PixelIcons.Trade,
                         trailing    = {
-                            IconButton(onClick = { vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                            IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
                                 Icon(Icons.Filled.Star, contentDescription = stringResource(R.string.favorite), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             }
                         },
@@ -230,7 +234,7 @@ fun TradesScreen(
                 }
             }
             items(trades, key = { it.rowId }) { t ->
-                TradeListItem(t, onItemTap, favoriteIds, vm::toggleFavorite)
+                TradeListItem(t, onItemTap, favoriteIds, { id, name -> hapticConfirm(); vm.toggleFavorite(id, name) })
             }
             if (trades.isEmpty()) item {
                 EmptyState(
