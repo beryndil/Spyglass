@@ -16338,5 +16338,590 @@
     "entityId": "wooded_badlands",
     "addedInJava": "1.7",
     "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "command",
+    "entityId": "advancement",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Removed /advancement test; replaced with target selectors"
+  },
+  {
+    "entityType": "command",
+    "entityId": "attribute",
+    "addedInJava": "1.16",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.21",
+    "mechanicsChangeNotes": "Modifier uuid/name replaced with single id argument"
+  },
+  {
+    "entityType": "command",
+    "entityId": "ban",
+    "addedInJava": "",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "ban-ip",
+    "addedInJava": "",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "banlist",
+    "addedInJava": "",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "bossbar",
+    "addedInJava": "1.13",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "clear",
+    "addedInJava": "1.4.2",
+    "addedInBedrock": "1.0.5",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Simplified syntax; removed numeric data/NBT arguments"
+  },
+  {
+    "entityType": "command",
+    "entityId": "clone",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "damage",
+    "addedInJava": "1.19.4",
+    "addedInBedrock": "1.18.10"
+  },
+  {
+    "entityType": "command",
+    "entityId": "data",
+    "addedInJava": "1.13",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.14",
+    "mechanicsChangeNotes": "Added /data modify subcommand"
+  },
+  {
+    "entityType": "command",
+    "entityId": "datapack",
+    "addedInJava": "1.13",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "debug",
+    "addedInJava": "1.3.1",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.17",
+    "mechanicsChangeNotes": "Added /debug function; removed /debug report (replaced by /perf)"
+  },
+  {
+    "entityType": "command",
+    "entityId": "defaultgamemode",
+    "addedInJava": "1.3.1",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Removed numeric and abbreviated gamemode IDs"
+  },
+  {
+    "entityType": "command",
+    "entityId": "deop",
+    "addedInJava": "",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "difficulty",
+    "addedInJava": "1.4.2",
+    "addedInBedrock": "1.0.5",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Only accepts string IDs; added query without arguments"
+  },
+  {
+    "entityType": "command",
+    "entityId": "effect",
+    "addedInJava": "1.5",
+    "addedInBedrock": "1.0.5",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Split into /effect give and /effect clear subcommands"
+  },
+  {
+    "entityType": "command",
+    "entityId": "enchant",
+    "addedInJava": "1.4.4",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "execute",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.16",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Complete syntax overhaul with modular subcommands (as/at/if/unless/run)"
+  },
+  {
+    "entityType": "command",
+    "entityId": "experience",
+    "addedInJava": "1.13",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "fill",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "fillbiome",
+    "addedInJava": "1.19.3",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "forceload",
+    "addedInJava": "1.13.1",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "function",
+    "addedInJava": "1.12",
+    "addedInBedrock": "1.8"
+  },
+  {
+    "entityType": "command",
+    "entityId": "gamemode",
+    "addedInJava": "",
+    "addedInBedrock": "0.16",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Removed abbreviated and numeric gamemode IDs"
+  },
+  {
+    "entityType": "command",
+    "entityId": "gamerule",
+    "addedInJava": "1.4.2",
+    "addedInBedrock": "1.0.5"
+  },
+  {
+    "entityType": "command",
+    "entityId": "give",
+    "addedInJava": "",
+    "addedInBedrock": "0.16",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Switched to namespaced IDs; removed numeric item IDs"
+  },
+  {
+    "entityType": "command",
+    "entityId": "help",
+    "addedInJava": "1.3.1",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "item",
+    "addedInJava": "1.17",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "jfr",
+    "addedInJava": "1.18",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "kick",
+    "addedInJava": "",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "kill",
+    "addedInJava": "",
+    "addedInBedrock": "0.16",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Now uses void damage instead of fixed 1000 HP damage"
+  },
+  {
+    "entityType": "command",
+    "entityId": "list",
+    "addedInJava": "",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "locate",
+    "addedInJava": "1.11",
+    "addedInBedrock": "1.0",
+    "mechanicsChangedInJava": "1.19",
+    "mechanicsChangeNotes": "Merged /locatebiome into /locate; added POI and biome subcommands"
+  },
+  {
+    "entityType": "command",
+    "entityId": "loot",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.18"
+  },
+  {
+    "entityType": "command",
+    "entityId": "me",
+    "addedInJava": "",
+    "addedInBedrock": "1.0.5"
+  },
+  {
+    "entityType": "command",
+    "entityId": "msg",
+    "addedInJava": "",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "op",
+    "addedInJava": "",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "pardon",
+    "addedInJava": "",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "pardon-ip",
+    "addedInJava": "",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "particle",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.8"
+  },
+  {
+    "entityType": "command",
+    "entityId": "perf",
+    "addedInJava": "1.17",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "place",
+    "addedInJava": "1.19",
+    "addedInBedrock": "1.21.50"
+  },
+  {
+    "entityType": "command",
+    "entityId": "playsound",
+    "addedInJava": "1.6.1",
+    "addedInBedrock": "1.0.5"
+  },
+  {
+    "entityType": "command",
+    "entityId": "publish",
+    "addedInJava": "1.3.1",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "random",
+    "addedInJava": "1.20.2",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "recipe",
+    "addedInJava": "1.12",
+    "addedInBedrock": "1.20.10"
+  },
+  {
+    "entityType": "command",
+    "entityId": "reload",
+    "addedInJava": "1.12",
+    "addedInBedrock": "1.8"
+  },
+  {
+    "entityType": "command",
+    "entityId": "return",
+    "addedInJava": "1.20",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "ride",
+    "addedInJava": "1.19.4",
+    "addedInBedrock": "1.16.100"
+  },
+  {
+    "entityType": "command",
+    "entityId": "rotate",
+    "addedInJava": "1.21.2",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "save-all",
+    "addedInJava": "",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "save-off",
+    "addedInJava": "",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "save-on",
+    "addedInJava": "",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "say",
+    "addedInJava": "",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "schedule",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.16.100"
+  },
+  {
+    "entityType": "command",
+    "entityId": "scoreboard",
+    "addedInJava": "1.5",
+    "addedInBedrock": "1.7",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Restructured into /scoreboard objectives and /scoreboard players subcommands"
+  },
+  {
+    "entityType": "command",
+    "entityId": "seed",
+    "addedInJava": "1.3.1",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "setblock",
+    "addedInJava": "1.7.2",
+    "addedInBedrock": "0.16",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Switched to block state arguments; removed numeric block IDs"
+  },
+  {
+    "entityType": "command",
+    "entityId": "setidletimeout",
+    "addedInJava": "1.7.2",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "setworldspawn",
+    "addedInJava": "1.7.2",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "spawnpoint",
+    "addedInJava": "1.4.2",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "spectate",
+    "addedInJava": "1.15",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "spreadplayers",
+    "addedInJava": "1.6.1",
+    "addedInBedrock": "1.0.5"
+  },
+  {
+    "entityType": "command",
+    "entityId": "stop",
+    "addedInJava": "",
+    "addedInBedrock": ""
+  },
+  {
+    "entityType": "command",
+    "entityId": "stopsound",
+    "addedInJava": "1.9.4",
+    "addedInBedrock": "1.0.5"
+  },
+  {
+    "entityType": "command",
+    "entityId": "summon",
+    "addedInJava": "1.7.2",
+    "addedInBedrock": "0.16",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Switched to namespaced entity IDs"
+  },
+  {
+    "entityType": "command",
+    "entityId": "tag",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.9"
+  },
+  {
+    "entityType": "command",
+    "entityId": "team",
+    "addedInJava": "1.13",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "teammsg",
+    "addedInJava": "1.14",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "teleport",
+    "addedInJava": "",
+    "addedInBedrock": "0.16",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "/tp became alias of /teleport; unified syntax"
+  },
+  {
+    "entityType": "command",
+    "entityId": "tell",
+    "addedInJava": "",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "tellraw",
+    "addedInJava": "1.7.2",
+    "addedInBedrock": "1.9"
+  },
+  {
+    "entityType": "command",
+    "entityId": "tick",
+    "addedInJava": "1.20.3",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "time",
+    "addedInJava": "",
+    "addedInBedrock": "0.16",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Added noon and midnight time values"
+  },
+  {
+    "entityType": "command",
+    "entityId": "title",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.0.5"
+  },
+  {
+    "entityType": "command",
+    "entityId": "tp",
+    "addedInJava": "",
+    "addedInBedrock": "0.16",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Became alias of /teleport"
+  },
+  {
+    "entityType": "command",
+    "entityId": "transfer",
+    "addedInJava": "1.20.5",
+    "addedInBedrock": "1.20.30"
+  },
+  {
+    "entityType": "command",
+    "entityId": "trigger",
+    "addedInJava": "1.8",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "weather",
+    "addedInJava": "1.4.2",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "whitelist",
+    "addedInJava": "",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "command",
+    "entityId": "worldborder",
+    "addedInJava": "1.8",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "xp",
+    "addedInJava": "",
+    "addedInBedrock": "0.16",
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Restructured into add/set/query subcommands; /experience added as primary command"
+  },
+  {
+    "entityType": "command",
+    "entityId": "test",
+    "addedInJava": "1.21.5",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "tm",
+    "addedInJava": "1.14",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "command",
+    "entityId": "w",
+    "addedInJava": "",
+    "addedInBedrock": "0.16"
   }
 ]
