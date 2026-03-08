@@ -42,6 +42,7 @@ private val LIGHT_SOURCES = listOf(
 
 @Composable
 fun LightScreen() {
+    val hapticClick = rememberHapticClick()
     var selectedSource by remember { mutableStateOf(LIGHT_SOURCES[7]) } // Default to Torch
     var showSourcePicker by remember { mutableStateOf(false) }
 
@@ -66,7 +67,7 @@ fun LightScreen() {
                 color = MaterialTheme.colorScheme.primary,
             )
             OutlinedButton(
-                onClick = { showSourcePicker = !showSourcePicker },
+                onClick = { hapticClick(); showSourcePicker = !showSourcePicker },
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.onSurface),
                 modifier = Modifier.fillMaxWidth(),
             ) {
@@ -83,6 +84,7 @@ fun LightScreen() {
                     ) {
                         TextButton(
                             onClick = {
+                                hapticClick()
                                 selectedSource = source
                                 showSourcePicker = false
                             },

@@ -369,6 +369,7 @@ fun TextureCraftingGrid(
     onItemTap: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val hapticClick = rememberHapticClick()
     // Parse the original grid from the recipe
     val parsed = runCatching {
         Json.parseToJsonElement(recipe.ingredientsJson).jsonArray
@@ -428,7 +429,7 @@ fun TextureCraftingGrid(
                                     .size(30.dp)
                                     .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(2.dp))
                                     .border(0.5.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(2.dp))
-                                    .clickable { onItemTap(cell) },
+                                    .clickable { hapticClick(); onItemTap(cell) },
                             ) {
                                 if (tag != null) {
                                     RotatingTagIcon(tag, modifier = Modifier.size(22.dp))
@@ -559,6 +560,7 @@ fun VersionCard(
     changelog: List<String>,
     modifier: Modifier = Modifier,
 ) {
+    val hapticClick = rememberHapticClick()
     var expanded by remember { mutableStateOf(false) }
 
     Column(
@@ -566,7 +568,7 @@ fun VersionCard(
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(12.dp))
             .border(1.dp, accentColor.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
-            .clickable { expanded = !expanded },
+            .clickable { hapticClick(); expanded = !expanded },
     ) {
         // Header banner with accent color
         Box(
@@ -648,9 +650,10 @@ fun SortButton(
     onSelect: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val hapticClick = rememberHapticClick()
     var expanded by remember { mutableStateOf(false) }
     Box(modifier = modifier) {
-        IconButton(onClick = { expanded = true }) {
+        IconButton(onClick = { hapticClick(); expanded = true }) {
             Icon(
                 Icons.AutoMirrored.Filled.Sort,
                 contentDescription = "Sort",
@@ -667,7 +670,7 @@ fun SortButton(
                             color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
                         )
                     },
-                    onClick = { onSelect(option.key); expanded = false },
+                    onClick = { hapticClick(); onSelect(option.key); expanded = false },
                     trailingIcon = if (isSelected) { {
                         Icon(
                             Icons.Default.Check,

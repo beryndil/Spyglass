@@ -17,6 +17,7 @@ private val MAZE_TYPE_LABELS = listOf("Rect", "Circle", "Floors")
 fun MazeScreen(vm: MazeViewModel = viewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
     var view3D by remember { mutableStateOf(false) }
+    val hapticClick = rememberHapticClick()
 
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState()),
@@ -56,14 +57,14 @@ fun MazeScreen(vm: MazeViewModel = viewModel()) {
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 Button(
-                    onClick = { vm.generate() },
+                    onClick = { hapticClick(); vm.generate() },
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary),
                     modifier = Modifier.weight(1f),
                 ) {
                     Text("Generate")
                 }
                 OutlinedButton(
-                    onClick = { vm.shuffle() },
+                    onClick = { hapticClick(); vm.shuffle() },
                     colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.weight(1f),
                 ) {

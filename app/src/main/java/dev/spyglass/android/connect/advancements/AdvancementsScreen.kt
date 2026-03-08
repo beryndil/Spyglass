@@ -149,6 +149,7 @@ private fun AdvancementsContent(
     }
 
     // Filter tabs
+    val hapticClick = rememberHapticClick()
     var selectedTab by remember { mutableStateOf<String?>(null) }
 
     // Merge and build tree
@@ -227,13 +228,13 @@ private fun AdvancementsContent(
         ) {
             FilterChip(
                 selected = selectedTab == null,
-                onClick = { selectedTab = null },
+                onClick = { hapticClick(); selectedTab = null },
                 label = { Text("All") },
             )
             TAB_ORDER.forEach { tab ->
                 FilterChip(
                     selected = selectedTab == tab,
-                    onClick = { selectedTab = if (selectedTab == tab) null else tab },
+                    onClick = { hapticClick(); selectedTab = if (selectedTab == tab) null else tab },
                     label = { Text(TAB_LABELS[tab] ?: tab) },
                 )
             }

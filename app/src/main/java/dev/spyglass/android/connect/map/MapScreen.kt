@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ConnectViewModel
+import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.connect.MapTile
 import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.StructureLocation
@@ -57,6 +58,7 @@ fun MapScreen(
 
 @Composable
 fun MapContent(viewModel: ConnectViewModel) {
+    val hapticClick = rememberHapticClick()
     val mapState = remember { MapState(viewModel) }
     val mapData by mapState.mapData.collectAsStateWithLifecycle()
     val structures by viewModel.structures.collectAsStateWithLifecycle()
@@ -101,7 +103,7 @@ fun MapContent(viewModel: ConnectViewModel) {
                 }
                 FilterChip(
                     selected = selected,
-                    onClick = { if (isConnected) mapState.switchDimension(dim) },
+                    onClick = { if (isConnected) { hapticClick(); mapState.switchDimension(dim) } },
                     enabled = isConnected,
                     label = { Text(label, style = MaterialTheme.typography.labelSmall) },
                     modifier = Modifier.padding(horizontal = 2.dp),

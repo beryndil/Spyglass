@@ -91,6 +91,7 @@ private enum class SortMode(val label: String) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FoodScreen() {
+    val hapticClick = rememberHapticClick()
     var query by remember { mutableStateOf("") }
     var categoryFilter by remember { mutableStateOf("all") }
     var sortMode by remember { mutableStateOf(SortMode.SATURATION) }
@@ -137,7 +138,7 @@ fun FoodScreen() {
             categories.forEach { cat ->
                 FilterChip(
                     selected = categoryFilter == cat,
-                    onClick = { categoryFilter = cat },
+                    onClick = { hapticClick(); categoryFilter = cat },
                     label = { Text(if (cat == "all") stringResource(R.string.all) else cat.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.labelSmall) },
                 )
             }
@@ -153,7 +154,7 @@ fun FoodScreen() {
             SortMode.entries.forEach { mode ->
                 FilterChip(
                     selected = sortMode == mode,
-                    onClick = { sortMode = mode },
+                    onClick = { hapticClick(); sortMode = mode },
                     label = { Text(mode.label, style = MaterialTheme.typography.labelSmall) },
                 )
             }

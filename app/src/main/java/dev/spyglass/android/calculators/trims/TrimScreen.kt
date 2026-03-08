@@ -65,6 +65,7 @@ private val TRIM_MATERIALS = listOf(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TrimScreen(onStructureTap: (String) -> Unit = {}) {
+    val hapticClick = rememberHapticClick()
     var selectedSection by remember { mutableStateOf("templates") }
 
     Column(
@@ -86,7 +87,7 @@ fun TrimScreen(onStructureTap: (String) -> Unit = {}) {
             listOf("templates" to "Templates", "materials" to "Materials", "howto" to "How To").forEach { (key, label) ->
                 FilterChip(
                     selected = selectedSection == key,
-                    onClick = { selectedSection = key },
+                    onClick = { hapticClick(); selectedSection = key },
                     label = { Text(label, style = MaterialTheme.typography.labelSmall) },
                 )
             }
@@ -104,6 +105,7 @@ fun TrimScreen(onStructureTap: (String) -> Unit = {}) {
 
 @Composable
 private fun TemplatesSection(onStructureTap: (String) -> Unit = {}) {
+    val hapticClick = rememberHapticClick()
     SectionHeader("Trim Templates (18)")
 
     TRIM_TEMPLATES.forEach { template ->
@@ -131,7 +133,7 @@ private fun TemplatesSection(onStructureTap: (String) -> Unit = {}) {
                     style = MaterialTheme.typography.bodySmall,
                     color = PotionBlue,
                     textDecoration = TextDecoration.Underline,
-                    modifier = Modifier.clickable { onStructureTap(template.structureId) },
+                    modifier = Modifier.clickable { hapticClick(); onStructureTap(template.structureId) },
                 )
             }
             StatRow("Drop Chance", template.chance)

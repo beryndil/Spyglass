@@ -298,6 +298,7 @@ fun AppNavGraph() {
 
 @Composable
 private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> Unit = {}) {
+    val hapticClick = rememberHapticClick()
     var menuExpanded by remember { mutableStateOf(false) }
 
     Row(
@@ -330,7 +331,7 @@ private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> U
         Spacer(Modifier.width(8.dp))
 
         Box {
-            IconButton(onClick = { menuExpanded = true }) {
+            IconButton(onClick = { hapticClick(); menuExpanded = true }) {
                 SpyglassIconImage(
                     icon = PixelIcons.Menu,
                     contentDescription = stringResource(R.string.menu),
@@ -345,6 +346,7 @@ private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> U
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.settings)) },
                     onClick = {
+                        hapticClick()
                         menuExpanded = false
                         navController.navigate("settings") {
                             launchSingleTop = true
@@ -354,6 +356,7 @@ private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> U
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.changelog)) },
                     onClick = {
+                        hapticClick()
                         menuExpanded = false
                         navController.navigate("changelog") {
                             launchSingleTop = true
@@ -363,6 +366,7 @@ private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> U
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.feedback)) },
                     onClick = {
+                        hapticClick()
                         menuExpanded = false
                         navController.navigate("feedback") {
                             launchSingleTop = true
@@ -372,6 +376,7 @@ private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> U
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.about)) },
                     onClick = {
+                        hapticClick()
                         menuExpanded = false
                         navController.navigate("about") {
                             launchSingleTop = true
@@ -389,12 +394,13 @@ private fun SpyglassTopBar(navController: NavHostController, onClockTap: () -> U
 fun BottomNavBar(navController: NavHostController, onTabSelected: (String) -> Unit) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDest   = backStackEntry?.destination
+    val hapticClick = rememberHapticClick()
 
     NavigationBar(containerColor = MaterialTheme.colorScheme.background) {
         TOP_DESTINATIONS.forEach { dest ->
             NavigationBarItem(
                 selected = currentDest?.hierarchy?.any { it.route == dest.route } == true,
-                onClick  = { onTabSelected(dest.route) },
+                onClick  = { hapticClick(); onTabSelected(dest.route) },
                 icon  = { SpyglassIconImage(dest.icon, contentDescription = stringResource(dest.labelResId), modifier = Modifier.size(24.dp)) },
                 label = { Text(stringResource(dest.labelResId)) },
                 colors = NavigationBarItemDefaults.colors(

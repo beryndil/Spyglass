@@ -15,6 +15,8 @@ import dev.spyglass.android.R
 fun ConsentDialog(
     onResult: (analyticsConsent: Boolean, crashConsent: Boolean, adPersonalizationConsent: Boolean) -> Unit,
 ) {
+    val hapticClick = rememberHapticClick()
+    val hapticConfirm = rememberHapticConfirm()
     var showCustomize by remember { mutableStateOf(false) }
     var analyticsChecked by remember { mutableStateOf(true) }
     var crashChecked by remember { mutableStateOf(true) }
@@ -44,7 +46,7 @@ fun ConsentDialog(
                     ) {
                         Checkbox(
                             checked = analyticsChecked,
-                            onCheckedChange = { analyticsChecked = it },
+                            onCheckedChange = { hapticConfirm(); analyticsChecked = it },
                         )
                         Column(modifier = Modifier.weight(1f)) {
                             Text(stringResource(R.string.consent_analytics), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
@@ -57,7 +59,7 @@ fun ConsentDialog(
                     ) {
                         Checkbox(
                             checked = crashChecked,
-                            onCheckedChange = { crashChecked = it },
+                            onCheckedChange = { hapticConfirm(); crashChecked = it },
                         )
                         Column(modifier = Modifier.weight(1f)) {
                             Text(stringResource(R.string.consent_crash_reports), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
@@ -70,7 +72,7 @@ fun ConsentDialog(
                     ) {
                         Checkbox(
                             checked = adPersonalizationChecked,
-                            onCheckedChange = { adPersonalizationChecked = it },
+                            onCheckedChange = { hapticConfirm(); adPersonalizationChecked = it },
                         )
                         Column(modifier = Modifier.weight(1f)) {
                             Text(stringResource(R.string.consent_personalized_ads), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
@@ -90,26 +92,26 @@ fun ConsentDialog(
         },
         confirmButton = {
             if (showCustomize) {
-                TextButton(onClick = { onResult(analyticsChecked, crashChecked, adPersonalizationChecked) }) {
+                TextButton(onClick = { hapticClick(); onResult(analyticsChecked, crashChecked, adPersonalizationChecked) }) {
                     Text(stringResource(R.string.consent_save_choices), color = MaterialTheme.colorScheme.primary)
                 }
             } else {
-                TextButton(onClick = { onResult(true, true, true) }) {
+                TextButton(onClick = { hapticClick(); onResult(true, true, true) }) {
                     Text(stringResource(R.string.consent_accept_all), color = MaterialTheme.colorScheme.primary)
                 }
             }
         },
         dismissButton = {
             if (showCustomize) {
-                TextButton(onClick = { showCustomize = false }) {
+                TextButton(onClick = { hapticClick(); showCustomize = false }) {
                     Text(stringResource(R.string.back), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             } else {
                 Row {
-                    TextButton(onClick = { onResult(false, false, false) }) {
+                    TextButton(onClick = { hapticClick(); onResult(false, false, false) }) {
                         Text(stringResource(R.string.consent_decline_all), color = MaterialTheme.colorScheme.secondary)
                     }
-                    TextButton(onClick = { showCustomize = true }) {
+                    TextButton(onClick = { hapticClick(); showCustomize = true }) {
                         Text(stringResource(R.string.consent_customize), color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
