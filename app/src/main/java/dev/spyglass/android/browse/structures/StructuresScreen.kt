@@ -235,7 +235,7 @@ fun StructuresScreen(
                         enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
                         exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
-                        StructureDetailCard(s, onNavigateToMob, onNavigateToBiome, onItemTap, onCalcTab, entityLinkIndex, onEnchantTap)
+                        StructureDetailCard(s, onNavigateToMob, onNavigateToBiome, onItemTap, onCalcTab, entityLinkIndex, onEnchantTap, tag, vFilter)
                     }
                 }
             }
@@ -305,6 +305,8 @@ private fun StructureDetailCard(
     onCalcTab: (Int) -> Unit,
     entityLinkIndex: EntityLinkIndex,
     onEnchantTap: (String) -> Unit,
+    tag: VersionTagEntity? = null,
+    vFilter: VersionFilterState = VersionFilterState(),
 ) {
     val biomes      = parseCommaSeparated(structure.biomes)
     val mobs        = parseCommaSeparated(structure.mobs)
@@ -313,6 +315,10 @@ private fun StructureDetailCard(
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         MinecraftIdRow(structure.id)
+
+        if (tag != null) {
+            VersionEditionSection(tag, vFilter)
+        }
 
         // Description
         if (structure.description.isNotEmpty()) {
