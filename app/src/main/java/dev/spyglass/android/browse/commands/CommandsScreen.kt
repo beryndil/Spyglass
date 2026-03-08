@@ -325,5 +325,8 @@ private fun CommandDetailCard(cmd: CommandEntity, entityLinkIndex: EntityLinkInd
         SpyglassDivider()
         StatRow(stringResource(R.string.category), categoryLabel(cmd.category))
         StatRow("Permission", permissionLabel(cmd.permissionLevel))
+
+        SpyglassDivider()
+        ReportProblemRow(entityType = "Command", entityName = cmd.name, entityId = cmd.name)
     }
 }

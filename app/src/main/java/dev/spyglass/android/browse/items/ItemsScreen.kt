@@ -781,5 +781,8 @@ private fun ItemDetailCard(
         // ── Add to shopping list ─────────────────────────────────────────
         SpyglassDivider()
         AddToListSection(itemId = item.id, itemName = item.name)
+
+        SpyglassDivider()
+        ReportProblemRow(entityType = "Item", entityName = item.name, entityId = item.id)
     }
 }

@@ -432,5 +432,8 @@ private fun StructureDetailCard(
                 )
             }
         }
+
+        SpyglassDivider()
+        ReportProblemRow(entityType = "Structure", entityName = structure.name, entityId = structure.id)
     }
 }

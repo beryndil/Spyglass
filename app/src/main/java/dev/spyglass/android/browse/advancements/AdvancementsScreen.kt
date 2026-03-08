@@ -714,5 +714,8 @@ private fun AdvancementDetailCard(
                 )
             }
         }
+
+        SpyglassDivider()
+        ReportProblemRow(entityType = "Advancement", entityName = adv.name, entityId = adv.id)
     }
 }

@@ -652,5 +652,8 @@ private fun BlockDetailContent(
         // ── Add to shopping list ──
         SpyglassDivider()
         AddToListSection(itemId = block.id, itemName = block.name)
+
+        SpyglassDivider()
+        ReportProblemRow(entityType = "Block", entityName = block.name, entityId = block.id)
     }
 }

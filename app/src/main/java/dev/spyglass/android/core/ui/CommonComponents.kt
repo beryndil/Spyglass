@@ -14,6 +14,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.outlined.Flag
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import dev.spyglass.android.core.VersionFilterState
@@ -34,7 +35,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.spyglass.android.data.db.entities.RecipeEntity
+import androidx.compose.ui.platform.LocalUriHandler
 import kotlinx.serialization.json.*
+import java.net.URLEncoder
 
 // ── Section header ────────────────────────────────────────────────────────────
 
@@ -352,6 +355,38 @@ fun MinecraftIdRow(id: String) {
             kotlinx.coroutines.delay(1500)
             copied = false
         }
+    }
+}
+
+// ── Report a problem — opens pre-filled GitHub issue ─────────────────────────
+
+@Composable
+fun ReportProblemRow(
+    entityType: String,
+    entityName: String,
+    entityId: String,
+    textColor: Color = MaterialTheme.colorScheme.secondary,
+) {
+    val uriHandler = LocalUriHandler.current
+    val title = URLEncoder.encode("[$entityType] $entityName — Data Issue", "UTF-8")
+    val body = URLEncoder.encode(
+        "**$entityType:** $entityName\n**ID:** `$entityId`\n\n" +
+        "### What's wrong?\n\n\n### What should it be?\n\n",
+        "UTF-8"
+    )
+    val url = "https://github.com/beryndil/Spyglass/issues/new?title=$title&body=$body&labels=data-issue"
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { uriHandler.openUri(url) }
+            .padding(vertical = 8.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(Icons.Outlined.Flag, contentDescription = null, modifier = Modifier.size(16.dp), tint = textColor)
+        Spacer(Modifier.width(6.dp))
+        Text("Report a problem", style = MaterialTheme.typography.labelSmall, color = textColor)
     }
 }
 
