@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -360,11 +361,15 @@ private fun HomeHeader() {
             color = MaterialTheme.colorScheme.onSurface,
         )
         if (updateAvailable == true) {
+            val uriHandler = LocalUriHandler.current
             Spacer(Modifier.height(4.dp))
             Text(
                 stringResource(R.string.home_update_available),
                 style = MaterialTheme.typography.labelMedium,
                 color = Color(0xFFD32F2F),
+                modifier = Modifier.clickable {
+                    uriHandler.openUri("https://play.google.com/store/apps/details?id=dev.spyglass.android")
+                },
             )
         }
         Spacer(Modifier.height(4.dp))

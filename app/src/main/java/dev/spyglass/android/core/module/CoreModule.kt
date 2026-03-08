@@ -170,11 +170,15 @@ object CoreModule : SpyglassModule {
                 color = MaterialTheme.colorScheme.onSurface,
             )
             if (updateAvailable == true) {
+                val uriHandler = LocalUriHandler.current
                 Spacer(Modifier.height(4.dp))
                 Text(
                     stringResource(R.string.home_update_available),
                     style = MaterialTheme.typography.labelMedium,
                     color = Color(0xFFD32F2F),
+                    modifier = Modifier.clickable {
+                        uriHandler.openUri("https://play.google.com/store/apps/details?id=dev.spyglass.android")
+                    },
                 )
             }
             Spacer(Modifier.height(4.dp))
