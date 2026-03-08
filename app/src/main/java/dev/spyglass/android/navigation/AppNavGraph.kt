@@ -60,7 +60,7 @@ private val SUB_ROUTES = setOf(
     "about", "settings", "changelog", "feedback", "license", "disclaimer",
     "connect_scan", "connect_character", "connect_inventory",
     "connect_enderchest", "connect_chestfinder", "connect_map",
-    "connect_statistics", "connect_advancements",
+    "connect_statistics", "connect_advancements", "connect_waypoints",
 )
 
 /** Pending navigation target from Search -> Browse */

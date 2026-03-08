@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dev.spyglass.android.connect.client.*
 import dev.spyglass.android.connect.gear.GearAnalysis
 import dev.spyglass.android.connect.gear.GearAnalyzer
+import dev.spyglass.android.connect.waypoints.ConnectWaypoint
 import dev.spyglass.android.core.CrashReporter
 import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.Dispatchers
@@ -97,6 +98,9 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private val _pets = MutableStateFlow<List<PetData>>(emptyList())
     val pets: StateFlow<List<PetData>> = _pets
 
+    private val _connectWaypoints = MutableStateFlow<List<ConnectWaypoint>>(emptyList())
+    val connectWaypoints: StateFlow<List<ConnectWaypoint>> = _connectWaypoints
+
     private val _chestContents = MutableStateFlow<ChestContentsPayload?>(null)
     val chestContents: StateFlow<ChestContentsPayload?> = _chestContents
 
@@ -147,6 +151,15 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     }
                 } else {
                     _gearAnalysis.value = null
+                }
+            }
+        }
+
+        // Auto-populate waypoints when player data updates
+        viewModelScope.launch {
+            _playerData.collectLatest { data ->
+                if (data != null) {
+                    autoPopulateWaypoints(data)
                 }
             }
         }
@@ -233,6 +246,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         ConnectCache.loadSkinBody(ctx, worldFolder)?.let { _playerBodySkin.value = it }
         ConnectCache.loadLastUpdated(ctx, worldFolder)?.let { _lastUpdated.value = it }
         ConnectCache.loadPets(ctx, worldFolder)?.let { _pets.value = it }
+        ConnectCache.loadWaypoints(ctx, worldFolder)?.let { _connectWaypoints.value = it }
     }
 
     /** Connect via QR pairing data. */
@@ -278,6 +292,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     "statistics"  -> requestStats()
                     "advancements" -> requestAdvancements()
                     "pets"        -> requestPets()
+                    "waypoints"   -> requestPlayerData()
                     "connect"     -> requestPlayerList()
                 }
             }
@@ -540,6 +555,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         _selectedWorld.value = null
         _lastUpdated.value = null
         _pets.value = emptyList()
+        _connectWaypoints.value = emptyList()
         _comparePlayerData.value = null
         SkinManager.clear()
         viewModelScope.launch(Dispatchers.IO) {
@@ -600,6 +616,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         _selectedWorld.value = null
         _lastUpdated.value = null
         _pets.value = emptyList()
+        _connectWaypoints.value = emptyList()
         _comparePlayerData.value = null
         viewModelScope.launch {
             PairingStore.clear(getApplication())
@@ -747,6 +764,109 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         } catch (e: Exception) {
             Timber.w(e, "Failed to handle message: ${message.type}")
             CrashReporter.recordException(e, "Handle message failed: ${message.type}")
+        }
+    }
+
+    // ── Waypoints ─────────────────────────────────────────────────────────
+
+    /** Auto-generate system waypoints from player data, preserving custom ones. */
+    private fun autoPopulateWaypoints(data: PlayerData) {
+        val current = _connectWaypoints.value.toMutableList()
+
+        fun upsertAuto(id: String, builder: () -> ConnectWaypoint?) {
+            val wp = builder() ?: return
+            val idx = current.indexOfFirst { it.id == id }
+            if (idx >= 0) current[idx] = wp else current.add(wp)
+        }
+
+        upsertAuto(ConnectWaypoint.ID_WORLD_SPAWN) {
+            data.worldSpawn?.let {
+                ConnectWaypoint(
+                    id = ConnectWaypoint.ID_WORLD_SPAWN,
+                    name = "World Spawn",
+                    x = it.x, y = it.y, z = it.z,
+                    dimension = it.dimension,
+                    category = "spawn", color = "green",
+                    source = ConnectWaypoint.SOURCE_AUTO,
+                )
+            }
+        }
+
+        upsertAuto(ConnectWaypoint.ID_RESPAWN) {
+            data.spawnLocation?.let {
+                val spawnType = if (it.dimension != "overworld" || data.spawnForced) "Respawn Anchor" else "Bed"
+                ConnectWaypoint(
+                    id = ConnectWaypoint.ID_RESPAWN,
+                    name = "Respawn Point",
+                    x = it.x, y = it.y, z = it.z,
+                    dimension = it.dimension,
+                    category = "spawn", color = "blue",
+                    notes = spawnType,
+                    source = ConnectWaypoint.SOURCE_AUTO,
+                )
+            }
+        }
+
+        upsertAuto(ConnectWaypoint.ID_DEATH) {
+            data.lastDeathLocation?.let {
+                ConnectWaypoint(
+                    id = ConnectWaypoint.ID_DEATH,
+                    name = "Last Death",
+                    x = it.x, y = it.y, z = it.z,
+                    dimension = it.dimension,
+                    category = "death", color = "red",
+                    source = ConnectWaypoint.SOURCE_AUTO,
+                )
+            }
+        }
+
+        _connectWaypoints.value = current
+        saveWaypointsToCache()
+    }
+
+    /** Create a custom waypoint. */
+    fun createConnectWaypoint(waypoint: ConnectWaypoint) {
+        _connectWaypoints.value = _connectWaypoints.value + waypoint
+        saveWaypointsToCache()
+    }
+
+    /** Create a waypoint at the player's current position. */
+    fun createWaypointAtPlayer(name: String, category: String = "other", color: String = "gold", notes: String = "") {
+        val data = _playerData.value ?: return
+        createConnectWaypoint(
+            ConnectWaypoint(
+                id = java.util.UUID.randomUUID().toString(),
+                name = name,
+                x = data.posX.toInt(),
+                y = data.posY.toInt(),
+                z = data.posZ.toInt(),
+                dimension = data.dimension,
+                category = category,
+                color = color,
+                notes = notes,
+            ),
+        )
+    }
+
+    /** Update a custom waypoint. */
+    fun updateConnectWaypoint(waypoint: ConnectWaypoint) {
+        _connectWaypoints.value = _connectWaypoints.value.map {
+            if (it.id == waypoint.id) waypoint else it
+        }
+        saveWaypointsToCache()
+    }
+
+    /** Delete a custom waypoint. */
+    fun deleteConnectWaypoint(id: String) {
+        _connectWaypoints.value = _connectWaypoints.value.filter { it.id != id }
+        saveWaypointsToCache()
+    }
+
+    private fun saveWaypointsToCache() {
+        val world = _selectedWorld.value ?: return
+        val waypoints = _connectWaypoints.value
+        viewModelScope.launch(Dispatchers.IO) {
+            ConnectCache.saveWaypoints(getApplication(), world, waypoints)
         }
     }
 

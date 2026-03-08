@@ -142,6 +142,7 @@ data class PlayerData(
     val spawnLocation: LocationData? = null,
     val spawnForced: Boolean = false,
     val activeEffects: List<ActiveEffect> = emptyList(),
+    val worldSpawn: LocationData? = null,
 )
 
 @Serializable

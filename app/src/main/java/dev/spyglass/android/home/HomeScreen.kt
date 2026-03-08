@@ -639,6 +639,7 @@ private fun connectLinks(
         add(QuickLink(PixelIcons.Enchant,     "Ender Chest")   to "connect_enderchest")
         add(QuickLink(PixelIcons.Search,      "Chest Finder")  to "connect_chestfinder")
         add(QuickLink(PixelIcons.Biome,       "World Map")     to "connect_map")
+        add(QuickLink(PixelIcons.Waypoints,   "Waypoints")     to "connect_waypoints")
         add(QuickLink(PixelIcons.Mob,         "Pets")          to "connect_pets")
         if (playerCount > 1) {
             add(QuickLink(PixelIcons.Steve,   "Players")       to "connect_players")

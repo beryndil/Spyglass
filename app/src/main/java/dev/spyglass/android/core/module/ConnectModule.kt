@@ -49,6 +49,7 @@ import dev.spyglass.android.connect.advancements.AdvancementsScreen
 import dev.spyglass.android.connect.players.PlayersScreen
 import dev.spyglass.android.connect.players.CompareScreen
 import dev.spyglass.android.connect.pets.PetsScreen
+import dev.spyglass.android.connect.waypoints.ConnectWaypointsScreen
 import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.core.ui.Emerald
 import dev.spyglass.android.core.ui.PixelIcons
@@ -177,6 +178,13 @@ object ConnectModule : SpyglassModule {
             ModuleRoute("connect_pets") { _, nav ->
                 val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
                 PetsScreen(
+                    viewModel = connectViewModel,
+                    onBack = { nav.navigateBack() },
+                )
+            },
+            ModuleRoute("connect_waypoints") { _, nav ->
+                val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
+                ConnectWaypointsScreen(
                     viewModel = connectViewModel,
                     onBack = { nav.navigateBack() },
                 )
@@ -433,6 +441,7 @@ object ConnectModule : SpyglassModule {
             add(QuickLink(PixelIcons.Enchant, "Ender Chest") to "connect_enderchest")
             add(QuickLink(PixelIcons.Search, "Chest Finder") to "connect_chestfinder")
             add(QuickLink(PixelIcons.Biome, "World Map") to "connect_map")
+            add(QuickLink(PixelIcons.Waypoints, "Waypoints") to "connect_waypoints")
             add(QuickLink(PixelIcons.Mob, "Pets") to "connect_pets")
             if (playerCount > 1) {
                 add(QuickLink(PixelIcons.Steve, "Players") to "connect_players")

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import dev.spyglass.android.connect.*
+import dev.spyglass.android.connect.waypoints.ConnectWaypoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
@@ -284,6 +285,31 @@ object ConnectCache {
                 json.decodeFromString<List<PetData>>(file.readText())
             } catch (e: Exception) {
                 Timber.w(e, "Failed to load pets cache")
+                null
+            }
+        }
+
+    // ── Waypoints ─────────────────────────────────────────────────────────
+
+    suspend fun saveWaypoints(context: Context, worldFolder: String, waypoints: List<ConnectWaypoint>) =
+        withContext(Dispatchers.IO) {
+            try {
+                val dir = worldDir(context, worldFolder)
+                dir.mkdirs()
+                File(dir, "waypoints.json").writeText(json.encodeToString(waypoints))
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to save waypoints cache")
+            }
+        }
+
+    suspend fun loadWaypoints(context: Context, worldFolder: String): List<ConnectWaypoint>? =
+        withContext(Dispatchers.IO) {
+            try {
+                val file = File(worldDir(context, worldFolder), "waypoints.json")
+                if (!file.exists()) return@withContext null
+                json.decodeFromString<List<ConnectWaypoint>>(file.readText())
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to load waypoints cache")
                 null
             }
         }
