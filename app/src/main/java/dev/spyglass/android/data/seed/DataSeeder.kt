@@ -18,7 +18,7 @@ import java.io.File
  */
 object DataSeeder {
 
-    private const val CURRENT_DATA_VERSION = 21
+    private const val CURRENT_DATA_VERSION = 22
     private const val PREFS_NAME = "spyglass_seed"
     private const val KEY_DATA_VERSION = "data_version"
 
@@ -258,6 +258,7 @@ object DataSeeder {
         val relatedItems: String = "", val relatedMobs: String = "",
         val relatedStructures: String = "", val relatedBiomes: String = "",
         val dimension: String = "", val xpReward: String = "",
+        val tutorial: String = "", val difficulty: String = "",
     )
 
     @Serializable data class CommandJson(
@@ -425,7 +426,8 @@ object DataSeeder {
         db.advancementDao().insertAll(items.map {
             AdvancementEntity(it.id, it.name, it.description, it.category, it.type, it.parent,
                 it.hint, it.requirements, it.relatedItems, it.relatedMobs,
-                it.relatedStructures, it.relatedBiomes, it.dimension, it.xpReward)
+                it.relatedStructures, it.relatedBiomes, it.dimension, it.xpReward,
+                it.tutorial, it.difficulty)
         })
     }
 

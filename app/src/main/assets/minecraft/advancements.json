@@ -13,7 +13,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "500"
+    "xpReward": "500",
+    "tutorial": "You must visit every required overworld biome. There are approximately 52 biomes to discover. This requires extensive exploration across all terrain types.\n\nStrategies:\n- **Use /locatebiome** in a creative copy of your world to find missing biomes.\n- **Nether travel** to cover ground faster (875 Nether blocks = 7000 Overworld blocks).\n- **Track progress** in the advancement tab — hover over the advancement to see your completion count.\n- **Rare biomes** to watch for: mushroom fields (ocean-surrounded), eroded badlands, bamboo jungle, ice spikes, snowy slopes, frozen peaks, jagged peaks, stony peaks, cherry grove, deep dark.\n- **Use elytra + fireworks** for fast aerial exploration.\n- Some biomes only exist at specific heights/terrain — peaks biomes need mountains, deep dark is below Y=0.",
+    "difficulty": "expert"
   },
   {
     "id": "adventure/arbalistic",
@@ -29,7 +31,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "This requires a Piercing IV crossbow and extremely precise setup.\n\n1. **Gather 5 different mob types** and line them up in a narrow corridor (use boats, leads, or a channel).\n2. **Weaken all mobs** to 1 HP (use potions of Harming, or hit them carefully). Each mob must die from the single arrow.\n3. **Line them up perfectly** — all 5 must be in a straight line within the arrow's path.\n4. **Fire one shot** through all 5.\n\nRecommended mob types: Use small-hitbox mobs that are easy to capture. Chickens, rabbits, and baby mobs work well. Build a narrow 1-block-wide corridor and pack them in.\n\nThe difficulty is that the arrow must kill each mob it passes through, and Piercing IV only passes through 5 entities total. Make sure they're all at 1 HP.",
+    "difficulty": "expert"
   },
   {
     "id": "adventure/avoid_vibration",
@@ -45,7 +49,9 @@
     "relatedStructures": "",
     "relatedBiomes": "minecraft:deep_dark",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find a sculk sensor (deep dark biome or ancient city) and crouch-walk (sneak) near it. Sneaking prevents vibrations that would trigger the sensor.",
+    "difficulty": "easy"
   },
   {
     "id": "adventure/blowback",
@@ -61,7 +67,9 @@
     "relatedStructures": "minecraft:trial_chambers",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "Found in trial chambers, the breeze shoots wind charges that can be deflected back by hitting them. Time your melee attack when the wind charge is close and aim it back at the breeze. The breeze has 30 HP, so this will take multiple reflected charges. Similar to ghast fireball deflection but wind charges deal less damage.",
+    "difficulty": "hard"
   },
   {
     "id": "adventure/brush_armadillo",
@@ -77,7 +85,9 @@
     "relatedStructures": "",
     "relatedBiomes": "minecraft:savanna,minecraft:badlands",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find an armadillo in a savanna or badlands biome. Craft a brush from a feather, copper ingot, and stick. Walk up to the armadillo slowly — if it curls up, wait for it to unroll. Use the brush on it to collect armadillo scutes, which are used to craft wolf armor.",
+    "difficulty": "easy"
   },
   {
     "id": "adventure/bullseye",
@@ -93,7 +103,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "Craft a target block (4 redstone + 1 hay bale). Place it and walk 30+ blocks away. Shoot the exact center with an arrow. The target block emits a redstone signal proportional to accuracy — full signal (15) means bullseye. Fully charged bow + practice. A flat area with clear line of sight is ideal.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/craft_decorated_pot_using_only_sherds",
@@ -109,7 +121,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find 4 pottery sherds from suspicious sand/gravel in trail ruins, desert pyramids, desert wells, ocean ruins, or cold ocean ruins. Use a brush (feather + copper ingot + stick) on suspicious blocks to extract sherds. Craft 4 sherds together in a diamond pattern in a crafting table. All 4 must be sherds — no plain bricks.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/crafters_crafting_crafters",
@@ -125,7 +139,9 @@
     "relatedStructures": "minecraft:trial_chambers",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find a crafter block in a trial chamber or craft one from 5 iron ingots, 1 crafting table, 2 redstone dust, and 1 dropper. Place the crafter and load it with the recipe for another crafter. Power it with a redstone signal (lever or button) while standing nearby. You must be within range when the crafter finishes crafting.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/fall_from_world_height",
@@ -141,7 +157,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "You need to fall from build height (Y=320) to near bedrock (Y=-62) and survive.\n\nMethods to survive:\n1. **Water bucket MLG** — Place water at the bottom just before landing. Requires precise timing.\n2. **Slow Falling potion** — Drink just before impact (but you still need enough fall distance).\n3. **Hay bales** — Reduce fall damage by 80%. Stack enough at the bottom.\n4. **Twisting vines / scaffolding** — Place at the bottom to break your fall.\n\nSetup: Build up to Y=320 (bring lots of blocks), dig a clear shaft down to Y=-62 or lower. The easiest method is to place water at the bottom and aim for it. Use Feather Falling IV boots + a Totem of Undying as backup.",
+    "difficulty": "hard"
   },
   {
     "id": "adventure/heart_transplanter",
@@ -157,7 +175,9 @@
     "relatedStructures": "",
     "relatedBiomes": "minecraft:pale_garden",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Locate a pale garden biome and find a creaking heart block inside pale oak trees. Mine it with Silk Touch. Place two pale oak logs vertically, then place the creaking heart between them so its axis aligns with the logs. When placed correctly at night, a creaking mob will spawn.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/hero_of_the_village",
@@ -173,7 +193,9 @@
     "relatedStructures": "minecraft:village",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "1. **Get Bad Omen** by killing a pillager captain.\n2. **Enter a village** to trigger the raid.\n3. **Survive all waves** — Normal difficulty has 5 waves, Hard has 7. Waves include pillagers, vindicators, ravagers, evokers, and witches.\n\nPreparation tips:\n- **Wall off the village** or funnel mobs through chokepoints.\n- **Ring a bell** to highlight raiders with Glowing.\n- **Bring strong gear**: Full diamond/netherite, Sharpness V sword, bow, shield, golden apples.\n- **Protect villagers** — if all villagers die, the raid fails.\n- **Totems of Undying** (dropped by evokers in earlier waves) are your insurance.\n\nReward: Hero of the Village gives massive trade discounts from villagers and triggers gift-throwing from villagers.",
+    "difficulty": "hard"
   },
   {
     "id": "adventure/honey_block_slide",
@@ -189,7 +211,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Place a honey block on a wall (or stack them) and walk off an edge while pressed against it. Crafted from 4 honey bottles. You can also find honey blocks near bee nests.",
+    "difficulty": "easy"
   },
   {
     "id": "adventure/kill_a_mob",
@@ -205,7 +229,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Kill any hostile mob — zombie, skeleton, spider, creeper, etc.",
+    "difficulty": "trivial"
   },
   {
     "id": "adventure/kill_all_mobs",
@@ -221,7 +247,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "100"
+    "xpReward": "100",
+    "tutorial": "You must kill at least one of every required hostile mob in the game. The full list includes:\n\nBlaze, Cave Spider, Creeper, Drowned, Elder Guardian, Ender Dragon, Enderman, Endermite, Evoker, Ghast, Guardian, Hoglin, Husk, Magma Cube, Phantom, Piglin, Piglin Brute, Pillager, Ravager, Shulker, Silverfish, Skeleton, Slime, Spider, Stray, Vex, Vindicator, Witch, Wither, Wither Skeleton, Zoglin, Zombie, Zombie Villager, Breeze.\n\nNotable hard-to-find mobs:\n- **Elder Guardian**: Ocean monument (3 per monument, don't respawn)\n- **Evoker/Vex**: Woodland mansion or raids\n- **Hoglin**: Crimson forest (Nether)\n- **Piglin Brute**: Bastion remnants only (don't respawn)\n- **Endermite**: 5% chance when throwing an ender pearl\n- **Zoglin**: Bring a hoglin through a portal to the Overworld\n- **Wither**: Must be summoned\n- **Breeze**: Trial chambers\n\nTrack your progress in the advancement tab. This requires visiting nearly every structure and dimension in the game.",
+    "difficulty": "expert"
   },
   {
     "id": "adventure/kill_mob_near_sculk_catalyst",
@@ -237,7 +265,9 @@
     "relatedStructures": "",
     "relatedBiomes": "minecraft:deep_dark",
     "dimension": "overworld",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "Find a sculk catalyst in the deep dark biome or an ancient city (or silk touch one and bring it). Kill any XP-dropping mob within 8 blocks of it. The catalyst will absorb the XP and spread sculk blocks.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/lighten_up",
@@ -253,7 +283,9 @@
     "relatedStructures": "minecraft:trial_chambers",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find a copper bulb in a trial chamber or craft one from 3 copper blocks, 1 blaze rod, and 1 redstone dust. If it has oxidized to a darker state, use any axe on it to scrape off one level of oxidation, making it brighter.",
+    "difficulty": "easy"
   },
   {
     "id": "adventure/lightning_rod_with_villager_no_fire",
@@ -269,7 +301,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Place a lightning rod within 128 blocks of a villager. During a thunderstorm, the rod must redirect a natural lightning strike that would have hit the villager. This is largely luck-based — you need a thunderstorm and lightning to strike near a villager.\n\nSetup: Place a villager in an exposed area and surround them with lightning rods on slightly higher ground. Wait for a thunderstorm. Using a Channeling trident does NOT count — it must be natural lightning redirected by the rod.",
+    "difficulty": "hard"
   },
   {
     "id": "adventure/minecraft_trials_edition",
@@ -285,7 +319,9 @@
     "relatedStructures": "minecraft:trial_chambers",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Trial chambers generate underground, typically between Y=-40 and Y=-20. Use the /locate command in creative to find them, or look for copper and tuff structures while deep mining. They contain trial spawners and the breeze mob.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/ol_betsy",
@@ -301,7 +337,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a crossbow (3 sticks + 2 string + 1 iron ingot + 1 tripwire hook) or find one from pillagers. Right-click to charge, right-click again to fire.",
+    "difficulty": "easy"
   },
   {
     "id": "adventure/overoverkill",
@@ -317,7 +355,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "The mace gains bonus damage based on fall distance. You need an enormous fall to deal 100+ damage.\n\n1. **Obtain a mace** — Crafted from a breeze rod (dropped by breeze in trial chambers) + heavy core (from ominous vault in trial chambers).\n2. **Build up HIGH** — You need roughly 100+ blocks of fall height.\n3. **Fall and smash** — The mace negates fall damage to the user when it hits, so jump from a tall pillar and strike a mob at the bottom.\n4. **Density enchantment** significantly increases mace damage per block fallen — highly recommended.\n5. **Wind Burst enchantment** lets you bounce back up after hitting, but isn't needed for this advancement.\n\nTarget a high-HP mob (iron golem, ravager) to ensure it registers the full damage in one hit.",
+    "difficulty": "hard"
   },
   {
     "id": "adventure/play_jukebox_in_meadows",
@@ -333,7 +373,9 @@
     "relatedStructures": "",
     "relatedBiomes": "minecraft:meadow",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find a meadow biome (gentle flower-filled hills usually near mountains) and place a jukebox (8 planks + 1 diamond). Insert any music disc. Music discs drop when a skeleton kills a creeper, or can be found in dungeon/ancient city chests.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/read_power_of_chiseled_bookshelf",
@@ -349,7 +391,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a chiseled bookshelf (6 planks + 3 slabs). Place books in it, put a redstone comparator behind it. The comparator outputs a signal strength based on which slot was last interacted with (1–6).",
+    "difficulty": "easy"
   },
   {
     "id": "adventure/revaulting",
@@ -365,7 +409,9 @@
     "relatedStructures": "minecraft:trial_chambers",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "500"
+    "xpReward": "500",
+    "tutorial": "Get the Bad Omen effect by drinking an ominous bottle (found in pillager outpost chests or dropped by raid captains). Enter a trial chamber — the Bad Omen converts to Trial Omen. Defeat the ominous trial spawner mobs (tougher variants) to earn an ominous trial key. Use it on an ominous vault (the darker, decorated vault blocks) for rare exclusive loot like heavy core, wind burst, and more.",
+    "difficulty": "hard"
   },
   {
     "id": "adventure/root",
@@ -381,7 +427,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Kill any mob or get killed. This happens within minutes of starting.",
+    "difficulty": "trivial"
   },
   {
     "id": "adventure/salvage_sherd",
@@ -397,7 +445,9 @@
     "relatedStructures": "minecraft:desert_pyramid,minecraft:trail_ruins,minecraft:ocean_ruin",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a brush (feather + copper ingot + stick). Find suspicious sand or suspicious gravel in trail ruins, desert temples, desert wells, or ocean ruins. Right-click the suspicious block with the brush — hold it steady until the item is extracted. Some yield pottery sherds.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/shoot_arrow",
@@ -413,7 +463,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a bow (3 sticks + 3 string) and arrows (1 flint + 1 stick + 1 feather), then shoot any mob.",
+    "difficulty": "easy"
   },
   {
     "id": "adventure/sleep_in_bed",
@@ -429,7 +481,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a bed (3 wool + 3 planks) and sleep in it at night.",
+    "difficulty": "trivial"
   },
   {
     "id": "adventure/sniper_duel",
@@ -445,7 +499,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "Find a skeleton in a flat area. Walk 50+ blocks away (measure with F3 coordinates). Shoot it with a bow — a fully charged Power V bow can one-shot a skeleton. Account for arrow drop at distance. Using a spyglass to verify distance beforehand helps.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/spear_many_mobs",
@@ -461,7 +517,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "500"
+    "xpReward": "500",
+    "tutorial": "Craft a spear (a new 1.22 weapon) and use its charge attack. Line up at least five mobs in a tight space — a narrow corridor or animal pen works best. Initiate the charge attack to pierce through all five in a single charge.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/spyglass_at_dragon",
@@ -477,7 +535,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "end",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Bring a spyglass to the End and look at the dragon through it.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/spyglass_at_ghast",
@@ -493,7 +553,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Use a spyglass to look at a ghast in the Nether.",
+    "difficulty": "easy"
   },
   {
     "id": "adventure/spyglass_at_parrot",
@@ -509,7 +571,9 @@
     "relatedStructures": "",
     "relatedBiomes": "minecraft:jungle",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a spyglass (1 amethyst shard + 2 copper ingots). Find a parrot in a jungle biome and look at it through the spyglass.",
+    "difficulty": "easy"
   },
   {
     "id": "adventure/summon_iron_golem",
@@ -525,7 +589,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "500"
+    "xpReward": "500",
+    "tutorial": "Gather 36 iron ingots and craft 4 iron blocks. Find or carve a pumpkin (use shears on a pumpkin to get a carved pumpkin). Build a T-shape with the iron blocks: place one block on the ground, one on top, and one on each side of the top block. Place the carved pumpkin on top last. The iron golem will spawn immediately.",
+    "difficulty": "easy"
   },
   {
     "id": "adventure/throw_trident",
@@ -541,7 +607,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Tridents are only obtained from drowned that are visibly holding them (about 6.25% of drowned hold them, 8.5% drop chance with Looting III). Once you have one, hold right-click to charge and release to throw it at a mob. Don't throw it into the void — use Loyalty enchantment to make it return.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/totem_of_undying",
@@ -557,7 +625,9 @@
     "relatedStructures": "minecraft:mansion",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "500"
+    "xpReward": "500",
+    "tutorial": "Totems of Undying drop from evokers (found in woodland mansions and raids). Hold the totem in either hand — when you take lethal damage, it activates automatically, restoring health and giving Absorption, Regeneration, and Fire Resistance. You must actually take lethal damage with it in hand.",
+    "difficulty": "hard"
   },
   {
     "id": "adventure/trade",
@@ -573,7 +643,9 @@
     "relatedStructures": "minecraft:village",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find a village and trade with any villager. Farmer villagers often have cheap first trades (wheat, potatoes, carrots).",
+    "difficulty": "easy"
   },
   {
     "id": "adventure/trade_at_world_height",
@@ -589,7 +661,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Transport a villager to Y=319+ (build limit) and trade with them. Use a boat on scaffolding, a nether portal at high Y, or a long bubble column. The simplest method: place a villager in a boat, push the boat up a tall scaffolding tower to build height, and trade.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/trim_with_all_exclusive_armor_patterns",
@@ -605,7 +679,9 @@
     "relatedStructures": "minecraft:end_city,minecraft:bastion_remnant,minecraft:nether_fortress,minecraft:ancient_city,minecraft:mansion,minecraft:ocean_monument,minecraft:trail_ruins",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "You need to find and use all 8 exclusive smithing templates, each from a different structure:\n\n- **Spire**: End city\n- **Snout**: Bastion remnant\n- **Rib**: Nether fortress\n- **Ward**: Ancient city\n- **Silence**: Ancient city (very rare)\n- **Vex**: Woodland mansion\n- **Tide**: Elder guardian drop (ocean monument)\n- **Wayfinder**: Trail ruins\n\nThe Silence trim is the rarest — it only appears in ancient city chests with a ~1.2% chance. Each template can be duplicated at a crafting table with 7 diamonds + the template + a specific material.\n\nYou need to visit 6 different structure types across 3 dimensions. Plan a systematic approach: Overworld structures first (trail ruins, woodland mansion, ocean monument), then Nether (fortress, bastion), then End (end city).",
+    "difficulty": "expert"
   },
   {
     "id": "adventure/trim_with_any_armor_pattern",
@@ -621,7 +697,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find a smithing template (various structures have unique trim patterns) and use it at a smithing table with armor + a trim material (any ingot, crystal, etc.). The template, armor piece, and trim material go in specific slots. Templates are found in structures like trail ruins, desert pyramids, jungle temples, ocean monuments, and more.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/two_birds_one_arrow",
@@ -637,7 +715,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "Enchant a crossbow with Piercing (IV recommended for reliability). Stay awake for 3+ nights to spawn phantoms. Phantoms swoop in groups — wait for two to line up on a dive and shoot. This requires good timing and some luck. Piercing allows arrows to pass through entities, hitting multiple targets.",
+    "difficulty": "hard"
   },
   {
     "id": "adventure/under_lock_and_key",
@@ -653,7 +733,9 @@
     "relatedStructures": "minecraft:trial_chambers",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Complete trial spawner challenges in a trial chamber to earn trial keys. Use a trial key on a vault block (the orange/copper blocks in trial chambers) to unlock it and receive loot. Each vault can only be opened once per player.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/use_lodestone",
@@ -669,7 +751,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a lodestone (8 chiseled stone bricks + 1 netherite ingot) and right-click it with a compass. The compass will now point to the lodestone instead of world spawn. Lodestones work in all dimensions, making them invaluable for Nether navigation. The netherite ingot requirement makes this expensive.",
+    "difficulty": "hard"
   },
   {
     "id": "adventure/very_very_frightening",
@@ -685,7 +769,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Enchant a trident with Channeling. During a thunderstorm, throw the trident at a villager — the lightning will strike them, converting them into a witch. Note: this kills the villager's trading career, so use a villager you don't need.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/voluntary_exile",
@@ -701,7 +787,9 @@
     "relatedStructures": "minecraft:pillager_outpost",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find a pillager outpost or patrol. The captain is the pillager carrying an ominous banner on its head. Kill it and you get the Bad Omen effect. Entering a village with Bad Omen triggers a raid.",
+    "difficulty": "medium"
   },
   {
     "id": "adventure/walk_on_powder_snow_with_leather_boots",
@@ -717,7 +805,9 @@
     "relatedStructures": "",
     "relatedBiomes": "minecraft:snowy_slopes,minecraft:grove",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find powder snow (common in grove and snowy slopes biomes, or from cauldrons in snowy weather). Wear leather boots and walk on it — you'll walk on top instead of sinking.",
+    "difficulty": "easy"
   },
   {
     "id": "adventure/who_needs_rockets",
@@ -733,7 +823,9 @@
     "relatedStructures": "minecraft:trial_chambers",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Obtain wind charges from breezes in trial chambers. Stand on flat ground, look straight down, jump, and immediately use a wind charge at your feet at the peak of your jump. The explosion launches you upward. You need to reach at least 8 blocks of height from where you used the charge. Timing the jump and charge together is key.",
+    "difficulty": "easy"
   },
   {
     "id": "adventure/whos_the_pillager_now",
@@ -749,7 +841,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Kill a pillager using a crossbow. Crossbows can be crafted or taken from dead pillagers.",
+    "difficulty": "medium"
   },
   {
     "id": "end/dragon_breath",
@@ -765,7 +859,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "end",
-    "xpReward": "500"
+    "xpReward": "500",
+    "tutorial": "During the dragon fight (or a respawned dragon), the dragon breathes purple acid breath clouds on the fountain. Right-click the purple particles with an empty glass bottle to collect dragon's breath. Used to brew lingering potions. Bring several glass bottles — the clouds dissipate quickly.",
+    "difficulty": "medium"
   },
   {
     "id": "end/dragon_egg",
@@ -781,7 +877,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "end",
-    "xpReward": "500"
+    "xpReward": "500",
+    "tutorial": "After killing the dragon, a dragon egg appears on top of the exit portal. It teleports when clicked directly. To collect it: place a torch 2 blocks below it, then break the block the egg sits on. The egg falls onto the torch and drops as an item. Alternatively, push it with a piston.",
+    "difficulty": "medium"
   },
   {
     "id": "end/elytra",
@@ -797,7 +895,9 @@
     "relatedStructures": "minecraft:end_city",
     "relatedBiomes": "",
     "dimension": "end",
-    "xpReward": "500"
+    "xpReward": "500",
+    "tutorial": "Elytra are found exclusively in end ships, which are attached to some (not all) end cities in the outer End islands.\n\n1. **Find an end city with a ship** — Not all end cities have ships. The ship is a floating structure that looks like a boat, connected to the city by a bridge.\n2. **Enter the ship** — The elytra is displayed in an item frame in the ship's hull. Watch out for shulkers.\n3. **Take the elytra** — Right-click the item frame.\n\nElytra go in the chestplate slot. Activate by jumping while falling and pressing space. Use firework rockets (crafted with paper + gunpowder) to boost while flying. Mending and Unbreaking III enchantments are essential for long-term use.",
+    "difficulty": "hard"
   },
   {
     "id": "end/enter_end_gateway",
@@ -813,7 +913,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "end",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "After killing the dragon, an end gateway portal spawns at the edge of the main island (small bedrock frame with a starry block inside). Throw an ender pearl into the starry block to teleport to the outer End islands. These islands contain end cities, chorus plants, and shulkers.",
+    "difficulty": "medium"
   },
   {
     "id": "end/find_end_city",
@@ -829,7 +931,9 @@
     "relatedStructures": "minecraft:end_city",
     "relatedBiomes": "",
     "dimension": "end",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "After using an end gateway, explore the outer End islands. End cities are tall purpur block structures that generate on the islands. They can be spaced far apart — bridge between islands using blocks or ender pearls. End cities contain valuable loot chests with enchanted gear, and some have end ships attached (which contain elytra).",
+    "difficulty": "hard"
   },
   {
     "id": "end/kill_dragon",
@@ -845,7 +949,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "end",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "The ender dragon fight has two phases:\n\n**Phase 1 — Destroy the end crystals:**\n- 10 obsidian pillars each have an end crystal on top that heals the dragon.\n- Shoot them with a bow (Infinity recommended) or climb the pillars.\n- 2 crystals are in iron cages — you must pillar up and break the cage before destroying the crystal.\n- Carry a water bucket for fall damage and to deal with endermen.\n\n**Phase 2 — Kill the dragon:**\n- The dragon perches on the central fountain periodically. This is when you deal the most damage — hit its head with a sword (deals bonus damage).\n- Between perches, shoot it with arrows as it flies.\n- Beds explode in the End and deal massive damage. Place a bed on the fountain's edge and click it when the dragon perches — stand behind an obsidian block for cover. This is the speedrunner strategy.\n- The dragon has 200 HP.\n\n**Gear recommendations:** Diamond/netherite armor (Prot IV), bow (Power V, Infinity), sword (Sharpness V), slow falling potions (critical for safety), ender pearls, water bucket, pumpkin head (prevents enderman aggro), golden apples, building blocks.",
+    "difficulty": "hard"
   },
   {
     "id": "end/levitate",
@@ -861,7 +967,9 @@
     "relatedStructures": "minecraft:end_city",
     "relatedBiomes": "",
     "dimension": "end",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "Shulker projectiles inflict Levitation, causing you to float up. To get 50 blocks of vertical distance:\n\n1. Find a shulker in an end city with enough vertical clearance above it (at least 50 blocks of open air).\n2. **Remove your armor** or wear minimal armor so the effect duration is longer (higher damage = longer effect).\n3. **Let the shulker hit you** from a low point. Don't eat golden apples or drink milk.\n4. You'll float up. Multiple hits stack the duration — let shulkers hit you repeatedly for more levitation time.\n5. **Bring a water bucket or ender pearls** to survive the fall afterward, or use Slow Falling potions.\n\nAlternative: Find a naturally tall end city tower and position yourself at the bottom with a shulker above. Some end cities have enough vertical space built in.",
+    "difficulty": "hard"
   },
   {
     "id": "end/respawn_dragon",
@@ -877,7 +985,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "end",
-    "xpReward": "500"
+    "xpReward": "500",
+    "tutorial": "Craft 4 end crystals (7 glass + 1 eye of ender + 1 ghast tear each). Place one on each side of the exit portal (on the edge blocks facing N/S/E/W). The dragon respawns, the crystals regenerate, and a new end gateway spawns after the fight. Note: each respawned dragon does NOT drop another dragon egg or as much XP.",
+    "difficulty": "hard"
   },
   {
     "id": "end/root",
@@ -893,7 +1003,9 @@
     "relatedStructures": "minecraft:stronghold",
     "relatedBiomes": "",
     "dimension": "end",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "See 'The End?' in the Minecraft category.",
+    "difficulty": "hard"
   },
   {
     "id": "husbandry/allay_deliver_cake_to_note_block",
@@ -909,7 +1021,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Give a cake to an allay (right-click). Place and play a note block nearby. Drop a cake on the ground. The allay will pick up the cake and deliver it to the note block instead of to you, because it's heard the note block. The note block must have been played (clicked) at least once while the allay is nearby.",
+    "difficulty": "medium"
   },
   {
     "id": "husbandry/allay_deliver_item_to_player",
@@ -925,7 +1039,9 @@
     "relatedStructures": "minecraft:pillager_outpost,minecraft:mansion",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find an allay in a pillager outpost cage or woodland mansion. Give it an item (right-click with the item). The allay will find matching items on the ground and bring them to you (or to a note block if one is playing nearby). Drop some of the same item on the ground nearby and the allay will pick them up and deliver them.",
+    "difficulty": "medium"
   },
   {
     "id": "husbandry/axolotl_in_a_bucket",
@@ -941,7 +1057,9 @@
     "relatedStructures": "",
     "relatedBiomes": "minecraft:lush_caves",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find an axolotl in a lush cave biome (underground, near azalea trees). Use a water bucket on it. Axolotls spawn in water above clay blocks in lush caves.",
+    "difficulty": "easy"
   },
   {
     "id": "husbandry/balanced_diet",
@@ -957,7 +1075,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "You must eat every edible item in the game. Full list includes:\n\nApple, baked potato, beetroot, beetroot soup, bread, cake (place and eat), carrot, chorus fruit, cooked chicken, cooked cod, cooked mutton, cooked porkchop, cooked rabbit, cooked salmon, cookie, dried kelp, enchanted golden apple, glow berries, golden apple, golden carrot, honey bottle, melon slice, mushroom stew, poisonous potato, potato, pufferfish, pumpkin pie, rabbit stew, raw beef, raw chicken, raw cod, raw mutton, raw porkchop, raw rabbit, raw salmon, rotten flesh, spider eye, steak, suspicious stew, sweet berries, tropical fish.\n\nHardest items:\n- **Enchanted golden apple**: Cannot be crafted, only found in loot chests (dungeon, mineshaft, desert temple, woodland mansion, ancient city, ruined portal). Very rare.\n- **Poisonous potato**: 2% chance drop from potato crops.\n- **Pufferfish**: Fish with a bucket or fishing rod in warm/lukewarm oceans.\n- **Chorus fruit**: Found in End outer islands.\n- **Suspicious stew**: Craft with mushrooms + flower + bowl, or milk a mooshroom after feeding it a flower.\n\nTrack progress in the advancement tab.",
+    "difficulty": "expert"
   },
   {
     "id": "husbandry/bred_all_animals",
@@ -973,7 +1093,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "You need to breed every breedable animal in the game. Required animals and their breeding food:\n\n- **Armadillo**: Spider eye\n- **Bee**: Any flower\n- **Camel**: Cactus\n- **Cat**: Raw cod or raw salmon\n- **Chicken**: Seeds (any type)\n- **Cow**: Wheat\n- **Donkey**: Golden apple or golden carrot\n- **Fox**: Sweet berries or glow berries\n- **Frog**: Slimeball (breeds tadpoles from frogspawn)\n- **Goat**: Wheat\n- **Hoglin**: Crimson fungus\n- **Horse**: Golden apple or golden carrot\n- **Llama**: Hay bale\n- **Mooshroom**: Wheat\n- **Mule**: Breed horse + donkey (golden apple/carrot)\n- **Ocelot**: Raw cod or raw salmon\n- **Panda**: Bamboo (must have 8+ bamboo nearby)\n- **Pig**: Carrots, potatoes, or beetroots\n- **Rabbit**: Carrots, golden carrots, or dandelions\n- **Sheep**: Wheat\n- **Sniffer**: Torchflower seeds\n- **Strider**: Warped fungus\n- **Trader Llama**: Hay bale\n- **Turtle**: Seagrass\n- **Wolf**: Any raw meat\n\nHardest to obtain: Mooshrooms (mushroom island), pandas (bamboo jungle, need bamboo nearby), sniffers (hatch from sniffer eggs in suspicious sand from warm ocean ruins), and trader llamas (from wandering traders — kill the trader and the llamas become tameable). Mules require both a horse AND donkey.",
+    "difficulty": "expert"
   },
   {
     "id": "husbandry/breed_an_animal",
@@ -989,7 +1111,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Feed two animals of the same species their preferred food (e.g., wheat for cows/sheep, carrots for pigs, seeds for chickens). Hearts appear and a baby spawns.",
+    "difficulty": "trivial"
   },
   {
     "id": "husbandry/complete_catalogue",
@@ -1005,7 +1129,9 @@
     "relatedStructures": "minecraft:village",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "There are 11 cat variants. Cats spawn in villages (max 10 per village) and are tamed with raw cod or raw salmon. Each cat has a random variant on spawn.\n\nTo get all 11: visit multiple villages, tame every cat you find. If you need specific variants, kill surplus cats to allow new ones to spawn. The 11 variants are: tabby, tuxedo, red, siamese, british shorthair, calico, persian, ragdoll, white, jellie, and black.\n\n**Black cats** spawn exclusively during full moons or in swamp huts (witch huts). If you're missing the black cat, wait for a full moon near a village or find a swamp hut.",
+    "difficulty": "hard"
   },
   {
     "id": "husbandry/feed_snifflet",
@@ -1021,7 +1147,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Hatch a sniffer egg to get a snifflet (baby sniffer). Feed it torchflower seeds. Torchflower seeds are obtained by letting an adult sniffer dig — it sniffs the ground and digs up seeds. So you need at least one adult sniffer first, then hatch another egg or breed two adults.",
+    "difficulty": "medium"
   },
   {
     "id": "husbandry/fishy_business",
@@ -1037,7 +1165,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a fishing rod (3 sticks + 2 string). Cast into water and wait for the bobber to dip, then right-click to reel in.",
+    "difficulty": "easy"
   },
   {
     "id": "husbandry/froglights",
@@ -1053,7 +1183,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "Froglights come in 3 colors based on frog variant. A frog eating a small magma cube produces a froglight:\n\n- **Pearlescent (purple)**: Warm frog (white — spawns from tadpoles in warm biomes)\n- **Verdant (green)**: Cold frog (green — spawns from tadpoles in cold biomes)\n- **Ochre (yellow)**: Temperate frog (orange — spawns from tadpoles in temperate biomes)\n\nProcess:\n1. Breed frogs with slimeballs to get frogspawn.\n2. Collect tadpoles in buckets.\n3. Release tadpoles in a warm, cold, and temperate biome to get all 3 frog variants.\n4. Transport each frog to the Nether (boat through a portal).\n5. Lead each frog near a magma cube spawner or small magma cubes. The frog must eat a SMALL magma cube (the smallest size).\n6. Each frog produces its froglight color.\n\nAlternatively, find natural frogs near swamps and transport them.",
+    "difficulty": "hard"
   },
   {
     "id": "husbandry/kill_axolotl_target",
@@ -1069,7 +1201,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Release an axolotl from a bucket near a hostile aquatic mob (guardian, drowned, elder guardian). When the axolotl kills the mob or assists you, you receive Regeneration. The axolotl must be fighting alongside you — find a guardian or drowned and fight it with an axolotl nearby.",
+    "difficulty": "medium"
   },
   {
     "id": "husbandry/leash_all_frog_variants",
@@ -1085,7 +1219,9 @@
     "relatedStructures": "",
     "relatedBiomes": "minecraft:swamp,minecraft:desert,minecraft:snowy_plains",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Obtain leads (4 string + 1 slimeball) and leash one of each frog type. You need a warm (white), cold (green), and temperate (orange) frog. Breed frogs in swamps (slimeballs), collect tadpoles, release them in warm/cold/temperate biomes to get all 3 variants. Leash all 3.",
+    "difficulty": "medium"
   },
   {
     "id": "husbandry/make_a_sign_glow",
@@ -1101,7 +1237,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a sign and place it with text. Apply a glow ink sac (dropped by glow squids, found underground in water) to make the text glow. Right-click the sign with the glow ink sac.",
+    "difficulty": "easy"
   },
   {
     "id": "husbandry/obtain_netherite_hoe",
@@ -1117,7 +1255,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "Use a smithing table with a netherite upgrade smithing template + diamond hoe + netherite ingot. The netherite ingot alone requires 4 ancient debris + 4 gold ingots. The most expensive hoe in the game.",
+    "difficulty": "hard"
   },
   {
     "id": "husbandry/obtain_sniffer_egg",
@@ -1133,7 +1273,9 @@
     "relatedStructures": "minecraft:ocean_ruin_warm",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Sniffer eggs are found by brushing suspicious sand in warm ocean ruins. Use a brush on suspicious sand blocks until you get a sniffer egg. Place the egg on moss for faster hatching (about 10 minutes on moss vs 20 on other blocks).",
+    "difficulty": "medium"
   },
   {
     "id": "husbandry/place_dried_ghast_in_water",
@@ -1149,7 +1291,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Obtain a dried ghast block — find them naturally in soul sand valleys near nether fossils, get one from piglin bartering, or craft from 9 ghast tears surrounding 1 soul sand. Bring it to the Overworld and place it so it touches water (a water source block or flowing water). It will rehydrate and become a happy ghast.",
+    "difficulty": "medium"
   },
   {
     "id": "husbandry/plant_any_sniffer_seed",
@@ -1165,7 +1309,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Let an adult sniffer roam on dirt/grass. It will periodically dig up ancient seeds (torchflower seeds or pitcher pods). Plant them on farmland. Sniffers dig roughly every 8 minutes.",
+    "difficulty": "medium"
   },
   {
     "id": "husbandry/plant_seed",
@@ -1181,7 +1327,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Use a hoe on dirt near water, then plant a seed (wheat seeds from breaking grass, or other crop seeds).",
+    "difficulty": "trivial"
   },
   {
     "id": "husbandry/remove_wolf_armor",
@@ -1197,7 +1345,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Tame a wolf with bones, then craft wolf armor from 6 armadillo scutes. Equip the armor on your tamed wolf by using it on the wolf. To remove it, use shears on the armored wolf. The armor will drop as an item you can pick up.",
+    "difficulty": "easy"
   },
   {
     "id": "husbandry/repair_wolf_armor",
@@ -1213,7 +1363,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Get armadillo scutes by brushing armadillos in savanna or badlands biomes. Equip wolf armor on a tamed wolf, then let the wolf take some damage (from mobs, fall damage, etc.) so the armor loses durability. Use armadillo scutes directly on the wolf to repair its armor. Keep using scutes until the armor is fully repaired.",
+    "difficulty": "easy"
   },
   {
     "id": "husbandry/ride_a_boat_with_a_goat",
@@ -1229,7 +1381,9 @@
     "relatedStructures": "",
     "relatedBiomes": "minecraft:jagged_peaks,minecraft:frozen_peaks,minecraft:snowy_slopes",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find a goat in a mountain biome. Place a boat near it and push or lead the goat into the boat, then get in yourself. Or place the boat in water and lure the goat in with wheat.",
+    "difficulty": "easy"
   },
   {
     "id": "husbandry/root",
@@ -1245,7 +1399,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Eat any food item.",
+    "difficulty": "trivial"
   },
   {
     "id": "husbandry/safely_harvest_honey",
@@ -1261,7 +1417,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find a bee nest (plains, flower forests, etc.) or craft a beehive. Wait until honey_level reaches 5 (dripping particles). Place a campfire under or within 5 blocks below the hive. Use a glass bottle on the hive to collect honey safely.",
+    "difficulty": "easy"
   },
   {
     "id": "husbandry/silk_touch_nest",
@@ -1277,7 +1435,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find a bee nest with 3 bees living in it. Wait until nighttime or rain when all bees are inside. Mine the nest with a Silk Touch pickaxe. The bees stay inside the block. Smoke from a campfire makes bees enter the nest faster.",
+    "difficulty": "medium"
   },
   {
     "id": "husbandry/tactical_fishing",
@@ -1293,7 +1453,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Use a water bucket on any fish mob (cod, salmon, tropical fish, pufferfish) swimming in the water. This picks them up as a bucket of fish.",
+    "difficulty": "easy"
   },
   {
     "id": "husbandry/tadpole_in_a_bucket",
@@ -1309,7 +1471,9 @@
     "relatedStructures": "",
     "relatedBiomes": "minecraft:swamp,minecraft:mangrove_swamp",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find frogs in a swamp or mangrove swamp biome. Feed two frogs slimeballs to make them breed — one will lay frogspawn on nearby water. Wait for the frogspawn to hatch into tadpoles, then use a water bucket on a tadpole to scoop it up.",
+    "difficulty": "easy"
   },
   {
     "id": "husbandry/tame_an_animal",
@@ -1325,7 +1489,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Tame a wolf (bones), cat (raw cod or salmon), or horse (repeatedly mount until hearts appear). Wolves are the easiest — just give a wolf bones until hearts appear.",
+    "difficulty": "easy"
   },
   {
     "id": "husbandry/wax_off",
@@ -1341,7 +1507,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Right-click a waxed copper block with any axe to remove the wax.",
+    "difficulty": "easy"
   },
   {
     "id": "husbandry/wax_on",
@@ -1357,7 +1525,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Right-click any copper block with honeycomb. This prevents further oxidation. Honeycomb is obtained by using shears on a full beehive/nest (with campfire underneath).",
+    "difficulty": "easy"
   },
   {
     "id": "husbandry/whole_pack",
@@ -1373,7 +1543,9 @@
     "relatedStructures": "",
     "relatedBiomes": "minecraft:forest,minecraft:taiga,minecraft:snowy_taiga,minecraft:grove,minecraft:old_growth_spruce_taiga",
     "dimension": "overworld",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "Wolf variants were added in 1.20.5 and are biome-dependent. There are 9 wolf variants:\n\n- **Pale (classic)**: Taiga\n- **Woods**: Forest\n- **Ashen**: Snowy taiga\n- **Black**: Old growth pine taiga\n- **Chestnut**: Old growth spruce taiga\n- **Rusty**: Sparse jungle / jungle\n- **Spotted**: Savanna plateau\n- **Striped**: Wooded badlands\n- **Snowy**: Grove\n\nAll wolves are tamed with bones. You'll need to visit all these biomes and find wolves in each. Some variants are rarer due to lower spawn rates in their biome. Bring plenty of bones (skeleton farm recommended).",
+    "difficulty": "hard"
   },
   {
     "id": "nether/all_effects",
@@ -1389,7 +1561,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "This is widely considered the hardest advancement in the game. You need EVERY status effect active at the same time, including mob-inflicted ones.\n\nAll required effects (1.21.4):\n- All 13 potion effects from 'A Furious Cocktail'\n- **Absorption**: Golden apple\n- **Bad Omen**: Kill a pillager captain\n- **Conduit Power**: Activated conduit (requires prismarine + heart of the sea, must be near water)\n- **Darkness**: Warden's sonic shriek\n- **Dolphin's Grace**: Swim near a dolphin\n- **Glowing**: Spectral arrow\n- **Hero of the Village**: Win a raid\n- **Hunger**: Husk attack or rotten flesh (unreliable) / Pufferfish\n- **Levitation**: Shulker projectile\n- **Mining Fatigue**: Elder guardian\n- **Wither**: Wither boss or wither rose\n\nStrategic approach:\n1. **Location**: Build the attempt site in an ocean near an ocean monument. You need the elder guardian for Mining Fatigue and water for Conduit Power and Dolphin's Grace.\n2. **Pre-work**: Win a raid for Hero of the Village (lasts 40 min). Get Bad Omen first, trigger raid, win it. Or reverse — get Hero first, then get Bad Omen from a caged pillager captain.\n3. **Set up a shulker** — Transport a shulker from the End via minecart/boat through portals. This is one of the hardest parts.\n4. **Set up a warden trigger** — Place sculk shriekers nearby to summon a warden for Darkness.\n5. **Timing is everything** — Many effects are very short-duration (Dolphin's Grace, Levitation, Darkness). You need to trigger them nearly simultaneously.\n6. **Drink all potions**, eat a golden apple (Absorption), step into a wither rose (Wither effect), get hit by the shulker (Levitation), swim past a dolphin (Dolphin's Grace), enter conduit range (Conduit Power), get shot by a spectral arrow from a skeleton with spectral arrows or a friend, trigger the warden (Darkness), and have an elder guardian nearby (Mining Fatigue).\n\nMost players build an elaborate contraption with all mob sources in one spot and practice the sequence many times. Expect hours of setup and multiple attempts.",
+    "difficulty": "expert"
   },
   {
     "id": "nether/all_potions",
@@ -1405,7 +1579,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "You need all of these effects active at once: Speed, Slowness, Strength, Jump Boost, Regeneration, Fire Resistance, Water Breathing, Invisibility, Night Vision, Poison, Weakness, Slow Falling, Resistance.\n\nKey strategy:\n1. **Brew extended versions** of every potion possible to maximize duration windows.\n2. **Use a beacon** for Resistance (the only reliable source) — requires defeating the Wither first. Set a beacon with a full iron/diamond/netherite pyramid for Resistance.\n3. **Prep all potions** in advance and organize them in hotbar + inventory for fast drinking.\n4. **Drink in order** — start with the shortest-duration effects last. Drink the longest-duration ones first.\n5. **Conflicting effects**: Slowness and Speed can coexist. Poison and Regeneration can coexist. The trick is having them all overlap.\n6. **Arrow of Weakness or Witch**: Weakness can come from a splash/lingering potion, or you can let a witch hit you.\n\nRequired effects and sources:\n- Speed: Potion of Swiftness\n- Slowness: Potion of Slowness\n- Strength: Potion of Strength\n- Jump Boost: Potion of Leaping\n- Regeneration: Potion of Regeneration\n- Fire Resistance: Potion of Fire Resistance\n- Water Breathing: Potion of Water Breathing\n- Invisibility: Potion of Invisibility\n- Night Vision: Potion of Night Vision\n- Poison: Potion of Poison\n- Weakness: Potion/Arrow of Weakness\n- Slow Falling: Potion of Slow Falling\n- Resistance: Beacon only\n\nNote: In 1.21.4, Wind Charging and Oozing/Infested are NOT required.",
+    "difficulty": "expert"
   },
   {
     "id": "nether/brew_potion",
@@ -1421,7 +1597,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a brewing stand (1 blaze rod + 3 cobblestone). Place it, fill glass bottles with water, put them in the bottom slots, add blaze powder as fuel in the fuel slot, and add a potion ingredient in the top slot. Easiest potion: Awkward Potion (water bottle + nether wart). Most useful first brew: Potion of Fire Resistance (awkward potion + magma cream).",
+    "difficulty": "medium"
   },
   {
     "id": "nether/charge_respawn_anchor",
@@ -1437,7 +1615,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a respawn anchor (6 crying obsidian + 3 glowstone). Place it in the Nether and right-click it with glowstone blocks 4 times to fully charge it. Right-click it once more (empty-handed) to set your spawn. Each death consumes one charge. Crying obsidian comes from piglin bartering or ruined portals.",
+    "difficulty": "medium"
   },
   {
     "id": "nether/create_beacon",
@@ -1453,7 +1633,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "1. **Kill the Wither** to get a nether star (see 'Withering Heights').\n2. **Craft a beacon**: 5 glass + 3 obsidian + 1 nether star.\n3. **Build a pyramid** of iron, gold, emerald, diamond, or netherite blocks. Minimum: 9 blocks (3x3) for a 1-level pyramid. Full 4-level pyramid: 164 blocks (9x9 base). Iron is the most practical material.\n4. **Place the beacon** on top of the pyramid. It must have a clear line of sight to the sky.\n5. **Activate it** by inserting an iron ingot, gold ingot, diamond, emerald, or netherite ingot and selecting an effect.",
+    "difficulty": "hard"
   },
   {
     "id": "nether/create_full_beacon",
@@ -1469,7 +1651,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "500"
+    "xpReward": "500",
+    "tutorial": "Build a full 4-level pyramid (9x9, 7x7, 5x5, 3x3 = 164 blocks) of mineral blocks and place a beacon on top. Iron blocks are cheapest — you need 1476 iron ingots. An iron farm makes this much more feasible. Once the pyramid is complete and the beacon is placed, insert a mineral and select a primary + secondary power.",
+    "difficulty": "hard"
   },
   {
     "id": "nether/distract_piglin",
@@ -1485,7 +1669,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Drop or right-click a gold ingot on an adult piglin. They'll examine it and give you a random item in return. Piglins are found in crimson forests and bastion remnants. Wear gold armor to prevent aggro.",
+    "difficulty": "easy"
   },
   {
     "id": "nether/explore_nether",
@@ -1501,7 +1687,9 @@
     "relatedStructures": "",
     "relatedBiomes": "minecraft:nether_wastes,minecraft:soul_sand_valley,minecraft:crimson_forest,minecraft:warped_forest,minecraft:basalt_deltas",
     "dimension": "nether",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "You must visit all five Nether biomes:\n\n1. **Nether Wastes** — The classic red biome. Most common, hard to miss.\n2. **Soul Sand Valley** — Blue fog, soul sand/soil, lots of skeletons and ghasts. Fossils and basalt pillars.\n3. **Crimson Forest** — Red trees (huge crimson fungi), hoglins, piglins. Has crimson nylium floor.\n4. **Warped Forest** — Teal/cyan trees (huge warped fungi), endermen spawn frequently. Safest biome.\n5. **Basalt Deltas** — Gray, volcanic biome with magma cubes. Difficult terrain with lots of lava and blackstone.\n\nJust travel through the Nether in a straight line. The biomes transition like Overworld biomes. The advancement triggers when you've set foot in all five. Use F3 to check your current biome.",
+    "difficulty": "hard"
   },
   {
     "id": "nether/fast_travel",
@@ -1517,7 +1705,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "The Nether has an 8:1 distance ratio with the Overworld. Build a nether portal at your base, enter the Nether, travel 875+ blocks in any horizontal direction, build another portal, and exit. You'll emerge 7000+ blocks from your original Overworld position. Building a nether highway with ice and a boat is the fastest method. Packed ice or blue ice paths let boats travel extremely fast in the Nether.",
+    "difficulty": "medium"
   },
   {
     "id": "nether/find_bastion",
@@ -1533,7 +1723,9 @@
     "relatedStructures": "minecraft:bastion_remnant",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Bastion remnants generate in all Nether biomes except basalt deltas. They're large blackstone structures populated by piglins and piglin brutes. Just walk inside one. They come in four variants: bridge, hoglin stable, housing units, and treasure room. Be cautious — piglin brutes are permanently hostile and hit hard. Wear at least one piece of gold armor to prevent regular piglins from attacking.",
+    "difficulty": "medium"
   },
   {
     "id": "nether/find_fortress",
@@ -1549,7 +1741,9 @@
     "relatedStructures": "minecraft:nether_fortress",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Nether fortresses are large dark brick structures that generate in all Nether biomes. They tend to generate in strips along the Z-axis. If you can't find one, travel along the X-axis (east/west). Fortresses contain blaze spawners and wither skeletons, which are essential for progression.",
+    "difficulty": "medium"
   },
   {
     "id": "nether/get_wither_skull",
@@ -1565,7 +1759,9 @@
     "relatedStructures": "minecraft:nether_fortress",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Wither skeletons spawn in nether fortresses at light level 0–7. They have a 2.5% chance to drop their skull on death, increased by Looting III to 5.5%. Strategies to farm efficiently:\n\n1. **Looting III** is essential — almost doubles drop rate.\n2. **Build a platform** in the fortress to concentrate spawns. Wither skeletons need a 3-block-tall space and nether brick to spawn on.\n3. **Light up surrounding areas** to reduce other mob spawns and funnel spawns to your kill zone.\n4. **Smite V** one-shots wither skeletons.\n5. You need 3 skulls total to summon the Wither.\n\nExpect to kill roughly 55 wither skeletons per skull without Looting, or ~18 with Looting III.",
+    "difficulty": "hard"
   },
   {
     "id": "nether/loot_bastion",
@@ -1581,7 +1777,9 @@
     "relatedStructures": "minecraft:bastion_remnant",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Find a bastion remnant and open any chest inside. Wear gold armor to avoid piglin aggro, but be aware that opening chests or breaking gold blocks will anger piglins regardless. Piglin brutes are always hostile and cannot be pacified. Recommended approach: wear gold, locate a chest, grab loot, and be ready to fight or flee. The treasure room variant has the best loot including a guaranteed netherite upgrade smithing template.",
+    "difficulty": "medium"
   },
   {
     "id": "nether/netherite_armor",
@@ -1597,7 +1795,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "You need 16 netherite scraps (16 ancient debris) + 16 gold ingots = 4 netherite ingots, plus 4 netherite upgrade smithing templates.\n\n1. **Mine 16+ ancient debris** at Y=15 in the Nether (see 'Hidden in the Depths').\n2. **Smelt them** into netherite scraps (furnace or blast furnace).\n3. **Craft 4 netherite ingots**: 4 netherite scraps + 4 gold ingots each.\n4. **Obtain 4 netherite upgrade smithing templates** — Found in bastion remnant treasure rooms. You only need to find 1, then duplicate it: 1 template + 1 netherrack + 7 diamonds = 2 templates.\n5. **Upgrade each piece** at a smithing table: template + diamond armor piece + netherite ingot.\n\nTotal resources: ~16 ancient debris, 16 gold ingots, 4 diamond armor pieces, 4 templates (or 1 + duplication materials), and a smithing table.",
+    "difficulty": "expert"
   },
   {
     "id": "nether/obtain_ancient_debris",
@@ -1613,7 +1813,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Ancient debris generates in the Nether, most commonly at Y=15. Mining strategies:\n\n1. **TNT mining**: The most efficient method. At Y=15, place TNT every 4 blocks in a line and chain-detonate. Ancient debris is blast-resistant, so it survives while other blocks are cleared.\n2. **Bed mining**: Beds explode in the Nether. Place a bed at Y=15, stand behind a block for cover, and right-click the bed. Cheaper than TNT but more dangerous. Always place a blast-resistant block between you and the bed.\n3. **Branch mining**: Mine at Y=15 with Efficiency V diamond/netherite pickaxe. Slower but safest.\n\nAncient debris spawns 1–3 per chunk, always surrounded by other blocks (never exposed to air). You need 4 ancient debris to make 1 netherite ingot.",
+    "difficulty": "hard"
   },
   {
     "id": "nether/obtain_blaze_rod",
@@ -1629,7 +1831,9 @@
     "relatedStructures": "minecraft:nether_fortress",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Kill a blaze in a nether fortress. Blazes spawn naturally on fortress walkways and from blaze spawners. They shoot triple fireballs, so use a shield or strafe. Snowballs deal 3 damage to blazes and are cheap crowd control. A fire resistance potion makes the fight trivial. Blazes drop 0–1 blaze rods (increased by Looting).",
+    "difficulty": "medium"
   },
   {
     "id": "nether/obtain_crying_obsidian",
@@ -1645,7 +1849,9 @@
     "relatedStructures": "minecraft:ruined_portal",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Crying obsidian can be found in ruined portals (Overworld and Nether) or obtained by bartering gold ingots with piglins (about 8.7% chance per barter, gives 1–3). It's used to craft respawn anchors.",
+    "difficulty": "easy"
   },
   {
     "id": "nether/return_to_sender",
@@ -1661,7 +1867,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "When a ghast fires at you, time a melee hit (left-click) or shoot a projectile at the fireball to reflect it back. Melee is easier — punch the fireball when it's close. The fireball must kill the ghast, so aim carefully. The ghast has 10 HP and reflected fireballs deal up to 6 damage, so it may take 2 hits. Standing further away gives you more reaction time. A reflected fireball's trajectory follows your crosshair, so aim directly at the ghast.",
+    "difficulty": "medium"
   },
   {
     "id": "nether/ride_strider",
@@ -1677,7 +1885,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a warped fungus on a stick (fishing rod + warped fungus). Find a strider on a lava lake, put a saddle on it, mount it, and hold the warped fungus on a stick to steer. Warped fungus grows in warped forests.",
+    "difficulty": "easy"
   },
   {
     "id": "nether/ride_strider_in_overworld_lava",
@@ -1693,7 +1903,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "You need to bring a strider through a nether portal to the Overworld, then ride it across 50 blocks of lava. Steps:\n\n1. **Saddle a strider** in the Nether and ride it into your portal.\n2. **Find or create a lava lake** in the Overworld. Natural lava lakes exist underground and in certain biomes. You could also bucket-place a long lava channel.\n3. **Ride the strider** with a warped fungus on a stick for 50+ blocks across the lava.\n\nThe biggest challenge is getting the strider through the portal and to a suitable lava source. Striders take damage from water and rain, so choose a non-rainy biome or go underground.",
+    "difficulty": "hard"
   },
   {
     "id": "nether/root",
@@ -1709,7 +1921,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Same as 'We Need to Go Deeper' — build and enter a nether portal.",
+    "difficulty": "medium"
   },
   {
     "id": "nether/summon_wither",
@@ -1725,7 +1939,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "any",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Collect 3 wither skeleton skulls (see 'Spooky Scary Skeleton') and 4 blocks of soul sand or soul soil.\n\nBuild a T-shape with soul sand/soil: place 3 blocks in a row, then 1 block on top of the middle block. Place the 3 wither skeleton skulls on top of the 3 upper blocks (place the middle skull last to trigger the spawn).\n\n**CRITICAL WARNINGS**:\n- Summon it far from your base — the Wither destroys blocks with its explosions.\n- The Wither has 300 HP and two phases. Below half health, it gains Wither Armor (immune to arrows) and you must melee.\n- The bedrock ceiling of the Nether (Y=127) can be exploited: summon the Wither under bedrock to trap its head, then melee it safely.\n- Alternatively, fight it in a long underground tunnel. Smite V + Strength II makes quick work of it.\n- Bring milk buckets to clear the Wither effect, golden apples for Absorption, and the best armor you have.",
+    "difficulty": "hard"
   },
   {
     "id": "nether/uneasy_alliance",
@@ -1741,7 +1957,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "1000"
+    "xpReward": "1000",
+    "tutorial": "This is one of the most tedious advancements. You must lure a ghast through a nether portal and kill it in the Overworld.\n\n1. **Build a massive nether portal** — Ghasts need a large opening. The portal frame can be up to 23x23 (interior 21x21). A 5x5 interior is the practical minimum, but bigger is better. Build it in an open area of the Nether where ghasts spawn (soul sand valley or nether wastes).\n2. **Lure the ghast** — Ghasts wander randomly, so you need patience. Fishing rods can pull them. Position yourself so the ghast is between you and the portal. Lead entities don't work on ghasts.\n3. **Get it through** — The ghast must fly into the active portal. This can take many attempts. Some players build a large funnel/tunnel structure around the portal to guide the ghast.\n4. **Kill it in the Overworld** — Once it's through, kill it quickly before it floats away or despawns. Use a bow.\n\nAlternative: Build a portal in a soul sand valley at ghast-flight altitude, create a long enclosed tunnel leading to the portal, and hope one floats in. Many players report this taking 1–3 hours of attempts.",
+    "difficulty": "expert"
   },
   {
     "id": "story/cure_zombie_villager",
@@ -1757,7 +1975,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "500"
+    "xpReward": "500",
+    "tutorial": "This requires two items and some patience:\n\n1. **Find a zombie villager** — They spawn naturally (5% of zombie spawns) or you can let a zombie kill a villager (50% conversion on Normal, 100% on Hard).\n2. **Throw a Splash Potion of Weakness** at the zombie villager. Brewing: Water Bottle → add Fermented Spider Eye = Potion of Weakness → add Gunpowder = Splash Potion of Weakness. Alternative: A witch may throw weakness at you while near the zombie villager, or use a tipped arrow.\n3. **Use a golden apple** on the weakened zombie villager (right-click with a regular golden apple, NOT enchanted). Craft: 8 gold ingots + 1 apple.\n4. Wait 3–5 minutes. The zombie villager will shake and emit red particles. Keep it safe from sunlight and other mobs during conversion. Iron bars and a bed nearby speed up conversion.\n\nThe cured villager will have deeply discounted trades and can restore its previous profession if its job site block is nearby.",
+    "difficulty": "hard"
   },
   {
     "id": "story/deflect_arrow",
@@ -1773,7 +1993,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a shield (1 iron ingot + 6 planks). Hold right-click to raise it when a skeleton shoots at you or a pillager fires a crossbow.",
+    "difficulty": "easy"
   },
   {
     "id": "story/enchant_item",
@@ -1789,7 +2011,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft an enchanting table (4 obsidian, 2 diamonds, 1 book). Place it with bookshelves arranged in the standard pattern (1 block gap, up to 15 bookshelves for max level 30 enchants). You need lapis lazuli and experience levels to enchant. For the cheapest option, enchant a book or wooden tool at level 1 to unlock the advancement.",
+    "difficulty": "medium"
   },
   {
     "id": "story/enter_the_end",
@@ -1805,7 +2029,9 @@
     "relatedStructures": "minecraft:stronghold",
     "relatedBiomes": "",
     "dimension": "end",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Reaching the End requires completing several milestones:\n\n1. **Get blaze rods** — Kill blazes in a Nether fortress. You need at least 7 (6 for eyes + 1 for brewing stand), but 10–12 is safer.\n2. **Get ender pearls** — Kill endermen (Overworld at night or Warped Forest in Nether) or trade with cleric villagers. You need at least 12.\n3. **Craft Eyes of Ender** — Combine ender pearl + blaze powder (crafted from blaze rods).\n4. **Locate the stronghold** — Throw Eyes of Ender and follow their trajectory.\n5. **Find the End portal room** — Navigate the stronghold to the portal room. Fill all 12 frame blocks with Eyes of Ender (some may already be filled, ~10% chance each).\n6. **Jump in** — The portal activates when all 12 frames have eyes. Jump into the portal.\n\nBring strong gear — once you enter, you can only leave by dying or killing the dragon.",
+    "difficulty": "hard"
   },
   {
     "id": "story/enter_the_nether",
@@ -1821,7 +2047,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "nether",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Build a nether portal frame (minimum 4x5 obsidian frame, corners optional — 10 obsidian minimum) and light it with flint and steel. You can also build a portal without a diamond pickaxe by using bucket-casting: place lava source blocks and pour water next to them to form obsidian in place. Stand in the portal for 4 seconds to teleport.",
+    "difficulty": "medium"
   },
   {
     "id": "story/follow_ender_eye",
@@ -1837,7 +2065,9 @@
     "relatedStructures": "minecraft:stronghold",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft Eyes of Ender (ender pearl + blaze powder) and throw them. They float toward the nearest stronghold. Follow the direction they travel. When they start angling downward, dig down to find the stronghold. Eyes have a 20% chance to shatter on use, so bring extras (12+ recommended since you also need them for the portal).",
+    "difficulty": "medium"
   },
   {
     "id": "story/form_obsidian",
@@ -1853,7 +2083,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Pour water onto a lava source block to form obsidian, then mine it with a diamond pickaxe (takes ~9.4 seconds).",
+    "difficulty": "easy"
   },
   {
     "id": "story/iron_tools",
@@ -1869,7 +2101,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft an iron pickaxe from 3 iron ingots and 2 sticks.",
+    "difficulty": "easy"
   },
   {
     "id": "story/lava_bucket",
@@ -1885,7 +2119,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a bucket (3 iron ingots) and right-click a lava source block. Lava is common in caves below Y=0 and on the surface in some biomes.",
+    "difficulty": "easy"
   },
   {
     "id": "story/mine_diamond",
@@ -1901,7 +2137,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Diamond ore generates between Y=-64 and Y=16, with peak frequency around Y=-59. Strip mining at Y=-59 is the most efficient method. You need an iron pickaxe or better. Diamonds also appear in loot chests in buried treasures, shipwrecks, desert temples, jungle temples, and woodland mansions. Fortune III significantly increases yield per ore block.",
+    "difficulty": "medium"
   },
   {
     "id": "story/mine_stone",
@@ -1917,7 +2155,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a wooden pickaxe and mine any stone block.",
+    "difficulty": "trivial"
   },
   {
     "id": "story/obtain_armor",
@@ -1933,7 +2173,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft any iron armor piece. Iron boots (4 ingots) is the cheapest option.",
+    "difficulty": "easy"
   },
   {
     "id": "story/root",
@@ -1949,7 +2191,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Punch a tree, craft 4 planks, craft a crafting table. This is literally the first thing you do.",
+    "difficulty": "trivial"
   },
   {
     "id": "story/shiny_gear",
@@ -1965,7 +2209,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft any diamond armor piece. Diamond boots are cheapest at 4 diamonds. Mining at Y=-59 with Fortune III is the best way to gather diamonds efficiently.",
+    "difficulty": "medium"
   },
   {
     "id": "story/smelt_iron",
@@ -1981,7 +2227,9 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Smelt raw iron in a furnace or blast furnace.",
+    "difficulty": "trivial"
   },
   {
     "id": "story/upgrade_tools",
@@ -1997,6 +2245,8 @@
     "relatedStructures": "",
     "relatedBiomes": "",
     "dimension": "overworld",
-    "xpReward": "0"
+    "xpReward": "0",
+    "tutorial": "Craft a stone pickaxe from cobblestone and sticks.",
+    "difficulty": "trivial"
   }
 ]

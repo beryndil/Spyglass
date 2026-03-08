@@ -166,6 +166,8 @@ data class AdvancementEntity(
     val relatedBiomes: String = "",     // Comma-sep biome IDs
     val dimension: String = "",         // "overworld", "nether", "end"
     val xpReward: String = "",          // XP reward info
+    val tutorial: String = "",          // Step-by-step tutorial text
+    val difficulty: String = "",        // "trivial", "easy", "medium", "hard", "expert"
 )
 
 @Entity(tableName = "advancement_progress")

@@ -25,7 +25,7 @@ import dev.spyglass.android.data.db.entities.*
         CommandEntity::class,
         VersionTagEntity::class,
     ],
-    version = 28,
+    version = 29,
     exportSchema = true,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
@@ -44,6 +44,14 @@ abstract class SpyglassDatabase : RoomDatabase() {
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null
+
+        // Migration 28→29: add tutorial and difficulty columns to advancements
+        private val MIGRATION_28_29 = object : Migration(28, 29) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE advancements ADD COLUMN tutorial TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE advancements ADD COLUMN difficulty TEXT NOT NULL DEFAULT ''")
+            }
+        }
 
         // Migration 27→28: add indexes on frequently queried columns
         private val MIGRATION_27_28 = object : Migration(27, 28) {
@@ -295,7 +303,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
                                 MIGRATION_17_18, MIGRATION_18_19, MIGRATION_19_20,
                                 MIGRATION_20_21, MIGRATION_21_22, MIGRATION_22_23,
                                 MIGRATION_23_24, MIGRATION_24_25, MIGRATION_25_26,
-                                MIGRATION_26_27, MIGRATION_27_28,
+                                MIGRATION_26_27, MIGRATION_27_28, MIGRATION_28_29,
                             )
                             // Game data can always be rebuilt from bundled assets or sync.
                             // This ensures the app never crashes due to a missing migration.
