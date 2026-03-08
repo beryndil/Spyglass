@@ -90,6 +90,7 @@ fun SettingsScreen(
     val appLockEnabled      by vm.appLockEnabled.collectAsStateWithLifecycle()
     val syncFrequencyHours  by vm.syncFrequencyHours.collectAsStateWithLifecycle()
     val offlineMode         by vm.offlineMode.collectAsStateWithLifecycle()
+    val fontScale           by vm.fontScale.collectAsStateWithLifecycle()
     val textureState        by TextureManager.state.collectAsStateWithLifecycle()
 
     val uriHandler = LocalUriHandler.current
@@ -368,6 +369,29 @@ fun SettingsScreen(
                     checked = reduceAnimations,
                     onCheckedChange = vm::setReduceAnimations,
                 )
+                SpyglassDivider()
+                Text(
+                    stringResource(R.string.settings_font_size),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    stringResource(R.string.settings_font_size_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    FontScaleOptions.forEachIndexed { i, (label, _) ->
+                        FilterChip(
+                            selected = fontScale == i,
+                            onClick = { hapticClick(); vm.setFontScale(i) },
+                            label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                        )
+                    }
+                }
             }
         }
 

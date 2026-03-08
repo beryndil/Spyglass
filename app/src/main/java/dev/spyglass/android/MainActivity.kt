@@ -71,6 +71,10 @@ class MainActivity : FragmentActivity() {
                 .map { it[PreferenceKeys.HAPTIC_FEEDBACK] ?: true }
                 .collectAsStateWithLifecycle(initialValue = true)
 
+            val fontScale by dataStore.data
+                .map { it[PreferenceKeys.FONT_SCALE] ?: 1 }
+                .collectAsStateWithLifecycle(initialValue = 1)
+
             val consentShown by dataStore.data
                 .map { it[PreferenceKeys.CONSENT_SHOWN] ?: false }
                 .collectAsStateWithLifecycle(initialValue = true) // default true to avoid flash
@@ -86,6 +90,7 @@ class MainActivity : FragmentActivity() {
                 dynamicColor = dynamicColor,
                 highContrast = highContrast,
                 hapticEnabled = hapticEnabled,
+                fontScale = fontScale,
             ) {
                 if (!consentShown) {
                     ConsentDialog { analyticsConsent, crashConsent, adPersonalizationConsent ->

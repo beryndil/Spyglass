@@ -177,6 +177,14 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         store.edit { it[PreferenceKeys.DEFAULT_STARTUP_TAB] = tab }
     }
 
+    val fontScale: StateFlow<Int> = store.data
+        .map { it[PreferenceKeys.FONT_SCALE] ?: 1 }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 1)
+
+    fun setFontScale(scale: Int) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.FONT_SCALE] = scale }
+    }
+
     // Content Filtering
     val hideUnobtainableBlocks: StateFlow<Boolean> = store.data
         .map { it[PreferenceKeys.HIDE_UNOBTAINABLE_BLOCKS] ?: false }

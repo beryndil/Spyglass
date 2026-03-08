@@ -319,6 +319,9 @@ val ThemeOrder = listOf(
 
 const val DEFAULT_THEME = "obsidian"
 
+/** Font scale multipliers: 0=Small, 1=Default, 2=Large, 3=Extra Large */
+val FontScaleOptions = listOf("Small" to 0.85f, "Default" to 1.0f, "Large" to 1.15f, "Extra Large" to 1.3f)
+
 @Composable
 fun SpyglassTheme(
     theme: String = DEFAULT_THEME,
@@ -326,6 +329,7 @@ fun SpyglassTheme(
     dynamicColor: Boolean = false,
     highContrast: Boolean = false,
     hapticEnabled: Boolean = true,
+    fontScale: Int = 1,
     content: @Composable () -> Unit,
 ) {
     val colors = ThemePresets[theme] ?: ThemePresets.getValue(DEFAULT_THEME)
@@ -352,9 +356,24 @@ fun SpyglassTheme(
         LocalIsWideScreen provides isWideScreen,
         LocalHapticEnabled provides hapticEnabled,
     ) {
+        val scaledTypography = if (fontScale == 1) SpyglassTypography else {
+            val factor = FontScaleOptions.getOrNull(fontScale)?.second ?: 1.0f
+            SpyglassTypography.run {
+                copy(
+                    headlineMedium = headlineMedium.copy(fontSize = headlineMedium.fontSize * factor),
+                    headlineSmall  = headlineSmall.copy(fontSize = headlineSmall.fontSize * factor),
+                    titleLarge     = titleLarge.copy(fontSize = titleLarge.fontSize * factor),
+                    titleMedium    = titleMedium.copy(fontSize = titleMedium.fontSize * factor),
+                    bodyLarge      = bodyLarge.copy(fontSize = bodyLarge.fontSize * factor),
+                    bodyMedium     = bodyMedium.copy(fontSize = bodyMedium.fontSize * factor),
+                    labelSmall     = labelSmall.copy(fontSize = labelSmall.fontSize * factor),
+                )
+            }
+        }
+
         MaterialTheme(
             colorScheme = scheme,
-            typography  = SpyglassTypography,
+            typography  = scaledTypography,
             content     = content,
         )
     }

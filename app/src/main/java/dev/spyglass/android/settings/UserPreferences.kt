@@ -33,6 +33,7 @@ object PreferenceKeys {
     val DYNAMIC_COLOR           = booleanPreferencesKey("dynamic_color")
     val HIGH_CONTRAST           = booleanPreferencesKey("high_contrast")
     val DEFAULT_STARTUP_TAB     = intPreferencesKey("default_startup_tab")
+    val FONT_SCALE              = intPreferencesKey("font_scale") // 0=Small, 1=Default, 2=Large, 3=Extra Large
 
     // Security
     val APP_LOCK_ENABLED        = booleanPreferencesKey("app_lock_enabled")

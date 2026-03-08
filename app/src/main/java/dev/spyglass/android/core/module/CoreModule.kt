@@ -60,6 +60,7 @@ import dev.spyglass.android.BuildConfig
 import dev.spyglass.android.R
 import dev.spyglass.android.core.FirebaseHelper
 import dev.spyglass.android.core.ui.DEFAULT_THEME
+import dev.spyglass.android.core.ui.FontScaleOptions
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.Red400
 import dev.spyglass.android.core.ui.ResultCard
@@ -406,6 +407,7 @@ object CoreModule : SpyglassModule {
         }
     }
 
+    @OptIn(ExperimentalLayoutApi::class)
     @Composable
     private fun DisplayTogglesContent() {
         val context = LocalContext.current
@@ -426,6 +428,10 @@ object CoreModule : SpyglassModule {
         val reduceAnimations by remember {
             context.dataStore.data.map { it[PreferenceKeys.REDUCE_ANIMATIONS] ?: false }
         }.collectAsStateWithLifecycle(initialValue = false)
+
+        val fontScale by remember {
+            context.dataStore.data.map { it[PreferenceKeys.FONT_SCALE] ?: 1 }
+        }.collectAsStateWithLifecycle(initialValue = 1)
 
         val showExperimental by remember {
             context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: false }
@@ -467,6 +473,30 @@ object CoreModule : SpyglassModule {
                 checked = reduceAnimations,
                 onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.REDUCE_ANIMATIONS] = !reduceAnimations } } },
             )
+            SpyglassDivider()
+            val hapticClick = rememberHapticClick()
+            Text(
+                stringResource(R.string.settings_font_size),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+            Text(
+                stringResource(R.string.settings_font_size_desc),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                FontScaleOptions.forEachIndexed { i, (label, _) ->
+                    FilterChip(
+                        selected = fontScale == i,
+                        onClick = { hapticClick(); scope.launch { context.dataStore.edit { it[PreferenceKeys.FONT_SCALE] = i } } },
+                        label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                    )
+                }
+            }
         }
     }
 

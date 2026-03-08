@@ -108,6 +108,8 @@
     <string name="settings_haptic_feedback_desc">Vibrate on taps and interactions</string>
     <string name="settings_reduce_animations">Reduce Animations</string>
     <string name="settings_reduce_animations_desc">Minimize motion throughout the app</string>
+    <string name="settings_font_size">Font Size</string>
+    <string name="settings_font_size_desc">Adjust text size throughout the app</string>
     <string name="settings_dynamic_color">Dynamic Color</string>
     <string name="settings_dynamic_color_desc">Use your wallpaper colors (Android 12+)</string>
     <string name="settings_high_contrast">High Contrast</string>
