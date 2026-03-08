@@ -182,6 +182,24 @@ fun ConnectWaypointsScreen(
                 item { OfflineIndicator(lastUpdated) }
             }
 
+            // DEBUG: Show data state for troubleshooting
+            item {
+                val debugText = buildString {
+                    append("DEBUG | connected=$isConnected")
+                    append(" | playerData=${if (playerData != null) "YES" else "null"}")
+                    append(" | worldSpawn=${playerData?.worldSpawn?.let { "(${it.x},${it.y},${it.z})" } ?: "null"}")
+                    append(" | spawn=${playerData?.spawnLocation?.let { "(${it.x},${it.y},${it.z})" } ?: "null"}")
+                    append(" | death=${playerData?.lastDeathLocation?.let { "(${it.x},${it.y},${it.z})" } ?: "null"}")
+                    append(" | waypoints=${waypoints.size} (${waypoints.count { it.source == ConnectWaypoint.SOURCE_AUTO }} auto)")
+                }
+                Text(
+                    debugText,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(bottom = 4.dp),
+                )
+            }
+
             // Dimension filter chips
             item {
                 FlowRow(
