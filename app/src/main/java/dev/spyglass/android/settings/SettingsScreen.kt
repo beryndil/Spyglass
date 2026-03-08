@@ -621,6 +621,12 @@ fun SettingsScreen(
                 )
                 SpyglassDivider()
                 SettingsLink(
+                    title = "Spyglass Wiki",
+                    description = "Guides, tips, and detailed documentation",
+                    onClick = { uriHandler.openUri("https://github.com/beryndil/Spyglass/wiki") },
+                )
+                SpyglassDivider()
+                SettingsLink(
                     title = stringResource(R.string.settings_send_feedback),
                     description = stringResource(R.string.settings_send_feedback_desc),
                     onClick = onFeedback,
