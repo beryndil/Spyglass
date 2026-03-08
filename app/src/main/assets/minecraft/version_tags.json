@@ -16923,5 +16923,900 @@
     "entityId": "w",
     "addedInJava": "",
     "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/adventuring_time",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.18",
+    "mechanicsChangeNotes": "Updated biome list for new world generation"
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/arbalistic",
+    "addedInJava": "1.14",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/avoid_vibration",
+    "addedInJava": "1.19",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/blowback",
+    "addedInJava": "1.21",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/brush_armadillo",
+    "addedInJava": "1.20.5",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/bullseye",
+    "addedInJava": "1.16",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/craft_decorated_pot_using_only_sherds",
+    "addedInJava": "1.20",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/crafters_crafting_crafters",
+    "addedInJava": "1.21",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/fall_from_world_height",
+    "addedInJava": "1.18",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/heart_transplanter",
+    "addedInJava": "1.21.6",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/hero_of_the_village",
+    "addedInJava": "1.14",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/honey_block_slide",
+    "addedInJava": "1.15",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/kill_a_mob",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/kill_all_mobs",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.21",
+    "mechanicsChangeNotes": "Updated mob list"
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/kill_mob_near_sculk_catalyst",
+    "addedInJava": "1.19",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/lighten_up",
+    "addedInJava": "1.21",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/lightning_rod_with_villager_no_fire",
+    "addedInJava": "1.17",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/minecraft_trials_edition",
+    "addedInJava": "1.21",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/ol_betsy",
+    "addedInJava": "1.14",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/overoverkill",
+    "addedInJava": "1.21",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/play_jukebox_in_meadows",
+    "addedInJava": "1.18",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/read_power_of_chiseled_bookshelf",
+    "addedInJava": "1.20",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/revaulting",
+    "addedInJava": "1.21",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/root",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/salvage_sherd",
+    "addedInJava": "1.20",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/shoot_arrow",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/sleep_in_bed",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/sniper_duel",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/spear_many_mobs",
+    "addedInJava": "1.21.11",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/spyglass_at_dragon",
+    "addedInJava": "1.17",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/spyglass_at_ghast",
+    "addedInJava": "1.17",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/spyglass_at_parrot",
+    "addedInJava": "1.17",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/summon_iron_golem",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/throw_trident",
+    "addedInJava": "1.13",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/totem_of_undying",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/trade",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/trade_at_world_height",
+    "addedInJava": "1.18",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/trim_with_all_exclusive_armor_patterns",
+    "addedInJava": "1.20",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/trim_with_any_armor_pattern",
+    "addedInJava": "1.20",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/two_birds_one_arrow",
+    "addedInJava": "1.14",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/under_lock_and_key",
+    "addedInJava": "1.21",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/use_lodestone",
+    "addedInJava": "1.16",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.21.5",
+    "mechanicsChangeNotes": "Moved from Nether to Adventure tab"
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/very_very_frightening",
+    "addedInJava": "1.13",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/voluntary_exile",
+    "addedInJava": "1.14",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/walk_on_powder_snow_with_leather_boots",
+    "addedInJava": "1.17",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/who_needs_rockets",
+    "addedInJava": "1.21",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "adventure/whos_the_pillager_now",
+    "addedInJava": "1.14",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "end/dragon_breath",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "end/dragon_egg",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "end/elytra",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "end/enter_end_gateway",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "end/find_end_city",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "end/kill_dragon",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "end/levitate",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "end/respawn_dragon",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "end/root",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/allay_deliver_cake_to_note_block",
+    "addedInJava": "1.19",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/allay_deliver_item_to_player",
+    "addedInJava": "1.19",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/axolotl_in_a_bucket",
+    "addedInJava": "1.17",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/balanced_diet",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.13",
+    "mechanicsChangeNotes": "Updated food list"
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/bred_all_animals",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.19",
+    "mechanicsChangeNotes": "Updated animal list"
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/breed_an_animal",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/complete_catalogue",
+    "addedInJava": "1.14",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.19",
+    "mechanicsChangeNotes": "Updated cat variant list"
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/feed_snifflet",
+    "addedInJava": "1.20",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/fishy_business",
+    "addedInJava": "1.13",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/froglights",
+    "addedInJava": "1.19",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/kill_axolotl_target",
+    "addedInJava": "1.17",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/leash_all_frog_variants",
+    "addedInJava": "1.19",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/make_a_sign_glow",
+    "addedInJava": "1.17",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/obtain_netherite_hoe",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.16",
+    "mechanicsChangeNotes": "Changed from using up a diamond hoe to upgrading a hoe with netherite"
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/obtain_sniffer_egg",
+    "addedInJava": "1.20",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/place_dried_ghast_in_water",
+    "addedInJava": "1.21.6",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/plant_any_sniffer_seed",
+    "addedInJava": "1.20",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/plant_seed",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/remove_wolf_armor",
+    "addedInJava": "1.20.5",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/repair_wolf_armor",
+    "addedInJava": "1.20.5",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/ride_a_boat_with_a_goat",
+    "addedInJava": "1.17",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/root",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/safely_harvest_honey",
+    "addedInJava": "1.15",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/silk_touch_nest",
+    "addedInJava": "1.15",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/tactical_fishing",
+    "addedInJava": "1.13",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/tadpole_in_a_bucket",
+    "addedInJava": "1.19",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/tame_an_animal",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/wax_off",
+    "addedInJava": "1.17",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/wax_on",
+    "addedInJava": "1.17",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "husbandry/whole_pack",
+    "addedInJava": "1.20.5",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/all_effects",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.19",
+    "mechanicsChangeNotes": "Updated effect list"
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/all_potions",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.19",
+    "mechanicsChangeNotes": "Updated potion list"
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/brew_potion",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/charge_respawn_anchor",
+    "addedInJava": "1.16",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/create_beacon",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/create_full_beacon",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/distract_piglin",
+    "addedInJava": "1.16",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/explore_nether",
+    "addedInJava": "1.16",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.16.2",
+    "mechanicsChangeNotes": "Updated biome list"
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/fast_travel",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/find_bastion",
+    "addedInJava": "1.16",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/find_fortress",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/get_wither_skull",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/loot_bastion",
+    "addedInJava": "1.16",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/netherite_armor",
+    "addedInJava": "1.16",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/obtain_ancient_debris",
+    "addedInJava": "1.16",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/obtain_blaze_rod",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/obtain_crying_obsidian",
+    "addedInJava": "1.16",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/return_to_sender",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/ride_strider",
+    "addedInJava": "1.16",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/ride_strider_in_overworld_lava",
+    "addedInJava": "1.18",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/root",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/summon_wither",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "nether/uneasy_alliance",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/cure_zombie_villager",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/deflect_arrow",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/enchant_item",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/enter_the_end",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/enter_the_nether",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/follow_ender_eye",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/form_obsidian",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/iron_tools",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/lava_bucket",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/mine_diamond",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/mine_stone",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/obtain_armor",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/root",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/shiny_gear",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/smelt_iron",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
+  },
+  {
+    "entityType": "advancement",
+    "entityId": "story/upgrade_tools",
+    "addedInJava": "1.12",
+    "addedInBedrock": "",
+    "javaOnly": true
   }
 ]

@@ -534,6 +534,8 @@ fun AdvancementsScreen(
                             onBiomeTap = onBiomeTap,
                             onEnchantTap = onEnchantTap,
                             entityLinkIndex = entityLinkIndex,
+                            tag = tag,
+                            vFilter = vFilter,
                             onAdvancementTap = { parentId ->
                                 vm.navigateToAdvancement(parentId, advancements)
                                 // Scroll to it
@@ -576,11 +578,16 @@ private fun AdvancementDetailCard(
     onBiomeTap: (String) -> Unit,
     onEnchantTap: (String) -> Unit,
     entityLinkIndex: EntityLinkIndex,
+    tag: VersionTagEntity? = null,
+    vFilter: VersionFilterState = VersionFilterState(),
     onAdvancementTap: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ResultCard(modifier = modifier) {
         MinecraftIdRow(adv.id)
+        if (tag != null) {
+            VersionEditionSection(tag, vFilter)
+        }
         if (adv.description.isNotEmpty()) {
             LinkedDescription(
                 description = adv.description,
