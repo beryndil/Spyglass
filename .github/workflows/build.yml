@@ -67,25 +67,6 @@ jobs:
         env:
           BUILD_TIMESTAMP: ${{ steps.ts.outputs.stamp }}
 
-      - name: Build release AAB
-        run: ./gradlew bundleRelease
-        env:
-          BUILD_TIMESTAMP: ${{ steps.ts.outputs.stamp }}
-
-      - name: Decode Play service account
-        if: ${{ env.HAS_PLAY_KEY == 'true' }}
-        run: echo "${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}" | base64 -d > play-service-account.json
-        env:
-          HAS_PLAY_KEY: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
-
-      - name: Publish AAB to Google Play (internal)
-        if: ${{ env.HAS_PLAY_KEY == 'true' }}
-        run: |
-          echo "PLAY_SERVICE_ACCOUNT_JSON=play-service-account.json" >> local.properties
-          ./gradlew publishReleaseBundle
-        env:
-          HAS_PLAY_KEY: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
-
       - name: Generate release tag
         id: tag
         run: echo "tag=${{ steps.ts.outputs.tag }}" >> "$GITHUB_OUTPUT"
@@ -99,10 +80,8 @@ jobs:
             Release build from `main` — ${{ github.sha }}
 
             **APK** — download `app-release.apk` and sideload on your Android device.
-            **AAB** — download `app-release.aab` for Google Play Store upload.
           files: |
             app/build/outputs/apk/release/app-release.apk
-            app/build/outputs/bundle/release/app-release.aab
           make_latest: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
