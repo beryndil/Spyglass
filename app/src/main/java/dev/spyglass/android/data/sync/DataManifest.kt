@@ -29,6 +29,7 @@ data class DataManifest(
     @SerialName("texture_map") val textureMap: String = "",
     val news: String = "",
     val tips: String = "",
+    @SerialName("latest_app") val latestApp: String = "",
     /** Optional SHA-256 checksums per file. Empty map when server doesn't provide them. */
     val checksums: Map<String, String> = emptyMap(),
 ) {

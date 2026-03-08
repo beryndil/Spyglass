@@ -1,6 +1,7 @@
 package dev.spyglass.android.core.module
 
 import android.content.Context
+import dev.spyglass.android.data.sync.DataManifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -182,7 +183,7 @@ object CoreModule : SpyglassModule {
                     color = Color(0xFFD32F2F),
                     modifier = Modifier.clickable {
                         hapticClick()
-                        uriHandler.openUri("https://play.google.com/store/apps/details?id=dev.spyglass.android")
+                        uriHandler.openUri("https://github.com/beryndil/Spyglass/releases/latest")
                     },
                 )
             }
@@ -827,30 +828,18 @@ object CoreModule : SpyglassModule {
                 .readTimeout(5, TimeUnit.SECONDS)
                 .build()
             val request = Request.Builder()
-                .url("https://api.github.com/repos/beryndil/Spyglass/releases/latest")
-                .header("Accept", "application/vnd.github.v3+json")
+                .url("https://raw.githubusercontent.com/beryndil/Spyglass-Data/main/manifest.json")
                 .build()
             client.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) return null
                 val body = response.body?.string() ?: return null
-                val zodiacYears = mapOf(
-                    "WoodDragon" to 2024, "WoodSnake" to 2025,
-                    "FireHorse" to 2026, "FireGoat" to 2027,
-                    "EarthMonkey" to 2028, "EarthRooster" to 2029,
-                    "MetalDog" to 2030, "MetalPig" to 2031,
-                    "WaterRat" to 2032, "WaterOx" to 2033,
-                    "WoodTiger" to 2034, "WoodRabbit" to 2035,
-                )
-                val tagMatch = Regex(""""tag_name"\s*:\s*"([A-Za-z]+)\.(\d{2})(\d{2})\.(\d{2})(\d{2})-a"""")
-                    .find(body) ?: return null
-                val year = (zodiacYears[tagMatch.groupValues[1]] ?: return null) - 2000
-                val month = tagMatch.groupValues[2].toInt()
-                val day = tagMatch.groupValues[3].toInt()
-                val hour = tagMatch.groupValues[4].toInt()
-                val minute = tagMatch.groupValues[5].toInt()
-                val remoteCode = year * 10_000_000 + month * 1_000_000 +
-                    day * 10_000 + hour * 100 + minute
-                remoteCode > BuildConfig.VERSION_CODE
+                val manifest = DataManifest.fromJson(body)
+                val latestApp = manifest.latestApp
+                if (latestApp.isEmpty()) return null
+                // latestApp is e.g. "FireHorse.0307.2049" — compare using zodiac version ordering
+                // Strip trailing "-a" suffix if present for comparison
+                val currentVersion = BuildConfig.VERSION_NAME.removeSuffix("-a")
+                DataManifest.compareVersions(latestApp, currentVersion) > 0
             }
         } catch (e: Exception) {
             Timber.d(e, "Update check failed")
