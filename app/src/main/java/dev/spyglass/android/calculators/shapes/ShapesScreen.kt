@@ -32,6 +32,7 @@ private val SHAPE_LABELS = mapOf(
 fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
     var view3D by remember { mutableStateOf(false) }
+    val hapticConfirm = rememberHapticConfirm()
 
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState()),
@@ -142,7 +143,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                     Spacer(Modifier.weight(1f))
                     Switch(
                         checked = s.hollow,
-                        onCheckedChange = { vm.setHollow(it) },
+                        onCheckedChange = { hapticConfirm(); vm.setHollow(it) },
                         colors = SwitchDefaults.colors(checkedTrackColor = MaterialTheme.colorScheme.primary),
                     )
                 }
@@ -158,7 +159,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                     Spacer(Modifier.weight(1f))
                     Switch(
                         checked = s.flipped,
-                        onCheckedChange = { vm.setFlipped(it) },
+                        onCheckedChange = { hapticConfirm(); vm.setFlipped(it) },
                         colors = SwitchDefaults.colors(checkedTrackColor = MaterialTheme.colorScheme.primary),
                     )
                 }

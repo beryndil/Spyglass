@@ -67,6 +67,10 @@ class MainActivity : FragmentActivity() {
                 .map { it[PreferenceKeys.HIGH_CONTRAST] ?: false }
                 .collectAsStateWithLifecycle(initialValue = false)
 
+            val hapticEnabled by dataStore.data
+                .map { it[PreferenceKeys.HAPTIC_FEEDBACK] ?: true }
+                .collectAsStateWithLifecycle(initialValue = true)
+
             val consentShown by dataStore.data
                 .map { it[PreferenceKeys.CONSENT_SHOWN] ?: false }
                 .collectAsStateWithLifecycle(initialValue = true) // default true to avoid flash
@@ -81,6 +85,7 @@ class MainActivity : FragmentActivity() {
                 isWideScreen = isWideScreen,
                 dynamicColor = dynamicColor,
                 highContrast = highContrast,
+                hapticEnabled = hapticEnabled,
             ) {
                 if (!consentShown) {
                     ConsentDialog { analyticsConsent, crashConsent, adPersonalizationConsent ->

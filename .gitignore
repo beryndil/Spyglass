@@ -10,6 +10,7 @@
 .cxx
 local.properties
 app/release/
+app/src/main/play/
 *.jks
 *.keystore
 .kotlin/

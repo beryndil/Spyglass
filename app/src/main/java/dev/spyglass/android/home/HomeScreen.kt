@@ -385,12 +385,13 @@ private fun HomeHeader() {
 
 @Composable
 private fun HomeSearchBar(onSearch: () -> Unit) {
+    val hapticClick = rememberHapticClick()
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp))
             .border(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.4f), RoundedCornerShape(8.dp))
-            .clickable { onSearch() }
+            .clickable { hapticClick(); onSearch() }
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
@@ -561,12 +562,13 @@ private fun QuickLinkGrid(links: List<QuickLink>, onTap: (Int) -> Unit) {
 
 @Composable
 private fun QuickLinkCard(link: QuickLink, onClick: () -> Unit) {
+    val hapticClick = rememberHapticClick()
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(LocalSurfaceCard.current, RoundedCornerShape(8.dp))
             .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
-            .clickable { onClick() }
+            .clickable { hapticClick(); onClick() }
             .padding(horizontal = 12.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {

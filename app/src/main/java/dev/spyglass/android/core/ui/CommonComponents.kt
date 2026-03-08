@@ -130,6 +130,7 @@ fun TogglePill(
     onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val hapticClick = rememberHapticClick()
     Row(
         modifier = modifier
             .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(6.dp))
@@ -149,7 +150,7 @@ fun TogglePill(
                     .height(32.dp),
             ) {
                 TextButton(
-                    onClick    = { onSelect(i) },
+                    onClick    = { hapticClick(); onSelect(i) },
                     modifier   = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(0.dp),
                 ) {
@@ -319,6 +320,7 @@ fun MinecraftIdRow(id: String) {
     val context = androidx.compose.ui.platform.LocalContext.current
     val fullId = if (id.contains(':')) id else "minecraft:$id"
     var copied by remember { mutableStateOf(false) }
+    val hapticConfirm = rememberHapticConfirm()
 
     Column(
         modifier = Modifier
@@ -326,6 +328,7 @@ fun MinecraftIdRow(id: String) {
             .clickable {
                 val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager ?: return@clickable
                 clipboard.setPrimaryClip(android.content.ClipData.newPlainText("Minecraft ID", fullId))
+                hapticConfirm()
                 copied = true
             }
             .background(MaterialTheme.colorScheme.outline.copy(alpha = 0.3f), RoundedCornerShape(6.dp))
@@ -471,6 +474,7 @@ fun SpyglassTabRow(
     onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val hapticClick = rememberHapticClick()
     ScrollableTabRow(
         selectedTabIndex = selectedIndex,
         edgePadding      = 12.dp,
@@ -483,7 +487,7 @@ fun SpyglassTabRow(
             val selected = selectedIndex == i
             Tab(
                 selected = selected,
-                onClick  = { onSelect(i) },
+                onClick  = { hapticClick(); onSelect(i) },
                 text = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         SpyglassIconImage(

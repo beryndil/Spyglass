@@ -25,6 +25,7 @@ import dev.spyglass.android.connect.ItemStack
 import dev.spyglass.android.core.ui.ItemTextures
 import dev.spyglass.android.core.ui.LocalSurfaceCard
 import dev.spyglass.android.core.ui.SpyglassIconImage
+import dev.spyglass.android.core.ui.rememberHaptic
 import kotlinx.coroutines.delay
 
 /**
@@ -40,6 +41,7 @@ fun InventorySlotView(
     onLongPress: ((ItemStack) -> Unit)? = null,
 ) {
     var showTooltip by remember { mutableStateOf(false) }
+    val haptic = rememberHaptic()
 
     // Auto-dismiss tooltip after 2 seconds
     if (showTooltip) {
@@ -66,7 +68,7 @@ fun InventorySlotView(
                 if (item != null) {
                     Modifier.combinedClickable(
                         onClick = { showTooltip = !showTooltip },
-                        onLongClick = { onLongPress?.invoke(item) },
+                        onLongClick = { haptic(); onLongPress?.invoke(item) },
                     )
                 } else {
                     Modifier

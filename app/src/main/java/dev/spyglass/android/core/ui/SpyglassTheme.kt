@@ -36,6 +36,7 @@ val Emerald       = Color(0xFF66BB6A)
 
 val LocalSurfaceCard = compositionLocalOf { Color(0xFF211F1B) }
 val LocalIsWideScreen = compositionLocalOf { false }
+val LocalHapticEnabled = compositionLocalOf { true }
 
 // ── Theme preset data ────────────────────────────────────────────────────────
 
@@ -324,6 +325,7 @@ fun SpyglassTheme(
     isWideScreen: Boolean = false,
     dynamicColor: Boolean = false,
     highContrast: Boolean = false,
+    hapticEnabled: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     val colors = ThemePresets[theme] ?: ThemePresets.getValue(DEFAULT_THEME)
@@ -348,6 +350,7 @@ fun SpyglassTheme(
     CompositionLocalProvider(
         LocalSurfaceCard provides cardColor,
         LocalIsWideScreen provides isWideScreen,
+        LocalHapticEnabled provides hapticEnabled,
     ) {
         MaterialTheme(
             colorScheme = scheme,

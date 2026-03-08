@@ -277,6 +277,7 @@ private fun TodoRow(
     onDelete: () -> Unit,
     onLinkTap: () -> Unit,
 ) {
+    val hapticConfirm = rememberHapticConfirm()
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -287,7 +288,7 @@ private fun TodoRow(
     ) {
         Checkbox(
             checked = todo.completed,
-            onCheckedChange = { onToggle() },
+            onCheckedChange = { hapticConfirm(); onToggle() },
             colors = CheckboxDefaults.colors(
                 checkedColor = MaterialTheme.colorScheme.primary,
                 uncheckedColor = MaterialTheme.colorScheme.secondary,

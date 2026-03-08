@@ -59,6 +59,7 @@ private val BIOME_ENCHANTS = listOf(
 @Composable
 fun LibrarianScreen() {
     var selectedBiome by remember { mutableStateOf<String?>(null) }
+    val hapticClick = rememberHapticClick()
 
     Column(
         modifier = Modifier
@@ -103,13 +104,13 @@ fun LibrarianScreen() {
         ) {
             FilterChip(
                 selected = selectedBiome == null,
-                onClick = { selectedBiome = null },
+                onClick = { hapticClick(); selectedBiome = null },
                 label = { Text("All Biomes", style = MaterialTheme.typography.labelSmall) },
             )
             BIOME_ENCHANTS.forEach { be ->
                 FilterChip(
                     selected = selectedBiome == be.biome,
-                    onClick = { selectedBiome = be.biome },
+                    onClick = { hapticClick(); selectedBiome = be.biome },
                     label = { Text(be.biome, style = MaterialTheme.typography.labelSmall) },
                 )
             }

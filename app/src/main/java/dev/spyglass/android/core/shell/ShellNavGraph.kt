@@ -58,6 +58,7 @@ import dev.spyglass.android.core.ui.AdBanner
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassIcon
 import dev.spyglass.android.core.ui.SpyglassIconImage
+import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.navigation.BrowseTarget
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
@@ -374,11 +375,12 @@ private fun ShellBottomNavBar(
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDest = backStackEntry?.destination
 
+    val hapticClick = rememberHapticClick()
     NavigationBar(containerColor = MaterialTheme.colorScheme.background) {
         destinations.forEach { dest ->
             NavigationBarItem(
                 selected = currentDest?.hierarchy?.any { it.route == dest.route } == true,
-                onClick = { onNavigate(dest.route) },
+                onClick = { hapticClick(); onNavigate(dest.route) },
                 icon = {
                     SpyglassIconImage(
                         dest.icon,

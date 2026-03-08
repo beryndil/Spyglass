@@ -126,6 +126,8 @@ fun LootScreen(onStructureTap: (String) -> Unit = {}) {
         }
     }
 
+    val hapticClick = rememberHapticClick()
+
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = { query = it },
@@ -144,7 +146,7 @@ fun LootScreen(onStructureTap: (String) -> Unit = {}) {
             listOf("all", "overworld", "nether", "end").forEach { dim ->
                 FilterChip(
                     selected = dimensionFilter == dim,
-                    onClick = { dimensionFilter = dim },
+                    onClick = { hapticClick(); dimensionFilter = dim },
                     label = { Text(if (dim == "all") stringResource(R.string.all) else dimensionLabel(dim), style = MaterialTheme.typography.labelSmall) },
                 )
             }
