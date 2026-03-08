@@ -47,7 +47,7 @@ object TextureManager {
 
     private fun textureDir(context: Context) = File(context.filesDir, "textures")
 
-    /** Call once at app startup to set initial state. Fills in missing bundled textures. */
+    /** Call once at app startup to set initial state. Extracts bundled textures on app update. */
     fun init(context: Context) {
         val dir = textureDir(context)
         textureDirPath = dir
@@ -55,14 +55,20 @@ object TextureManager {
         val hasTextures = dir.exists() && (dir.listFiles()?.isNotEmpty() == true)
         _state.value = if (hasTextures) TextureState.DOWNLOADED else TextureState.NOT_DOWNLOADED
 
-        // Extract any missing textures from the bundled zip
-        extractMissingBundledTextures(context)
+        // Extract bundled textures if app version changed (or first launch)
+        val versionFile = File(dir, ".app_version")
+        val currentVersion = dev.spyglass.android.BuildConfig.VERSION_CODE.toString()
+        val lastVersion = if (versionFile.exists()) versionFile.readText().trim() else ""
+        if (lastVersion != currentVersion) {
+            extractMissingBundledTextures(context)
+            versionFile.parentFile?.mkdirs()
+            versionFile.writeText(currentVersion)
+        }
     }
 
     /**
      * Extracts only missing PNGs from the bundled `textures.zip` into `filesDir/textures/`.
      * Skips files that already exist on disk (preserving newer synced versions).
-     * Runs on every startup so new textures bundled with app updates are immediately available.
      */
     private fun extractMissingBundledTextures(context: Context) {
         try {
