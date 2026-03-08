@@ -241,6 +241,20 @@ object ItemTextures {
         // Bundles → leather
         if (itemId == "bundle" || itemId.endsWith("_bundle")) return lookup("leather")
 
+        // Gear material fallback: copper → iron → diamond → golden → leather/wooden/stone
+        val gearSuffixes = listOf("_helmet", "_chestplate", "_leggings", "_boots",
+            "_sword", "_pickaxe", "_axe", "_shovel", "_hoe", "_horse_armor")
+        for (suffix in gearSuffixes) {
+            if (!itemId.endsWith(suffix)) continue
+            val tiers = if (suffix in listOf("_helmet", "_chestplate", "_leggings", "_boots", "_horse_armor"))
+                listOf("iron", "diamond", "golden", "leather", "chainmail")
+            else
+                listOf("iron", "diamond", "golden", "stone", "wooden")
+            for (tier in tiers) {
+                lookup("${tier}$suffix")?.let { return it }
+            }
+        }
+
         // Spears → trident (closest weapon shape)
         if (itemId.endsWith("_spear")) return lookup("trident")
 
