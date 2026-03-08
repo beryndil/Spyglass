@@ -3,31 +3,31 @@
     android:height="24dp"
     android:viewportWidth="16"
     android:viewportHeight="16">
-    <!-- Chest body outline (very dark obsidian) -->
+    <!-- Chest body outline (dark obsidian) -->
     <path android:fillColor="#0A1A10"
-        android:pathData="M2,5h12v10h-12z"/>
-    <!-- Lid fill (dark green obsidian) -->
+        android:pathData="M1,3h14v12h-14z"/>
+    <!-- Chest lid (dark obsidian green) -->
     <path android:fillColor="#1B3A2A"
-        android:pathData="M3,6h10v3h-10z"/>
-    <!-- Lid top highlight -->
-    <path android:fillColor="#2A5A3A"
-        android:pathData="M3,6h10v1h-10z"/>
-    <!-- Body fill (slightly lighter dark green) -->
+        android:pathData="M2,4h12v4h-12z"/>
+    <!-- Chest body (slightly lighter obsidian green) -->
     <path android:fillColor="#1F4030"
-        android:pathData="M3,9h10v5h-10z"/>
-    <!-- Lid/body divider (dark seam) -->
+        android:pathData="M2,8h12v6h-12z"/>
+    <!-- Lid top edge highlight -->
+    <path android:fillColor="#2A5A3A"
+        android:pathData="M2,4h12v1h-12z"/>
+    <!-- Lid/body divider line -->
     <path android:fillColor="#0A1A10"
-        android:pathData="M3,8h10v1h-10z"/>
-    <!-- Eye of Ender clasp (bright teal) -->
+        android:pathData="M2,7h12v1h-12z"/>
+    <!-- Latch (teal Eye of Ender) -->
     <path android:fillColor="#2DE0A5"
-        android:pathData="M7,7h2v3h-2z"/>
-    <!-- Clasp highlight (bright glow) -->
+        android:pathData="M7,6h2v4h-2z"/>
+    <!-- Latch highlight -->
     <path android:fillColor="#7AFFCC"
-        android:pathData="M7,7h2v1h-2z"/>
-    <!-- Clasp pupil (dark center) -->
+        android:pathData="M7,6h2v1h-2z"/>
+    <!-- Latch pupil (dark center) -->
     <path android:fillColor="#0A3A28"
         android:pathData="M7,9h2v1h-2z"/>
-    <!-- Subtle obsidian texture -->
+    <!-- Obsidian texture detail on body -->
     <path android:fillColor="#142E1E"
-        android:pathData="M4,10h2v1h-2z M10,11h2v1h-2z M4,13h2v1h-2z"/>
+        android:pathData="M3,9h3v1h-3z M10,10h3v1h-3z M3,12h4v1h-4z"/>
 </vector>
