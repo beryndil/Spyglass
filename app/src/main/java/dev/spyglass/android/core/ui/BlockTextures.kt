@@ -75,8 +75,11 @@ object BlockTextures {
             return get(plant)
         }
 
+        // Ender chest → dedicated icon
+        if (blockId == "ender_chest") return PixelIcons.EnderChest
+
         // Chest variants → chest icon
-        if (blockId == "chest" || blockId == "trapped_chest" || blockId == "ender_chest" ||
+        if (blockId == "chest" || blockId == "trapped_chest" ||
             blockId == "barrel" || blockId.endsWith("shulker_box")) {
             return PixelIcons.Storage
         }
