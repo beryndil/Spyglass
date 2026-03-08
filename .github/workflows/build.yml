@@ -72,7 +72,7 @@ jobs:
         run: echo "tag=${{ steps.ts.outputs.tag }}" >> "$GITHUB_OUTPUT"
 
       - name: Rename APK
-        run: cp app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/spyglass-${{ steps.tag.outputs.tag }}.apk
+        run: cp app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/Spyglass-${{ steps.tag.outputs.tag }}.apk
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -82,9 +82,9 @@ jobs:
           body: |
             Release build from `main` — ${{ github.sha }}
 
-            **APK** — download `spyglass-${{ steps.tag.outputs.tag }}.apk` and sideload on your Android device.
+            **APK** — download `Spyglass-${{ steps.tag.outputs.tag }}.apk` and sideload on your Android device.
           files: |
-            app/build/outputs/apk/release/spyglass-${{ steps.tag.outputs.tag }}.apk
+            app/build/outputs/apk/release/Spyglass-${{ steps.tag.outputs.tag }}.apk
           make_latest: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
