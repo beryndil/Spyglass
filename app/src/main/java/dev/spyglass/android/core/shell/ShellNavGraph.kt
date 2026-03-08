@@ -353,6 +353,20 @@ private fun ShellTopBar(navController: NavHostController, onClockTap: () -> Unit
                     },
                 )
                 DropdownMenuItem(
+                    text = { Text(stringResource(R.string.news)) },
+                    onClick = {
+                        menuExpanded = false
+                        navController.navigate("news") { launchSingleTop = true }
+                    },
+                )
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.help)) },
+                    onClick = {
+                        menuExpanded = false
+                        navController.navigate("help") { launchSingleTop = true }
+                    },
+                )
+                DropdownMenuItem(
                     text = { Text(stringResource(R.string.about)) },
                     onClick = {
                         menuExpanded = false

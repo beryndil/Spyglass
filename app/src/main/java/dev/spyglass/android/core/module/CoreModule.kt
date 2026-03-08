@@ -140,6 +140,12 @@ object CoreModule : SpyglassModule {
         ModuleRoute("feedback") { _, nav ->
             dev.spyglass.android.feedback.FeedbackScreen(onBack = { nav.navigateBack() })
         },
+        ModuleRoute("help") { _, nav ->
+            dev.spyglass.android.help.HelpScreen(onBack = { nav.navigateBack() })
+        },
+        ModuleRoute("news") { _, nav ->
+            dev.spyglass.android.news.NewsScreen(onBack = { nav.navigateBack() })
+        },
     )
 
     override fun bottomNavItems(): List<BottomNavItem> = emptyList()
