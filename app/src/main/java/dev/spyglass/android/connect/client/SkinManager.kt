@@ -25,29 +25,37 @@ object SkinManager {
     private var cachedBodyBitmap: Bitmap? = null
     private var cachedPlayerName: String? = null
 
+    private val AVATAR_URLS = listOf(
+        "https://mc-heads.net/avatar/%s/64",
+        "https://minotar.net/helm/%s/64",
+    )
+
     suspend fun fetchSkin(uuid: String): Bitmap? {
         // Return cached if same player
         if (uuid == cachedUuid && cachedBitmap != null) return cachedBitmap
 
+        val cleanUuid = uuid.replace("-", "")
         return withContext(Dispatchers.IO) {
-            try {
-                val request = Request.Builder()
-                    .url("https://crafatar.com/avatars/$uuid?size=64&overlay")
-                    .build()
-                client.newCall(request).execute().use { response ->
-                    if (!response.isSuccessful) return@withContext null
-                    val bytes = response.body?.bytes() ?: return@withContext null
-                    val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                    if (bitmap != null) {
-                        cachedUuid = uuid
-                        cachedBitmap = bitmap
+            for (urlTemplate in AVATAR_URLS) {
+                try {
+                    val request = Request.Builder()
+                        .url(urlTemplate.format(cleanUuid))
+                        .build()
+                    client.newCall(request).execute().use { response ->
+                        if (!response.isSuccessful) return@use
+                        val bytes = response.body?.bytes() ?: return@use
+                        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                        if (bitmap != null) {
+                            cachedUuid = uuid
+                            cachedBitmap = bitmap
+                            return@withContext bitmap
+                        }
                     }
-                    bitmap
+                } catch (e: Exception) {
+                    Timber.d(e, "Failed to fetch skin from ${urlTemplate.format(cleanUuid)}")
                 }
-            } catch (e: Exception) {
-                Timber.d(e, "Failed to fetch skin for $uuid")
-                null
             }
+            null
         }
     }
 
