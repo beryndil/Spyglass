@@ -23,7 +23,7 @@ import dev.spyglass.android.core.ui.ItemTextures
 import dev.spyglass.android.core.ui.SpyglassIconImage
 
 /**
- * Chest Finder: search bar + results, then a full browse list of all containers
+ * Storage: search bar + results, then a full browse list of all containers
  * with their items displayed like inventory slots.
  */
 @Composable
@@ -57,7 +57,7 @@ fun ChestFinderScreen(
             IconButton(onClick = onBack) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
             }
-            Text("Chest Finder", style = MaterialTheme.typography.titleMedium)
+            Text("Storage", style = MaterialTheme.typography.titleMedium)
         }
 
         ChestFinderContent(viewModel = viewModel)
