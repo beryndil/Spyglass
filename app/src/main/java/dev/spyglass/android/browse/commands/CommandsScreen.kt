@@ -279,7 +279,7 @@ fun CommandsScreen(
                         enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
                         exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
-                        CommandDetailCard(cmd, entityLinkIndex, onItemTap, onMobTap, onBiomeTap, onStructureTap, onEnchantTap)
+                        CommandDetailCard(cmd, entityLinkIndex, onItemTap, onMobTap, onBiomeTap, onStructureTap, onEnchantTap, tag, vFilter)
                     }
                 }
             }
@@ -295,7 +295,7 @@ fun CommandsScreen(
 }
 
 @Composable
-private fun CommandDetailCard(cmd: CommandEntity, entityLinkIndex: EntityLinkIndex, onItemTap: (String) -> Unit, onMobTap: (String) -> Unit, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onEnchantTap: (String) -> Unit) {
+private fun CommandDetailCard(cmd: CommandEntity, entityLinkIndex: EntityLinkIndex, onItemTap: (String) -> Unit, onMobTap: (String) -> Unit, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onEnchantTap: (String) -> Unit, tag: VersionTagEntity? = null, vFilter: VersionFilterState = VersionFilterState()) {
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         Text(
             "SYNTAX",
@@ -309,6 +309,10 @@ private fun CommandDetailCard(cmd: CommandEntity, entityLinkIndex: EntityLinkInd
                 style = MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace),
                 color = Emerald,
             )
+        }
+        if (tag != null) {
+            SpyglassDivider()
+            VersionEditionSection(tag, vFilter)
         }
         SpyglassDivider()
         LinkedDescription(
