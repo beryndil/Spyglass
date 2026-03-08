@@ -232,6 +232,8 @@ private fun CharacterContent(
                                 val tex = ItemTextures.get(itemId)
                                 if (tex != null) {
                                     SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(28.dp))
+                                } else {
+                                    SpyglassIconImage(PixelIcons.Item, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(28.dp))
                                 }
                             }
                         }
