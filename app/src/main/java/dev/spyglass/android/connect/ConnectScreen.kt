@@ -218,7 +218,7 @@ private fun DisconnectedContent(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 ConnectQuickLink("Character", characterIcon, Modifier.weight(1f), onClick = onCharacter)
-                ConnectQuickLink("Inventory", PixelIcons.Item, Modifier.weight(1f), onClick = onInventory)
+                ConnectQuickLink("Inventory", PixelIcons.Backpack, Modifier.weight(1f), tint = PotionBlue, onClick = onInventory)
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -348,7 +348,7 @@ private fun ConnectedContent(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            ConnectQuickLink("Inventory", PixelIcons.Item, Modifier.weight(1f), onClick = onInventory)
+            ConnectQuickLink("Inventory", PixelIcons.Backpack, Modifier.weight(1f), tint = PotionBlue, onClick = onInventory)
             ConnectQuickLink("Ender Chest", PixelIcons.Enchant, Modifier.weight(1f), onClick = onEnderChest)
         }
         Spacer(Modifier.height(8.dp))
@@ -356,7 +356,7 @@ private fun ConnectedContent(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            ConnectQuickLink("Chest Finder", PixelIcons.Search, Modifier.weight(1f), onClick = onChestFinder)
+            ConnectQuickLink("Storage", PixelIcons.Search, Modifier.weight(1f), onClick = onChestFinder)
             ConnectQuickLink("Map", PixelIcons.Biome, Modifier.weight(1f), onClick = onMap)
         }
     }
@@ -477,6 +477,7 @@ private fun ConnectQuickLink(
     label: String,
     icon: SpyglassIcon,
     modifier: Modifier = Modifier,
+    tint: Color = MaterialTheme.colorScheme.primary,
     onClick: () -> Unit,
 ) {
     val hapticClick = rememberHapticClick()
@@ -488,7 +489,7 @@ private fun ConnectQuickLink(
             .padding(horizontal = 12.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        SpyglassIconImage(icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
+        SpyglassIconImage(icon, contentDescription = null, tint = tint, modifier = Modifier.size(22.dp))
         Spacer(Modifier.width(10.dp))
         Text(label, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
     }
