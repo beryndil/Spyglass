@@ -658,9 +658,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     _playerList.value = payload.players
                 }
                 MessageType.PLAYER_DATA -> {
-                    Timber.d("PLAYER_DATA raw payload keys: ${(message.payload as? kotlinx.serialization.json.JsonObject)?.keys}")
                     val payload = json.decodeFromJsonElement(PlayerData.serializer(), message.payload)
-                    Timber.d("PLAYER_DATA parsed: worldSpawn=${payload.worldSpawn}, spawnLocation=${payload.spawnLocation}, lastDeath=${payload.lastDeathLocation}")
                     // Route to compare if this is the compare player's data
                     val compareUuid = pendingCompareUuid
                     if (compareUuid != null && payload.playerUuid.equals(compareUuid, ignoreCase = true)) {
