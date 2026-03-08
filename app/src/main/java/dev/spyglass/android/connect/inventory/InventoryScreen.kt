@@ -38,6 +38,11 @@ fun InventoryScreen(
     val scope = rememberCoroutineScope()
     val hapticClick = rememberHapticClick()
 
+    DisposableEffect(Unit) {
+        viewModel.setActiveScreen("inventory")
+        onDispose { viewModel.setActiveScreen(null) }
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         // Top bar
         Row(

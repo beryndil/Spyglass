@@ -43,6 +43,11 @@ fun ConnectScreen(
     val playerList by viewModel.playerList.collectAsStateWithLifecycle()
     val selectedPlayerUuid by viewModel.selectedPlayerUuid.collectAsStateWithLifecycle()
 
+    DisposableEffect(Unit) {
+        viewModel.setActiveScreen("connect")
+        onDispose { viewModel.setActiveScreen(null) }
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         // Top bar
         Row(

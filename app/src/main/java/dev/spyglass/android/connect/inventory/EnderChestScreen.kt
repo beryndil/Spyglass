@@ -38,6 +38,11 @@ fun EnderChestScreen(
     val scope = rememberCoroutineScope()
     val hapticClick = rememberHapticClick()
 
+    DisposableEffect(Unit) {
+        viewModel.setActiveScreen("enderchest")
+        onDispose { viewModel.setActiveScreen(null) }
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
             modifier = Modifier

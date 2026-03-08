@@ -55,6 +55,12 @@ fun CharacterScreen(
     val isConnected = connectionState.isConnected
     val scope = rememberCoroutineScope()
 
+    // Track active screen for live refresh
+    DisposableEffect(Unit) {
+        viewModel.setActiveScreen("character")
+        onDispose { viewModel.setActiveScreen(null) }
+    }
+
     // Request fresh player data when screen opens (only if connected)
     LaunchedEffect(isConnected) {
         if (isConnected) {

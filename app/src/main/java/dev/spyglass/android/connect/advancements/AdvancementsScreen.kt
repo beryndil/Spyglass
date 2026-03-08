@@ -66,6 +66,11 @@ fun AdvancementsScreen(
     val isConnected = connectionState.isConnected
     val context = LocalContext.current
 
+    DisposableEffect(Unit) {
+        viewModel.setActiveScreen("advancements")
+        onDispose { viewModel.setActiveScreen(null) }
+    }
+
     LaunchedEffect(isConnected) {
         if (isConnected) {
             Timber.d("AdvancementsScreen: requesting advancements")

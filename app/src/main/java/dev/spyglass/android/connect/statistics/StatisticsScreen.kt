@@ -57,6 +57,11 @@ fun StatisticsScreen(
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
 
+    DisposableEffect(Unit) {
+        viewModel.setActiveScreen("statistics")
+        onDispose { viewModel.setActiveScreen(null) }
+    }
+
     LaunchedEffect(isConnected) {
         if (isConnected) {
             Timber.d("StatisticsScreen: requesting stats")

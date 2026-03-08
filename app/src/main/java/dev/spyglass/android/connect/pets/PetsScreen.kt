@@ -35,6 +35,11 @@ fun PetsScreen(
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
 
+    DisposableEffect(Unit) {
+        viewModel.setActiveScreen("pets")
+        onDispose { viewModel.setActiveScreen(null) }
+    }
+
     LaunchedEffect(isConnected) {
         if (isConnected) viewModel.requestPets()
     }

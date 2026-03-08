@@ -33,6 +33,11 @@ fun ChestFinderScreen(
 ) {
     val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
 
+    DisposableEffect(Unit) {
+        viewModel.setActiveScreen("chestfinder")
+        onDispose { viewModel.setActiveScreen(null) }
+    }
+
     // Request chest contents when screen opens (if connected)
     LaunchedEffect(connectionState.isConnected) {
         if (connectionState.isConnected) {

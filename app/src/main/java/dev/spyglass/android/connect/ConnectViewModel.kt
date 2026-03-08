@@ -30,6 +30,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private val reconnectManager = ReconnectManager()
     private var mdnsDiscovery: MdnsDiscovery? = null
     private var reconnectJob: Job? = null
+    private var liveRefreshJob: Job? = null
     private val logTree = ConnectLogTree(client)
 
     /** Whether we've been connected at least once (to know if reconnect makes sense). */
@@ -37,6 +38,12 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Whether we've already re-sent select_world for this session (prevents loop). */
     private var worldReselected = false
+
+    /** Which Connect screen is currently visible, for live refresh. */
+    private val _activeScreen = MutableStateFlow<String?>(null)
+
+    /** Set the active screen so live refresh knows what data to fetch. */
+    fun setActiveScreen(screen: String?) { _activeScreen.value = screen }
 
     // ── Observable state ─────────────────────────────────────────────────────
 
@@ -188,8 +195,11 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                         viewModelScope.launch(Dispatchers.IO) { sendPendingCrashLogs() }
                         // Flush any buffered log entries to desktop
                         logTree.flush()
+                        // Start live refresh
+                        startLiveRefresh()
                     }
                     is ConnectionState.Error -> {
+                        liveRefreshJob?.cancel()
                         // Auto-reconnect on unexpected disconnect
                         if (wasConnected && !client.wasUserDisconnect) {
                             startAutoReconnect()
@@ -198,6 +208,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                         }
                     }
                     is ConnectionState.Disconnected -> {
+                        liveRefreshJob?.cancel()
                         if (wasConnected && !client.wasUserDisconnect) {
                             startAutoReconnect()
                         } else {
@@ -248,6 +259,27 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                         publicKey = pairingData.pubkey,
                     ),
                 )
+            }
+        }
+    }
+
+    /** Periodically refresh data for whichever Connect screen is currently visible. */
+    private fun startLiveRefresh() {
+        liveRefreshJob?.cancel()
+        liveRefreshJob = viewModelScope.launch(Dispatchers.IO) {
+            while (true) {
+                kotlinx.coroutines.delay(10_000)
+                if (!client.isConnected) break
+                when (_activeScreen.value) {
+                    "character"   -> requestPlayerData()
+                    "inventory"   -> requestPlayerData()
+                    "enderchest"  -> requestPlayerData()
+                    "chestfinder" -> requestChests()
+                    "statistics"  -> requestStats()
+                    "advancements" -> requestAdvancements()
+                    "pets"        -> requestPets()
+                    "connect"     -> requestPlayerList()
+                }
             }
         }
     }
