@@ -47,13 +47,67 @@ object TextureManager {
 
     private fun textureDir(context: Context) = File(context.filesDir, "textures")
 
-    /** Call once at app startup to set initial state. */
+    /** Call once at app startup to set initial state. Extracts bundled textures if needed. */
     fun init(context: Context) {
         val dir = textureDir(context)
         textureDirPath = dir
         appContext = context.applicationContext
-        _state.value = if (dir.exists() && (dir.listFiles()?.isNotEmpty() == true))
-            TextureState.DOWNLOADED else TextureState.NOT_DOWNLOADED
+        val hasTextures = dir.exists() && (dir.listFiles()?.isNotEmpty() == true)
+        _state.value = if (hasTextures) TextureState.DOWNLOADED else TextureState.NOT_DOWNLOADED
+
+        // Extract bundled textures.zip if no textures on disk yet
+        if (!hasTextures) {
+            extractBundledTextures(context)
+        }
+    }
+
+    /**
+     * Extracts `textures.zip` from bundled assets into `filesDir/textures/`.
+     * Used on first launch or after texture deletion so textures work immediately
+     * without waiting for a network download.
+     */
+    private fun extractBundledTextures(context: Context) {
+        try {
+            val zipBytes = context.assets.open("minecraft/textures.zip").readBytes()
+            val dir = textureDir(context)
+            if (dir.exists()) dir.deleteRecursively()
+            dir.mkdirs()
+
+            val maxEntrySize = 1_024_000L
+            var extracted = 0
+            ZipInputStream(zipBytes.inputStream()).use { zip ->
+                var entry = zip.nextEntry
+                while (entry != null) {
+                    if (!entry.isDirectory) {
+                        val name = entry.name.substringAfterLast('/')
+                        if (name.isNotEmpty()) {
+                            var entryBytes = 0L
+                            val buf = ByteArray(8192)
+                            File(dir, name).outputStream().use { out ->
+                                var n: Int
+                                while (zip.read(buf).also { n = it } != -1) {
+                                    entryBytes += n
+                                    if (entryBytes > maxEntrySize) break
+                                    out.write(buf, 0, n)
+                                }
+                            }
+                            if (entryBytes > maxEntrySize) {
+                                File(dir, name).delete()
+                            } else {
+                                extracted++
+                            }
+                        }
+                    }
+                    zip.closeEntry()
+                    entry = zip.nextEntry
+                }
+            }
+            bitmapCache.evictAll()
+            _state.value = TextureState.DOWNLOADED
+            Timber.d("TextureManager: extracted %d bundled textures", extracted)
+        } catch (e: Exception) {
+            Timber.w(e, "TextureManager: failed to extract bundled textures")
+        }
     }
 
     /**
