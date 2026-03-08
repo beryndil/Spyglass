@@ -277,7 +277,7 @@ fun BiomesScreen(
                         enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
                         exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
-                        BiomeDetailCard(b, onNavigateToMob, onNavigateToStructure, onItemTap, onCalcTab)
+                        BiomeDetailCard(b, onNavigateToMob, onNavigateToStructure, onItemTap, onCalcTab, tag, vFilter)
                     }
                 }
             }
@@ -334,6 +334,8 @@ private fun BiomeDetailCard(
     onStructureTap: (String) -> Unit,
     onItemTap: (String) -> Unit,
     onCalcTab: (Int) -> Unit,
+    tag: VersionTagEntity? = null,
+    vFilter: VersionFilterState = VersionFilterState(),
 ) {
     val bgColor   = parseBiomeColor(biome.color) ?: MaterialTheme.colorScheme.surface
     val isLight   = (0.299 * bgColor.red + 0.587 * bgColor.green + 0.114 * bgColor.blue) > 0.5
@@ -354,6 +356,10 @@ private fun BiomeDetailCard(
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         MinecraftIdRow(biome.id)
+
+        if (tag != null) {
+            VersionEditionSection(tag, vFilter)
+        }
 
         // Description
         if (biome.description.isNotBlank()) {

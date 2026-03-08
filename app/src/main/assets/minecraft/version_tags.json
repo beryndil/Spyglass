@@ -16291,7 +16291,7 @@
   },
   {
     "entityType": "biome",
-    "entityId": "the_void",
+    "entityId": "void",
     "addedInJava": "1.9",
     "javaOnly": true
   },
