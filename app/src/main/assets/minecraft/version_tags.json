@@ -17818,5 +17818,794 @@
     "addedInJava": "1.12",
     "addedInBedrock": "",
     "javaOnly": true
+  },
+  {
+    "entityType": "potion",
+    "entityId": "water",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "mundane",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "thick",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "awkward",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "night_vision",
+    "addedInJava": "1.4.2",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "night_vision_splash",
+    "addedInJava": "1.4.2",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "night_vision_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "night_vision_long",
+    "addedInJava": "1.4.2",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "night_vision_long_splash",
+    "addedInJava": "1.4.2",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "night_vision_long_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "invisibility",
+    "addedInJava": "1.4.2",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "invisibility_splash",
+    "addedInJava": "1.4.2",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "invisibility_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "invisibility_long",
+    "addedInJava": "1.4.2",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "invisibility_long_splash",
+    "addedInJava": "1.4.2",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "invisibility_long_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "leaping",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "leaping_splash",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "leaping_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "leaping_long",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "leaping_long_splash",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "leaping_long_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "leaping_ii",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "leaping_ii_splash",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "leaping_ii_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "fire_resistance",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "fire_resistance_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "fire_resistance_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "fire_resistance_long",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "fire_resistance_long_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "fire_resistance_long_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "swiftness",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "swiftness_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "swiftness_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "swiftness_long",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "swiftness_long_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "swiftness_long_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "swiftness_ii",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "swiftness_ii_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "swiftness_ii_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slowness",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slowness_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slowness_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slowness_long",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slowness_long_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slowness_long_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slowness_iv",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slowness_iv_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slowness_iv_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "turtle_master",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.5.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "turtle_master_splash",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.5.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "turtle_master_lingering",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.5.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "turtle_master_long",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.5.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "turtle_master_long_splash",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.5.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "turtle_master_long_lingering",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.5.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "turtle_master_ii",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.5.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "turtle_master_ii_splash",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.5.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "turtle_master_ii_lingering",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.5.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "water_breathing",
+    "addedInJava": "1.7.2",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "water_breathing_splash",
+    "addedInJava": "1.7.2",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "water_breathing_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "water_breathing_long",
+    "addedInJava": "1.7.2",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "water_breathing_long_splash",
+    "addedInJava": "1.7.2",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "water_breathing_long_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "healing",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "healing_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "healing_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "healing_ii",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "healing_ii_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "healing_ii_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "harming",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "harming_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "harming_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "harming_ii",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "harming_ii_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "harming_ii_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "poison",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "poison_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "poison_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "poison_long",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "poison_long_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "poison_long_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "poison_ii",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "poison_ii_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "poison_ii_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "regeneration",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "regeneration_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "regeneration_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "regeneration_long",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "regeneration_long_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "regeneration_long_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "regeneration_ii",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "regeneration_ii_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "regeneration_ii_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "strength",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "strength_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "strength_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "strength_long",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "strength_long_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "strength_long_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "strength_ii",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "strength_ii_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "strength_ii_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "weakness",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "weakness_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "weakness_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "weakness_long",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "weakness_long_splash",
+    "addedInJava": "1.0",
+    "addedInBedrock": "0.12.1"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "weakness_long_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "luck",
+    "addedInJava": "1.9",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.19.4",
+    "mechanicsChangeNotes": "Enchantment glint removed"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "luck_splash",
+    "addedInJava": "1.9",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.19.4",
+    "mechanicsChangeNotes": "Enchantment glint removed"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "luck_lingering",
+    "addedInJava": "1.9",
+    "addedInBedrock": "",
+    "javaOnly": true,
+    "mechanicsChangedInJava": "1.19.4",
+    "mechanicsChangeNotes": "Enchantment glint removed"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slow_falling",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.6.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slow_falling_splash",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.6.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slow_falling_lingering",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.6.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slow_falling_long",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.6.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slow_falling_long_splash",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.6.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "slow_falling_long_lingering",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.6.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "wind_charged",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "wind_charged_splash",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "wind_charged_lingering",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "oozing",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "oozing_splash",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "oozing_lingering",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "weaving",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "weaving_splash",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "weaving_lingering",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "infested",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "infested_splash",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
+  },
+  {
+    "entityType": "potion",
+    "entityId": "infested_lingering",
+    "addedInJava": "1.21",
+    "addedInBedrock": "1.21.0"
   }
 ]

@@ -318,7 +318,7 @@ fun PotionsScreen(
                         enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
                         exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
-                        PotionDetailCard(p, onItemTap)
+                        PotionDetailCard(p, onItemTap, tag, vFilter)
                     }
                 }
             }
@@ -335,9 +335,13 @@ fun PotionsScreen(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun PotionDetailCard(potion: PotionEntity, onItemTap: (String) -> Unit) {
+private fun PotionDetailCard(potion: PotionEntity, onItemTap: (String) -> Unit, tag: VersionTagEntity? = null, vFilter: VersionFilterState = VersionFilterState()) {
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         MinecraftIdRow(potion.id)
+
+        if (tag != null) {
+            VersionEditionSection(tag, vFilter)
+        }
 
         // Effect
         if (potion.effect.isNotBlank() && potion.effect != "none") {
