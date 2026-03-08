@@ -92,6 +92,7 @@ fun SettingsScreen(
     val offlineMode         by vm.offlineMode.collectAsStateWithLifecycle()
     val fontScale           by vm.fontScale.collectAsStateWithLifecycle()
     val textureState        by TextureManager.state.collectAsStateWithLifecycle()
+    val syncing             by vm.syncing.collectAsStateWithLifecycle()
 
     val uriHandler = LocalUriHandler.current
     val context = LocalContext.current
@@ -465,6 +466,19 @@ fun SettingsScreen(
                             enabled = !offlineMode,
                             label = { Text(label, style = MaterialTheme.typography.labelSmall) },
                         )
+                    }
+                }
+                Spacer(Modifier.height(4.dp))
+                TextButton(
+                    onClick = { hapticClick(); vm.syncNow() },
+                    enabled = !offlineMode && !syncing,
+                ) {
+                    if (syncing) {
+                        CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                        Spacer(Modifier.width(8.dp))
+                        Text("Syncing...", color = MaterialTheme.colorScheme.secondary)
+                    } else {
+                        Text("Sync Now", color = MaterialTheme.colorScheme.primary)
                     }
                 }
 

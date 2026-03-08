@@ -9,8 +9,10 @@ import dev.spyglass.android.core.ui.DEFAULT_THEME
 import dev.spyglass.android.core.ui.TextureManager
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.data.sync.DataSyncManager
 import dev.spyglass.android.data.sync.DataSyncWorker
 import androidx.datastore.preferences.core.edit
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.io.File
@@ -243,5 +245,17 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun clearTextureCache() = viewModelScope.launch {
         TextureManager.delete(getApplication())
+    }
+
+    private val _syncing = MutableStateFlow(false)
+    val syncing: StateFlow<Boolean> = _syncing.asStateFlow()
+
+    fun syncNow() = viewModelScope.launch(Dispatchers.IO) {
+        _syncing.value = true
+        try {
+            DataSyncManager.sync(getApplication())
+        } finally {
+            _syncing.value = false
+        }
     }
 }
