@@ -75,6 +75,12 @@ object BlockTextures {
             return get(plant)
         }
 
+        // Chest variants → chest icon
+        if (blockId == "chest" || blockId == "trapped_chest" || blockId == "ender_chest" ||
+            blockId == "barrel" || blockId.endsWith("shulker_box")) {
+            return PixelIcons.Storage
+        }
+
         return null
     }
 
