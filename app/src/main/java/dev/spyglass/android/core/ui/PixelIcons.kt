@@ -35,4 +35,5 @@ object PixelIcons {
     val Globe     = SpyglassIcon.Drawable(R.drawable.ic_pixel_globe)
     val Steve     = SpyglassIcon.Drawable(R.drawable.ic_pixel_steve)
     val Backpack  = SpyglassIcon.Drawable(R.drawable.ic_pixel_backpack)
+    val EnderChest = SpyglassIcon.Drawable(R.drawable.ic_pixel_ender_chest)
 }
