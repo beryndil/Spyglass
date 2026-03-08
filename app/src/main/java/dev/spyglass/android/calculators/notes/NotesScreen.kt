@@ -13,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -26,6 +25,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.core.ui.SpyglassSearchBar
 import dev.spyglass.android.data.db.entities.NoteEntity
 import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -99,12 +99,9 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
             modifier = Modifier.fillMaxWidth().padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            OutlinedTextField(
-                value = query, onValueChange = vm::setQuery,
-                placeholder = { Text("Search notes\u2026", color = MaterialTheme.colorScheme.secondary) },
-                leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
-                singleLine = true,
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
+            SpyglassSearchBar(
+                query = query, onQueryChange = vm::setQuery,
+                category = "notes", placeholder = "Search notes\u2026",
                 modifier = Modifier.weight(1f),
             )
             Spacer(Modifier.width(8.dp))

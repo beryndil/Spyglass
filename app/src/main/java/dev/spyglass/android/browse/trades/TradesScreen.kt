@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -24,6 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.core.ui.SpyglassSearchBar
 import dev.spyglass.android.core.ui.rememberHapticConfirm
 import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.ItemTags
@@ -173,12 +173,9 @@ fun TradesScreen(
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        OutlinedTextField(
-            value = query, onValueChange = vm::setQuery,
-            placeholder = { Text("Search trades…", color = MaterialTheme.colorScheme.secondary) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
-            singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
+        SpyglassSearchBar(
+            query = query, onQueryChange = vm::setQuery,
+            category = "trades", placeholder = "Search trades\u2026",
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
         androidx.compose.foundation.lazy.LazyRow(

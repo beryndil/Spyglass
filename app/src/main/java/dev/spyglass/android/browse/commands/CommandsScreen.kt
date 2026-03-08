@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -34,6 +33,7 @@ import dev.spyglass.android.core.checkAvailability
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.core.ui.SpyglassSearchBar
 import dev.spyglass.android.core.ui.rememberHapticConfirm
 import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.db.entities.CommandEntity
@@ -183,12 +183,9 @@ fun CommandsScreen(
             modifier = Modifier.padding(start = 16.dp, end = 4.dp, top = 16.dp, bottom = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            OutlinedTextField(
-                value = query, onValueChange = vm::setQuery,
-                placeholder = { Text("Search commands\u2026", color = MaterialTheme.colorScheme.secondary) },
-                leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
-                singleLine = true,
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
+            SpyglassSearchBar(
+                query = query, onQueryChange = vm::setQuery,
+                category = "commands", placeholder = "Search commands\u2026",
                 modifier = Modifier.weight(1f),
             )
             SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)

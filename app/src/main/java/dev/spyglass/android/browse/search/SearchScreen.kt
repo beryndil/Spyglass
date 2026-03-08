@@ -5,8 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -18,6 +16,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.core.ui.SpyglassSearchBar
 import dev.spyglass.android.data.db.entities.*
 import dev.spyglass.android.data.repository.GameDataRepository
 import dev.spyglass.android.settings.PreferenceKeys
@@ -138,12 +137,9 @@ fun SearchScreen(
     val results by vm.results.collectAsStateWithLifecycle()
 
     Column(modifier = Modifier.fillMaxSize()) {
-        OutlinedTextField(
-            value = query, onValueChange = vm::setQuery,
-            placeholder = { Text(stringResource(R.string.search_placeholder), color = MaterialTheme.colorScheme.secondary) },
-            leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
-            singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
+        SpyglassSearchBar(
+            query = query, onQueryChange = vm::setQuery,
+            category = "global", placeholder = "Search everything\u2026",
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
 

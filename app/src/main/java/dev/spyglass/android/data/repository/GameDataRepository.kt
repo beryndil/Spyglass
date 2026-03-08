@@ -176,6 +176,16 @@ class GameDataRepository(context: Context) {
     suspend fun deleteCompletedTodos()                              { userDb.todoDao().deleteCompleted() }
     fun todosForLink(type: String, id: Long): Flow<List<TodoEntity>> = userDb.todoDao().findByLink(type, id)
 
+    // Search history (user data)
+    fun searchHistory(category: String): Flow<List<SearchHistoryEntity>> = userDb.searchHistoryDao().recentByCategory(category)
+    fun matchingHistory(category: String, prefix: String): Flow<List<SearchHistoryEntity>> = userDb.searchHistoryDao().matchingByCategory(category, prefix)
+    suspend fun saveSearchHistory(category: String, query: String) {
+        userDb.searchHistoryDao().upsert(SearchHistoryEntity(category = category, query = query))
+        userDb.searchHistoryDao().pruneCategory(category)
+    }
+    suspend fun deleteSearchHistory(id: Long) { userDb.searchHistoryDao().delete(id) }
+    suspend fun clearSearchHistory(category: String) { userDb.searchHistoryDao().clearCategory(category) }
+
     // Delete all user-generated data (todos, notes, waypoints, shopping lists, favorites, advancement progress)
     suspend fun deleteAllUserData() {
         userDb.withTransaction {
@@ -186,6 +196,7 @@ class GameDataRepository(context: Context) {
             userDb.shoppingListDao().deleteAllLists()
             userDb.favoriteDao().deleteAll()
             userDb.advancementProgressDao().deleteAll()
+            userDb.searchHistoryDao().deleteAll()
         }
     }
 

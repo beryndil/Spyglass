@@ -6,6 +6,7 @@ import android.os.Trace
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import dev.spyglass.android.data.db.daos.*
 import dev.spyglass.android.data.db.entities.*
@@ -25,8 +26,9 @@ import timber.log.Timber
         ShoppingListItemEntity::class,
         TodoEntity::class,
         AdvancementProgressEntity::class,
+        SearchHistoryEntity::class,
     ],
-    version = 1,
+    version = 2,
     exportSchema = true,
 )
 abstract class UserDatabase : RoomDatabase() {
@@ -36,8 +38,16 @@ abstract class UserDatabase : RoomDatabase() {
     abstract fun shoppingListDao(): ShoppingListDao
     abstract fun todoDao(): TodoDao
     abstract fun advancementProgressDao(): AdvancementProgressDao
+    abstract fun searchHistoryDao(): SearchHistoryDao
 
     companion object {
+        private val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("CREATE TABLE IF NOT EXISTS search_history (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, category TEXT NOT NULL, query TEXT NOT NULL, searchedAt INTEGER NOT NULL)")
+                db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_search_history_category_query ON search_history (category, query)")
+            }
+        }
+
         @Volatile private var INSTANCE: UserDatabase? = null
 
         fun get(context: Context): UserDatabase =
@@ -59,6 +69,7 @@ abstract class UserDatabase : RoomDatabase() {
                 "spyglass_user.db",
             )
                 .addCallback(MigrateFromOldDbCallback(context))
+                .addMigrations(MIGRATION_1_2)
                 .build()
         }
 
