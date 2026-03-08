@@ -667,6 +667,8 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     } else {
                         val changed = _playerData.value != payload
                         _playerData.value = payload
+                        // Always auto-populate waypoints on fresh data (StateFlow dedup may skip collectLatest)
+                        autoPopulateWaypoints(payload)
                         if (changed) {
                             val world = _selectedWorld.value
                             if (world != null) {
@@ -830,6 +832,17 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         Timber.d("Auto-populated waypoints: ${current.count { it.source == ConnectWaypoint.SOURCE_AUTO }} auto, ${current.count { it.source == ConnectWaypoint.SOURCE_CUSTOM }} custom")
         _connectWaypoints.value = current
         saveWaypointsToCache()
+    }
+
+    /** Force refresh waypoints from current player data (safety net for screens). */
+    fun refreshWaypoints() {
+        val data = _playerData.value
+        if (data != null) {
+            Timber.d("refreshWaypoints: forcing auto-populate from existing playerData")
+            autoPopulateWaypoints(data)
+        } else {
+            Timber.d("refreshWaypoints: no playerData available yet")
+        }
     }
 
     /** Create a custom waypoint. */

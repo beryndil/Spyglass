@@ -121,6 +121,13 @@ fun ConnectWaypointsScreen(
         if (isConnected) viewModel.requestPlayerData()
     }
 
+    // Safety net: if playerData exists but no auto waypoints, force refresh
+    LaunchedEffect(playerData, waypoints) {
+        if (playerData != null && waypoints.none { it.source == ConnectWaypoint.SOURCE_AUTO }) {
+            viewModel.refreshWaypoints()
+        }
+    }
+
     val filtered = remember(waypoints, dimensionFilter) {
         val list = if (dimensionFilter == "all") waypoints
         else waypoints.filter { it.dimension == dimensionFilter }
