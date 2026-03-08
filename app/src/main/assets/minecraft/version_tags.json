@@ -18607,5 +18607,1375 @@
     "entityId": "infested_lingering",
     "addedInJava": "1.21",
     "addedInBedrock": "1.21.0"
+  },
+  {
+    "entityType": "block",
+    "entityId": "acacia_shelf",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "bamboo_shelf",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "birch_shelf",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "cherry_shelf",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "crimson_shelf",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "dark_oak_shelf",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "jungle_shelf",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "mangrove_shelf",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "oak_shelf",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "pale_oak_shelf",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "spruce_shelf",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "warped_shelf",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "acacia_wall_sign",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.10"
+  },
+  {
+    "entityType": "block",
+    "entityId": "bamboo_wall_sign",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "birch_wall_sign",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.10"
+  },
+  {
+    "entityType": "block",
+    "entityId": "cherry_wall_sign",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "crimson_wall_sign",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "block",
+    "entityId": "dark_oak_wall_sign",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.10"
+  },
+  {
+    "entityType": "block",
+    "entityId": "jungle_wall_sign",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.10"
+  },
+  {
+    "entityType": "block",
+    "entityId": "mangrove_wall_sign",
+    "addedInJava": "1.19",
+    "addedInBedrock": "1.19"
+  },
+  {
+    "entityType": "block",
+    "entityId": "oak_wall_sign",
+    "addedInBedrock": "0.6"
+  },
+  {
+    "entityType": "block",
+    "entityId": "pale_oak_wall_sign",
+    "addedInJava": "1.21.4",
+    "addedInBedrock": "1.21.50"
+  },
+  {
+    "entityType": "block",
+    "entityId": "spruce_wall_sign",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.10"
+  },
+  {
+    "entityType": "block",
+    "entityId": "warped_wall_sign",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "block",
+    "entityId": "acacia_wall_hanging_sign",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "bamboo_wall_hanging_sign",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "birch_wall_hanging_sign",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "cherry_wall_hanging_sign",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "crimson_wall_hanging_sign",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "dark_oak_wall_hanging_sign",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "jungle_wall_hanging_sign",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "mangrove_wall_hanging_sign",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "oak_wall_hanging_sign",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "pale_oak_wall_hanging_sign",
+    "addedInJava": "1.21.4",
+    "addedInBedrock": "1.21.50"
+  },
+  {
+    "entityType": "block",
+    "entityId": "spruce_wall_hanging_sign",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "warped_wall_hanging_sign",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "acacia_slab",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "block",
+    "entityId": "acacia_stairs",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "block",
+    "entityId": "dark_oak_slab",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "block",
+    "entityId": "dark_oak_stairs",
+    "addedInJava": "1.7",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "block",
+    "entityId": "stone_brick_stairs",
+    "addedInBedrock": "0.6"
+  },
+  {
+    "entityType": "block",
+    "entityId": "black_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "black_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "blue_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "blue_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "brown_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "brown_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "cyan_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "cyan_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "gray_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "gray_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "green_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "green_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "light_blue_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "light_blue_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "light_gray_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "light_gray_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "lime_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "lime_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "magenta_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "magenta_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "orange_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "orange_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "pink_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "pink_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "purple_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "purple_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "red_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "red_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "yellow_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "yellow_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "white_wall_banner",
+    "addedInJava": "1.8",
+    "addedInBedrock": "1.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "black_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "blue_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "brown_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "cyan_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "gray_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "green_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "light_blue_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "light_gray_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "lime_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "magenta_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "orange_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "pink_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "purple_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "red_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "yellow_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "white_candle_cake",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "brain_coral_wall_fan",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "dead_brain_coral_wall_fan",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "bubble_coral_wall_fan",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "dead_bubble_coral_wall_fan",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "fire_coral_wall_fan",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "dead_fire_coral_wall_fan",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "horn_coral_wall_fan",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "dead_horn_coral_wall_fan",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "tube_coral_wall_fan",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "dead_tube_coral_wall_fan",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "creeper_wall_head",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "block",
+    "entityId": "dragon_wall_head",
+    "addedInJava": "1.9",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "block",
+    "entityId": "piglin_wall_head",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "player_wall_head",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "block",
+    "entityId": "skeleton_wall_skull",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "block",
+    "entityId": "wither_skeleton_wall_skull",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.16"
+  },
+  {
+    "entityType": "block",
+    "entityId": "zombie_wall_head",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "block",
+    "entityId": "wall_torch",
+    "addedInBedrock": "0.1"
+  },
+  {
+    "entityType": "block",
+    "entityId": "redstone_wall_torch",
+    "addedInBedrock": "0.13"
+  },
+  {
+    "entityType": "block",
+    "entityId": "soul_wall_torch",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "block",
+    "entityId": "copper_wall_torch",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "copper_torch",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_acacia_sapling",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_allium",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_azalea_bush",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_azure_bluet",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_bamboo",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.8"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_birch_sapling",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_blue_orchid",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_brown_mushroom",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_cactus",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_cherry_sapling",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_closed_eyeblossom",
+    "addedInJava": "1.21.4",
+    "addedInBedrock": "1.21.50"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_cornflower",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.13"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_crimson_fungus",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_crimson_roots",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_dandelion",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_dark_oak_sapling",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_dead_bush",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_fern",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_flowering_azalea_bush",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_golden_dandelion",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_jungle_sapling",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_lily_of_the_valley",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.13"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_mangrove_propagule",
+    "addedInJava": "1.19",
+    "addedInBedrock": "1.19"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_oak_sapling",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_open_eyeblossom",
+    "addedInJava": "1.21.4",
+    "addedInBedrock": "1.21.50"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_orange_tulip",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_oxeye_daisy",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_pale_oak_sapling",
+    "addedInJava": "1.21.4",
+    "addedInBedrock": "1.21.50"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_pink_tulip",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_poppy",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_red_mushroom",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_red_tulip",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_spruce_sapling",
+    "addedInJava": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_torchflower",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_warped_fungus",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_warped_roots",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_white_tulip",
+    "addedInJava": "1.7"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potted_wither_rose",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.13"
+  },
+  {
+    "entityType": "block",
+    "entityId": "wheat",
+    "addedInBedrock": "0.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "beetroots",
+    "addedInJava": "1.9",
+    "addedInBedrock": "0.8"
+  },
+  {
+    "entityType": "block",
+    "entityId": "carrots",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.8"
+  },
+  {
+    "entityType": "block",
+    "entityId": "potatoes",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.8"
+  },
+  {
+    "entityType": "block",
+    "entityId": "melon_stem",
+    "addedInBedrock": "0.9"
+  },
+  {
+    "entityType": "block",
+    "entityId": "pumpkin_stem",
+    "addedInBedrock": "0.6"
+  },
+  {
+    "entityType": "block",
+    "entityId": "attached_melon_stem"
+  },
+  {
+    "entityType": "block",
+    "entityId": "attached_pumpkin_stem"
+  },
+  {
+    "entityType": "block",
+    "entityId": "pitcher_crop",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "torchflower_crop",
+    "addedInJava": "1.20",
+    "addedInBedrock": "1.20"
+  },
+  {
+    "entityType": "block",
+    "entityId": "sweet_berry_bush",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.10"
+  },
+  {
+    "entityType": "block",
+    "entityId": "cave_vines",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "cave_vines_plant",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "twisting_vines_plant",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "block",
+    "entityId": "weeping_vines_plant",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "block",
+    "entityId": "kelp_plant",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "big_dripleaf_stem",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "bamboo_sapling",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.8"
+  },
+  {
+    "entityType": "block",
+    "entityId": "tall_seagrass",
+    "addedInJava": "1.13",
+    "addedInBedrock": "1.4"
+  },
+  {
+    "entityType": "block",
+    "entityId": "chipped_anvil",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "block",
+    "entityId": "damaged_anvil",
+    "addedInJava": "1.4",
+    "addedInBedrock": "0.12"
+  },
+  {
+    "entityType": "block",
+    "entityId": "chiseled_red_sandstone",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.14"
+  },
+  {
+    "entityType": "block",
+    "entityId": "cut_red_sandstone",
+    "addedInJava": "1.8",
+    "addedInBedrock": "0.14"
+  },
+  {
+    "entityType": "block",
+    "entityId": "smoker",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.11"
+  },
+  {
+    "entityType": "block",
+    "entityId": "smithing_table",
+    "addedInJava": "1.14",
+    "addedInBedrock": "1.10"
+  },
+  {
+    "entityType": "block",
+    "entityId": "lapis_block",
+    "addedInBedrock": "0.2"
+  },
+  {
+    "entityType": "block",
+    "entityId": "dragon_egg",
+    "addedInJava": "1.0",
+    "addedInBedrock": "1.0"
+  },
+  {
+    "entityType": "block",
+    "entityId": "dried_ghast",
+    "addedInJava": "1.21.6",
+    "addedInBedrock": "1.21.80"
+  },
+  {
+    "entityType": "block",
+    "entityId": "copper_bars",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_copper_bars",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "exposed_copper_bars",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_exposed_copper_bars",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "oxidized_copper_bars",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_oxidized_copper_bars",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "weathered_copper_bars",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_weathered_copper_bars",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "copper_chain",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_copper_chain",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "exposed_copper_chain",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_exposed_copper_chain",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "oxidized_copper_chain",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_oxidized_copper_chain",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "weathered_copper_chain",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_weathered_copper_chain",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "copper_chest",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.100"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_copper_chest",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.100"
+  },
+  {
+    "entityType": "block",
+    "entityId": "exposed_copper_chest",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.100"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_exposed_copper_chest",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.100"
+  },
+  {
+    "entityType": "block",
+    "entityId": "oxidized_copper_chest",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.100"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_oxidized_copper_chest",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.100"
+  },
+  {
+    "entityType": "block",
+    "entityId": "weathered_copper_chest",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.100"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_weathered_copper_chest",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.100"
+  },
+  {
+    "entityType": "block",
+    "entityId": "copper_golem_statue",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_copper_golem_statue",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "exposed_copper_golem_statue",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_exposed_copper_golem_statue",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "oxidized_copper_golem_statue",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_oxidized_copper_golem_statue",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "weathered_copper_golem_statue",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_weathered_copper_golem_statue",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "copper_lantern",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_copper_lantern",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "exposed_copper_lantern",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_exposed_copper_lantern",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "oxidized_copper_lantern",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_oxidized_copper_lantern",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "weathered_copper_lantern",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_weathered_copper_lantern",
+    "addedInJava": "1.21.9",
+    "addedInBedrock": "1.21.111"
+  },
+  {
+    "entityType": "block",
+    "entityId": "exposed_lightning_rod",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "oxidized_lightning_rod",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "weathered_lightning_rod",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_lightning_rod",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_exposed_lightning_rod",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_oxidized_lightning_rod",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "waxed_weathered_lightning_rod",
+    "addedInJava": "1.17",
+    "addedInBedrock": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "iron_chain",
+    "addedInJava": "1.16",
+    "addedInBedrock": "1.16"
+  },
+  {
+    "entityType": "block",
+    "entityId": "lava_cauldron",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "water_cauldron",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "powder_snow_cauldron",
+    "addedInJava": "1.17"
+  },
+  {
+    "entityType": "block",
+    "entityId": "redstone_wire",
+    "addedInBedrock": "0.13"
+  },
+  {
+    "entityType": "block",
+    "entityId": "tripwire",
+    "addedInJava": "1.3",
+    "addedInBedrock": "0.13"
+  },
+  {
+    "entityType": "block",
+    "entityId": "piston_head",
+    "addedInBedrock": "0.15"
+  },
+  {
+    "entityType": "block",
+    "entityId": "moving_piston",
+    "addedInBedrock": "0.15"
+  },
+  {
+    "entityType": "block",
+    "entityId": "chain_command_block",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.5"
+  },
+  {
+    "entityType": "block",
+    "entityId": "repeating_command_block",
+    "addedInJava": "1.9",
+    "addedInBedrock": "1.0.5"
+  },
+  {
+    "entityType": "block",
+    "entityId": "oak_pressure_plate",
+    "addedInBedrock": "0.13"
   }
 ]
