@@ -7,8 +7,10 @@ import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -131,7 +133,7 @@ fun SettingsScreen(
         // ══════════════════════════════════════════════════════════════════
         item(key = "appearance") {
             SectionHeader("Appearance")
-            // ── Image background themes ──
+            // ── Theme picker ──
             ResultCard {
                 Text(
                     "Backgrounds",
@@ -148,10 +150,10 @@ fun SettingsScreen(
                         val drawableRes = imageThemeDrawable(key) ?: return@forEach
                         val isSelected = backgroundTheme == key
                         val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
-                        val shape = RoundedCornerShape(10.dp)
+                        val shape = RoundedCornerShape(8.dp)
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.width(80.dp),
+                            modifier = Modifier.width(64.dp),
                         ) {
                             Box(
                                 modifier = Modifier
@@ -173,28 +175,29 @@ fun SettingsScreen(
                                     alignment = Alignment.TopCenter,
                                 )
                             }
-                            Spacer(Modifier.height(4.dp))
+                            Spacer(Modifier.height(3.dp))
                             Text(
                                 info.label,
                                 style = MaterialTheme.typography.labelSmall,
                                 color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
                                 textAlign = TextAlign.Center,
+                                maxLines = 1,
                             )
                         }
                     }
                 }
-            }
-
-            // ── Solid colour themes ──
-            ResultCard {
+                Spacer(Modifier.height(8.dp))
                 Text(
                     "Solid Colors",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                Spacer(Modifier.height(4.dp))
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState()),
                 ) {
                     SolidThemeOrder.forEach { key ->
                         val info = ThemeInfoMap[key] ?: return@forEach
@@ -202,7 +205,7 @@ fun SettingsScreen(
                         val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
                         Box(
                             modifier = Modifier
-                                .size(24.dp)
+                                .size(20.dp)
                                 .clip(CircleShape)
                                 .background(info.background, CircleShape)
                                 .border(
