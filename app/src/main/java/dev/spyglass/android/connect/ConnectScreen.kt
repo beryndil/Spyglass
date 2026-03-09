@@ -2,7 +2,9 @@ package dev.spyglass.android.connect
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -46,6 +48,7 @@ fun ConnectScreen(
     val selectedPlayerUuid by viewModel.selectedPlayerUuid.collectAsStateWithLifecycle()
     val playerSkin by viewModel.playerSkin.collectAsStateWithLifecycle()
     val capabilities by viewModel.desktopCapabilities.collectAsStateWithLifecycle()
+    var showLoadingDemo by remember { mutableStateOf(false) }
 
     DisposableEffect(Unit) {
         viewModel.setActiveScreen("connect")
@@ -82,8 +85,12 @@ fun ConnectScreen(
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            // Connection status card
-            ConnectionStatusCard(state)
+            // Connection status card (long-press to toggle loading animation demo)
+            ConnectionStatusCard(state, onLongPress = { showLoadingDemo = !showLoadingDemo })
+
+            if (showLoadingDemo) {
+                ChestLoadingDemo()
+            }
 
             when {
                 state is ConnectionState.Disconnected || state is ConnectionState.Error -> {
@@ -130,8 +137,9 @@ fun ConnectScreen(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ConnectionStatusCard(state: ConnectionState) {
+private fun ConnectionStatusCard(state: ConnectionState, onLongPress: () -> Unit = {}) {
     val (color, icon) = when (state) {
         is ConnectionState.Connected -> Color(0xFF4CAF50) to Icons.Filled.Wifi
         is ConnectionState.Connecting, is ConnectionState.Pairing, is ConnectionState.Reconnecting ->
@@ -140,7 +148,12 @@ private fun ConnectionStatusCard(state: ConnectionState) {
         else -> MaterialTheme.colorScheme.onSurfaceVariant to Icons.Filled.WifiOff
     }
 
-    ResultCard {
+    ResultCard(
+        modifier = Modifier.combinedClickable(
+            onClick = {},
+            onLongClick = onLongPress,
+        ),
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),

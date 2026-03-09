@@ -14,6 +14,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import dev.spyglass.android.connect.client.ConnectionState
 import kotlin.math.*
 
@@ -365,5 +366,64 @@ fun ChestLoadingAnimation(
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             )
         }
+    }
+}
+
+/**
+ * Demo mode: cycles through all connection states automatically so you can
+ * see the full animation on-device. Call from any screen or activity.
+ */
+@Composable
+fun ChestLoadingDemo(modifier: Modifier = Modifier) {
+    val states = listOf(
+        ConnectionState.Disconnected,
+        ConnectionState.Connecting("192.168.1.100", 29170),
+        ConnectionState.Pairing,
+        ConnectionState.Connected("Spyglass Connect"),
+    )
+    var index by remember { mutableIntStateOf(0) }
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            kotlinx.coroutines.delay(2500)
+            index = (index + 1) % states.size
+        }
+    }
+
+    ChestLoadingAnimation(
+        connectionState = states[index],
+        modifier = modifier,
+    )
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF121212)
+@Composable
+private fun PreviewConnecting() {
+    MaterialTheme(colorScheme = darkColorScheme()) {
+        ChestLoadingAnimation(connectionState = ConnectionState.Connecting("192.168.1.100", 29170))
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF121212)
+@Composable
+private fun PreviewPairing() {
+    MaterialTheme(colorScheme = darkColorScheme()) {
+        ChestLoadingAnimation(connectionState = ConnectionState.Pairing)
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF121212)
+@Composable
+private fun PreviewConnected() {
+    MaterialTheme(colorScheme = darkColorScheme()) {
+        ChestLoadingAnimation(connectionState = ConnectionState.Connected("Spyglass Connect"))
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF121212)
+@Composable
+private fun PreviewDemo() {
+    MaterialTheme(colorScheme = darkColorScheme()) {
+        ChestLoadingDemo()
     }
 }
