@@ -41,8 +41,10 @@ val LocalReduceAnimations = compositionLocalOf { false }
 val LocalThemeKey = compositionLocalOf { DEFAULT_THEME }
 
 /** Theme keys that use a full-screen background image instead of a solid color. */
-/** Theme keys that use a full-screen background image instead of a solid color. */
-val ImageThemeKeys = setOf<String>()
+val ImageThemeKeys = setOf(
+    "creeper", "ocean_monument", "deep_dark", "nether_fortress", "desert_sunset",
+    "cherry_grove", "lush_cave", "end_city", "sunflower_plains",
+)
 
 // ── Theme preset data ────────────────────────────────────────────────────────
 
@@ -109,7 +111,60 @@ private fun buildTheme(
 
 val ThemePresets: Map<String, SpyglassColors> = mapOf(
     // ── Image themes (semi-transparent surfaces — background image shows through) ──
-    // Add image themes here — see ImageThemeKeys, ImageThemeOrder, and ThemeInfoMap
+    "creeper" to buildTheme(
+        isDark = true, bg = Color.Transparent,
+        surface = Color(0xD9101A10), surfaceVariant = Color(0xD9182818),
+        surfaceCard = Color(0xD9142214), outline = Color(0xFF2A3A2A),
+        secondary = Color(0xFF4A6A4A), onSurfaceVariant = Color(0xFF8AAA8A), onSurface = Color(0xFFD0E8D0),
+    ),
+    "ocean_monument" to buildTheme(
+        isDark = true, bg = Color.Transparent,
+        surface = Color(0xD90C1A1E), surfaceVariant = Color(0xD9142628),
+        surfaceCard = Color(0xD9102022), outline = Color(0xFF1E3438),
+        secondary = Color(0xFF3A6068), onSurfaceVariant = Color(0xFF80AAAE), onSurface = Color(0xFFC8E4E8),
+    ),
+    "deep_dark" to buildTheme(
+        isDark = true, bg = Color.Transparent,
+        surface = Color(0xD9081418), surfaceVariant = Color(0xD9102022),
+        surfaceCard = Color(0xD90C1A1E), outline = Color(0xFF182C30),
+        secondary = Color(0xFF345860), onSurfaceVariant = Color(0xFF789CA2), onSurface = Color(0xFFC2DEE2),
+    ),
+    "nether_fortress" to buildTheme(
+        isDark = true, bg = Color.Transparent,
+        surface = Color(0xD91A0E08), surfaceVariant = Color(0xD9261810),
+        surfaceCard = Color(0xD920120C), outline = Color(0xFF3A2410),
+        secondary = Color(0xFF6A4830), onSurfaceVariant = Color(0xFFAA8868), onSurface = Color(0xFFE8D0B8),
+    ),
+    "desert_sunset" to buildTheme(
+        isDark = true, bg = Color.Transparent,
+        surface = Color(0xD91C1208), surfaceVariant = Color(0xD9281C10),
+        surfaceCard = Color(0xD922160C), outline = Color(0xFF3E2C12),
+        secondary = Color(0xFF6E5030), onSurfaceVariant = Color(0xFFAE9068), onSurface = Color(0xFFE8D4B8),
+    ),
+    "cherry_grove" to buildTheme(
+        isDark = true, bg = Color.Transparent,
+        surface = Color(0xD91A0E14), surfaceVariant = Color(0xD926181E),
+        surfaceCard = Color(0xD9201218), outline = Color(0xFF3A2430),
+        secondary = Color(0xFF6A4860), onSurfaceVariant = Color(0xFFAA8898), onSurface = Color(0xFFE8D0DE),
+    ),
+    "lush_cave" to buildTheme(
+        isDark = true, bg = Color.Transparent,
+        surface = Color(0xD910180C), surfaceVariant = Color(0xD9182414),
+        surfaceCard = Color(0xD9141E10), outline = Color(0xFF243420),
+        secondary = Color(0xFF486040), onSurfaceVariant = Color(0xFF88A880), onSurface = Color(0xFFD0E4C8),
+    ),
+    "end_city" to buildTheme(
+        isDark = true, bg = Color.Transparent,
+        surface = Color(0xD9140E1A), surfaceVariant = Color(0xD91E1826),
+        surfaceCard = Color(0xD918121E), outline = Color(0xFF2E2438),
+        secondary = Color(0xFF584A68), onSurfaceVariant = Color(0xFF988AAA), onSurface = Color(0xFFD8CCE6),
+    ),
+    "sunflower_plains" to buildTheme(
+        isDark = true, bg = Color.Transparent,
+        surface = Color(0xD9181408), surfaceVariant = Color(0xD9221E10),
+        surfaceCard = Color(0xD91E1A0C), outline = Color(0xFF342E14),
+        secondary = Color(0xFF605840), onSurfaceVariant = Color(0xFFA09878), onSurface = Color(0xFFE0D8C0),
+    ),
     // ── Solid colour themes ─────────────────────────────────────────────────────
     "obsidian" to buildTheme(
         isDark          = true,
@@ -301,6 +356,17 @@ val ThemePresets: Map<String, SpyglassColors> = mapOf(
 )
 
 val ThemeInfoMap: Map<String, ThemeInfo> = mapOf(
+    // Image themes (background color used for settings preview border/fallback)
+    "creeper"           to ThemeInfo("Creeper",           Color(0xFF1A2E1A), isDark = true),
+    "ocean_monument"    to ThemeInfo("Ocean Monument",    Color(0xFF0C2A30), isDark = true),
+    "deep_dark"         to ThemeInfo("Deep Dark",         Color(0xFF081820), isDark = true),
+    "nether_fortress"   to ThemeInfo("Nether Fortress",   Color(0xFF2A1208), isDark = true),
+    "desert_sunset"     to ThemeInfo("Desert Sunset",     Color(0xFF2C1A08), isDark = true),
+    "cherry_grove"      to ThemeInfo("Cherry Grove",      Color(0xFF2A1420), isDark = true),
+    "lush_cave"         to ThemeInfo("Lush Cave",         Color(0xFF142010), isDark = true),
+    "end_city"          to ThemeInfo("End City",           Color(0xFF1A1028), isDark = true),
+    "sunflower_plains"  to ThemeInfo("Sunflower Plains",  Color(0xFF201C0C), isDark = true),
+    // Solid themes
     "obsidian"    to ThemeInfo("Obsidian",    Color(0xFF0E0C0A), isDark = true),
     "deepslate"   to ThemeInfo("Deepslate",   Color(0xFF17171B), isDark = true),
     "spruce"      to ThemeInfo("Spruce",      Color(0xFF16120E), isDark = true),
@@ -321,7 +387,10 @@ val ThemeInfoMap: Map<String, ThemeInfo> = mapOf(
 )
 
 /** Image themes — shown as featured cards in settings. */
-val ImageThemeOrder = listOf<String>()
+val ImageThemeOrder = listOf(
+    "creeper", "ocean_monument", "deep_dark", "nether_fortress", "desert_sunset",
+    "cherry_grove", "lush_cave", "end_city", "sunflower_plains",
+)
 
 /** Solid colour themes — shown as circles in settings. */
 val SolidThemeOrder = listOf(
@@ -333,7 +402,7 @@ val SolidThemeOrder = listOf(
 /** All themes in display order (image themes first). */
 val ThemeOrder = ImageThemeOrder + SolidThemeOrder
 
-const val DEFAULT_THEME = "obsidian"
+const val DEFAULT_THEME = "creeper"
 
 /** Font scale multipliers: 0=Small, 1=Default, 2=Large, 3=Extra Large */
 val FontScaleOptions = listOf("Small" to 0.85f, "Default" to 1.0f, "Large" to 1.15f, "Extra Large" to 1.3f)

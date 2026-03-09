@@ -312,8 +312,15 @@ fun ShellNavGraph() {
 
 /** Map image theme keys to their background drawable resource. */
 fun imageThemeDrawable(key: String): Int? = when (key) {
-    // Add image theme drawables here:
-    // "theme_key" -> R.drawable.bg_theme_key
+    "creeper"          -> R.drawable.bg_creeper
+    "ocean_monument"   -> R.drawable.bg_ocean_monument
+    "deep_dark"        -> R.drawable.bg_deep_dark
+    "nether_fortress"  -> R.drawable.bg_nether_fortress
+    "desert_sunset"    -> R.drawable.bg_desert_sunset
+    "cherry_grove"     -> R.drawable.bg_cherry_grove
+    "lush_cave"        -> R.drawable.bg_lush_cave
+    "end_city"         -> R.drawable.bg_end_city
+    "sunflower_plains" -> R.drawable.bg_sunflower_plains
     else -> null
 }
 
