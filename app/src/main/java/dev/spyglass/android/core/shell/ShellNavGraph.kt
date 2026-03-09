@@ -232,16 +232,8 @@ fun ShellNavGraph() {
     } else null
 
     Box(modifier = Modifier.fillMaxSize()) {
-        if (isImageTheme && bgResId != null) {
-            Image(
-                painter = painterResource(bgResId),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
-                alignment = Alignment.TopCenter,
-                alpha = 0.45f,
-            )
-        } else if (isDynamic && wallpaperPainter != null) {
+        if (isDynamic && wallpaperPainter != null) {
+            // Dynamic colors: wallpaper overrides any theme background
             Image(
                 painter = wallpaperPainter,
                 contentDescription = null,
@@ -249,6 +241,15 @@ fun ShellNavGraph() {
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.TopCenter,
                 alpha = 0.35f,
+            )
+        } else if (isImageTheme && bgResId != null) {
+            Image(
+                painter = painterResource(bgResId),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+                alignment = Alignment.TopCenter,
+                alpha = 0.45f,
             )
         }
 
