@@ -33,6 +33,8 @@ Fully encrypted (ECDH + AES-256-GCM). Auto-reconnects via mDNS.
 
 **Requires:** [Spyglass Connect](https://github.com/beryndil/Spyglass-Connect) running on your PC (Windows, macOS, or Linux), same WiFi network.
 
+**Requires Spyglass Connect protocol v2+.** Both apps negotiate versions during pairing — if either is outdated, you'll see a clear update message.
+
 ---
 
 ## Download

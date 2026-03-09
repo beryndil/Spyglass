@@ -39,6 +39,9 @@ For security, Spyglass Connect only allows connections to private/LAN IP address
 ### Does it work with Bedrock Edition?
 No. Spyglass Connect reads Java Edition save files only. Bedrock uses a different save format.
 
+### Why does it say my desktop app is out of date?
+Spyglass and Spyglass Connect negotiate protocol versions during pairing. If either app is too old, you'll see a message telling you which one to update. Download the latest version from [Spyglass Connect Releases](https://github.com/beryndil/Spyglass-Connect/releases/latest) (desktop) or update Spyglass from the Play Store or [GitHub Releases](https://github.com/beryndil/Spyglass/releases/latest) (phone).
+
 ---
 
 ## Data & Sync

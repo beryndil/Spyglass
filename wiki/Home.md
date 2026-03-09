@@ -26,6 +26,7 @@ Spyglass is an Android companion app for Minecraft Java Edition 1.21.4. It combi
 - ~30 MB storage
 - Textures download ~1.3 MB on first launch
 - WiFi connection for Spyglass Connect features
+- Spyglass Connect protocol v2+ (both apps must be up to date)
 
 ## Links
 

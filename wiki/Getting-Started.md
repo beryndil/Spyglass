@@ -65,4 +65,6 @@ To use Spyglass Connect features (inventory viewer, chest finder, map, etc.):
 3. Tap "Connect to PC" from the home screen dropdown menu
 4. Scan the QR code shown on your PC
 
+> **Note:** Both apps must support the same protocol version. If you see a version mismatch error, update whichever app the message indicates.
+
 See the [Spyglass Connect](Spyglass-Connect) page for full details.

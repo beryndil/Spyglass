@@ -25,6 +25,7 @@ Under the hood, the QR code contains connection info (IP, port, public key) enco
 | Encryption | ECDH + AES-256-GCM |
 | Discovery | mDNS (NsdManager on Android, JmDNS on desktop) |
 | IP Restriction | Private/LAN IPs only (10.x, 172.16-31.x, 192.168.x, 127.x) |
+| Protocol Version | v2 (encrypted, with version negotiation) |
 
 ## Features
 
@@ -107,8 +108,17 @@ When the connection drops unexpectedly (not user-initiated), Spyglass automatica
 
 - Connections are restricted to private/LAN IP addresses only
 - The app validates the target IP before connecting
-- Cleartext WebSocket traffic is allowed only for local network addresses
+- All WebSocket traffic is encrypted with ECDH + AES-256-GCM after pairing
 - All other network traffic (data sync, Firebase, ads) uses HTTPS
+
+## Compatibility
+
+Both apps negotiate protocol versions during the pairing handshake. If either side is running an incompatible version, pairing is rejected with a clear message explaining which app to update.
+
+| Scenario | Message |
+|----------|---------|
+| Phone app too old | "Spyglass Connect requires protocol version 2+. Update your Spyglass app." |
+| Desktop app too old | "Your Spyglass app requires a newer desktop version. Update Spyglass Connect." |
 
 ## Home Screen Integration
 

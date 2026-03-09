@@ -1,6 +1,7 @@
 package dev.spyglass.android.connect.client
 
 import dev.spyglass.android.connect.*
+import dev.spyglass.android.BuildConfig
 import dev.spyglass.android.core.CrashReporter
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -90,15 +91,35 @@ class SpyglassClient {
                     // Handle pair acceptance
                     if (message.type == MessageType.PAIR_ACCEPT) {
                         val accept = json.decodeFromJsonElement(PairAcceptPayload.serializer(), message.payload)
-                        if (accept.accepted) {
-                            // Encryption disabled — ECDH shared secret differs between
-                            // JVM SunEC and Android Conscrypt. Do not derive shared key.
-                            _connectionState.value = ConnectionState.Connected(accept.deviceName)
-                            CrashReporter.setKey("connect_state", "connected")
-                            CrashReporter.setKey("connect_device", accept.deviceName)
-                        } else {
-                            _connectionState.value = ConnectionState.Error("Pairing rejected")
+                        if (!accept.accepted) {
+                            val reason = accept.rejectionReason ?: "Pairing rejected"
+                            _connectionState.value = ConnectionState.Error(reason)
+                            webSocket.close(1000, "Pairing rejected")
+                            return
                         }
+                        // Protocol version compatibility check
+                        if (accept.protocolVersion < ProtocolInfo.MIN_COMPATIBLE_VERSION) {
+                            _connectionState.value = ConnectionState.Error(
+                                "Update Spyglass Connect on your PC. Desktop protocol v${accept.protocolVersion} is not compatible (v${ProtocolInfo.MIN_COMPATIBLE_VERSION}+ required)."
+                            )
+                            webSocket.close(1000, "Incompatible protocol version")
+                            return
+                        }
+                        if (ProtocolInfo.PROTOCOL_VERSION < accept.minCompatibleVersion) {
+                            _connectionState.value = ConnectionState.Error(
+                                "Update the Spyglass app to the latest version. Desktop requires protocol v${accept.minCompatibleVersion}+."
+                            )
+                            webSocket.close(1000, "Incompatible protocol version")
+                            return
+                        }
+                        // Derive shared encryption key from desktop's ECDH public key
+                        if (accept.pubkey != null) {
+                            encryption.deriveSharedKey(accept.pubkey)
+                            Timber.d("Encryption established")
+                        }
+                        _connectionState.value = ConnectionState.Connected(accept.deviceName)
+                        CrashReporter.setKey("connect_state", "connected")
+                        CrashReporter.setKey("connect_device", accept.deviceName)
                         return
                     }
 
@@ -128,11 +149,8 @@ class SpyglassClient {
         })
     }
 
-    /** Send a pairing request with our ECDH public key. */
+    /** Send a pairing request with our ECDH public key and protocol version. */
     fun sendPairRequest(deviceName: String, desktopPublicKey: String) {
-        // Encryption disabled — ECDH shared secret differs between JVM SunEC and Android Conscrypt.
-        // Local network traffic for Minecraft data doesn't need AES-256-GCM.
-
         val message = SpyglassMessage(
             type = MessageType.PAIR_REQUEST,
             requestId = UUID.randomUUID().toString(),
@@ -140,11 +158,14 @@ class SpyglassClient {
                 PairRequestPayload(
                     deviceName = deviceName,
                     pubkey = encryption.getPublicKeyBase64(),
+                    protocolVersion = ProtocolInfo.PROTOCOL_VERSION,
+                    minCompatibleVersion = ProtocolInfo.MIN_COMPATIBLE_VERSION,
+                    appVersion = BuildConfig.VERSION_NAME,
                 ),
             ),
         )
 
-        // Send unencrypted (pairing handshake)
+        // Send unencrypted (pairing handshake completes before encryption begins)
         send(message, encrypted = false)
     }
 
