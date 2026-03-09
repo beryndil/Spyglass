@@ -5,6 +5,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -340,16 +342,18 @@ private fun ConnectedContent(
                         if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
                         RoundedCornerShape(8.dp),
                     )
-                    .combinedClickable(
-                        onClick = {
-                            hapticClick()
-                            onSelectWorld(world.folderName)
-                            onRequestPlayer()
-                        },
-                        onLongClick = if (isSelected) {
-                            { hapticConfirm(); onLongPressGlobe() }
-                        } else null,
-                    )
+                    .pointerInput(isSelected) {
+                        detectTapGestures(
+                            onTap = {
+                                hapticClick()
+                                onSelectWorld(world.folderName)
+                                onRequestPlayer()
+                            },
+                            onLongPress = if (isSelected) {
+                                { hapticConfirm(); onLongPressGlobe() }
+                            } else null,
+                        )
+                    }
                     .padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
