@@ -1,5 +1,7 @@
 package dev.spyglass.android.core.shell
 
+import android.app.WallpaperManager
+import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,6 +37,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -62,6 +66,7 @@ import dev.spyglass.android.core.module.ModuleRoute
 import dev.spyglass.android.core.module.SettingsSectionScope
 import dev.spyglass.android.core.ui.AdBanner
 import dev.spyglass.android.core.ui.ImageThemeKeys
+import dev.spyglass.android.core.ui.LocalDynamicColor
 import dev.spyglass.android.core.ui.LocalThemeKey
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassIcon
@@ -210,8 +215,22 @@ fun ShellNavGraph() {
     // ── Scaffold ────────────────────────────────────────────────────────────
 
     val themeKey = LocalThemeKey.current
+    val isDynamic = LocalDynamicColor.current
     val isImageTheme = themeKey in ImageThemeKeys
+    val hasImageBg = isImageTheme || isDynamic
     val bgResId = imageThemeDrawable(themeKey)
+
+    // Load wallpaper bitmap for dynamic color mode
+    val context = LocalContext.current
+    val wallpaperPainter = if (isDynamic) {
+        remember {
+            try {
+                val wm = WallpaperManager.getInstance(context)
+                val drawable = wm.drawable
+                if (drawable is BitmapDrawable) BitmapPainter(drawable.bitmap.asImageBitmap()) else null
+            } catch (_: Exception) { null }
+        }
+    } else null
 
     Box(modifier = Modifier.fillMaxSize()) {
         if (isImageTheme && bgResId != null) {
@@ -223,12 +242,21 @@ fun ShellNavGraph() {
                 alignment = Alignment.TopCenter,
                 alpha = 0.45f,
             )
+        } else if (isDynamic && wallpaperPainter != null) {
+            Image(
+                painter = wallpaperPainter,
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+                alignment = Alignment.TopCenter,
+                alpha = 0.35f,
+            )
         }
 
     Scaffold(
-        containerColor = if (isImageTheme) Color.Transparent else MaterialTheme.colorScheme.background,
+        containerColor = if (hasImageBg) Color.Transparent else MaterialTheme.colorScheme.background,
         topBar = {
-            ShellTopBar(navController, isImageTheme = isImageTheme, onClockTap = {
+            ShellTopBar(navController, isImageTheme = hasImageBg, onClockTap = {
                 pendingCalcTab = 9
                 navigateToTop("calculators")
             })
@@ -236,7 +264,7 @@ fun ShellNavGraph() {
         bottomBar = {
             Column(Modifier.navigationBarsPadding()) {
                 if (showBars) {
-                    ShellBottomNavBar(navController, destinations, isImageTheme) { route ->
+                    ShellBottomNavBar(navController, destinations, hasImageBg) { route ->
                         navigateToTop(route)
                     }
                 }

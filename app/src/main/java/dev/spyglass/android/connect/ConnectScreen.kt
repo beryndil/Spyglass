@@ -58,7 +58,7 @@ fun ConnectScreen(
         onDispose { viewModel.setActiveScreen(null) }
     }
 
-    val isImageTheme = LocalThemeKey.current in ImageThemeKeys
+    val isImageTheme = LocalThemeKey.current in ImageThemeKeys || LocalDynamicColor.current
 
     Box(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.fillMaxSize()) {

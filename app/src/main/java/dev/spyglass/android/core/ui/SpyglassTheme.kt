@@ -38,6 +38,7 @@ val LocalSurfaceCard = compositionLocalOf { Color(0xFF211F1B) }
 val LocalIsWideScreen = compositionLocalOf { false }
 val LocalHapticEnabled = compositionLocalOf { true }
 val LocalReduceAnimations = compositionLocalOf { false }
+val LocalDynamicColor = compositionLocalOf { false }
 val LocalThemeKey = compositionLocalOf { DEFAULT_THEME }
 
 /** Theme keys that use a full-screen background image instead of a solid color. */
@@ -421,17 +422,25 @@ fun SpyglassTheme(
     val colors = ThemePresets[theme] ?: ThemePresets.getValue(DEFAULT_THEME)
     val isDark = ThemeInfoMap[theme]?.isDark ?: true
 
+    val isDynamicActive = dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
     val scheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        isDynamicActive -> {
             val ctx = LocalContext.current
             val dynamic = if (isDark) dynamicDarkColorScheme(ctx) else dynamicLightColorScheme(ctx)
-            if (highContrast) applyHighContrast(dynamic, isDark) else dynamic
+            val base = if (highContrast) applyHighContrast(dynamic, isDark) else dynamic
+            // Semi-transparent surfaces so the wallpaper shows through
+            base.copy(
+                background = Color.Transparent,
+                surface = base.surface.copy(alpha = 0.85f),
+                surfaceVariant = base.surfaceVariant.copy(alpha = 0.85f),
+            )
         }
         highContrast -> applyHighContrast(colors.scheme, isDark)
         else -> colors.scheme
     }
 
-    val cardColor = if (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+    val cardColor = if (isDynamicActive) {
         scheme.surfaceVariant
     } else {
         colors.surfaceCard
@@ -439,6 +448,7 @@ fun SpyglassTheme(
 
     CompositionLocalProvider(
         LocalThemeKey provides theme,
+        LocalDynamicColor provides (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S),
         LocalSurfaceCard provides cardColor,
         LocalIsWideScreen provides isWideScreen,
         LocalHapticEnabled provides hapticEnabled,
