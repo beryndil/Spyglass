@@ -221,7 +221,6 @@ fun ShellNavGraph() {
     val bgResId = imageThemeDrawable(themeKey)
 
     // Load wallpaper bitmap for dynamic color mode
-    val context = LocalContext.current
     val wallpaperPainter = if (isDynamic) {
         remember {
             try {
