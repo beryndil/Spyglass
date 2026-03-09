@@ -6,11 +6,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -21,6 +25,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -50,8 +55,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -70,9 +77,11 @@ import dev.spyglass.android.core.ui.SpyglassDivider
 import dev.spyglass.android.core.ui.SpyglassIcon
 import dev.spyglass.android.core.ui.SpyglassIconImage
 import dev.spyglass.android.core.ui.TextureManager
+import dev.spyglass.android.core.ui.ImageThemeOrder
+import dev.spyglass.android.core.ui.SolidThemeOrder
 import dev.spyglass.android.core.ui.ThemeInfoMap
-import dev.spyglass.android.core.ui.ThemeOrder
 import dev.spyglass.android.core.ui.rememberHapticClick
+import dev.spyglass.android.core.shell.imageThemeDrawable
 import dev.spyglass.android.core.ui.rememberHapticConfirm
 import dev.spyglass.android.home.TipsLoader
 import dev.spyglass.android.settings.PreferenceKeys
@@ -343,7 +352,7 @@ object CoreModule : SpyglassModule {
 
         SectionHeader("Appearance")
         ResultCard {
-            // Theme
+            // Image background themes
             Text(
                 stringResource(R.string.settings_background),
                 style = MaterialTheme.typography.bodyMedium,
@@ -352,18 +361,76 @@ object CoreModule : SpyglassModule {
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.fillMaxWidth(),
             ) {
-                ThemeOrder.forEach { key ->
+                ImageThemeOrder.forEach { key ->
+                    val info = ThemeInfoMap[key] ?: return@forEach
+                    val drawableRes = imageThemeDrawable(key) ?: return@forEach
+                    val isSelected = backgroundTheme == key
+                    val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+                    val shape = RoundedCornerShape(8.dp)
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.width(64.dp),
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(9f / 16f)
+                                .clip(shape)
+                                .border(
+                                    width = if (isSelected) 2.5.dp else 1.dp,
+                                    color = borderColor,
+                                    shape = shape,
+                                )
+                                .clickable {
+                                    hapticClick()
+                                    scope.launch { context.dataStore.edit { it[PreferenceKeys.BACKGROUND_THEME] = key } }
+                                },
+                        ) {
+                            Image(
+                                painter = painterResource(drawableRes),
+                                contentDescription = info.label,
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop,
+                                alignment = Alignment.TopCenter,
+                            )
+                        }
+                        Spacer(Modifier.height(3.dp))
+                        Text(
+                            info.label,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                        )
+                    }
+                }
+            }
+            Spacer(Modifier.height(8.dp))
+            Text(
+                "Solid Colors",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(Modifier.height(4.dp))
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState()),
+            ) {
+                SolidThemeOrder.forEach { key ->
                     val info = ThemeInfoMap[key] ?: return@forEach
                     val isSelected = backgroundTheme == key
                     val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
                     Box(
                         modifier = Modifier
-                            .size(48.dp)
+                            .size(20.dp)
                             .clip(CircleShape)
                             .background(info.background, CircleShape)
                             .border(
-                                width = if (isSelected) 2.5.dp else 1.dp,
+                                width = if (isSelected) 2.dp else 0.5.dp,
                                 color = borderColor,
                                 shape = CircleShape,
                             )
