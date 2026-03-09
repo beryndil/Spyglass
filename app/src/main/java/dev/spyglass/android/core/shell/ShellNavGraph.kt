@@ -211,12 +211,7 @@ fun ShellNavGraph() {
 
     val themeKey = LocalThemeKey.current
     val isImageTheme = themeKey in ImageThemeKeys
-    val bgResId = when (themeKey) {
-        "nether_portal" -> R.drawable.bg_nether_portal
-        "deep_dark"     -> R.drawable.bg_deep_dark
-        "aurora"        -> R.drawable.bg_aurora_night
-        else            -> null
-    }
+    val bgResId = imageThemeDrawable(themeKey)
 
     Box(modifier = Modifier.fillMaxSize()) {
         if (isImageTheme && bgResId != null) {
@@ -313,6 +308,13 @@ fun ShellNavGraph() {
     }
     } // Box
 
+}
+
+/** Map image theme keys to their background drawable resource. */
+fun imageThemeDrawable(key: String): Int? = when (key) {
+    // Add image theme drawables here:
+    // "theme_key" -> R.drawable.bg_theme_key
+    else -> null
 }
 
 // ── Top bar ─────────────────────────────────────────────────────────────────

@@ -30,6 +30,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import dev.spyglass.android.R
+import dev.spyglass.android.core.shell.imageThemeDrawable
 import dev.spyglass.android.core.ui.*
 
 @Composable
@@ -137,25 +138,24 @@ fun SettingsScreen(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
-                Row(
+                FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    val imageThemes = listOf(
-                        Triple("nether_portal", "Nether Portal", R.drawable.bg_nether_portal),
-                        Triple("deep_dark", "Deep Dark", R.drawable.bg_deep_dark),
-                        Triple("aurora", "Aurora Night", R.drawable.bg_aurora_night),
-                    )
-                    imageThemes.forEach { (key, label, drawableRes) ->
+                    ImageThemeOrder.forEach { key ->
+                        val info = ThemeInfoMap[key] ?: return@forEach
+                        val drawableRes = imageThemeDrawable(key) ?: return@forEach
                         val isSelected = backgroundTheme == key
                         val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
                         val shape = RoundedCornerShape(10.dp)
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier.width(80.dp),
                         ) {
                             Box(
                                 modifier = Modifier
+                                    .fillMaxWidth()
                                     .aspectRatio(9f / 16f)
                                     .clip(shape)
                                     .border(
@@ -167,7 +167,7 @@ fun SettingsScreen(
                             ) {
                                 Image(
                                     painter = painterResource(drawableRes),
-                                    contentDescription = label,
+                                    contentDescription = info.label,
                                     modifier = Modifier.fillMaxSize(),
                                     contentScale = ContentScale.Crop,
                                     alignment = Alignment.TopCenter,
@@ -175,7 +175,7 @@ fun SettingsScreen(
                             }
                             Spacer(Modifier.height(4.dp))
                             Text(
-                                label,
+                                info.label,
                                 style = MaterialTheme.typography.labelSmall,
                                 color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
                                 textAlign = TextAlign.Center,
