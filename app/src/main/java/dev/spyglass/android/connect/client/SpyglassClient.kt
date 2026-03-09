@@ -154,9 +154,15 @@ class SpyglassClient {
             }
 
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                Timber.w(t, "WebSocket failure")
+                val isConnRefused = t is java.net.ConnectException
+                if (isConnRefused) {
+                    // Don't log full stack trace for routine connection refused (desktop offline)
+                    Timber.d("WebSocket connection refused: ${t.message}")
+                } else {
+                    Timber.w(t, "WebSocket failure")
+                    CrashReporter.recordException(t, "WebSocket failure")
+                }
                 _connectionState.value = ConnectionState.Error(t.message ?: "Connection failed")
-                CrashReporter.recordException(t, "WebSocket failure")
             }
         })
     }

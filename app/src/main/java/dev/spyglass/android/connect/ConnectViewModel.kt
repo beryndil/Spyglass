@@ -385,6 +385,8 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 mdnsDiscovery?.stopDiscovery()
                 Timber.d("Auto-reconnect exhausted (mDNS found nothing)")
                 CrashReporter.log("Auto-reconnect exhausted")
+                // Clear wasConnected so the collect block doesn't restart reconnect
+                wasConnected = false
                 client.setError("Lost connection to PC")
                 ConnectService.stop(getApplication())
             }
