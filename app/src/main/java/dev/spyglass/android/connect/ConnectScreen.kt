@@ -98,6 +98,7 @@ fun ConnectScreen(
                     DisconnectedContent(
                         state = state,
                         hasCachedData = selectedWorld != null,
+                        worldName = selectedWorld,
                         playerSkin = playerSkin,
                         onScanQr = onScanQr,
                         onReconnect = { viewModel.tryReconnect() },
@@ -186,6 +187,7 @@ private fun ConnectionStatusCard(state: ConnectionState, onLongPress: () -> Unit
 private fun DisconnectedContent(
     state: ConnectionState,
     hasCachedData: Boolean = false,
+    worldName: String? = null,
     playerSkin: Bitmap? = null,
     onScanQr: () -> Unit,
     onReconnect: () -> Unit,
@@ -197,6 +199,32 @@ private fun DisconnectedContent(
 ) {
     val hapticClick = rememberHapticClick()
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        // Connection error banner
+        if (state is ConnectionState.Error) {
+            val displayName = worldName ?: "server"
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color(0xFFF44336).copy(alpha = 0.1f), RoundedCornerShape(8.dp))
+                    .border(1.dp, Color(0xFFF44336).copy(alpha = 0.3f), RoundedCornerShape(8.dp))
+                    .padding(12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Icon(
+                    Icons.Filled.Public,
+                    contentDescription = null,
+                    tint = Color(0xFFF44336),
+                    modifier = Modifier.size(20.dp),
+                )
+                Text(
+                    "Failed to connect to $displayName",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color(0xFFF44336),
+                )
+            }
+        }
+
         // Scan QR button
         Button(
             onClick = { hapticClick(); onScanQr() },
@@ -257,13 +285,6 @@ private fun DisconnectedContent(
             )
         }
 
-        if (state is ConnectionState.Error) {
-            Text(
-                state.message,
-                style = MaterialTheme.typography.bodySmall,
-                color = Color(0xFFF44336),
-            )
-        }
     }
 }
 
