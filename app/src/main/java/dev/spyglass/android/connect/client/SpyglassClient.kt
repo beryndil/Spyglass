@@ -57,10 +57,12 @@ class SpyglassClient {
     /** Connect to the desktop WebSocket server. Only allows private/LAN IPs. */
     fun connect(ip: String, port: Int) {
         if (!isPrivateIp(ip)) {
+            Timber.w("Connect rejected: $ip is not a private/LAN IP")
             _connectionState.value = ConnectionState.Error("Connection rejected: only local network IPs allowed")
             return
         }
         userDisconnect = false
+        Timber.i("Connecting to $ip:$port")
         _connectionState.value = ConnectionState.Connecting(ip, port)
         CrashReporter.setKey("connect_state", "connecting")
         CrashReporter.setKey("connect_ip", "$ip:$port")
@@ -71,7 +73,7 @@ class SpyglassClient {
 
         webSocket = okHttpClient.newWebSocket(request, object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
-                Timber.d("WebSocket connected to $ip:$port")
+                Timber.i("WebSocket opened to $ip:$port — starting pairing")
                 _connectionState.value = ConnectionState.Pairing
                 CrashReporter.setKey("connect_state", "pairing")
             }
@@ -96,12 +98,14 @@ class SpyglassClient {
                         val accept = json.decodeFromJsonElement(PairAcceptPayload.serializer(), message.payload)
                         if (!accept.accepted) {
                             val reason = accept.rejectionReason ?: "Pairing rejected"
+                            Timber.w("Pairing rejected by desktop: $reason")
                             _connectionState.value = ConnectionState.Error(reason)
                             webSocket.close(1000, "Pairing rejected")
                             return
                         }
                         // Protocol version compatibility check
                         if (accept.protocolVersion < ProtocolInfo.MIN_COMPATIBLE_VERSION) {
+                            Timber.w("Desktop protocol v${accept.protocolVersion} too old (need v${ProtocolInfo.MIN_COMPATIBLE_VERSION}+)")
                             _connectionState.value = ConnectionState.Error(
                                 "Update Spyglass Connect on your PC. Desktop protocol v${accept.protocolVersion} is not compatible (v${ProtocolInfo.MIN_COMPATIBLE_VERSION}+ required)."
                             )
@@ -109,26 +113,32 @@ class SpyglassClient {
                             return
                         }
                         if (ProtocolInfo.PROTOCOL_VERSION < accept.minCompatibleVersion) {
+                            Timber.w("App protocol v${ProtocolInfo.PROTOCOL_VERSION} too old (desktop requires v${accept.minCompatibleVersion}+)")
                             _connectionState.value = ConnectionState.Error(
                                 "Update the Spyglass app to the latest version. Desktop requires protocol v${accept.minCompatibleVersion}+."
                             )
                             webSocket.close(1000, "Incompatible protocol version")
                             return
                         }
+                        Timber.i("Pairing accepted by '${accept.deviceName}' (protocol v${accept.protocolVersion})")
                         // Derive shared encryption key from desktop's ECDH public key
                         if (accept.pubkey != null) {
                             encryption.deriveSharedKey(accept.pubkey)
-                            Timber.d("Encryption established")
+                            Timber.i("ECDH encryption established")
+                        } else {
+                            Timber.w("Desktop did not provide pubkey — connection is UNENCRYPTED")
                         }
                         // Negotiate capabilities
                         val desktopCaps = accept.capabilities.toSet()
                         _negotiatedCapabilities.value = if (desktopCaps.isEmpty()) {
                             // Legacy v2 desktop — assume all supported
+                            Timber.i("Legacy desktop (no capabilities list) — assuming all supported")
                             Capability.ALL
                         } else {
                             desktopCaps.intersect(Capability.ALL)
                         }
-                        Timber.d("Negotiated capabilities: ${_negotiatedCapabilities.value}")
+                        val caps = _negotiatedCapabilities.value
+                        Timber.i("Capabilities (${caps.size}): ${caps.joinToString()}")
                         _connectionState.value = ConnectionState.Connected(accept.deviceName)
                         CrashReporter.setKey("connect_state", "connected")
                         CrashReporter.setKey("connect_device", accept.deviceName)
@@ -144,7 +154,7 @@ class SpyglassClient {
             }
 
             override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-                Timber.d("WebSocket closing: $code $reason")
+                Timber.i("WebSocket closing: code=$code reason=$reason userDisconnect=$userDisconnect")
                 webSocket.close(1000, null)
                 if (!userDisconnect) {
                     _connectionState.value = ConnectionState.Error("Connection closed: $reason")
@@ -156,8 +166,7 @@ class SpyglassClient {
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
                 val isConnRefused = t is java.net.ConnectException
                 if (isConnRefused) {
-                    // Don't log full stack trace for routine connection refused (desktop offline)
-                    Timber.d("WebSocket connection refused: ${t.message}")
+                    Timber.i("Connection refused by $ip:$port (desktop probably offline)")
                 } else {
                     Timber.w(t, "WebSocket failure")
                     CrashReporter.recordException(t, "WebSocket failure")
@@ -203,12 +212,16 @@ class SpyglassClient {
     /** Send a request and generate a unique request ID. */
     fun sendRequest(type: String, payload: kotlinx.serialization.json.JsonElement = kotlinx.serialization.json.JsonNull): String {
         val requestId = UUID.randomUUID().toString()
+        if (type != MessageType.DEVICE_LOG) { // Don't log the log messages themselves
+            Timber.i("→ Sending $type")
+        }
         send(SpyglassMessage(type = type, requestId = requestId, payload = payload))
         return requestId
     }
 
     /** Disconnect from the desktop (user-initiated). */
     fun disconnect() {
+        Timber.i("Disconnecting (user-initiated)")
         userDisconnect = true
         webSocket?.close(1000, "Client disconnect")
         webSocket = null

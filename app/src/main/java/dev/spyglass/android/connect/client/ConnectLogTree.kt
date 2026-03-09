@@ -34,11 +34,12 @@ class ConnectLogTree(private val client: SpyglassClient) : Timber.Tree() {
     }
 
     override fun isLoggable(tag: String?, priority: Int): Boolean {
-        return priority >= Log.WARN
+        return priority >= Log.INFO
     }
 
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         val level = when (priority) {
+            Log.INFO -> "I"
             Log.WARN -> "W"
             Log.ERROR -> "E"
             Log.ASSERT -> "WTF"

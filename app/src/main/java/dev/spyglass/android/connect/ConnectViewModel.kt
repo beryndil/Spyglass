@@ -113,23 +113,30 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     init {
         // Plant the log tree so warnings/errors/crashes are captured and sent to desktop
         Timber.plant(logTree)
+        Timber.i("ConnectViewModel initialized — loading cache and checking for paired device")
 
         // Load cached data on startup
         viewModelScope.launch(Dispatchers.IO) {
             val meta = ConnectCache.loadMeta(getApplication())
             if (meta != null) {
+                Timber.i("Cache loaded: ${meta.worlds.size} worlds, selected=${meta.selectedWorld ?: "none"}")
                 _worlds.value = meta.worlds
                 _selectedWorld.value = meta.selectedWorld
                 val world = meta.selectedWorld
                 if (world != null) {
                     loadCachedWorldData(world)
                 }
+            } else {
+                Timber.i("No cached data found — fresh start")
             }
 
             // Auto-connect to last paired device if available
             val device = PairingStore.load(getApplication())
             if (device != null) {
+                Timber.i("Found paired device: ${device.deviceName} at ${device.ip}:${device.port} — auto-reconnecting")
                 tryReconnect()
+            } else {
+                Timber.i("No paired device stored — waiting for QR scan")
             }
         }
 
@@ -200,6 +207,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             client.connectionState.collect { state ->
                 when (state) {
                     is ConnectionState.Connected -> {
+                        Timber.i("Connected to '${state.deviceName}' — starting foreground service + live refresh")
                         wasConnected = true
                         worldReselected = false
                         reconnectManager.reset()
@@ -213,6 +221,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                         startLiveRefresh()
                     }
                     is ConnectionState.Error -> {
+                        Timber.i("Connection error: ${state.message} (wasConnected=$wasConnected, userDisconnect=${client.wasUserDisconnect})")
                         liveRefreshJob?.cancel()
                         // Auto-reconnect on unexpected disconnect
                         if (wasConnected && !client.wasUserDisconnect) {
@@ -222,6 +231,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                         }
                     }
                     is ConnectionState.Disconnected -> {
+                        Timber.i("Disconnected (wasConnected=$wasConnected, userDisconnect=${client.wasUserDisconnect})")
                         liveRefreshJob?.cancel()
                         if (wasConnected && !client.wasUserDisconnect) {
                             startAutoReconnect()
@@ -254,6 +264,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     /** Connect via QR pairing data. */
     fun connectFromQr(pairingData: QrPairingData) {
         reconnectJob?.cancel()
+        Timber.i("QR pairing started → ${pairingData.ip}:${pairingData.port}")
         CrashReporter.log("QR pair started")
         viewModelScope.launch(Dispatchers.IO) {
             client.connect(pairingData.ip, pairingData.port)
@@ -263,6 +274,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
             if (client.connectionState.value is ConnectionState.Pairing) {
                 val deviceName = "${Build.MANUFACTURER} ${Build.MODEL}"
+                Timber.i("WebSocket open, sending pair request as '$deviceName'")
                 client.sendPairRequest(deviceName, pairingData.pubkey)
 
                 // Save pairing info for reconnection
@@ -309,15 +321,16 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         CrashReporter.log("Auto-reconnect started")
         reconnectJob = viewModelScope.launch(Dispatchers.IO) {
             val device = PairingStore.load(getApplication()) ?: run {
-                Timber.d("No paired device stored, can't auto-reconnect")
+                Timber.i("No paired device stored — cannot auto-reconnect")
                 ConnectService.stop(getApplication())
                 return@launch
             }
 
+            Timber.i("Starting auto-reconnect to ${device.ip}:${device.port}")
             reconnectManager.reset()
             while (reconnectManager.waitForNextRetry()) {
                 val attempt = reconnectManager.currentAttempt
-                Timber.d("Auto-reconnect attempt $attempt to ${device.ip}:${device.port}")
+                Timber.i("Auto-reconnect attempt $attempt → ${device.ip}:${device.port}")
                 client.setReconnecting(attempt)
 
                 client.connect(device.ip, device.port)
@@ -337,21 +350,21 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                         it is ConnectionState.Connected || it is ConnectionState.Error
                     }
                     if (paired is ConnectionState.Connected) {
-                        Timber.d("Auto-reconnect succeeded on attempt $attempt")
+                        Timber.i("Auto-reconnect succeeded on attempt $attempt")
                         CrashReporter.log("Auto-reconnect succeeded attempt $attempt")
                         return@launch
                     }
                 } else if (result is ConnectionState.Connected) {
-                    Timber.d("Auto-reconnect succeeded on attempt $attempt")
+                    Timber.i("Auto-reconnect succeeded on attempt $attempt")
                     CrashReporter.log("Auto-reconnect succeeded attempt $attempt")
                     return@launch
                 }
 
-                Timber.d("Auto-reconnect attempt $attempt failed")
+                Timber.i("Auto-reconnect attempt $attempt failed")
             }
 
             // Exhausted IP-based attempts — try mDNS as last resort
-            Timber.d("IP retries exhausted, trying mDNS discovery")
+            Timber.i("IP retries exhausted — trying mDNS discovery as fallback")
             CrashReporter.log("Auto-reconnect trying mDNS fallback")
             val deviceName = "${Build.MANUFACTURER} ${Build.MODEL}"
             mdnsDiscovery = MdnsDiscovery(getApplication())
@@ -383,7 +396,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             kotlinx.coroutines.delay(10_000)
             if (!mdnsHandled) {
                 mdnsDiscovery?.stopDiscovery()
-                Timber.d("Auto-reconnect exhausted (mDNS found nothing)")
+                Timber.i("Auto-reconnect exhausted — mDNS found nothing after 10s")
                 CrashReporter.log("Auto-reconnect exhausted")
                 // Clear wasConnected so the collect block doesn't restart reconnect
                 wasConnected = false
@@ -395,10 +408,16 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Try reconnecting to a previously paired device (user-initiated). */
     fun tryReconnect() {
+        Timber.i("User-initiated reconnect")
         wasConnected = false // Reset so auto-reconnect doesn't fire on first failure
         reconnectJob?.cancel()
         viewModelScope.launch(Dispatchers.IO) {
-            val device = PairingStore.load(getApplication()) ?: return@launch
+            val device = PairingStore.load(getApplication())
+            if (device == null) {
+                Timber.i("No paired device stored — nothing to reconnect to")
+                return@launch
+            }
+            Timber.i("Reconnecting to stored device ${device.ip}:${device.port}")
             val deviceName = "${Build.MANUFACTURER} ${Build.MODEL}"
 
             client.connect(device.ip, device.port)
@@ -412,7 +431,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 client.sendPairRequest(deviceName, device.publicKey)
             } else {
                 // Stored IP failed — try mDNS discovery as fallback
-                Timber.d("Stored IP failed, trying mDNS discovery")
+                Timber.i("Stored IP ${device.ip} failed — trying mDNS discovery")
                 mdnsDiscovery = MdnsDiscovery(getApplication())
                 mdnsDiscovery?.startDiscovery { ip, port ->
                     viewModelScope.launch(Dispatchers.IO) {
@@ -440,6 +459,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Select a world on the desktop. */
     fun selectWorld(folderName: String) {
+        Timber.i("Selecting world: $folderName")
         _selectedWorld.value = folderName
         // Save meta with new selection
         viewModelScope.launch(Dispatchers.IO) {
@@ -583,6 +603,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Disconnect and clean up. */
     fun disconnect() {
+        Timber.i("User disconnecting — keeping cached data for offline viewing")
         CrashReporter.log("User disconnect")
         wasConnected = false
         reconnectJob?.cancel()
@@ -596,6 +617,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Unpair (disconnect + clear stored device + clear cache). */
     fun unpair() {
+        Timber.i("User unpairing — clearing all cached data and stored device")
         CrashReporter.log("User unpair")
         wasConnected = false
         reconnectJob?.cancel()
@@ -631,12 +653,12 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Handle an incoming message from the desktop. */
     private fun handleMessage(message: SpyglassMessage) {
-        Timber.d("Received ${message.type}")
+        Timber.i("← Received ${message.type}")
         try {
             when (message.type) {
                 MessageType.WORLD_LIST -> {
                     val payload = json.decodeFromJsonElement(WorldListPayload.serializer(), message.payload)
-                    Timber.d("World list: ${payload.worlds.size} worlds")
+                    Timber.i("  ${payload.worlds.size} worlds: ${payload.worlds.joinToString { it.displayName }}")
                     _worlds.value = payload.worlds
                     // Cache meta
                     viewModelScope.launch(Dispatchers.IO) {
@@ -649,7 +671,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     val currentWorld = _selectedWorld.value
                     if (currentWorld != null && connectionState.value.isConnected && !worldReselected) {
                         worldReselected = true
-                        Timber.d("Re-selecting world after reconnect: $currentWorld")
+                        Timber.i("  Re-selecting previously chosen world: $currentWorld")
                         val selectPayload = json.encodeToJsonElement(SelectWorldPayload(currentWorld))
                         client.sendRequest(MessageType.SELECT_WORLD, selectPayload)
                         requestPlayerList()
@@ -657,11 +679,12 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 }
                 MessageType.PLAYER_LIST -> {
                     val payload = json.decodeFromJsonElement(PlayerListPayload.serializer(), message.payload)
-                    Timber.d("Player list: ${payload.players.size} players")
+                    Timber.i("  ${payload.players.size} players: ${payload.players.joinToString { it.name ?: it.uuid.take(8) }}")
                     _playerList.value = payload.players
                 }
                 MessageType.PLAYER_DATA -> {
                     val payload = json.decodeFromJsonElement(PlayerData.serializer(), message.payload)
+                    Timber.i("  Player: ${payload.playerName ?: payload.playerUuid?.take(8) ?: "owner"} — HP:${payload.health.toInt()} Food:${payload.foodLevel} XP:${payload.xpLevel} Dim:${payload.dimension}")
                     // Route to compare if this is the compare player's data
                     val compareUuid = pendingCompareUuid
                     if (compareUuid != null && payload.playerUuid.equals(compareUuid, ignoreCase = true)) {
@@ -685,14 +708,17 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 }
                 MessageType.CHEST_CONTENTS -> {
                     val payload = json.decodeFromJsonElement(ChestContentsPayload.serializer(), message.payload)
+                    Timber.i("  ${payload.containers.size} containers (${payload.totalItemStacks} item stacks)")
                     _chestContents.value = payload
                 }
                 MessageType.SEARCH_RESULTS -> {
                     val payload = json.decodeFromJsonElement(SearchResultsPayload.serializer(), message.payload)
+                    Timber.i("  ${payload.results.size} search results")
                     _searchResults.value = payload
                 }
                 MessageType.STRUCTURE_LOCATIONS -> {
                     val payload = json.decodeFromJsonElement(StructureLocationsPayload.serializer(), message.payload)
+                    Timber.i("  ${payload.structures.size} structures")
                     val changed = _structures.value != payload.structures
                     _structures.value = payload.structures
                     if (changed) {
@@ -706,6 +732,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 }
                 MessageType.MAP_RENDER -> {
                     val payload = json.decodeFromJsonElement(MapRenderPayload.serializer(), message.payload)
+                    Timber.i("  Map tiles: ${payload.tiles.size} tiles")
                     val changed = _mapTiles.value != payload
                     _mapTiles.value = payload
                     if (changed) {
@@ -747,6 +774,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 }
                 MessageType.PETS_LIST -> {
                     val payload = json.decodeFromJsonElement(PetsListPayload.serializer(), message.payload)
+                    Timber.i("  ${payload.pets.size} pets")
                     val changed = _pets.value != payload.pets
                     _pets.value = payload.pets
                     if (changed) {
@@ -760,7 +788,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     }
                 }
                 MessageType.WORLD_CHANGED -> {
-                    // Re-request data for the selected world
+                    Timber.i("  World state changed — refreshing player data")
                     requestPlayerData()
                 }
                 MessageType.ERROR -> {
@@ -832,7 +860,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             }
         }
 
-        Timber.d("Auto-populated waypoints: ${current.count { it.source == ConnectWaypoint.SOURCE_AUTO }} auto, ${current.count { it.source == ConnectWaypoint.SOURCE_CUSTOM }} custom")
+        Timber.d("Waypoints: ${current.count { it.source == ConnectWaypoint.SOURCE_AUTO }} auto, ${current.count { it.source == ConnectWaypoint.SOURCE_CUSTOM }} custom")
         _connectWaypoints.value = current
         saveWaypointsToCache()
     }
