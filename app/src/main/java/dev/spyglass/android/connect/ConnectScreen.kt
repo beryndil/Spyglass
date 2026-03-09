@@ -126,6 +126,7 @@ fun ConnectScreen(
                         onEnderChest = onEnderChest,
                         onChestFinder = onChestFinder,
                         onMap = onMap,
+                        onLongPressWorld = { showLoadingDemo = !showLoadingDemo },
                     )
                 }
 
@@ -288,6 +289,7 @@ private fun DisconnectedContent(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ConnectedContent(
     worlds: List<WorldInfo>,
@@ -303,6 +305,7 @@ private fun ConnectedContent(
     onEnderChest: () -> Unit,
     onChestFinder: () -> Unit,
     onMap: () -> Unit,
+    onLongPressWorld: () -> Unit = {},
 ) {
     val hapticClick = rememberHapticClick()
     // World selector
@@ -323,11 +326,14 @@ private fun ConnectedContent(
                         if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
                         RoundedCornerShape(8.dp),
                     )
-                    .clickable {
-                        hapticClick()
-                        onSelectWorld(world.folderName)
-                        onRequestPlayer()
-                    }
+                    .combinedClickable(
+                        onClick = {
+                            hapticClick()
+                            onSelectWorld(world.folderName)
+                            onRequestPlayer()
+                        },
+                        onLongClick = onLongPressWorld,
+                    )
                     .padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
