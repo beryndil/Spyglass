@@ -38,6 +38,10 @@ val LocalSurfaceCard = compositionLocalOf { Color(0xFF211F1B) }
 val LocalIsWideScreen = compositionLocalOf { false }
 val LocalHapticEnabled = compositionLocalOf { true }
 val LocalReduceAnimations = compositionLocalOf { false }
+val LocalThemeKey = compositionLocalOf { DEFAULT_THEME }
+
+/** Theme keys that use a full-screen background image instead of a solid color. */
+val ImageThemeKeys = setOf("nether_portal", "deep_dark", "aurora")
 
 // ── Theme preset data ────────────────────────────────────────────────────────
 
@@ -103,6 +107,41 @@ private fun buildTheme(
 }
 
 val ThemePresets: Map<String, SpyglassColors> = mapOf(
+    // ── Image themes (semi-transparent surfaces — background image shows through) ──
+    "nether_portal" to buildTheme(
+        isDark          = true,
+        bg              = Color.Transparent,
+        surface         = Color(0xD9180C18),
+        surfaceVariant  = Color(0xCC261428),
+        surfaceCard     = Color(0xD9140A14),
+        outline         = Color(0xFF3A2434),
+        secondary       = Color(0xFF8E6882),
+        onSurfaceVariant = Color(0xFFBE98B2),
+        onSurface       = Color(0xFFECD0E2),
+    ),
+    "deep_dark" to buildTheme(
+        isDark          = true,
+        bg              = Color.Transparent,
+        surface         = Color(0xD90A1018),
+        surfaceVariant  = Color(0xCC121A22),
+        surfaceCard     = Color(0xD9080C14),
+        outline         = Color(0xFF1A2A34),
+        secondary       = Color(0xFF5888A0),
+        onSurfaceVariant = Color(0xFF88B8CC),
+        onSurface       = Color(0xFFD0E8F0),
+    ),
+    "aurora" to buildTheme(
+        isDark          = true,
+        bg              = Color.Transparent,
+        surface         = Color(0xD90A1014),
+        surfaceVariant  = Color(0xCC10181E),
+        surfaceCard     = Color(0xD9080C10),
+        outline         = Color(0xFF1A2830),
+        secondary       = Color(0xFF508878),
+        onSurfaceVariant = Color(0xFF88ACA0),
+        onSurface       = Color(0xFFD0E4DC),
+    ),
+    // ── Solid colour themes ─────────────────────────────────────────────────────
     "obsidian" to buildTheme(
         isDark          = true,
         bg              = Color(0xFF0E0C0A),
@@ -293,6 +332,9 @@ val ThemePresets: Map<String, SpyglassColors> = mapOf(
 )
 
 val ThemeInfoMap: Map<String, ThemeInfo> = mapOf(
+    "nether_portal" to ThemeInfo("Nether Portal", Color(0xFF2A0E22), isDark = true),
+    "deep_dark"     to ThemeInfo("Deep Dark",     Color(0xFF0A1018), isDark = true),
+    "aurora"        to ThemeInfo("Aurora Night",   Color(0xFF0A1420), isDark = true),
     "obsidian"    to ThemeInfo("Obsidian",    Color(0xFF0E0C0A), isDark = true),
     "deepslate"   to ThemeInfo("Deepslate",   Color(0xFF17171B), isDark = true),
     "spruce"      to ThemeInfo("Spruce",      Color(0xFF16120E), isDark = true),
@@ -312,11 +354,18 @@ val ThemeInfoMap: Map<String, ThemeInfo> = mapOf(
     "pink"        to ThemeInfo("Pink",        Color(0xFFFCEFF5), isDark = false),
 )
 
-val ThemeOrder = listOf(
+/** Image themes — shown as featured cards in settings. */
+val ImageThemeOrder = listOf("nether_portal", "deep_dark", "aurora")
+
+/** Solid colour themes — shown as circles in settings. */
+val SolidThemeOrder = listOf(
     "obsidian", "deepslate", "spruce", "warped", "crimson",
     "prismarine", "copper", "mycelium", "chorus", "magenta", "shulker",
     "end_stone", "birch", "sandstone", "cherry", "amethyst", "pink",
 )
+
+/** All themes in display order (image themes first). */
+val ThemeOrder = ImageThemeOrder + SolidThemeOrder
 
 const val DEFAULT_THEME = "obsidian"
 
@@ -354,6 +403,7 @@ fun SpyglassTheme(
     }
 
     CompositionLocalProvider(
+        LocalThemeKey provides theme,
         LocalSurfaceCard provides cardColor,
         LocalIsWideScreen provides isWideScreen,
         LocalHapticEnabled provides hapticEnabled,

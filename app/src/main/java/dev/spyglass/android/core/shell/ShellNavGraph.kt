@@ -1,10 +1,12 @@
 package dev.spyglass.android.core.shell
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -31,7 +33,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -55,6 +59,8 @@ import dev.spyglass.android.core.module.ModuleRegistry
 import dev.spyglass.android.core.module.ModuleRoute
 import dev.spyglass.android.core.module.SettingsSectionScope
 import dev.spyglass.android.core.ui.AdBanner
+import dev.spyglass.android.core.ui.ImageThemeKeys
+import dev.spyglass.android.core.ui.LocalThemeKey
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassIcon
 import dev.spyglass.android.core.ui.SpyglassIconImage
@@ -201,7 +207,27 @@ fun ShellNavGraph() {
 
     // ── Scaffold ────────────────────────────────────────────────────────────
 
+    val themeKey = LocalThemeKey.current
+    val isImageTheme = themeKey in ImageThemeKeys
+    val bgResId = when (themeKey) {
+        "nether_portal" -> R.drawable.bg_nether_portal
+        "deep_dark"     -> R.drawable.bg_deep_dark
+        "aurora"        -> R.drawable.bg_aurora_night
+        else            -> null
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (isImageTheme && bgResId != null) {
+            Image(
+                painter = painterResource(bgResId),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+            )
+        }
+
     Scaffold(
+        containerColor = if (isImageTheme) Color.Transparent else MaterialTheme.colorScheme.background,
         topBar = {
             ShellTopBar(navController, onClockTap = {
                 pendingCalcTab = 9
@@ -211,7 +237,7 @@ fun ShellNavGraph() {
         bottomBar = {
             Column(Modifier.navigationBarsPadding()) {
                 if (showBars) {
-                    ShellBottomNavBar(navController, destinations) { route ->
+                    ShellBottomNavBar(navController, destinations, isImageTheme) { route ->
                         navigateToTop(route)
                     }
                 }
@@ -282,6 +308,8 @@ fun ShellNavGraph() {
             }
         }
     }
+    } // Box
+
 }
 
 // ── Top bar ─────────────────────────────────────────────────────────────────
@@ -384,13 +412,15 @@ private fun ShellTopBar(navController: NavHostController, onClockTap: () -> Unit
 private fun ShellBottomNavBar(
     navController: NavHostController,
     destinations: List<ShellDestination>,
+    isImageTheme: Boolean = false,
     onNavigate: (String) -> Unit,
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDest = backStackEntry?.destination
 
     val hapticClick = rememberHapticClick()
-    NavigationBar(containerColor = MaterialTheme.colorScheme.background) {
+    val navBarColor = if (isImageTheme) Color(0xC0080810) else MaterialTheme.colorScheme.background
+    NavigationBar(containerColor = navBarColor) {
         destinations.forEach { dest ->
             NavigationBarItem(
                 selected = currentDest?.hierarchy?.any { it.route == dest.route } == true,

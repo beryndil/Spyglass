@@ -23,6 +23,12 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
@@ -125,23 +131,78 @@ fun SettingsScreen(
         item(key = "appearance") {
             SectionHeader("Appearance")
             ResultCard {
-                // Theme colors
+                // ── Featured image themes ──
                 Text(
                     stringResource(R.string.settings_background),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    val imageThemes = listOf(
+                        Triple("nether_portal", "Nether Portal", R.drawable.bg_nether_portal),
+                        Triple("deep_dark", "Deep Dark", R.drawable.bg_deep_dark),
+                        Triple("aurora", "Aurora Night", R.drawable.bg_aurora_night),
+                    )
+                    imageThemes.forEach { (key, label, drawableRes) ->
+                        val isSelected = backgroundTheme == key
+                        val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+                        val shape = RoundedCornerShape(10.dp)
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.weight(1f),
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .aspectRatio(9f / 16f)
+                                    .clip(shape)
+                                    .border(
+                                        width = if (isSelected) 2.5.dp else 1.dp,
+                                        color = borderColor,
+                                        shape = shape,
+                                    )
+                                    .clickable { hapticClick(); vm.setBackgroundTheme(key) },
+                            ) {
+                                Image(
+                                    painter = painterResource(drawableRes),
+                                    contentDescription = label,
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop,
+                                )
+                            }
+                            Spacer(Modifier.height(4.dp))
+                            Text(
+                                label,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
+                    }
+                }
+
+                Spacer(Modifier.height(8.dp))
+
+                // ── Solid colour themes ──
+                Text(
+                    "Solid Colors",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                Spacer(Modifier.height(4.dp))
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
-                    ThemeOrder.forEach { key ->
+                    SolidThemeOrder.forEach { key ->
                         val info = ThemeInfoMap[key] ?: return@forEach
                         val isSelected = backgroundTheme == key
                         val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
                         Box(
                             modifier = Modifier
-                                .size(48.dp)
+                                .size(42.dp)
                                 .clip(CircleShape)
                                 .background(info.background, CircleShape)
                                 .border(
