@@ -50,13 +50,14 @@ fun ConnectScreen(
     val selectedPlayerUuid by viewModel.selectedPlayerUuid.collectAsStateWithLifecycle()
     val playerSkin by viewModel.playerSkin.collectAsStateWithLifecycle()
     val capabilities by viewModel.desktopCapabilities.collectAsStateWithLifecycle()
-    var showLoadingDemo by remember { mutableStateOf(false) }
+    var showChestAnimation by remember { mutableStateOf(false) }
 
     DisposableEffect(Unit) {
         viewModel.setActiveScreen("connect")
         onDispose { viewModel.setActiveScreen(null) }
     }
 
+    Box(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.fillMaxSize()) {
         // Top bar
         Row(
@@ -88,12 +89,7 @@ fun ConnectScreen(
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            // Connection status card (long-press to toggle loading animation demo)
-            ConnectionStatusCard(state, onLongPress = { showLoadingDemo = !showLoadingDemo })
-
-            if (showLoadingDemo) {
-                ChestLoadingDemo()
-            }
+            ConnectionStatusCard(state)
 
             when {
                 state is ConnectionState.Disconnected || state is ConnectionState.Error -> {
@@ -129,7 +125,10 @@ fun ConnectScreen(
                         onEnderChest = onEnderChest,
                         onChestFinder = onChestFinder,
                         onMap = onMap,
-                        onLongPressWorld = { showLoadingDemo = !showLoadingDemo },
+                        onLongPressGlobe = {
+                            viewModel.requestChests()
+                            showChestAnimation = true
+                        },
                     )
                 }
 
@@ -140,11 +139,27 @@ fun ConnectScreen(
             }
         }
     }
+
+    // Chest loading overlay — triggered by long-pressing globe on selected world
+    if (showChestAnimation) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background.copy(alpha = 0.95f))
+                .clickable(enabled = false) {},
+            contentAlignment = Alignment.Center,
+        ) {
+            ChestLoadingOneShot(
+                modifier = Modifier.padding(horizontal = 32.dp),
+                onComplete = { showChestAnimation = false },
+            )
+        }
+    }
+    } // Box
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ConnectionStatusCard(state: ConnectionState, onLongPress: () -> Unit = {}) {
+private fun ConnectionStatusCard(state: ConnectionState) {
     val (color, icon) = when (state) {
         is ConnectionState.Connected -> Color(0xFF4CAF50) to Icons.Filled.Wifi
         is ConnectionState.Connecting, is ConnectionState.Pairing, is ConnectionState.Reconnecting ->
@@ -153,12 +168,7 @@ private fun ConnectionStatusCard(state: ConnectionState, onLongPress: () -> Unit
         else -> MaterialTheme.colorScheme.onSurfaceVariant to Icons.Filled.WifiOff
     }
 
-    ResultCard(
-        modifier = Modifier.combinedClickable(
-            onClick = {},
-            onLongClick = onLongPress,
-        ),
-    ) {
+    ResultCard {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -308,9 +318,10 @@ private fun ConnectedContent(
     onEnderChest: () -> Unit,
     onChestFinder: () -> Unit,
     onMap: () -> Unit,
-    onLongPressWorld: () -> Unit = {},
+    onLongPressGlobe: () -> Unit = {},
 ) {
     val hapticClick = rememberHapticClick()
+    val hapticConfirm = rememberHapticConfirm()
     // World selector
     if (worlds.isNotEmpty()) {
         SectionHeader("Select World")
@@ -329,14 +340,11 @@ private fun ConnectedContent(
                         if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
                         RoundedCornerShape(8.dp),
                     )
-                    .combinedClickable(
-                        onClick = {
-                            hapticClick()
-                            onSelectWorld(world.folderName)
-                            onRequestPlayer()
-                        },
-                        onLongClick = onLongPressWorld,
-                    )
+                    .clickable {
+                        hapticClick()
+                        onSelectWorld(world.folderName)
+                        onRequestPlayer()
+                    }
                     .padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -344,7 +352,14 @@ private fun ConnectedContent(
                     Icons.Filled.Public,
                     contentDescription = null,
                     tint = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.size(24.dp),
+                    modifier = Modifier
+                        .size(24.dp)
+                        .then(
+                            if (isSelected) Modifier.combinedClickable(
+                                onClick = {},
+                                onLongClick = { hapticConfirm(); onLongPressGlobe() },
+                            ) else Modifier
+                        ),
                 )
                 Spacer(Modifier.width(12.dp))
                 Column(modifier = Modifier.weight(1f)) {

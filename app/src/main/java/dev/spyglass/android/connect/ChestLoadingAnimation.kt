@@ -369,28 +369,25 @@ fun ChestLoadingAnimation(
 }
 
 /**
- * Demo mode: cycles through all connection states automatically so you can
- * see the full animation on-device. Call from any screen or activity.
+ * One-shot chest loading animation — plays through the full connection
+ * sequence once, then calls [onComplete] when done.
+ * Secret easter egg triggered by long-pressing the globe on a selected world.
  */
 @Composable
-fun ChestLoadingDemo(modifier: Modifier = Modifier) {
-    val states = listOf(
-        ConnectionState.Disconnected,
-        ConnectionState.Connecting("192.168.1.100", 29170),
-        ConnectionState.Pairing,
-        ConnectionState.Connected("Spyglass Connect"),
-    )
-    var index by remember { mutableIntStateOf(0) }
+fun ChestLoadingOneShot(modifier: Modifier = Modifier, onComplete: () -> Unit) {
+    var state by remember { mutableStateOf<ConnectionState>(ConnectionState.Connecting("192.168.1.100", 29170)) }
 
     LaunchedEffect(Unit) {
-        while (true) {
-            kotlinx.coroutines.delay(2500)
-            index = (index + 1) % states.size
-        }
+        kotlinx.coroutines.delay(1200)
+        state = ConnectionState.Pairing
+        kotlinx.coroutines.delay(1000)
+        state = ConnectionState.Connected("Spyglass Connect")
+        kotlinx.coroutines.delay(3000) // let burst finish
+        onComplete()
     }
 
     ChestLoadingAnimation(
-        connectionState = states[index],
+        connectionState = state,
         modifier = modifier,
     )
 }
@@ -421,8 +418,8 @@ private fun PreviewConnected() {
 
 @Preview(showBackground = true, backgroundColor = 0xFF121212)
 @Composable
-private fun PreviewDemo() {
+private fun PreviewOneShot() {
     MaterialTheme(colorScheme = darkColorScheme()) {
-        ChestLoadingDemo()
+        ChestLoadingOneShot(onComplete = {})
     }
 }
