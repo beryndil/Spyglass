@@ -342,7 +342,14 @@ private fun ShellTopBar(navController: NavHostController, isImageTheme: Boolean 
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .then(
+                    if (isImageTheme) Modifier
+                        .background(Color(0x40000000), RoundedCornerShape(16.dp))
+                        .padding(horizontal = 8.dp, vertical = 2.dp)
+                    else Modifier
+                ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
