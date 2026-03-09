@@ -12,7 +12,7 @@
 
     <!-- Splash screen theme (extends base so the window stays dark during init) -->
     <style name="Theme.Spyglass.Splash" parent="Theme.Spyglass">
-        <item name="android:windowSplashScreenBackground">#0E0C0A</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">#0E0C0A</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@mipmap/ic_launcher</item>
     </style>
 </resources>

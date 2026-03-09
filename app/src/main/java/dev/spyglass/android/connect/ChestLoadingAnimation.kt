@@ -25,7 +25,6 @@ private data class BurstParticle(
     val speed: Float,
     val size: Float,
     val color: Color,
-    var progress: Float = 0f,
 )
 
 @Composable

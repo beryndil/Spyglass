@@ -776,7 +776,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Auto-generate system waypoints from player data, preserving custom ones. */
     private fun autoPopulateWaypoints(data: PlayerData) {
-        Timber.d("autoPopulateWaypoints: worldSpawn=${data.worldSpawn != null}, spawnLocation=${data.spawnLocation != null}, lastDeath=${data.lastDeathLocation != null}")
+        // Waypoint sources: worldSpawn, player spawnLocation (bed/respawn anchor), lastDeathLocation
         val current = _connectWaypoints.value.toMutableList()
 
         fun upsertOrRemoveAuto(id: String, builder: () -> ConnectWaypoint?) {
