@@ -1,8 +1,12 @@
 package dev.spyglass.android
 
+import android.graphics.Color as AndroidColor
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.LaunchedEffect
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
@@ -62,6 +66,18 @@ class MainActivity : FragmentActivity() {
             val dynamicColor by dataStore.data
                 .map { it[PreferenceKeys.DYNAMIC_COLOR] ?: false }
                 .collectAsStateWithLifecycle(initialValue = false)
+
+            // Show the device wallpaper behind the app when dynamic colors is active
+            val isDynamicActive = dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+            LaunchedEffect(isDynamicActive) {
+                if (isDynamicActive) {
+                    window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER)
+                    window.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(AndroidColor.TRANSPARENT))
+                } else {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER)
+                    window.setBackgroundDrawable(null)
+                }
+            }
 
             val highContrast by dataStore.data
                 .map { it[PreferenceKeys.HIGH_CONTRAST] ?: false }

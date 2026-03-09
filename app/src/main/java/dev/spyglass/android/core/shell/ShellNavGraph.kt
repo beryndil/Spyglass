@@ -1,7 +1,5 @@
 package dev.spyglass.android.core.shell
 
-import android.app.WallpaperManager
-import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,8 +35,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -220,29 +216,8 @@ fun ShellNavGraph() {
     val hasImageBg = isImageTheme || isDynamic
     val bgResId = imageThemeDrawable(themeKey)
 
-    // Load wallpaper bitmap for dynamic color mode
-    val wallpaperPainter = if (isDynamic) {
-        remember {
-            try {
-                val wm = WallpaperManager.getInstance(context)
-                val drawable = wm.drawable
-                if (drawable is BitmapDrawable) BitmapPainter(drawable.bitmap.asImageBitmap()) else null
-            } catch (_: Exception) { null }
-        }
-    } else null
-
     Box(modifier = Modifier.fillMaxSize()) {
-        if (isDynamic && wallpaperPainter != null) {
-            // Dynamic colors: wallpaper overrides any theme background
-            Image(
-                painter = wallpaperPainter,
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
-                alignment = Alignment.TopCenter,
-                alpha = 0.35f,
-            )
-        } else if (isImageTheme && bgResId != null) {
+        if (!isDynamic && isImageTheme && bgResId != null) {
             Image(
                 painter = painterResource(bgResId),
                 contentDescription = null,
