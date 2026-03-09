@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Auto Backup rules (Android 11 and below).
-    Mirror of backup_rules.xml for older API levels.
+    Only include user-created data — game content is re-seeded on launch.
 -->
 <full-backup-content>
     <include domain="database" path="spyglass_user.db" />
     <include domain="file" path="datastore/" />
     <include domain="file" path="connect/" />
     <include domain="sharedpref" path="." />
-
-    <exclude domain="database" path="spyglass.db" />
-    <exclude domain="database" path="spyglass.db-wal" />
-    <exclude domain="database" path="spyglass.db-shm" />
-    <exclude domain="file" path="textures/" />
-    <exclude domain="file" path="minecraft/" />
-    <exclude domain="file" path="connect-logs/" />
-    <exclude domain="root" path="cache/" />
 </full-backup-content>

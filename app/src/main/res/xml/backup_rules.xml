@@ -2,7 +2,7 @@
 <!--
     Auto Backup rules (Android 12+).
     Preserves user data through uninstall/reinstall via Google Drive backup.
-    Game content DB (spyglass.db) is excluded — it's re-seeded on first launch.
+    Only user-created data is included — game content DB is re-seeded on launch.
 -->
 <cloud-backup-rules>
     <!-- User database: notes, waypoints, favorites, shopping lists, etc. -->
@@ -16,19 +16,4 @@
 
     <!-- SharedPreferences: sync manifest, review tracking -->
     <include domain="sharedpref" path="." />
-
-    <!-- Exclude game content DB (large, re-seeded from bundled JSON) -->
-    <exclude domain="database" path="spyglass.db" />
-    <exclude domain="database" path="spyglass.db-wal" />
-    <exclude domain="database" path="spyglass.db-shm" />
-
-    <!-- Exclude re-downloadable content -->
-    <exclude domain="file" path="textures/" />
-    <exclude domain="file" path="minecraft/" />
-
-    <!-- Exclude crash logs (transient) -->
-    <exclude domain="file" path="connect-logs/" />
-
-    <!-- Exclude cache dir entirely -->
-    <exclude domain="root" path="cache/" />
 </cloud-backup-rules>
