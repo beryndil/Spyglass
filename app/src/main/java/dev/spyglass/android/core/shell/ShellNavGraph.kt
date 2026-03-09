@@ -221,6 +221,7 @@ fun ShellNavGraph() {
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
                 alignment = Alignment.TopCenter,
+                alpha = 0.45f,
             )
         }
 
