@@ -1,6 +1,7 @@
 package dev.spyglass.android.core.shell
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.IconButton
@@ -230,7 +232,7 @@ fun ShellNavGraph() {
     Scaffold(
         containerColor = if (isImageTheme) Color.Transparent else MaterialTheme.colorScheme.background,
         topBar = {
-            ShellTopBar(navController, onClockTap = {
+            ShellTopBar(navController, isImageTheme = isImageTheme, onClockTap = {
                 pendingCalcTab = 9
                 navigateToTop("calculators")
             })
@@ -316,12 +318,16 @@ fun ShellNavGraph() {
 // ── Top bar ─────────────────────────────────────────────────────────────────
 
 @Composable
-private fun ShellTopBar(navController: NavHostController, onClockTap: () -> Unit = {}) {
+private fun ShellTopBar(navController: NavHostController, isImageTheme: Boolean = false, onClockTap: () -> Unit = {}) {
     var menuExpanded by remember { mutableStateOf(false) }
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .then(
+                if (isImageTheme) Modifier.background(Color(0xB0080810))
+                else Modifier
+            )
             .statusBarsPadding()
             .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
