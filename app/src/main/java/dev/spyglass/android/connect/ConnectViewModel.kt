@@ -49,6 +49,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     // ── Observable state ─────────────────────────────────────────────────────
 
     val connectionState: StateFlow<ConnectionState> = client.connectionState
+    val desktopCapabilities: StateFlow<Set<String>> = client.negotiatedCapabilities
 
     private val _worlds = MutableStateFlow<List<WorldInfo>>(emptyList())
     val worlds: StateFlow<List<WorldInfo>> = _worlds

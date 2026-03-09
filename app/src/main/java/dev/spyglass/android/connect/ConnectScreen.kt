@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import android.graphics.Bitmap
@@ -44,6 +45,7 @@ fun ConnectScreen(
     val playerList by viewModel.playerList.collectAsStateWithLifecycle()
     val selectedPlayerUuid by viewModel.selectedPlayerUuid.collectAsStateWithLifecycle()
     val playerSkin by viewModel.playerSkin.collectAsStateWithLifecycle()
+    val capabilities by viewModel.desktopCapabilities.collectAsStateWithLifecycle()
 
     DisposableEffect(Unit) {
         viewModel.setActiveScreen("connect")
@@ -108,6 +110,7 @@ fun ConnectScreen(
                         playerData = playerData,
                         playerList = playerList,
                         selectedPlayerUuid = selectedPlayerUuid,
+                        capabilities = capabilities,
                         onSelectWorld = { viewModel.selectWorld(it) },
                         onSelectPlayer = { viewModel.selectPlayer(it) },
                         onRequestPlayer = { viewModel.requestPlayerData() },
@@ -263,6 +266,7 @@ private fun ConnectedContent(
     playerData: PlayerData?,
     playerList: List<PlayerSummary>,
     selectedPlayerUuid: String?,
+    capabilities: Set<String>,
     onSelectWorld: (String) -> Unit,
     onSelectPlayer: (String?) -> Unit,
     onRequestPlayer: () -> Unit,
@@ -348,16 +352,16 @@ private fun ConnectedContent(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            ConnectQuickLink("Inventory", PixelIcons.Backpack, Modifier.weight(1f), tint = Color.Unspecified, onClick = onInventory)
-            ConnectQuickLink("Ender Chest", PixelIcons.EnderChest, Modifier.weight(1f), tint = Color.Unspecified, onClick = onEnderChest)
+            ConnectQuickLink("Inventory", PixelIcons.Backpack, Modifier.weight(1f), tint = Color.Unspecified, enabled = capabilities.contains(Capability.PLAYER_DATA), onClick = onInventory)
+            ConnectQuickLink("Ender Chest", PixelIcons.EnderChest, Modifier.weight(1f), tint = Color.Unspecified, enabled = capabilities.contains(Capability.PLAYER_DATA), onClick = onEnderChest)
         }
         Spacer(Modifier.height(8.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            ConnectQuickLink("Storage", PixelIcons.Search, Modifier.weight(1f), onClick = onChestFinder)
-            ConnectQuickLink("Map", PixelIcons.Biome, Modifier.weight(1f), onClick = onMap)
+            ConnectQuickLink("Storage", PixelIcons.Search, Modifier.weight(1f), enabled = capabilities.contains(Capability.CHEST_CONTENTS), onClick = onChestFinder)
+            ConnectQuickLink("Map", PixelIcons.Biome, Modifier.weight(1f), enabled = capabilities.contains(Capability.MAP_RENDER), onClick = onMap)
         }
     }
 }
@@ -478,19 +482,32 @@ private fun ConnectQuickLink(
     icon: SpyglassIcon,
     modifier: Modifier = Modifier,
     tint: Color = MaterialTheme.colorScheme.primary,
+    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     val hapticClick = rememberHapticClick()
-    Row(
+    val alpha = if (enabled) 1f else 0.4f
+    Column(
         modifier = modifier
             .background(LocalSurfaceCard.current, RoundedCornerShape(8.dp))
             .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
-            .clickable { hapticClick(); onClick() }
+            .then(if (enabled) Modifier.clickable { hapticClick(); onClick() } else Modifier)
             .padding(horizontal = 12.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically,
     ) {
-        SpyglassIconImage(icon, contentDescription = null, tint = tint, modifier = Modifier.size(22.dp))
-        Spacer(Modifier.width(10.dp))
-        Text(label, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.graphicsLayer { this.alpha = alpha },
+        ) {
+            SpyglassIconImage(icon, contentDescription = null, tint = tint, modifier = Modifier.size(22.dp))
+            Spacer(Modifier.width(10.dp))
+            Text(label, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+        }
+        if (!enabled) {
+            Text(
+                "Requires desktop update",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+            )
+        }
     }
 }

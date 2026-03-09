@@ -39,6 +39,9 @@ class SpyglassClient {
     private val _messages = MutableSharedFlow<SpyglassMessage>(extraBufferCapacity = 64)
     val messages: SharedFlow<SpyglassMessage> = _messages
 
+    private val _negotiatedCapabilities = MutableStateFlow<Set<String>>(emptySet())
+    val negotiatedCapabilities: StateFlow<Set<String>> = _negotiatedCapabilities
+
     /** Whether the last disconnect was user-initiated. */
     private var userDisconnect = false
 
@@ -117,6 +120,15 @@ class SpyglassClient {
                             encryption.deriveSharedKey(accept.pubkey)
                             Timber.d("Encryption established")
                         }
+                        // Negotiate capabilities
+                        val desktopCaps = accept.capabilities.toSet()
+                        _negotiatedCapabilities.value = if (desktopCaps.isEmpty()) {
+                            // Legacy v2 desktop — assume all supported
+                            Capability.ALL
+                        } else {
+                            desktopCaps.intersect(Capability.ALL)
+                        }
+                        Timber.d("Negotiated capabilities: ${_negotiatedCapabilities.value}")
                         _connectionState.value = ConnectionState.Connected(accept.deviceName)
                         CrashReporter.setKey("connect_state", "connected")
                         CrashReporter.setKey("connect_device", accept.deviceName)
@@ -161,6 +173,8 @@ class SpyglassClient {
                     protocolVersion = ProtocolInfo.PROTOCOL_VERSION,
                     minCompatibleVersion = ProtocolInfo.MIN_COMPATIBLE_VERSION,
                     appVersion = BuildConfig.VERSION_NAME,
+                    platform = "android",
+                    capabilities = Capability.ALL.toList(),
                 ),
             ),
         )
@@ -193,6 +207,7 @@ class SpyglassClient {
         webSocket?.close(1000, "Client disconnect")
         webSocket = null
         _connectionState.value = ConnectionState.Disconnected
+        _negotiatedCapabilities.value = emptySet()
         CrashReporter.setKey("connect_state", "disconnected")
     }
 
