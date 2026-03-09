@@ -122,13 +122,8 @@ fun ConnectScreen(
                 }
 
                 else -> {
-                    // Connecting/Pairing/Reconnecting — show spinner
-                    Box(
-                        modifier = Modifier.fillMaxWidth().padding(32.dp),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
-                    }
+                    // Connecting/Pairing/Reconnecting — show chest loading animation
+                    ChestLoadingAnimation(connectionState = state)
                 }
             }
         }
