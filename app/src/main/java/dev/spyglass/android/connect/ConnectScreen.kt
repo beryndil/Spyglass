@@ -140,13 +140,13 @@ fun ConnectScreen(
         }
     }
 
-    // Chest loading overlay — triggered by long-pressing globe on selected world
+    // Chest loading overlay — triggered by long-pressing selected world row
     if (showChestAnimation) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background.copy(alpha = 0.95f))
-                .clickable(enabled = false) {},
+                .background(Color(0xF0101014))
+                .clickable {},
             contentAlignment = Alignment.Center,
         ) {
             ChestLoadingOneShot(
@@ -340,11 +340,16 @@ private fun ConnectedContent(
                         if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
                         RoundedCornerShape(8.dp),
                     )
-                    .clickable {
-                        hapticClick()
-                        onSelectWorld(world.folderName)
-                        onRequestPlayer()
-                    }
+                    .combinedClickable(
+                        onClick = {
+                            hapticClick()
+                            onSelectWorld(world.folderName)
+                            onRequestPlayer()
+                        },
+                        onLongClick = if (isSelected) {
+                            { hapticConfirm(); onLongPressGlobe() }
+                        } else null,
+                    )
                     .padding(12.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -352,14 +357,7 @@ private fun ConnectedContent(
                     Icons.Filled.Public,
                     contentDescription = null,
                     tint = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .then(
-                            if (isSelected) Modifier.combinedClickable(
-                                onClick = {},
-                                onLongClick = { hapticConfirm(); onLongPressGlobe() },
-                            ) else Modifier
-                        ),
+                    modifier = Modifier.size(24.dp),
                 )
                 Spacer(Modifier.width(12.dp))
                 Column(modifier = Modifier.weight(1f)) {
