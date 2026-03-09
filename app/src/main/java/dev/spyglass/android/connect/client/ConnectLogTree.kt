@@ -5,24 +5,35 @@ import dev.spyglass.android.connect.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 import timber.log.Timber
-import java.io.PrintWriter
-import java.io.StringWriter
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.atomic.AtomicLong
 
 /**
  * Timber tree that captures warnings, errors, and crashes and sends them
  * to the desktop over the existing WebSocket connection.
  *
- * Logs are batched — buffered while disconnected and flushed when the
- * WebSocket becomes available.
+ * Smart features:
+ * - Deduplicates repeated messages (collapses to "× N" counts)
+ * - Extracts root cause from throwables instead of full obfuscated traces
+ * - Throttles flush to max once per 2 seconds to avoid reconnect spam
  */
 class ConnectLogTree(private val client: SpyglassClient) : Timber.Tree() {
 
     private val json = Json { encodeDefaults = true }
     private val buffer = ConcurrentLinkedQueue<DeviceLogEntry>()
 
+    // Deduplication: track last message to collapse repeats
+    @Volatile private var lastKey = ""
+    @Volatile private var lastEntry: DeviceLogEntry? = null
+    @Volatile private var repeatCount = 0
+
+    // Throttle: don't flush more than once per 2 seconds
+    private val lastFlushTime = AtomicLong(0)
+    private companion object {
+        const val FLUSH_INTERVAL_MS = 2000L
+    }
+
     override fun isLoggable(tag: String?, priority: Int): Boolean {
-        // Capture warnings, errors, and WTF (assert) only
         return priority >= Log.WARN
     }
 
@@ -34,33 +45,90 @@ class ConnectLogTree(private val client: SpyglassClient) : Timber.Tree() {
             else -> return
         }
 
-        val throwableStr = if (t != null) {
-            val sw = StringWriter()
-            t.printStackTrace(PrintWriter(sw))
-            sw.toString().take(4000) // Cap stack trace size
-        } else null
+        val safeTag = tag ?: "unknown"
+        val safeMessage = message.take(2000)
+        val key = "$level/$safeTag:$safeMessage"
 
-        val entry = DeviceLogEntry(
-            timestamp = System.currentTimeMillis(),
-            level = level,
-            tag = tag ?: "unknown",
-            message = message.take(2000),
-            throwable = throwableStr,
-        )
+        // Extract just the root cause message — full R8-obfuscated traces are useless
+        val throwableStr = t?.let { extractRootCause(it) }
 
-        buffer.add(entry)
+        synchronized(this) {
+            if (key == lastKey && repeatCount < 999) {
+                // Same message again — just bump the count
+                repeatCount++
+                return
+            }
 
-        // Trim buffer if it gets too large (keep most recent 200)
-        while (buffer.size > 200) buffer.poll()
+            // Different message — flush any pending repeats first
+            emitPendingRepeat()
 
-        // Try to flush if connected
-        flush()
+            val entry = DeviceLogEntry(
+                timestamp = System.currentTimeMillis(),
+                level = level,
+                tag = safeTag,
+                message = safeMessage,
+                throwable = throwableStr,
+            )
+
+            lastKey = key
+            lastEntry = entry
+            repeatCount = 1
+            buffer.add(entry)
+
+            while (buffer.size > 200) buffer.poll()
+        }
+
+        // Throttled flush
+        val now = System.currentTimeMillis()
+        if (now - lastFlushTime.get() >= FLUSH_INTERVAL_MS) {
+            lastFlushTime.set(now)
+            flush()
+        }
+    }
+
+    /** Emit a "repeated N times" entry if the last message was seen more than once. */
+    private fun emitPendingRepeat() {
+        if (repeatCount > 1) {
+            val last = lastEntry ?: return
+            buffer.add(DeviceLogEntry(
+                timestamp = System.currentTimeMillis(),
+                level = last.level,
+                tag = last.tag,
+                message = "↑ repeated ${repeatCount - 1} more times",
+                throwable = null,
+            ))
+            while (buffer.size > 200) buffer.poll()
+        }
+    }
+
+    /**
+     * Extract a human-readable root cause from a throwable chain.
+     * Skips obfuscated stack frames — just returns the exception class + message
+     * for each cause in the chain.
+     */
+    private fun extractRootCause(t: Throwable): String {
+        val causes = mutableListOf<String>()
+        var current: Throwable? = t
+        val seen = mutableSetOf<Throwable>()
+        while (current != null && seen.add(current)) {
+            val name = current.javaClass.name
+            val msg = current.message?.take(500) ?: ""
+            causes.add("$name: $msg")
+            current = current.cause
+        }
+        return causes.joinToString("\n  Caused by: ").take(2000)
     }
 
     /** Flush all buffered log entries to the desktop. */
     fun flush() {
-        if (buffer.isEmpty()) return
+        if (buffer.isEmpty() && repeatCount <= 1) return
         if (!client.connectionState.value.isConnected) return
+
+        // Emit any pending repeat count before flushing
+        synchronized(this) {
+            emitPendingRepeat()
+            repeatCount = if (lastEntry != null) 1 else 0
+        }
 
         val entries = mutableListOf<DeviceLogEntry>()
         while (true) {
