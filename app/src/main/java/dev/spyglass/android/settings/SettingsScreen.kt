@@ -130,10 +130,10 @@ fun SettingsScreen(
         // ══════════════════════════════════════════════════════════════════
         item(key = "appearance") {
             SectionHeader("Appearance")
+            // ── Image background themes ──
             ResultCard {
-                // ── Featured image themes ──
                 Text(
-                    stringResource(R.string.settings_background),
+                    "Backgrounds",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
@@ -170,6 +170,7 @@ fun SettingsScreen(
                                     contentDescription = label,
                                     modifier = Modifier.fillMaxSize(),
                                     contentScale = ContentScale.Crop,
+                                    alignment = Alignment.TopCenter,
                                 )
                             }
                             Spacer(Modifier.height(4.dp))
@@ -182,19 +183,18 @@ fun SettingsScreen(
                         }
                     }
                 }
+            }
 
-                Spacer(Modifier.height(8.dp))
-
-                // ── Solid colour themes ──
+            // ── Solid colour themes ──
+            ResultCard {
                 Text(
                     "Solid Colors",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
-                Spacer(Modifier.height(4.dp))
                 FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     SolidThemeOrder.forEach { key ->
                         val info = ThemeInfoMap[key] ?: return@forEach
@@ -202,11 +202,11 @@ fun SettingsScreen(
                         val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
                         Box(
                             modifier = Modifier
-                                .size(42.dp)
+                                .size(24.dp)
                                 .clip(CircleShape)
                                 .background(info.background, CircleShape)
                                 .border(
-                                    width = if (isSelected) 2.5.dp else 1.dp,
+                                    width = if (isSelected) 2.dp else 0.5.dp,
                                     color = borderColor,
                                     shape = CircleShape,
                                 )
@@ -219,8 +219,10 @@ fun SettingsScreen(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
+            }
 
-                SpyglassDivider()
+            // ── Other appearance settings ──
+            ResultCard {
 
                 // Dynamic Color (Material You) — Android 12+ only
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
