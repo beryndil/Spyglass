@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.foundation.layout.*
@@ -59,12 +58,18 @@ fun ConnectScreen(
         onDispose { viewModel.setActiveScreen(null) }
     }
 
+    val isImageTheme = LocalThemeKey.current in ImageThemeKeys
+
     Box(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.fillMaxSize()) {
         // Top bar
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .then(
+                    if (isImageTheme) Modifier.background(Color(0xB0080810))
+                    else Modifier
+                )
                 .statusBarsPadding()
                 .padding(horizontal = 8.dp, vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -75,7 +80,14 @@ fun ConnectScreen(
             Text(
                 "Spyglass Connect",
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .then(
+                        if (isImageTheme) Modifier
+                            .background(Color(0x80000000), RoundedCornerShape(16.dp))
+                            .padding(horizontal = 10.dp, vertical = 4.dp)
+                        else Modifier
+                    ),
             )
             if (state.isConnected) {
                 IconButton(onClick = { hapticConfirm(); viewModel.disconnect() }) {
