@@ -7,10 +7,8 @@ import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -193,28 +191,27 @@ fun SettingsScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(Modifier.height(4.dp))
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .horizontalScroll(rememberScrollState()),
-                ) {
-                    SolidThemeOrder.forEach { key ->
-                        val info = ThemeInfoMap[key] ?: return@forEach
-                        val isSelected = backgroundTheme == key
-                        val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
-                        Box(
-                            modifier = Modifier
-                                .size(20.dp)
-                                .clip(CircleShape)
-                                .background(info.background, CircleShape)
-                                .border(
-                                    width = if (isSelected) 2.dp else 0.5.dp,
-                                    color = borderColor,
-                                    shape = CircleShape,
+                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    SolidThemeOrder.chunked(9).forEach { row ->
+                        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                            row.forEach { key ->
+                                val info = ThemeInfoMap[key] ?: return@forEach
+                                val isSelected = backgroundTheme == key
+                                val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+                                Box(
+                                    modifier = Modifier
+                                        .size(20.dp)
+                                        .clip(CircleShape)
+                                        .background(info.background, CircleShape)
+                                        .border(
+                                            width = if (isSelected) 2.dp else 0.5.dp,
+                                            color = borderColor,
+                                            shape = CircleShape,
+                                        )
+                                        .clickable { hapticClick(); vm.setBackgroundTheme(key) },
                                 )
-                                .clickable { hapticClick(); vm.setBackgroundTheme(key) },
-                        )
+                            }
+                        }
                     }
                 }
                 Text(
