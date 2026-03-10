@@ -256,25 +256,27 @@ fun SettingsScreen(
                                 }
                             }
                             Spacer(Modifier.height(3.dp))
-                            Text(
-                                "My Photo",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
-                                textAlign = TextAlign.Center,
-                                maxLines = 1,
-                            )
-                            // Change/Remove when custom is selected
                             if (isSelected && hasCustom) {
                                 Text(
                                     "Change",
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.primary,
+                                    textAlign = TextAlign.Center,
+                                    maxLines = 1,
                                     modifier = Modifier.clickable {
                                         hapticClick()
                                         photoPickerLauncher.launch(
                                             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                                         )
                                     },
+                                )
+                            } else {
+                                Text(
+                                    "My Photo",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+                                    textAlign = TextAlign.Center,
+                                    maxLines = 1,
                                 )
                             }
                         }

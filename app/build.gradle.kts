@@ -175,6 +175,7 @@ dependencies {
 
     implementation(libs.datastore.preferences)
     implementation(libs.androidx.palette)
+    implementation(libs.androidx.exifinterface)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.android)
     // Debug tools

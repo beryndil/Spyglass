@@ -3,8 +3,10 @@ package dev.spyglass.android.core.ui
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.net.Uri
 import androidx.compose.ui.graphics.Color
+import androidx.exifinterface.media.ExifInterface
 import androidx.palette.graphics.Palette
 import timber.log.Timber
 import java.io.File
@@ -61,13 +63,33 @@ object CustomWallpaper {
                 return
             }
 
-            // Scale to max width if still too large
-            val scaled = if (bitmap.width > MAX_WIDTH) {
-                val ratio = MAX_WIDTH.toFloat() / bitmap.width
-                Bitmap.createScaledBitmap(bitmap, MAX_WIDTH, (bitmap.height * ratio).toInt(), true).also {
-                    if (it !== bitmap) bitmap.recycle()
+            // Fix EXIF rotation
+            val rotated = context.contentResolver.openInputStream(uri)?.use { exifStream ->
+                val exif = ExifInterface(exifStream)
+                val orientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL
+                )
+                val degrees = when (orientation) {
+                    ExifInterface.ORIENTATION_ROTATE_90 -> 90f
+                    ExifInterface.ORIENTATION_ROTATE_180 -> 180f
+                    ExifInterface.ORIENTATION_ROTATE_270 -> 270f
+                    else -> 0f
                 }
-            } else bitmap
+                if (degrees != 0f) {
+                    val matrix = Matrix().apply { postRotate(degrees) }
+                    Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true).also {
+                        if (it !== bitmap) bitmap.recycle()
+                    }
+                } else bitmap
+            } ?: bitmap
+
+            // Scale to max width if still too large
+            val scaled = if (rotated.width > MAX_WIDTH) {
+                val ratio = MAX_WIDTH.toFloat() / rotated.width
+                Bitmap.createScaledBitmap(rotated, MAX_WIDTH, (rotated.height * ratio).toInt(), true).also {
+                    if (it !== rotated) rotated.recycle()
+                }
+            } else rotated
 
             // Save as WebP
             file.outputStream().use { out ->
