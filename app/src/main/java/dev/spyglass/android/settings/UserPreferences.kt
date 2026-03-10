@@ -48,6 +48,8 @@ object PreferenceKeys {
 
     // Language / i18n
     val APP_LANGUAGE            = stringPreferencesKey("app_language") // "system", "en", "es", "pt", "fr", "de", "ja"
+    val TRANSLATE_GAME_DATA     = booleanPreferencesKey("translate_game_data")     // translate entity names/descriptions
+    val SHOW_ORIGINAL_NAMES     = booleanPreferencesKey("show_original_names")     // show English name alongside translation
 
     // Spyglass Connect
     val CONNECT_PAIRED_DEVICE   = stringPreferencesKey("connect_paired_device")

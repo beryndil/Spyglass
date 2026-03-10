@@ -59,13 +59,17 @@ fun translationMapFlow(
     repo: GameDataRepository,
     entityType: String,
 ): Flow<Map<String, Map<String, String>>> =
-    resolveLocaleFlow(dataStore).flatMapLatest { locale ->
-        if (locale == "en") flowOf(emptyMap())
-        else repo.translationsForType(locale, entityType).map { list ->
-            list.groupBy { it.entityId }
-                .mapValues { (_, entries) -> entries.associate { it.field to it.value } }
+    kotlinx.coroutines.flow.combine(
+        resolveLocaleFlow(dataStore),
+        dataStore.data.map { it[PreferenceKeys.TRANSLATE_GAME_DATA] ?: true },
+    ) { locale, enabled -> locale to enabled }
+        .flatMapLatest { (locale, enabled) ->
+            if (locale == "en" || !enabled) flowOf(emptyMap())
+            else repo.translationsForType(locale, entityType).map { list ->
+                list.groupBy { it.entityId }
+                    .mapValues { (_, entries) -> entries.associate { it.field to it.value } }
+            }
         }
-    }
 
 /** Supported languages with display names (always shown in native script). */
 val SupportedLanguages = listOf(

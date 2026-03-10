@@ -112,6 +112,8 @@ fun SettingsScreen(
     val textureState        by TextureManager.state.collectAsStateWithLifecycle()
     val syncing             by vm.syncing.collectAsStateWithLifecycle()
     val appLanguage         by vm.appLanguage.collectAsStateWithLifecycle()
+    val translateGameData   by vm.translateGameData.collectAsStateWithLifecycle()
+    val showOriginalNames   by vm.showOriginalNames.collectAsStateWithLifecycle()
 
     val uriHandler = LocalUriHandler.current
     val context = LocalContext.current
@@ -148,6 +150,80 @@ fun SettingsScreen(
                 )
             }
             SectionHeader(stringResource(R.string.settings))
+        }
+
+        // ══════════════════════════════════════════════════════════════════
+        // 0. LANGUAGE — app locale selector (top of settings)
+        // ══════════════════════════════════════════════════════════════════
+        item(key = "language") {
+            SectionHeader(stringResource(R.string.settings_language))
+            ResultCard {
+                Text(
+                    stringResource(R.string.settings_language_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    SupportedLanguages.forEach { (code, label) ->
+                        FilterChip(
+                            selected = appLanguage == code,
+                            onClick = { hapticClick(); vm.setAppLanguage(code) },
+                            label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                        )
+                    }
+                }
+                if (appLanguage != "en" && appLanguage != "system") {
+                    SpyglassDivider()
+                    SettingsToggle(
+                        title = stringResource(R.string.settings_translate_game_data),
+                        description = stringResource(R.string.settings_translate_game_data_desc),
+                        checked = translateGameData,
+                        onCheckedChange = vm::setTranslateGameData,
+                    )
+                    SettingsToggle(
+                        title = stringResource(R.string.settings_show_original_names),
+                        description = stringResource(R.string.settings_show_original_names_desc),
+                        checked = showOriginalNames,
+                        onCheckedChange = vm::setShowOriginalNames,
+                    )
+                }
+                val langContext = LocalContext.current
+                SpyglassDivider()
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                Intent(Settings.ACTION_APP_LOCALE_SETTINGS).apply {
+                                    data = Uri.parse("package:${langContext.packageName}")
+                                }
+                            } else {
+                                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                    data = Uri.parse("package:${langContext.packageName}")
+                                }
+                            }
+                            langContext.startActivity(intent)
+                        }
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        stringResource(R.string.settings_language_system_override),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.weight(1f),
+                    )
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp).graphicsLayer { rotationZ = 180f },
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                }
+            }
         }
 
         // ══════════════════════════════════════════════════════════════════
@@ -374,65 +450,6 @@ fun SettingsScreen(
                     checked = reduceAnimations,
                     onCheckedChange = vm::setReduceAnimations,
                 )
-            }
-        }
-
-        // ══════════════════════════════════════════════════════════════════
-        // 1b. LANGUAGE — app locale selector
-        // ══════════════════════════════════════════════════════════════════
-        item(key = "language") {
-            SectionHeader(stringResource(R.string.settings_language))
-            ResultCard {
-                Text(
-                    stringResource(R.string.settings_language_desc),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    SupportedLanguages.forEach { (code, label) ->
-                        FilterChip(
-                            selected = appLanguage == code,
-                            onClick = { hapticClick(); vm.setAppLanguage(code) },
-                            label = { Text(label, style = MaterialTheme.typography.labelSmall) },
-                        )
-                    }
-                }
-                val context = LocalContext.current
-                SpyglassDivider()
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                Intent(Settings.ACTION_APP_LOCALE_SETTINGS).apply {
-                                    data = Uri.parse("package:${context.packageName}")
-                                }
-                            } else {
-                                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                    data = Uri.parse("package:${context.packageName}")
-                                }
-                            }
-                            context.startActivity(intent)
-                        }
-                        .padding(vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        stringResource(R.string.settings_language_system_override),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.weight(1f),
-                    )
-                    Icon(
-                        Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = null,
-                        modifier = Modifier.size(16.dp).graphicsLayer { rotationZ = 180f },
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
-                }
             }
         }
 

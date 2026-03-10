@@ -202,6 +202,22 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(localeList)
     }
 
+    val translateGameData: StateFlow<Boolean> = store.data
+        .map { it[PreferenceKeys.TRANSLATE_GAME_DATA] ?: true }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
+
+    fun setTranslateGameData(enabled: Boolean) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.TRANSLATE_GAME_DATA] = enabled }
+    }
+
+    val showOriginalNames: StateFlow<Boolean> = store.data
+        .map { it[PreferenceKeys.SHOW_ORIGINAL_NAMES] ?: false }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
+
+    fun setShowOriginalNames(enabled: Boolean) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.SHOW_ORIGINAL_NAMES] = enabled }
+    }
+
     // Content Filtering
     val hideUnobtainableBlocks: StateFlow<Boolean> = store.data
         .map { it[PreferenceKeys.HIDE_UNOBTAINABLE_BLOCKS] ?: false }

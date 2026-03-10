@@ -239,6 +239,10 @@
     <!-- Settings — Language -->
     <string name="settings_language">Idioma</string>
     <string name="settings_language_desc">Escolha o idioma de exibição do Spyglass. Traduções dos dados do jogo são baixadas separadamente.</string>
+    <string name="settings_translate_game_data">Traduzir dados do jogo</string>
+    <string name="settings_translate_game_data_desc">Mostrar nomes e descrições traduzidos para blocos, itens, mobs e outros dados do jogo</string>
+    <string name="settings_show_original_names">Mostrar nomes originais em inglês</string>
+    <string name="settings_show_original_names_desc">Exibir o nome em inglês junto às traduções como referência</string>
     <string name="settings_language_system_override">Abrir configurações de idioma do sistema</string>
 
     <!-- Settings — Security -->

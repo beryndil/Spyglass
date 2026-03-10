@@ -239,6 +239,10 @@
     <!-- Settings — Language -->
     <string name="settings_language">言語</string>
     <string name="settings_language_desc">Spyglassの表示言語を選択してください。ゲームデータの翻訳は別途ダウンロードされます。</string>
+    <string name="settings_translate_game_data">ゲームデータを翻訳</string>
+    <string name="settings_translate_game_data_desc">ブロック、アイテム、モブなどのゲームデータの翻訳された名前と説明を表示</string>
+    <string name="settings_show_original_names">英語の元の名前を表示</string>
+    <string name="settings_show_original_names_desc">参考として翻訳の横に英語名を表示</string>
     <string name="settings_language_system_override">システム言語設定を開く</string>
 
     <!-- Settings — Security -->
