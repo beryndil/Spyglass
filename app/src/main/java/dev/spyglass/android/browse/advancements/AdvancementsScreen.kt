@@ -87,6 +87,10 @@ class AdvancementsViewModel(app: Application) : AndroidViewModel(app) {
         .map { it.toTagMap() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
+    val translations: StateFlow<Map<String, Map<String, String>>> =
+        translationMapFlow(app.dataStore, repo, "advancement")
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val advancements: StateFlow<List<AdvancementEntity>> = combine(_query.debounce(200), _category, _sortKey) { q, cat, sort ->
         val flow = if (q.isBlank() && cat == "all") repo.searchAdvancements("")
         else if (cat != "all") repo.advancementsByCategory(cat)
@@ -285,6 +289,7 @@ fun AdvancementsScreen(
     val sortKey by vm.sortKey.collectAsStateWithLifecycle()
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
+    val txMap       by vm.translations.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
     val reduceMotion = LocalReduceAnimations.current
@@ -471,7 +476,7 @@ fun AdvancementsScreen(
                         // Name
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
-                                adv.name,
+                                txMap[adv.id]?.get("name") ?: adv.name,
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = if (isComplete) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface,
                                 textDecoration = if (isComplete) TextDecoration.LineThrough else TextDecoration.None,
@@ -534,6 +539,7 @@ fun AdvancementsScreen(
                             entityLinkIndex = entityLinkIndex,
                             tag = tag,
                             vFilter = vFilter,
+                            txMap = txMap,
                             onAdvancementTap = { parentId ->
                                 vm.navigateToAdvancement(parentId, advancements)
                                 // Scroll to it
@@ -578,6 +584,7 @@ private fun AdvancementDetailCard(
     entityLinkIndex: EntityLinkIndex,
     tag: VersionTagEntity? = null,
     vFilter: VersionFilterState = VersionFilterState(),
+    txMap: Map<String, Map<String, String>> = emptyMap(),
     onAdvancementTap: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -588,7 +595,7 @@ private fun AdvancementDetailCard(
         }
         if (adv.description.isNotEmpty()) {
             LinkedDescription(
-                description = adv.description,
+                description = txMap[adv.id]?.get("description") ?: adv.description,
                 linkIndex = entityLinkIndex,
                 selfId = adv.id,
                 onItemTap = onItemTap,
@@ -602,19 +609,19 @@ private fun AdvancementDetailCard(
         // Requirements section
         if (adv.requirements.isNotEmpty()) {
             SectionHeader(title = stringResource(R.string.advancements_requirements))
-            Text(adv.requirements, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+            Text(txMap[adv.id]?.get("requirements") ?: adv.requirements, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
         }
 
         // How to get this section
         if (adv.hint.isNotEmpty()) {
             SectionHeader(title = stringResource(R.string.advancements_how_to_get))
-            Text(adv.hint, style = MaterialTheme.typography.bodyMedium, color = Emerald)
+            Text(txMap[adv.id]?.get("hint") ?: adv.hint, style = MaterialTheme.typography.bodyMedium, color = Emerald)
         }
 
         // Tutorial section
         if (adv.tutorial.isNotEmpty()) {
             SectionHeader(title = stringResource(R.string.advancements_tutorial))
-            Text(adv.tutorial, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+            Text(txMap[adv.id]?.get("tutorial") ?: adv.tutorial, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
         }
 
         // Stats

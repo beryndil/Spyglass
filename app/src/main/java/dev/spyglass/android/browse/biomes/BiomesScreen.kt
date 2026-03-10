@@ -88,6 +88,10 @@ class BiomesViewModel(app: Application) : AndroidViewModel(app) {
         .map { it.toTagMap() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
+    val translations: StateFlow<Map<String, Map<String, String>>> =
+        translationMapFlow(app.dataStore, repo, "biome")
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val biomes: StateFlow<List<BiomeEntity>> = combine(_query.debounce(200), _category, _sortKey) { q, cat, sort ->
         repo.searchBiomes(q).map { list ->
             val filtered = if (cat == "all") list else list.filter { it.category.equals(cat, ignoreCase = true) }
@@ -165,6 +169,7 @@ fun BiomesScreen(
     val favoriteBiomes by vm.favoriteBiomes.collectAsStateWithLifecycle()
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
+    val txMap       by vm.translations.collectAsStateWithLifecycle()
     val listState    = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
@@ -270,14 +275,14 @@ fun BiomesScreen(
                 val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val isExpanded = b.id in expandedIds
                 Column(modifier = Modifier.alpha(vAlpha)) {
-                    BiomeListItem(b, isFavorite = b.id in favoriteIds, onToggleFavorite = { hapticConfirm(); vm.toggleFavorite(b.id, b.name) }, onClick = { vm.toggleExpanded(b.id) }, addedIn = addedIn, availability = availability)
+                    BiomeListItem(b, isFavorite = b.id in favoriteIds, onToggleFavorite = { hapticConfirm(); vm.toggleFavorite(b.id, b.name) }, onClick = { vm.toggleExpanded(b.id) }, addedIn = addedIn, availability = availability, txMap = txMap)
                     val reduceMotion = LocalReduceAnimations.current
                     AnimatedVisibility(
                         visible = isExpanded,
                         enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
                         exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
-                        BiomeDetailCard(b, onNavigateToMob, onNavigateToStructure, onItemTap, onCalcTab, tag, vFilter)
+                        BiomeDetailCard(b, onNavigateToMob, onNavigateToStructure, onItemTap, onCalcTab, tag, vFilter, txMap)
                     }
                 }
             }
@@ -293,11 +298,11 @@ fun BiomesScreen(
 }
 
 @Composable
-private fun BiomeListItem(b: BiomeEntity, isFavorite: Boolean, onToggleFavorite: () -> Unit, onClick: () -> Unit, addedIn: String = "", availability: VersionAvailability = VersionAvailability.AVAILABLE) {
+private fun BiomeListItem(b: BiomeEntity, isFavorite: Boolean, onToggleFavorite: () -> Unit, onClick: () -> Unit, addedIn: String = "", availability: VersionAvailability = VersionAvailability.AVAILABLE, txMap: Map<String, Map<String, String>> = emptyMap()) {
     val biomeColor = parseBiomeColor(b.color)
 
     BrowseListItem(
-        headline    = b.name,
+        headline    = txMap[b.id]?.get("name") ?: b.name,
         supporting  = "",
         leadingIcon = BiomeTextures.get(b.id) ?: PixelIcons.Biome,
         modifier    = Modifier.clickable { onClick() },
@@ -336,6 +341,7 @@ private fun BiomeDetailCard(
     onCalcTab: (Int) -> Unit,
     tag: VersionTagEntity? = null,
     vFilter: VersionFilterState = VersionFilterState(),
+    txMap: Map<String, Map<String, String>> = emptyMap(),
 ) {
     val bgColor   = parseBiomeColor(biome.color) ?: MaterialTheme.colorScheme.surface
     val isLight   = (0.299 * bgColor.red + 0.587 * bgColor.green + 0.114 * bgColor.blue) > 0.5
@@ -363,7 +369,7 @@ private fun BiomeDetailCard(
 
         // Description
         if (biome.description.isNotBlank()) {
-            Text(biome.description, style = MaterialTheme.typography.bodySmall, color = subtextColor)
+            Text(txMap[biome.id]?.get("description") ?: biome.description, style = MaterialTheme.typography.bodySmall, color = subtextColor)
         }
 
         // Stats

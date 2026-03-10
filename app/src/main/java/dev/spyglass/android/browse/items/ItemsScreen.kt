@@ -95,6 +95,10 @@ class ItemsViewModel(app: Application) : AndroidViewModel(app) {
     }.applyVersionFilter(versionFilter, versionTags, "item") { it.id }
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    val translations: StateFlow<Map<String, Map<String, String>>> =
+        translationMapFlow(app.dataStore, repo, "item")
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val structures: StateFlow<List<StructureEntity>> = repo.searchStructures("")
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -225,6 +229,7 @@ fun ItemsScreen(
     val favoriteItems  by vm.favoriteItems.collectAsStateWithLifecycle()
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
+    val txMap       by vm.translations.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
@@ -346,7 +351,7 @@ fun ItemsScreen(
                         else      -> if (item.durability > 0) "\u2764 ${item.durability}" else null
                     }
                     BrowseListItem(
-                        headline    = item.name,
+                        headline    = txMap[item.id]?.get("name") ?: item.name,
                         supporting  = "",
                         leadingIcon = texture ?: PixelIcons.Item,
                         modifier    = Modifier.clickable { vm.toggleExpanded(item.id) },
@@ -404,6 +409,7 @@ fun ItemsScreen(
                             entityLinkIndex = entityLinkIndex,
                             versionTag = tag,
                             versionFilter = vFilter,
+                            txMap = txMap,
                         )
                     }
                 }
@@ -437,6 +443,7 @@ private fun ItemDetailCard(
     entityLinkIndex: EntityLinkIndex,
     versionTag: VersionTagEntity? = null,
     versionFilter: VersionFilterState = VersionFilterState(),
+    txMap: Map<String, Map<String, String>> = emptyMap(),
 ) {
     val recipesFor  by vm.recipesForItem(item.id).collectAsStateWithLifecycle(initialValue = emptyList())
     val recipesUsing by vm.recipesUsingItem(item.id).collectAsStateWithLifecycle(initialValue = emptyList())
@@ -451,7 +458,7 @@ private fun ItemDetailCard(
                 Spacer(Modifier.width(12.dp))
             }
             Column(modifier = Modifier.weight(1f)) {
-                Text(item.name, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                Text(txMap[item.id]?.get("name") ?: item.name, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
                 // Badges row
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -484,7 +491,7 @@ private fun ItemDetailCard(
         // Description
         if (item.description.isNotEmpty()) {
             LinkedDescription(
-                description = item.description,
+                description = txMap[item.id]?.get("description") ?: item.description,
                 linkIndex = entityLinkIndex,
                 selfId = item.id,
                 onItemTap = onItemTap,

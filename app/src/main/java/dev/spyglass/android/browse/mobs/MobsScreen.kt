@@ -73,6 +73,10 @@ class MobsViewModel(app: Application) : AndroidViewModel(app) {
         .map { it.toTagMap() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
+    val translations: StateFlow<Map<String, Map<String, String>>> =
+        translationMapFlow(app.dataStore, repo, "mob")
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val mobs: StateFlow<List<MobEntity>> = combine(
         _query.debounce(200), _category, _sortKey
     ) { q, cat, sort -> Triple(q, cat, sort) }
@@ -184,6 +188,7 @@ fun MobsScreen(
     val favoriteMobs by vm.favoriteMobs.collectAsStateWithLifecycle()
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
+    val txMap       by vm.translations.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
@@ -289,7 +294,7 @@ fun MobsScreen(
                 }
                 Column(modifier = Modifier.alpha(vAlpha)) {
                     BrowseListItem(
-                        headline    = m.name,
+                        headline    = txMap[m.id]?.get("name") ?: m.name,
                         supporting  = "",
                         leadingIcon = MobTextures.get(m.id) ?: PixelIcons.Mob,
                         modifier    = Modifier.clickable { vm.toggleExpanded(m.id) },
@@ -323,7 +328,7 @@ fun MobsScreen(
                         enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
                         exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
-                        MobDetailCard(m, onNavigateToBiome, onNavigateToStructure, onItemTap, onMobTap, onCalcTab, entityLinkIndex, tag, vFilter)
+                        MobDetailCard(m, onNavigateToBiome, onNavigateToStructure, onItemTap, onMobTap, onCalcTab, entityLinkIndex, tag, vFilter, txMap)
                     }
                 }
             }
@@ -340,7 +345,7 @@ fun MobsScreen(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onItemTap: (String) -> Unit, onMobTap: (String) -> Unit, onCalcTab: (Int) -> Unit, entityLinkIndex: EntityLinkIndex, tag: VersionTagEntity? = null, vFilter: VersionFilterState = VersionFilterState()) {
+private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onItemTap: (String) -> Unit, onMobTap: (String) -> Unit, onCalcTab: (Int) -> Unit, entityLinkIndex: EntityLinkIndex, tag: VersionTagEntity? = null, vFilter: VersionFilterState = VersionFilterState(), txMap: Map<String, Map<String, String>> = emptyMap()) {
     val drops  = parseStructuredDrops(mob.dropsJson)
     val biomes = parseBiomes(mob.spawnBiomesJson)
 
@@ -354,7 +359,7 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
         // Description
         if (mob.description.isNotEmpty()) {
             LinkedDescription(
-                description = mob.description,
+                description = txMap[mob.id]?.get("description") ?: mob.description,
                 linkIndex = entityLinkIndex,
                 selfId = mob.id,
                 onItemTap = onItemTap,

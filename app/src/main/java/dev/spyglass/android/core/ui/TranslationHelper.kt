@@ -3,7 +3,18 @@ package dev.spyglass.android.core.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.settings.PreferenceKeys
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+
+/** Locales that have game-data translations. */
+private val SUPPORTED_GAME_LOCALES = setOf("es", "pt", "fr", "de", "ja")
 
 /**
  * Looks up a translated string for a game data entity field.
@@ -23,6 +34,38 @@ fun translatedText(
         .collectAsState(initial = null)
     return translated ?: fallback
 }
+
+/**
+ * Resolves the user's language preference from DataStore into an actual locale code.
+ * "system" resolves to the device default if supported, otherwise "en".
+ */
+fun resolveLocaleFlow(dataStore: DataStore<Preferences>): Flow<String> =
+    dataStore.data.map { prefs ->
+        val pref = prefs[PreferenceKeys.APP_LANGUAGE] ?: "system"
+        if (pref == "system") {
+            val lang = java.util.Locale.getDefault().language
+            if (lang in SUPPORTED_GAME_LOCALES) lang else "en"
+        } else pref
+    }
+
+/**
+ * Reactive translation map for a given entity type.
+ * Returns `Map<entityId, Map<field, translatedValue>>`.
+ * Empty when locale is English (no lookups needed).
+ */
+@OptIn(ExperimentalCoroutinesApi::class)
+fun translationMapFlow(
+    dataStore: DataStore<Preferences>,
+    repo: GameDataRepository,
+    entityType: String,
+): Flow<Map<String, Map<String, String>>> =
+    resolveLocaleFlow(dataStore).flatMapLatest { locale ->
+        if (locale == "en") flowOf(emptyMap())
+        else repo.translationsForType(locale, entityType).map { list ->
+            list.groupBy { it.entityId }
+                .mapValues { (_, entries) -> entries.associate { it.field to it.value } }
+        }
+    }
 
 /** Supported languages with display names (always shown in native script). */
 val SupportedLanguages = listOf(

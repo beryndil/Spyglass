@@ -70,6 +70,10 @@ class EnchantsViewModel(app: Application) : AndroidViewModel(app) {
         .map { it.toTagMap() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
+    val translations: StateFlow<Map<String, Map<String, String>>> =
+        translationMapFlow(app.dataStore, repo, "enchant")
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val enchants: StateFlow<List<EnchantEntity>> = combine(_query.debounce(200), _target, _sortKey) { q, t, sort ->
         (if (q.isBlank() && t == "all") repo.searchEnchants("") else
         if (t != "all") repo.enchantsForTarget(t) else repo.searchEnchants(q)).map { list ->
@@ -200,6 +204,7 @@ fun EnchantsScreen(
     val favoriteEnchants by vm.favoriteEnchants.collectAsStateWithLifecycle()
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
+    val txMap       by vm.translations.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
@@ -323,7 +328,7 @@ fun EnchantsScreen(
                 Column(modifier = Modifier.alpha(vAlpha)) {
                     BrowseListItem(
                         headline    = buildString {
-                            append(e.name)
+                            append(txMap[e.id]?.get("name") ?: e.name)
                             if (e.isTreasure && !e.isCurse) append("  \u2022 ${stringResource(R.string.enchants_anvil_only)}")
                             if (e.isCurse) append("  \u2022 ${stringResource(R.string.enchants_curse)}")
                         },
@@ -375,7 +380,7 @@ fun EnchantsScreen(
                         enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
                         exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
-                        EnchantDetailCard(e, enchantIndex, listState, vm, entityLinkIndex, onItemTap, onMobTap, onBiomeTap, onStructureTap, onEnchantTap, tag, vFilter)
+                        EnchantDetailCard(e, enchantIndex, listState, vm, entityLinkIndex, onItemTap, onMobTap, onBiomeTap, onStructureTap, onEnchantTap, tag, vFilter, txMap)
                     }
                 }
             }
@@ -410,6 +415,7 @@ private fun EnchantDetailCard(
     onEnchantTap: (String) -> Unit,
     tag: VersionTagEntity? = null,
     vFilter: VersionFilterState = VersionFilterState(),
+    txMap: Map<String, Map<String, String>> = emptyMap(),
 ) {
     val scope = rememberCoroutineScope()
     val reduceMotion = LocalReduceAnimations.current
@@ -425,7 +431,7 @@ private fun EnchantDetailCard(
         // Description
         if (enchant.description.isNotEmpty()) {
             LinkedDescription(
-                description = enchant.description,
+                description = txMap[enchant.id]?.get("description") ?: enchant.description,
                 linkIndex = entityLinkIndex,
                 selfId = enchant.id,
                 onItemTap = onItemTap,

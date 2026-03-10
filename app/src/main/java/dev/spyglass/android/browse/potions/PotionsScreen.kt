@@ -129,6 +129,10 @@ class PotionsViewModel(app: Application) : AndroidViewModel(app) {
         .map { it.toTagMap() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
+    val translations: StateFlow<Map<String, Map<String, String>>> =
+        translationMapFlow(app.dataStore, repo, "potion")
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val potions: StateFlow<List<PotionEntity>> = combine(_query.debounce(200), _category, _sortKey) { q, cat, sort ->
         repo.searchPotions(q).map { list ->
             val filtered = if (cat == "all") list else list.filter { it.category == cat }
@@ -188,6 +192,7 @@ fun PotionsScreen(
     val sortKey    by vm.sortKey.collectAsStateWithLifecycle()
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
+    val txMap       by vm.translations.collectAsStateWithLifecycle()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
 
@@ -277,7 +282,7 @@ fun PotionsScreen(
                 val isExpanded = p.id in expandedIds
                 Column(modifier = Modifier.alpha(vAlpha)) {
                     BrowseListItem(
-                        headline    = p.name,
+                        headline    = txMap[p.id]?.get("name") ?: p.name,
                         supporting  = "",
                         supportingMaxLines = 1,
                         leadingIcon = PotionTextures.get(p.id) ?: PixelIcons.Potion,
@@ -316,7 +321,7 @@ fun PotionsScreen(
                         enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
                         exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
-                        PotionDetailCard(p, onItemTap, tag, vFilter)
+                        PotionDetailCard(p, onItemTap, tag, vFilter, txMap)
                     }
                 }
             }
@@ -333,7 +338,7 @@ fun PotionsScreen(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun PotionDetailCard(potion: PotionEntity, onItemTap: (String) -> Unit, tag: VersionTagEntity? = null, vFilter: VersionFilterState = VersionFilterState()) {
+private fun PotionDetailCard(potion: PotionEntity, onItemTap: (String) -> Unit, tag: VersionTagEntity? = null, vFilter: VersionFilterState = VersionFilterState(), txMap: Map<String, Map<String, String>> = emptyMap()) {
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         MinecraftIdRow(potion.id)
 
@@ -343,7 +348,7 @@ private fun PotionDetailCard(potion: PotionEntity, onItemTap: (String) -> Unit, 
 
         // Effect
         if (potion.effect.isNotBlank() && potion.effect != "none") {
-            Text(potion.effect, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(txMap[potion.id]?.get("effect") ?: potion.effect, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             val desc = EFFECT_DESCRIPTIONS[potion.effect]
             if (desc != null) {
                 Text(desc, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)

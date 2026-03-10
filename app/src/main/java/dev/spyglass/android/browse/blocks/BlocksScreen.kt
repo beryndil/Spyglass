@@ -152,6 +152,10 @@ class BlocksViewModel(app: Application) : AndroidViewModel(app) {
     }.applyVersionFilter(versionFilter, versionTags, "block") { it.id }
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    val translations: StateFlow<Map<String, Map<String, String>>> =
+        translationMapFlow(app.dataStore, repo, "block")
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     // Build a map of all recipes keyed by outputItem for chain calculation
     val allRecipes: StateFlow<Map<String, RecipeEntity>> = repo.searchRecipes("")
         .map { list -> list.associateBy { it.outputItem } }
@@ -211,6 +215,7 @@ fun BlocksScreen(
     val favoriteBlocks by vm.favoriteBlocks.collectAsStateWithLifecycle()
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
+    val txMap       by vm.translations.collectAsStateWithLifecycle()
     val listState   = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
@@ -332,7 +337,7 @@ fun BlocksScreen(
                 }
                 Column(modifier = Modifier.alpha(vAlpha)) {
                     BrowseListItem(
-                        headline    = b.name,
+                        headline    = txMap[b.id]?.get("name") ?: b.name,
                         supporting  = "",
                         leadingIcon = ItemTextures.get(b.id) ?: PixelIcons.Blocks,
                         modifier    = Modifier.clickable { vm.toggleExpanded(b.id) },
@@ -389,7 +394,7 @@ fun BlocksScreen(
                         enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
                         exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
-                        BlockDetailContent(b, allRecipes, structures, vm, onItemTap, onBiomeTap, onTradeTap, onStructureTap, tag, vFilter)
+                        BlockDetailContent(b, allRecipes, structures, vm, onItemTap, onBiomeTap, onTradeTap, onStructureTap, tag, vFilter, txMap)
                     }
                 }
             }
@@ -419,6 +424,7 @@ private fun BlockDetailContent(
     onStructureTap: (String) -> Unit,
     tag: VersionTagEntity? = null,
     vFilter: VersionFilterState = VersionFilterState(),
+    txMap: Map<String, Map<String, String>> = emptyMap(),
 ) {
     val recipesForItem  by vm.recipesForItem(block.id).collectAsStateWithLifecycle(initialValue = emptyList())
     val recipesUsingItem by vm.recipesUsingItem(block.id).collectAsStateWithLifecycle(initialValue = emptyList())
@@ -434,7 +440,8 @@ private fun BlockDetailContent(
 
         // ── Description ──
         if (block.description.isNotBlank()) {
-            Text(block.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            val translatedDesc = txMap[block.id]?.get("description") ?: block.description
+            Text(translatedDesc, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
         // ── Property badges ──

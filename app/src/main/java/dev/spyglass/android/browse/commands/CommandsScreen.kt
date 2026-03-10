@@ -67,6 +67,10 @@ class CommandsViewModel(app: Application) : AndroidViewModel(app) {
         .map { it.toTagMap() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
+    val translations: StateFlow<Map<String, Map<String, String>>> =
+        translationMapFlow(app.dataStore, repo, "command")
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val commands: StateFlow<List<CommandEntity>> = combine(_query.debounce(200), _category, _sortKey) { q, cat, sort ->
         val flow = if (q.isBlank() && cat == "all") repo.searchCommands("")
         else if (cat != "all") repo.commandsByCategory(cat)
@@ -160,6 +164,7 @@ fun CommandsScreen(
     val sortKey by vm.sortKey.collectAsStateWithLifecycle()
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
+    val txMap       by vm.translations.collectAsStateWithLifecycle()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
 
@@ -244,8 +249,8 @@ fun CommandsScreen(
                 val isExpanded = cmd.id in expandedIds
                 Column(modifier = Modifier.alpha(vAlpha)) {
                     BrowseListItem(
-                        headline = cmd.name,
-                        supporting = cmd.description.take(60),
+                        headline = txMap[cmd.id]?.get("name") ?: cmd.name,
+                        supporting = (txMap[cmd.id]?.get("description") ?: cmd.description).take(60),
                         supportingMaxLines = 1,
                         leadingIcon = PixelIcons.Command,
                         modifier = Modifier.clickable { vm.toggleExpanded(cmd.id) },
@@ -277,7 +282,7 @@ fun CommandsScreen(
                         enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
                         exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
-                        CommandDetailCard(cmd, entityLinkIndex, onItemTap, onMobTap, onBiomeTap, onStructureTap, onEnchantTap, tag, vFilter)
+                        CommandDetailCard(cmd, entityLinkIndex, onItemTap, onMobTap, onBiomeTap, onStructureTap, onEnchantTap, tag, vFilter, txMap)
                     }
                 }
             }
@@ -293,7 +298,7 @@ fun CommandsScreen(
 }
 
 @Composable
-private fun CommandDetailCard(cmd: CommandEntity, entityLinkIndex: EntityLinkIndex, onItemTap: (String) -> Unit, onMobTap: (String) -> Unit, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onEnchantTap: (String) -> Unit, tag: VersionTagEntity? = null, vFilter: VersionFilterState = VersionFilterState()) {
+private fun CommandDetailCard(cmd: CommandEntity, entityLinkIndex: EntityLinkIndex, onItemTap: (String) -> Unit, onMobTap: (String) -> Unit, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onEnchantTap: (String) -> Unit, tag: VersionTagEntity? = null, vFilter: VersionFilterState = VersionFilterState(), txMap: Map<String, Map<String, String>> = emptyMap()) {
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         Text(
             stringResource(R.string.commands_syntax),
@@ -314,7 +319,7 @@ private fun CommandDetailCard(cmd: CommandEntity, entityLinkIndex: EntityLinkInd
         }
         SpyglassDivider()
         LinkedDescription(
-            description = cmd.description,
+            description = txMap[cmd.id]?.get("description") ?: cmd.description,
             linkIndex = entityLinkIndex,
             selfId = cmd.id,
             onItemTap = onItemTap,

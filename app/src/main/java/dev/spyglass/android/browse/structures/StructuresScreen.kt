@@ -72,6 +72,10 @@ class StructuresViewModel(app: Application) : AndroidViewModel(app) {
         .map { it.toTagMap() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
+    val translations: StateFlow<Map<String, Map<String, String>>> =
+        translationMapFlow(app.dataStore, repo, "structure")
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
     val structures: StateFlow<List<StructureEntity>> = combine(
         _query.debounce(200), _dimension, _sortKey
     ) { q, dim, sort ->
@@ -134,6 +138,7 @@ fun StructuresScreen(
     val favoriteStructures by vm.favoriteStructures.collectAsStateWithLifecycle()
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
+    val txMap       by vm.translations.collectAsStateWithLifecycle()
     val listState    = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
@@ -228,14 +233,14 @@ fun StructuresScreen(
                 val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val isExpanded = s.id in expandedIds
                 Column(modifier = Modifier.alpha(vAlpha)) {
-                    StructureListItem(s, isFavorite = s.id in favoriteIds, onToggleFavorite = { hapticConfirm(); vm.toggleFavorite(s.id, s.name) }, onClick = { vm.toggleExpanded(s.id) }, addedIn = addedIn, availability = availability)
+                    StructureListItem(s, isFavorite = s.id in favoriteIds, onToggleFavorite = { hapticConfirm(); vm.toggleFavorite(s.id, s.name) }, onClick = { vm.toggleExpanded(s.id) }, addedIn = addedIn, availability = availability, txMap = txMap)
                     val reduceMotion = LocalReduceAnimations.current
                     AnimatedVisibility(
                         visible = isExpanded,
                         enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
                         exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
                     ) {
-                        StructureDetailCard(s, onNavigateToMob, onNavigateToBiome, onItemTap, onCalcTab, entityLinkIndex, onEnchantTap, tag, vFilter)
+                        StructureDetailCard(s, onNavigateToMob, onNavigateToBiome, onItemTap, onCalcTab, entityLinkIndex, onEnchantTap, tag, vFilter, txMap)
                     }
                 }
             }
@@ -251,7 +256,7 @@ fun StructuresScreen(
 }
 
 @Composable
-private fun StructureListItem(s: StructureEntity, isFavorite: Boolean, onToggleFavorite: () -> Unit, onClick: () -> Unit, addedIn: String = "", availability: VersionAvailability = VersionAvailability.AVAILABLE) {
+private fun StructureListItem(s: StructureEntity, isFavorite: Boolean, onToggleFavorite: () -> Unit, onClick: () -> Unit, addedIn: String = "", availability: VersionAvailability = VersionAvailability.AVAILABLE, txMap: Map<String, Map<String, String>> = emptyMap()) {
     val dimensionColor = when (s.dimension) {
         "nether" -> NetherRed
         "end"    -> EnderPurple
@@ -264,7 +269,7 @@ private fun StructureListItem(s: StructureEntity, isFavorite: Boolean, onToggleF
     }
 
     BrowseListItem(
-        headline    = s.name,
+        headline    = txMap[s.id]?.get("name") ?: s.name,
         supporting  = "",
         leadingIcon = StructureTextures.get(s.id) ?: PixelIcons.Structure,
         modifier    = Modifier.clickable { onClick() },
@@ -307,6 +312,7 @@ private fun StructureDetailCard(
     onEnchantTap: (String) -> Unit,
     tag: VersionTagEntity? = null,
     vFilter: VersionFilterState = VersionFilterState(),
+    txMap: Map<String, Map<String, String>> = emptyMap(),
 ) {
     val biomes      = parseCommaSeparated(structure.biomes)
     val mobs        = parseCommaSeparated(structure.mobs)
@@ -323,7 +329,7 @@ private fun StructureDetailCard(
         // Description
         if (structure.description.isNotEmpty()) {
             LinkedDescription(
-                description = structure.description,
+                description = txMap[structure.id]?.get("description") ?: structure.description,
                 linkIndex = entityLinkIndex,
                 selfId = structure.id,
                 onItemTap = onItemTap,
