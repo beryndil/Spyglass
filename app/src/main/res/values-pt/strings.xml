@@ -1,0 +1,1451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Spyglass Connect</string>
+
+    <!-- Common -->
+    <string name="back">Voltar</string>
+    <string name="search">Buscar</string>
+    <string name="save">Salvar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete">Excluir</string>
+    <string name="edit">Editar</string>
+    <string name="confirm_delete">Confirmar exclusão</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="all">Todos</string>
+    <string name="add">Adicionar</string>
+    <string name="done">Pronto</string>
+    <string name="favorite">Favorito</string>
+    <string name="favorites">Favoritos</string>
+    <string name="category">Categoria</string>
+    <string name="type">Tipo</string>
+    <string name="dimension">Dimensão</string>
+    <string name="copied">Copiado!</string>
+    <string name="tap_to_copy">Toque para copiar</string>
+    <string name="menu">Menu</string>
+    <string name="settings">Configurações</string>
+    <string name="changelog">Registro de alterações</string>
+    <string name="feedback">Feedback</string>
+    <string name="help">Ajuda</string>
+    <string name="news">Notícias</string>
+    <string name="about">Sobre</string>
+
+    <!-- Help Screen -->
+    <string name="help_title">Ajuda</string>
+    <string name="help_wiki">Spyglass Wiki \u2192</string>
+
+    <!-- News Screen -->
+    <string name="news_title">Notícias</string>
+    <string name="news_placeholder">Nenhuma notícia ainda. Volte em breve!</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Início</string>
+    <string name="nav_browse">Explorar</string>
+    <string name="nav_tools">Ferramentas</string>
+    <string name="nav_search">Buscar</string>
+    <string name="top_bar_title">SPYGLASS CONNECT</string>
+
+    <!-- Home Screen -->
+    <string name="home_welcome">Bem-vindo ao Spyglass Connect</string>
+    <string name="home_update_available">Atualização disponível</string>
+    <string name="home_subtitle">Seu companheiro Minecraft para fabricação, construção e exploração</string>
+    <string name="home_minecraft_version">Minecraft Java 1.21.4</string>
+    <string name="home_todo_empty">O que você planeja para hoje?</string>
+    <string name="home_todo_open">Toque para abrir sua lista de tarefas \u2192</string>
+    <string name="home_todo_view_all">Ver todas as %d tarefas</string>
+    <string name="home_todo_edit">Editar lista de tarefas</string>
+    <string name="home_tools">Ferramentas</string>
+    <string name="home_browse">Explorar</string>
+    <string name="home_todo">Tarefas</string>
+    <string name="home_did_you_know">VOCÊ SABIA?</string>
+    <string name="home_whats_new">Novidades</string>
+    <string name="home_whats_new_blocks">%1$d blocos &amp; %2$d itens</string>
+    <string name="home_whats_new_blocks_desc">Banco de dados completo com categorias, durabilidade e receitas</string>
+    <string name="home_whats_new_enchant">Otimizador de encantamentos</string>
+    <string name="home_whats_new_enchant_desc">Calcule a ordem mais barata de XP para combinar livros na bigorna</string>
+    <string name="home_whats_new_links">Links entre abas</string>
+    <string name="home_whats_new_links_desc">Toque em qualquer item, mob, bioma ou estrutura para ir à sua página de detalhes</string>
+    <string name="home_whats_new_search">Busque tudo</string>
+    <string name="home_whats_new_search_desc">Busca global em blocos, mobs, itens, receitas e mais</string>
+
+    <!-- Home Screen — Quick Link Labels (Browse) -->
+    <string name="home_link_blocks">Blocos</string>
+    <string name="home_link_items">Itens</string>
+    <string name="home_link_recipes">Receitas</string>
+    <string name="home_link_mobs">Mobs</string>
+    <string name="home_link_biomes">Biomas</string>
+    <string name="home_link_structures">Estruturas</string>
+    <string name="home_link_trades">Trocas</string>
+    <string name="home_link_enchants">Encantamentos</string>
+    <string name="home_link_potions">Poções</string>
+    <string name="home_link_advancements">Progressos</string>
+    <string name="home_link_commands">Comandos</string>
+    <string name="home_link_reference">Referência</string>
+    <string name="home_link_versions">Versões</string>
+
+    <!-- Home Screen — Quick Link Labels (Tools) -->
+    <string name="home_link_todo_list">Lista de tarefas</string>
+    <string name="home_link_shopping_lists">Listas de compras</string>
+    <string name="home_link_notes">Notas</string>
+    <string name="home_link_waypoints">Pontos de referência</string>
+    <string name="home_link_block_fill">Preenchimento</string>
+    <string name="home_link_shapes">Formas</string>
+    <string name="home_link_maze_maker">Criador de labirintos</string>
+    <string name="home_link_storage">Armazenamento</string>
+    <string name="home_link_enchanting">Encantamento</string>
+    <string name="home_link_smelting">Fundição</string>
+    <string name="home_link_librarian_guide">Guia do bibliotecário</string>
+    <string name="home_link_light_spacing">Espaçamento de luz</string>
+    <string name="home_link_nether_portal">Portal do Nether</string>
+    <string name="home_link_game_clock">Relógio do jogo</string>
+
+    <!-- Home Screen — Tip Section -->
+    <string name="home_tip_options">Opções de dica</string>
+    <string name="home_tip_disable">Desativar dicas</string>
+    <string name="home_tip_previous">Dica anterior</string>
+    <string name="home_tip_next">Próxima dica</string>
+
+    <!-- Home Screen — Connect Section -->
+    <string name="home_connect_title">Spyglass Connect</string>
+    <string name="home_connect_stream">Transmita dados do mundo Minecraft do seu PC</string>
+    <string name="home_connect_wifi">Ambos os dispositivos na mesma rede WiFi</string>
+    <string name="home_connect_scan_qr">Escanear código QR</string>
+    <string name="home_connect_reconnect_last">Reconectar ao último dispositivo</string>
+    <string name="home_connect_status_connected">Conectado</string>
+    <string name="home_connect_status_reconnecting">Reconectando</string>
+    <string name="home_connect_status_connecting">Conectando</string>
+    <string name="home_connect_status_reconnect">Reconectar</string>
+    <string name="home_connect_clear_data_title">Limpar dados</string>
+    <string name="home_connect_clear_data_message">Limpar todos os dados do Connect em cache? O pareamento do dispositivo será mantido.</string>
+    <string name="home_connect_clear_data_confirm">Limpar</string>
+    <string name="home_connect_switch_world">Trocar de mundo</string>
+    <string name="home_connect_disconnect">Desconectar</string>
+    <string name="home_connect_scan_new_device">Escanear novo dispositivo</string>
+    <string name="home_connect_select_world">Selecionar um mundo</string>
+    <string name="home_connect_modded_suffix"> (Modificado)</string>
+    <string name="home_connect_no_worlds">Nenhum mundo encontrado</string>
+    <string name="home_connect_game_mode_difficulty">%1$s \u2022 %2$s</string>
+
+    <!-- Home Screen — Connect Quick Links -->
+    <string name="home_connect_link_character">Personagem</string>
+    <string name="home_connect_link_inventory">Inventário</string>
+    <string name="home_connect_link_ender_chest">Baú do End</string>
+    <string name="home_connect_link_storage">Armazenamento</string>
+    <string name="home_connect_link_world_map">Mapa do mundo</string>
+    <string name="home_connect_link_waypoints">Pontos de referência</string>
+    <string name="home_connect_link_pets">Animais</string>
+    <string name="home_connect_link_players">Jogadores</string>
+    <string name="home_connect_link_statistics">Estatísticas</string>
+    <string name="home_connect_link_advancements">Progressos</string>
+
+    <!-- Consent Dialog -->
+    <string name="consent_title">Privacidade &amp; Coleta de dados</string>
+    <string name="consent_body">O Spyglass Connect pode coletar dados anônimos para ajudar a melhorar o aplicativo. Nenhuma informação pessoal é compartilhada.</string>
+    <string name="consent_accept_all">Aceitar tudo</string>
+    <string name="consent_decline_all">Recusar tudo</string>
+    <string name="consent_customize">Personalizar</string>
+    <string name="consent_save_choices">Salvar escolhas</string>
+    <string name="consent_analytics">Análises</string>
+    <string name="consent_analytics_desc">Padrões de uso para melhorar recursos</string>
+    <string name="consent_crash_reports">Relatórios de erros</string>
+    <string name="consent_crash_reports_desc">Relatórios automáticos de erros para corrigir bugs</string>
+    <string name="consent_personalized_ads">Anúncios personalizados</string>
+    <string name="consent_personalized_ads_desc">Exibir anúncios com base nos seus interesses. Anúncios não personalizados ainda aparecem se desativado.</string>
+    <string name="consent_privacy_policy_link">Leia nossa Política de Privacidade completa</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_theme">Tema</string>
+    <string name="settings_background">Plano de fundo</string>
+    <string name="settings_default_browse_tab">Aba padrão de Explorar</string>
+    <string name="settings_browse_tab_desc">Qual aba abre primeiro ao tocar em Explorar</string>
+    <string name="settings_default_tool_tab">Aba padrão de Ferramentas</string>
+    <string name="settings_tool_tab_desc">Qual aba abre primeiro ao tocar em Ferramentas</string>
+    <string name="settings_display">Exibição</string>
+    <string name="settings_tip_of_day">Mostrar dica do dia</string>
+    <string name="settings_tip_of_day_desc">Dica diária de Minecraft na tela inicial</string>
+    <string name="settings_favorites_on_home">Mostrar favoritos na tela inicial</string>
+    <string name="settings_favorites_on_home_desc">Exibir seus itens favoritos na página inicial</string>
+    <string name="settings_game_clock">Relógio do jogo</string>
+    <string name="settings_game_clock_desc">Mostrar mini relógio na barra superior</string>
+    <string name="settings_configure_clock">Configurar relógio do jogo \u2192</string>
+    <string name="settings_favorites">Favoritos</string>
+    <string name="settings_no_favorites">Nenhum favorito ainda. Marque itens com estrela nas abas de Explorar para adicioná-los aqui.</string>
+    <string name="settings_favorites_count">%d favorito(s)</string>
+    <string name="settings_clear_all_favorites">Limpar todos os favoritos</string>
+    <string name="settings_privacy">Privacidade &amp; Dados</string>
+    <string name="settings_privacy_policy">Política de privacidade \u2192</string>
+    <string name="settings_delete_data">Excluir todos os meus dados</string>
+    <string name="settings_delete_data_title">Excluir todos os dados?</string>
+    <string name="settings_delete_data_message">Isso excluirá permanentemente todas as suas tarefas, notas, pontos de referência, listas de compras, favoritos e progresso de progressos. Isso não pode ser desfeito.</string>
+    <string name="settings_delete_data_confirm">Excluir tudo</string>
+
+    <!-- Settings — Section Headers -->
+    <string name="settings_appearance">Aparência</string>
+    <string name="settings_game_settings">Configurações do jogo</string>
+    <string name="settings_defaults">Padrões</string>
+    <string name="settings_data_sync">Dados &amp; Sincronização</string>
+    <string name="settings_privacy_security">Privacidade &amp; Segurança</string>
+    <string name="settings_about_section">Sobre</string>
+
+    <!-- Settings — Appearance -->
+    <string name="settings_backgrounds">Planos de fundo</string>
+    <string name="settings_my_photo">Minha foto</string>
+    <string name="settings_choose_photo">Escolher foto</string>
+    <string name="settings_change_photo">Alterar</string>
+    <string name="settings_solid_colors">Cores sólidas</string>
+    <string name="settings_default_theme">Obsidian</string>
+
+    <!-- Settings — Game Settings -->
+    <string name="settings_game_filter_desc">Filtrar conteúdo por edição e versão do Minecraft</string>
+    <string name="settings_edition">Edição</string>
+    <string name="settings_edition_java">Java</string>
+    <string name="settings_edition_bedrock">Bedrock</string>
+    <string name="settings_version">Versão</string>
+    <string name="settings_version_latest">Mais recente</string>
+    <string name="settings_filter_mode">Modo de filtro</string>
+    <string name="settings_filter_show_all">Mostrar tudo</string>
+    <string name="settings_filter_highlight">Destacar indisponíveis</string>
+    <string name="settings_filter_hide">Ocultar indisponíveis</string>
+
+    <!-- Settings — Data & Sync (additional) -->
+    <string name="settings_syncing">Sincronizando\u2026</string>
+    <string name="settings_sync_now">Sincronizar agora</string>
+    <string name="settings_downloaded_textures">Texturas baixadas: %s</string>
+    <string name="settings_connect_title">Spyglass Connect</string>
+    <string name="settings_connect_desc">Transmita dados do mundo Minecraft do seu PC pela rede WiFi local. O pareamento é gerenciado na tela do Connect.</string>
+    <string name="settings_connect_download">Baixar para PC: hardknocks.com/spyglass-connect</string>
+
+    <!-- Settings — About (additional) -->
+    <string name="settings_wiki">Spyglass Wiki</string>
+    <string name="settings_wiki_desc">Guias, dicas e documentação detalhada</string>
+
+    <string name="settings_hide_unobtainable">Ocultar blocos exclusivos do Criativo</string>
+    <string name="settings_hide_unobtainable_desc">Ocultar blocos que não podem ser obtidos no modo Sobrevivência</string>
+    <string name="settings_show_experimental">Mostrar recursos experimentais</string>
+    <string name="settings_show_experimental_desc">Incluir recursos de pacotes de dados experimentais do Minecraft (ex.: rebalanceamento de trocas do bibliotecário)</string>
+    <string name="settings_haptic_feedback">Feedback tátil</string>
+    <string name="settings_haptic_feedback_desc">Vibrar ao tocar e interagir</string>
+    <string name="settings_reduce_animations">Reduzir animações</string>
+    <string name="settings_reduce_animations_desc">Minimizar movimentos em todo o aplicativo</string>
+    <string name="settings_font_size">Tamanho da fonte</string>
+    <string name="settings_font_size_desc">Ajustar o tamanho do texto em todo o aplicativo</string>
+    <string name="settings_dynamic_color">Cor dinâmica</string>
+    <string name="settings_dynamic_color_desc">Usar cores do seu papel de parede (Android 12+)</string>
+    <string name="settings_high_contrast">Alto contraste</string>
+    <string name="settings_high_contrast_desc">Aumentar o contraste para melhor legibilidade</string>
+    <string name="settings_startup_tab">Tela inicial padrão</string>
+    <string name="settings_startup_tab_desc">Qual tela abre ao iniciar o aplicativo</string>
+
+    <!-- Settings — Language -->
+    <string name="settings_language">Idioma</string>
+    <string name="settings_language_desc">Escolha o idioma de exibição do Spyglass Connect. Traduções dos dados do jogo são baixadas separadamente.</string>
+
+    <!-- Settings — Security -->
+    <string name="settings_security">Segurança</string>
+    <string name="settings_app_lock">Bloqueio do app</string>
+    <string name="settings_app_lock_desc">Exigir biometria ou PIN para abrir o aplicativo</string>
+    <string name="settings_app_lock_title">Desbloquear Spyglass Connect</string>
+    <string name="settings_app_lock_subtitle">Autentique-se para continuar</string>
+
+    <!-- Settings — Data & Storage -->
+    <string name="settings_data_storage">Dados &amp; Armazenamento</string>
+    <string name="settings_sync_frequency">Frequência de sincronização</string>
+    <string name="settings_sync_frequency_desc">Com que frequência verificar dados atualizados do jogo</string>
+    <string name="settings_clear_cache">Limpar cache de imagens</string>
+    <string name="settings_clear_cache_desc">Liberar espaço removendo texturas em cache</string>
+    <string name="settings_cache_cleared">Cache limpo</string>
+    <string name="settings_storage_usage">Uso de armazenamento</string>
+    <string name="settings_offline_mode">Modo offline</string>
+    <string name="settings_offline_mode_desc">Desativar sincronização de dados em segundo plano</string>
+
+    <!-- Settings — Quick Links -->
+    <string name="settings_quick_links">Links rápidos</string>
+    <string name="settings_rate_app">Avaliar na Play Store</string>
+    <string name="settings_rate_app_desc">Deixe uma avaliação para apoiar o Spyglass Connect</string>
+    <string name="settings_send_feedback">Enviar feedback</string>
+    <string name="settings_send_feedback_desc">Reportar bugs ou solicitar recursos</string>
+    <string name="settings_about">Sobre o Spyglass Connect</string>
+    <string name="settings_about_desc">Informações de versão, créditos e licenças</string>
+    <string name="settings_changelog">Ver registro de alterações</string>
+    <string name="settings_changelog_desc">Veja o que mudou nas atualizações recentes</string>
+    <string name="settings_app_permissions">Permissões do app</string>
+    <string name="settings_app_permissions_desc">Revisar permissões nas configurações do sistema</string>
+
+    <!-- About Screen -->
+    <string name="about_app_title">Spyglass Connect</string>
+    <string name="about_version">%s</string>
+    <string name="about_companion">Uma ferramenta companheira para Minecraft.</string>
+    <string name="about_author">por Beryndil</string>
+    <string name="about_enjoy">Curtindo o Spyglass Connect?</string>
+    <string name="about_coffee">Me pague um café</string>
+    <string name="about_disclaimer">Não é afiliado à Mojang Studios ou Microsoft.</string>
+    <string name="about_game_data">Dados do jogo</string>
+    <string name="about_data_version">Versão dos dados</string>
+    <string name="about_minecraft_version">Java 1.21.4</string>
+    <string name="about_credits">Créditos &amp; Licenças</string>
+    <string name="about_license_cc">Todos os direitos reservados \u2014 Ver licença</string>
+    <string name="about_pixel_perfection">Pixel Perfection</string>
+    <string name="about_by_xssheep">por XSSheep</string>
+    <string name="about_cc_by_sa">CC-BY-SA 4.0</string>
+    <string name="about_project_page">Página do projeto</string>
+    <string name="about_entity_icons">Entity-Icons</string>
+    <string name="about_cc0">CC0 1.0</string>
+    <string name="about_github">GitHub</string>
+    <string name="about_copyright">\u00A9 2026 Beryndil. Todos os direitos reservados.</string>
+    <string name="about_privacy">Privacidade</string>
+    <string name="about_privacy_text">Todos os dados do jogo são armazenados localmente no seu dispositivo. O Spyglass Connect exibe anúncios via Google AdMob e pode coletar análises anônimas e relatórios de erros com seu consentimento. Nenhuma informação pessoal é compartilhada.</string>
+    <string name="about_report_bug">Reportar um bug</string>
+    <string name="about_request_feature">Solicitar um recurso</string>
+
+    <!-- Disclaimer Screen -->
+    <string name="disclaimer_title">Aviso legal</string>
+    <string name="disclaimer_body">O Spyglass Connect é um aplicativo companheiro não oficial, feito por fãs, para Minecraft: Java Edition.\n\nEste aplicativo NÃO é um produto oficial do Minecraft. NÃO é aprovado ou associado à Mojang Studios, Microsoft Corporation ou qualquer uma de suas subsidiárias ou afiliadas.\n\n\"Minecraft\" é uma marca registrada da Mojang Studios. Todo o conteúdo relacionado ao Minecraft, incluindo, mas não limitado a, dados do jogo, nomes de itens, nomes de mobs, nomes de biomas e nomes de blocos, é propriedade intelectual da Mojang Studios.\n\nTodos os dados do jogo exibidos neste aplicativo são provenientes de informações publicamente disponíveis na Minecraft Wiki e recursos oficiais da Mojang. Este aplicativo não modifica, interage ou se conecta a servidores de Minecraft de nenhuma forma.\n\nAs texturas de pixel art usadas neste aplicativo são do pacote de recursos \"Pixel Perfection\" de XSSheep, licenciado sob CC BY-SA 4.0. Os ícones de entidades são do projeto \"Entity-Icons\", licenciado sob CC0 1.0.\n\nEste aplicativo é fornecido \"como está\" sem garantia de qualquer tipo. O desenvolvedor não assume responsabilidade por quaisquer problemas decorrentes do uso deste aplicativo.</string>
+
+    <!-- License Screen -->
+    <string name="license_title">Licença</string>
+    <string name="license_full_name">Licença de software proprietário</string>
+    <string name="license_copyright">\u00A9 2026 Beryndil. Todos os direitos reservados.</string>
+    <string name="license_permitted_use">Uso permitido</string>
+    <string name="license_permitted_use_desc">Você recebe uma licença não exclusiva, intransferível e revogável para usar o aplicativo Spyglass Connect conforme distribuído pelos canais oficiais de lançamento para fins pessoais e não comerciais.</string>
+    <string name="license_restrictions">Restrições</string>
+    <string name="license_restriction_copy">Você não pode copiar, reproduzir ou duplicar o código-fonte ou o aplicativo.</string>
+    <string name="license_restriction_modify">Você não pode modificar, adaptar, traduzir ou criar obras derivadas.</string>
+    <string name="license_restriction_distribute">Você não pode distribuir, sublicenciar, alugar ou transferir o aplicativo a terceiros.</string>
+    <string name="license_restriction_reverse">Você não pode fazer engenharia reversa, descompilar ou desmontar o aplicativo.</string>
+    <string name="license_restriction_commercial">Você não pode usar o código-fonte ou o aplicativo para qualquer finalidade comercial.</string>
+    <string name="license_third_party">Este aplicativo inclui recursos de terceiros sujeitos às suas próprias licenças, conforme indicado na página Sobre.</string>
+    <string name="license_no_warranty">Sem garantia</string>
+    <string name="license_no_warranty_desc">O software é fornecido \"como está\", sem garantia de qualquer tipo. O desenvolvedor não assume responsabilidade por quaisquer problemas decorrentes do uso deste aplicativo.</string>
+
+    <!-- Feedback Screen -->
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_report_bug">Reportar um bug</string>
+    <string name="feedback_request_feature">Solicitar um recurso</string>
+    <string name="feedback_rate">Avaliar na Play Store</string>
+    <string name="feedback_thanks">Seu feedback ajuda a tornar o Spyglass Connect melhor para todos. Obrigado!</string>
+
+    <!-- Changelog Screen -->
+    <string name="changelog_title">Registro de alterações</string>
+
+    <!-- Search Screen -->
+    <string name="search_placeholder">Buscar todos os dados do Minecraft\u2026</string>
+    <string name="search_empty_title">Buscar tudo</string>
+    <string name="search_empty_subtitle">Digite pelo menos 2 caracteres para buscar blocos, mobs, biomas, estruturas, itens, receitas, trocas e mais.</string>
+    <string name="search_no_results">Sem resultados</string>
+    <string name="search_no_matches">Nenhum resultado para \"%s\"</string>
+
+    <!-- Browse Tabs -->
+    <string name="browse_tab_blocks">Blocos</string>
+    <string name="browse_tab_items">Itens</string>
+    <string name="browse_tab_recipes">Receitas</string>
+    <string name="browse_tab_mobs">Mobs</string>
+    <string name="browse_tab_trades">Trocas</string>
+    <string name="browse_tab_biomes">Biomas</string>
+    <string name="browse_tab_structures">Estruturas</string>
+    <string name="browse_tab_enchants">Encantamentos</string>
+    <string name="browse_tab_potions">Poções</string>
+    <string name="browse_tab_advancements">Progressos</string>
+    <string name="browse_tab_commands">Comandos</string>
+    <string name="browse_tab_reference">Referência</string>
+    <string name="browse_tab_versions">Versões</string>
+
+    <!-- Calculator/Tool Tabs -->
+    <string name="calc_tab_todo">Tarefas</string>
+    <string name="calc_tab_shopping">Compras</string>
+    <string name="calc_tab_enchanting">Encantamento</string>
+    <string name="calc_tab_fill">Preencher</string>
+    <string name="calc_tab_shapes">Formas</string>
+    <string name="calc_tab_maze">Labirinto</string>
+    <string name="calc_tab_storage">Armazenamento</string>
+    <string name="calc_tab_smelt">Fundir</string>
+    <string name="calc_tab_nether">Nether</string>
+    <string name="calc_tab_game_clock">Relógio do jogo</string>
+    <string name="calc_tab_light">Luz</string>
+    <string name="calc_tab_notes">Notas</string>
+    <string name="calc_tab_waypoints">Pontos de referência</string>
+    <string name="calc_tab_redstone">Redstone</string>
+    <string name="calc_tab_librarian">Bibliotecário</string>
+    <string name="calc_tab_food">Comida</string>
+    <string name="calc_tab_banners">Estandartes</string>
+    <string name="calc_tab_trims">Adornos</string>
+    <string name="calc_tab_loot">Saque</string>
+
+    <!-- Browse Screens -->
+
+    <!-- Blocks -->
+    <string name="blocks_search_placeholder">Buscar blocos\u2026</string>
+    <string name="blocks_title">Blocos</string>
+    <string name="blocks_description">Todos os blocos colocáveis com dureza e informações de ferramenta</string>
+    <string name="blocks_stat">%d blocos</string>
+    <string name="blocks_no_results_title">Nenhum bloco encontrado</string>
+    <string name="blocks_no_results_subtitle">Tente um termo de busca diferente</string>
+    <string name="blocks_badge_unobtainable">Inobtível</string>
+    <string name="blocks_badge_flammable">Inflamável</string>
+    <string name="blocks_badge_transparent">Transparente</string>
+    <string name="blocks_badge_gravity">Gravidade</string>
+    <string name="blocks_badge_waterloggable">Alagável</string>
+    <string name="blocks_badge_light">Luz: %d</string>
+    <string name="blocks_stack_size">Tamanho da pilha</string>
+    <string name="blocks_hardness">Dureza</string>
+    <string name="blocks_blast_resistance">Resistência a explosão</string>
+    <string name="blocks_tool_required">Ferramenta necessária</string>
+    <string name="blocks_min_tool_tier">Nível mín. da ferramenta</string>
+    <string name="blocks_light_level">Nível de luz</string>
+    <string name="blocks_light_level_value">%d/15</string>
+    <string name="blocks_ore_generation">Geração de minério</string>
+    <string name="blocks_min_y">Y mín.</string>
+    <string name="blocks_max_y">Y máx.</string>
+    <string name="blocks_peak_y">Y pico</string>
+    <string name="blocks_drops_nothing">Não dropa nada</string>
+    <string name="blocks_drops">Drops</string>
+    <string name="blocks_job_block">Bloco de profissão</string>
+    <string name="blocks_job_block_for">Bloco de profissão para: %s</string>
+    <string name="blocks_compostable_items">Itens compostáveis</string>
+    <string name="blocks_compost_chance">%d%% de chance</string>
+    <string name="blocks_found_in_structures">Encontrado em estruturas</string>
+    <string name="blocks_glance_y_range">Y %1$d a %2$d</string>
+    <string name="blocks_glance_light">%d luz</string>
+    <string name="blocks_glance_gravity">gravidade</string>
+    <string name="blocks_glance_redstone">redstone</string>
+    <string name="blocks_glance_hardness">%s dureza</string>
+
+    <!-- Blocks Sort Options -->
+    <string name="blocks_sort_name">Nome A\u2192Z</string>
+    <string name="blocks_sort_hardness">Dureza \u2193</string>
+    <string name="blocks_sort_blast_resistance">Resistência a explosão \u2193</string>
+    <string name="blocks_sort_light_level">Nível de luz \u2193</string>
+
+    <!-- Items -->
+    <string name="items_search_placeholder">Buscar itens\u2026</string>
+    <string name="items_title">Itens</string>
+    <string name="items_description">Itens que não são blocos: ferramentas, armas, armaduras, comida, materiais e mais -- com fontes e links cruzados</string>
+    <string name="items_stat">%d itens</string>
+    <string name="items_no_results_title">Nenhum item encontrado</string>
+    <string name="items_no_results_subtitle">Tente uma busca ou categoria diferente</string>
+    <string name="items_badge_stack">Pilha: %d</string>
+    <string name="items_badge_renewable">Renovável</string>
+    <string name="items_badge_non_renewable">Não renovável</string>
+    <string name="items_how_to_obtain">Como obter</string>
+    <string name="items_combat_stats">Estatísticas de combate</string>
+    <string name="items_durability">Durabilidade</string>
+    <string name="items_attack_damage">Dano de ataque</string>
+    <string name="items_attack_speed">Velocidade de ataque</string>
+    <string name="items_dps">DPS</string>
+    <string name="items_enchantability">Encantabilidade</string>
+    <string name="items_armor_stats">Estatísticas de armadura</string>
+    <string name="items_defense_points">Pontos de defesa</string>
+    <string name="items_armor_toughness">Resistência da armadura</string>
+    <string name="items_knockback_resistance">Resistência a repulsão</string>
+    <string name="items_food_stats">Estatísticas de comida</string>
+    <string name="items_hunger">Fome</string>
+    <string name="items_saturation">Saturação</string>
+    <string name="items_efficiency">Eficiência</string>
+    <string name="items_effects">Efeitos</string>
+    <string name="items_uses">Usos</string>
+    <string name="items_compostable">Compostável</string>
+    <string name="items_compost_chance">%d%% de chance por item</string>
+    <string name="items_applicable_enchantments">Encantamentos aplicáveis</string>
+    <string name="items_recipe">Receita</string>
+    <string name="items_crafting">Fabricação</string>
+    <string name="items_dropped_by">Dropado por</string>
+    <string name="items_used_to_breed">Usado para reproduzir</string>
+    <string name="items_mined_from">Minerado de</string>
+    <string name="items_found_in_biomes">Encontrado em biomas</string>
+    <string name="items_found_in_structures">Encontrado em estruturas</string>
+    <string name="items_used_in_recipes">Usado em %d receita(s)</string>
+
+    <!-- Items Sort Options -->
+    <string name="items_sort_name">Nome A\u2192Z</string>
+    <string name="items_sort_durability">Durabilidade \u2193</string>
+    <string name="items_sort_attack_damage">Dano de ataque \u2193</string>
+    <string name="items_sort_defense">Defesa \u2193</string>
+    <string name="items_sort_saturation">Saturação \u2193</string>
+
+    <!-- Recipes -->
+    <string name="recipes_search_placeholder">Buscar receitas\u2026</string>
+    <string name="recipes_title">Receitas</string>
+    <string name="recipes_description">Receitas de fabricação para todos os itens fabricáveis</string>
+    <string name="recipes_stat">%d receitas</string>
+    <string name="recipes_no_results_title">Nenhuma receita encontrada</string>
+    <string name="recipes_no_results_subtitle">Tente um termo de busca diferente</string>
+
+    <!-- Mobs -->
+    <string name="mobs_search_placeholder">Buscar mobs\u2026</string>
+    <string name="mobs_title">Mobs</string>
+    <string name="mobs_description">Todos os mobs do Minecraft com vida, drops, biomas de spawn e dicas de estratégia</string>
+    <string name="mobs_stat">%d mobs</string>
+    <string name="mobs_no_results_title">Nenhum mob encontrado</string>
+    <string name="mobs_no_results_subtitle">Tente uma busca ou categoria diferente</string>
+    <string name="mobs_health">Vida</string>
+    <string name="mobs_health_value">%s HP</string>
+    <string name="mobs_attack_damage">Dano de ataque</string>
+    <string name="mobs_attack_damage_value">%s HP</string>
+    <string name="mobs_xp_drop">XP dropado</string>
+    <string name="mobs_fire_immune">Imune ao fogo</string>
+    <string name="mobs_spawn_conditions">Condições de spawn</string>
+    <string name="mobs_breeding">Reprodução</string>
+    <string name="mobs_drops">Drops</string>
+    <string name="mobs_found_in">Encontrado em</string>
+    <string name="mobs_food_guide">Guia de comida \u2192</string>
+    <string name="mobs_light_spacing">Espaçamento de luz \u2192</string>
+
+    <!-- Mobs Sort Options -->
+    <string name="mobs_sort_name">Nome A\u2192Z</string>
+    <string name="mobs_sort_health">Vida \u2193</string>
+    <string name="mobs_sort_xp">XP \u2193</string>
+
+    <!-- Biomes -->
+    <string name="biomes_search_placeholder">Buscar biomas\u2026</string>
+    <string name="biomes_title">Biomas</string>
+    <string name="biomes_description">Todos os biomas do Minecraft com temperatura, mobs, estruturas e cores do mapa</string>
+    <string name="biomes_stat">%d biomas</string>
+    <string name="biomes_no_results_title">Nenhum bioma encontrado</string>
+    <string name="biomes_no_results_subtitle">Tente um termo de busca diferente</string>
+    <string name="biomes_temperature">Temperatura</string>
+    <string name="biomes_precipitation">Precipitação</string>
+    <string name="biomes_features">Características</string>
+    <string name="biomes_resources">Recursos</string>
+    <string name="biomes_building_palette">Paleta de construção</string>
+    <string name="biomes_structures">Estruturas</string>
+    <string name="biomes_mobs_found_here">Mobs encontrados aqui</string>
+    <string name="biomes_librarian_guide">Guia do bibliotecário \u2192</string>
+    <string name="biomes_structure_loot">Saque de estrutura \u2192</string>
+
+    <!-- Biomes Sort Options -->
+    <string name="biomes_sort_name">Nome A\u2192Z</string>
+    <string name="biomes_sort_temperature">Temperatura \u2193</string>
+
+    <!-- Structures -->
+    <string name="structures_search_placeholder">Buscar estruturas\u2026</string>
+    <string name="structures_title">Estruturas</string>
+    <string name="structures_description">Todas as estruturas do Minecraft com biomas, mobs, saque e como encontrá-las</string>
+    <string name="structures_stat">%d estruturas</string>
+    <string name="structures_no_results_title">Nenhuma estrutura encontrada</string>
+    <string name="structures_no_results_subtitle">Tente uma busca ou filtro de dimensão diferente</string>
+    <string name="structures_how_to_find">Como encontrar</string>
+    <string name="structures_biomes">Biomas</string>
+    <string name="structures_mobs">Mobs</string>
+    <string name="structures_loot">Saque</string>
+    <string name="structures_unique_blocks">Blocos exclusivos</string>
+    <string name="structures_loot_guide">Guia de saque \u2192</string>
+    <string name="structures_armor_trims">Adornos de armadura \u2192</string>
+
+    <!-- Structures Sort Options -->
+    <string name="structures_sort_name">Nome A\u2192Z</string>
+    <string name="structures_sort_difficulty">Dificuldade \u2193</string>
+
+    <!-- Enchantments -->
+    <string name="enchants_search_placeholder">Buscar encantamentos\u2026</string>
+    <string name="enchants_title">Encantamentos</string>
+    <string name="enchants_description">Todos os encantamentos por alvo, raridade e compatibilidade</string>
+    <string name="enchants_stat">%d encantamentos</string>
+    <string name="enchants_no_results_title">Nenhum encantamento encontrado</string>
+    <string name="enchants_no_results_subtitle">Tente uma busca ou filtro diferente</string>
+    <string name="enchants_open_librarian_guide">Abrir guia do bibliotecário \u2192</string>
+    <string name="enchants_anvil_only">Apenas bigorna</string>
+    <string name="enchants_curse">Maldição</string>
+    <string name="enchants_max_level">Máx %d</string>
+    <string name="enchants_anvil">Bigorna</string>
+    <string name="enchants_max_level_label">Nível máximo</string>
+    <string name="enchants_applies_to">Aplica-se a</string>
+    <string name="enchants_rarity">Raridade</string>
+    <string name="enchants_treasure">Tesouro</string>
+    <string name="enchants_treasure_value">Sim (apenas saque/bigorna)</string>
+    <string name="enchants_incompatible_with">Incompatível com</string>
+
+    <!-- Enchantments Sort Options -->
+    <string name="enchants_sort_name">Nome A\u2192Z</string>
+    <string name="enchants_sort_max_level">Nível máximo \u2193</string>
+    <string name="enchants_sort_rarity">Raridade \u2193</string>
+
+    <!-- Potions -->
+    <string name="potions_search_placeholder">Buscar poções\u2026</string>
+    <string name="potions_title">Poções</string>
+    <string name="potions_description">Caminhos de preparo e efeitos para cada poção</string>
+    <string name="potions_stat">%d poções</string>
+    <string name="potions_no_results_title">Nenhuma poção encontrada</string>
+    <string name="potions_no_results_subtitle">Tente um termo de busca diferente</string>
+    <string name="potions_duration">Duração</string>
+    <string name="potions_level">Nível</string>
+    <string name="potions_brewing_path">Caminho de preparo</string>
+
+    <!-- Potions Sort Options -->
+    <string name="potions_sort_name">Nome A\u2192Z</string>
+    <string name="potions_sort_duration">Duração \u2193</string>
+    <string name="potions_sort_amplifier">Amplificador \u2193</string>
+
+    <!-- Trades -->
+    <string name="trades_search_placeholder">Buscar trocas\u2026</string>
+    <string name="trades_title">Trocas</string>
+    <string name="trades_description">Trocas de aldeões por profissão e nível</string>
+    <string name="trades_stat">%d trocas</string>
+    <string name="trades_no_results_title">Nenhuma troca encontrada</string>
+    <string name="trades_no_results_subtitle">Tente uma busca ou profissão diferente</string>
+    <string name="trades_job_block">Bloco de profissão</string>
+    <string name="trades_ingredients">Ingredientes</string>
+    <string name="trades_level_badge">Nív %d</string>
+    <string name="trades_restock">%d/reabastecimento</string>
+
+    <!-- Advancements -->
+    <string name="advancements_search_placeholder">Buscar progressos\u2026</string>
+    <string name="advancements_title">Planejador de progressos</string>
+    <string name="advancements_description">Acompanhe seu progresso em todos os progressos do Minecraft com guias práticos</string>
+    <string name="advancements_stat">%1$d / %2$d concluídos</string>
+    <string name="advancements_no_results_title">Nenhum progresso encontrado</string>
+    <string name="advancements_no_results_subtitle">Tente uma busca ou filtro diferente</string>
+    <string name="advancements_reset_progress">Redefinir progresso</string>
+    <string name="advancements_reset_confirm">Limpar todas as marcações de progresso? Isso não pode ser desfeito.</string>
+    <string name="advancements_reset">Redefinir</string>
+    <string name="advancements_toggle_children">Alternar sub-progressos</string>
+    <string name="advancements_children_count">%d sub-progressos</string>
+    <string name="advancements_completed">Concluído</string>
+    <string name="advancements_mark_complete">Marcar como concluído</string>
+    <string name="advancements_requirements">Requisitos</string>
+    <string name="advancements_how_to_get">Como conseguir</string>
+    <string name="advancements_tutorial">Tutorial</string>
+    <string name="advancements_stats">Estatísticas</string>
+    <string name="advancements_difficulty">Dificuldade</string>
+    <string name="advancements_xp_reward">Recompensa de XP</string>
+    <string name="advancements_requires">Requer</string>
+    <string name="advancements_related_items">Itens relacionados</string>
+    <string name="advancements_related_mobs">Mobs relacionados</string>
+    <string name="advancements_related_structures">Estruturas relacionadas</string>
+    <string name="advancements_related_biomes">Biomas relacionados</string>
+
+    <!-- Advancements Sort Options -->
+    <string name="advancements_sort_name">Nome A\u2192Z</string>
+    <string name="advancements_sort_type">Tipo \u2193</string>
+
+    <!-- Commands -->
+    <string name="commands_search_placeholder">Buscar comandos\u2026</string>
+    <string name="commands_title">Comandos</string>
+    <string name="commands_description">Todos os comandos do Minecraft Java 1.21.4 com sintaxe, descrições e níveis de permissão.</string>
+    <string name="commands_stat">%d comandos</string>
+    <string name="commands_no_results_title">Nenhum comando encontrado</string>
+    <string name="commands_no_results_subtitle">Tente uma busca ou filtro diferente</string>
+    <string name="commands_syntax">SINTAXE</string>
+    <string name="commands_permission">Permissão</string>
+
+    <!-- Commands Sort Options -->
+    <string name="commands_sort_name">Nome A\u2192Z</string>
+    <string name="commands_sort_permission">Permissão \u2193</string>
+
+    <!-- Versions -->
+    <string name="versions_header">Histórico de versões do Java Edition</string>
+    <string name="versions_subtitle">%1$d grandes atualizações de 1.0 a %2$s</string>
+
+    <!-- Connect Screens -->
+    <string name="connect_title">Spyglass Connect</string>
+    <string name="connect_disconnect_desc">Desconectar</string>
+    <string name="connect_status_connected">Conectado</string>
+    <string name="connect_status_label">Status</string>
+    <string name="connect_failed_to_connect">Falha ao conectar a %s</string>
+    <string name="connect_scan_qr_button">Escanear código QR</string>
+    <string name="connect_reconnect_last">Reconectar ao último dispositivo</string>
+    <string name="connect_cached_data_offline">Dados em cache (Offline)</string>
+    <string name="connect_character">Personagem</string>
+    <string name="connect_inventory">Inventário</string>
+    <string name="connect_ender_chest">Baú do End</string>
+    <string name="connect_map">Mapa</string>
+    <string name="connect_storage">Armazenamento</string>
+    <string name="connect_how_to_connect">Como conectar:</string>
+    <string name="connect_instructions">1. Abra o Spyglass Connect no seu computador\n2. Certifique-se de que ambos os dispositivos estão na mesma rede WiFi\n3. Toque em \'Escanear código QR\' acima e aponte para o QR na tela</string>
+    <string name="connect_select_world">Selecionar mundo</string>
+    <string name="connect_world_viewer">Visualizador de mundo</string>
+    <string name="connect_requires_desktop_update">Requer atualização do desktop</string>
+    <string name="connect_health">Vida</string>
+    <string name="connect_food">Comida</string>
+    <string name="connect_xp_level">Nível de XP</string>
+    <string name="connect_xp">XP</string>
+    <string name="connect_position_format">Posição: %1$d, %2$d, %3$d</string>
+    <string name="connect_players_count">Jogadores (%d)</string>
+    <string name="connect_fair_play_warning">Visualizar dados de outros jogadores pode não estar de acordo com o jogo justo em mundos multiplayer.</string>
+    <string name="connect_world_owner">Dono do mundo</string>
+
+    <!-- Connect — QR Scanner -->
+    <string name="connect_qr_title">Escanear código QR</string>
+    <string name="connect_qr_instruction">Aponte para o código QR no seu computador</string>
+    <string name="connect_qr_not_spyglass">Não é um código QR do Spyglass Connect</string>
+    <string name="connect_qr_camera_required">A permissão da câmera é necessária para escanear códigos QR</string>
+    <string name="connect_qr_grant_permission">Conceder permissão</string>
+
+    <!-- Connect — Chest Loading Animation -->
+    <string name="connect_anim_error">Erro de conexão</string>
+    <string name="connect_anim_ready">Pronto!</string>
+    <string name="connect_anim_connected">Conectado!</string>
+    <string name="connect_anim_pairing">Pareando\u2026</string>
+    <string name="connect_anim_connecting">Conectando\u2026</string>
+    <string name="connect_anim_reconnecting">Reconectando (tentativa %d)\u2026</string>
+    <string name="connect_anim_getting_ready">Preparando\u2026</string>
+
+    <!-- Connect — Offline Indicator -->
+    <string name="connect_offline">Offline</string>
+    <string name="connect_offline_last_updated">Offline \u00b7 Última atualização %s</string>
+    <string name="connect_time_just_now">agora mesmo</string>
+    <string name="connect_time_minutes_ago">%dm atrás</string>
+    <string name="connect_time_hours_ago">%dh atrás</string>
+    <string name="connect_time_yesterday">ontem</string>
+    <string name="connect_time_days_ago">%dd atrás</string>
+
+    <!-- Connect — Character Screen -->
+    <string name="connect_no_cached_player">Nenhum dado de jogador em cache</string>
+    <string name="connect_loading_player">Carregando dados do jogador\u2026</string>
+    <string name="connect_player_body">Corpo do jogador</string>
+    <string name="connect_player_head">Cabeça do jogador</string>
+    <string name="connect_player">Jogador</string>
+    <string name="connect_ign">IGN</string>
+    <string name="connect_unknown_player">Jogador desconhecido</string>
+    <string name="connect_uuid">UUID</string>
+    <string name="connect_last_death">Última morte: %1$d, %2$d, %3$d (%4$s)</string>
+    <string name="connect_spawn">Spawn: %1$d, %2$d, %3$d</string>
+    <string name="connect_spawn_forced">Spawn: %1$d, %2$d, %3$d (Forçado)</string>
+    <string name="connect_active_effects">Efeitos ativos</string>
+    <string name="connect_equipment_analysis">Análise de equipamento</string>
+    <string name="connect_analyzing_gear">Analisando equipamento\u2026</string>
+    <string name="connect_slot_head">Cabeça</string>
+    <string name="connect_slot_chest">Peito</string>
+    <string name="connect_slot_legs">Pernas</string>
+    <string name="connect_slot_feet">Pés</string>
+    <string name="connect_slot_main_hand">Mão principal</string>
+    <string name="connect_slot_off_hand">Mão secundária</string>
+    <string name="connect_empty">Vazio</string>
+    <string name="connect_upgrade_to">Melhorar para %s \u2192</string>
+    <string name="connect_suggested">Sugerido: %s \u2192</string>
+
+    <!-- Connect — Inventory Screen -->
+    <string name="connect_no_cached_inventory">Nenhum dado de inventário em cache</string>
+    <string name="connect_no_player_data">Sem dados do jogador</string>
+    <string name="connect_equipment">Equipamento</string>
+    <string name="connect_hotbar">Hotbar</string>
+    <string name="connect_armor_head">Cabeça</string>
+    <string name="connect_armor_chest">Peito</string>
+    <string name="connect_armor_legs">Pernas</string>
+    <string name="connect_armor_feet">Pés</string>
+    <string name="connect_armor_off">Sec.</string>
+
+    <!-- Connect — Ender Chest Screen -->
+    <string name="connect_no_cached_ender_chest">Nenhum dado do baú do End em cache</string>
+    <string name="connect_no_ender_chest_data">Sem dados do baú do End</string>
+    <string name="connect_ender_chest_items">Baú do End (%d itens)</string>
+
+    <!-- Connect — Chest Finder / Storage Screen -->
+    <string name="connect_search_items_placeholder">Buscar itens (ex.: diamante, ferro)</string>
+    <string name="connect_clear">Limpar</string>
+    <string name="connect_no_items_found">Nenhum item encontrado para \"%s\"</string>
+    <string name="connect_showing_results">Mostrando 15 de %d resultados \u2014 refine sua busca</string>
+    <string name="connect_no_containers">Nenhum contêiner encontrado</string>
+    <string name="connect_container_count">%d contêineres</string>
+    <string name="connect_and_more_locations">\u2026e mais %d locais</string>
+
+    <!-- Connect — Map Screen -->
+    <string name="connect_world_map">Mapa do mundo</string>
+    <string name="connect_center_on_player">Centralizar no jogador</string>
+
+    <!-- Connect — Players Screen -->
+    <string name="connect_players">Jogadores</string>
+    <string name="connect_loading_players">Carregando jogadores\u2026</string>
+    <string name="connect_no_player_data_available">Nenhum dado de jogador disponível</string>
+    <string name="connect_unknown">Desconhecido</string>
+    <string name="connect_owner">Dono</string>
+    <string name="connect_compare">Comparar</string>
+
+    <!-- Connect — Compare Screen -->
+    <string name="connect_compare_players">Comparar jogadores</string>
+    <string name="connect_loading_comparison">Carregando dados de comparação\u2026</string>
+    <string name="connect_connect_to_compare">Conecte-se para comparar jogadores</string>
+    <string name="connect_player_1">Jogador 1</string>
+    <string name="connect_player_2">Jogador 2</string>
+    <string name="connect_compare_dimension">Dimensão</string>
+    <string name="connect_compare_position">Posição</string>
+    <string name="connect_compare_inventory">Inventário</string>
+    <string name="connect_compare_armor">Armadura</string>
+    <string name="connect_items_format">%d itens</string>
+    <string name="connect_pieces_format">%d peças</string>
+
+    <!-- Connect — Statistics Screen -->
+    <string name="connect_player_statistics">Estatísticas do jogador</string>
+    <string name="connect_no_cached_statistics">Nenhuma estatística em cache</string>
+    <string name="connect_loading_statistics">Carregando estatísticas\u2026</string>
+    <string name="connect_no_statistics">Nenhuma estatística encontrada</string>
+
+    <!-- Connect — Pets Screen -->
+    <string name="connect_pets">Animais</string>
+    <string name="connect_scanning_tamed">Procurando mobs domesticados\u2026</string>
+    <string name="connect_no_tamed_mobs">Nenhum mob domesticado encontrado</string>
+    <string name="connect_owner_label">\u00b7 Dono: %s</string>
+    <string name="connect_collar">Coleira: %s</string>
+    <string name="connect_variant">Variante: %s</string>
+    <string name="connect_speed_format">Velocidade: %s b/s</string>
+    <string name="connect_jump_format">Pulo: %s blocos</string>
+
+    <!-- Connect — Advancements Screen -->
+    <string name="connect_advancements">Progressos</string>
+    <string name="connect_no_cached_advancements">Nenhum progresso em cache</string>
+    <string name="connect_loading_advancements">Carregando progressos\u2026</string>
+    <string name="connect_completed_count">%1$d / %2$d concluídos</string>
+
+    <!-- Connect — Waypoints Screen -->
+    <string name="connect_waypoints">Pontos de referência</string>
+    <string name="connect_new_waypoint_desc">Novo ponto de referência</string>
+    <string name="connect_live_locations">LOCAIS EM TEMPO REAL</string>
+    <string name="connect_custom_waypoints">PONTOS PERSONALIZADOS</string>
+    <string name="connect_no_waypoints_dimension">Nenhum ponto de referência nesta dimensão</string>
+    <string name="connect_no_waypoints_yet">Nenhum ponto de referência ainda</string>
+    <string name="connect_connect_to_autodetect">Conecte-se a um mundo para detectar locais automaticamente</string>
+    <string name="connect_locations_will_appear">Os locais aparecerão quando os dados do mundo carregarem</string>
+    <string name="connect_add_waypoint_at_position">Adicionar ponto na posição atual</string>
+    <string name="connect_new_waypoint_title">Novo ponto de referência</string>
+    <string name="connect_edit_waypoint_title">Editar ponto de referência</string>
+    <string name="connect_waypoint_name">Nome</string>
+    <string name="connect_waypoint_color">Cor</string>
+    <string name="connect_waypoint_notes">Notas (opcional)</string>
+    <string name="connect_coordinates">COORDENADAS</string>
+    <string name="connect_distances">DISTÂNCIAS</string>
+    <string name="connect_notes">NOTAS</string>
+    <string name="connect_auto_detected">Detectado automaticamente dos dados do mundo</string>
+    <string name="connect_different_dimension">Dimensão diferente</string>
+
+    <!-- Connect — World Selector Sheet -->
+    <string name="connect_world_selector_title">Selecionar mundo</string>
+    <string name="connect_world_date_unknown">Desconhecido</string>
+
+    <!-- Connect — Connection States -->
+    <string name="connect_state_disconnected">Desconectado</string>
+    <string name="connect_state_scanning">Escaneando código QR\u2026</string>
+    <string name="connect_state_connecting">Conectando a %s\u2026</string>
+    <string name="connect_state_pairing">Pareando\u2026</string>
+    <string name="connect_state_connected">Conectado a %s</string>
+    <string name="connect_state_reconnecting">Reconectando (tentativa %d)\u2026</string>
+    <string name="connect_state_error">Erro: %s</string>
+
+    <!-- Core UI -->
+    <string name="core_sort">Ordenar</string>
+    <string name="core_report_problem">Reportar um problema</string>
+    <string name="core_copied">Copiado!</string>
+    <string name="core_tap_to_copy">Toque para copiar</string>
+    <string name="core_remove">Remover</string>
+    <string name="core_clear_history">Limpar histórico</string>
+    <string name="core_add_to_todo">Adicionar à lista de tarefas</string>
+    <string name="core_qty">Qtd</string>
+    <string name="core_add_to_todo_icon">Adicionar à lista de tarefas</string>
+    <string name="core_added">Adicionado!</string>
+    <string name="core_add_to_shopping_list">Adicionar à lista de compras</string>
+    <string name="core_no_shopping_lists">Nenhuma lista de compras ainda \u2014 crie uma na aba Compras</string>
+    <string name="core_add_to_list_icon">Adicionar à lista</string>
+    <string name="core_show_less">Mostrar menos</string>
+    <string name="core_show_more">+%d mais\u2026</string>
+    <string name="core_java_only">Apenas Java</string>
+    <string name="core_bedrock_only">Apenas Bedrock</string>
+    <string name="core_both_editions">Ambas as edições</string>
+    <string name="core_mechanics_changed">Mecânicas alteradas em %s</string>
+
+    <!-- Calculator Screens -->
+
+    <!-- Smelting -->
+    <string name="smelting_header">Calculadora de fundição / combustível</string>
+    <string name="smelting_label">Itens para fundir</string>
+    <string name="smelting_placeholder">ex.: 14 pilhas, 5k, 2 baús</string>
+    <string name="smelting_parse_error">Não foi possível interpretar a quantidade</string>
+    <string name="smelting_wasted">%d desperdiçado</string>
+    <string name="smelting_help">Insira quantos itens você precisa fundir e veja exatamente quanto de cada tipo de combustível será necessário. Pontos verdes significam alta eficiência, dourado é média, cinza é baixa. Digite quantidades como \"14 pilhas\", \"5k\" ou \"2 baús\".</string>
+
+    <!-- Reference -->
+    <string name="reference_title">Referência rápida</string>
+    <string name="reference_description">Folhas de consulta para minérios, XP, preparo de poções, redstone, tempos e cores de tinta</string>
+    <string name="reference_ore_levels">Níveis de minério por Y</string>
+    <string name="reference_ore_y_range">Y %1$d a %2$d</string>
+    <string name="reference_ore_peak">Pico %d</string>
+    <string name="reference_xp_table">Tabela de XP</string>
+    <string name="reference_levels_0_16">Níveis 0-16</string>
+    <string name="reference_xp_per_level">XP por nível</string>
+    <string name="reference_xp_formula_low">2L + 7</string>
+    <string name="reference_total_to_16">Total até 16</string>
+    <string name="reference_xp_315">315 XP</string>
+    <string name="reference_levels_17_31">Níveis 17-31</string>
+    <string name="reference_xp_formula_mid">5L - 38</string>
+    <string name="reference_total_to_30">Total até 30</string>
+    <string name="reference_xp_1395">1,395 XP</string>
+    <string name="reference_levels_32_plus">Níveis 32+</string>
+    <string name="reference_xp_formula_high">9L - 158</string>
+    <string name="reference_enchanting_table_slots">Slots da mesa de encantamento</string>
+    <string name="reference_slot_1">Slot 1 (mais barato)</string>
+    <string name="reference_slot_1_cost">1 Lapis + 1 nível</string>
+    <string name="reference_slot_2">Slot 2 (médio)</string>
+    <string name="reference_slot_2_cost">2 Lapis + 2 níveis</string>
+    <string name="reference_slot_3">Slot 3 (melhor)</string>
+    <string name="reference_slot_3_cost">3 Lapis + 3 níveis</string>
+    <string name="reference_anvil">Bigorna</string>
+    <string name="reference_too_expensive_cap">Limite de caro demais</string>
+    <string name="reference_too_expensive_val">40 níveis</string>
+    <string name="reference_rename_cost">Custo de renomear</string>
+    <string name="reference_rename_cost_val">1 nível (primeira vez)</string>
+    <string name="reference_cost_doubles">Custo dobra</string>
+    <string name="reference_cost_doubles_val">A cada penalidade de trabalho anterior</string>
+    <string name="reference_brewing_chart">Diagrama de preparo</string>
+    <string name="reference_base_chain">Cadeia base</string>
+    <string name="reference_water_bottle">Frasco de água</string>
+    <string name="reference_starting_point">Ponto de partida</string>
+    <string name="reference_plus_nether_wart">+ Fungo do Nether</string>
+    <string name="reference_awkward_potion">Poção estranha</string>
+    <string name="reference_effect_ingredients">Ingredientes de efeito</string>
+    <string name="reference_modifiers">Modificadores</string>
+    <string name="reference_extends_duration">Estende a duração</string>
+    <string name="reference_amplifies_effect">Amplifica o efeito</string>
+    <string name="reference_corrupts">Corrompe (inverte)</string>
+    <string name="reference_splash_version">Versão arremessável</string>
+    <string name="reference_lingering_version">Versão persistente</string>
+    <string name="reference_redstone_basics">Básico de Redstone</string>
+    <string name="reference_signal">Sinal</string>
+    <string name="reference_max_range">Alcance máx.</string>
+    <string name="reference_max_range_val">15 blocos</string>
+    <string name="reference_strength_loss">Perda de força</string>
+    <string name="reference_strength_loss_val">1 por bloco percorrido</string>
+    <string name="reference_redstone_tick">Tick de Redstone</string>
+    <string name="reference_redstone_tick_val">0,1 segundo (2 ticks do jogo)</string>
+    <string name="reference_repeater">Repetidor</string>
+    <string name="reference_delay_settings">Configurações de atraso</string>
+    <string name="reference_delay_val">1-4 ticks (0,1-0,4s)</string>
+    <string name="reference_resets_signal">Reseta o sinal</string>
+    <string name="reference_resets_val">Volta para 15</string>
+    <string name="reference_lock_mode">Modo de bloqueio</string>
+    <string name="reference_lock_mode_val">Entrada lateral congela o estado</string>
+    <string name="reference_comparator">Comparador</string>
+    <string name="reference_compare_mode">Modo de comparação</string>
+    <string name="reference_compare_mode_val">Saída = traseira se traseira >= lateral</string>
+    <string name="reference_subtract_mode">Modo de subtração</string>
+    <string name="reference_subtract_mode_val">Saída = traseira - lateral</string>
+    <string name="reference_container_read">Leitura de contêiner</string>
+    <string name="reference_container_read_val">Sinal = nível de preenchimento (0-15)</string>
+    <string name="reference_key_components">Componentes principais</string>
+    <string name="reference_piston">Pistão</string>
+    <string name="reference_piston_val">Empurra até 12 blocos</string>
+    <string name="reference_sticky_piston">Pistão grudento</string>
+    <string name="reference_sticky_piston_val">Empurra e puxa</string>
+    <string name="reference_observer">Observador</string>
+    <string name="reference_observer_val">Detecta atualizações de bloco</string>
+    <string name="reference_hopper">Funil</string>
+    <string name="reference_hopper_val">Taxa de transferência de 5 itens/seg</string>
+    <string name="reference_dropper">Dispensador</string>
+    <string name="reference_dropper_val">Ejeta 1 item por pulso</string>
+    <string name="reference_daylight_sensor">Sensor de luz do dia</string>
+    <string name="reference_daylight_sensor_val">Emite com base na luz do céu</string>
+    <string name="reference_times_durations">Tempos &amp; Durações</string>
+    <string name="reference_day_night_cycle">Ciclo dia/noite</string>
+    <string name="reference_full_cycle">Ciclo completo</string>
+    <string name="reference_full_cycle_val">20 minutos (24.000 ticks)</string>
+    <string name="reference_daytime">Dia</string>
+    <string name="reference_daytime_val">10 min (tick 0-12.000)</string>
+    <string name="reference_sunset">Pôr do sol</string>
+    <string name="reference_sunset_val">1,5 min (tick 12.000-13.800)</string>
+    <string name="reference_night">Noite</string>
+    <string name="reference_night_val">7 min (tick 13.800-22.200)</string>
+    <string name="reference_sunrise">Nascer do sol</string>
+    <string name="reference_sunrise_val">1,5 min (tick 22.200-24.000)</string>
+    <string name="reference_sleep_available">Dormir disponível</string>
+    <string name="reference_sleep_available_val">Tick 12.542-23.460</string>
+    <string name="reference_breeding_growth">Reprodução &amp; Crescimento</string>
+    <string name="reference_breeding_cooldown">Intervalo de reprodução</string>
+    <string name="reference_breeding_cooldown_val">5 minutos</string>
+    <string name="reference_baby_growth">Tempo de crescimento do filhote</string>
+    <string name="reference_baby_growth_val">20 minutos</string>
+    <string name="reference_speed_up_growth">Acelerar crescimento</string>
+    <string name="reference_speed_up_growth_val">Alimente o filhote com sua comida de reprodução</string>
+    <string name="reference_villager_restock">Reabastecimento do aldeão</string>
+    <string name="reference_villager_restock_val">2x por dia no jogo</string>
+    <string name="reference_crop_growth">Crescimento de plantações (média)</string>
+    <string name="reference_wheat">Trigo / Cenouras / Batatas</string>
+    <string name="reference_wheat_val">~25 minutos (8 estágios)</string>
+    <string name="reference_beetroot">Beterraba</string>
+    <string name="reference_beetroot_val">~25 minutos (4 estágios)</string>
+    <string name="reference_nether_wart">Fungo do Nether</string>
+    <string name="reference_nether_wart_val">~10 minutos (4 estágios)</string>
+    <string name="reference_sugarcane">Cana-de-açúcar / Cacto</string>
+    <string name="reference_sugarcane_val">~18 min por bloco</string>
+    <string name="reference_bamboo">Bambu</string>
+    <string name="reference_bamboo_val">~4 min por bloco</string>
+    <string name="reference_melon_pumpkin">Caule de melancia / abóbora</string>
+    <string name="reference_melon_pumpkin_val">~25 min, depois a fruta nasce</string>
+    <string name="reference_other_timers">Outros temporizadores</string>
+    <string name="reference_smelting_per_item">Fundição por item</string>
+    <string name="reference_smelting_per_item_val">10 segundos (200 ticks)</string>
+    <string name="reference_item_despawn">Desaparecimento de item</string>
+    <string name="reference_item_despawn_val">5 minutos</string>
+    <string name="reference_mob_despawn">Desaparecimento de mob</string>
+    <string name="reference_mob_despawn_val">>128 blocos = instantâneo</string>
+    <string name="reference_drowning">Afogamento</string>
+    <string name="reference_drowning_val">15 seg de ar, depois 1 hp/seg</string>
+    <string name="reference_phantoms">Phantoms aparecem após</string>
+    <string name="reference_phantoms_val">3+ dias sem dormir</string>
+    <string name="reference_fire_spread">Verificação de propagação de fogo</string>
+    <string name="reference_fire_spread_val">A cada 2 segundos</string>
+    <string name="reference_raid_timeout">Tempo limite de invasão</string>
+    <string name="reference_raid_timeout_val">40 minutos</string>
+    <string name="reference_dye_colors">Cores de tinta</string>
+
+    <!-- Redstone -->
+    <string name="redstone_title">Sinal de Redstone</string>
+    <string name="redstone_description">Calcule a intensidade do sinal do comparador a partir dos níveis de preenchimento do contêiner. Planeje contagens exatas de itens para engenhocas de redstone.</string>
+    <string name="redstone_container">Contêiner</string>
+    <string name="redstone_select_container">SELECIONAR CONTÊINER</string>
+    <string name="redstone_container_slots">%1$s (%2$d slots)</string>
+    <string name="redstone_slots_label">%d slots</string>
+    <string name="redstone_calc_signal">Calcular sinal a partir de itens</string>
+    <string name="redstone_item_count">Quantidade de itens</string>
+    <string name="redstone_stack_size">Tamanho da pilha</string>
+    <string name="redstone_stack_hint">Comum: 64 (maioria dos itens), 16 (ovos, pérolas do End, bolas de neve), 1 (ferramentas, armaduras)</string>
+    <string name="redstone_fill_level">Nível de preenchimento</string>
+    <string name="redstone_signal_strength">Intensidade do sinal</string>
+    <string name="redstone_signal_out_of">%d / 15</string>
+    <string name="redstone_max_capacity">Capacidade máxima</string>
+    <string name="redstone_max_capacity_val">%d itens</string>
+    <string name="redstone_slots_used">Slots usados</string>
+    <string name="redstone_slots_used_val">%1$d / %2$d</string>
+    <string name="redstone_items_needed_header">Itens necessários para sinal alvo</string>
+    <string name="redstone_target_signal">Sinal alvo (0-15)</string>
+    <string name="redstone_target_signal_label">Sinal alvo</string>
+    <string name="redstone_items_needed">Itens necessários</string>
+    <string name="redstone_items_needed_val">%1$d (pilha de %2$d)</string>
+    <string name="redstone_max_items_at_signal">Máx. de itens no sinal %d</string>
+    <string name="redstone_signal_reference">Referência de sinal</string>
+    <string name="redstone_signal_table_for">TABELA DE SINAL PARA %s</string>
+    <string name="redstone_signal_n">Sinal %d</string>
+    <string name="redstone_items_suffix">%s itens</string>
+    <string name="redstone_special_sources">Fontes especiais de comparador</string>
+    <string name="redstone_non_container_sources">FONTES NÃO-CONTÊINER</string>
+    <string name="redstone_cake">Bolo</string>
+    <string name="redstone_cake_val">Sinal = 14 - (2 * fatias comidas), máx 14</string>
+    <string name="redstone_composter">Composteira</string>
+    <string name="redstone_composter_val">Sinal = nível de composto (0-8)</string>
+    <string name="redstone_cauldron">Caldeirão</string>
+    <string name="redstone_cauldron_val">Sinal = nível de água (0-3)</string>
+    <string name="redstone_beehive">Colmeia / Ninho de abelha</string>
+    <string name="redstone_beehive_val">Sinal = nível de mel (0-5)</string>
+    <string name="redstone_lectern">Púlpito</string>
+    <string name="redstone_lectern_val">Sinal = número da página / total de páginas * 15</string>
+    <string name="redstone_respawn_anchor">Âncora de renascimento</string>
+    <string name="redstone_respawn_anchor_val">Sinal = cargas (0-4)</string>
+    <string name="redstone_sculk_sensor">Sensor de sculk</string>
+    <string name="redstone_sculk_sensor_val">Sinal baseado no tipo de vibração (1-15)</string>
+    <string name="redstone_end_portal_frame">Moldura do portal do End</string>
+    <string name="redstone_end_portal_frame_val">Sinal 15 se tem olho, 0 se vazio</string>
+    <string name="redstone_jukebox">Jukebox</string>
+    <string name="redstone_jukebox_val">Sinal depende do disco (1-15)</string>
+    <string name="redstone_command_block">Bloco de comando</string>
+    <string name="redstone_command_block_val">Sinal = contagem de sucessos</string>
+    <string name="redstone_item_frame">Moldura de item</string>
+    <string name="redstone_item_frame_val">Sinal = passo de rotação (0-8)</string>
+    <string name="redstone_jukebox_disc_signals">SINAIS DE DISCO DA JUKEBOX</string>
+    <string name="redstone_comparator_tips">Dicas de comparador</string>
+    <string name="redstone_how_comparators_work">COMO OS COMPARADORES FUNCIONAM</string>
+    <string name="redstone_comparator_desc">Um comparador de Redstone lê o nível de preenchimento de um contêiner atrás dele e emite uma intensidade de sinal de 0-15.</string>
+    <string name="redstone_compare_mode_label">MODO DE COMPARAÇÃO (tocha frontal apagada)</string>
+    <string name="redstone_compare_mode_desc">Saída = sinal traseiro se traseiro >= sinal lateral, caso contrário 0.</string>
+    <string name="redstone_subtract_mode_label">MODO DE SUBTRAÇÃO (tocha frontal acesa)</string>
+    <string name="redstone_subtract_mode_desc">Saída = sinal traseiro - sinal lateral (mínimo 0). Útil para circuitos aritméticos.</string>
+    <string name="redstone_signal_formula">FÓRMULA DO SINAL</string>
+    <string name="redstone_signal_formula_desc">sinal = floor(1 + (soma das frações de itens / total de slots) * 14)\nonde fração do item = contagem / tamanho_máx_pilha para cada slot\nO sinal é 0 quando vazio, 15 quando completamente cheio.</string>
+
+    <!-- Notes -->
+    <string name="notes_search_placeholder">Buscar notas\u2026</string>
+    <string name="notes_new_note_cd">Nova nota</string>
+    <string name="notes_title">Notas</string>
+    <string name="notes_description">Escreva, rotule e organize suas notas de Minecraft. Adicione rótulos para agrupá-las por tópico.</string>
+    <string name="notes_stat">%d notas</string>
+    <string name="notes_no_found">Nenhuma nota encontrada</string>
+    <string name="notes_no_yet">Nenhuma nota ainda</string>
+    <string name="notes_try_different">Tente uma busca ou rótulo diferente</string>
+    <string name="notes_tap_to_create">Toque em + para criar sua primeira nota</string>
+    <string name="notes_label">Rótulo</string>
+    <string name="notes_created">Criada</string>
+    <string name="notes_updated">Atualizada</string>
+    <string name="notes_new_note_dialog">Nova nota</string>
+    <string name="notes_edit_note_dialog">Editar nota</string>
+    <string name="notes_field_title">Título</string>
+    <string name="notes_field_label">Rótulo (opcional)</string>
+    <string name="notes_field_content">Conteúdo</string>
+
+    <!-- Maze -->
+    <string name="maze_header">Criador de labirintos</string>
+    <string name="maze_width_cells">Largura (células)</string>
+    <string name="maze_length_cells">Comprimento (células)</string>
+    <string name="maze_rings">Anéis</string>
+    <string name="maze_floors">Andares</string>
+    <string name="maze_path_width">Largura do caminho</string>
+    <string name="maze_wall_height">Altura da parede</string>
+    <string name="maze_generate">Gerar</string>
+    <string name="maze_shuffle">Embaralhar</string>
+    <string name="maze_total_blocks">Total de blocos</string>
+    <string name="maze_width_x">Largura (X)</string>
+    <string name="maze_depth_z">Profundidade (Z)</string>
+    <string name="maze_height_y">Altura (Y)</string>
+    <string name="maze_dead_ends">Becos sem saída</string>
+    <string name="maze_longest_path">Caminho mais longo</string>
+    <string name="maze_longest_path_val">%d células</string>
+    <string name="maze_y_layer">Camada Y: %d</string>
+    <string name="maze_help">Gere labirintos para Minecraft. Escolha retangular para labirintos clássicos de cerca viva, circular para labirintos de anéis concêntricos ou multi-andar para labirintos empilhados conectados por escadas. Use o controle de camada para construir camada por camada, ou mude para 3D para uma visualização isométrica.</string>
+
+    <!-- Block Fill -->
+    <string name="blockfill_header">Calculadora de preenchimento</string>
+    <string name="blockfill_width">Largura</string>
+    <string name="blockfill_length">Comprimento</string>
+    <string name="blockfill_height">Altura (blocos)</string>
+    <string name="blockfill_blocks">Blocos</string>
+    <string name="blockfill_chunks">Chunks</string>
+    <string name="blockfill_hollow">Oco (apenas casca)</string>
+    <string name="blockfill_total_blocks">Total de blocos</string>
+    <string name="blockfill_stacks">Pilhas (64)</string>
+    <string name="blockfill_stacks_val">%1$s + %2$d restantes</string>
+    <string name="blockfill_single_chests">Baús simples</string>
+    <string name="blockfill_double_chests">Baús duplos</string>
+    <string name="blockfill_shulker_boxes">Caixas de shulker</string>
+    <string name="blockfill_help">Insira a largura, comprimento e altura de uma área para calcular quantos blocos você precisa para preenchê-la. Alterne entre blocos e chunks para grandes construções. Os resultados mostram o armazenamento necessário em pilhas, baús e caixas de shulker.</string>
+
+    <!-- Anvil / Enchanting -->
+    <string name="anvil_header">Encantamento</string>
+    <string name="anvil_weapons">Armas</string>
+    <string name="anvil_tools">Ferramentas</string>
+    <string name="anvil_armor">Armadura</string>
+    <string name="anvil_enchantments">Encantamentos</string>
+    <string name="anvil_optimal_order">Ordem ideal</string>
+    <string name="anvil_step">Passo %1$d: %2$s</string>
+    <string name="anvil_lvl_cost">%d nív</string>
+    <string name="anvil_too_expensive">Caro demais!</string>
+    <string name="anvil_total_xp">XP total</string>
+    <string name="anvil_total_xp_val">%d níveis</string>
+    <string name="anvil_help">Escolha um item e selecione os encantamentos desejados. Esta ferramenta calcula a ordem mais barata de XP para combiná-los na bigorna, evitando o limite de \"Caro demais\". Toque nos níveis de encantamento (I\u2013V) para ajustar.</string>
+    <string name="anvil_how_costs_work">Como os custos da bigorna funcionam</string>
+    <string name="anvil_prior_work_penalty">Penalidade de trabalho anterior</string>
+    <string name="anvil_prior_work_desc">Toda vez que um item é usado na bigorna, ele ganha um contador oculto de \"usos da bigorna\". A penalidade dobra a cada vez: 0, 1, 3, 7, 15, 31 níveis (fórmula: 2\u207F \u2212 1). Isso se aplica tanto ao item alvo quanto ao item sacrificado.</string>
+    <string name="anvil_too_expensive_title">\"Caro demais\"</string>
+    <string name="anvil_too_expensive_desc">Se qualquer operação na bigorna custar 40+ níveis, o jogo a bloqueia completamente. Após 6 usos da bigorna, a penalidade sozinha chega a 63 níveis \u2014 tornando encantamentos adicionais impossíveis.</string>
+    <string name="anvil_why_order_matters">Por que a ordem importa</string>
+    <string name="anvil_why_order_desc">Os usos da bigorna do item resultante = max(alvo, sacrifício) + 1. Combinando livros em pares primeiro (árvore binária), cada livro acumula menos usos da bigorna. Encantamentos mais baratos vão primeiro para que seus pequenos custos base absorvam a penalidade crescente. Esta calculadora encontra essa ordem ideal automaticamente.</string>
+
+    <!-- Waypoints -->
+    <string name="waypoints_title">Pontos de referência</string>
+    <string name="waypoints_description">Salve e organize coordenadas dos seus locais importantes no Minecraft.</string>
+    <string name="waypoints_stat">%d pontos de referência</string>
+    <string name="waypoints_search_placeholder">Buscar pontos de referência\u2026</string>
+    <string name="waypoints_new_waypoint_cd">Novo ponto de referência</string>
+    <string name="waypoints_no_found">Nenhum ponto de referência encontrado</string>
+    <string name="waypoints_no_saved">Nenhum ponto de referência salvo</string>
+    <string name="waypoints_try_different">Tente uma busca ou filtro diferente</string>
+    <string name="waypoints_tap_to_save">Toque em + para salvar seu primeiro local</string>
+    <string name="waypoints_coordinates">COORDENADAS</string>
+    <string name="waypoints_save_as_waypoint">Salvar como ponto do %s</string>
+    <string name="waypoints_notes_label">NOTAS</string>
+    <string name="waypoints_new_dialog">Novo ponto de referência</string>
+    <string name="waypoints_edit_dialog">Editar ponto de referência</string>
+    <string name="waypoints_field_name">Nome</string>
+    <string name="waypoints_color">Cor</string>
+    <string name="waypoints_field_notes">Notas (opcional)</string>
+
+    <!-- Clock -->
+    <string name="clock_title">Relógio do jogo</string>
+    <string name="clock_description">Acompanhe o ciclo dia/noite do Minecraft e os próximos eventos.</string>
+    <string name="clock_sync">Sincronizar</string>
+    <string name="clock_not_synced">Não sincronizado \u2014 escolha um método abaixo</string>
+    <string name="clock_f3_sync">SINCRONIZAÇÃO F3 (MAIS PRECISA)</string>
+    <string name="clock_f3_desc">Insira o valor do tick da tela de debug F3</string>
+    <string name="clock_day_time_tick">Tick do dia (0\u201323999)</string>
+    <string name="clock_sync_btn">Sincronizar</string>
+    <string name="clock_quick_sync">SINCRONIZAÇÃO RÁPIDA</string>
+    <string name="clock_quick_sync_desc">Toque quando ver o evento no jogo:</string>
+    <string name="clock_synced_via">Sincronizado via</string>
+    <string name="clock_f3_debug">Debug F3</string>
+    <string name="clock_quick_sync_label">Sincronização rápida</string>
+    <string name="clock_game_time">Hora do jogo</string>
+    <string name="clock_stop">Parar relógio</string>
+    <string name="clock_current_time">Hora atual</string>
+    <string name="clock_day_prefix">Dia </string>
+    <string name="clock_tick_format">  \u2022  Tick %d</string>
+    <string name="clock_your_events">Seus eventos</string>
+    <string name="clock_no_events">Nenhum evento configurado. Toque abaixo para adicionar eventos.</string>
+    <string name="clock_add_event_arrow">Adicionar evento \u2192</string>
+    <string name="clock_upcoming_events">Próximos eventos</string>
+    <string name="clock_no_events_configured">Nenhum evento configurado.</string>
+    <string name="clock_how_to_sync">Como sincronizar</string>
+    <string name="clock_using_f3">Usando F3 (PC)</string>
+    <string name="clock_f3_step_1">1. Pressione F3 no Minecraft para abrir a tela de debug</string>
+    <string name="clock_f3_step_2">2. Encontre o valor \u201cDay Time\u201d no lado esquerdo</string>
+    <string name="clock_f3_step_3">3. Insira o número do tick (0\u201323999) no campo acima</string>
+    <string name="clock_f3_step_4">4. Toque em \u201cSincronizar\u201d \u2014 o relógio acompanhará a partir desse ponto</string>
+    <string name="clock_quick_sync_title">Sincronização rápida</string>
+    <string name="clock_quick_sync_help">Toque no botão Nascer do sol, Meio-dia ou Pôr do sol no momento em que ver o evento acontecer no jogo.</string>
+    <string name="clock_quick_sync_sunrise">\u2022 Nascer do sol \u2014 quando o sol aparece pela primeira vez no horizonte</string>
+    <string name="clock_quick_sync_noon">\u2022 Meio-dia \u2014 quando o sol está diretamente acima</string>
+    <string name="clock_quick_sync_sunset">\u2022 Pôr do sol \u2014 quando o sol começa a descer abaixo do horizonte</string>
+    <string name="clock_reading_countdowns">Lendo contagens regressivas</string>
+    <string name="clock_countdown_help">A linha do tempo de eventos mostra quanto tempo falta até cada evento ocorrer.</string>
+    <string name="clock_1_mc_day">1 dia Minecraft = 20 minutos reais</string>
+    <string name="clock_1_mc_hour">1 hora Minecraft \u2248 50 segundos reais</string>
+    <string name="clock_color_coded">Os eventos são codificados por cores: verde (seguro), dourado (alerta), vermelho (perigo).</string>
+    <string name="clock_add_event_dialog">Adicionar evento</string>
+    <string name="clock_predefined">Predefinido</string>
+    <string name="clock_custom">Personalizado</string>
+    <string name="clock_all_predefined_added">Todos os eventos predefinidos já foram adicionados.</string>
+    <string name="clock_event_name">Nome do evento</string>
+    <string name="clock_event_tick">Tick (0\u201323999)</string>
+    <string name="clock_color_label">COR</string>
+    <string name="clock_set_day_dialog">Definir dia</string>
+    <string name="clock_set_day_desc">Insira o dia atual no jogo da tela de debug F3 (linha Day). Você pode atualizar isso a qualquer momento após uma reinicialização ou falha do servidor.</string>
+    <string name="clock_day_number">Número do dia</string>
+    <string name="clock_set">Definir</string>
+
+    <!-- Food -->
+    <string name="food_search_placeholder">Buscar comida\u2026</string>
+    <string name="food_sort">Ordenar:</string>
+    <string name="food_title">Comida &amp; Saturação</string>
+    <string name="food_description">Referência completa de comida com fome, saturação e efeitos especiais. Ordene por saturação para encontrar as melhores comidas.</string>
+    <string name="food_stat">%d comidas</string>
+    <string name="food_saturation_label">saturação</string>
+    <string name="food_how_saturation_works">COMO A SATURAÇÃO FUNCIONA</string>
+    <string name="food_saturation_desc">Saturação é uma estatística oculta que determina quanto tempo antes da fome começar a diminuir. Maior saturação = mais tempo antes de sentir fome novamente. Sua saturação não pode exceder seu nível atual de fome.</string>
+    <string name="food_best_by_category">MELHORES COMIDAS POR CATEGORIA</string>
+    <string name="food_best_overall">Melhor geral</string>
+    <string name="food_best_overall_val">Cenoura dourada (14,4 sat)</string>
+    <string name="food_best_meat">Melhor carne cozida</string>
+    <string name="food_best_meat_val">Bife / Costeleta (12,8 sat)</string>
+    <string name="food_best_fish">Melhor peixe</string>
+    <string name="food_best_fish_val">Salmão cozido (9,6 sat)</string>
+    <string name="food_best_crop">Melhor plantação</string>
+    <string name="food_best_crop_val">Batata assada (6,0 sat)</string>
+    <string name="food_best_stew">Melhor ensopado</string>
+    <string name="food_best_stew_val">Ensopado de coelho (12,0 sat)</string>
+
+    <!-- Todo -->
+    <string name="todo_title">Lista de tarefas</string>
+    <string name="todo_description">Acompanhe tarefas, metas de coleta e vincule às suas ferramentas</string>
+    <string name="todo_free_form">Texto livre</string>
+    <string name="todo_item_linked">Vinculado a item</string>
+    <string name="todo_freeform_placeholder">Construir a ponte leste\u2026</string>
+    <string name="todo_search_items_placeholder">Buscar itens\u2026</string>
+    <string name="todo_qty">Qtd</string>
+    <string name="todo_tasks_header">Tarefas</string>
+    <string name="todo_no_tasks_yet">Nenhuma tarefa ainda</string>
+    <string name="todo_add_first_task">Adicione sua primeira tarefa acima</string>
+    <string name="todo_clear_completed">Limpar %d concluídas</string>
+    <string name="todo_edit_task">Editar tarefa</string>
+    <string name="todo_link_to_tool">Vincular à ferramenta</string>
+    <string name="todo_link_desc">Vincular \"%s\" a uma lista de compras</string>
+    <string name="todo_no_shopping_lists">Nenhuma lista de compras ainda</string>
+    <string name="todo_select_list">Selecione uma lista</string>
+    <string name="todo_link_btn">Vincular</string>
+    <string name="todo_unlink">Desvincular</string>
+    <string name="todo_link_cd">Vincular</string>
+    <string name="todo_clear_link_cd">Limpar vínculo</string>
+    <string name="todo_link_shopping_optional">Vincular à lista de compras (opcional)</string>
+
+    <!-- Trim -->
+    <string name="trim_title">Adornos de armadura</string>
+    <string name="trim_description">Todos os 18 modelos de adorno de armadura, 11 materiais de adorno e onde encontrá-los.</string>
+    <string name="trim_templates">Modelos</string>
+    <string name="trim_materials">Materiais</string>
+    <string name="trim_how_to">Como fazer</string>
+    <string name="trim_templates_header">Modelos de adorno (18)</string>
+    <string name="trim_structure_label">Estrutura  </string>
+    <string name="trim_drop_chance">Chance de drop</string>
+    <string name="trim_duplicate_with">Duplicar com</string>
+    <string name="trim_duplicate_val">7 diamantes + %s</string>
+    <string name="trim_materials_header">Materiais de adorno (11)</string>
+    <string name="trim_materials_desc">Cada material muda a cor do padrão de adorno na armadura.</string>
+    <string name="trim_materials_darker">Se o material do adorno corresponder ao material da armadura (ex.: adorno de diamante em armadura de diamante), o padrão usa uma paleta de cores mais escura.</string>
+    <string name="trim_combinations">Combinações</string>
+    <string name="trim_armor_types">Tipos de armadura</string>
+    <string name="trim_armor_types_val">6 (couro, cota de malha, ferro, ouro, diamante, netherita)</string>
+    <string name="trim_armor_pieces">Peças de armadura</string>
+    <string name="trim_armor_pieces_val">4 (capacete, peitoral, calças, botas)</string>
+    <string name="trim_total_looks">Total de visuais únicos</string>
+    <string name="trim_total_looks_val">18 \u00d7 11 \u00d7 6 \u00d7 4 = 4.752</string>
+    <string name="trim_how_to_header">Como adornar armadura</string>
+    <string name="trim_smithing_table">RECEITA DA MESA DE FERREIRO</string>
+    <string name="trim_smithing_steps">1. Abra a mesa de ferreiro\n2. Coloque o modelo de adorno no slot esquerdo\n3. Coloque a peça de armadura no slot do meio\n4. Coloque o material de adorno no slot direito\n5. Pegue a armadura adornada da saída</string>
+    <string name="trim_key_notes">NOTAS IMPORTANTES</string>
+    <string name="trim_key_notes_text">\u2022 Os modelos são consumidos durante o adorno\n\u2022 Adornos são puramente cosméticos (sem efeito no gameplay)\n\u2022 Você pode re-adornar armaduras (sobrescreve o padrão anterior)\n\u2022 Encantamentos são preservados ao adornar\n\u2022 Funciona em todos os materiais de armadura</string>
+    <string name="trim_duplicating">DUPLICANDO MODELOS</string>
+    <string name="trim_duplicating_text">Na mesa de fabricação:\n1 modelo + 7 diamantes + 1 material de duplicação = 2 modelos\n\nCada modelo tem um material de duplicação específico (veja a aba Modelos). Isso torna modelos raros renováveis após encontrar o primeiro.</string>
+
+    <!-- Banner -->
+    <string name="banner_title">Designer de estandartes</string>
+    <string name="banner_description">Crie estandartes personalizados como um tear. Escolha uma cor base, adicione até 6 camadas de padrão e visualize seu design ao vivo.</string>
+    <string name="banner_base_color">Cor base</string>
+    <string name="banner_preview">Pré-visualização</string>
+    <string name="banner_layers_count">%d/6 camadas</string>
+    <string name="banner_add_pattern">Adicionar padrão</string>
+    <string name="banner_requires_item"> (requer item)</string>
+    <string name="banner_layer_color">Cor da camada</string>
+    <string name="banner_add_layer">Adicionar camada</string>
+    <string name="banner_layer_stack">Pilha de camadas</string>
+    <string name="banner_move_up">Mover para cima</string>
+    <string name="banner_move_down">Mover para baixo</string>
+    <string name="banner_remove">Remover</string>
+    <string name="banner_clear_all">Limpar tudo</string>
+    <string name="banner_materials_needed">Materiais necessários</string>
+    <string name="banner_banner_material">Estandarte</string>
+    <string name="banner_banner_val">1x Estandarte %s</string>
+    <string name="banner_dye_count">%dx</string>
+    <string name="banner_reusable">1x (reutilizável)</string>
+    <string name="banner_hide_reference">Ocultar referência</string>
+    <string name="banner_show_reference">Mostrar referência</string>
+    <string name="banner_special_items">Itens de padrão especial</string>
+    <string name="banner_special_items_desc">Estes itens desbloqueiam padrões especiais no tear. Eles não são consumidos ao serem usados.</string>
+    <string name="banner_obtained">Obtido</string>
+    <string name="banner_source">Fonte</string>
+    <string name="banner_loom_patterns">Padrões do tear (sem item necessário)</string>
+    <string name="banner_loom_patterns_desc">Estes padrões estão disponíveis no tear sem nenhum item especial de padrão de estandarte.</string>
+    <string name="banner_all_16_dye">Todas as 16 cores de tinta</string>
+    <string name="banner_dye_desc">Qualquer uma dessas cores pode ser usada no tear para aplicar padrões aos estandartes.</string>
+    <string name="banner_how_to_use_loom">COMO USAR O TEAR</string>
+    <string name="banner_loom_steps">1. Coloque um estandarte no slot superior esquerdo\n2. Coloque uma tinta no slot superior direito\n3. Opcionalmente coloque um item de padrão no slot do meio\n4. Selecione um padrão da lista\n5. Pegue o resultado no slot de saída</string>
+    <string name="banner_tips">DICAS</string>
+    <string name="banner_tips_text">\u2022 Estandartes podem ter até 6 camadas de padrão\n\u2022 Itens de padrão NÃO são consumidos ao serem usados\n\u2022 Você pode copiar um estandarte colocando-o + estandarte em branco na grade de fabricação\n\u2022 Estandartes podem ser colocados em escudos na mesa de fabricação</string>
+
+    <!-- Shapes -->
+    <string name="shapes_header">Designer de formas</string>
+    <string name="shapes_total_blocks">Total de blocos</string>
+    <string name="shapes_width_x">Largura (X)</string>
+    <string name="shapes_depth_z">Profundidade (Z)</string>
+    <string name="shapes_height_y">Altura (Y)</string>
+    <string name="shapes_y_layer">Camada Y: %d</string>
+    <string name="shapes_hollow">Oco</string>
+    <string name="shapes_flipped">Invertido</string>
+    <string name="shapes_help">Construa formas perfeitas no Minecraft. Defina um raio e altura, depois use o controle de camada Y para ver exatamente quais blocos colocar em cada camada, ou mude para 3D para uma visualização isométrica.</string>
+
+    <!-- Light -->
+    <string name="light_title">Espaçamento de luz</string>
+    <string name="light_description">Calcule o espaçamento de tochas e fontes de luz para evitar o spawn de mobs hostis.</string>
+    <string name="light_source">Fonte de luz</string>
+    <string name="light_select_source">SELECIONAR FONTE DE LUZ</string>
+    <string name="light_source_level">%1$s (Nível %2$d)</string>
+    <string name="light_level_label">Nível %d</string>
+    <string name="light_spacing_results">Resultados de espaçamento</string>
+    <string name="light_level">Nível de luz</string>
+    <string name="light_linear_reach">Alcance linear</string>
+    <string name="light_linear_reach_val">%d blocos em cada direção</string>
+    <string name="light_line_spacing">Espaçamento em linha</string>
+    <string name="light_line_spacing_val">%d blocos de distância</string>
+    <string name="light_line_place">Coloque %1$s a cada %2$d blocos ao longo de uma linha (corredor, túnel).</string>
+    <string name="light_grid_spacing">Espaçamento em grade</string>
+    <string name="light_grid_spacing_val">%d blocos de distância</string>
+    <string name="light_grid_place">Coloque %1$s em um padrão de grade a cada %2$d blocos nas direções X e Z para prevenir completamente o spawn de mobs em uma superfície plana.</string>
+    <string name="light_not_practical">Não prático</string>
+    <string name="light_too_dim">%1$s é muito fraco (nível %2$d) para proteção eficaz contra mobs. A luz deve atingir nível 1+ em cada bloco. Considere uma fonte mais forte.</string>
+    <string name="light_mob_spawning">Regras de spawn de mobs</string>
+    <string name="light_overworld">OVERWORLD (1.18+)</string>
+    <string name="light_overworld_desc">Mobs hostis spawnam apenas no nível de luz 0. Qualquer nível de luz 1 ou acima previne o spawn.</string>
+    <string name="light_nether_label">NETHER</string>
+    <string name="light_nether_desc">A maioria dos mobs hostis spawna no nível de luz 11 ou inferior. Blazes e esqueletos Wither spawnam em fortalezas no nível de luz 11 ou inferior.</string>
+    <string name="light_mob_spawners">GERADORES DE MOBS</string>
+    <string name="light_mob_spawners_desc">Blocos geradores de mobs são ativados quando o nível de luz é 11 ou inferior. Coloque fontes de luz dentro de 4 blocos para desativá-los.</string>
+    <string name="light_quick_reference">Referência rápida</string>
+    <string name="light_common_spacings">ESPAÇAMENTOS COMUNS</string>
+    <string name="light_torch_14">Tocha (14)</string>
+    <string name="light_torch_14_val">Grade de 12 blocos / linha de 27 blocos</string>
+    <string name="light_lantern_15">Lanterna (15)</string>
+    <string name="light_lantern_15_val">Grade de 14 blocos / linha de 29 blocos</string>
+    <string name="light_soul_torch_10">Tocha das almas (10)</string>
+    <string name="light_soul_torch_10_val">Grade de 6 blocos / linha de 19 blocos</string>
+    <string name="light_how_light_spreads">COMO A LUZ SE PROPAGA</string>
+    <string name="light_spread_desc">A luz diminui em 1 para cada bloco de distância (distância Manhattan). Uma tocha no nível 14 atinge o nível 1 a 13 blocos de distância e nível 0 a 14 blocos.</string>
+
+    <!-- Shopping -->
+    <string name="shopping_title">Listas de compras</string>
+    <string name="shopping_description">Planeje sua coleta e fabricação com listas nomeadas</string>
+    <string name="shopping_new_list">Nova lista</string>
+    <string name="shopping_no_lists_yet">Nenhuma lista ainda</string>
+    <string name="shopping_no_lists_subtitle">Crie uma lista para começar a rastrear itens</string>
+    <string name="shopping_created">Criada %s</string>
+    <string name="shopping_delete_list_title">Excluir lista?</string>
+    <string name="shopping_delete_list_desc">Isso removerá permanentemente esta lista e todos os seus itens.</string>
+    <string name="shopping_list_label">Lista</string>
+    <string name="shopping_items_count">%d itens</string>
+    <string name="shopping_rename_list_cd">Renomear lista</string>
+    <string name="shopping_search_placeholder">Buscar\u2026</string>
+    <string name="shopping_qty">Qtd</string>
+    <string name="shopping_checklist">Checklist</string>
+    <string name="shopping_gather">Coletar</string>
+    <string name="shopping_craft">Fabricar</string>
+    <string name="shopping_new_list_dialog">Nova lista de compras</string>
+    <string name="shopping_list_name">Nome da lista</string>
+    <string name="shopping_create">Criar</string>
+    <string name="shopping_rename_dialog">Renomear lista</string>
+    <string name="shopping_rename">Renomear</string>
+    <string name="shopping_ok">OK</string>
+
+    <!-- Nether -->
+    <string name="nether_header">Ferramentas do Nether</string>
+    <string name="nether_convert">Converter</string>
+    <string name="nether_obsidian">Obsidiana</string>
+    <string name="nether_portals">Portais</string>
+    <string name="nether_input_coords">Inserir coordenadas</string>
+    <string name="nether_y_unchanged">Y (inalterado)</string>
+    <string name="nether_facing">Direção</string>
+    <string name="nether_portal_interior">Dimensões internas do portal</string>
+    <string name="nether_width_min">Largura (mín 2)</string>
+    <string name="nether_height_min">Altura (mín 3)</string>
+    <string name="nether_without_corners">Sem cantos</string>
+    <string name="nether_without_corners_val">%d obsidiana</string>
+    <string name="nether_with_corners">Com cantos</string>
+    <string name="nether_with_corners_val">%d obsidiana</string>
+    <string name="nether_portal_name">Nome do portal</string>
+    <string name="nether_save_portal">Salvar coordenadas atuais como portal</string>
+    <string name="nether_no_saved_portals">Nenhum portal salvo</string>
+    <string name="nether_no_saved_subtitle">Salve as coordenadas acima para rastrear seus portais</string>
+    <string name="nether_help">Converta coordenadas entre o Overworld e o Nether (proporção 8:1), calcule quanta obsidiana você precisa para um portal de tamanho personalizado ou salve locais de portais para acompanhar sua rede.</string>
+
+    <!-- Librarian -->
+    <string name="librarian_title">Guia do bibliotecário</string>
+    <string name="librarian_description">Os encantamentos do bibliotecário são bloqueados por bioma quando o pacote de dados de rebalanceamento de trocas de aldeões está ativado. Encontre o bioma certo para o encantamento que você precisa.</string>
+    <string name="librarian_experimental">Recurso experimental</string>
+    <string name="librarian_experimental_desc">Requer o pacote de dados de rebalanceamento de trocas de aldeões. Não ativo no gameplay padrão.</string>
+    <string name="librarian_select_biome">Selecionar bioma</string>
+    <string name="librarian_all_biomes">Todos os biomas</string>
+    <string name="librarian_master_exclusive">EXCLUSIVO DO NÍVEL MESTRE</string>
+    <string name="librarian_master_guaranteed">Troca garantida de livro encantado no nível Mestre.</string>
+    <string name="librarian_common_pool">POOL COMUM</string>
+    <string name="librarian_common_available">Disponível do nível Novato ao Especialista.</string>
+    <string name="librarian_how_it_works">Como funciona</string>
+    <string name="librarian_biome_determination">DETERMINAÇÃO DO BIOMA</string>
+    <string name="librarian_biome_determination_desc">Os encantamentos disponíveis de um bibliotecário são determinados pelo bioma onde ele primeiro reivindicou um púlpito. Movê-lo para um bioma diferente NÃO altera seu pool de encantamentos.</string>
+    <string name="librarian_level_caps">LIMITES DE NÍVEL DE ENCANTAMENTO</string>
+    <string name="librarian_level_caps_desc">Alguns encantamentos são limitados abaixo do nível máximo com bibliotecários:\n\u2022 Proteção III (máx IV requer combinação na bigorna)\n\u2022 Fortuna II (máx III requer combinação na bigorna)\n\u2022 Inquebrável II (máx III requer combinação na bigorna)</string>
+    <string name="librarian_strategy_tips">DICAS DE ESTRATÉGIA</string>
+    <string name="librarian_strategy_tips_desc">\u2022 Para Remendo, reproduza aldeões em um bioma de Pântano\n\u2022 Para Toque Suave, use um bioma Nevado\n\u2022 Combine encantamentos limitados via bigorna para nível máximo\n\u2022 Quebre e recoloque o púlpito para recarregar as trocas</string>
+    <string name="librarian_not_available">Não disponível com bibliotecários</string>
+    <string name="librarian_cannot_be_traded">ESTES ENCANTAMENTOS NÃO PODEM SER TROCADOS</string>
+    <string name="librarian_unavailable_list">\u2022 Tridente: Condutividade, Lealdade, Correnteza, Empalar\n\u2022 Besta: Tiro múltiplo, Perfuração, Carga rápida\n\u2022 Vara de pesca: Sorte do mar, Isca\n\u2022 Apenas tesouro: Velocidade das almas, Esgueirar veloz, Rajada de vento\n\u2022 Apenas 1.21+: Violação, Densidade (encantamentos de maça)</string>
+    <string name="librarian_found_from">Estes devem ser encontrados em baús de saque, pescaria, drops de mobs ou mesas de encantamento.</string>
+
+    <!-- Storage -->
+    <string name="storage_header">Calculadora de armazenamento</string>
+    <string name="storage_quantity">Quantidade</string>
+    <string name="storage_placeholder">ex.: 14 pilhas, 5k</string>
+    <string name="storage_item_dropdown">Item (para compressão em blocos)</string>
+    <string name="storage_total_items">Total de itens</string>
+    <string name="storage_stacks">Pilhas</string>
+    <string name="storage_single_chests">Baús simples</string>
+    <string name="storage_double_chests">Baús duplos</string>
+    <string name="storage_shulker_boxes">Caixas de shulker</string>
+    <string name="storage_help">Descubra quantos baús e caixas de shulker você precisa para uma determinada quantidade de itens. Escolha um item no menu para ver também a compressão em blocos (ex.: quantos blocos de ferro você pode fazer com seus lingotes de ferro).</string>
+
+    <!-- Loot -->
+    <string name="loot_search_placeholder">Buscar saque ou estruturas\u2026</string>
+    <string name="loot_title">Saque de estruturas</string>
+    <string name="loot_description">Itens de saque notáveis e exclusivos encontrados em cada estrutura do Minecraft. Encontre a estrutura certa para o que você precisa.</string>
+    <string name="loot_stat">%d estruturas</string>
+    <string name="loot_exclusive_rare">EXCLUSIVO / RARO</string>
+    <string name="loot_notable">SAQUE NOTÁVEL</string>
+    <string name="loot_rarest_items">ITENS EXCLUSIVOS MAIS RAROS</string>
+    <string name="loot_elytra">Élitros</string>
+    <string name="loot_elytra_val">Apenas cidades do End</string>
+    <string name="loot_echo_shards">Fragmentos de eco</string>
+    <string name="loot_echo_shards_val">Apenas cidades antigas</string>
+    <string name="loot_heavy_core">Núcleo pesado</string>
+    <string name="loot_heavy_core_val">Apenas câmaras de provação</string>
+    <string name="loot_pigstep">Disco Pigstep</string>
+    <string name="loot_pigstep_val">Apenas resquícios de bastião</string>
+    <string name="loot_silence_trim">Adorno do silêncio</string>
+    <string name="loot_silence_trim_val">Cidades antigas (1,2%)</string>
+    <string name="loot_swift_sneak">Esgueirar veloz</string>
+    <string name="loot_swift_sneak_val">Apenas cidades antigas</string>
+</resources>
