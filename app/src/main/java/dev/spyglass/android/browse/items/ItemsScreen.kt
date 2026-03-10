@@ -790,5 +790,6 @@ private fun ItemDetailCard(
 
         SpyglassDivider()
         ReportProblemRow(entityType = "Item", entityName = item.name, entityId = item.id)
+        ReportTranslationRow(entityType = "Item", entityName = item.name, entityId = item.id)
     }
 }

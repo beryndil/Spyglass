@@ -838,6 +838,13 @@
     <string name="core_bedrock_only">Apenas Bedrock</string>
     <string name="core_both_editions">Ambas as edições</string>
     <string name="core_mechanics_changed">Mecânicas alteradas em %s</string>
+    <string name="core_report_translation">Reportar problema de tradução</string>
+    <string name="core_report_translation_title">Reportar Problema de Tradução</string>
+    <string name="core_report_translation_hint">Qual o problema com a tradução? (opcional)</string>
+    <string name="core_report_translation_submit">Enviar Relatório</string>
+    <string name="core_report_translation_saved">Relatório salvo — abrindo GitHub…</string>
+    <string name="core_report_translation_entity">%1$s: %2$s</string>
+    <string name="core_report_translation_language">Idioma: %s</string>
 
     <!-- Calculator Screens -->
 

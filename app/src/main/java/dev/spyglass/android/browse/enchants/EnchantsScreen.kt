@@ -482,5 +482,6 @@ private fun EnchantDetailCard(
 
         SpyglassDivider()
         ReportProblemRow(entityType = "Enchantment", entityName = enchant.name, entityId = enchant.id)
+        ReportTranslationRow(entityType = "Enchantment", entityName = enchant.name, entityId = enchant.id)
     }
 }

@@ -446,5 +446,6 @@ private fun StructureDetailCard(
 
         SpyglassDivider()
         ReportProblemRow(entityType = "Structure", entityName = structure.name, entityId = structure.id)
+        ReportTranslationRow(entityType = "Structure", entityName = structure.name, entityId = structure.id)
     }
 }

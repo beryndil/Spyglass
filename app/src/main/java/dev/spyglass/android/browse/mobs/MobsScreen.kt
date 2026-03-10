@@ -500,6 +500,7 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
 
         SpyglassDivider()
         ReportProblemRow(entityType = "Mob", entityName = mob.name, entityId = mob.id)
+        ReportTranslationRow(entityType = "Mob", entityName = mob.name, entityId = mob.id)
     }
 }
 

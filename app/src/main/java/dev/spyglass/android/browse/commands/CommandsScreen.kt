@@ -334,5 +334,6 @@ private fun CommandDetailCard(cmd: CommandEntity, entityLinkIndex: EntityLinkInd
 
         SpyglassDivider()
         ReportProblemRow(entityType = "Command", entityName = cmd.name, entityId = cmd.name)
+        ReportTranslationRow(entityType = "Command", entityName = cmd.name, entityId = cmd.name)
     }
 }

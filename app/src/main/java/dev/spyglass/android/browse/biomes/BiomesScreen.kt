@@ -524,6 +524,7 @@ private fun BiomeDetailCard(
 
         HorizontalDivider(color = textColor.copy(alpha = 0.2f), thickness = 0.5.dp)
         ReportProblemRow(entityType = "Biome", entityName = biome.name, entityId = biome.id, textColor = Color.White.copy(alpha = 0.7f))
+        ReportTranslationRow(entityType = "Biome", entityName = biome.name, entityId = biome.id, textColor = Color.White.copy(alpha = 0.7f))
     }
 }
 

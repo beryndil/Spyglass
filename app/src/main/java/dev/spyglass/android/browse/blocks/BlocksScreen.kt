@@ -657,5 +657,6 @@ private fun BlockDetailContent(
 
         SpyglassDivider()
         ReportProblemRow(entityType = "Block", entityName = block.name, entityId = block.id)
+        ReportTranslationRow(entityType = "Block", entityName = block.name, entityId = block.id)
     }
 }

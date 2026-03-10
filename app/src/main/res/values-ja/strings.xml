@@ -838,6 +838,13 @@
     <string name="core_bedrock_only">Bedrock限定</string>
     <string name="core_both_editions">両エディション</string>
     <string name="core_mechanics_changed">%sで仕様変更あり</string>
+    <string name="core_report_translation">翻訳の問題を報告</string>
+    <string name="core_report_translation_title">翻訳の問題を報告</string>
+    <string name="core_report_translation_hint">翻訳の問題点を教えてください（任意）</string>
+    <string name="core_report_translation_submit">レポートを送信</string>
+    <string name="core_report_translation_saved">レポートを保存しました — GitHubを開いています…</string>
+    <string name="core_report_translation_entity">%1$s: %2$s</string>
+    <string name="core_report_translation_language">言語: %s</string>
 
     <!-- Calculator Screens -->
 

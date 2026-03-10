@@ -409,5 +409,6 @@ private fun PotionDetailCard(potion: PotionEntity, onItemTap: (String) -> Unit, 
 
         SpyglassDivider()
         ReportProblemRow(entityType = "Potion", entityName = potion.name, entityId = potion.id)
+        ReportTranslationRow(entityType = "Potion", entityName = potion.name, entityId = potion.id)
     }
 }
