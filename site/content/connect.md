@@ -1,9 +1,11 @@
 ---
-title: "Spyglass Connect"
+title: "Connect"
 description: "Pair your phone with the Spyglass Connect desktop companion to view inventory, find chests, locate structures, and explore a map — all over local WiFi."
 subtitle: "Your Minecraft world, on your phone."
 cssClass: "connect-page"
 ---
+
+> **Alpha Software** — Spyglass Connect is in active development. Expect bugs, missing features, and rough edges.
 
 ## Overview
 
@@ -18,6 +20,7 @@ Spyglass Connect is a desktop companion app that reads your Minecraft Java Editi
 3. **Done** — your phone auto-reconnects whenever both devices are on the same WiFi
 
 Under the hood: QR code pairs devices via ECDH key exchange, then communicates over an encrypted WebSocket (AES-256-GCM). mDNS handles automatic reconnection.
+Protocol version negotiation ensures both apps are compatible — if either side is outdated, you'll see a clear error message.
 
 ## Features
 
@@ -46,3 +49,4 @@ An interactive terrain map showing structure markers, your player position, and 
 - [Spyglass Connect](https://github.com/beryndil/Spyglass-Connect) running on your PC
 - Both devices on the same WiFi network
 - Minecraft Java Edition save files accessible on your PC
+- Spyglass Connect protocol v2+ (both apps must support the same protocol version)

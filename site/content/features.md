@@ -1,8 +1,10 @@
 ---
 title: "Features"
-description: "Explore everything Spyglass offers — Spyglass Connect, 13 browse categories, 19 calculators, global search, 15 themes, offline-first data, and automatic sync."
-subtitle: "Everything in Spyglass, at a glance."
+description: "Explore everything Spyglass Connect offers — desktop companion, 13 browse categories, 19 calculators, global search, 15 themes, offline-first data, and automatic sync."
+subtitle: "Everything in Spyglass Connect, at a glance."
 ---
+
+> **Alpha Software** — Spyglass Connect is in active development. Expect bugs, missing features, and rough edges.
 
 ## Spyglass Connect
 
@@ -18,7 +20,6 @@ Pair your phone with the [Spyglass Connect](https://github.com/beryndil/Spyglass
 | **Overhead Map** | Interactive terrain map with structure markers and player position |
 
 Fully encrypted (ECDH + AES-256-GCM). Auto-reconnects via mDNS.
-
 Protocol v2 with version negotiation — incompatible versions show a clear update message.
 
 [Learn more about Connect](/connect/)
@@ -83,11 +84,4 @@ All game data is bundled with the app and works without an internet connection. 
 
 ## Data Sync
 
-Spyglass automatically syncs game data via a global CDN ([data.hardknocks.university](https://data.hardknocks.university)), powered by Cloudflare Pages with edge caching across 300+ servers worldwide. A per-file manifest ensures only changed data is downloaded — keeping the app up to date without large downloads. If the CDN is unreachable, the app falls back to GitHub automatically.
-
-## Production-Ready
-
-- **18 database indexes** across 12 entities for fast search and filtering at scale
-- **Async I/O** throughout — no main-thread disk access, no ANR risk
-- **LAN-only connections** — Spyglass Connect validates private IP addresses before connecting
-- **Automatic updates** — the app checks the CDN for new versions and prompts you to update
+Spyglass Connect automatically syncs with the [Spyglass-Data](https://github.com/beryndil/Spyglass-Data) repository. A manifest tracks per-file versions so only changed data is downloaded — keeping the app up to date without large downloads.
