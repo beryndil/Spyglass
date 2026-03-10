@@ -400,34 +400,38 @@ fun SettingsScreen(
                         )
                     }
                 }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    val context = LocalContext.current
-                    SpyglassDivider()
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                val intent = Intent(Settings.ACTION_APP_LOCALE_SETTINGS).apply {
+                val context = LocalContext.current
+                SpyglassDivider()
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                Intent(Settings.ACTION_APP_LOCALE_SETTINGS).apply {
                                     data = Uri.parse("package:${context.packageName}")
                                 }
-                                context.startActivity(intent)
+                            } else {
+                                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                    data = Uri.parse("package:${context.packageName}")
+                                }
                             }
-                            .padding(vertical = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(
-                            stringResource(R.string.settings_language_system_override),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.weight(1f),
-                        )
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp).graphicsLayer { rotationZ = 180f },
-                            tint = MaterialTheme.colorScheme.primary,
-                        )
-                    }
+                            context.startActivity(intent)
+                        }
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        stringResource(R.string.settings_language_system_override),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.weight(1f),
+                    )
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp).graphicsLayer { rotationZ = 180f },
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
                 }
             }
         }
