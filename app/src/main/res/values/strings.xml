@@ -59,7 +59,7 @@
     <string name="home_todo">Todo</string>
     <string name="home_did_you_know">DID YOU KNOW?</string>
     <string name="home_whats_new">What\'s New</string>
-    <string name="home_whats_new_blocks">%d blocks &amp; %d items</string>
+    <string name="home_whats_new_blocks">%1$d blocks &amp; %2$d items</string>
     <string name="home_whats_new_blocks_desc">Full database with categories, durability, and recipes</string>
     <string name="home_whats_new_enchant">Enchant optimizer</string>
     <string name="home_whats_new_enchant_desc">Calculate the cheapest XP order for combining books on the anvil</string>
@@ -67,6 +67,76 @@
     <string name="home_whats_new_links_desc">Tap any item, mob, biome, or structure to jump to its detail page</string>
     <string name="home_whats_new_search">Search everything</string>
     <string name="home_whats_new_search_desc">Global search across blocks, mobs, items, recipes, and more</string>
+
+    <!-- Home Screen — Quick Link Labels (Browse) -->
+    <string name="home_link_blocks">Blocks</string>
+    <string name="home_link_items">Items</string>
+    <string name="home_link_recipes">Recipes</string>
+    <string name="home_link_mobs">Mobs</string>
+    <string name="home_link_biomes">Biomes</string>
+    <string name="home_link_structures">Structures</string>
+    <string name="home_link_trades">Trades</string>
+    <string name="home_link_enchants">Enchants</string>
+    <string name="home_link_potions">Potions</string>
+    <string name="home_link_advancements">Advancements</string>
+    <string name="home_link_commands">Commands</string>
+    <string name="home_link_reference">Reference</string>
+    <string name="home_link_versions">Versions</string>
+
+    <!-- Home Screen — Quick Link Labels (Tools) -->
+    <string name="home_link_todo_list">Todo List</string>
+    <string name="home_link_shopping_lists">Shopping Lists</string>
+    <string name="home_link_notes">Notes</string>
+    <string name="home_link_waypoints">Waypoints</string>
+    <string name="home_link_block_fill">Block Fill</string>
+    <string name="home_link_shapes">Shapes</string>
+    <string name="home_link_maze_maker">Maze Maker</string>
+    <string name="home_link_storage">Storage</string>
+    <string name="home_link_enchanting">Enchanting</string>
+    <string name="home_link_smelting">Smelting</string>
+    <string name="home_link_librarian_guide">Librarian Guide</string>
+    <string name="home_link_light_spacing">Light Spacing</string>
+    <string name="home_link_nether_portal">Nether Portal</string>
+    <string name="home_link_game_clock">Game Clock</string>
+
+    <!-- Home Screen — Tip Section -->
+    <string name="home_tip_options">Tip options</string>
+    <string name="home_tip_disable">Disable tips</string>
+    <string name="home_tip_previous">Previous tip</string>
+    <string name="home_tip_next">Next tip</string>
+
+    <!-- Home Screen — Connect Section -->
+    <string name="home_connect_title">Spyglass Connect</string>
+    <string name="home_connect_stream">Stream Minecraft world data from your PC</string>
+    <string name="home_connect_wifi">Both devices on the same WiFi</string>
+    <string name="home_connect_scan_qr">Scan QR Code</string>
+    <string name="home_connect_reconnect_last">Reconnect to Last Device</string>
+    <string name="home_connect_status_connected">Connected</string>
+    <string name="home_connect_status_reconnecting">Reconnecting</string>
+    <string name="home_connect_status_connecting">Connecting</string>
+    <string name="home_connect_status_reconnect">Reconnect</string>
+    <string name="home_connect_clear_data_title">Clear Data</string>
+    <string name="home_connect_clear_data_message">Clear all cached Connect data? Your device pairing will be kept.</string>
+    <string name="home_connect_clear_data_confirm">Clear</string>
+    <string name="home_connect_switch_world">Switch World</string>
+    <string name="home_connect_disconnect">Disconnect</string>
+    <string name="home_connect_scan_new_device">Scan New Device</string>
+    <string name="home_connect_select_world">Select a World</string>
+    <string name="home_connect_modded_suffix"> (Modded)</string>
+    <string name="home_connect_no_worlds">No worlds found</string>
+    <string name="home_connect_game_mode_difficulty">%1$s \u2022 %2$s</string>
+
+    <!-- Home Screen — Connect Quick Links -->
+    <string name="home_connect_link_character">Character</string>
+    <string name="home_connect_link_inventory">Inventory</string>
+    <string name="home_connect_link_ender_chest">Ender Chest</string>
+    <string name="home_connect_link_storage">Storage</string>
+    <string name="home_connect_link_world_map">World Map</string>
+    <string name="home_connect_link_waypoints">Waypoints</string>
+    <string name="home_connect_link_pets">Pets</string>
+    <string name="home_connect_link_players">Players</string>
+    <string name="home_connect_link_statistics">Statistics</string>
+    <string name="home_connect_link_advancements">Advancements</string>
 
     <!-- Consent Dialog -->
     <string name="consent_title">Privacy &amp; Data Collection</string>
@@ -109,7 +179,46 @@
     <string name="settings_delete_data_message">This will permanently delete all your todos, notes, waypoints, shopping lists, favorites, and advancement progress. This cannot be undone.</string>
     <string name="settings_delete_data_confirm">Delete Everything</string>
 
+    <!-- Settings — Section Headers -->
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_game_settings">Game Settings</string>
+    <string name="settings_defaults">Defaults</string>
+    <string name="settings_data_sync">Data &amp; Sync</string>
+    <string name="settings_privacy_security">Privacy &amp; Security</string>
+    <string name="settings_about_section">About</string>
+
     <!-- Settings — Appearance -->
+    <string name="settings_backgrounds">Backgrounds</string>
+    <string name="settings_my_photo">My Photo</string>
+    <string name="settings_choose_photo">Choose photo</string>
+    <string name="settings_change_photo">Change</string>
+    <string name="settings_solid_colors">Solid Colors</string>
+    <string name="settings_default_theme">Obsidian</string>
+
+    <!-- Settings — Game Settings -->
+    <string name="settings_game_filter_desc">Filter content by Minecraft edition and version</string>
+    <string name="settings_edition">Edition</string>
+    <string name="settings_edition_java">Java</string>
+    <string name="settings_edition_bedrock">Bedrock</string>
+    <string name="settings_version">Version</string>
+    <string name="settings_version_latest">Latest</string>
+    <string name="settings_filter_mode">Filter Mode</string>
+    <string name="settings_filter_show_all">Show All</string>
+    <string name="settings_filter_highlight">Highlight Unavailable</string>
+    <string name="settings_filter_hide">Hide Unavailable</string>
+
+    <!-- Settings — Data & Sync (additional) -->
+    <string name="settings_syncing">Syncing\u2026</string>
+    <string name="settings_sync_now">Sync Now</string>
+    <string name="settings_downloaded_textures">Downloaded textures: %s</string>
+    <string name="settings_connect_title">Spyglass Connect</string>
+    <string name="settings_connect_desc">Stream Minecraft world data from your PC over local WiFi. Pairing is managed from the Connect screen.</string>
+    <string name="settings_connect_download">Download for PC: hardknocks.com/spyglass-connect</string>
+
+    <!-- Settings — About (additional) -->
+    <string name="settings_wiki">Spyglass Wiki</string>
+    <string name="settings_wiki_desc">Guides, tips, and detailed documentation</string>
+
     <string name="settings_hide_unobtainable">Hide Creative-Only Blocks</string>
     <string name="settings_hide_unobtainable_desc">Hide blocks that can\'t be obtained in Survival mode</string>
     <string name="settings_show_experimental">Show Experimental Features</string>
@@ -260,4 +369,1083 @@
     <string name="calc_tab_banners">Banners</string>
     <string name="calc_tab_trims">Trims</string>
     <string name="calc_tab_loot">Loot</string>
+
+    <!-- Browse Screens -->
+
+    <!-- Blocks -->
+    <string name="blocks_search_placeholder">Search blocks\u2026</string>
+    <string name="blocks_title">Blocks</string>
+    <string name="blocks_description">Every placeable block with hardness and tool info</string>
+    <string name="blocks_stat">%d blocks</string>
+    <string name="blocks_no_results_title">No blocks found</string>
+    <string name="blocks_no_results_subtitle">Try a different search term</string>
+    <string name="blocks_badge_unobtainable">Unobtainable</string>
+    <string name="blocks_badge_flammable">Flammable</string>
+    <string name="blocks_badge_transparent">Transparent</string>
+    <string name="blocks_badge_gravity">Gravity</string>
+    <string name="blocks_badge_waterloggable">Waterloggable</string>
+    <string name="blocks_badge_light">Light: %d</string>
+    <string name="blocks_stack_size">Stack Size</string>
+    <string name="blocks_hardness">Hardness</string>
+    <string name="blocks_blast_resistance">Blast Resistance</string>
+    <string name="blocks_tool_required">Tool Required</string>
+    <string name="blocks_min_tool_tier">Min. Tool Tier</string>
+    <string name="blocks_light_level">Light Level</string>
+    <string name="blocks_light_level_value">%d/15</string>
+    <string name="blocks_ore_generation">Ore Generation</string>
+    <string name="blocks_min_y">Min Y</string>
+    <string name="blocks_max_y">Max Y</string>
+    <string name="blocks_peak_y">Peak Y</string>
+    <string name="blocks_drops_nothing">Drops nothing</string>
+    <string name="blocks_drops">Drops</string>
+    <string name="blocks_job_block">Job Block</string>
+    <string name="blocks_job_block_for">Job block for: %s</string>
+    <string name="blocks_compostable_items">Compostable Items</string>
+    <string name="blocks_compost_chance">%d%% chance</string>
+    <string name="blocks_found_in_structures">Found in Structures</string>
+    <string name="blocks_glance_y_range">Y %1$d to %2$d</string>
+    <string name="blocks_glance_light">%d light</string>
+    <string name="blocks_glance_gravity">gravity</string>
+    <string name="blocks_glance_redstone">redstone</string>
+    <string name="blocks_glance_hardness">%s hard</string>
+
+    <!-- Blocks Sort Options -->
+    <string name="blocks_sort_name">Name A\u2192Z</string>
+    <string name="blocks_sort_hardness">Hardness \u2193</string>
+    <string name="blocks_sort_blast_resistance">Blast Resistance \u2193</string>
+    <string name="blocks_sort_light_level">Light Level \u2193</string>
+
+    <!-- Items -->
+    <string name="items_search_placeholder">Search items\u2026</string>
+    <string name="items_title">Items</string>
+    <string name="items_description">Non-block items: tools, weapons, armor, food, materials, and more -- with sources and cross-links</string>
+    <string name="items_stat">%d items</string>
+    <string name="items_no_results_title">No items found</string>
+    <string name="items_no_results_subtitle">Try a different search or category</string>
+    <string name="items_badge_stack">Stack: %d</string>
+    <string name="items_badge_renewable">Renewable</string>
+    <string name="items_badge_non_renewable">Non-renewable</string>
+    <string name="items_how_to_obtain">How to Obtain</string>
+    <string name="items_combat_stats">Combat Stats</string>
+    <string name="items_durability">Durability</string>
+    <string name="items_attack_damage">Attack Damage</string>
+    <string name="items_attack_speed">Attack Speed</string>
+    <string name="items_dps">DPS</string>
+    <string name="items_enchantability">Enchantability</string>
+    <string name="items_armor_stats">Armor Stats</string>
+    <string name="items_defense_points">Defense Points</string>
+    <string name="items_armor_toughness">Armor Toughness</string>
+    <string name="items_knockback_resistance">Knockback Resistance</string>
+    <string name="items_food_stats">Food Stats</string>
+    <string name="items_hunger">Hunger</string>
+    <string name="items_saturation">Saturation</string>
+    <string name="items_efficiency">Efficiency</string>
+    <string name="items_effects">Effects</string>
+    <string name="items_uses">Uses</string>
+    <string name="items_compostable">Compostable</string>
+    <string name="items_compost_chance">%d%% chance per item</string>
+    <string name="items_applicable_enchantments">Applicable Enchantments</string>
+    <string name="items_recipe">Recipe</string>
+    <string name="items_crafting">Crafting</string>
+    <string name="items_dropped_by">Dropped by</string>
+    <string name="items_used_to_breed">Used to Breed</string>
+    <string name="items_mined_from">Mined from</string>
+    <string name="items_found_in_biomes">Found in Biomes</string>
+    <string name="items_found_in_structures">Found in Structures</string>
+    <string name="items_used_in_recipes">Used in %d recipe(s)</string>
+
+    <!-- Items Sort Options -->
+    <string name="items_sort_name">Name A\u2192Z</string>
+    <string name="items_sort_durability">Durability \u2193</string>
+    <string name="items_sort_attack_damage">Attack Damage \u2193</string>
+    <string name="items_sort_defense">Defense \u2193</string>
+    <string name="items_sort_saturation">Saturation \u2193</string>
+
+    <!-- Recipes -->
+    <string name="recipes_search_placeholder">Search recipes\u2026</string>
+    <string name="recipes_title">Recipes</string>
+    <string name="recipes_description">Crafting recipes for every craftable item</string>
+    <string name="recipes_stat">%d recipes</string>
+    <string name="recipes_no_results_title">No recipes found</string>
+    <string name="recipes_no_results_subtitle">Try a different search term</string>
+
+    <!-- Mobs -->
+    <string name="mobs_search_placeholder">Search mobs\u2026</string>
+    <string name="mobs_title">Mobs</string>
+    <string name="mobs_description">Every Minecraft mob with health, drops, spawn biomes, and strategy tips</string>
+    <string name="mobs_stat">%d mobs</string>
+    <string name="mobs_no_results_title">No mobs found</string>
+    <string name="mobs_no_results_subtitle">Try a different search or category</string>
+    <string name="mobs_health">Health</string>
+    <string name="mobs_health_value">%s HP</string>
+    <string name="mobs_attack_damage">Attack Damage</string>
+    <string name="mobs_attack_damage_value">%s HP</string>
+    <string name="mobs_xp_drop">XP Drop</string>
+    <string name="mobs_fire_immune">Fire Immune</string>
+    <string name="mobs_spawn_conditions">Spawn Conditions</string>
+    <string name="mobs_breeding">Breeding</string>
+    <string name="mobs_drops">Drops</string>
+    <string name="mobs_found_in">Found in</string>
+    <string name="mobs_food_guide">Food Guide \u2192</string>
+    <string name="mobs_light_spacing">Light Spacing \u2192</string>
+
+    <!-- Mobs Sort Options -->
+    <string name="mobs_sort_name">Name A\u2192Z</string>
+    <string name="mobs_sort_health">Health \u2193</string>
+    <string name="mobs_sort_xp">XP \u2193</string>
+
+    <!-- Biomes -->
+    <string name="biomes_search_placeholder">Search biomes\u2026</string>
+    <string name="biomes_title">Biomes</string>
+    <string name="biomes_description">Every Minecraft biome with temperature, mobs, structures, and map colors</string>
+    <string name="biomes_stat">%d biomes</string>
+    <string name="biomes_no_results_title">No biomes found</string>
+    <string name="biomes_no_results_subtitle">Try a different search term</string>
+    <string name="biomes_temperature">Temperature</string>
+    <string name="biomes_precipitation">Precipitation</string>
+    <string name="biomes_features">Features</string>
+    <string name="biomes_resources">Resources</string>
+    <string name="biomes_building_palette">Building Palette</string>
+    <string name="biomes_structures">Structures</string>
+    <string name="biomes_mobs_found_here">Mobs found here</string>
+    <string name="biomes_librarian_guide">Librarian Guide \u2192</string>
+    <string name="biomes_structure_loot">Structure Loot \u2192</string>
+
+    <!-- Biomes Sort Options -->
+    <string name="biomes_sort_name">Name A\u2192Z</string>
+    <string name="biomes_sort_temperature">Temperature \u2193</string>
+
+    <!-- Structures -->
+    <string name="structures_search_placeholder">Search structures\u2026</string>
+    <string name="structures_title">Structures</string>
+    <string name="structures_description">Every Minecraft structure with biomes, mobs, loot, and how to find them</string>
+    <string name="structures_stat">%d structures</string>
+    <string name="structures_no_results_title">No structures found</string>
+    <string name="structures_no_results_subtitle">Try a different search or dimension filter</string>
+    <string name="structures_how_to_find">How to Find</string>
+    <string name="structures_biomes">Biomes</string>
+    <string name="structures_mobs">Mobs</string>
+    <string name="structures_loot">Loot</string>
+    <string name="structures_unique_blocks">Unique Blocks</string>
+    <string name="structures_loot_guide">Loot Guide \u2192</string>
+    <string name="structures_armor_trims">Armor Trims \u2192</string>
+
+    <!-- Structures Sort Options -->
+    <string name="structures_sort_name">Name A\u2192Z</string>
+    <string name="structures_sort_difficulty">Difficulty \u2193</string>
+
+    <!-- Enchantments -->
+    <string name="enchants_search_placeholder">Search enchantments\u2026</string>
+    <string name="enchants_title">Enchantments</string>
+    <string name="enchants_description">All enchantments by target, rarity, and compatibility</string>
+    <string name="enchants_stat">%d enchantments</string>
+    <string name="enchants_no_results_title">No enchantments found</string>
+    <string name="enchants_no_results_subtitle">Try a different search or filter</string>
+    <string name="enchants_open_librarian_guide">Open Librarian Guide \u2192</string>
+    <string name="enchants_anvil_only">Anvil Only</string>
+    <string name="enchants_curse">Curse</string>
+    <string name="enchants_max_level">Max %d</string>
+    <string name="enchants_anvil">Anvil</string>
+    <string name="enchants_max_level_label">Max Level</string>
+    <string name="enchants_applies_to">Applies to</string>
+    <string name="enchants_rarity">Rarity</string>
+    <string name="enchants_treasure">Treasure</string>
+    <string name="enchants_treasure_value">Yes (Loot/Anvil only)</string>
+    <string name="enchants_incompatible_with">Incompatible with</string>
+
+    <!-- Enchantments Sort Options -->
+    <string name="enchants_sort_name">Name A\u2192Z</string>
+    <string name="enchants_sort_max_level">Max Level \u2193</string>
+    <string name="enchants_sort_rarity">Rarity \u2193</string>
+
+    <!-- Potions -->
+    <string name="potions_search_placeholder">Search potions\u2026</string>
+    <string name="potions_title">Potions</string>
+    <string name="potions_description">Brewing paths and effects for every potion</string>
+    <string name="potions_stat">%d potions</string>
+    <string name="potions_no_results_title">No potions found</string>
+    <string name="potions_no_results_subtitle">Try a different search term</string>
+    <string name="potions_duration">Duration</string>
+    <string name="potions_level">Level</string>
+    <string name="potions_brewing_path">Brewing Path</string>
+
+    <!-- Potions Sort Options -->
+    <string name="potions_sort_name">Name A\u2192Z</string>
+    <string name="potions_sort_duration">Duration \u2193</string>
+    <string name="potions_sort_amplifier">Amplifier \u2193</string>
+
+    <!-- Trades -->
+    <string name="trades_search_placeholder">Search trades\u2026</string>
+    <string name="trades_title">Trades</string>
+    <string name="trades_description">Villager trades by profession and level</string>
+    <string name="trades_stat">%d trades</string>
+    <string name="trades_no_results_title">No trades found</string>
+    <string name="trades_no_results_subtitle">Try a different search or profession</string>
+    <string name="trades_job_block">Job Block</string>
+    <string name="trades_ingredients">Ingredients</string>
+    <string name="trades_level_badge">Lvl %d</string>
+    <string name="trades_restock">%d/restock</string>
+
+    <!-- Advancements -->
+    <string name="advancements_search_placeholder">Search advancements\u2026</string>
+    <string name="advancements_title">Advancement Planner</string>
+    <string name="advancements_description">Track your progress through all Minecraft advancements with practical guides</string>
+    <string name="advancements_stat">%1$d / %2$d completed</string>
+    <string name="advancements_no_results_title">No advancements found</string>
+    <string name="advancements_no_results_subtitle">Try a different search or filter</string>
+    <string name="advancements_reset_progress">Reset Progress</string>
+    <string name="advancements_reset_confirm">Clear all advancement checkmarks? This cannot be undone.</string>
+    <string name="advancements_reset">Reset</string>
+    <string name="advancements_toggle_children">Toggle children</string>
+    <string name="advancements_children_count">%d children</string>
+    <string name="advancements_completed">Completed</string>
+    <string name="advancements_mark_complete">Mark Complete</string>
+    <string name="advancements_requirements">Requirements</string>
+    <string name="advancements_how_to_get">How to Get This</string>
+    <string name="advancements_tutorial">Tutorial</string>
+    <string name="advancements_stats">Stats</string>
+    <string name="advancements_difficulty">Difficulty</string>
+    <string name="advancements_xp_reward">XP Reward</string>
+    <string name="advancements_requires">Requires</string>
+    <string name="advancements_related_items">Related Items</string>
+    <string name="advancements_related_mobs">Related Mobs</string>
+    <string name="advancements_related_structures">Related Structures</string>
+    <string name="advancements_related_biomes">Related Biomes</string>
+
+    <!-- Advancements Sort Options -->
+    <string name="advancements_sort_name">Name A\u2192Z</string>
+    <string name="advancements_sort_type">Type \u2193</string>
+
+    <!-- Commands -->
+    <string name="commands_search_placeholder">Search commands\u2026</string>
+    <string name="commands_title">Commands</string>
+    <string name="commands_description">All Minecraft Java 1.21.4 commands with syntax, descriptions, and permission levels.</string>
+    <string name="commands_stat">%d commands</string>
+    <string name="commands_no_results_title">No commands found</string>
+    <string name="commands_no_results_subtitle">Try a different search or filter</string>
+    <string name="commands_syntax">SYNTAX</string>
+    <string name="commands_permission">Permission</string>
+
+    <!-- Commands Sort Options -->
+    <string name="commands_sort_name">Name A\u2192Z</string>
+    <string name="commands_sort_permission">Permission \u2193</string>
+
+    <!-- Versions -->
+    <string name="versions_header">Java Edition Version History</string>
+    <string name="versions_subtitle">%1$d major updates from 1.0 to %2$s</string>
+
+    <!-- Connect Screens -->
+    <string name="connect_title">Spyglass Connect</string>
+    <string name="connect_disconnect_desc">Disconnect</string>
+    <string name="connect_status_connected">Connected</string>
+    <string name="connect_status_label">Status</string>
+    <string name="connect_failed_to_connect">Failed to connect to %s</string>
+    <string name="connect_scan_qr_button">Scan QR Code</string>
+    <string name="connect_reconnect_last">Reconnect to Last Device</string>
+    <string name="connect_cached_data_offline">Cached Data (Offline)</string>
+    <string name="connect_character">Character</string>
+    <string name="connect_inventory">Inventory</string>
+    <string name="connect_ender_chest">Ender Chest</string>
+    <string name="connect_map">Map</string>
+    <string name="connect_storage">Storage</string>
+    <string name="connect_how_to_connect">How to connect:</string>
+    <string name="connect_instructions">1. Open Spyglass Connect on your computer\n2. Make sure both devices are on the same WiFi\n3. Tap \'Scan QR Code\' above and point at the QR on screen</string>
+    <string name="connect_select_world">Select World</string>
+    <string name="connect_world_viewer">World Viewer</string>
+    <string name="connect_requires_desktop_update">Requires desktop update</string>
+    <string name="connect_health">Health</string>
+    <string name="connect_food">Food</string>
+    <string name="connect_xp_level">XP Level</string>
+    <string name="connect_xp">XP</string>
+    <string name="connect_position_format">Position: %1$d, %2$d, %3$d</string>
+    <string name="connect_players_count">Players (%d)</string>
+    <string name="connect_fair_play_warning">Viewing other players\' data may not align with fair play on multiplayer worlds.</string>
+    <string name="connect_world_owner">World Owner</string>
+
+    <!-- Connect — QR Scanner -->
+    <string name="connect_qr_title">Scan QR Code</string>
+    <string name="connect_qr_instruction">Point at the QR code on your computer</string>
+    <string name="connect_qr_not_spyglass">Not a Spyglass Connect QR code</string>
+    <string name="connect_qr_camera_required">Camera permission is required to scan QR codes</string>
+    <string name="connect_qr_grant_permission">Grant Permission</string>
+
+    <!-- Connect — Chest Loading Animation -->
+    <string name="connect_anim_error">Connection error</string>
+    <string name="connect_anim_ready">Ready!</string>
+    <string name="connect_anim_connected">Connected!</string>
+    <string name="connect_anim_pairing">Pairing\u2026</string>
+    <string name="connect_anim_connecting">Connecting\u2026</string>
+    <string name="connect_anim_reconnecting">Reconnecting (attempt %d)\u2026</string>
+    <string name="connect_anim_getting_ready">Getting ready\u2026</string>
+
+    <!-- Connect — Offline Indicator -->
+    <string name="connect_offline">Offline</string>
+    <string name="connect_offline_last_updated">Offline \u00b7 Last updated %s</string>
+    <string name="connect_time_just_now">just now</string>
+    <string name="connect_time_minutes_ago">%dm ago</string>
+    <string name="connect_time_hours_ago">%dh ago</string>
+    <string name="connect_time_yesterday">yesterday</string>
+    <string name="connect_time_days_ago">%dd ago</string>
+
+    <!-- Connect — Character Screen -->
+    <string name="connect_no_cached_player">No cached player data</string>
+    <string name="connect_loading_player">Loading player data\u2026</string>
+    <string name="connect_player_body">Player body</string>
+    <string name="connect_player_head">Player head</string>
+    <string name="connect_player">Player</string>
+    <string name="connect_ign">IGN</string>
+    <string name="connect_unknown_player">Unknown Player</string>
+    <string name="connect_uuid">UUID</string>
+    <string name="connect_last_death">Last Death: %1$d, %2$d, %3$d (%4$s)</string>
+    <string name="connect_spawn">Spawn: %1$d, %2$d, %3$d</string>
+    <string name="connect_spawn_forced">Spawn: %1$d, %2$d, %3$d (Forced)</string>
+    <string name="connect_active_effects">Active Effects</string>
+    <string name="connect_equipment_analysis">Equipment Analysis</string>
+    <string name="connect_analyzing_gear">Analyzing gear\u2026</string>
+    <string name="connect_slot_head">Head</string>
+    <string name="connect_slot_chest">Chest</string>
+    <string name="connect_slot_legs">Legs</string>
+    <string name="connect_slot_feet">Feet</string>
+    <string name="connect_slot_main_hand">Main Hand</string>
+    <string name="connect_slot_off_hand">Off Hand</string>
+    <string name="connect_empty">Empty</string>
+    <string name="connect_upgrade_to">Upgrade to %s \u2192</string>
+    <string name="connect_suggested">Suggested: %s \u2192</string>
+
+    <!-- Connect — Inventory Screen -->
+    <string name="connect_no_cached_inventory">No cached inventory data</string>
+    <string name="connect_no_player_data">No player data</string>
+    <string name="connect_equipment">Equipment</string>
+    <string name="connect_hotbar">Hotbar</string>
+    <string name="connect_armor_head">Head</string>
+    <string name="connect_armor_chest">Chest</string>
+    <string name="connect_armor_legs">Legs</string>
+    <string name="connect_armor_feet">Feet</string>
+    <string name="connect_armor_off">Off</string>
+
+    <!-- Connect — Ender Chest Screen -->
+    <string name="connect_no_cached_ender_chest">No cached ender chest data</string>
+    <string name="connect_no_ender_chest_data">No ender chest data</string>
+    <string name="connect_ender_chest_items">Ender Chest (%d items)</string>
+
+    <!-- Connect — Chest Finder / Storage Screen -->
+    <string name="connect_search_items_placeholder">Search items (e.g., diamond, iron)</string>
+    <string name="connect_clear">Clear</string>
+    <string name="connect_no_items_found">No items found matching \"%s\"</string>
+    <string name="connect_showing_results">Showing 15 of %d results \u2014 refine your search</string>
+    <string name="connect_no_containers">No containers found</string>
+    <string name="connect_container_count">%d containers</string>
+    <string name="connect_and_more_locations">\u2026and %d more locations</string>
+
+    <!-- Connect — Map Screen -->
+    <string name="connect_world_map">World Map</string>
+    <string name="connect_center_on_player">Center on player</string>
+
+    <!-- Connect — Players Screen -->
+    <string name="connect_players">Players</string>
+    <string name="connect_loading_players">Loading players\u2026</string>
+    <string name="connect_no_player_data_available">No player data available</string>
+    <string name="connect_unknown">Unknown</string>
+    <string name="connect_owner">Owner</string>
+    <string name="connect_compare">Compare</string>
+
+    <!-- Connect — Compare Screen -->
+    <string name="connect_compare_players">Compare Players</string>
+    <string name="connect_loading_comparison">Loading comparison data\u2026</string>
+    <string name="connect_connect_to_compare">Connect to compare players</string>
+    <string name="connect_player_1">Player 1</string>
+    <string name="connect_player_2">Player 2</string>
+    <string name="connect_compare_dimension">Dimension</string>
+    <string name="connect_compare_position">Position</string>
+    <string name="connect_compare_inventory">Inventory</string>
+    <string name="connect_compare_armor">Armor</string>
+    <string name="connect_items_format">%d items</string>
+    <string name="connect_pieces_format">%d pieces</string>
+
+    <!-- Connect — Statistics Screen -->
+    <string name="connect_player_statistics">Player Statistics</string>
+    <string name="connect_no_cached_statistics">No cached statistics</string>
+    <string name="connect_loading_statistics">Loading statistics\u2026</string>
+    <string name="connect_no_statistics">No statistics found</string>
+
+    <!-- Connect — Pets Screen -->
+    <string name="connect_pets">Pets</string>
+    <string name="connect_scanning_tamed">Scanning for tamed mobs\u2026</string>
+    <string name="connect_no_tamed_mobs">No tamed mobs found</string>
+    <string name="connect_owner_label">\u00b7 Owner: %s</string>
+    <string name="connect_collar">Collar: %s</string>
+    <string name="connect_variant">Variant: %s</string>
+    <string name="connect_speed_format">Speed: %s b/s</string>
+    <string name="connect_jump_format">Jump: %s blocks</string>
+
+    <!-- Connect — Advancements Screen -->
+    <string name="connect_advancements">Advancements</string>
+    <string name="connect_no_cached_advancements">No cached advancements</string>
+    <string name="connect_loading_advancements">Loading advancements\u2026</string>
+    <string name="connect_completed_count">%1$d / %2$d completed</string>
+
+    <!-- Connect — Waypoints Screen -->
+    <string name="connect_waypoints">Waypoints</string>
+    <string name="connect_new_waypoint_desc">New waypoint</string>
+    <string name="connect_live_locations">LIVE LOCATIONS</string>
+    <string name="connect_custom_waypoints">CUSTOM WAYPOINTS</string>
+    <string name="connect_no_waypoints_dimension">No waypoints in this dimension</string>
+    <string name="connect_no_waypoints_yet">No waypoints yet</string>
+    <string name="connect_connect_to_autodetect">Connect to a world to auto-detect locations</string>
+    <string name="connect_locations_will_appear">Locations will appear when world data loads</string>
+    <string name="connect_add_waypoint_at_position">Add Waypoint at Current Position</string>
+    <string name="connect_new_waypoint_title">New Waypoint</string>
+    <string name="connect_edit_waypoint_title">Edit Waypoint</string>
+    <string name="connect_waypoint_name">Name</string>
+    <string name="connect_waypoint_color">Color</string>
+    <string name="connect_waypoint_notes">Notes (optional)</string>
+    <string name="connect_coordinates">COORDINATES</string>
+    <string name="connect_distances">DISTANCES</string>
+    <string name="connect_notes">NOTES</string>
+    <string name="connect_auto_detected">Auto-detected from world data</string>
+    <string name="connect_different_dimension">Different dimension</string>
+
+    <!-- Connect — World Selector Sheet -->
+    <string name="connect_world_selector_title">Select World</string>
+    <string name="connect_world_date_unknown">Unknown</string>
+
+    <!-- Connect — Connection States -->
+    <string name="connect_state_disconnected">Disconnected</string>
+    <string name="connect_state_scanning">Scanning QR code\u2026</string>
+    <string name="connect_state_connecting">Connecting to %s\u2026</string>
+    <string name="connect_state_pairing">Pairing\u2026</string>
+    <string name="connect_state_connected">Connected to %s</string>
+    <string name="connect_state_reconnecting">Reconnecting (attempt %d)\u2026</string>
+    <string name="connect_state_error">Error: %s</string>
+
+    <!-- Core UI -->
+    <string name="core_sort">Sort</string>
+    <string name="core_report_problem">Report a problem</string>
+    <string name="core_copied">Copied!</string>
+    <string name="core_tap_to_copy">Tap to copy</string>
+    <string name="core_remove">Remove</string>
+    <string name="core_clear_history">Clear history</string>
+    <string name="core_add_to_todo">Add to Todo List</string>
+    <string name="core_qty">Qty</string>
+    <string name="core_add_to_todo_icon">Add to todo</string>
+    <string name="core_added">Added!</string>
+    <string name="core_add_to_shopping_list">Add to Shopping List</string>
+    <string name="core_no_shopping_lists">No shopping lists yet \u2014 create one in the Shopping tab</string>
+    <string name="core_add_to_list_icon">Add to list</string>
+    <string name="core_show_less">Show less</string>
+    <string name="core_show_more">+%d more\u2026</string>
+    <string name="core_java_only">Java Only</string>
+    <string name="core_bedrock_only">Bedrock Only</string>
+    <string name="core_both_editions">Both Editions</string>
+    <string name="core_mechanics_changed">Mechanics changed in %s</string>
+
+    <!-- Calculator Screens -->
+
+    <!-- Smelting -->
+    <string name="smelting_header">Smelting / Fuel Calculator</string>
+    <string name="smelting_label">Items to smelt</string>
+    <string name="smelting_placeholder">e.g. 14 stacks, 5k, 2 chests</string>
+    <string name="smelting_parse_error">Could not parse quantity</string>
+    <string name="smelting_wasted">%d wasted</string>
+    <string name="smelting_help">Enter how many items you need to smelt and see exactly how much of each fuel type you\'ll need. Green dots mean high efficiency, gold is mid, gray is low. Type amounts like \"14 stacks\", \"5k\", or \"2 chests\".</string>
+
+    <!-- Reference -->
+    <string name="reference_title">Quick Reference</string>
+    <string name="reference_description">Cheat sheets for ores, XP, brewing, redstone, times, and dye colors</string>
+    <string name="reference_ore_levels">Ore Levels by Y</string>
+    <string name="reference_ore_y_range">Y %1$d to %2$d</string>
+    <string name="reference_ore_peak">Peak %d</string>
+    <string name="reference_xp_table">XP Table</string>
+    <string name="reference_levels_0_16">Levels 0-16</string>
+    <string name="reference_xp_per_level">XP per level</string>
+    <string name="reference_xp_formula_low">2L + 7</string>
+    <string name="reference_total_to_16">Total to 16</string>
+    <string name="reference_xp_315">315 XP</string>
+    <string name="reference_levels_17_31">Levels 17-31</string>
+    <string name="reference_xp_formula_mid">5L - 38</string>
+    <string name="reference_total_to_30">Total to 30</string>
+    <string name="reference_xp_1395">1,395 XP</string>
+    <string name="reference_levels_32_plus">Levels 32+</string>
+    <string name="reference_xp_formula_high">9L - 158</string>
+    <string name="reference_enchanting_table_slots">Enchanting Table Slots</string>
+    <string name="reference_slot_1">Slot 1 (cheapest)</string>
+    <string name="reference_slot_1_cost">1 Lapis + 1 level</string>
+    <string name="reference_slot_2">Slot 2 (mid)</string>
+    <string name="reference_slot_2_cost">2 Lapis + 2 levels</string>
+    <string name="reference_slot_3">Slot 3 (best)</string>
+    <string name="reference_slot_3_cost">3 Lapis + 3 levels</string>
+    <string name="reference_anvil">Anvil</string>
+    <string name="reference_too_expensive_cap">Too Expensive cap</string>
+    <string name="reference_too_expensive_val">40 levels</string>
+    <string name="reference_rename_cost">Rename cost</string>
+    <string name="reference_rename_cost_val">1 level (first time)</string>
+    <string name="reference_cost_doubles">Cost doubles</string>
+    <string name="reference_cost_doubles_val">Each prior work penalty</string>
+    <string name="reference_brewing_chart">Brewing Chart</string>
+    <string name="reference_base_chain">Base Chain</string>
+    <string name="reference_water_bottle">Water Bottle</string>
+    <string name="reference_starting_point">Starting point</string>
+    <string name="reference_plus_nether_wart">+ Nether Wart</string>
+    <string name="reference_awkward_potion">Awkward Potion</string>
+    <string name="reference_effect_ingredients">Effect Ingredients</string>
+    <string name="reference_modifiers">Modifiers</string>
+    <string name="reference_extends_duration">Extends duration</string>
+    <string name="reference_amplifies_effect">Amplifies effect</string>
+    <string name="reference_corrupts">Corrupts (inverts)</string>
+    <string name="reference_splash_version">Splash version</string>
+    <string name="reference_lingering_version">Lingering version</string>
+    <string name="reference_redstone_basics">Redstone Basics</string>
+    <string name="reference_signal">Signal</string>
+    <string name="reference_max_range">Max range</string>
+    <string name="reference_max_range_val">15 blocks</string>
+    <string name="reference_strength_loss">Strength loss</string>
+    <string name="reference_strength_loss_val">1 per block traveled</string>
+    <string name="reference_redstone_tick">Redstone tick</string>
+    <string name="reference_redstone_tick_val">0.1 seconds (2 game ticks)</string>
+    <string name="reference_repeater">Repeater</string>
+    <string name="reference_delay_settings">Delay settings</string>
+    <string name="reference_delay_val">1-4 ticks (0.1-0.4s)</string>
+    <string name="reference_resets_signal">Resets signal</string>
+    <string name="reference_resets_val">Back to 15</string>
+    <string name="reference_lock_mode">Lock mode</string>
+    <string name="reference_lock_mode_val">Side input freezes state</string>
+    <string name="reference_comparator">Comparator</string>
+    <string name="reference_compare_mode">Compare mode</string>
+    <string name="reference_compare_mode_val">Output = back if back >= side</string>
+    <string name="reference_subtract_mode">Subtract mode</string>
+    <string name="reference_subtract_mode_val">Output = back - side</string>
+    <string name="reference_container_read">Container read</string>
+    <string name="reference_container_read_val">Signal = fill level (0-15)</string>
+    <string name="reference_key_components">Key Components</string>
+    <string name="reference_piston">Piston</string>
+    <string name="reference_piston_val">Pushes up to 12 blocks</string>
+    <string name="reference_sticky_piston">Sticky Piston</string>
+    <string name="reference_sticky_piston_val">Pushes and pulls</string>
+    <string name="reference_observer">Observer</string>
+    <string name="reference_observer_val">Detects block updates</string>
+    <string name="reference_hopper">Hopper</string>
+    <string name="reference_hopper_val">5 items/sec transfer rate</string>
+    <string name="reference_dropper">Dropper</string>
+    <string name="reference_dropper_val">Ejects 1 item per pulse</string>
+    <string name="reference_daylight_sensor">Daylight Sensor</string>
+    <string name="reference_daylight_sensor_val">Outputs based on sky light</string>
+    <string name="reference_times_durations">Times &amp; Durations</string>
+    <string name="reference_day_night_cycle">Day/Night Cycle</string>
+    <string name="reference_full_cycle">Full cycle</string>
+    <string name="reference_full_cycle_val">20 minutes (24,000 ticks)</string>
+    <string name="reference_daytime">Daytime</string>
+    <string name="reference_daytime_val">10 min (tick 0-12,000)</string>
+    <string name="reference_sunset">Sunset</string>
+    <string name="reference_sunset_val">1.5 min (tick 12,000-13,800)</string>
+    <string name="reference_night">Night</string>
+    <string name="reference_night_val">7 min (tick 13,800-22,200)</string>
+    <string name="reference_sunrise">Sunrise</string>
+    <string name="reference_sunrise_val">1.5 min (tick 22,200-24,000)</string>
+    <string name="reference_sleep_available">Sleep available</string>
+    <string name="reference_sleep_available_val">Tick 12,542-23,460</string>
+    <string name="reference_breeding_growth">Breeding &amp; Growth</string>
+    <string name="reference_breeding_cooldown">Breeding cooldown</string>
+    <string name="reference_breeding_cooldown_val">5 minutes</string>
+    <string name="reference_baby_growth">Baby growth time</string>
+    <string name="reference_baby_growth_val">20 minutes</string>
+    <string name="reference_speed_up_growth">Speed up growth</string>
+    <string name="reference_speed_up_growth_val">Feed baby its breeding food</string>
+    <string name="reference_villager_restock">Villager restock</string>
+    <string name="reference_villager_restock_val">2x per in-game day</string>
+    <string name="reference_crop_growth">Crop Growth (avg)</string>
+    <string name="reference_wheat">Wheat / Carrots / Potatoes</string>
+    <string name="reference_wheat_val">~25 minutes (8 stages)</string>
+    <string name="reference_beetroot">Beetroot</string>
+    <string name="reference_beetroot_val">~25 minutes (4 stages)</string>
+    <string name="reference_nether_wart">Nether Wart</string>
+    <string name="reference_nether_wart_val">~10 minutes (4 stages)</string>
+    <string name="reference_sugarcane">Sugarcane / Cactus</string>
+    <string name="reference_sugarcane_val">~18 min per block</string>
+    <string name="reference_bamboo">Bamboo</string>
+    <string name="reference_bamboo_val">~4 min per block</string>
+    <string name="reference_melon_pumpkin">Melon / Pumpkin stem</string>
+    <string name="reference_melon_pumpkin_val">~25 min, then fruit spawns</string>
+    <string name="reference_other_timers">Other Timers</string>
+    <string name="reference_smelting_per_item">Smelting per item</string>
+    <string name="reference_smelting_per_item_val">10 seconds (200 ticks)</string>
+    <string name="reference_item_despawn">Item despawn</string>
+    <string name="reference_item_despawn_val">5 minutes</string>
+    <string name="reference_mob_despawn">Mob despawn</string>
+    <string name="reference_mob_despawn_val">>128 blocks = instant</string>
+    <string name="reference_drowning">Drowning</string>
+    <string name="reference_drowning_val">15 sec air, then 1 hp/sec</string>
+    <string name="reference_phantoms">Phantoms spawn after</string>
+    <string name="reference_phantoms_val">3+ days without sleep</string>
+    <string name="reference_fire_spread">Fire spread check</string>
+    <string name="reference_fire_spread_val">Every 2 seconds</string>
+    <string name="reference_raid_timeout">Raid timeout</string>
+    <string name="reference_raid_timeout_val">40 minutes</string>
+    <string name="reference_dye_colors">Dye Colors</string>
+
+    <!-- Redstone -->
+    <string name="redstone_title">Redstone Signal</string>
+    <string name="redstone_description">Calculate comparator signal strength from container fill levels. Plan exact item counts for redstone contraptions.</string>
+    <string name="redstone_container">Container</string>
+    <string name="redstone_select_container">SELECT CONTAINER</string>
+    <string name="redstone_container_slots">%1$s (%2$d slots)</string>
+    <string name="redstone_slots_label">%d slots</string>
+    <string name="redstone_calc_signal">Calculate Signal from Items</string>
+    <string name="redstone_item_count">Item Count</string>
+    <string name="redstone_stack_size">Stack Size</string>
+    <string name="redstone_stack_hint">Common: 64 (most items), 16 (eggs, ender pearls, snowballs), 1 (tools, armor)</string>
+    <string name="redstone_fill_level">Fill Level</string>
+    <string name="redstone_signal_strength">Signal Strength</string>
+    <string name="redstone_signal_out_of">%d / 15</string>
+    <string name="redstone_max_capacity">Max Capacity</string>
+    <string name="redstone_max_capacity_val">%d items</string>
+    <string name="redstone_slots_used">Slots Used</string>
+    <string name="redstone_slots_used_val">%1$d / %2$d</string>
+    <string name="redstone_items_needed_header">Items Needed for Target Signal</string>
+    <string name="redstone_target_signal">Target Signal (0-15)</string>
+    <string name="redstone_target_signal_label">Target Signal</string>
+    <string name="redstone_items_needed">Items Needed</string>
+    <string name="redstone_items_needed_val">%1$d (stack size %2$d)</string>
+    <string name="redstone_max_items_at_signal">Max Items at Signal %d</string>
+    <string name="redstone_signal_reference">Signal Reference</string>
+    <string name="redstone_signal_table_for">SIGNAL TABLE FOR %s</string>
+    <string name="redstone_signal_n">Signal %d</string>
+    <string name="redstone_items_suffix">%s items</string>
+    <string name="redstone_special_sources">Special Comparator Sources</string>
+    <string name="redstone_non_container_sources">NON-CONTAINER SOURCES</string>
+    <string name="redstone_cake">Cake</string>
+    <string name="redstone_cake_val">Signal = 14 - (2 * slices eaten), max 14</string>
+    <string name="redstone_composter">Composter</string>
+    <string name="redstone_composter_val">Signal = compost level (0-8)</string>
+    <string name="redstone_cauldron">Cauldron</string>
+    <string name="redstone_cauldron_val">Signal = water level (0-3)</string>
+    <string name="redstone_beehive">Beehive / Bee Nest</string>
+    <string name="redstone_beehive_val">Signal = honey level (0-5)</string>
+    <string name="redstone_lectern">Lectern</string>
+    <string name="redstone_lectern_val">Signal = page number / total pages * 15</string>
+    <string name="redstone_respawn_anchor">Respawn Anchor</string>
+    <string name="redstone_respawn_anchor_val">Signal = charges (0-4)</string>
+    <string name="redstone_sculk_sensor">Sculk Sensor</string>
+    <string name="redstone_sculk_sensor_val">Signal based on vibration type (1-15)</string>
+    <string name="redstone_end_portal_frame">End Portal Frame</string>
+    <string name="redstone_end_portal_frame_val">Signal 15 if has eye, 0 if empty</string>
+    <string name="redstone_jukebox">Jukebox</string>
+    <string name="redstone_jukebox_val">Signal depends on disc (1-15)</string>
+    <string name="redstone_command_block">Command Block</string>
+    <string name="redstone_command_block_val">Signal = success count</string>
+    <string name="redstone_item_frame">Item Frame</string>
+    <string name="redstone_item_frame_val">Signal = rotation step (0-8)</string>
+    <string name="redstone_jukebox_disc_signals">JUKEBOX DISC SIGNALS</string>
+    <string name="redstone_comparator_tips">Comparator Tips</string>
+    <string name="redstone_how_comparators_work">HOW COMPARATORS WORK</string>
+    <string name="redstone_comparator_desc">A Redstone Comparator reads the fill level of a container behind it and outputs a signal strength from 0-15.</string>
+    <string name="redstone_compare_mode_label">COMPARE MODE (front torch off)</string>
+    <string name="redstone_compare_mode_desc">Output = rear signal if rear >= side signal, otherwise 0.</string>
+    <string name="redstone_subtract_mode_label">SUBTRACT MODE (front torch on)</string>
+    <string name="redstone_subtract_mode_desc">Output = rear signal - side signal (minimum 0). Useful for arithmetic circuits.</string>
+    <string name="redstone_signal_formula">SIGNAL FORMULA</string>
+    <string name="redstone_signal_formula_desc">signal = floor(1 + (sum of item fractions / total slots) * 14)\nwhere item fraction = count / max_stack_size for each slot\nSignal is 0 when empty, 15 when completely full.</string>
+
+    <!-- Notes -->
+    <string name="notes_search_placeholder">Search notes\u2026</string>
+    <string name="notes_new_note_cd">New note</string>
+    <string name="notes_title">Notes</string>
+    <string name="notes_description">Write, label, and organize your Minecraft notes. Add labels to group them by topic.</string>
+    <string name="notes_stat">%d notes</string>
+    <string name="notes_no_found">No notes found</string>
+    <string name="notes_no_yet">No notes yet</string>
+    <string name="notes_try_different">Try a different search or label</string>
+    <string name="notes_tap_to_create">Tap + to create your first note</string>
+    <string name="notes_label">Label</string>
+    <string name="notes_created">Created</string>
+    <string name="notes_updated">Updated</string>
+    <string name="notes_new_note_dialog">New Note</string>
+    <string name="notes_edit_note_dialog">Edit Note</string>
+    <string name="notes_field_title">Title</string>
+    <string name="notes_field_label">Label (optional)</string>
+    <string name="notes_field_content">Content</string>
+
+    <!-- Maze -->
+    <string name="maze_header">Maze Maker</string>
+    <string name="maze_width_cells">Width (cells)</string>
+    <string name="maze_length_cells">Length (cells)</string>
+    <string name="maze_rings">Rings</string>
+    <string name="maze_floors">Floors</string>
+    <string name="maze_path_width">Path width</string>
+    <string name="maze_wall_height">Wall height</string>
+    <string name="maze_generate">Generate</string>
+    <string name="maze_shuffle">Shuffle</string>
+    <string name="maze_total_blocks">Total blocks</string>
+    <string name="maze_width_x">Width (X)</string>
+    <string name="maze_depth_z">Depth (Z)</string>
+    <string name="maze_height_y">Height (Y)</string>
+    <string name="maze_dead_ends">Dead ends</string>
+    <string name="maze_longest_path">Longest path</string>
+    <string name="maze_longest_path_val">%d cells</string>
+    <string name="maze_y_layer">Y layer: %d</string>
+    <string name="maze_help">Generate mazes for Minecraft. Choose rectangular for classic hedge mazes, circular for concentric ring mazes, or multi-floor for stacked mazes connected by staircases. Use the layer slider to build layer by layer, or switch to 3D for an isometric preview.</string>
+
+    <!-- Block Fill -->
+    <string name="blockfill_header">Block Fill Calculator</string>
+    <string name="blockfill_width">Width</string>
+    <string name="blockfill_length">Length</string>
+    <string name="blockfill_height">Height (blocks)</string>
+    <string name="blockfill_blocks">Blocks</string>
+    <string name="blockfill_chunks">Chunks</string>
+    <string name="blockfill_hollow">Hollow (shell only)</string>
+    <string name="blockfill_total_blocks">Total blocks</string>
+    <string name="blockfill_stacks">Stacks (64)</string>
+    <string name="blockfill_stacks_val">%1$s + %2$d left</string>
+    <string name="blockfill_single_chests">Single chests</string>
+    <string name="blockfill_double_chests">Double chests</string>
+    <string name="blockfill_shulker_boxes">Shulker boxes</string>
+    <string name="blockfill_help">Enter the width, length, and height of an area to calculate how many blocks you need to fill it. Toggle between blocks and chunks for large builds. Results show storage needed in stacks, chests, and shulker boxes.</string>
+
+    <!-- Anvil / Enchanting -->
+    <string name="anvil_header">Enchanting</string>
+    <string name="anvil_weapons">Weapons</string>
+    <string name="anvil_tools">Tools</string>
+    <string name="anvil_armor">Armor</string>
+    <string name="anvil_enchantments">Enchantments</string>
+    <string name="anvil_optimal_order">Optimal Order</string>
+    <string name="anvil_step">Step %1$d: %2$s</string>
+    <string name="anvil_lvl_cost">%d lvl</string>
+    <string name="anvil_too_expensive">Too Expensive!</string>
+    <string name="anvil_total_xp">Total XP</string>
+    <string name="anvil_total_xp_val">%d levels</string>
+    <string name="anvil_help">Pick an item and select the enchantments you want. This tool calculates the cheapest XP order to combine them on an anvil, avoiding the \"Too Expensive\" cap. Tap enchantment levels (I\u2013V) to adjust.</string>
+    <string name="anvil_how_costs_work">How Anvil Costs Work</string>
+    <string name="anvil_prior_work_penalty">Prior-Work Penalty</string>
+    <string name="anvil_prior_work_desc">Every time an item is used in an anvil, it gains a hidden \"anvil uses\" counter. The penalty doubles each time: 0, 1, 3, 7, 15, 31 levels (formula: 2\u207F \u2212 1). This applies to both the target and sacrifice items.</string>
+    <string name="anvil_too_expensive_title">\"Too Expensive\"</string>
+    <string name="anvil_too_expensive_desc">If any single anvil operation costs 40+ levels, the game blocks it entirely. After 6 anvil uses, the penalty alone hits 63 levels \u2014 making further enchanting impossible.</string>
+    <string name="anvil_why_order_matters">Why Order Matters</string>
+    <string name="anvil_why_order_desc">The output item\u2019s anvil uses = max(target, sacrifice) + 1. By combining books in pairs first (binary tree), each book accumulates fewer anvil uses. Cheapest enchantments go first so their small base costs absorb the growing penalty. This calculator finds that optimal order automatically.</string>
+
+    <!-- Waypoints -->
+    <string name="waypoints_title">Waypoints</string>
+    <string name="waypoints_description">Save and organize coordinates for your important Minecraft locations.</string>
+    <string name="waypoints_stat">%d waypoints</string>
+    <string name="waypoints_search_placeholder">Search waypoints\u2026</string>
+    <string name="waypoints_new_waypoint_cd">New waypoint</string>
+    <string name="waypoints_no_found">No waypoints found</string>
+    <string name="waypoints_no_saved">No waypoints saved</string>
+    <string name="waypoints_try_different">Try a different search or filter</string>
+    <string name="waypoints_tap_to_save">Tap + to save your first location</string>
+    <string name="waypoints_coordinates">COORDINATES</string>
+    <string name="waypoints_save_as_waypoint">Save as %s waypoint</string>
+    <string name="waypoints_notes_label">NOTES</string>
+    <string name="waypoints_new_dialog">New Waypoint</string>
+    <string name="waypoints_edit_dialog">Edit Waypoint</string>
+    <string name="waypoints_field_name">Name</string>
+    <string name="waypoints_color">Color</string>
+    <string name="waypoints_field_notes">Notes (optional)</string>
+
+    <!-- Clock -->
+    <string name="clock_title">Game Clock</string>
+    <string name="clock_description">Track Minecraft\u2019s day/night cycle and upcoming events.</string>
+    <string name="clock_sync">Sync</string>
+    <string name="clock_not_synced">Not synced \u2014 choose a method below</string>
+    <string name="clock_f3_sync">F3 SYNC (MOST ACCURATE)</string>
+    <string name="clock_f3_desc">Enter the tick value from the F3 debug screen</string>
+    <string name="clock_day_time_tick">Day Time tick (0\u201323999)</string>
+    <string name="clock_sync_btn">Sync</string>
+    <string name="clock_quick_sync">QUICK SYNC</string>
+    <string name="clock_quick_sync_desc">Tap when you see the event in-game:</string>
+    <string name="clock_synced_via">Synced via</string>
+    <string name="clock_f3_debug">F3 Debug</string>
+    <string name="clock_quick_sync_label">Quick Sync</string>
+    <string name="clock_game_time">Game time</string>
+    <string name="clock_stop">Stop Clock</string>
+    <string name="clock_current_time">Current Time</string>
+    <string name="clock_day_prefix">Day </string>
+    <string name="clock_tick_format">  \u2022  Tick %d</string>
+    <string name="clock_your_events">Your Events</string>
+    <string name="clock_no_events">No events configured. Tap below to add events.</string>
+    <string name="clock_add_event_arrow">Add Event \u2192</string>
+    <string name="clock_upcoming_events">Upcoming Events</string>
+    <string name="clock_no_events_configured">No events configured.</string>
+    <string name="clock_how_to_sync">How to Sync</string>
+    <string name="clock_using_f3">Using F3 (PC)</string>
+    <string name="clock_f3_step_1">1. Press F3 in Minecraft to open the debug screen</string>
+    <string name="clock_f3_step_2">2. Find the \u201cDay Time\u201d value on the left side</string>
+    <string name="clock_f3_step_3">3. Enter the tick number (0\u201323999) in the field above</string>
+    <string name="clock_f3_step_4">4. Tap \u201cSync\u201d \u2014 the clock will track from that point</string>
+    <string name="clock_quick_sync_title">Quick Sync</string>
+    <string name="clock_quick_sync_help">Tap the Sunrise, Noon, or Sunset button the moment you see that event happen in-game.</string>
+    <string name="clock_quick_sync_sunrise">\u2022 Sunrise \u2014 when the sun first appears on the horizon</string>
+    <string name="clock_quick_sync_noon">\u2022 Noon \u2014 when the sun is directly overhead</string>
+    <string name="clock_quick_sync_sunset">\u2022 Sunset \u2014 when the sun starts to dip below the horizon</string>
+    <string name="clock_reading_countdowns">Reading Countdowns</string>
+    <string name="clock_countdown_help">The event timeline shows how long until each event occurs.</string>
+    <string name="clock_1_mc_day">1 Minecraft day = 20 real minutes</string>
+    <string name="clock_1_mc_hour">1 Minecraft hour \u2248 50 real seconds</string>
+    <string name="clock_color_coded">Events are color-coded: green (safe), gold (warning), red (danger).</string>
+    <string name="clock_add_event_dialog">Add Event</string>
+    <string name="clock_predefined">Predefined</string>
+    <string name="clock_custom">Custom</string>
+    <string name="clock_all_predefined_added">All predefined events are already added.</string>
+    <string name="clock_event_name">Event name</string>
+    <string name="clock_event_tick">Tick (0\u201323999)</string>
+    <string name="clock_color_label">COLOR</string>
+    <string name="clock_set_day_dialog">Set Day</string>
+    <string name="clock_set_day_desc">Enter the current in-game day from the F3 debug screen (Day line). You can update this any time after a server restart or crash.</string>
+    <string name="clock_day_number">Day number</string>
+    <string name="clock_set">Set</string>
+
+    <!-- Food -->
+    <string name="food_search_placeholder">Search food\u2026</string>
+    <string name="food_sort">Sort:</string>
+    <string name="food_title">Food &amp; Saturation</string>
+    <string name="food_description">Complete food reference with hunger, saturation, and special effects. Sort by saturation to find the best foods.</string>
+    <string name="food_stat">%d foods</string>
+    <string name="food_saturation_label">saturation</string>
+    <string name="food_how_saturation_works">HOW SATURATION WORKS</string>
+    <string name="food_saturation_desc">Saturation is a hidden stat that determines how long before hunger starts decreasing. Higher saturation = longer before you get hungry again. Your saturation cannot exceed your current hunger level.</string>
+    <string name="food_best_by_category">BEST FOODS BY CATEGORY</string>
+    <string name="food_best_overall">Best Overall</string>
+    <string name="food_best_overall_val">Golden Carrot (14.4 sat)</string>
+    <string name="food_best_meat">Best Cooked Meat</string>
+    <string name="food_best_meat_val">Steak / Porkchop (12.8 sat)</string>
+    <string name="food_best_fish">Best Fish</string>
+    <string name="food_best_fish_val">Cooked Salmon (9.6 sat)</string>
+    <string name="food_best_crop">Best Crop</string>
+    <string name="food_best_crop_val">Baked Potato (6.0 sat)</string>
+    <string name="food_best_stew">Best Stew</string>
+    <string name="food_best_stew_val">Rabbit Stew (12.0 sat)</string>
+
+    <!-- Todo -->
+    <string name="todo_title">Todo List</string>
+    <string name="todo_description">Track tasks, gather goals, and link to your tools</string>
+    <string name="todo_free_form">Free-form</string>
+    <string name="todo_item_linked">Item-linked</string>
+    <string name="todo_freeform_placeholder">Build the east bridge\u2026</string>
+    <string name="todo_search_items_placeholder">Search items\u2026</string>
+    <string name="todo_qty">Qty</string>
+    <string name="todo_tasks_header">Tasks</string>
+    <string name="todo_no_tasks_yet">No tasks yet</string>
+    <string name="todo_add_first_task">Add your first task above</string>
+    <string name="todo_clear_completed">Clear %d completed</string>
+    <string name="todo_edit_task">Edit Task</string>
+    <string name="todo_link_to_tool">Link to Tool</string>
+    <string name="todo_link_desc">Link \"%s\" to a shopping list</string>
+    <string name="todo_no_shopping_lists">No shopping lists yet</string>
+    <string name="todo_select_list">Select a list</string>
+    <string name="todo_link_btn">Link</string>
+    <string name="todo_unlink">Unlink</string>
+    <string name="todo_link_cd">Link</string>
+    <string name="todo_clear_link_cd">Clear link</string>
+    <string name="todo_link_shopping_optional">Link to shopping list (optional)</string>
+
+    <!-- Trim -->
+    <string name="trim_title">Armor Trims</string>
+    <string name="trim_description">All 18 armor trim templates, 11 trim materials, and where to find them.</string>
+    <string name="trim_templates">Templates</string>
+    <string name="trim_materials">Materials</string>
+    <string name="trim_how_to">How To</string>
+    <string name="trim_templates_header">Trim Templates (18)</string>
+    <string name="trim_structure_label">Structure  </string>
+    <string name="trim_drop_chance">Drop Chance</string>
+    <string name="trim_duplicate_with">Duplicate With</string>
+    <string name="trim_duplicate_val">7 Diamonds + %s</string>
+    <string name="trim_materials_header">Trim Materials (11)</string>
+    <string name="trim_materials_desc">Each material changes the color of the trim pattern on the armor.</string>
+    <string name="trim_materials_darker">If the trim material matches the armor material (e.g., Diamond trim on Diamond armor), the pattern uses a darker color palette.</string>
+    <string name="trim_combinations">Combinations</string>
+    <string name="trim_armor_types">Armor Types</string>
+    <string name="trim_armor_types_val">6 (leather, chainmail, iron, gold, diamond, netherite)</string>
+    <string name="trim_armor_pieces">Armor Pieces</string>
+    <string name="trim_armor_pieces_val">4 (helmet, chestplate, leggings, boots)</string>
+    <string name="trim_total_looks">Total Unique Looks</string>
+    <string name="trim_total_looks_val">18 \u00d7 11 \u00d7 6 \u00d7 4 = 4,752</string>
+    <string name="trim_how_to_header">How to Trim Armor</string>
+    <string name="trim_smithing_table">SMITHING TABLE RECIPE</string>
+    <string name="trim_smithing_steps">1. Open the Smithing Table\n2. Place a Trim Template in the left slot\n3. Place the armor piece in the middle slot\n4. Place the trim material in the right slot\n5. Take the trimmed armor from the output</string>
+    <string name="trim_key_notes">KEY NOTES</string>
+    <string name="trim_key_notes_text">\u2022 Templates are consumed during trimming\n\u2022 Trims are purely cosmetic (no gameplay effect)\n\u2022 You can re-trim armor (overwrites the previous pattern)\n\u2022 Enchantments are preserved when trimming\n\u2022 Works on all armor materials</string>
+    <string name="trim_duplicating">DUPLICATING TEMPLATES</string>
+    <string name="trim_duplicating_text">In a crafting table:\n1 Template + 7 Diamonds + 1 Duplication Material = 2 Templates\n\nEach template has a specific duplication material (see the Templates tab). This makes rare templates renewable after finding the first one.</string>
+
+    <!-- Banner -->
+    <string name="banner_title">Banner Designer</string>
+    <string name="banner_description">Design custom banners like a Loom. Pick a base color, add up to 6 pattern layers, and preview your design live.</string>
+    <string name="banner_base_color">Base Color</string>
+    <string name="banner_preview">Preview</string>
+    <string name="banner_layers_count">%d/6 layers</string>
+    <string name="banner_add_pattern">Add Pattern</string>
+    <string name="banner_requires_item"> (requires item)</string>
+    <string name="banner_layer_color">Layer Color</string>
+    <string name="banner_add_layer">Add Layer</string>
+    <string name="banner_layer_stack">Layer Stack</string>
+    <string name="banner_move_up">Move up</string>
+    <string name="banner_move_down">Move down</string>
+    <string name="banner_remove">Remove</string>
+    <string name="banner_clear_all">Clear All</string>
+    <string name="banner_materials_needed">Materials Needed</string>
+    <string name="banner_banner_material">Banner</string>
+    <string name="banner_banner_val">1x %s Banner</string>
+    <string name="banner_dye_count">%dx</string>
+    <string name="banner_reusable">1x (reusable)</string>
+    <string name="banner_hide_reference">Hide Reference</string>
+    <string name="banner_show_reference">Show Reference</string>
+    <string name="banner_special_items">Special Pattern Items</string>
+    <string name="banner_special_items_desc">These items unlock special patterns in the Loom. They are not consumed when used.</string>
+    <string name="banner_obtained">Obtained</string>
+    <string name="banner_source">Source</string>
+    <string name="banner_loom_patterns">Loom Patterns (No Item Required)</string>
+    <string name="banner_loom_patterns_desc">These patterns are available in the Loom without any special banner pattern item.</string>
+    <string name="banner_all_16_dye">All 16 Dye Colors</string>
+    <string name="banner_dye_desc">Any of these colors can be used in the Loom to apply patterns to banners.</string>
+    <string name="banner_how_to_use_loom">HOW TO USE THE LOOM</string>
+    <string name="banner_loom_steps">1. Place a banner in the top-left slot\n2. Place a dye in the top-right slot\n3. Optionally place a pattern item in the middle slot\n4. Select a pattern from the list\n5. Take the result from the output slot</string>
+    <string name="banner_tips">TIPS</string>
+    <string name="banner_tips_text">\u2022 Banners can have up to 6 pattern layers\n\u2022 Pattern items are NOT consumed when used\n\u2022 You can copy a banner by placing it + blank banner in a crafting grid\n\u2022 Banners can be placed on shields at a crafting table</string>
+
+    <!-- Shapes -->
+    <string name="shapes_header">Shape Designer</string>
+    <string name="shapes_total_blocks">Total blocks</string>
+    <string name="shapes_width_x">Width (X)</string>
+    <string name="shapes_depth_z">Depth (Z)</string>
+    <string name="shapes_height_y">Height (Y)</string>
+    <string name="shapes_y_layer">Y layer: %d</string>
+    <string name="shapes_hollow">Hollow</string>
+    <string name="shapes_flipped">Flipped</string>
+    <string name="shapes_help">Build perfect shapes in Minecraft. Set a radius and height, then use the Y-layer slider to see exactly which blocks to place on each layer, or switch to 3D for an isometric preview.</string>
+
+    <!-- Light -->
+    <string name="light_title">Light Spacing</string>
+    <string name="light_description">Calculate torch and light source spacing to prevent hostile mob spawning.</string>
+    <string name="light_source">Light Source</string>
+    <string name="light_select_source">SELECT LIGHT SOURCE</string>
+    <string name="light_source_level">%1$s (Level %2$d)</string>
+    <string name="light_level_label">Level %d</string>
+    <string name="light_spacing_results">Spacing Results</string>
+    <string name="light_level">Light Level</string>
+    <string name="light_linear_reach">Linear Reach</string>
+    <string name="light_linear_reach_val">%d blocks each direction</string>
+    <string name="light_line_spacing">Line Spacing</string>
+    <string name="light_line_spacing_val">%d blocks apart</string>
+    <string name="light_line_place">Place %1$s every %2$d blocks along a line (hallway, tunnel).</string>
+    <string name="light_grid_spacing">Grid Spacing</string>
+    <string name="light_grid_spacing_val">%d blocks apart</string>
+    <string name="light_grid_place">Place %1$s in a grid pattern every %2$d blocks in both X and Z directions to fully prevent mob spawning on a flat surface.</string>
+    <string name="light_not_practical">Not practical</string>
+    <string name="light_too_dim">%1$s is too dim (level %2$d) for effective mob-proofing. Light must reach level 1+ at every block. Consider a brighter source.</string>
+    <string name="light_mob_spawning">Mob Spawning Rules</string>
+    <string name="light_overworld">OVERWORLD (1.18+)</string>
+    <string name="light_overworld_desc">Hostile mobs spawn at block light level 0 only. Any light level 1 or above prevents spawning.</string>
+    <string name="light_nether_label">NETHER</string>
+    <string name="light_nether_desc">Most hostile mobs spawn at light level 11 or lower. Blazes and Wither Skeletons spawn in fortresses at light level 11 or lower.</string>
+    <string name="light_mob_spawners">MOB SPAWNERS</string>
+    <string name="light_mob_spawners_desc">Spawner blocks activate when light level is 11 or lower. Place light sources within 4 blocks to disable them.</string>
+    <string name="light_quick_reference">Quick Reference</string>
+    <string name="light_common_spacings">COMMON SPACINGS</string>
+    <string name="light_torch_14">Torch (14)</string>
+    <string name="light_torch_14_val">12 block grid / 27 block line</string>
+    <string name="light_lantern_15">Lantern (15)</string>
+    <string name="light_lantern_15_val">14 block grid / 29 block line</string>
+    <string name="light_soul_torch_10">Soul Torch (10)</string>
+    <string name="light_soul_torch_10_val">6 block grid / 19 block line</string>
+    <string name="light_how_light_spreads">HOW LIGHT SPREADS</string>
+    <string name="light_spread_desc">Light decreases by 1 for each block of distance (Manhattan distance). A torch at level 14 reaches level 1 at 13 blocks away, and level 0 at 14 blocks.</string>
+
+    <!-- Shopping -->
+    <string name="shopping_title">Shopping Lists</string>
+    <string name="shopping_description">Plan your gathering and crafting with named lists</string>
+    <string name="shopping_new_list">New List</string>
+    <string name="shopping_no_lists_yet">No lists yet</string>
+    <string name="shopping_no_lists_subtitle">Create a list to start tracking items</string>
+    <string name="shopping_created">Created %s</string>
+    <string name="shopping_delete_list_title">Delete list?</string>
+    <string name="shopping_delete_list_desc">This will permanently remove this list and all its items.</string>
+    <string name="shopping_list_label">List</string>
+    <string name="shopping_items_count">%d items</string>
+    <string name="shopping_rename_list_cd">Rename list</string>
+    <string name="shopping_search_placeholder">Search\u2026</string>
+    <string name="shopping_qty">Qty</string>
+    <string name="shopping_checklist">Checklist</string>
+    <string name="shopping_gather">Gather</string>
+    <string name="shopping_craft">Craft</string>
+    <string name="shopping_new_list_dialog">New Shopping List</string>
+    <string name="shopping_list_name">List name</string>
+    <string name="shopping_create">Create</string>
+    <string name="shopping_rename_dialog">Rename List</string>
+    <string name="shopping_rename">Rename</string>
+    <string name="shopping_ok">OK</string>
+
+    <!-- Nether -->
+    <string name="nether_header">Nether Tools</string>
+    <string name="nether_convert">Convert</string>
+    <string name="nether_obsidian">Obsidian</string>
+    <string name="nether_portals">Portals</string>
+    <string name="nether_input_coords">Input coordinates</string>
+    <string name="nether_y_unchanged">Y (unchanged)</string>
+    <string name="nether_facing">Facing</string>
+    <string name="nether_portal_interior">Portal interior dimensions</string>
+    <string name="nether_width_min">Width (min 2)</string>
+    <string name="nether_height_min">Height (min 3)</string>
+    <string name="nether_without_corners">Without corners</string>
+    <string name="nether_without_corners_val">%d obsidian</string>
+    <string name="nether_with_corners">With corners</string>
+    <string name="nether_with_corners_val">%d obsidian</string>
+    <string name="nether_portal_name">Portal name</string>
+    <string name="nether_save_portal">Save current coordinates as portal</string>
+    <string name="nether_no_saved_portals">No saved portals</string>
+    <string name="nether_no_saved_subtitle">Save coordinates above to track your portals</string>
+    <string name="nether_help">Convert coordinates between the Overworld and Nether (8:1 ratio), calculate how much obsidian you need for a custom-sized portal, or save portal locations to keep track of your network.</string>
+
+    <!-- Librarian -->
+    <string name="librarian_title">Librarian Guide</string>
+    <string name="librarian_description">Librarian enchantments are biome-locked when the Villager Trade Rebalance data pack is enabled. Find the right biome for the enchantment you need.</string>
+    <string name="librarian_experimental">Experimental Feature</string>
+    <string name="librarian_experimental_desc">Requires the Villager Trade Rebalance data pack. Not active in default gameplay.</string>
+    <string name="librarian_select_biome">Select Biome</string>
+    <string name="librarian_all_biomes">All Biomes</string>
+    <string name="librarian_master_exclusive">MASTER LEVEL EXCLUSIVE</string>
+    <string name="librarian_master_guaranteed">Guaranteed enchanted book trade at Master level.</string>
+    <string name="librarian_common_pool">COMMON POOL</string>
+    <string name="librarian_common_available">Available at Novice through Expert levels.</string>
+    <string name="librarian_how_it_works">How It Works</string>
+    <string name="librarian_biome_determination">BIOME DETERMINATION</string>
+    <string name="librarian_biome_determination_desc">A librarian\'s available enchantments are determined by the biome they first claimed a lectern in. Moving them to a different biome does NOT change their enchantment pool.</string>
+    <string name="librarian_level_caps">ENCHANTMENT LEVEL CAPS</string>
+    <string name="librarian_level_caps_desc">Some enchantments are capped below their maximum level from librarians:\n\u2022 Protection III (max IV requires anvil combining)\n\u2022 Fortune II (max III requires anvil combining)\n\u2022 Unbreaking II (max III requires anvil combining)</string>
+    <string name="librarian_strategy_tips">STRATEGY TIPS</string>
+    <string name="librarian_strategy_tips_desc">\u2022 For Mending, breed villagers in a Swamp biome\n\u2022 For Silk Touch, use a Snowy biome\n\u2022 Combine capped enchantments via anvil for max level\n\u2022 Break and replace the lectern to reroll trades</string>
+    <string name="librarian_not_available">Not Available from Librarians</string>
+    <string name="librarian_cannot_be_traded">THESE ENCHANTMENTS CANNOT BE TRADED</string>
+    <string name="librarian_unavailable_list">\u2022 Trident: Channeling, Loyalty, Riptide, Impaling\n\u2022 Crossbow: Multishot, Piercing, Quick Charge\n\u2022 Fishing Rod: Luck of the Sea, Lure\n\u2022 Treasure Only: Soul Speed, Swift Sneak, Wind Burst\n\u2022 1.21+ Only: Breach, Density (Mace enchantments)</string>
+    <string name="librarian_found_from">These must be found from loot chests, fishing, mob drops, or enchanting tables.</string>
+
+    <!-- Storage -->
+    <string name="storage_header">Storage Calculator</string>
+    <string name="storage_quantity">Quantity</string>
+    <string name="storage_placeholder">e.g. 14 stacks, 5k</string>
+    <string name="storage_item_dropdown">Item (for block compression)</string>
+    <string name="storage_total_items">Total items</string>
+    <string name="storage_stacks">Stacks</string>
+    <string name="storage_single_chests">Single chests</string>
+    <string name="storage_double_chests">Double chests</string>
+    <string name="storage_shulker_boxes">Shulker boxes</string>
+    <string name="storage_help">Figure out how many chests and shulker boxes you need for a given quantity of items. Pick an item from the dropdown to also see block compression (e.g. how many iron blocks you can make from your iron ingots).</string>
+
+    <!-- Loot -->
+    <string name="loot_search_placeholder">Search loot or structures\u2026</string>
+    <string name="loot_title">Structure Loot</string>
+    <string name="loot_description">Notable and exclusive loot items found in each Minecraft structure. Find the right structure for what you need.</string>
+    <string name="loot_stat">%d structures</string>
+    <string name="loot_exclusive_rare">EXCLUSIVE / RARE</string>
+    <string name="loot_notable">NOTABLE LOOT</string>
+    <string name="loot_rarest_items">RAREST EXCLUSIVE ITEMS</string>
+    <string name="loot_elytra">Elytra</string>
+    <string name="loot_elytra_val">End Cities only</string>
+    <string name="loot_echo_shards">Echo Shards</string>
+    <string name="loot_echo_shards_val">Ancient Cities only</string>
+    <string name="loot_heavy_core">Heavy Core</string>
+    <string name="loot_heavy_core_val">Trial Chambers only</string>
+    <string name="loot_pigstep">Pigstep Disc</string>
+    <string name="loot_pigstep_val">Bastion Remnants only</string>
+    <string name="loot_silence_trim">Silence Trim</string>
+    <string name="loot_silence_trim_val">Ancient Cities (1.2%)</string>
+    <string name="loot_swift_sneak">Swift Sneak</string>
+    <string name="loot_swift_sneak_val">Ancient Cities only</string>
 </resources>

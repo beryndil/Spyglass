@@ -16,6 +16,8 @@ import dev.spyglass.android.connect.ItemStack
 import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.PlayerData
 import dev.spyglass.android.connect.client.ConnectionState
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.SectionHeader
 import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.navigation.BrowseTarget
@@ -53,9 +55,9 @@ fun InventoryScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = { hapticClick(); onBack() }) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
             }
-            Text("Inventory", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.connect_inventory), style = MaterialTheme.typography.titleMedium)
         }
 
         if (!isConnected && lastUpdated != null) {
@@ -87,7 +89,7 @@ fun InventoryContent(
     if (player == null) {
         Box(modifier = Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
             Text(
-                if (isOffline) "No cached inventory data" else "No player data",
+                if (isOffline) stringResource(R.string.connect_no_cached_inventory) else stringResource(R.string.connect_no_player_data),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
@@ -102,7 +104,7 @@ fun InventoryContent(
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         // Armor + Offhand
-        SectionHeader("Equipment")
+        SectionHeader(stringResource(R.string.connect_equipment))
         InventoryGrid(
             items = player.armor.ifEmpty {
                 // Fall back to inventory armor slots
@@ -117,7 +119,7 @@ fun InventoryContent(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(2.dp),
         ) {
-            listOf("Head", "Chest", "Legs", "Feet", "Off").forEach {
+            listOf(stringResource(R.string.connect_armor_head), stringResource(R.string.connect_armor_chest), stringResource(R.string.connect_armor_legs), stringResource(R.string.connect_armor_feet), stringResource(R.string.connect_armor_off)).forEach {
                 Text(
                     it,
                     modifier = Modifier.weight(1f),
@@ -128,7 +130,7 @@ fun InventoryContent(
         }
 
         // Hotbar (slots 0-8)
-        SectionHeader("Hotbar")
+        SectionHeader(stringResource(R.string.connect_hotbar))
         InventoryGrid(
             items = player.inventory,
             startSlot = 0,
@@ -139,7 +141,7 @@ fun InventoryContent(
         )
 
         // Main inventory (slots 9-35)
-        SectionHeader("Inventory")
+        SectionHeader(stringResource(R.string.connect_inventory))
         InventoryGrid(
             items = player.inventory,
             startSlot = 9,

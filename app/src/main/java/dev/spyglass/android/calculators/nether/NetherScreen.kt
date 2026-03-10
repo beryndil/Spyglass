@@ -27,10 +27,10 @@ fun NetherScreen(vm: NetherViewModel = viewModel()) {
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        SectionHeader("Nether Tools", icon = PixelIcons.Nether)
+        SectionHeader(stringResource(R.string.nether_header), icon = PixelIcons.Nether)
 
         TabRow(selectedTabIndex = subTab, containerColor = MaterialTheme.colorScheme.surfaceVariant) {
-            listOf("Convert", "Obsidian", "Portals").forEachIndexed { i, t ->
+            listOf(stringResource(R.string.nether_convert), stringResource(R.string.nether_obsidian), stringResource(R.string.nether_portals)).forEachIndexed { i, t ->
                 Tab(selected = subTab == i, onClick = { hapticClick(); subTab = i }, text = { Text(t) })
             }
         }
@@ -42,7 +42,7 @@ fun NetherScreen(vm: NetherViewModel = viewModel()) {
         }
 
         Text(
-            "Convert coordinates between the Overworld and Nether (8:1 ratio), calculate how much obsidian you need for a custom-sized portal, or save portal locations to keep track of your network.",
+            stringResource(R.string.nether_help),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.secondary,
         )
@@ -56,7 +56,7 @@ private fun ConvertTab(s: NetherState, vm: NetherViewModel) {
             { vm.setDimension(if (it == 0) NetherDimension.OVERWORLD else NetherDimension.NETHER) })
 
         InputCard {
-            Text("Input coordinates", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+            Text(stringResource(R.string.nether_input_coords), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 SpyglassTextField(s.xIn, vm::setX, "X", Modifier.weight(1f))
                 SpyglassTextField(s.yIn, vm::setY, "Y", Modifier.weight(1f))
@@ -68,9 +68,9 @@ private fun ConvertTab(s: NetherState, vm: NetherViewModel) {
             ResultCard {
                 val outDim = if (s.dimension == NetherDimension.OVERWORLD) "Nether" else "Overworld"
                 if (s.xOut.isNotEmpty()) StatRow("$outDim X", s.xOut)
-                if (s.yOut.isNotEmpty()) StatRow("Y (unchanged)", s.yOut)
+                if (s.yOut.isNotEmpty()) StatRow(stringResource(R.string.nether_y_unchanged), s.yOut)
                 if (s.zOut.isNotEmpty()) StatRow("$outDim Z", s.zOut)
-                if (s.facing.isNotEmpty()) StatRow("Facing", s.facing)
+                if (s.facing.isNotEmpty()) StatRow(stringResource(R.string.nether_facing), s.facing)
             }
         }
 
@@ -81,16 +81,16 @@ private fun ConvertTab(s: NetherState, vm: NetherViewModel) {
 private fun ObsidianTab(s: NetherState, vm: NetherViewModel) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         InputCard {
-            Text("Portal interior dimensions", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+            Text(stringResource(R.string.nether_portal_interior), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                SpyglassTextField(s.obWidth, vm::setObWidth, "Width (min 2)", Modifier.weight(1f))
-                SpyglassTextField(s.obHeight, vm::setObHeight, "Height (min 3)", Modifier.weight(1f))
+                SpyglassTextField(s.obWidth, vm::setObWidth, stringResource(R.string.nether_width_min), Modifier.weight(1f))
+                SpyglassTextField(s.obHeight, vm::setObHeight, stringResource(R.string.nether_height_min), Modifier.weight(1f))
             }
         }
         if (s.obNoCorners > 0) {
             ResultCard {
-                StatRow("Without corners", "${s.obNoCorners} obsidian")
-                StatRow("With corners",    "${s.obWithCorners} obsidian")
+                StatRow(stringResource(R.string.nether_without_corners), stringResource(R.string.nether_without_corners_val, s.obNoCorners))
+                StatRow(stringResource(R.string.nether_with_corners),    stringResource(R.string.nether_with_corners_val, s.obWithCorners))
             }
         }
     }
@@ -102,17 +102,17 @@ private fun PortalsTab(s: NetherState, vm: NetherViewModel) {
     val hapticConfirm = rememberHapticConfirm()
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         InputCard {
-            SpyglassTextField(s.newPortalName, vm::setNewPortalName, "Portal name", keyboardType = androidx.compose.ui.text.input.KeyboardType.Text)
+            SpyglassTextField(s.newPortalName, vm::setNewPortalName, stringResource(R.string.nether_portal_name), keyboardType = androidx.compose.ui.text.input.KeyboardType.Text)
             Button(onClick = { hapticClick(); vm.savePortal() }, modifier = Modifier.fillMaxWidth()) {
-                Text("Save current coordinates as portal")
+                Text(stringResource(R.string.nether_save_portal))
             }
         }
 
         if (s.savedPortals.isEmpty()) {
             EmptyState(
                 icon     = PixelIcons.Bookmark,
-                title    = "No saved portals",
-                subtitle = "Save coordinates above to track your portals",
+                title    = stringResource(R.string.nether_no_saved_portals),
+                subtitle = stringResource(R.string.nether_no_saved_subtitle),
             )
         } else {
             s.savedPortals.forEach { p ->

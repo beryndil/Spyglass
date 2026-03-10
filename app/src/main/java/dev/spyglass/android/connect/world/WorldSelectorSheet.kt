@@ -10,6 +10,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.connect.WorldInfo
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -37,7 +39,7 @@ fun WorldSelectorSheet(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
         ) {
             Text(
-                "Select World",
+                stringResource(R.string.connect_world_selector_title),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(bottom = 12.dp),
             )
@@ -47,7 +49,7 @@ fun WorldSelectorSheet(
                 ListItem(
                     headlineContent = { Text(world.displayName) },
                     supportingContent = {
-                        val date = if (world.lastPlayed > 0) dateFormat.format(Date(world.lastPlayed)) else "Unknown"
+                        val date = if (world.lastPlayed > 0) dateFormat.format(Date(world.lastPlayed)) else stringResource(R.string.connect_world_date_unknown)
                         Text("${world.gameMode.replaceFirstChar { it.uppercase() }} • $date")
                     },
                     leadingContent = {

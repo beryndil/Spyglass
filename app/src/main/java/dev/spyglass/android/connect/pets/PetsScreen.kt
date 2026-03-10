@@ -16,6 +16,8 @@ import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.PetData
 import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.client.ConnectionState
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 private val COLLAR_COLORS = mapOf(
@@ -53,9 +55,9 @@ fun PetsScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
             }
-            Text("Pets", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.connect_pets), style = MaterialTheme.typography.titleMedium)
         }
 
         if (!isConnected && lastUpdated != null) {
@@ -71,10 +73,10 @@ fun PetsScreen(
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
                         Spacer(Modifier.height(12.dp))
-                        Text("Scanning for tamed mobs...", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(stringResource(R.string.connect_scanning_tamed), color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 } else {
-                    Text("No tamed mobs found", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.connect_no_tamed_mobs), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
             return
@@ -134,7 +136,7 @@ private fun PetCard(pet: PetData) {
                     )
                     if (pet.ownerName != null) {
                         Text(
-                            "· Owner: ${pet.ownerName}",
+                            stringResource(R.string.connect_owner_label, pet.ownerName!!),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -147,10 +149,10 @@ private fun PetCard(pet: PetData) {
                 )
                 // Extra details
                 val details = buildList {
-                    if (pet.collarColor >= 0) add("Collar: ${COLLAR_COLORS[pet.collarColor] ?: "Unknown"}")
-                    if (pet.catVariant != null) add("Variant: ${pet.catVariant.replace("_", " ").replaceFirstChar { it.uppercase() }}")
-                    if (pet.horseSpeed > 0) add("Speed: ${"%.2f".format(pet.horseSpeed * 43.17)} b/s")
-                    if (pet.horseJump > 0) add("Jump: ${"%.1f".format(pet.horseJump * 5.0)} blocks")
+                    if (pet.collarColor >= 0) add(stringResource(R.string.connect_collar, COLLAR_COLORS[pet.collarColor] ?: stringResource(R.string.connect_unknown)))
+                    if (pet.catVariant != null) add(stringResource(R.string.connect_variant, pet.catVariant!!.replace("_", " ").replaceFirstChar { it.uppercase() }))
+                    if (pet.horseSpeed > 0) add(stringResource(R.string.connect_speed_format, "%.2f".format(pet.horseSpeed * 43.17)))
+                    if (pet.horseJump > 0) add(stringResource(R.string.connect_jump_format, "%.1f".format(pet.horseJump * 5.0)))
                 }
                 if (details.isNotEmpty()) {
                     Text(

@@ -55,8 +55,8 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
         item(key = "header") {
             TabIntroHeader(
                 icon = PixelIcons.Todo,
-                title = "Todo List",
-                description = "Track tasks, gather goals, and link to your tools",
+                title = stringResource(R.string.todo_title),
+                description = stringResource(R.string.todo_description),
             )
         }
 
@@ -64,7 +64,7 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
         item(key = "add_section") {
             InputCard {
                 TogglePill(
-                    options = listOf("Free-form", "Item-linked"),
+                    options = listOf(stringResource(R.string.todo_free_form), stringResource(R.string.todo_item_linked)),
                     selected = mode,
                     onSelect = { mode = it },
                 )
@@ -85,7 +85,7 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                         OutlinedTextField(
                             value = freeformInput,
                             onValueChange = { if (it.length <= 200) freeformInput = it },
-                            placeholder = { Text("Build the east bridge\u2026", color = MaterialTheme.colorScheme.secondary) },
+                            placeholder = { Text(stringResource(R.string.todo_freeform_placeholder), color = MaterialTheme.colorScheme.secondary) },
                             singleLine = true,
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary,
@@ -126,7 +126,7 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                                     selectedName = ""
                                 }
                             },
-                            placeholder = { Text("Search items\u2026", color = MaterialTheme.colorScheme.secondary) },
+                            placeholder = { Text(stringResource(R.string.todo_search_items_placeholder), color = MaterialTheme.colorScheme.secondary) },
                             singleLine = true,
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = if (selectedId != null) Emerald else MaterialTheme.colorScheme.primary,
@@ -138,7 +138,7 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                         OutlinedTextField(
                             value = quantityInput,
                             onValueChange = { quantityInput = it.filter { c -> c.isDigit() } },
-                            label = { Text("Qty") },
+                            label = { Text(stringResource(R.string.todo_qty)) },
                             singleLine = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             colors = OutlinedTextFieldDefaults.colors(
@@ -211,14 +211,14 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
         // ── Task list ──
         if (todos.isNotEmpty()) {
             item(key = "list_header") {
-                SectionHeader("Tasks", icon = PixelIcons.Todo)
+                SectionHeader(stringResource(R.string.todo_tasks_header), icon = PixelIcons.Todo)
             }
         } else {
             item(key = "empty") {
                 EmptyState(
                     icon = PixelIcons.Todo,
-                    title = "No tasks yet",
-                    subtitle = "Add your first task above",
+                    title = stringResource(R.string.todo_no_tasks_yet),
+                    subtitle = stringResource(R.string.todo_add_first_task),
                 )
             }
         }
@@ -239,7 +239,7 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                 TextButton(onClick = vm::deleteCompleted) {
                     Icon(Icons.Default.Delete, contentDescription = null, tint = Red400, modifier = Modifier.size(16.dp))
                     Spacer(Modifier.width(4.dp))
-                    Text("Clear $completedCount completed", color = Red400)
+                    Text(stringResource(R.string.todo_clear_completed, completedCount), color = Red400)
                 }
             }
         }
@@ -344,7 +344,7 @@ private fun TodoRow(
         }
         // Link button
         IconButton(onClick = onLinkTap, modifier = Modifier.size(28.dp)) {
-            Icon(Icons.Default.Link, contentDescription = "Link", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
+            Icon(Icons.Default.Link, contentDescription = stringResource(R.string.todo_link_cd), tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
         }
         // Delete button
         IconButton(onClick = onDelete, modifier = Modifier.size(28.dp)) {
@@ -365,7 +365,7 @@ private fun EditTodoDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Edit Task", color = MaterialTheme.colorScheme.onSurface) },
+        title = { Text(stringResource(R.string.todo_edit_task), color = MaterialTheme.colorScheme.onSurface) },
         text = {
             OutlinedTextField(
                 value = text,
@@ -408,20 +408,20 @@ private fun LinkDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Link to Tool", color = MaterialTheme.colorScheme.onSurface) },
+        title = { Text(stringResource(R.string.todo_link_to_tool), color = MaterialTheme.colorScheme.onSurface) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Link \"${todo.title}\" to a shopping list", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.todo_link_desc, todo.title), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
                 if (shoppingLists.isEmpty()) {
-                    Text("No shopping lists yet", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                    Text(stringResource(R.string.todo_no_shopping_lists), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                 } else {
                     ExposedDropdownMenuBox(
                         expanded = expanded,
                         onExpandedChange = { expanded = it },
                     ) {
                         OutlinedTextField(
-                            value = selectedList?.name ?: "Select a list",
+                            value = selectedList?.name ?: stringResource(R.string.todo_select_list),
                             onValueChange = {},
                             readOnly = true,
                             singleLine = true,
@@ -462,13 +462,13 @@ private fun LinkDialog(
                 },
                 enabled = selectedList != null,
             ) {
-                Text("Link", color = if (selectedList != null) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
+                Text(stringResource(R.string.todo_link_btn), color = if (selectedList != null) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
             }
         },
         dismissButton = {
             if (todo.linkedType != null) {
                 TextButton(onClick = { onLink(null, null); onDismiss() }) {
-                    Text("Unlink", color = Red400)
+                    Text(stringResource(R.string.todo_unlink), color = Red400)
                 }
             }
             TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant) }
@@ -490,7 +490,7 @@ private fun ShoppingListLinkPicker(
 
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Text(
-            "Link to shopping list (optional)",
+            stringResource(R.string.todo_link_shopping_optional),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.secondary,
         )
@@ -515,7 +515,7 @@ private fun ShoppingListLinkPicker(
             }
             if (selected != null) {
                 IconButton(onClick = { onSelect(null) }, modifier = Modifier.size(28.dp)) {
-                    Icon(Icons.Default.LinkOff, contentDescription = "Clear link", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
+                    Icon(Icons.Default.LinkOff, contentDescription = stringResource(R.string.todo_clear_link_cd), tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(16.dp))
                 }
             }
         }

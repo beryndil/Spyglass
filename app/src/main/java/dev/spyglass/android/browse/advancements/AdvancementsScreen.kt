@@ -292,12 +292,10 @@ fun AdvancementsScreen(
     var showResetDialog by remember { mutableStateOf(false) }
     val isSearching = query.isNotBlank()
 
-    val sortOptions = remember {
-        listOf(
-            SortOption("Name A\u2192Z", "name"),
-            SortOption("Type \u2193", "type"),
-        )
-    }
+    val sortOptions = listOf(
+        SortOption(stringResource(R.string.advancements_sort_name), "name"),
+        SortOption(stringResource(R.string.advancements_sort_type), "type"),
+    )
 
     LaunchedEffect(targetAdvancementId) {
         if (targetAdvancementId != null) {
@@ -315,11 +313,11 @@ fun AdvancementsScreen(
     if (showResetDialog) {
         AlertDialog(
             onDismissRequest = { showResetDialog = false },
-            title = { Text("Reset Progress", color = MaterialTheme.colorScheme.onSurface) },
-            text = { Text("Clear all advancement checkmarks? This cannot be undone.", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+            title = { Text(stringResource(R.string.advancements_reset_progress), color = MaterialTheme.colorScheme.onSurface) },
+            text = { Text(stringResource(R.string.advancements_reset_confirm), color = MaterialTheme.colorScheme.onSurfaceVariant) },
             confirmButton = {
                 TextButton(onClick = { vm.resetAllProgress(); showResetDialog = false }) {
-                    Text("Reset", color = Red400)
+                    Text(stringResource(R.string.advancements_reset), color = Red400)
                 }
             },
             dismissButton = {
@@ -338,7 +336,7 @@ fun AdvancementsScreen(
         ) {
             SpyglassSearchBar(
                 query = query, onQueryChange = vm::setQuery,
-                category = "advancements", placeholder = "Search advancements\u2026",
+                category = "advancements", placeholder = stringResource(R.string.advancements_search_placeholder),
                 modifier = Modifier.weight(1f),
             )
             SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
@@ -368,9 +366,9 @@ fun AdvancementsScreen(
             item {
                 TabIntroHeader(
                     icon = PixelIcons.Advancement,
-                    title = "Advancement Planner",
-                    description = "Track your progress through all Minecraft advancements with practical guides",
-                    stat = "$completedCount / ${advancements.size} completed",
+                    title = stringResource(R.string.advancements_title),
+                    description = stringResource(R.string.advancements_description),
+                    stat = stringResource(R.string.advancements_stat, completedCount, advancements.size),
                 )
             }
             // Progress bar
@@ -388,7 +386,7 @@ fun AdvancementsScreen(
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                         Text("${(progress * 100).toInt()}%", style = MaterialTheme.typography.labelSmall, color = Emerald)
                         Text(
-                            "Reset Progress",
+                            stringResource(R.string.advancements_reset_progress),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.clickable { showResetDialog = true },
@@ -463,7 +461,7 @@ fun AdvancementsScreen(
                             ) {
                                 Icon(
                                     if (isTreeExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                                    contentDescription = "Toggle children",
+                                    contentDescription = stringResource(R.string.advancements_toggle_children),
                                     tint = MaterialTheme.colorScheme.secondary,
                                     modifier = Modifier.size(18.dp),
                                 )
@@ -501,7 +499,7 @@ fun AdvancementsScreen(
                             if (hasChildren) {
                                 Spacer(Modifier.height(2.dp))
                                 val childCount = advancements.count { it.parent == adv.id }
-                                CategoryBadge(label = "$childCount children", color = MaterialTheme.colorScheme.secondary)
+                                CategoryBadge(label = stringResource(R.string.advancements_children_count, childCount), color = MaterialTheme.colorScheme.secondary)
                             }
                         }
                         Spacer(Modifier.width(4.dp))
@@ -555,8 +553,8 @@ fun AdvancementsScreen(
             if (flatTreeItems.isEmpty()) item {
                 EmptyState(
                     icon = PixelIcons.SearchOff,
-                    title = "No advancements found",
-                    subtitle = "Try a different search or filter",
+                    title = stringResource(R.string.advancements_no_results_title),
+                    subtitle = stringResource(R.string.advancements_no_results_subtitle),
                 )
             }
         }
@@ -603,39 +601,39 @@ private fun AdvancementDetailCard(
 
         // Requirements section
         if (adv.requirements.isNotEmpty()) {
-            SectionHeader(title = "Requirements")
+            SectionHeader(title = stringResource(R.string.advancements_requirements))
             Text(adv.requirements, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
         }
 
         // How to get this section
         if (adv.hint.isNotEmpty()) {
-            SectionHeader(title = "How to Get This")
+            SectionHeader(title = stringResource(R.string.advancements_how_to_get))
             Text(adv.hint, style = MaterialTheme.typography.bodyMedium, color = Emerald)
         }
 
         // Tutorial section
         if (adv.tutorial.isNotEmpty()) {
-            SectionHeader(title = "Tutorial")
+            SectionHeader(title = stringResource(R.string.advancements_tutorial))
             Text(adv.tutorial, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
         }
 
         // Stats
-        SectionHeader(title = "Stats")
+        SectionHeader(title = stringResource(R.string.advancements_stats))
         StatRow(stringResource(R.string.category), categoryLabel(adv.category))
         StatRow(stringResource(R.string.type), typeLabel(adv.type))
         if (adv.difficulty.isNotEmpty()) {
-            StatRow("Difficulty", adv.difficulty.replaceFirstChar { it.uppercase() })
+            StatRow(stringResource(R.string.advancements_difficulty), adv.difficulty.replaceFirstChar { it.uppercase() })
         }
         if (adv.dimension.isNotEmpty()) {
             StatRow(stringResource(R.string.dimension), adv.dimension.replaceFirstChar { it.uppercase() })
         }
         if (adv.xpReward.isNotEmpty() && adv.xpReward != "0") {
-            StatRow("XP Reward", adv.xpReward)
+            StatRow(stringResource(R.string.advancements_xp_reward), adv.xpReward)
         }
 
         // Requires (parent advancement)
         if (adv.parent.isNotEmpty()) {
-            SectionHeader(title = "Requires")
+            SectionHeader(title = stringResource(R.string.advancements_requires))
             val parentAdv = allAdvancements.find { it.id == adv.parent }
             val parentName = parentAdv?.name ?: adv.parent.substringAfterLast('/').replace('_', ' ').replaceFirstChar { it.uppercase() }
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -654,7 +652,7 @@ private fun AdvancementDetailCard(
         // Related Items
         val relatedItems = parseCommaSeparated(adv.relatedItems)
         if (relatedItems.isNotEmpty()) {
-            SectionHeader(title = "Related Items")
+            SectionHeader(title = stringResource(R.string.advancements_related_items))
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 relatedItems.forEach { itemId ->
                     AssistChip(
@@ -673,7 +671,7 @@ private fun AdvancementDetailCard(
         // Related Mobs
         val relatedMobs = parseCommaSeparated(adv.relatedMobs)
         if (relatedMobs.isNotEmpty()) {
-            SectionHeader(title = "Related Mobs")
+            SectionHeader(title = stringResource(R.string.advancements_related_mobs))
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 relatedMobs.forEach { mobId ->
                     AssistChip(
@@ -692,7 +690,7 @@ private fun AdvancementDetailCard(
         // Related Structures
         val relatedStructures = parseCommaSeparated(adv.relatedStructures)
         if (relatedStructures.isNotEmpty()) {
-            SectionHeader(title = "Related Structures")
+            SectionHeader(title = stringResource(R.string.advancements_related_structures))
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 relatedStructures.forEach { structureId ->
                     AssistChip(
@@ -711,7 +709,7 @@ private fun AdvancementDetailCard(
         // Related Biomes
         val relatedBiomes = parseCommaSeparated(adv.relatedBiomes)
         if (relatedBiomes.isNotEmpty()) {
-            SectionHeader(title = "Related Biomes")
+            SectionHeader(title = stringResource(R.string.advancements_related_biomes))
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 relatedBiomes.forEach { biomeId ->
                     AssistChip(
@@ -742,7 +740,7 @@ private fun AdvancementDetailCard(
                 )
                 Spacer(Modifier.width(6.dp))
                 Text(
-                    if (isComplete) "Completed" else "Mark Complete",
+                    if (isComplete) stringResource(R.string.advancements_completed) else stringResource(R.string.advancements_mark_complete),
                     color = if (isComplete) Emerald else MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.labelSmall,
                 )

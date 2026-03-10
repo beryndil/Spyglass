@@ -101,7 +101,7 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
         ) {
             SpyglassSearchBar(
                 query = query, onQueryChange = vm::setQuery,
-                category = "notes", placeholder = "Search notes\u2026",
+                category = "notes", placeholder = stringResource(R.string.notes_search_placeholder),
                 modifier = Modifier.weight(1f),
             )
             Spacer(Modifier.width(8.dp))
@@ -109,7 +109,7 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
                 onClick = { hapticClick(); showCreateDialog = true },
                 colors = ButtonDefaults.filledTonalButtonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f), contentColor = MaterialTheme.colorScheme.primary),
             ) {
-                Icon(Icons.Default.Add, contentDescription = "New note", modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.notes_new_note_cd), modifier = Modifier.size(18.dp))
             }
         }
 
@@ -142,9 +142,9 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
             item {
                 TabIntroHeader(
                     icon = PixelIcons.Bookmark,
-                    title = "Notes",
-                    description = "Write, label, and organize your Minecraft notes. Add labels to group them by topic.",
-                    stat = "${notes.size} notes",
+                    title = stringResource(R.string.notes_title),
+                    description = stringResource(R.string.notes_description),
+                    stat = stringResource(R.string.notes_stat, notes.size),
                 )
             }
 
@@ -152,8 +152,8 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
                 item {
                     EmptyState(
                         icon = PixelIcons.Bookmark,
-                        title = if (query.isNotBlank() || labelFilter != "all") "No notes found" else "No notes yet",
-                        subtitle = if (query.isNotBlank() || labelFilter != "all") "Try a different search or label" else "Tap + to create your first note",
+                        title = if (query.isNotBlank() || labelFilter != "all") stringResource(R.string.notes_no_found) else stringResource(R.string.notes_no_yet),
+                        subtitle = if (query.isNotBlank() || labelFilter != "all") stringResource(R.string.notes_try_different) else stringResource(R.string.notes_tap_to_create),
                     )
                 }
             }
@@ -193,7 +193,7 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
 
     if (showCreateDialog) {
         NoteDialog(
-            title = "New Note",
+            title = stringResource(R.string.notes_new_note_dialog),
             existingLabels = labels,
             onDismiss = { showCreateDialog = false },
             onSave = { title, label, content ->
@@ -206,7 +206,7 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
     if (editingNote != null) {
         val note = editingNote!!
         NoteDialog(
-            title = "Edit Note",
+            title = stringResource(R.string.notes_edit_note_dialog),
             initialTitle = note.title,
             initialLabel = note.label,
             initialContent = note.content,
@@ -236,10 +236,10 @@ private fun NoteDetailCard(
             SpyglassDivider()
         }
         if (note.label.isNotBlank()) {
-            StatRow("Label", note.label)
+            StatRow(stringResource(R.string.notes_label), note.label)
         }
-        StatRow("Created", formatTimestamp(note.createdAt))
-        StatRow("Updated", formatTimestamp(note.updatedAt))
+        StatRow(stringResource(R.string.notes_created), formatTimestamp(note.createdAt))
+        StatRow(stringResource(R.string.notes_updated), formatTimestamp(note.updatedAt))
         SpyglassDivider()
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             TextButton(onClick = { hapticClick(); onEdit() }) {
@@ -289,7 +289,7 @@ private fun NoteDialog(
                 OutlinedTextField(
                     value = noteTitle,
                     onValueChange = { noteTitle = it },
-                    label = { Text("Title") },
+                    label = { Text(stringResource(R.string.notes_field_title)) },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.fillMaxWidth(),
@@ -297,7 +297,7 @@ private fun NoteDialog(
                 OutlinedTextField(
                     value = noteLabel,
                     onValueChange = { noteLabel = it },
-                    label = { Text("Label (optional)") },
+                    label = { Text(stringResource(R.string.notes_field_label)) },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.fillMaxWidth(),
@@ -319,7 +319,7 @@ private fun NoteDialog(
                 OutlinedTextField(
                     value = noteContent,
                     onValueChange = { noteContent = it },
-                    label = { Text("Content") },
+                    label = { Text(stringResource(R.string.notes_field_content)) },
                     minLines = 4,
                     maxLines = 8,
                     colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),

@@ -12,6 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 // ── Ore data ────────────────────────────────────────────────────────────────
@@ -78,12 +80,12 @@ fun ReferenceScreen() {
     ) {
         TabIntroHeader(
             icon = PixelIcons.Bookmark,
-            title = "Quick Reference",
-            description = "Cheat sheets for ores, XP, brewing, redstone, times, and dye colors",
+            title = stringResource(R.string.reference_title),
+            description = stringResource(R.string.reference_description),
         )
 
         // ── 1. Ore Levels by Y ──────────────────────────────────────────
-        SectionHeader("Ore Levels by Y")
+        SectionHeader(stringResource(R.string.reference_ore_levels))
         ResultCard {
             ORES.forEachIndexed { i, ore ->
                 if (i > 0) SpyglassDivider()
@@ -97,46 +99,46 @@ fun ReferenceScreen() {
                         Spacer(Modifier.width(8.dp))
                     }
                     Text(ore.name, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
-                    Text("Y ${ore.yMin} to ${ore.yMax}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                    Text(stringResource(R.string.reference_ore_y_range, ore.yMin, ore.yMax), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                     Spacer(Modifier.width(8.dp))
-                    CategoryBadge(label = "Peak ${ore.peakY}", color = MaterialTheme.colorScheme.primary)
+                    CategoryBadge(label = stringResource(R.string.reference_ore_peak, ore.peakY), color = MaterialTheme.colorScheme.primary)
                 }
             }
         }
 
         // ── 2. XP Table ─────────────────────────────────────────────────
-        SectionHeader("XP Table")
+        SectionHeader(stringResource(R.string.reference_xp_table))
         ResultCard {
-            Text("Levels 0-16", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("XP per level", "2L + 7")
-            StatRow("Total to 16", "315 XP")
+            Text(stringResource(R.string.reference_levels_0_16), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.reference_xp_per_level), stringResource(R.string.reference_xp_formula_low))
+            StatRow(stringResource(R.string.reference_total_to_16), stringResource(R.string.reference_xp_315))
             SpyglassDivider()
-            Text("Levels 17-31", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("XP per level", "5L - 38")
-            StatRow("Total to 30", "1,395 XP")
+            Text(stringResource(R.string.reference_levels_17_31), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.reference_xp_per_level), stringResource(R.string.reference_xp_formula_mid))
+            StatRow(stringResource(R.string.reference_total_to_30), stringResource(R.string.reference_xp_1395))
             SpyglassDivider()
-            Text("Levels 32+", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("XP per level", "9L - 158")
+            Text(stringResource(R.string.reference_levels_32_plus), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.reference_xp_per_level), stringResource(R.string.reference_xp_formula_high))
             SpyglassDivider()
-            Text("Enchanting Table Slots", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("Slot 1 (cheapest)", "1 Lapis + 1 level")
-            StatRow("Slot 2 (mid)", "2 Lapis + 2 levels")
-            StatRow("Slot 3 (best)", "3 Lapis + 3 levels")
+            Text(stringResource(R.string.reference_enchanting_table_slots), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.reference_slot_1), stringResource(R.string.reference_slot_1_cost))
+            StatRow(stringResource(R.string.reference_slot_2), stringResource(R.string.reference_slot_2_cost))
+            StatRow(stringResource(R.string.reference_slot_3), stringResource(R.string.reference_slot_3_cost))
             SpyglassDivider()
-            Text("Anvil", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("Too Expensive cap", "40 levels")
-            StatRow("Rename cost", "1 level (first time)")
-            StatRow("Cost doubles", "Each prior work penalty")
+            Text(stringResource(R.string.reference_anvil), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.reference_too_expensive_cap), stringResource(R.string.reference_too_expensive_val))
+            StatRow(stringResource(R.string.reference_rename_cost), stringResource(R.string.reference_rename_cost_val))
+            StatRow(stringResource(R.string.reference_cost_doubles), stringResource(R.string.reference_cost_doubles_val))
         }
 
         // ── 3. Brewing Chart ────────────────────────────────────────────
-        SectionHeader("Brewing Chart")
+        SectionHeader(stringResource(R.string.reference_brewing_chart))
         ResultCard {
-            Text("Base Chain", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("Water Bottle", "Starting point")
-            StatRow("+ Nether Wart", "Awkward Potion")
+            Text(stringResource(R.string.reference_base_chain), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.reference_water_bottle), stringResource(R.string.reference_starting_point))
+            StatRow(stringResource(R.string.reference_plus_nether_wart), stringResource(R.string.reference_awkward_potion))
             SpyglassDivider()
-            Text("Effect Ingredients", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.reference_effect_ingredients), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             StatRow("Sugar", "Speed")
             StatRow("Rabbit Foot", "Leaping")
             StatRow("Glistering Melon", "Healing")
@@ -150,78 +152,78 @@ fun ReferenceScreen() {
             StatRow("Turtle Helmet", "Turtle Master")
             StatRow("Breeze Rod", "Wind Charged")
             SpyglassDivider()
-            Text("Modifiers", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("Redstone", "Extends duration")
-            StatRow("Glowstone", "Amplifies effect")
-            StatRow("Fermented Spider Eye", "Corrupts (inverts)")
-            StatRow("Gunpowder", "Splash version")
-            StatRow("Dragon Breath", "Lingering version")
+            Text(stringResource(R.string.reference_modifiers), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow("Redstone", stringResource(R.string.reference_extends_duration))
+            StatRow("Glowstone", stringResource(R.string.reference_amplifies_effect))
+            StatRow("Fermented Spider Eye", stringResource(R.string.reference_corrupts))
+            StatRow("Gunpowder", stringResource(R.string.reference_splash_version))
+            StatRow("Dragon Breath", stringResource(R.string.reference_lingering_version))
         }
 
         // ── 4. Redstone Basics ──────────────────────────────────────────
-        SectionHeader("Redstone Basics")
+        SectionHeader(stringResource(R.string.reference_redstone_basics))
         ResultCard {
-            Text("Signal", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("Max range", "15 blocks")
-            StatRow("Strength loss", "1 per block traveled")
-            StatRow("Redstone tick", "0.1 seconds (2 game ticks)")
+            Text(stringResource(R.string.reference_signal), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.reference_max_range), stringResource(R.string.reference_max_range_val))
+            StatRow(stringResource(R.string.reference_strength_loss), stringResource(R.string.reference_strength_loss_val))
+            StatRow(stringResource(R.string.reference_redstone_tick), stringResource(R.string.reference_redstone_tick_val))
             SpyglassDivider()
-            Text("Repeater", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("Delay settings", "1-4 ticks (0.1-0.4s)")
-            StatRow("Resets signal", "Back to 15")
-            StatRow("Lock mode", "Side input freezes state")
+            Text(stringResource(R.string.reference_repeater), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.reference_delay_settings), stringResource(R.string.reference_delay_val))
+            StatRow(stringResource(R.string.reference_resets_signal), stringResource(R.string.reference_resets_val))
+            StatRow(stringResource(R.string.reference_lock_mode), stringResource(R.string.reference_lock_mode_val))
             SpyglassDivider()
-            Text("Comparator", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("Compare mode", "Output = back if back >= side")
-            StatRow("Subtract mode", "Output = back - side")
-            StatRow("Container read", "Signal = fill level (0-15)")
+            Text(stringResource(R.string.reference_comparator), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.reference_compare_mode), stringResource(R.string.reference_compare_mode_val))
+            StatRow(stringResource(R.string.reference_subtract_mode), stringResource(R.string.reference_subtract_mode_val))
+            StatRow(stringResource(R.string.reference_container_read), stringResource(R.string.reference_container_read_val))
             SpyglassDivider()
-            Text("Key Components", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("Piston", "Pushes up to 12 blocks")
-            StatRow("Sticky Piston", "Pushes and pulls")
-            StatRow("Observer", "Detects block updates")
-            StatRow("Hopper", "5 items/sec transfer rate")
-            StatRow("Dropper", "Ejects 1 item per pulse")
-            StatRow("Daylight Sensor", "Outputs based on sky light")
+            Text(stringResource(R.string.reference_key_components), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.reference_piston), stringResource(R.string.reference_piston_val))
+            StatRow(stringResource(R.string.reference_sticky_piston), stringResource(R.string.reference_sticky_piston_val))
+            StatRow(stringResource(R.string.reference_observer), stringResource(R.string.reference_observer_val))
+            StatRow(stringResource(R.string.reference_hopper), stringResource(R.string.reference_hopper_val))
+            StatRow(stringResource(R.string.reference_dropper), stringResource(R.string.reference_dropper_val))
+            StatRow(stringResource(R.string.reference_daylight_sensor), stringResource(R.string.reference_daylight_sensor_val))
         }
 
         // ── 5. Times & Durations ──────────────────────────────────────
-        SectionHeader("Times & Durations")
+        SectionHeader(stringResource(R.string.reference_times_durations))
         ResultCard {
-            Text("Day/Night Cycle", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("Full cycle", "20 minutes (24,000 ticks)")
-            StatRow("Daytime", "10 min (tick 0-12,000)")
-            StatRow("Sunset", "1.5 min (tick 12,000-13,800)")
-            StatRow("Night", "7 min (tick 13,800-22,200)")
-            StatRow("Sunrise", "1.5 min (tick 22,200-24,000)")
-            StatRow("Sleep available", "Tick 12,542-23,460")
+            Text(stringResource(R.string.reference_day_night_cycle), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.reference_full_cycle), stringResource(R.string.reference_full_cycle_val))
+            StatRow(stringResource(R.string.reference_daytime), stringResource(R.string.reference_daytime_val))
+            StatRow(stringResource(R.string.reference_sunset), stringResource(R.string.reference_sunset_val))
+            StatRow(stringResource(R.string.reference_night), stringResource(R.string.reference_night_val))
+            StatRow(stringResource(R.string.reference_sunrise), stringResource(R.string.reference_sunrise_val))
+            StatRow(stringResource(R.string.reference_sleep_available), stringResource(R.string.reference_sleep_available_val))
             SpyglassDivider()
-            Text("Breeding & Growth", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("Breeding cooldown", "5 minutes")
-            StatRow("Baby growth time", "20 minutes")
-            StatRow("Speed up growth", "Feed baby its breeding food")
-            StatRow("Villager restock", "2x per in-game day")
+            Text(stringResource(R.string.reference_breeding_growth), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.reference_breeding_cooldown), stringResource(R.string.reference_breeding_cooldown_val))
+            StatRow(stringResource(R.string.reference_baby_growth), stringResource(R.string.reference_baby_growth_val))
+            StatRow(stringResource(R.string.reference_speed_up_growth), stringResource(R.string.reference_speed_up_growth_val))
+            StatRow(stringResource(R.string.reference_villager_restock), stringResource(R.string.reference_villager_restock_val))
             SpyglassDivider()
-            Text("Crop Growth (avg)", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("Wheat / Carrots / Potatoes", "~25 minutes (8 stages)")
-            StatRow("Beetroot", "~25 minutes (4 stages)")
-            StatRow("Nether Wart", "~10 minutes (4 stages)")
-            StatRow("Sugarcane / Cactus", "~18 min per block")
-            StatRow("Bamboo", "~4 min per block")
-            StatRow("Melon / Pumpkin stem", "~25 min, then fruit spawns")
+            Text(stringResource(R.string.reference_crop_growth), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.reference_wheat), stringResource(R.string.reference_wheat_val))
+            StatRow(stringResource(R.string.reference_beetroot), stringResource(R.string.reference_beetroot_val))
+            StatRow(stringResource(R.string.reference_nether_wart), stringResource(R.string.reference_nether_wart_val))
+            StatRow(stringResource(R.string.reference_sugarcane), stringResource(R.string.reference_sugarcane_val))
+            StatRow(stringResource(R.string.reference_bamboo), stringResource(R.string.reference_bamboo_val))
+            StatRow(stringResource(R.string.reference_melon_pumpkin), stringResource(R.string.reference_melon_pumpkin_val))
             SpyglassDivider()
-            Text("Other Timers", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("Smelting per item", "10 seconds (200 ticks)")
-            StatRow("Item despawn", "5 minutes")
-            StatRow("Mob despawn", ">128 blocks = instant")
-            StatRow("Drowning", "15 sec air, then 1 hp/sec")
-            StatRow("Phantoms spawn after", "3+ days without sleep")
-            StatRow("Fire spread check", "Every 2 seconds")
-            StatRow("Raid timeout", "40 minutes")
+            Text(stringResource(R.string.reference_other_timers), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.reference_smelting_per_item), stringResource(R.string.reference_smelting_per_item_val))
+            StatRow(stringResource(R.string.reference_item_despawn), stringResource(R.string.reference_item_despawn_val))
+            StatRow(stringResource(R.string.reference_mob_despawn), stringResource(R.string.reference_mob_despawn_val))
+            StatRow(stringResource(R.string.reference_drowning), stringResource(R.string.reference_drowning_val))
+            StatRow(stringResource(R.string.reference_phantoms), stringResource(R.string.reference_phantoms_val))
+            StatRow(stringResource(R.string.reference_fire_spread), stringResource(R.string.reference_fire_spread_val))
+            StatRow(stringResource(R.string.reference_raid_timeout), stringResource(R.string.reference_raid_timeout_val))
         }
 
         // ── 6. Color Codes ──────────────────────────────────────────────
-        SectionHeader("Dye Colors")
+        SectionHeader(stringResource(R.string.reference_dye_colors))
         ResultCard {
             DYE_COLORS.forEachIndexed { i, dye ->
                 if (i > 0) SpyglassDivider()

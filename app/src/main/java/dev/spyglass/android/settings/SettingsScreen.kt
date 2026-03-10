@@ -153,11 +153,11 @@ fun SettingsScreen(
         // 1. APPEARANCE — theme, colors, font, haptics, animations
         // ══════════════════════════════════════════════════════════════════
         item(key = "appearance") {
-            SectionHeader("Appearance")
+            SectionHeader(stringResource(R.string.settings_appearance))
             // ── Theme picker ──
             ResultCard {
                 Text(
-                    "Backgrounds",
+                    stringResource(R.string.settings_backgrounds),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
@@ -243,7 +243,7 @@ fun SettingsScreen(
                                 if (hasCustom && thumb != null) {
                                     Image(
                                         bitmap = thumb.asImageBitmap(),
-                                        contentDescription = "My Photo",
+                                        contentDescription = stringResource(R.string.settings_my_photo),
                                         modifier = Modifier.fillMaxSize(),
                                         contentScale = ContentScale.Crop,
                                         alignment = Alignment.TopCenter,
@@ -251,7 +251,7 @@ fun SettingsScreen(
                                 } else {
                                     Icon(
                                         Icons.Filled.AddPhotoAlternate,
-                                        contentDescription = "Choose photo",
+                                        contentDescription = stringResource(R.string.settings_choose_photo),
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                         modifier = Modifier.size(24.dp),
                                     )
@@ -260,7 +260,7 @@ fun SettingsScreen(
                             Spacer(Modifier.height(3.dp))
                             if (isSelected && hasCustom) {
                                 Text(
-                                    "Change",
+                                    stringResource(R.string.settings_change_photo),
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.primary,
                                     textAlign = TextAlign.Center,
@@ -274,7 +274,7 @@ fun SettingsScreen(
                                 )
                             } else {
                                 Text(
-                                    "My Photo",
+                                    stringResource(R.string.settings_my_photo),
                                     style = MaterialTheme.typography.labelSmall,
                                     color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
                                     textAlign = TextAlign.Center,
@@ -286,7 +286,7 @@ fun SettingsScreen(
                 }
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    "Solid Colors",
+                    stringResource(R.string.settings_solid_colors),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -315,7 +315,7 @@ fun SettingsScreen(
                     }
                 }
                 Text(
-                    ThemeInfoMap[backgroundTheme]?.label ?: "Obsidian",
+                    ThemeInfoMap[backgroundTheme]?.label ?: stringResource(R.string.settings_default_theme),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -406,31 +406,32 @@ fun SettingsScreen(
         // 2. GAME SETTINGS — edition, version, filters, game clock
         // ══════════════════════════════════════════════════════════════════
         item(key = "game_settings") {
-            SectionHeader("Game Settings")
+            SectionHeader(stringResource(R.string.settings_game_settings))
             ResultCard {
                 Text(
-                    "Filter content by Minecraft edition and version",
+                    stringResource(R.string.settings_game_filter_desc),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
 
-                Text("Edition", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                Text(stringResource(R.string.settings_edition), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                 TogglePill(
-                    options = listOf("Java", "Bedrock"),
+                    options = listOf(stringResource(R.string.settings_edition_java), stringResource(R.string.settings_edition_bedrock)),
                     selected = if (minecraftEdition == "bedrock") 1 else 0,
                     onSelect = { vm.setMinecraftEdition(if (it == 1) "bedrock" else "java") },
                 )
 
                 val versions = if (minecraftEdition == "bedrock") MinecraftVersions.BEDROCK_VERSIONS else MinecraftVersions.JAVA_VERSIONS
-                val displayVersion = minecraftVersion.ifBlank { "Latest" }
-                Text("Version", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                val latestLabel = stringResource(R.string.settings_version_latest)
+                val displayVersion = minecraftVersion.ifBlank { latestLabel }
+                Text(stringResource(R.string.settings_version), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                 Box {
                     OutlinedButton(onClick = { hapticClick(); versionExpanded = true }) {
                         Text(displayVersion, color = MaterialTheme.colorScheme.onSurface)
                     }
                     DropdownMenu(expanded = versionExpanded, onDismissRequest = { versionExpanded = false }) {
                         DropdownMenuItem(
-                            text = { Text("Latest", color = if (minecraftVersion.isBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface) },
+                            text = { Text(latestLabel, color = if (minecraftVersion.isBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface) },
                             onClick = { hapticClick(); vm.setMinecraftVersion(""); versionExpanded = false },
                         )
                         versions.reversed().forEach { v ->
@@ -442,12 +443,12 @@ fun SettingsScreen(
                     }
                 }
 
-                Text("Filter Mode", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                Text(stringResource(R.string.settings_filter_mode), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
-                    val modes = listOf("show_all" to "Show All", "highlight" to "Highlight Unavailable", "hide" to "Hide Unavailable")
+                    val modes = listOf("show_all" to stringResource(R.string.settings_filter_show_all), "highlight" to stringResource(R.string.settings_filter_highlight), "hide" to stringResource(R.string.settings_filter_hide))
                     modes.forEach { (key, label) ->
                         FilterChip(
                             selected = versionFilterMode == key,
@@ -510,7 +511,7 @@ fun SettingsScreen(
         // 3. DEFAULTS — startup screen, browse tab, tool tab, home screen
         // ══════════════════════════════════════════════════════════════════
         item(key = "defaults") {
-            SectionHeader("Defaults")
+            SectionHeader(stringResource(R.string.settings_defaults))
             ResultCard {
                 // Startup screen
                 Text(
@@ -619,7 +620,7 @@ fun SettingsScreen(
         // 4. DATA & SYNC — offline, sync, storage, Connect link
         // ══════════════════════════════════════════════════════════════════
         item(key = "data_sync") {
-            SectionHeader("Data & Sync")
+            SectionHeader(stringResource(R.string.settings_data_sync))
             ResultCard {
                 // Offline mode
                 SettingsToggle(
@@ -664,9 +665,9 @@ fun SettingsScreen(
                     if (syncing) {
                         CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                         Spacer(Modifier.width(8.dp))
-                        Text("Syncing...", color = MaterialTheme.colorScheme.secondary)
+                        Text(stringResource(R.string.settings_syncing), color = MaterialTheme.colorScheme.secondary)
                     } else {
-                        Text("Sync Now", color = MaterialTheme.colorScheme.primary)
+                        Text(stringResource(R.string.settings_sync_now), color = MaterialTheme.colorScheme.primary)
                     }
                 }
 
@@ -679,7 +680,7 @@ fun SettingsScreen(
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    "Downloaded textures: ${formatBytes(storageBytes)}",
+                    stringResource(R.string.settings_downloaded_textures, formatBytes(storageBytes)),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -698,17 +699,17 @@ fun SettingsScreen(
 
                 // Spyglass Connect link
                 Text(
-                    "Spyglass Connect",
+                    stringResource(R.string.settings_connect_title),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    "Stream Minecraft world data from your PC over local WiFi. Pairing is managed from the Connect screen.",
+                    stringResource(R.string.settings_connect_desc),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
                 Text(
-                    "Download for PC: hardknocks.com/spyglass-connect",
+                    stringResource(R.string.settings_connect_download),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable {
@@ -723,7 +724,7 @@ fun SettingsScreen(
         // 5. PRIVACY & SECURITY — app lock, analytics, data deletion
         // ══════════════════════════════════════════════════════════════════
         item(key = "privacy_security") {
-            SectionHeader("Privacy & Security")
+            SectionHeader(stringResource(R.string.settings_privacy_security))
             ResultCard {
                 SettingsToggle(
                     title = stringResource(R.string.settings_app_lock),
@@ -783,7 +784,7 @@ fun SettingsScreen(
         // 6. ABOUT — links, favorites, feedback
         // ══════════════════════════════════════════════════════════════════
         item(key = "about") {
-            SectionHeader("About")
+            SectionHeader(stringResource(R.string.settings_about_section))
             ResultCard {
                 SettingsLink(
                     title = stringResource(R.string.settings_about),
@@ -798,8 +799,8 @@ fun SettingsScreen(
                 )
                 SpyglassDivider()
                 SettingsLink(
-                    title = "Spyglass Wiki",
-                    description = "Guides, tips, and detailed documentation",
+                    title = stringResource(R.string.settings_wiki),
+                    description = stringResource(R.string.settings_wiki_desc),
                     onClick = { uriHandler.openUri("https://github.com/beryndil/Spyglass/wiki") },
                 )
                 SpyglassDivider()

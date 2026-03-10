@@ -26,6 +26,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
@@ -345,7 +347,7 @@ fun MinecraftIdRow(id: String) {
             fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
         )
         Text(
-            if (copied) "Copied!" else "Tap to copy",
+            if (copied) stringResource(R.string.core_copied) else stringResource(R.string.core_tap_to_copy),
             style = MaterialTheme.typography.labelSmall,
             color = if (copied) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
         )
@@ -387,7 +389,7 @@ fun ReportProblemRow(
     ) {
         Icon(Icons.Outlined.Flag, contentDescription = null, modifier = Modifier.size(16.dp), tint = textColor)
         Spacer(Modifier.width(6.dp))
-        Text("Report a problem", style = MaterialTheme.typography.labelSmall, color = textColor)
+        Text(stringResource(R.string.core_report_problem), style = MaterialTheme.typography.labelSmall, color = textColor)
     }
 }
 
@@ -670,7 +672,7 @@ fun VersionCard(
             }
             if (changelog.size > 4) {
                 Text(
-                    if (expanded) "Show less" else "+${changelog.size - 4} more\u2026",
+                    if (expanded) stringResource(R.string.core_show_less) else stringResource(R.string.core_show_more, changelog.size - 4),
                     style = MaterialTheme.typography.labelSmall,
                     color = accentColor,
                     modifier = Modifier.padding(top = 4.dp),
@@ -693,7 +695,7 @@ fun SortButton(
         IconButton(onClick = { hapticClick(); expanded = true }) {
             Icon(
                 Icons.AutoMirrored.Filled.Sort,
-                contentDescription = "Sort",
+                contentDescription = stringResource(R.string.core_sort),
                 tint = MaterialTheme.colorScheme.primary,
             )
         }
@@ -734,9 +736,9 @@ fun VersionEditionSection(tag: VersionTagEntity, filter: VersionFilterState) {
 
     // Edition badge
     val editionLabel = when {
-        tag.javaOnly -> "Java Only"
-        tag.bedrockOnly -> "Bedrock Only"
-        else -> "Both Editions"
+        tag.javaOnly -> stringResource(R.string.core_java_only)
+        tag.bedrockOnly -> stringResource(R.string.core_bedrock_only)
+        else -> stringResource(R.string.core_both_editions)
     }
     val editionColor = when {
         tag.javaOnly -> PotionBlue
@@ -781,7 +783,7 @@ fun VersionEditionSection(tag: VersionTagEntity, filter: VersionFilterState) {
         ) {
             Column {
                 Text(
-                    "Mechanics changed in ${mechInfo.version}",
+                    stringResource(R.string.core_mechanics_changed, mechInfo.version),
                     style = MaterialTheme.typography.bodySmall,
                     color = AmberWarning,
                 )

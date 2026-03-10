@@ -19,6 +19,8 @@ import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.ContainerInfo
 import dev.spyglass.android.connect.SearchHit
 import dev.spyglass.android.connect.inventory.InventorySlotView
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.ItemTextures
 import dev.spyglass.android.core.ui.SpyglassIconImage
 
@@ -55,9 +57,9 @@ fun ChestFinderScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
             }
-            Text("Storage", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.connect_storage), style = MaterialTheme.typography.titleMedium)
         }
 
         ChestFinderContent(viewModel = viewModel)
@@ -89,12 +91,12 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
-                placeholder = { Text("Search items (e.g., diamond, iron)") },
+                placeholder = { Text(stringResource(R.string.connect_search_items_placeholder)) },
                 leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
                 trailingIcon = {
                     if (query.isNotBlank()) {
                         IconButton(onClick = { finderState.clear() }) {
-                            Icon(Icons.Filled.Clear, contentDescription = "Clear")
+                            Icon(Icons.Filled.Clear, contentDescription = stringResource(R.string.connect_clear))
                         }
                     }
                 },
@@ -115,7 +117,7 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            "No items found matching \"$query\"",
+                            stringResource(R.string.connect_no_items_found, query),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
@@ -132,7 +134,7 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
                 if (hits.size > 15) {
                     item(key = "more_results") {
                         Text(
-                            "Showing 15 of ${hits.size} results — refine your search",
+                            stringResource(R.string.connect_showing_results, hits.size),
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -153,7 +155,7 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            "No containers found",
+                            stringResource(R.string.connect_no_containers),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
@@ -161,7 +163,7 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
             } else {
                 item(key = "container_count") {
                     Text(
-                        "${containers.size} containers",
+                        stringResource(R.string.connect_container_count, containers.size),
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -310,7 +312,7 @@ private fun SearchHitCard(
 
                 if (hit.locations.size > 5) {
                     Text(
-                        "...and ${hit.locations.size - 5} more locations",
+                        stringResource(R.string.connect_and_more_locations, hit.locations.size - 5),
                         modifier = Modifier.padding(start = 8.dp),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,

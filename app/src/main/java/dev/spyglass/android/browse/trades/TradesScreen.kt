@@ -175,7 +175,7 @@ fun TradesScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         SpyglassSearchBar(
             query = query, onQueryChange = vm::setQuery,
-            category = "trades", placeholder = "Search trades\u2026",
+            category = "trades", placeholder = stringResource(R.string.trades_search_placeholder),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
         androidx.compose.foundation.lazy.LazyRow(
@@ -195,9 +195,9 @@ fun TradesScreen(
             item {
                 TabIntroHeader(
                     icon = PixelIcons.Trade,
-                    title = "Trades",
-                    description = "Villager trades by profession and level",
-                    stat = "${trades.size} trades",
+                    title = stringResource(R.string.trades_title),
+                    description = stringResource(R.string.trades_description),
+                    stat = stringResource(R.string.trades_stat, trades.size),
                     iconTint = Color.Unspecified,
                 )
             }
@@ -236,8 +236,8 @@ fun TradesScreen(
             if (trades.isEmpty()) item {
                 EmptyState(
                     icon     = PixelIcons.SearchOff,
-                    title    = "No trades found",
-                    subtitle = "Try a different search or profession",
+                    title    = stringResource(R.string.trades_no_results_title),
+                    subtitle = stringResource(R.string.trades_no_results_subtitle),
                 )
             }
         }
@@ -261,7 +261,7 @@ private fun JobBlockCard(info: JobBlockInfo) {
                 Spacer(Modifier.width(10.dp))
             }
             Column {
-                Text("Job Block", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary)
+                Text(stringResource(R.string.trades_job_block), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary)
                 Text(info.blockName, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
             }
         }
@@ -283,7 +283,7 @@ private fun JobBlockCard(info: JobBlockInfo) {
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                Text("Ingredients", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary)
+                Text(stringResource(R.string.trades_ingredients), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary)
                 info.ingredients.forEach { line ->
                     Text(line, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
@@ -343,7 +343,7 @@ private fun TradeListItem(trade: TradeEntity, onItemTap: (String) -> Unit, favor
                 )
                 if (trade.maxUses > 0) {
                     Text(
-                        " \u00B7 ${trade.maxUses}/restock",
+                        " \u00B7 ${stringResource(R.string.trades_restock, trade.maxUses)}",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.secondary,
                     )
@@ -351,7 +351,7 @@ private fun TradeListItem(trade: TradeEntity, onItemTap: (String) -> Unit, favor
             }
         }
         Spacer(Modifier.width(8.dp))
-        CategoryBadge(label = "Lvl ${trade.level}", color = MaterialTheme.colorScheme.primary)
+        CategoryBadge(label = stringResource(R.string.trades_level_badge, trade.level), color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.width(4.dp))
         val tradeKey = "trade_${trade.rowId}"
         val isFav = tradeKey in favoriteIds

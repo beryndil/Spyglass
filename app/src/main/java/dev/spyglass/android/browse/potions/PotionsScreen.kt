@@ -191,13 +191,11 @@ fun PotionsScreen(
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
 
-    val sortOptions = remember {
-        listOf(
-            SortOption("Name A\u2192Z", "name"),
-            SortOption("Duration \u2193", "duration"),
-            SortOption("Amplifier \u2193", "amplifier"),
-        )
-    }
+    val sortOptions = listOf(
+        SortOption(stringResource(R.string.potions_sort_name), "name"),
+        SortOption(stringResource(R.string.potions_sort_duration), "duration"),
+        SortOption(stringResource(R.string.potions_sort_amplifier), "amplifier"),
+    )
 
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
@@ -206,7 +204,7 @@ fun PotionsScreen(
         ) {
             SpyglassSearchBar(
                 query = query, onQueryChange = vm::setQuery,
-                category = "potions", placeholder = "Search potions\u2026",
+                category = "potions", placeholder = stringResource(R.string.potions_search_placeholder),
                 modifier = Modifier.weight(1f),
             )
             SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
@@ -238,9 +236,9 @@ fun PotionsScreen(
             item {
                 TabIntroHeader(
                     icon = PixelIcons.Potion,
-                    title = "Potions",
-                    description = "Brewing paths and effects for every potion",
-                    stat = "${potions.size} potions",
+                    title = stringResource(R.string.potions_title),
+                    description = stringResource(R.string.potions_description),
+                    stat = stringResource(R.string.potions_stat, potions.size),
                 )
             }
             if (favoritePotions.isNotEmpty()) {
@@ -325,8 +323,8 @@ fun PotionsScreen(
             if (potions.isEmpty()) item {
                 EmptyState(
                     icon     = PixelIcons.SearchOff,
-                    title    = "No potions found",
-                    subtitle = "Try a different search term",
+                    title    = stringResource(R.string.potions_no_results_title),
+                    subtitle = stringResource(R.string.potions_no_results_subtitle),
                 )
             }
         }
@@ -356,17 +354,17 @@ private fun PotionDetailCard(potion: PotionEntity, onItemTap: (String) -> Unit, 
         if (potion.durationSeconds > 0) {
             val mins = potion.durationSeconds / 60
             val secs = potion.durationSeconds % 60
-            StatRow("Duration", "${mins}:%02d".format(secs))
+            StatRow(stringResource(R.string.potions_duration), "${mins}:%02d".format(secs))
         }
         if (potion.amplifier > 0) {
-            StatRow("Level", "${potion.amplifier + 1}")
+            StatRow(stringResource(R.string.potions_level), "${potion.amplifier + 1}")
         }
         StatRow(stringResource(R.string.category), potion.category.replaceFirstChar { it.uppercase() })
 
         // Brewing path with clickable ingredients
         if (potion.ingredientPath.isNotBlank()) {
             SpyglassDivider()
-            Text("Brewing Path", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.potions_brewing_path), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             val steps = parseIngredientPath(potion.ingredientPath)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),

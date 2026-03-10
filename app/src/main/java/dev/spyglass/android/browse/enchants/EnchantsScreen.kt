@@ -236,11 +236,11 @@ fun EnchantsScreen(
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-    val sortOptions = remember { listOf(
-        SortOption("Name A\u2192Z", "name"),
-        SortOption("Max Level \u2193", "max_level"),
-        SortOption("Rarity \u2193", "rarity"),
-    ) }
+    val sortOptions = listOf(
+        SortOption(stringResource(R.string.enchants_sort_name), "name"),
+        SortOption(stringResource(R.string.enchants_sort_max_level), "max_level"),
+        SortOption(stringResource(R.string.enchants_sort_rarity), "rarity"),
+    )
 
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
@@ -249,7 +249,7 @@ fun EnchantsScreen(
         ) {
             SpyglassSearchBar(
                 query = query, onQueryChange = vm::setQuery,
-                category = "enchants", placeholder = "Search enchantments\u2026",
+                category = "enchants", placeholder = stringResource(R.string.enchants_search_placeholder),
                 modifier = Modifier.weight(1f),
             )
             SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
@@ -275,13 +275,13 @@ fun EnchantsScreen(
             item {
                 TabIntroHeader(
                     icon = PixelIcons.Enchant,
-                    title = "Enchantments",
-                    description = "All enchantments by target, rarity, and compatibility",
-                    stat = "${enchants.size} enchantments",
+                    title = stringResource(R.string.enchants_title),
+                    description = stringResource(R.string.enchants_description),
+                    stat = stringResource(R.string.enchants_stat, enchants.size),
                 )
                 if (showExperimental) {
                     Text(
-                        "Open Librarian Guide \u2192",
+                        stringResource(R.string.enchants_open_librarian_guide),
                         style = MaterialTheme.typography.labelSmall,
                         color = PotionBlue,
                         textDecoration = TextDecoration.Underline,
@@ -324,8 +324,8 @@ fun EnchantsScreen(
                     BrowseListItem(
                         headline    = buildString {
                             append(e.name)
-                            if (e.isTreasure && !e.isCurse) append("  \u2022 Anvil Only")
-                            if (e.isCurse) append("  \u2022 Curse")
+                            if (e.isTreasure && !e.isCurse) append("  \u2022 ${stringResource(R.string.enchants_anvil_only)}")
+                            if (e.isCurse) append("  \u2022 ${stringResource(R.string.enchants_curse)}")
                         },
                         supporting  = "",
                         supportingMaxLines = 1,
@@ -338,7 +338,7 @@ fun EnchantsScreen(
                                         VersionBadge(addedIn)
                                         Spacer(Modifier.height(2.dp))
                                     }
-                                    Text("Max ${e.maxLevel}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+                                    Text(stringResource(R.string.enchants_max_level, e.maxLevel), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
                                     Spacer(Modifier.height(2.dp))
                                     val rarityColor = when (e.rarity.lowercase()) {
                                         "common"   -> Emerald
@@ -351,7 +351,7 @@ fun EnchantsScreen(
                                     if (e.isTreasure) {
                                         Spacer(Modifier.height(2.dp))
                                         CategoryBadge(
-                                            label = if (e.isCurse) "Curse" else "Anvil",
+                                            label = if (e.isCurse) stringResource(R.string.enchants_curse) else stringResource(R.string.enchants_anvil),
                                             color = if (e.isCurse) Red400 else NetherRed,
                                         )
                                     }
@@ -382,8 +382,8 @@ fun EnchantsScreen(
             if (enchants.isEmpty()) item {
                 EmptyState(
                     icon     = PixelIcons.SearchOff,
-                    title    = "No enchantments found",
-                    subtitle = "Try a different search or filter",
+                    title    = stringResource(R.string.enchants_no_results_title),
+                    subtitle = stringResource(R.string.enchants_no_results_subtitle),
                 )
             }
         }
@@ -437,16 +437,16 @@ private fun EnchantDetailCard(
         }
 
         // Stats
-        StatRow("Max Level", "${enchant.maxLevel}")
-        StatRow("Applies to", formatTarget(enchant.target))
-        StatRow("Rarity", enchant.rarity.replace('_', ' ').replaceFirstChar { it.uppercase() })
-        if (enchant.isTreasure) StatRow("Treasure", "Yes (Loot/Anvil only)")
-        if (enchant.isCurse) StatRow("Curse", stringResource(R.string.yes))
+        StatRow(stringResource(R.string.enchants_max_level_label), "${enchant.maxLevel}")
+        StatRow(stringResource(R.string.enchants_applies_to), formatTarget(enchant.target))
+        StatRow(stringResource(R.string.enchants_rarity), enchant.rarity.replace('_', ' ').replaceFirstChar { it.uppercase() })
+        if (enchant.isTreasure) StatRow(stringResource(R.string.enchants_treasure), stringResource(R.string.enchants_treasure_value))
+        if (enchant.isCurse) StatRow(stringResource(R.string.enchants_curse), stringResource(R.string.yes))
 
         // Incompatible enchantments
         if (incompatible.isNotEmpty()) {
             SpyglassDivider()
-            Text("Incompatible with", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.enchants_incompatible_with), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),

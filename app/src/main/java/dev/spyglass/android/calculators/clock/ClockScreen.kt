@@ -43,28 +43,28 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
     ) {
         TabIntroHeader(
             icon = PixelIcons.Clock,
-            title = "Game Clock",
-            description = "Track Minecraft\u2019s day/night cycle and upcoming events.",
+            title = stringResource(R.string.clock_title),
+            description = stringResource(R.string.clock_description),
         )
 
         // ── Sync Controls ──
-        SectionHeader("Sync", icon = PixelIcons.Clock)
+        SectionHeader(stringResource(R.string.clock_sync), icon = PixelIcons.Clock)
         InputCard {
             if (!state.synced) {
                 Text(
-                    "Not synced \u2014 choose a method below",
+                    stringResource(R.string.clock_not_synced),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
                 // F3 Sync
                 Text(
-                    "F3 SYNC (MOST ACCURATE)",
+                    stringResource(R.string.clock_f3_sync),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.primary,
                 )
                 Text(
-                    "Enter the tick value from the F3 debug screen",
+                    stringResource(R.string.clock_f3_desc),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -75,7 +75,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                     SpyglassTextField(
                         value = tickInput,
                         onValueChange = { tickInput = it.filter { c -> c.isDigit() } },
-                        label = "Day Time tick (0\u201323999)",
+                        label = stringResource(R.string.clock_day_time_tick),
                         modifier = Modifier.weight(1f),
                     )
                     Button(
@@ -90,7 +90,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                         ),
                         enabled = tickInput.isNotBlank(),
                     ) {
-                        Text("Sync")
+                        Text(stringResource(R.string.clock_sync_btn))
                     }
                 }
 
@@ -98,12 +98,12 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
 
                 // Manual Sync
                 Text(
-                    "QUICK SYNC",
+                    stringResource(R.string.clock_quick_sync),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.primary,
                 )
                 Text(
-                    "Tap when you see the event in-game:",
+                    stringResource(R.string.clock_quick_sync_desc),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -119,21 +119,21 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                     }
                 }
             } else {
-                StatRow("Synced via", if (state.syncMethod == "f3") "F3 Debug" else "Quick Sync")
-                StatRow("Game time", state.timeString)
+                StatRow(stringResource(R.string.clock_synced_via), if (state.syncMethod == "f3") stringResource(R.string.clock_f3_debug) else stringResource(R.string.clock_quick_sync_label))
+                StatRow(stringResource(R.string.clock_game_time), state.timeString)
                 TextButton(
                     onClick = { hapticConfirm(); vm.resetSync() },
                     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
                     modifier = Modifier.height(32.dp),
                 ) {
-                    Text("Stop Clock", color = Red400, style = MaterialTheme.typography.labelSmall)
+                    Text(stringResource(R.string.clock_stop), color = Red400, style = MaterialTheme.typography.labelSmall)
                 }
             }
         }
 
         if (state.synced) {
             // ── Clock Display ──
-            SectionHeader("Current Time")
+            SectionHeader(stringResource(R.string.clock_current_time))
             ResultCard {
                 Text(
                     state.timeString,
@@ -164,7 +164,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        "Day ",
+                        stringResource(R.string.clock_day_prefix),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.secondary,
                     )
@@ -178,7 +178,7 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                             .padding(horizontal = 4.dp),
                     )
                     Text(
-                        "  \u2022  Tick ${state.currentTick}",
+                        stringResource(R.string.clock_tick_format, state.currentTick),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.secondary,
                     )
@@ -186,11 +186,11 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
             }
 
             // ── Your Events ──
-            SectionHeader("Your Events")
+            SectionHeader(stringResource(R.string.clock_your_events))
             ResultCard {
                 if (state.activeEvents.isEmpty()) {
                     Text(
-                        "No events configured. Tap below to add events.",
+                        stringResource(R.string.clock_no_events),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.secondary,
                     )
@@ -250,16 +250,16 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                     onClick = { hapticClick(); showAddDialog = true },
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text("Add Event \u2192", color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource(R.string.clock_add_event_arrow), color = MaterialTheme.colorScheme.primary)
                 }
             }
 
             // ── Event Timeline ──
-            SectionHeader("Upcoming Events")
+            SectionHeader(stringResource(R.string.clock_upcoming_events))
             ResultCard {
                 if (state.events.isEmpty()) {
                     Text(
-                        "No events configured.",
+                        stringResource(R.string.clock_no_events_configured),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.secondary,
                     )
@@ -305,42 +305,42 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
         }
 
         // ── Help ──
-        SectionHeader("How to Sync")
+        SectionHeader(stringResource(R.string.clock_how_to_sync))
         ResultCard {
             ExpandableHelp(
-                title = "Using F3 (PC)",
+                title = stringResource(R.string.clock_using_f3),
                 expanded = showF3Help,
                 onToggle = { showF3Help = !showF3Help },
             ) {
-                Text("1. Press F3 in Minecraft to open the debug screen", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text("2. Find the \u201cDay Time\u201d value on the left side", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text("3. Enter the tick number (0\u201323999) in the field above", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text("4. Tap \u201cSync\u201d \u2014 the clock will track from that point", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.clock_f3_step_1), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.clock_f3_step_2), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.clock_f3_step_3), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.clock_f3_step_4), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             SpyglassDivider()
             ExpandableHelp(
-                title = "Quick Sync",
+                title = stringResource(R.string.clock_quick_sync_title),
                 expanded = showQuickHelp,
                 onToggle = { showQuickHelp = !showQuickHelp },
             ) {
-                Text("Tap the Sunrise, Noon, or Sunset button the moment you see that event happen in-game.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.clock_quick_sync_help), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(4.dp))
-                Text("\u2022 Sunrise \u2014 when the sun first appears on the horizon", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text("\u2022 Noon \u2014 when the sun is directly overhead", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text("\u2022 Sunset \u2014 when the sun starts to dip below the horizon", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.clock_quick_sync_sunrise), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.clock_quick_sync_noon), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.clock_quick_sync_sunset), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             SpyglassDivider()
             ExpandableHelp(
-                title = "Reading Countdowns",
+                title = stringResource(R.string.clock_reading_countdowns),
                 expanded = showCountdownHelp,
                 onToggle = { showCountdownHelp = !showCountdownHelp },
             ) {
-                Text("The event timeline shows how long until each event occurs.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.clock_countdown_help), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(4.dp))
-                Text("1 Minecraft day = 20 real minutes", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text("1 Minecraft hour \u2248 50 real seconds", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.clock_1_mc_day), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.clock_1_mc_hour), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(4.dp))
-                Text("Events are color-coded: green (safe), gold (warning), red (danger).", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.clock_color_coded), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
 
@@ -387,7 +387,7 @@ private fun AddEventDialog(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surface,
         title = {
-            Text("Add Event", color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.clock_add_event_dialog), color = MaterialTheme.colorScheme.primary)
         },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -396,7 +396,7 @@ private fun AddEventDialog(
                     FilterChip(
                         selected = selectedTab == 0,
                         onClick = { hapticClick(); selectedTab = 0 },
-                        label = { Text("Predefined") },
+                        label = { Text(stringResource(R.string.clock_predefined)) },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                             selectedLabelColor = MaterialTheme.colorScheme.primary,
@@ -406,7 +406,7 @@ private fun AddEventDialog(
                     FilterChip(
                         selected = selectedTab == 1,
                         onClick = { hapticClick(); selectedTab = 1 },
-                        label = { Text("Custom") },
+                        label = { Text(stringResource(R.string.clock_custom)) },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
                             selectedLabelColor = MaterialTheme.colorScheme.primary,
@@ -419,7 +419,7 @@ private fun AddEventDialog(
                     // Predefined events
                     if (availablePredefined.isEmpty()) {
                         Text(
-                            "All predefined events are already added.",
+                            stringResource(R.string.clock_all_predefined_added),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.secondary,
                         )
@@ -479,17 +479,17 @@ private fun AddEventDialog(
                     SpyglassTextField(
                         value = customName,
                         onValueChange = { customName = it },
-                        label = "Event name",
+                        label = stringResource(R.string.clock_event_name),
                         modifier = Modifier.fillMaxWidth(),
                     )
                     SpyglassTextField(
                         value = customTick,
                         onValueChange = { customTick = it.filter { c -> c.isDigit() } },
-                        label = "Tick (0\u201323999)",
+                        label = stringResource(R.string.clock_event_tick),
                         modifier = Modifier.fillMaxWidth(),
                     )
                     Text(
-                        "COLOR",
+                        stringResource(R.string.clock_color_label),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.secondary,
                     )
@@ -557,18 +557,18 @@ private fun SetDayDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surface,
-        title = { Text("Set Day", color = MaterialTheme.colorScheme.primary) },
+        title = { Text(stringResource(R.string.clock_set_day_dialog), color = MaterialTheme.colorScheme.primary) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
-                    "Enter the current in-game day from the F3 debug screen (Day line). You can update this any time after a server restart or crash.",
+                    stringResource(R.string.clock_set_day_desc),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 SpyglassTextField(
                     value = dayInput,
                     onValueChange = { dayInput = it.filter { c -> c.isDigit() } },
-                    label = "Day number",
+                    label = stringResource(R.string.clock_day_number),
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
@@ -582,7 +582,7 @@ private fun SetDayDialog(
                 },
                 enabled = dayInput.isNotBlank() && dayInput.toLongOrNull() != null,
             ) {
-                Text("Set", color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.clock_set), color = MaterialTheme.colorScheme.primary)
             }
         },
         dismissButton = {

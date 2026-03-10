@@ -9,6 +9,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 private data class TrimTemplate(
@@ -76,15 +78,15 @@ fun TrimScreen(onStructureTap: (String) -> Unit = {}) {
     ) {
         TabIntroHeader(
             icon = PixelIcons.Item,
-            title = "Armor Trims",
-            description = "All 18 armor trim templates, 11 trim materials, and where to find them.",
+            title = stringResource(R.string.trim_title),
+            description = stringResource(R.string.trim_description),
         )
 
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
-            listOf("templates" to "Templates", "materials" to "Materials", "howto" to "How To").forEach { (key, label) ->
+            listOf("templates" to stringResource(R.string.trim_templates), "materials" to stringResource(R.string.trim_materials), "howto" to stringResource(R.string.trim_how_to)).forEach { (key, label) ->
                 FilterChip(
                     selected = selectedSection == key,
                     onClick = { hapticClick(); selectedSection = key },
@@ -106,7 +108,7 @@ fun TrimScreen(onStructureTap: (String) -> Unit = {}) {
 @Composable
 private fun TemplatesSection(onStructureTap: (String) -> Unit = {}) {
     val hapticClick = rememberHapticClick()
-    SectionHeader("Trim Templates (18)")
+    SectionHeader(stringResource(R.string.trim_templates_header))
 
     TRIM_TEMPLATES.forEach { template ->
         val locationColor = when (template.location) {
@@ -127,7 +129,7 @@ private fun TemplatesSection(onStructureTap: (String) -> Unit = {}) {
             }
             Spacer(Modifier.height(4.dp))
             Row {
-                Text("Structure  ", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                Text(stringResource(R.string.trim_structure_label), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                 Text(
                     template.structure,
                     style = MaterialTheme.typography.bodySmall,
@@ -136,8 +138,8 @@ private fun TemplatesSection(onStructureTap: (String) -> Unit = {}) {
                     modifier = Modifier.clickable { hapticClick(); onStructureTap(template.structureId) },
                 )
             }
-            StatRow("Drop Chance", template.chance)
-            StatRow("Duplicate With", "7 Diamonds + ${template.duplicationMaterial}")
+            StatRow(stringResource(R.string.trim_drop_chance), template.chance)
+            StatRow(stringResource(R.string.trim_duplicate_with), stringResource(R.string.trim_duplicate_val, template.duplicationMaterial))
             if (template.notes.isNotBlank()) {
                 Text(template.notes, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
             }
@@ -147,10 +149,10 @@ private fun TemplatesSection(onStructureTap: (String) -> Unit = {}) {
 
 @Composable
 private fun MaterialsSection() {
-    SectionHeader("Trim Materials (11)")
+    SectionHeader(stringResource(R.string.trim_materials_header))
     ResultCard {
         Text(
-            "Each material changes the color of the trim pattern on the armor.",
+            stringResource(R.string.trim_materials_desc),
             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
         )
         SpyglassDivider()
@@ -159,44 +161,44 @@ private fun MaterialsSection() {
         }
         SpyglassDivider()
         Text(
-            "If the trim material matches the armor material (e.g., Diamond trim on Diamond armor), the pattern uses a darker color palette.",
+            stringResource(R.string.trim_materials_darker),
             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary,
         )
     }
 
-    SectionHeader("Combinations")
+    SectionHeader(stringResource(R.string.trim_combinations))
     ResultCard {
-        StatRow("Templates", "18")
-        StatRow("Materials", "11")
-        StatRow("Armor Types", "6 (leather, chainmail, iron, gold, diamond, netherite)")
-        StatRow("Armor Pieces", "4 (helmet, chestplate, leggings, boots)")
+        StatRow(stringResource(R.string.trim_templates), "18")
+        StatRow(stringResource(R.string.trim_materials), "11")
+        StatRow(stringResource(R.string.trim_armor_types), stringResource(R.string.trim_armor_types_val))
+        StatRow(stringResource(R.string.trim_armor_pieces), stringResource(R.string.trim_armor_pieces_val))
         SpyglassDivider()
-        StatRow("Total Unique Looks", "18 \u00d7 11 \u00d7 6 \u00d7 4 = 4,752")
+        StatRow(stringResource(R.string.trim_total_looks), stringResource(R.string.trim_total_looks_val))
     }
 }
 
 @Composable
 private fun HowToSection() {
-    SectionHeader("How to Trim Armor")
+    SectionHeader(stringResource(R.string.trim_how_to_header))
     ResultCard {
-        Text("SMITHING TABLE RECIPE", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(R.string.trim_smithing_table), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(4.dp))
         Text(
-            "1. Open the Smithing Table\n2. Place a Trim Template in the left slot\n3. Place the armor piece in the middle slot\n4. Place the trim material in the right slot\n5. Take the trimmed armor from the output",
+            stringResource(R.string.trim_smithing_steps),
             style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         SpyglassDivider()
-        Text("KEY NOTES", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(R.string.trim_key_notes), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(4.dp))
         Text(
-            "\u2022 Templates are consumed during trimming\n\u2022 Trims are purely cosmetic (no gameplay effect)\n\u2022 You can re-trim armor (overwrites the previous pattern)\n\u2022 Enchantments are preserved when trimming\n\u2022 Works on all armor materials",
+            stringResource(R.string.trim_key_notes_text),
             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         SpyglassDivider()
-        Text("DUPLICATING TEMPLATES", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(R.string.trim_duplicating), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(4.dp))
         Text(
-            "In a crafting table:\n1 Template + 7 Diamonds + 1 Duplication Material = 2 Templates\n\nEach template has a specific duplication material (see the Templates tab). This makes rare templates renewable after finding the first one.",
+            stringResource(R.string.trim_duplicating_text),
             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }

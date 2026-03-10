@@ -21,6 +21,8 @@ import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.PlayerAdvancementsPayload
 import dev.spyglass.android.connect.client.ConnectionState
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -95,9 +97,9 @@ fun AdvancementsScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
             }
-            Text("Advancements", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.connect_advancements), style = MaterialTheme.typography.titleMedium)
         }
 
         if (!isConnected && lastUpdated != null) {
@@ -128,7 +130,7 @@ private fun AdvancementsContent(
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 if (isOffline) {
-                    Text("No cached advancements", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.connect_no_cached_advancements), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 } else {
                     CircularProgressIndicator(
                         modifier = Modifier.size(24.dp),
@@ -136,7 +138,7 @@ private fun AdvancementsContent(
                         color = MaterialTheme.colorScheme.primary,
                     )
                     Spacer(Modifier.height(12.dp))
-                    Text("Loading advancements...", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.connect_loading_advancements), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
@@ -208,7 +210,7 @@ private fun AdvancementsContent(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    "$completedCount / $totalCount completed",
+                    stringResource(R.string.connect_completed_count, completedCount, totalCount),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
                 )
@@ -229,7 +231,7 @@ private fun AdvancementsContent(
             FilterChip(
                 selected = selectedTab == null,
                 onClick = { hapticClick(); selectedTab = null },
-                label = { Text("All") },
+                label = { Text(stringResource(R.string.all)) },
             )
             TAB_ORDER.forEach { tab ->
                 FilterChip(

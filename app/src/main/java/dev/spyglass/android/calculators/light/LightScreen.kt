@@ -8,6 +8,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 private data class LightSource(
@@ -54,15 +56,15 @@ fun LightScreen() {
     ) {
         TabIntroHeader(
             icon = PixelIcons.Torch,
-            title = "Light Spacing",
-            description = "Calculate torch and light source spacing to prevent hostile mob spawning.",
+            title = stringResource(R.string.light_title),
+            description = stringResource(R.string.light_description),
         )
 
         // ── Light Source Selector ──
-        SectionHeader("Light Source")
+        SectionHeader(stringResource(R.string.light_source))
         InputCard {
             Text(
-                "SELECT LIGHT SOURCE",
+                stringResource(R.string.light_select_source),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
             )
@@ -71,7 +73,7 @@ fun LightScreen() {
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.onSurface),
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text("${selectedSource.name} (Level ${selectedSource.level})")
+                Text(stringResource(R.string.light_source_level, selectedSource.name, selectedSource.level))
             }
             if (showSourcePicker) {
                 LIGHT_SOURCES.forEach { source ->
@@ -95,7 +97,7 @@ fun LightScreen() {
                             )
                         }
                         Text(
-                            "Level ${source.level}",
+                            stringResource(R.string.light_level_label, source.level),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.secondary,
                         )
@@ -105,16 +107,16 @@ fun LightScreen() {
         }
 
         // ── Results ──
-        SectionHeader("Spacing Results")
+        SectionHeader(stringResource(R.string.light_spacing_results))
         ResultCard {
-            StatRow("Light Level", "${selectedSource.level}")
-            StatRow("Linear Reach", "${selectedSource.level} blocks each direction")
+            StatRow(stringResource(R.string.light_level), "${selectedSource.level}")
+            StatRow(stringResource(R.string.light_linear_reach), stringResource(R.string.light_linear_reach_val, selectedSource.level))
             SpyglassDivider()
 
             val lineSpacing = 2 * selectedSource.level - 1
-            StatRow("Line Spacing", "$lineSpacing blocks apart")
+            StatRow(stringResource(R.string.light_line_spacing), stringResource(R.string.light_line_spacing_val, lineSpacing))
             Text(
-                "Place ${selectedSource.name} every $lineSpacing blocks along a line (hallway, tunnel).",
+                stringResource(R.string.light_line_place, selectedSource.name, lineSpacing),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.secondary,
             )
@@ -122,16 +124,16 @@ fun LightScreen() {
             SpyglassDivider()
 
             if (selectedSource.gridSpacing > 0) {
-                StatRow("Grid Spacing", "${selectedSource.gridSpacing} blocks apart")
+                StatRow(stringResource(R.string.light_grid_spacing), stringResource(R.string.light_grid_spacing_val, selectedSource.gridSpacing))
                 Text(
-                    "Place ${selectedSource.name} in a grid pattern every ${selectedSource.gridSpacing} blocks in both X and Z directions to fully prevent mob spawning on a flat surface.",
+                    stringResource(R.string.light_grid_place, selectedSource.name, selectedSource.gridSpacing),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
             } else {
-                StatRow("Grid Spacing", "Not practical")
+                StatRow(stringResource(R.string.light_grid_spacing), stringResource(R.string.light_not_practical))
                 Text(
-                    "${selectedSource.name} is too dim (level ${selectedSource.level}) for effective mob-proofing. Light must reach level 1+ at every block. Consider a brighter source.",
+                    stringResource(R.string.light_too_dim, selectedSource.name, selectedSource.level),
                     style = MaterialTheme.typography.bodySmall,
                     color = Red400,
                 )
@@ -139,63 +141,63 @@ fun LightScreen() {
         }
 
         // ── Mob Spawning Info ──
-        SectionHeader("Mob Spawning Rules")
+        SectionHeader(stringResource(R.string.light_mob_spawning))
         ResultCard {
             Text(
-                "OVERWORLD (1.18+)",
+                stringResource(R.string.light_overworld),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
             )
             Text(
-                "Hostile mobs spawn at block light level 0 only. Any light level 1 or above prevents spawning.",
+                stringResource(R.string.light_overworld_desc),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
             Text(
-                "NETHER",
+                stringResource(R.string.light_nether_label),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
             )
             Text(
-                "Most hostile mobs spawn at light level 11 or lower. Blazes and Wither Skeletons spawn in fortresses at light level 11 or lower.",
+                stringResource(R.string.light_nether_desc),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
             Text(
-                "MOB SPAWNERS",
+                stringResource(R.string.light_mob_spawners),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
             )
             Text(
-                "Spawner blocks activate when light level is 11 or lower. Place light sources within 4 blocks to disable them.",
+                stringResource(R.string.light_mob_spawners_desc),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
         // ── Quick Reference ──
-        SectionHeader("Quick Reference")
+        SectionHeader(stringResource(R.string.light_quick_reference))
         ResultCard {
             Text(
-                "COMMON SPACINGS",
+                stringResource(R.string.light_common_spacings),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.height(4.dp))
-            StatRow("Torch (14)", "12 block grid / 27 block line")
-            StatRow("Lantern (15)", "14 block grid / 29 block line")
-            StatRow("Soul Torch (10)", "6 block grid / 19 block line")
+            StatRow(stringResource(R.string.light_torch_14), stringResource(R.string.light_torch_14_val))
+            StatRow(stringResource(R.string.light_lantern_15), stringResource(R.string.light_lantern_15_val))
+            StatRow(stringResource(R.string.light_soul_torch_10), stringResource(R.string.light_soul_torch_10_val))
             SpyglassDivider()
             Text(
-                "HOW LIGHT SPREADS",
+                stringResource(R.string.light_how_light_spreads),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.height(4.dp))
             Text(
-                "Light decreases by 1 for each block of distance (Manhattan distance). A torch at level 14 reaches level 1 at 13 blocks away, and level 0 at 14 blocks.",
+                stringResource(R.string.light_spread_desc),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

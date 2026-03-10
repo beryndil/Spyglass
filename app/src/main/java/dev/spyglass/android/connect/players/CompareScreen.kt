@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.PlayerData
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 @Composable
@@ -36,9 +38,9 @@ fun CompareScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
             }
-            Text("Compare Players", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.connect_compare_players), style = MaterialTheme.typography.titleMedium)
         }
 
         if (playerData == null || compareData == null) {
@@ -50,10 +52,10 @@ fun CompareScreen(
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
                         Spacer(Modifier.height(12.dp))
-                        Text("Loading comparison data...", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(stringResource(R.string.connect_loading_comparison), color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 } else {
-                    Text("Connect to compare players", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.connect_connect_to_compare), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
             return
@@ -71,14 +73,14 @@ fun CompareScreen(
             // Header row with player names
             Row(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    p1.playerName ?: "Player 1",
+                    p1.playerName ?: stringResource(R.string.connect_player_1),
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.primary,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f),
                 )
                 Text(
-                    p2.playerName ?: "Player 2",
+                    p2.playerName ?: stringResource(R.string.connect_player_2),
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.primary,
                     textAlign = TextAlign.Center,
@@ -86,33 +88,33 @@ fun CompareScreen(
                 )
             }
 
-            CompareRow("Health", "${p1.health.toInt()} / 20", "${p2.health.toInt()} / 20",
+            CompareRow(stringResource(R.string.connect_health), "${p1.health.toInt()} / 20", "${p2.health.toInt()} / 20",
                 p1.health > p2.health, p2.health > p1.health)
-            CompareRow("Food", "${p1.foodLevel} / 20", "${p2.foodLevel} / 20",
+            CompareRow(stringResource(R.string.connect_food), "${p1.foodLevel} / 20", "${p2.foodLevel} / 20",
                 p1.foodLevel > p2.foodLevel, p2.foodLevel > p1.foodLevel)
-            CompareRow("XP Level", "${p1.xpLevel}", "${p2.xpLevel}",
+            CompareRow(stringResource(R.string.connect_xp_level), "${p1.xpLevel}", "${p2.xpLevel}",
                 p1.xpLevel > p2.xpLevel, p2.xpLevel > p1.xpLevel)
 
             SpyglassDivider()
 
-            CompareRow("Dimension",
+            CompareRow(stringResource(R.string.connect_compare_dimension),
                 p1.dimension.replace("_", " ").replaceFirstChar { it.uppercase() },
                 p2.dimension.replace("_", " ").replaceFirstChar { it.uppercase() })
-            CompareRow("Position",
+            CompareRow(stringResource(R.string.connect_compare_position),
                 "${p1.posX.toInt()}, ${p1.posY.toInt()}, ${p1.posZ.toInt()}",
                 "${p2.posX.toInt()}, ${p2.posY.toInt()}, ${p2.posZ.toInt()}")
 
             SpyglassDivider()
 
-            CompareRow("Inventory",
-                "${p1.inventory.sumOf { it.count }} items",
-                "${p2.inventory.sumOf { it.count }} items")
-            CompareRow("Armor",
-                "${p1.armor.size} pieces",
-                "${p2.armor.size} pieces")
-            CompareRow("Ender Chest",
-                "${p1.enderChest.sumOf { it.count }} items",
-                "${p2.enderChest.sumOf { it.count }} items")
+            CompareRow(stringResource(R.string.connect_compare_inventory),
+                stringResource(R.string.connect_items_format, p1.inventory.sumOf { it.count }),
+                stringResource(R.string.connect_items_format, p2.inventory.sumOf { it.count }))
+            CompareRow(stringResource(R.string.connect_compare_armor),
+                stringResource(R.string.connect_pieces_format, p1.armor.size),
+                stringResource(R.string.connect_pieces_format, p2.armor.size))
+            CompareRow(stringResource(R.string.connect_ender_chest),
+                stringResource(R.string.connect_items_format, p1.enderChest.sumOf { it.count }),
+                stringResource(R.string.connect_items_format, p2.enderChest.sumOf { it.count }))
         }
     }
 }

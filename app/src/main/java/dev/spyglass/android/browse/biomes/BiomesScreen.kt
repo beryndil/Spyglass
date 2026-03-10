@@ -184,10 +184,10 @@ fun BiomesScreen(
         }
     }
 
-    val sortOptions = remember { listOf(
-        SortOption("Name A\u2192Z", "name"),
-        SortOption("Temperature \u2193", "temperature"),
-    ) }
+    val sortOptions = listOf(
+        SortOption(stringResource(R.string.biomes_sort_name), "name"),
+        SortOption(stringResource(R.string.biomes_sort_temperature), "temperature"),
+    )
 
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
@@ -196,7 +196,7 @@ fun BiomesScreen(
         ) {
             SpyglassSearchBar(
                 query = query, onQueryChange = vm::setQuery,
-                category = "biomes", placeholder = "Search biomes\u2026",
+                category = "biomes", placeholder = stringResource(R.string.biomes_search_placeholder),
                 modifier = Modifier.weight(1f),
             )
             SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
@@ -229,9 +229,9 @@ fun BiomesScreen(
             item {
                 TabIntroHeader(
                     icon = PixelIcons.Biome,
-                    title = "Biomes",
-                    description = "Every Minecraft biome with temperature, mobs, structures, and map colors",
-                    stat = "${biomes.size} biomes",
+                    title = stringResource(R.string.biomes_title),
+                    description = stringResource(R.string.biomes_description),
+                    stat = stringResource(R.string.biomes_stat, biomes.size),
                 )
             }
             if (favoriteBiomes.isNotEmpty()) {
@@ -284,8 +284,8 @@ fun BiomesScreen(
             if (biomes.isEmpty()) item {
                 EmptyState(
                     icon     = PixelIcons.SearchOff,
-                    title    = "No biomes found",
-                    subtitle = "Try a different search term",
+                    title    = stringResource(R.string.biomes_no_results_title),
+                    subtitle = stringResource(R.string.biomes_no_results_subtitle),
                 )
             }
         }
@@ -368,11 +368,11 @@ private fun BiomeDetailCard(
 
         // Stats
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("Temperature", style = MaterialTheme.typography.bodyMedium, color = subtextColor)
+            Text(stringResource(R.string.biomes_temperature), style = MaterialTheme.typography.bodyMedium, color = subtextColor)
             Text("${biome.temperature}\u00B0", style = MaterialTheme.typography.bodyLarge, color = textColor)
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("Precipitation", style = MaterialTheme.typography.bodyMedium, color = subtextColor)
+            Text(stringResource(R.string.biomes_precipitation), style = MaterialTheme.typography.bodyMedium, color = subtextColor)
             Text(biome.precipitation.replaceFirstChar { it.uppercase() }, style = MaterialTheme.typography.bodyLarge, color = textColor)
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
@@ -383,14 +383,14 @@ private fun BiomeDetailCard(
         // Features
         if (biome.features.isNotEmpty()) {
             HorizontalDivider(color = textColor.copy(alpha = 0.2f), thickness = 0.5.dp)
-            Text("Features", style = MaterialTheme.typography.labelSmall, color = labelColor)
+            Text(stringResource(R.string.biomes_features), style = MaterialTheme.typography.labelSmall, color = labelColor)
             Text(biome.features, style = MaterialTheme.typography.bodySmall, color = subtextColor)
         }
 
         // Resources (from BiomeResourceMap)
         if (resources.isNotEmpty()) {
             HorizontalDivider(color = textColor.copy(alpha = 0.2f), thickness = 0.5.dp)
-            Text("Resources", style = MaterialTheme.typography.labelSmall, color = labelColor)
+            Text(stringResource(R.string.biomes_resources), style = MaterialTheme.typography.labelSmall, color = labelColor)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 resources.forEach { itemId ->
                     AssistChip(
@@ -419,7 +419,7 @@ private fun BiomeDetailCard(
         val palette = biome.buildingPalette.split(",").map { it.trim() }.filter { it.isNotEmpty() }
         if (palette.isNotEmpty()) {
             HorizontalDivider(color = textColor.copy(alpha = 0.2f), thickness = 0.5.dp)
-            Text("Building Palette", style = MaterialTheme.typography.labelSmall, color = labelColor)
+            Text(stringResource(R.string.biomes_building_palette), style = MaterialTheme.typography.labelSmall, color = labelColor)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 palette.forEach { blockId ->
                     AssistChip(
@@ -447,7 +447,7 @@ private fun BiomeDetailCard(
         // Structures
         if (structures.isNotEmpty()) {
             HorizontalDivider(color = textColor.copy(alpha = 0.2f), thickness = 0.5.dp)
-            Text("Structures", style = MaterialTheme.typography.labelSmall, color = labelColor)
+            Text(stringResource(R.string.biomes_structures), style = MaterialTheme.typography.labelSmall, color = labelColor)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 structures.forEach { s ->
                     AssistChip(
@@ -466,7 +466,7 @@ private fun BiomeDetailCard(
         // Mobs
         if (mobs.isNotEmpty()) {
             HorizontalDivider(color = textColor.copy(alpha = 0.2f), thickness = 0.5.dp)
-            Text("Mobs found here", style = MaterialTheme.typography.labelSmall, color = labelColor)
+            Text(stringResource(R.string.biomes_mobs_found_here), style = MaterialTheme.typography.labelSmall, color = labelColor)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 mobs.forEach { mobId ->
                     if (mobId in KNOWN_MOB_IDS) {
@@ -497,7 +497,7 @@ private fun BiomeDetailCard(
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 if (isLibrarianBiome) {
                     Text(
-                        "Librarian Guide \u2192",
+                        stringResource(R.string.biomes_librarian_guide),
                         style = MaterialTheme.typography.labelSmall,
                         color = if (isLight) MaterialTheme.colorScheme.onPrimary else PotionBlue,
                         textDecoration = TextDecoration.Underline,
@@ -506,7 +506,7 @@ private fun BiomeDetailCard(
                 }
                 if (hasStructures) {
                     Text(
-                        "Structure Loot \u2192",
+                        stringResource(R.string.biomes_structure_loot),
                         style = MaterialTheme.typography.labelSmall,
                         color = if (isLight) MaterialTheme.colorScheme.onPrimary else PotionBlue,
                         textDecoration = TextDecoration.Underline,

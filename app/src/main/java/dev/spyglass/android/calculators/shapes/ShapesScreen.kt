@@ -11,6 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 private val SHAPE_LABELS = mapOf(
@@ -38,7 +40,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        SectionHeader("Shape Designer", icon = PixelIcons.Shapes)
+        SectionHeader(stringResource(R.string.shapes_header), icon = PixelIcons.Shapes)
 
         InputCard {
             // Shape type selector — two rows of chips
@@ -139,7 +141,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text("Hollow", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.shapes_hollow), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Spacer(Modifier.weight(1f))
                     Switch(
                         checked = s.hollow,
@@ -155,7 +157,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text("Flipped", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.shapes_flipped), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Spacer(Modifier.weight(1f))
                     Switch(
                         checked = s.flipped,
@@ -174,7 +176,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                 { view3D = it == 1 },
             )
 
-            StatRow("Total blocks", "%,d".format(s.totalBlocks))
+            StatRow(stringResource(R.string.shapes_total_blocks), "%,d".format(s.totalBlocks))
 
             // Dimensions in blocks and chunks
             val allXs = s.layers.values.flatMap { pts -> pts.map { it.first } }
@@ -189,9 +191,9 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                     return if (chunks > 0) "$blocks blocks ($chunks chunk${if (chunks > 1) "s" else ""}${if (rem > 0) " + $rem" else ""})"
                     else "$blocks blocks"
                 }
-                StatRow("Width (X)",  fmt(width))
-                StatRow("Depth (Z)",  fmt(depth))
-                StatRow("Height (Y)", fmt(height))
+                StatRow(stringResource(R.string.shapes_width_x),  fmt(width))
+                StatRow(stringResource(R.string.shapes_depth_z),  fmt(depth))
+                StatRow(stringResource(R.string.shapes_height_y), fmt(height))
             }
 
             SpyglassDivider()
@@ -201,7 +203,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
             } else {
                 // Layer slider
                 if (s.layerMin < s.layerMax) {
-                    Text("Y layer: ${s.currentLayer}", style = MaterialTheme.typography.bodyMedium)
+                    Text(stringResource(R.string.shapes_y_layer, s.currentLayer), style = MaterialTheme.typography.bodyMedium)
                     Slider(
                         value         = s.currentLayer.toFloat(),
                         onValueChange = { vm.setLayer(it.toInt()) },
@@ -218,7 +220,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
         }
 
         Text(
-            "Build perfect shapes in Minecraft. Set a radius and height, then use the Y-layer slider to see exactly which blocks to place on each layer, or switch to 3D for an isometric preview.",
+            stringResource(R.string.shapes_help),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.secondary,
         )

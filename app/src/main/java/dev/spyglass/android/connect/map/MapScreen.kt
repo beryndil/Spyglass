@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ConnectViewModel
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.connect.MapTile
 import dev.spyglass.android.connect.OfflineIndicator
@@ -47,9 +49,9 @@ fun MapScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
             }
-            Text("World Map", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            Text(stringResource(R.string.connect_world_map), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
         }
 
         MapContent(viewModel = viewModel)
@@ -119,7 +121,7 @@ fun MapContent(viewModel: ConnectViewModel) {
                 },
                 enabled = isConnected,
             ) {
-                Icon(Icons.Filled.MyLocation, contentDescription = "Center on player")
+                Icon(Icons.Filled.MyLocation, contentDescription = stringResource(R.string.connect_center_on_player))
             }
         }
 

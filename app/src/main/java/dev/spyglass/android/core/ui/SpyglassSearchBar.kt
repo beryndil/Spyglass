@@ -19,6 +19,8 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -111,7 +113,7 @@ fun SpyglassSearchBar(
                     onClick = { scope.launch { repo.clearSearchHistory(category) } },
                     modifier = Modifier.align(Alignment.End).padding(end = 4.dp),
                 ) {
-                    Text("Clear history", style = MaterialTheme.typography.labelSmall)
+                    Text(stringResource(R.string.core_clear_history), style = MaterialTheme.typography.labelSmall)
                 }
             }
         }
@@ -146,7 +148,7 @@ private fun HistoryRow(
         IconButton(onClick = onDelete, modifier = Modifier.size(24.dp)) {
             Icon(
                 Icons.Default.Close,
-                contentDescription = "Remove",
+                contentDescription = stringResource(R.string.core_remove),
                 tint = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.size(16.dp),
             )

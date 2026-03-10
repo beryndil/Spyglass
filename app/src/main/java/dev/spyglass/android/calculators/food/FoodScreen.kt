@@ -122,7 +122,7 @@ fun FoodScreen() {
         // Search
         OutlinedTextField(
             value = query, onValueChange = { query = it },
-            placeholder = { Text("Search food\u2026", color = MaterialTheme.colorScheme.secondary) },
+            placeholder = { Text(stringResource(R.string.food_search_placeholder), color = MaterialTheme.colorScheme.secondary) },
             leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
             colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
@@ -150,7 +150,7 @@ fun FoodScreen() {
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
-            Text("Sort:", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary, modifier = Modifier.align(Alignment.CenterVertically))
+            Text(stringResource(R.string.food_sort), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary, modifier = Modifier.align(Alignment.CenterVertically))
             SortMode.entries.forEach { mode ->
                 FilterChip(
                     selected = sortMode == mode,
@@ -167,9 +167,9 @@ fun FoodScreen() {
             item {
                 TabIntroHeader(
                     icon = PixelIcons.Item,
-                    title = "Food & Saturation",
-                    description = "Complete food reference with hunger, saturation, and special effects. Sort by saturation to find the best foods.",
-                    stat = "${filteredFoods.size} foods",
+                    title = stringResource(R.string.food_title),
+                    description = stringResource(R.string.food_description),
+                    stat = stringResource(R.string.food_stat, filteredFoods.size),
                 )
             }
 
@@ -180,20 +180,20 @@ fun FoodScreen() {
             item {
                 Spacer(Modifier.height(4.dp))
                 ResultCard {
-                    Text("HOW SATURATION WORKS", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource(R.string.food_how_saturation_works), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                     Spacer(Modifier.height(4.dp))
                     Text(
-                        "Saturation is a hidden stat that determines how long before hunger starts decreasing. Higher saturation = longer before you get hungry again. Your saturation cannot exceed your current hunger level.",
+                        stringResource(R.string.food_saturation_desc),
                         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     SpyglassDivider()
-                    Text("BEST FOODS BY CATEGORY", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource(R.string.food_best_by_category), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                     Spacer(Modifier.height(4.dp))
-                    StatRow("Best Overall", "Golden Carrot (14.4 sat)")
-                    StatRow("Best Cooked Meat", "Steak / Porkchop (12.8 sat)")
-                    StatRow("Best Fish", "Cooked Salmon (9.6 sat)")
-                    StatRow("Best Crop", "Baked Potato (6.0 sat)")
-                    StatRow("Best Stew", "Rabbit Stew (12.0 sat)")
+                    StatRow(stringResource(R.string.food_best_overall), stringResource(R.string.food_best_overall_val))
+                    StatRow(stringResource(R.string.food_best_meat), stringResource(R.string.food_best_meat_val))
+                    StatRow(stringResource(R.string.food_best_fish), stringResource(R.string.food_best_fish_val))
+                    StatRow(stringResource(R.string.food_best_crop), stringResource(R.string.food_best_crop_val))
+                    StatRow(stringResource(R.string.food_best_stew), stringResource(R.string.food_best_stew_val))
                 }
                 Spacer(Modifier.height(8.dp))
             }
@@ -226,7 +226,7 @@ private fun FoodItemCard(food: FoodItem) {
                     color = satColor,
                 )
                 Text(
-                    "saturation",
+                    stringResource(R.string.food_saturation_label),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )

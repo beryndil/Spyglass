@@ -15,6 +15,8 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.connect.client.ConnectionState
 import kotlin.math.*
 
@@ -89,12 +91,12 @@ fun ChestLoadingAnimation(
 
     // Status text
     val statusMessage = when (connectionState) {
-        is ConnectionState.Error -> "Connection error"
-        is ConnectionState.Connected -> if (phase == Phase.DONE) "Ready!" else "Connected!"
-        is ConnectionState.Pairing -> "Pairing..."
-        is ConnectionState.Connecting -> "Connecting..."
-        is ConnectionState.Reconnecting -> "Reconnecting (attempt ${connectionState.attempt})..."
-        else -> "Getting ready..."
+        is ConnectionState.Error -> stringResource(R.string.connect_anim_error)
+        is ConnectionState.Connected -> if (phase == Phase.DONE) stringResource(R.string.connect_anim_ready) else stringResource(R.string.connect_anim_connected)
+        is ConnectionState.Pairing -> stringResource(R.string.connect_anim_pairing)
+        is ConnectionState.Connecting -> stringResource(R.string.connect_anim_connecting)
+        is ConnectionState.Reconnecting -> stringResource(R.string.connect_anim_reconnecting, connectionState.attempt)
+        else -> stringResource(R.string.connect_anim_getting_ready)
     }
 
     Card(

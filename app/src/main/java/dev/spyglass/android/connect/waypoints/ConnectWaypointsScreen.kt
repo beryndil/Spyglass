@@ -157,9 +157,9 @@ fun ConnectWaypointsScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
             }
-            Text("Waypoints", style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            Text(stringResource(R.string.connect_waypoints), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             FilledTonalButton(
                 onClick = { hapticClick(); showCreateDialog = true },
                 colors = ButtonDefaults.filledTonalButtonColors(
@@ -168,7 +168,7 @@ fun ConnectWaypointsScreen(
                 ),
                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
             ) {
-                Icon(Icons.Default.Add, contentDescription = "New waypoint", modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.connect_new_waypoint_desc), modifier = Modifier.size(18.dp))
             }
         }
 
@@ -207,7 +207,7 @@ fun ConnectWaypointsScreen(
             if (autoWaypoints.isNotEmpty()) {
                 item {
                     Text(
-                        "LIVE LOCATIONS",
+                        stringResource(R.string.connect_live_locations),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(top = 8.dp),
@@ -234,7 +234,7 @@ fun ConnectWaypointsScreen(
             if (customWaypoints.isNotEmpty()) {
                 item {
                     Text(
-                        "CUSTOM WAYPOINTS",
+                        stringResource(R.string.connect_custom_waypoints),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(top = 8.dp),
@@ -262,8 +262,8 @@ fun ConnectWaypointsScreen(
                 item {
                     EmptyState(
                         icon = PixelIcons.Waypoints,
-                        title = if (dimensionFilter != "all") "No waypoints in this dimension" else "No waypoints yet",
-                        subtitle = if (!isConnected) "Connect to a world to auto-detect locations" else "Locations will appear when world data loads",
+                        title = if (dimensionFilter != "all") stringResource(R.string.connect_no_waypoints_dimension) else stringResource(R.string.connect_no_waypoints_yet),
+                        subtitle = if (!isConnected) stringResource(R.string.connect_connect_to_autodetect) else stringResource(R.string.connect_locations_will_appear),
                     )
                 }
             }
@@ -277,7 +277,7 @@ fun ConnectWaypointsScreen(
                     ) {
                         Icon(Icons.Default.MyLocation, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(8.dp))
-                        Text("Add Waypoint at Current Position")
+                        Text(stringResource(R.string.connect_add_waypoint_at_position))
                     }
                 }
             }
@@ -288,7 +288,7 @@ fun ConnectWaypointsScreen(
 
     if (showCreateDialog) {
         WaypointDialog(
-            title = "New Waypoint",
+            title = stringResource(R.string.connect_new_waypoint_title),
             initialX = playerData?.posX?.toInt()?.toString() ?: "",
             initialY = playerData?.posY?.toInt()?.toString() ?: "",
             initialZ = playerData?.posZ?.toInt()?.toString() ?: "",
@@ -310,7 +310,7 @@ fun ConnectWaypointsScreen(
     if (editingWaypoint != null) {
         val wp = editingWaypoint!!
         WaypointDialog(
-            title = "Edit Waypoint",
+            title = stringResource(R.string.connect_edit_waypoint_title),
             initialName = wp.name,
             initialX = wp.x.toString(),
             initialY = wp.y.toString(),
@@ -409,7 +409,7 @@ private fun WaypointDetail(
     val convertedZ = if (wp.dimension == "overworld") wp.z / 8 else wp.z * 8
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
-        Text("COORDINATES", style = MaterialTheme.typography.labelSmall, color = primary)
+        Text(stringResource(R.string.connect_coordinates), style = MaterialTheme.typography.labelSmall, color = primary)
         Text(
             "X: ${wp.x}   Y: ${wp.y}   Z: ${wp.z}",
             style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
@@ -468,7 +468,7 @@ private fun WaypointDetail(
         val otherWaypoints = allWaypoints.filter { it.id != wp.id }
         if (otherWaypoints.isNotEmpty()) {
             SpyglassDivider()
-            Text("DISTANCES", style = MaterialTheme.typography.labelSmall, color = primary)
+            Text(stringResource(R.string.connect_distances), style = MaterialTheme.typography.labelSmall, color = primary)
             otherWaypoints.forEach { other ->
                 val dist = distanceBetween(wp.x, wp.y, wp.z, wp.dimension, other.x, other.y, other.z, other.dimension)
                 StatRow(other.name, formatDistance(dist))
@@ -477,14 +477,14 @@ private fun WaypointDetail(
 
         if (wp.notes.isNotBlank()) {
             SpyglassDivider()
-            Text("NOTES", style = MaterialTheme.typography.labelSmall, color = primary)
+            Text(stringResource(R.string.connect_notes), style = MaterialTheme.typography.labelSmall, color = primary)
             Text(wp.notes, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
         if (wp.source == ConnectWaypoint.SOURCE_AUTO) {
             SpyglassDivider()
             Text(
-                "Auto-detected from world data",
+                stringResource(R.string.connect_auto_detected),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -565,7 +565,7 @@ private fun WaypointDialog(
             ) {
                 OutlinedTextField(
                     value = name, onValueChange = { name = it },
-                    label = { Text("Name") },
+                    label = { Text(stringResource(R.string.connect_waypoint_name)) },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = primary, cursorColor = primary),
                     modifier = Modifier.fillMaxWidth(),
@@ -616,7 +616,7 @@ private fun WaypointDialog(
                     }
                 }
 
-                Text("Color", style = MaterialTheme.typography.labelSmall, color = primary)
+                Text(stringResource(R.string.connect_waypoint_color), style = MaterialTheme.typography.labelSmall, color = primary)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     ConnectWaypoint.COLORS.forEach { c ->
                         Box(
@@ -641,7 +641,7 @@ private fun WaypointDialog(
 
                 OutlinedTextField(
                     value = notes, onValueChange = { notes = it },
-                    label = { Text("Notes (optional)") },
+                    label = { Text(stringResource(R.string.connect_waypoint_notes)) },
                     maxLines = 3,
                     colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = primary, cursorColor = primary),
                     modifier = Modifier.fillMaxWidth(),

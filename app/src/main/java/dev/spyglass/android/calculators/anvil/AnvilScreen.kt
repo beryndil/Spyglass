@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 private val WEAPONS = listOf(ItemType.SWORD, ItemType.BOW, ItemType.CROSSBOW, ItemType.TRIDENT, ItemType.MACE)
@@ -63,11 +65,11 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        SectionHeader("Enchanting", icon = PixelIcons.Anvil)
+        SectionHeader(stringResource(R.string.anvil_header), icon = PixelIcons.Anvil)
 
         InputCard {
             // Item selector — grouped by category
-            Text("Weapons", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+            Text(stringResource(R.string.anvil_weapons), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 WEAPONS.forEach { t ->
                     val icon = ItemTextures.get(t.textureId())
@@ -80,7 +82,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                 }
             }
             Spacer(Modifier.height(4.dp))
-            Text("Tools", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+            Text(stringResource(R.string.anvil_tools), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 TOOL_TYPES.forEach { t ->
                     val icon = ItemTextures.get(t.textureId())
@@ -93,7 +95,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                 }
             }
             Spacer(Modifier.height(4.dp))
-            Text("Armor", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+            Text(stringResource(R.string.anvil_armor), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 ARMOR_TYPES.forEach { t ->
                     val icon = ItemTextures.get(t.textureId())
@@ -109,7 +111,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
 
         // Enchantment picker
         InputCard {
-            Text("Enchantments", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+            Text(stringResource(R.string.anvil_enchantments), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             available.forEach { e ->
                 val picked = s.pickedEnchants.find { it.enchant.id == e.id }
                 val incompatible = picked == null && vm.isIncompatible(e)
@@ -149,31 +151,31 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
         // Results
         if (s.steps.isNotEmpty()) {
             ResultCard {
-                Text("Optimal Order", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.anvil_optimal_order), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.height(4.dp))
                 s.steps.forEachIndexed { i, step ->
                     if (i > 0) SpyglassDivider()
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                         Text(
-                            "Step ${i + 1}: ${step.desc}",
+                            stringResource(R.string.anvil_step, i + 1, step.desc),
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.weight(1f),
                         )
                         Text(
-                            "${step.cost} lvl",
+                            stringResource(R.string.anvil_lvl_cost, step.cost),
                             style = MaterialTheme.typography.bodyLarge,
                             color = if (step.tooExpensive) Red400 else MaterialTheme.colorScheme.primary,
                         )
                     }
-                    if (step.tooExpensive) Text("Too Expensive!", style = MaterialTheme.typography.bodySmall, color = Red400)
+                    if (step.tooExpensive) Text(stringResource(R.string.anvil_too_expensive), style = MaterialTheme.typography.bodySmall, color = Red400)
                 }
                 SpyglassDivider()
-                StatRow("Total XP", "${s.totalCost} levels")
+                StatRow(stringResource(R.string.anvil_total_xp), stringResource(R.string.anvil_total_xp_val, s.totalCost))
             }
         }
 
         Text(
-            "Pick an item and select the enchantments you want. This tool calculates the cheapest XP order to combine them on an anvil, avoiding the \"Too Expensive\" cap. Tap enchantment levels (I\u2013V) to adjust.",
+            stringResource(R.string.anvil_help),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.secondary,
         )
@@ -186,25 +188,25 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Text("How Anvil Costs Work", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.anvil_how_costs_work), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Text(if (showInfo) "\u25B2" else "\u25BC", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary)
             }
             val reduceMotion = LocalReduceAnimations.current
             AnimatedVisibility(visible = showInfo, enter = if (reduceMotion) expandVertically(snap()) else expandVertically(), exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically()) {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-                    Text("Prior-Work Penalty", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                    Text(stringResource(R.string.anvil_prior_work_penalty), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                     Text(
-                        "Every time an item is used in an anvil, it gains a hidden \"anvil uses\" counter. The penalty doubles each time: 0, 1, 3, 7, 15, 31 levels (formula: 2\u207F \u2212 1). This applies to both the target and sacrifice items.",
+                        stringResource(R.string.anvil_prior_work_desc),
                         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                    Text("\"Too Expensive\"", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                    Text(stringResource(R.string.anvil_too_expensive_title), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                     Text(
-                        "If any single anvil operation costs 40+ levels, the game blocks it entirely. After 6 anvil uses, the penalty alone hits 63 levels \u2014 making further enchanting impossible.",
+                        stringResource(R.string.anvil_too_expensive_desc),
                         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                    Text("Why Order Matters", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                    Text(stringResource(R.string.anvil_why_order_matters), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                     Text(
-                        "The output item\u2019s anvil uses = max(target, sacrifice) + 1. By combining books in pairs first (binary tree), each book accumulates fewer anvil uses. Cheapest enchantments go first so their small base costs absorb the growing penalty. This calculator finds that optimal order automatically.",
+                        stringResource(R.string.anvil_why_order_desc),
                         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }

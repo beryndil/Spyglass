@@ -129,9 +129,9 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
         item {
             TabIntroHeader(
                 icon = PixelIcons.Waypoints,
-                title = "Waypoints",
-                description = "Save and organize coordinates for your important Minecraft locations.",
-                stat = "${waypoints.size} waypoints",
+                title = stringResource(R.string.waypoints_title),
+                description = stringResource(R.string.waypoints_description),
+                stat = stringResource(R.string.waypoints_stat, waypoints.size),
             )
         }
 
@@ -142,7 +142,7 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
             ) {
                 OutlinedTextField(
                     value = query, onValueChange = vm::setQuery,
-                    placeholder = { Text("Search waypoints\u2026", color = MaterialTheme.colorScheme.secondary, maxLines = 1) },
+                    placeholder = { Text(stringResource(R.string.waypoints_search_placeholder), color = MaterialTheme.colorScheme.secondary, maxLines = 1) },
                     leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
@@ -153,7 +153,7 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
                     onClick = { hapticClick(); showCreateDialog = true },
                     colors = ButtonDefaults.filledTonalButtonColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f), contentColor = MaterialTheme.colorScheme.primary),
                 ) {
-                    Icon(Icons.Default.Add, contentDescription = "New waypoint", modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.Add, contentDescription = stringResource(R.string.waypoints_new_waypoint_cd), modifier = Modifier.size(18.dp))
                 }
             }
         }
@@ -182,8 +182,8 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
                 item {
                     EmptyState(
                         icon = PixelIcons.Waypoints,
-                        title = if (query.isNotBlank() || categoryFilter != "all") "No waypoints found" else "No waypoints saved",
-                        subtitle = if (query.isNotBlank() || categoryFilter != "all") "Try a different search or filter" else "Tap + to save your first location",
+                        title = if (query.isNotBlank() || categoryFilter != "all") stringResource(R.string.waypoints_no_found) else stringResource(R.string.waypoints_no_saved),
+                        subtitle = if (query.isNotBlank() || categoryFilter != "all") stringResource(R.string.waypoints_try_different) else stringResource(R.string.waypoints_tap_to_save),
                     )
                 }
             }
@@ -233,7 +233,7 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
 
     if (showCreateDialog) {
         WaypointDialog(
-            title = "New Waypoint",
+            title = stringResource(R.string.waypoints_new_dialog),
             onDismiss = { showCreateDialog = false },
             onSave = { name, x, y, z, dim, cat, color, notes ->
                 vm.createWaypoint(name, x, y, z, dim, cat, color, notes)
@@ -245,7 +245,7 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
     if (editingWaypoint != null) {
         val wp = editingWaypoint!!
         WaypointDialog(
-            title = "Edit Waypoint",
+            title = stringResource(R.string.waypoints_edit_dialog),
             initialName = wp.name,
             initialX = wp.x.toString(),
             initialY = wp.y.toString(),
@@ -285,7 +285,7 @@ private fun WaypointDetailCard(
 
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         Text(
-            "COORDINATES",
+            stringResource(R.string.waypoints_coordinates),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.primary,
         )
@@ -356,14 +356,14 @@ private fun WaypointDetailCard(
             ) {
                 Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(16.dp))
                 Spacer(Modifier.width(4.dp))
-                Text("Save as ${dimensionLabel(convertedDim)} waypoint")
+                Text(stringResource(R.string.waypoints_save_as_waypoint, dimensionLabel(convertedDim)))
             }
         }
 
         if (wp.notes.isNotBlank()) {
             SpyglassDivider()
             Text(
-                "NOTES",
+                stringResource(R.string.waypoints_notes_label),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
             )
@@ -433,7 +433,7 @@ private fun WaypointDialog(
             ) {
                 OutlinedTextField(
                     value = name, onValueChange = { name = it },
-                    label = { Text("Name") },
+                    label = { Text(stringResource(R.string.waypoints_field_name)) },
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.fillMaxWidth(),
@@ -487,7 +487,7 @@ private fun WaypointDialog(
                     }
                 }
 
-                Text("Color", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.waypoints_color), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     COLORS.forEach { c ->
                         Box(
@@ -512,7 +512,7 @@ private fun WaypointDialog(
 
                 OutlinedTextField(
                     value = notes, onValueChange = { notes = it },
-                    label = { Text("Notes (optional)") },
+                    label = { Text(stringResource(R.string.waypoints_field_notes)) },
                     maxLines = 3,
                     colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.fillMaxWidth(),

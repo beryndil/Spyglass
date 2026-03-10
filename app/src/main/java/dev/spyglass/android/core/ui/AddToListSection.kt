@@ -10,7 +10,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import dev.spyglass.android.R
 import androidx.compose.ui.unit.dp
 import dev.spyglass.android.data.db.entities.ShoppingListEntity
 import dev.spyglass.android.data.repository.GameDataRepository
@@ -42,11 +44,11 @@ fun AddToListSection(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text("Add to Shopping List", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(R.string.core_add_to_shopping_list), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
 
         if (lists.isEmpty()) {
             Text(
-                "No shopping lists yet \u2014 create one in the Shopping tab",
+                stringResource(R.string.core_no_shopping_lists),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.secondary,
             )
@@ -96,7 +98,7 @@ fun AddToListSection(
             OutlinedTextField(
                 value = quantityInput,
                 onValueChange = { quantityInput = it.filter { c -> c.isDigit() } },
-                label = { Text("Qty") },
+                label = { Text(stringResource(R.string.core_qty)) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 colors = OutlinedTextFieldDefaults.colors(
@@ -114,13 +116,13 @@ fun AddToListSection(
                     if (qty !in 1..10_000_000) return@IconButton
                     scope.launch {
                         repo.addToShoppingList(list.id, itemId, itemName, qty)
-                        feedback = "Added!"
+                        feedback = context.getString(R.string.core_added)
                     }
                 },
                 colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.primary),
                 modifier = Modifier.size(40.dp),
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add to list", tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.core_add_to_list_icon), tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
             }
         }
 

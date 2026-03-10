@@ -131,7 +131,7 @@ fun LootScreen(onStructureTap: (String) -> Unit = {}) {
     Column(modifier = Modifier.fillMaxSize()) {
         OutlinedTextField(
             value = query, onValueChange = { query = it },
-            placeholder = { Text("Search loot or structures\u2026", color = MaterialTheme.colorScheme.secondary) },
+            placeholder = { Text(stringResource(R.string.loot_search_placeholder), color = MaterialTheme.colorScheme.secondary) },
             leadingIcon = { Icon(Icons.Default.Search, null, tint = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
             colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary),
@@ -159,9 +159,9 @@ fun LootScreen(onStructureTap: (String) -> Unit = {}) {
             item {
                 TabIntroHeader(
                     icon = PixelIcons.Structure,
-                    title = "Structure Loot",
-                    description = "Notable and exclusive loot items found in each Minecraft structure. Find the right structure for what you need.",
-                    stat = "${filtered.size} structures",
+                    title = stringResource(R.string.loot_title),
+                    description = stringResource(R.string.loot_description),
+                    stat = stringResource(R.string.loot_stat, filtered.size),
                 )
             }
 
@@ -172,14 +172,14 @@ fun LootScreen(onStructureTap: (String) -> Unit = {}) {
             item {
                 Spacer(Modifier.height(4.dp))
                 ResultCard {
-                    Text("RAREST EXCLUSIVE ITEMS", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource(R.string.loot_rarest_items), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                     Spacer(Modifier.height(4.dp))
-                    StatRow("Elytra", "End Cities only")
-                    StatRow("Echo Shards", "Ancient Cities only")
-                    StatRow("Heavy Core", "Trial Chambers only")
-                    StatRow("Pigstep Disc", "Bastion Remnants only")
-                    StatRow("Silence Trim", "Ancient Cities (1.2%)")
-                    StatRow("Swift Sneak", "Ancient Cities only")
+                    StatRow(stringResource(R.string.loot_elytra), stringResource(R.string.loot_elytra_val))
+                    StatRow(stringResource(R.string.loot_echo_shards), stringResource(R.string.loot_echo_shards_val))
+                    StatRow(stringResource(R.string.loot_heavy_core), stringResource(R.string.loot_heavy_core_val))
+                    StatRow(stringResource(R.string.loot_pigstep), stringResource(R.string.loot_pigstep_val))
+                    StatRow(stringResource(R.string.loot_silence_trim), stringResource(R.string.loot_silence_trim_val))
+                    StatRow(stringResource(R.string.loot_swift_sneak), stringResource(R.string.loot_swift_sneak_val))
                 }
                 Spacer(Modifier.height(8.dp))
             }
@@ -209,7 +209,7 @@ private fun StructureLootCard(loot: StructureLoot, onStructureTap: () -> Unit = 
 
         if (loot.exclusiveItems.isNotEmpty()) {
             Spacer(Modifier.height(8.dp))
-            Text("EXCLUSIVE / RARE", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.loot_exclusive_rare), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             loot.exclusiveItems.forEach { item ->
                 Text(
@@ -222,7 +222,7 @@ private fun StructureLootCard(loot: StructureLoot, onStructureTap: () -> Unit = 
 
         if (loot.notableItems.isNotEmpty()) {
             Spacer(Modifier.height(8.dp))
-            Text("NOTABLE LOOT", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary)
+            Text(stringResource(R.string.loot_notable), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.secondary)
             Spacer(Modifier.height(4.dp))
             loot.notableItems.forEach { item ->
                 Text(

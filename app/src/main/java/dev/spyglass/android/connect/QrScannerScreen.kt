@@ -23,8 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import dev.spyglass.android.R
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.zxing.*
@@ -87,10 +89,10 @@ fun QrScannerScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
             }
             Text(
-                "Scan QR Code",
+                stringResource(R.string.connect_qr_title),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.weight(1f),
             )
@@ -116,7 +118,7 @@ fun QrScannerScreen(
                             if (pairingData.app == "spyglass-connect") {
                                 onPairingDataScanned(pairingData)
                             } else {
-                                scanError = "Not a Spyglass Connect QR code"
+                                scanError = context.getString(R.string.connect_qr_not_spyglass)
                             }
                         } catch (e: Exception) {
                             Timber.w(e, "Failed to parse QR data: ${e.message}")
@@ -145,7 +147,7 @@ fun QrScannerScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
-                        "Point at the QR code on your computer",
+                        stringResource(R.string.connect_qr_instruction),
                         color = Color.White,
                         style = MaterialTheme.typography.bodyMedium,
                     )
@@ -167,13 +169,13 @@ fun QrScannerScreen(
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        "Camera permission is required to scan QR codes",
+                        stringResource(R.string.connect_qr_camera_required),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     Spacer(Modifier.height(16.dp))
                     Button(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
-                        Text("Grant Permission")
+                        Text(stringResource(R.string.connect_qr_grant_permission))
                     }
                 }
             }

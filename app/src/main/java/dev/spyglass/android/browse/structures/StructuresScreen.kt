@@ -155,10 +155,10 @@ fun StructuresScreen(
         }
     }
 
-    val sortOptions = remember { listOf(
-        SortOption("Name A\u2192Z", "name"),
-        SortOption("Difficulty \u2193", "difficulty"),
-    ) }
+    val sortOptions = listOf(
+        SortOption(stringResource(R.string.structures_sort_name), "name"),
+        SortOption(stringResource(R.string.structures_sort_difficulty), "difficulty"),
+    )
 
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
@@ -167,7 +167,7 @@ fun StructuresScreen(
         ) {
             SpyglassSearchBar(
                 query = query, onQueryChange = vm::setQuery,
-                category = "structures", placeholder = "Search structures\u2026",
+                category = "structures", placeholder = stringResource(R.string.structures_search_placeholder),
                 modifier = Modifier.weight(1f),
             )
             SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
@@ -187,9 +187,9 @@ fun StructuresScreen(
             item {
                 TabIntroHeader(
                     icon = PixelIcons.Structure,
-                    title = "Structures",
-                    description = "Every Minecraft structure with biomes, mobs, loot, and how to find them",
-                    stat = "${structures.size} structures",
+                    title = stringResource(R.string.structures_title),
+                    description = stringResource(R.string.structures_description),
+                    stat = stringResource(R.string.structures_stat, structures.size),
                 )
             }
             if (favoriteStructures.isNotEmpty()) {
@@ -242,8 +242,8 @@ fun StructuresScreen(
             if (structures.isEmpty()) item {
                 EmptyState(
                     icon     = PixelIcons.SearchOff,
-                    title    = "No structures found",
-                    subtitle = "Try a different search or dimension filter",
+                    title    = stringResource(R.string.structures_no_results_title),
+                    subtitle = stringResource(R.string.structures_no_results_subtitle),
                 )
             }
         }
@@ -337,14 +337,14 @@ private fun StructureDetailCard(
         // How to Find
         if (structure.findMethod.isNotEmpty()) {
             SpyglassDivider()
-            Text("How to Find", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.structures_how_to_find), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Text(structure.findMethod, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
         // Biomes
         if (biomes.isNotEmpty()) {
             SpyglassDivider()
-            Text("Biomes", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.structures_biomes), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 biomes.forEach { biomeId ->
                     AssistChip(
@@ -363,7 +363,7 @@ private fun StructureDetailCard(
         // Mobs
         if (mobs.isNotEmpty()) {
             SpyglassDivider()
-            Text("Mobs", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.structures_mobs), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 mobs.forEach { mobId ->
                     AssistChip(
@@ -382,7 +382,7 @@ private fun StructureDetailCard(
         // Loot
         if (loot.isNotEmpty()) {
             SpyglassDivider()
-            Text("Loot", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.structures_loot), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 loot.forEach { itemId ->
                     AssistChip(
@@ -401,7 +401,7 @@ private fun StructureDetailCard(
         // Unique Blocks
         if (uniqueBlocks.isNotEmpty()) {
             SpyglassDivider()
-            Text("Unique Blocks", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.structures_unique_blocks), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 uniqueBlocks.forEach { blockId ->
                     AssistChip(
@@ -422,14 +422,14 @@ private fun StructureDetailCard(
             SpyglassDivider()
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(
-                    "Loot Guide \u2192",
+                    stringResource(R.string.structures_loot_guide),
                     style = MaterialTheme.typography.labelSmall,
                     color = PotionBlue,
                     textDecoration = TextDecoration.Underline,
                     modifier = Modifier.clickable { onCalcTab(18) },
                 )
                 Text(
-                    "Armor Trims \u2192",
+                    stringResource(R.string.structures_armor_trims),
                     style = MaterialTheme.typography.labelSmall,
                     color = PotionBlue,
                     textDecoration = TextDecoration.Underline,

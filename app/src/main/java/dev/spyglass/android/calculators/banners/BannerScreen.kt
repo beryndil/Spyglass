@@ -24,6 +24,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 // ── Reference data (kept for collapsible reference section) ─────────────────
@@ -66,12 +68,12 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
     ) {
         TabIntroHeader(
             icon = PixelIcons.Blocks,
-            title = "Banner Designer",
-            description = "Design custom banners like a Loom. Pick a base color, add up to 6 pattern layers, and preview your design live.",
+            title = stringResource(R.string.banner_title),
+            description = stringResource(R.string.banner_description),
         )
 
         // ── Base color selector ─────────────────────────────────────────
-        SectionHeader("Base Color")
+        SectionHeader(stringResource(R.string.banner_base_color))
         InputCard {
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -89,7 +91,7 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
         }
 
         // ── Live banner preview ─────────────────────────────────────────
-        SectionHeader("Preview")
+        SectionHeader(stringResource(R.string.banner_preview))
         ResultCard(modifier = Modifier.fillMaxWidth()) {
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                 BannerPreview(
@@ -100,7 +102,7 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
                 )
             }
             Text(
-                "${s.layers.size}/6 layers",
+                stringResource(R.string.banner_layers_count, s.layers.size),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -109,7 +111,7 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
 
         // ── Add pattern layer ───────────────────────────────────────────
         if (s.layers.size < 6) {
-            SectionHeader("Add Pattern")
+            SectionHeader(stringResource(R.string.banner_add_pattern))
             InputCard {
                 // Category filter chips
                 FlowRow(
@@ -162,13 +164,13 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
                 }
 
                 Text(
-                    s.selectedPattern.displayName + if (s.selectedPattern.requiresItem) " (requires item)" else "",
+                    s.selectedPattern.displayName + if (s.selectedPattern.requiresItem) stringResource(R.string.banner_requires_item) else "",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
                 // Layer color picker
-                Text("Layer Color", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.banner_layer_color), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -191,14 +193,14 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
                 ) {
                     Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(6.dp))
-                    Text("Add Layer")
+                    Text(stringResource(R.string.banner_add_layer))
                 }
             }
         }
 
         // ── Layer stack ─────────────────────────────────────────────────
         if (s.layers.isNotEmpty()) {
-            SectionHeader("Layer Stack")
+            SectionHeader(stringResource(R.string.banner_layer_stack))
             ResultCard {
                 s.layers.forEachIndexed { index, layer ->
                     Row(
@@ -225,17 +227,17 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
                             modifier = Modifier.weight(1f),
                         )
                         IconButton(onClick = { hapticClick(); vm.moveLayerUp(index) }, modifier = Modifier.size(28.dp)) {
-                            Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Move up",
+                            Icon(Icons.Default.KeyboardArrowUp, contentDescription = stringResource(R.string.banner_move_up),
                                 tint = if (index > 0) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.outline,
                                 modifier = Modifier.size(18.dp))
                         }
                         IconButton(onClick = { hapticClick(); vm.moveLayerDown(index) }, modifier = Modifier.size(28.dp)) {
-                            Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Move down",
+                            Icon(Icons.Default.KeyboardArrowDown, contentDescription = stringResource(R.string.banner_move_down),
                                 tint = if (index < s.layers.size - 1) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.outline,
                                 modifier = Modifier.size(18.dp))
                         }
                         IconButton(onClick = { hapticConfirm(); vm.removeLayer(index) }, modifier = Modifier.size(28.dp)) {
-                            Icon(Icons.Default.Close, contentDescription = "Remove",
+                            Icon(Icons.Default.Close, contentDescription = stringResource(R.string.banner_remove),
                                 tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(16.dp))
                         }
                     }
@@ -250,28 +252,28 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
                 ) {
                     Icon(Icons.Default.Delete, contentDescription = null, modifier = Modifier.size(16.dp))
                     Spacer(Modifier.width(6.dp))
-                    Text("Clear All")
+                    Text(stringResource(R.string.banner_clear_all))
                 }
             }
         }
 
         // ── Materials summary ───────────────────────────────────────────
         if (s.layers.isNotEmpty()) {
-            SectionHeader("Materials Needed")
+            SectionHeader(stringResource(R.string.banner_materials_needed))
             ResultCard {
-                StatRow("Banner", "1x ${s.baseColor.displayName} Banner")
+                StatRow(stringResource(R.string.banner_banner_material), stringResource(R.string.banner_banner_val, s.baseColor.displayName))
 
                 val dyeCounts = mutableMapOf<DyeColor, Int>()
                 s.layers.forEach { layer -> dyeCounts[layer.color] = (dyeCounts[layer.color] ?: 0) + 1 }
                 dyeCounts.forEach { (dye, count) ->
-                    StatRow("${dye.displayName} Dye", "${count}x")
+                    StatRow("${dye.displayName} Dye", stringResource(R.string.banner_dye_count, count))
                 }
 
                 val specialItems = s.layers.filter { it.pattern.requiresItem }.map { it.pattern.itemName }.distinct()
                 if (specialItems.isNotEmpty()) {
                     SpyglassDivider()
                     specialItems.forEach { item ->
-                        StatRow(item, "1x (reusable)")
+                        StatRow(item, stringResource(R.string.banner_reusable))
                     }
                 }
             }
@@ -283,7 +285,7 @@ fun BannerScreen(vm: BannerDesignerViewModel = viewModel()) {
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.secondary),
         ) {
-            Text(if (showReference) "Hide Reference" else "Show Reference")
+            Text(if (showReference) stringResource(R.string.banner_hide_reference) else stringResource(R.string.banner_show_reference))
         }
 
         if (showReference) {
@@ -335,10 +337,10 @@ private fun ColorSwatch(
 
 @Composable
 private fun PatternItemsSection() {
-    SectionHeader("Special Pattern Items")
+    SectionHeader(stringResource(R.string.banner_special_items))
     ResultCard {
         Text(
-            "These items unlock special patterns in the Loom. They are not consumed when used.",
+            stringResource(R.string.banner_special_items_desc),
             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
         )
     }
@@ -359,8 +361,8 @@ private fun PatternItemsSection() {
                 CategoryBadge(label = item.rarity, color = rarityColor)
             }
             Spacer(Modifier.height(4.dp))
-            StatRow("Obtained", item.obtainMethod)
-            StatRow("Source", item.source)
+            StatRow(stringResource(R.string.banner_obtained), item.obtainMethod)
+            StatRow(stringResource(R.string.banner_source), item.source)
         }
     }
 }
@@ -368,10 +370,10 @@ private fun PatternItemsSection() {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun LoomPatternsSection() {
-    SectionHeader("Loom Patterns (No Item Required)")
+    SectionHeader(stringResource(R.string.banner_loom_patterns))
     ResultCard {
         Text(
-            "These patterns are available in the Loom without any special banner pattern item.",
+            stringResource(R.string.banner_loom_patterns_desc),
             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
         )
     }
@@ -403,10 +405,10 @@ private fun LoomPatternsSection() {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DyeColorsSection() {
-    SectionHeader("All 16 Dye Colors")
+    SectionHeader(stringResource(R.string.banner_all_16_dye))
     ResultCard {
         Text(
-            "Any of these colors can be used in the Loom to apply patterns to banners.",
+            stringResource(R.string.banner_dye_desc),
             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
         )
         SpyglassDivider()
@@ -419,17 +421,17 @@ private fun DyeColorsSection() {
             }
         }
         SpyglassDivider()
-        Text("HOW TO USE THE LOOM", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(R.string.banner_how_to_use_loom), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(4.dp))
         Text(
-            "1. Place a banner in the top-left slot\n2. Place a dye in the top-right slot\n3. Optionally place a pattern item in the middle slot\n4. Select a pattern from the list\n5. Take the result from the output slot",
+            stringResource(R.string.banner_loom_steps),
             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         SpyglassDivider()
-        Text("TIPS", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(R.string.banner_tips), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.height(4.dp))
         Text(
-            "\u2022 Banners can have up to 6 pattern layers\n\u2022 Pattern items are NOT consumed when used\n\u2022 You can copy a banner by placing it + blank banner in a crafting grid\n\u2022 Banners can be placed on shields at a crafting table",
+            stringResource(R.string.banner_tips_text),
             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }

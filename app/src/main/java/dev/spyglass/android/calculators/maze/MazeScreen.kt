@@ -9,6 +9,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 private val MAZE_TYPE_LABELS = listOf("Rect", "Circle", "Floors")
@@ -23,7 +25,7 @@ fun MazeScreen(vm: MazeViewModel = viewModel()) {
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        SectionHeader("Maze Maker", icon = PixelIcons.Maze)
+        SectionHeader(stringResource(R.string.maze_header), icon = PixelIcons.Maze)
 
         InputCard {
             // Maze type selector
@@ -35,21 +37,21 @@ fun MazeScreen(vm: MazeViewModel = viewModel()) {
 
             // Conditional sliders
             if (s.mazeType == MazeType.RECT || s.mazeType == MazeType.FLOORS) {
-                LabeledSlider("Width (cells)", s.widthCells, 3, 30) { vm.setWidthCells(it) }
-                LabeledSlider("Length (cells)", s.lengthCells, 3, 30) { vm.setLengthCells(it) }
+                LabeledSlider(stringResource(R.string.maze_width_cells), s.widthCells, 3, 30) { vm.setWidthCells(it) }
+                LabeledSlider(stringResource(R.string.maze_length_cells), s.lengthCells, 3, 30) { vm.setLengthCells(it) }
             }
 
             if (s.mazeType == MazeType.CIRCLE) {
-                LabeledSlider("Rings", s.rings, 2, 10) { vm.setRings(it) }
+                LabeledSlider(stringResource(R.string.maze_rings), s.rings, 2, 10) { vm.setRings(it) }
             }
 
             if (s.mazeType == MazeType.FLOORS) {
-                LabeledSlider("Floors", s.floors, 2, 6) { vm.setFloors(it) }
+                LabeledSlider(stringResource(R.string.maze_floors), s.floors, 2, 6) { vm.setFloors(it) }
             }
 
             // All types
-            LabeledSlider("Path width", s.pathWidth, 1, 3) { vm.setPathWidth(it) }
-            LabeledSlider("Wall height", s.wallHeight, 1, 10) { vm.setWallHeight(it) }
+            LabeledSlider(stringResource(R.string.maze_path_width), s.pathWidth, 1, 3) { vm.setPathWidth(it) }
+            LabeledSlider(stringResource(R.string.maze_wall_height), s.wallHeight, 1, 10) { vm.setWallHeight(it) }
 
             // Generate / Shuffle buttons
             Row(
@@ -61,14 +63,14 @@ fun MazeScreen(vm: MazeViewModel = viewModel()) {
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary, contentColor = MaterialTheme.colorScheme.onPrimary),
                     modifier = Modifier.weight(1f),
                 ) {
-                    Text("Generate")
+                    Text(stringResource(R.string.maze_generate))
                 }
                 OutlinedButton(
                     onClick = { hapticClick(); vm.shuffle() },
                     colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.primary),
                     modifier = Modifier.weight(1f),
                 ) {
-                    Text("Shuffle")
+                    Text(stringResource(R.string.maze_shuffle))
                 }
             }
         }
@@ -81,7 +83,7 @@ fun MazeScreen(vm: MazeViewModel = viewModel()) {
                 { view3D = it == 1 },
             )
 
-            StatRow("Total blocks", "%,d".format(s.totalBlocks))
+            StatRow(stringResource(R.string.maze_total_blocks), "%,d".format(s.totalBlocks))
 
             // Dimensions in blocks and chunks
             val allXs = s.layers.values.flatMap { pts -> pts.map { it.first } }
@@ -96,13 +98,13 @@ fun MazeScreen(vm: MazeViewModel = viewModel()) {
                     return if (chunks > 0) "$blocks blocks ($chunks chunk${if (chunks > 1) "s" else ""}${if (rem > 0) " + $rem" else ""})"
                     else "$blocks blocks"
                 }
-                StatRow("Width (X)",  fmt(width))
-                StatRow("Depth (Z)",  fmt(depth))
-                StatRow("Height (Y)", fmt(height))
+                StatRow(stringResource(R.string.maze_width_x),  fmt(width))
+                StatRow(stringResource(R.string.maze_depth_z),  fmt(depth))
+                StatRow(stringResource(R.string.maze_height_y), fmt(height))
             }
 
-            StatRow("Dead ends", "${s.deadEnds}")
-            StatRow("Longest path", "${s.longestPath} cells")
+            StatRow(stringResource(R.string.maze_dead_ends), "${s.deadEnds}")
+            StatRow(stringResource(R.string.maze_longest_path), stringResource(R.string.maze_longest_path_val, s.longestPath))
 
             SpyglassDivider()
 
@@ -111,7 +113,7 @@ fun MazeScreen(vm: MazeViewModel = viewModel()) {
             } else {
                 // Layer slider
                 if (s.layerMin < s.layerMax) {
-                    Text("Y layer: ${s.currentLayer}", style = MaterialTheme.typography.bodyMedium)
+                    Text(stringResource(R.string.maze_y_layer, s.currentLayer), style = MaterialTheme.typography.bodyMedium)
                     Slider(
                         value         = s.currentLayer.toFloat(),
                         onValueChange = { vm.setLayer(it.toInt()) },
@@ -128,7 +130,7 @@ fun MazeScreen(vm: MazeViewModel = viewModel()) {
         }
 
         Text(
-            "Generate mazes for Minecraft. Choose rectangular for classic hedge mazes, circular for concentric ring mazes, or multi-floor for stacked mazes connected by staircases. Use the layer slider to build layer by layer, or switch to 3D for an isometric preview.",
+            stringResource(R.string.maze_help),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.secondary,
         )

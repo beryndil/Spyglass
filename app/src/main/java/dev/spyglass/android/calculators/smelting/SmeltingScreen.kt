@@ -12,6 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 @Composable
@@ -22,19 +24,19 @@ fun SmeltingScreen(vm: SmeltingViewModel = viewModel()) {
         modifier = Modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        SectionHeader("Smelting / Fuel Calculator", icon = PixelIcons.Smelt)
+        SectionHeader(stringResource(R.string.smelting_header), icon = PixelIcons.Smelt)
 
         InputCard {
             SpyglassTextField(
                 value         = s.input,
                 onValueChange = vm::setInput,
-                label         = "Items to smelt",
-                placeholder   = "e.g. 14 stacks, 5k, 2 chests",
+                label         = stringResource(R.string.smelting_label),
+                placeholder   = stringResource(R.string.smelting_placeholder),
                 keyboardType  = androidx.compose.ui.text.input.KeyboardType.Text,
             )
 
             if (s.parseError) {
-                Text("Could not parse quantity", color = Red400, style = MaterialTheme.typography.bodySmall)
+                Text(stringResource(R.string.smelting_parse_error), color = Red400, style = MaterialTheme.typography.bodySmall)
             }
         }
 
@@ -48,7 +50,7 @@ fun SmeltingScreen(vm: SmeltingViewModel = viewModel()) {
         }
 
         Text(
-            "Enter how many items you need to smelt and see exactly how much of each fuel type you'll need. Green dots mean high efficiency, gold is mid, gray is low. Type amounts like \"14 stacks\", \"5k\", or \"2 chests\".",
+            stringResource(R.string.smelting_help),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.secondary,
         )
@@ -88,7 +90,7 @@ private fun FuelRow(r: FuelResult) {
             Text(qty, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
             val wasted = r.unused.toLong()
             if (wasted > 0) {
-                Text("$wasted wasted", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                Text(stringResource(R.string.smelting_wasted, wasted), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             }
         }
     }

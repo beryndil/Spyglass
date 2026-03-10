@@ -34,6 +34,8 @@ import dev.spyglass.android.connect.gear.EnchantRecommendation
 import dev.spyglass.android.connect.gear.GearAnalysis
 import dev.spyglass.android.connect.gear.SlotAnalysis
 import dev.spyglass.android.connect.gear.SlotType
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.navigation.BrowseTarget
 
@@ -85,9 +87,9 @@ fun CharacterScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
             }
-            Text("Character", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.connect_character), style = MaterialTheme.typography.titleMedium)
         }
 
         if (!isConnected && lastUpdated != null) {
@@ -132,7 +134,7 @@ private fun CharacterContent(
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 if (isOffline) {
-                    Text("No cached player data", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.connect_no_cached_player), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 } else {
                     CircularProgressIndicator(
                         modifier = Modifier.size(24.dp),
@@ -140,7 +142,7 @@ private fun CharacterContent(
                         color = MaterialTheme.colorScheme.primary,
                     )
                     Spacer(Modifier.height(12.dp))
-                    Text("Loading player data...", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.connect_loading_player), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
@@ -170,19 +172,19 @@ private fun CharacterContent(
                 when {
                     playerBodySkin != null -> Image(
                         bitmap = playerBodySkin.asImageBitmap(),
-                        contentDescription = "Player body",
+                        contentDescription = stringResource(R.string.connect_player_body),
                         modifier = Modifier.fillMaxHeight(),
                         contentScale = ContentScale.Fit,
                     )
                     playerSkin != null -> Image(
                         bitmap = playerSkin.asImageBitmap(),
-                        contentDescription = "Player head",
+                        contentDescription = stringResource(R.string.connect_player_head),
                         modifier = Modifier.size(64.dp),
                         contentScale = ContentScale.Fit,
                     )
                     else -> SpyglassIconImage(
                         PixelIcons.Steve,
-                        contentDescription = "Player",
+                        contentDescription = stringResource(R.string.connect_player),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(48.dp),
                     )
@@ -195,9 +197,9 @@ private fun CharacterContent(
                 verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 // IGN
-                Text("IGN", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.connect_ign), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Text(
-                    playerName ?: "Unknown Player",
+                    playerName ?: stringResource(R.string.connect_unknown_player),
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,
@@ -205,7 +207,7 @@ private fun CharacterContent(
                 )
 
                 // UUID (tap to copy)
-                Text("UUID", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.connect_uuid), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 val uuid = playerData.playerUuid ?: "—"
                 val clipboardManager = LocalClipboardManager.current
                 Text(
@@ -265,7 +267,7 @@ private fun CharacterContent(
                     ) {
                         SpyglassIconImage(PixelIcons.Mob, contentDescription = null, tint = Color(0xFFF44336), modifier = Modifier.size(16.dp))
                         Text(
-                            "Last Death: ${loc.x}, ${loc.y}, ${loc.z} (${loc.dimension.replace("_", " ").replaceFirstChar { it.uppercase() }})",
+                            stringResource(R.string.connect_last_death, loc.x, loc.y, loc.z, loc.dimension.replace("_", " ").replaceFirstChar { it.uppercase() }),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface,
                         )
@@ -280,7 +282,7 @@ private fun CharacterContent(
                     ) {
                         SpyglassIconImage(PixelIcons.Structure, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
                         Text(
-                            "Spawn: ${loc.x}, ${loc.y}, ${loc.z}${if (playerData.spawnForced) " (Forced)" else ""}",
+                            if (playerData.spawnForced) stringResource(R.string.connect_spawn_forced, loc.x, loc.y, loc.z) else stringResource(R.string.connect_spawn, loc.x, loc.y, loc.z),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface,
                         )
@@ -295,16 +297,16 @@ private fun CharacterContent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
-                StatColumn("Health", "${playerData.health.toInt()} / 20")
-                StatColumn("Food", "${playerData.foodLevel} / 20")
-                StatColumn("XP", "${playerData.xpLevel}")
+                StatColumn(stringResource(R.string.connect_health), "${playerData.health.toInt()} / 20")
+                StatColumn(stringResource(R.string.connect_food), "${playerData.foodLevel} / 20")
+                StatColumn(stringResource(R.string.connect_xp), "${playerData.xpLevel}")
             }
         }
 
         // ── Active Effects ──
         if (playerData.activeEffects.isNotEmpty()) {
             Text(
-                "Active Effects",
+                stringResource(R.string.connect_active_effects),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
             )
@@ -313,7 +315,7 @@ private fun CharacterContent(
 
         // ── Equipment Analysis ──
         Text(
-            "Equipment Analysis",
+            stringResource(R.string.connect_equipment_analysis),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.primary,
         )
@@ -329,7 +331,7 @@ private fun CharacterContent(
         } else {
             ResultCard {
                 Text(
-                    "Analyzing gear...",
+                    stringResource(R.string.connect_analyzing_gear),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -346,13 +348,14 @@ private fun StatColumn(label: String, value: String) {
     }
 }
 
+@Composable
 private fun slotLabel(slotType: SlotType): String = when (slotType) {
-    SlotType.HEAD -> "Head"
-    SlotType.CHEST -> "Chest"
-    SlotType.LEGS -> "Legs"
-    SlotType.FEET -> "Feet"
-    SlotType.MAIN_HAND -> "Main Hand"
-    SlotType.OFF_HAND -> "Off Hand"
+    SlotType.HEAD -> stringResource(R.string.connect_slot_head)
+    SlotType.CHEST -> stringResource(R.string.connect_slot_chest)
+    SlotType.LEGS -> stringResource(R.string.connect_slot_legs)
+    SlotType.FEET -> stringResource(R.string.connect_slot_feet)
+    SlotType.MAIN_HAND -> stringResource(R.string.connect_slot_main_hand)
+    SlotType.OFF_HAND -> stringResource(R.string.connect_slot_off_hand)
 }
 
 private fun formatItemName(id: String): String =
@@ -451,7 +454,7 @@ private fun GearSlotCard(
                     )
                     Spacer(Modifier.width(4.dp))
                     Text(
-                        "Upgrade to ${slotAnalysis.tierUpgrade.name} \u2192",
+                        stringResource(R.string.connect_upgrade_to, slotAnalysis.tierUpgrade.name),
                         style = MaterialTheme.typography.bodySmall,
                         color = PotionBlue,
                     )
@@ -467,7 +470,7 @@ private fun GearSlotCard(
                 )
                 Spacer(Modifier.weight(1f))
                 Text(
-                    "Empty",
+                    stringResource(R.string.connect_empty),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -484,7 +487,7 @@ private fun GearSlotCard(
                         Spacer(Modifier.width(6.dp))
                     }
                     Text(
-                        "Suggested: ${slotAnalysis.tierUpgrade.name} \u2192",
+                        stringResource(R.string.connect_suggested, slotAnalysis.tierUpgrade.name),
                         style = MaterialTheme.typography.bodySmall,
                         color = PotionBlue,
                     )

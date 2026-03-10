@@ -9,6 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 private data class BiomeEnchants(
@@ -69,8 +71,8 @@ fun LibrarianScreen() {
     ) {
         TabIntroHeader(
             icon = PixelIcons.Enchant,
-            title = "Librarian Guide",
-            description = "Librarian enchantments are biome-locked when the Villager Trade Rebalance data pack is enabled. Find the right biome for the enchantment you need.",
+            title = stringResource(R.string.librarian_title),
+            description = stringResource(R.string.librarian_description),
         )
 
         // Experimental notice
@@ -82,12 +84,12 @@ fun LibrarianScreen() {
                 Text("⚗", style = MaterialTheme.typography.titleMedium)
                 Column {
                     Text(
-                        "Experimental Feature",
+                        stringResource(R.string.librarian_experimental),
                         style = MaterialTheme.typography.labelSmall,
                         color = Color(0xFFFFC107),
                     )
                     Text(
-                        "Requires the Villager Trade Rebalance data pack. Not active in default gameplay.",
+                        stringResource(R.string.librarian_experimental_desc),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -96,7 +98,7 @@ fun LibrarianScreen() {
         }
 
         // ── Biome Filter ──
-        SectionHeader("Select Biome")
+        SectionHeader(stringResource(R.string.librarian_select_biome))
         FlowRow(
             modifier = Modifier.padding(horizontal = 0.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -105,7 +107,7 @@ fun LibrarianScreen() {
             FilterChip(
                 selected = selectedBiome == null,
                 onClick = { hapticClick(); selectedBiome = null },
-                label = { Text("All Biomes", style = MaterialTheme.typography.labelSmall) },
+                label = { Text(stringResource(R.string.librarian_all_biomes), style = MaterialTheme.typography.labelSmall) },
             )
             BIOME_ENCHANTS.forEach { be ->
                 FilterChip(
@@ -124,15 +126,15 @@ fun LibrarianScreen() {
         displayed.forEach { be ->
             SectionHeader(be.biome)
             ResultCard {
-                Text("MASTER LEVEL EXCLUSIVE", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.librarian_master_exclusive), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.height(4.dp))
                 Text(be.masterExclusive, style = MaterialTheme.typography.titleMedium, color = EnderPurple)
                 Text(
-                    "Guaranteed enchanted book trade at Master level.",
+                    stringResource(R.string.librarian_master_guaranteed),
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
                 )
                 SpyglassDivider()
-                Text("COMMON POOL", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.librarian_common_pool), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.height(4.dp))
                 be.commonPool.forEach { enchant ->
                     Text(
@@ -142,49 +144,49 @@ fun LibrarianScreen() {
                     )
                 }
                 Text(
-                    "Available at Novice through Expert levels.",
+                    stringResource(R.string.librarian_common_available),
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
                 )
             }
         }
 
         // ── Key Info ──
-        SectionHeader("How It Works")
+        SectionHeader(stringResource(R.string.librarian_how_it_works))
         ResultCard {
-            Text("BIOME DETERMINATION", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.librarian_biome_determination), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             Text(
-                "A librarian's available enchantments are determined by the biome they first claimed a lectern in. Moving them to a different biome does NOT change their enchantment pool.",
+                stringResource(R.string.librarian_biome_determination_desc),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
-            Text("ENCHANTMENT LEVEL CAPS", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.librarian_level_caps), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             Text(
-                "Some enchantments are capped below their maximum level from librarians:\n\u2022 Protection III (max IV requires anvil combining)\n\u2022 Fortune II (max III requires anvil combining)\n\u2022 Unbreaking II (max III requires anvil combining)",
+                stringResource(R.string.librarian_level_caps_desc),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
-            Text("STRATEGY TIPS", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.librarian_strategy_tips), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             Text(
-                "\u2022 For Mending, breed villagers in a Swamp biome\n\u2022 For Silk Touch, use a Snowy biome\n\u2022 Combine capped enchantments via anvil for max level\n\u2022 Break and replace the lectern to reroll trades",
+                stringResource(R.string.librarian_strategy_tips_desc),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
         // ── Unavailable ──
-        SectionHeader("Not Available from Librarians")
+        SectionHeader(stringResource(R.string.librarian_not_available))
         ResultCard {
-            Text("THESE ENCHANTMENTS CANNOT BE TRADED", style = MaterialTheme.typography.labelSmall, color = Red400)
+            Text(stringResource(R.string.librarian_cannot_be_traded), style = MaterialTheme.typography.labelSmall, color = Red400)
             Spacer(Modifier.height(4.dp))
             Text(
-                "\u2022 Trident: Channeling, Loyalty, Riptide, Impaling\n\u2022 Crossbow: Multishot, Piercing, Quick Charge\n\u2022 Fishing Rod: Luck of the Sea, Lure\n\u2022 Treasure Only: Soul Speed, Swift Sneak, Wind Burst\n\u2022 1.21+ Only: Breach, Density (Mace enchantments)",
+                stringResource(R.string.librarian_unavailable_list),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
             Text(
-                "These must be found from loot chests, fishing, mob drops, or enchanting tables.",
+                stringResource(R.string.librarian_found_from),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary,
             )
         }

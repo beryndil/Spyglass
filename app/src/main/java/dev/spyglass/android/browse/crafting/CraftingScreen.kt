@@ -151,7 +151,7 @@ fun CraftingScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         SpyglassSearchBar(
             query = query, onQueryChange = vm::setQuery,
-            category = "crafting", placeholder = "Search recipes\u2026",
+            category = "crafting", placeholder = stringResource(R.string.recipes_search_placeholder),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
 
@@ -182,9 +182,9 @@ fun CraftingScreen(
             item {
                 TabIntroHeader(
                     icon = PixelIcons.Crafting,
-                    title = "Recipes",
-                    description = "Crafting recipes for every craftable item",
-                    stat = "${dedupedRecipes.size} recipes",
+                    title = stringResource(R.string.recipes_title),
+                    description = stringResource(R.string.recipes_description),
+                    stat = stringResource(R.string.recipes_stat, dedupedRecipes.size),
                 )
             }
             if (favoriteRecipes.isNotEmpty()) {
@@ -245,8 +245,8 @@ fun CraftingScreen(
             if (recipes.isEmpty()) item {
                 EmptyState(
                     icon     = PixelIcons.SearchOff,
-                    title    = "No recipes found",
-                    subtitle = "Try a different search term",
+                    title    = stringResource(R.string.recipes_no_results_title),
+                    subtitle = stringResource(R.string.recipes_no_results_subtitle),
                 )
             }
         }

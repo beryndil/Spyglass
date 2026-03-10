@@ -214,12 +214,12 @@ fun BlocksScreen(
     val listState   = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
-    val blockSortOptions = remember { listOf(
-        SortOption("Name A\u2192Z", "name"),
-        SortOption("Hardness \u2193", "hardness"),
-        SortOption("Blast Resistance \u2193", "blast_resistance"),
-        SortOption("Light Level \u2193", "light_level"),
-    ) }
+    val blockSortOptions = listOf(
+        SortOption(stringResource(R.string.blocks_sort_name), "name"),
+        SortOption(stringResource(R.string.blocks_sort_hardness), "hardness"),
+        SortOption(stringResource(R.string.blocks_sort_blast_resistance), "blast_resistance"),
+        SortOption(stringResource(R.string.blocks_sort_light_level), "light_level"),
+    )
 
     // Auto-expand and scroll to target block from cross-reference (runs once per targetBlockId)
     LaunchedEffect(targetBlockId) {
@@ -244,7 +244,7 @@ fun BlocksScreen(
         ) {
             SpyglassSearchBar(
                 query = query, onQueryChange = vm::setQuery,
-                category = "blocks", placeholder = "Search blocks\u2026",
+                category = "blocks", placeholder = stringResource(R.string.blocks_search_placeholder),
                 modifier = Modifier.weight(1f),
             )
             SortButton(options = blockSortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
@@ -283,9 +283,9 @@ fun BlocksScreen(
             item {
                 TabIntroHeader(
                     icon = PixelIcons.Blocks,
-                    title = "Blocks",
-                    description = "Every placeable block with hardness and tool info",
-                    stat = "${blocks.size} blocks",
+                    title = stringResource(R.string.blocks_title),
+                    description = stringResource(R.string.blocks_description),
+                    stat = stringResource(R.string.blocks_stat, blocks.size),
                 )
             }
             if (favoriteBlocks.isNotEmpty()) {
@@ -324,11 +324,11 @@ fun BlocksScreen(
                 val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val isExpanded = b.id in expandedIds
                 val glanceText = when {
-                    b.minY != null && b.maxY != null -> "Y ${b.minY} to ${b.maxY}"
-                    b.lightLevel > 0 -> "${b.lightLevel} light"
-                    b.hasGravity -> "gravity"
-                    b.category == "redstone" -> "redstone"
-                    else -> "${"%.1f".format(b.hardness)} hard"
+                    b.minY != null && b.maxY != null -> stringResource(R.string.blocks_glance_y_range, b.minY!!, b.maxY!!)
+                    b.lightLevel > 0 -> stringResource(R.string.blocks_glance_light, b.lightLevel)
+                    b.hasGravity -> stringResource(R.string.blocks_glance_gravity)
+                    b.category == "redstone" -> stringResource(R.string.blocks_glance_redstone)
+                    else -> stringResource(R.string.blocks_glance_hardness, "%.1f".format(b.hardness))
                 }
                 Column(modifier = Modifier.alpha(vAlpha)) {
                     BrowseListItem(
@@ -396,8 +396,8 @@ fun BlocksScreen(
             if (blocks.isEmpty()) item {
                 EmptyState(
                     icon     = PixelIcons.SearchOff,
-                    title    = "No blocks found",
-                    subtitle = "Try a different search term",
+                    title    = stringResource(R.string.blocks_no_results_title),
+                    subtitle = stringResource(R.string.blocks_no_results_subtitle),
                 )
             }
         }
@@ -439,12 +439,12 @@ private fun BlockDetailContent(
 
         // ── Property badges ──
         val badges = buildList {
-            if (!block.isObtainable) add("Unobtainable" to NetherRed)
-            if (block.isFlammable) add("Flammable" to NetherRed)
-            if (block.isTransparent) add("Transparent" to PotionBlue)
-            if (block.hasGravity) add("Gravity" to MaterialTheme.colorScheme.primary)
-            if (block.isWaterloggable) add("Waterloggable" to PotionBlue)
-            if (block.lightLevel > 0) add("Light: ${block.lightLevel}" to Color(0xFFFFA726))
+            if (!block.isObtainable) add(stringResource(R.string.blocks_badge_unobtainable) to NetherRed)
+            if (block.isFlammable) add(stringResource(R.string.blocks_badge_flammable) to NetherRed)
+            if (block.isTransparent) add(stringResource(R.string.blocks_badge_transparent) to PotionBlue)
+            if (block.hasGravity) add(stringResource(R.string.blocks_badge_gravity) to MaterialTheme.colorScheme.primary)
+            if (block.isWaterloggable) add(stringResource(R.string.blocks_badge_waterloggable) to PotionBlue)
+            if (block.lightLevel > 0) add(stringResource(R.string.blocks_badge_light, block.lightLevel) to Color(0xFFFFA726))
         }
         if (badges.isNotEmpty()) {
             FlowRow(
@@ -459,9 +459,9 @@ private fun BlockDetailContent(
         }
 
         // ── Stats section ──
-        if (block.stackSize != 64) StatRow("Stack Size", "${block.stackSize}")
-        StatRow("Hardness", "${block.hardness}")
-        StatRow("Blast Resistance", "${block.blastResistance}")
+        if (block.stackSize != 64) StatRow(stringResource(R.string.blocks_stack_size), "${block.stackSize}")
+        StatRow(stringResource(R.string.blocks_hardness), "${block.hardness}")
+        StatRow(stringResource(R.string.blocks_blast_resistance), "${block.blastResistance}")
 
         if (block.toolRequired.isNotBlank() && block.toolRequired != "none") {
             val toolTexId = toolTextureId(block.toolRequired)
@@ -471,7 +471,7 @@ private fun BlockDetailContent(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("Tool Required", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
+                Text(stringResource(R.string.blocks_tool_required), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     if (toolIcon != null) {
                         SpyglassIconImage(toolIcon, contentDescription = null, modifier = Modifier.size(16.dp))
@@ -482,7 +482,7 @@ private fun BlockDetailContent(
             }
         }
         if (block.toolLevel.isNotBlank()) {
-            StatRow("Min. Tool Tier", formatId(block.toolLevel))
+            StatRow(stringResource(R.string.blocks_min_tool_tier), formatId(block.toolLevel))
         }
 
         // ── Light level bar ──
@@ -493,8 +493,8 @@ private fun BlockDetailContent(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("Light Level", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
-                Text("${block.lightLevel}/15", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                Text(stringResource(R.string.blocks_light_level), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
+                Text(stringResource(R.string.blocks_light_level_value, block.lightLevel), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
             }
             Row(
                 modifier = Modifier.fillMaxWidth().height(8.dp),
@@ -523,10 +523,10 @@ private fun BlockDetailContent(
         // ── Ore Generation section ──
         if (block.minY != null) {
             SpyglassDivider()
-            Text("Ore Generation", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
-            StatRow("Min Y", "${block.minY}")
-            if (block.maxY != null) StatRow("Max Y", "${block.maxY}")
-            if (block.peakY != null) StatRow("Peak Y", "${block.peakY}")
+            Text(stringResource(R.string.blocks_ore_generation), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            StatRow(stringResource(R.string.blocks_min_y), "${block.minY}")
+            if (block.maxY != null) StatRow(stringResource(R.string.blocks_max_y), "${block.maxY}")
+            if (block.peakY != null) StatRow(stringResource(R.string.blocks_peak_y), "${block.peakY}")
         }
 
         // ── Drops section ──
@@ -534,11 +534,11 @@ private fun BlockDetailContent(
         if (drops.isNotEmpty()) {
             SpyglassDivider()
             if (drops.size == 1 && drops[0] == "none") {
-                Text("Drops nothing", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
+                Text(stringResource(R.string.blocks_drops_nothing), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
             } else {
                 val isSelfDrop = drops.size == 1 && drops[0] == block.id
                 if (!isSelfDrop) {
-                    Text("Drops", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource(R.string.blocks_drops), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -563,10 +563,10 @@ private fun BlockDetailContent(
         val profession = BLOCK_TO_PROFESSION[block.id]
         if (profession != null) {
             SpyglassDivider()
-            Text("Job Block", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.blocks_job_block), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             AssistChip(
                 onClick = { onTradeTap(profession.lowercase()) },
-                label = { Text("Job block for: $profession", style = MaterialTheme.typography.labelSmall) },
+                label = { Text(stringResource(R.string.blocks_job_block_for, profession), style = MaterialTheme.typography.labelSmall) },
                 colors = AssistChipDefaults.assistChipColors(
                     labelColor = MaterialTheme.colorScheme.primary,
                     containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
@@ -578,9 +578,9 @@ private fun BlockDetailContent(
         // ── Compostable items (shown for composter block) ──
         if (block.id == "composter") {
             SpyglassDivider()
-            Text("Compostable Items", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.blocks_compostable_items), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             CompostData.byChance.forEach { (chance, items) ->
-                Text("$chance% chance", style = MaterialTheme.typography.bodySmall, color = Emerald)
+                Text(stringResource(R.string.blocks_compost_chance, chance), style = MaterialTheme.typography.bodySmall, color = Emerald)
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -610,7 +610,7 @@ private fun BlockDetailContent(
         }
         if (matchingStructures.isNotEmpty()) {
             SpyglassDivider()
-            Text("Found in Structures", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.blocks_found_in_structures), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),

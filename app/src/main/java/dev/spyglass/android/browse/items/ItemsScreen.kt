@@ -228,13 +228,13 @@ fun ItemsScreen(
     val listState   = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
-    val itemSortOptions = remember { listOf(
-        SortOption("Name A\u2192Z", "name"),
-        SortOption("Durability \u2193", "durability"),
-        SortOption("Attack Damage \u2193", "attack_damage"),
-        SortOption("Defense \u2193", "defense"),
-        SortOption("Saturation \u2193", "saturation"),
-    ) }
+    val itemSortOptions = listOf(
+        SortOption(stringResource(R.string.items_sort_name), "name"),
+        SortOption(stringResource(R.string.items_sort_durability), "durability"),
+        SortOption(stringResource(R.string.items_sort_attack_damage), "attack_damage"),
+        SortOption(stringResource(R.string.items_sort_defense), "defense"),
+        SortOption(stringResource(R.string.items_sort_saturation), "saturation"),
+    )
 
     // Auto-expand and scroll to target item from cross-reference
     LaunchedEffect(targetItemId) {
@@ -258,7 +258,7 @@ fun ItemsScreen(
         ) {
             SpyglassSearchBar(
                 query = query, onQueryChange = vm::setQuery,
-                category = "items", placeholder = "Search items\u2026",
+                category = "items", placeholder = stringResource(R.string.items_search_placeholder),
                 modifier = Modifier.weight(1f),
             )
             SortButton(options = itemSortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
@@ -296,9 +296,9 @@ fun ItemsScreen(
             item {
                 TabIntroHeader(
                     icon = PixelIcons.Item,
-                    title = "Items",
-                    description = "Non-block items: tools, weapons, armor, food, materials, and more — with sources and cross-links",
-                    stat = "${items.size} items",
+                    title = stringResource(R.string.items_title),
+                    description = stringResource(R.string.items_description),
+                    stat = stringResource(R.string.items_stat, items.size),
                 )
             }
             if (favoriteItems.isNotEmpty()) {
@@ -411,8 +411,8 @@ fun ItemsScreen(
             if (items.isEmpty()) item {
                 EmptyState(
                     icon     = PixelIcons.SearchOff,
-                    title    = "No items found",
-                    subtitle = "Try a different search or category",
+                    title    = stringResource(R.string.items_no_results_title),
+                    subtitle = stringResource(R.string.items_no_results_subtitle),
                 )
             }
         }
@@ -462,12 +462,12 @@ private fun ItemDetailCard(
                         color = categoryColor(item.category),
                     )
                     if (item.stackSize != 64) {
-                        CategoryBadge(label = "Stack: ${item.stackSize}", color = MaterialTheme.colorScheme.secondary)
+                        CategoryBadge(label = stringResource(R.string.items_badge_stack, item.stackSize), color = MaterialTheme.colorScheme.secondary)
                     }
                     if (item.isRenewable) {
-                        CategoryBadge(label = "Renewable", color = Emerald)
+                        CategoryBadge(label = stringResource(R.string.items_badge_renewable), color = Emerald)
                     } else {
-                        CategoryBadge(label = "Non-renewable", color = NetherRed)
+                        CategoryBadge(label = stringResource(R.string.items_badge_non_renewable), color = NetherRed)
                     }
                 }
             }
@@ -499,7 +499,7 @@ private fun ItemDetailCard(
         val sources = item.obtainedFrom.split(",").map { it.trim() }.filter { it.isNotEmpty() }
         if (sources.isNotEmpty()) {
             SpyglassDivider()
-            Text("How to Obtain", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.items_how_to_obtain), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -516,46 +516,46 @@ private fun ItemDetailCard(
         // ── Conditional: Tools & Weapons Combat Stats ────────────────────
         if (item.category in listOf("tools", "weapons") && (item.durability > 0 || item.attackDamage.isNotBlank())) {
             SpyglassDivider()
-            Text("Combat Stats", style = MaterialTheme.typography.labelSmall, color = categoryColor(item.category))
-            if (item.durability > 0) StatRow("Durability", "${item.durability}")
+            Text(stringResource(R.string.items_combat_stats), style = MaterialTheme.typography.labelSmall, color = categoryColor(item.category))
+            if (item.durability > 0) StatRow(stringResource(R.string.items_durability), "${item.durability}")
             if (item.attackDamage.isNotBlank()) {
-                StatRow("Attack Damage", item.attackDamage)
+                StatRow(stringResource(R.string.items_attack_damage), item.attackDamage)
             }
             if (item.attackSpeed.isNotBlank()) {
-                StatRow("Attack Speed", item.attackSpeed)
+                StatRow(stringResource(R.string.items_attack_speed), item.attackSpeed)
                 // DPS calculation
                 val dmg = item.attackDamage.toFloatOrNull()
                 val spd = item.attackSpeed.toFloatOrNull()
                 if (dmg != null && spd != null) {
-                    StatRow("DPS", "${"%.1f".format(dmg * spd)}")
+                    StatRow(stringResource(R.string.items_dps), "${"%.1f".format(dmg * spd)}")
                 }
             }
-            if (item.enchantability > 0) StatRow("Enchantability", "${item.enchantability}")
+            if (item.enchantability > 0) StatRow(stringResource(R.string.items_enchantability), "${item.enchantability}")
         }
 
         // ── Conditional: Armor Stats ─────────────────────────────────────
         if (item.category == "armor" && (item.defensePoints > 0 || item.durability > 0)) {
             SpyglassDivider()
-            Text("Armor Stats", style = MaterialTheme.typography.labelSmall, color = categoryColor("armor"))
-            if (item.defensePoints > 0) StatRow("Defense Points", "${item.defensePoints}")
-            if (item.armorToughness > 0f) StatRow("Armor Toughness", "${"%.1f".format(item.armorToughness)}")
-            if (item.knockbackResistance > 0f) StatRow("Knockback Resistance", "${"%.1f".format(item.knockbackResistance)}")
-            if (item.durability > 0) StatRow("Durability", "${item.durability}")
-            if (item.enchantability > 0) StatRow("Enchantability", "${item.enchantability}")
+            Text(stringResource(R.string.items_armor_stats), style = MaterialTheme.typography.labelSmall, color = categoryColor("armor"))
+            if (item.defensePoints > 0) StatRow(stringResource(R.string.items_defense_points), "${item.defensePoints}")
+            if (item.armorToughness > 0f) StatRow(stringResource(R.string.items_armor_toughness), "${"%.1f".format(item.armorToughness)}")
+            if (item.knockbackResistance > 0f) StatRow(stringResource(R.string.items_knockback_resistance), "${"%.1f".format(item.knockbackResistance)}")
+            if (item.durability > 0) StatRow(stringResource(R.string.items_durability), "${item.durability}")
+            if (item.enchantability > 0) StatRow(stringResource(R.string.items_enchantability), "${item.enchantability}")
         }
 
         // ── Conditional: Food Stats ──────────────────────────────────────
         if (item.category == "food" && item.hunger > 0) {
             SpyglassDivider()
-            Text("Food Stats", style = MaterialTheme.typography.labelSmall, color = categoryColor("food"))
-            StatRow("Hunger", "${item.hunger}")
-            StatRow("Saturation", "${"%.1f".format(item.saturation)}")
+            Text(stringResource(R.string.items_food_stats), style = MaterialTheme.typography.labelSmall, color = categoryColor("food"))
+            StatRow(stringResource(R.string.items_hunger), "${item.hunger}")
+            StatRow(stringResource(R.string.items_saturation), "${"%.1f".format(item.saturation)}")
             if (item.hunger > 0) {
                 val efficiency = item.saturation / item.hunger
-                StatRow("Efficiency", "${"%.2f".format(efficiency)}")
+                StatRow(stringResource(R.string.items_efficiency), "${"%.2f".format(efficiency)}")
             }
             if (item.foodEffect.isNotBlank()) {
-                StatRow("Effects", item.foodEffect)
+                StatRow(stringResource(R.string.items_effects), item.foodEffect)
             }
         }
 
@@ -563,7 +563,7 @@ private fun ItemDetailCard(
         val compostChance = CompostData.chanceFor(item.id)
         if (compostChance != null) {
             SpyglassDivider()
-            Text("Uses", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.items_uses), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -579,8 +579,8 @@ private fun ItemDetailCard(
                     Spacer(Modifier.width(8.dp))
                 }
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Compostable", style = MaterialTheme.typography.bodyMedium, color = Emerald)
-                    Text("$compostChance% chance per item", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                    Text(stringResource(R.string.items_compostable), style = MaterialTheme.typography.bodyMedium, color = Emerald)
+                    Text(stringResource(R.string.items_compost_chance, compostChance), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                 }
             }
         }
@@ -588,7 +588,7 @@ private fun ItemDetailCard(
         // ── Applicable Enchantments ──────────────────────────────────────
         if (enchants.isNotEmpty()) {
             SpyglassDivider()
-            Text("Applicable Enchantments", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.items_applicable_enchantments), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -616,13 +616,13 @@ private fun ItemDetailCard(
         // ── Recipe (if craftable) ────────────────────────────────────────
         if (recipesFor.isNotEmpty()) {
             SpyglassDivider()
-            Text("Recipe", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.items_recipe), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             recipesFor.forEach { recipe ->
                 if (recipe.type.contains("shaped")) {
                     TextureCraftingGrid(recipe = recipe, onItemTap = onItemTap)
                 }
                 Text(
-                    if (recipe.type.contains("crafting")) "Crafting"
+                    if (recipe.type.contains("crafting")) stringResource(R.string.items_crafting)
                     else recipe.type.replace('_', ' ').replaceFirstChar { it.uppercase() },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
@@ -634,7 +634,7 @@ private fun ItemDetailCard(
         val droppedBy = item.droppedBy.split(",").map { it.trim() }.filter { it.isNotEmpty() }
         if (droppedBy.isNotEmpty()) {
             SpyglassDivider()
-            Text("Dropped by", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.items_dropped_by), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -657,7 +657,7 @@ private fun ItemDetailCard(
         val breedableMobs = breedingMap[item.id].orEmpty()
         if (breedableMobs.isNotEmpty()) {
             SpyglassDivider()
-            Text("Used to Breed", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.items_used_to_breed), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -684,7 +684,7 @@ private fun ItemDetailCard(
         val minedFrom = item.minedFrom.split(",").map { it.trim() }.filter { it.isNotEmpty() }
         if (minedFrom.isNotEmpty()) {
             SpyglassDivider()
-            Text("Mined from", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.items_mined_from), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -707,7 +707,7 @@ private fun ItemDetailCard(
         val biomes = BiomeResourceMap.biomesForItem(item.id)
         if (biomes.isNotEmpty()) {
             SpyglassDivider()
-            Text("Found in Biomes", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.items_found_in_biomes), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -732,7 +732,7 @@ private fun ItemDetailCard(
         }
         if (matchingStructures.isNotEmpty()) {
             SpyglassDivider()
-            Text("Found in Structures", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.items_found_in_structures), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -754,7 +754,7 @@ private fun ItemDetailCard(
         // ── Used in recipes (max 8 + overflow) ──────────────────────────
         if (recipesUsing.isNotEmpty()) {
             SpyglassDivider()
-            Text("Used in ${recipesUsing.size} recipe(s)", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.items_used_in_recipes, recipesUsing.size), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),

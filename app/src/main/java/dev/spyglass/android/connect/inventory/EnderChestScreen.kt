@@ -16,6 +16,8 @@ import dev.spyglass.android.connect.ItemStack
 import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.PlayerData
 import dev.spyglass.android.connect.client.ConnectionState
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.SectionHeader
 import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.navigation.BrowseTarget
@@ -52,9 +54,9 @@ fun EnderChestScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = { hapticClick(); onBack() }) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
             }
-            Text("Ender Chest", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.connect_ender_chest), style = MaterialTheme.typography.titleMedium)
         }
 
         if (!isConnected && lastUpdated != null) {
@@ -86,7 +88,7 @@ fun EnderChestContent(
     if (player == null || player.enderChest.isEmpty()) {
         Box(modifier = Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
             Text(
-                if (isOffline) "No cached ender chest data" else "No ender chest data",
+                if (isOffline) stringResource(R.string.connect_no_cached_ender_chest) else stringResource(R.string.connect_no_ender_chest_data),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
@@ -100,7 +102,7 @@ fun EnderChestContent(
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        SectionHeader("Ender Chest (${player.enderChest.size} items)")
+        SectionHeader(stringResource(R.string.connect_ender_chest_items, player.enderChest.size))
         InventoryGrid(
             items = player.enderChest,
             startSlot = 0,

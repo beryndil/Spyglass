@@ -163,12 +163,10 @@ fun CommandsScreen(
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
 
-    val sortOptions = remember {
-        listOf(
-            SortOption("Name A\u2192Z", "name"),
-            SortOption("Permission \u2193", "permission"),
-        )
-    }
+    val sortOptions = listOf(
+        SortOption(stringResource(R.string.commands_sort_name), "name"),
+        SortOption(stringResource(R.string.commands_sort_permission), "permission"),
+    )
 
     LaunchedEffect(targetCommandId) {
         if (targetCommandId != null) {
@@ -185,7 +183,7 @@ fun CommandsScreen(
         ) {
             SpyglassSearchBar(
                 query = query, onQueryChange = vm::setQuery,
-                category = "commands", placeholder = "Search commands\u2026",
+                category = "commands", placeholder = stringResource(R.string.commands_search_placeholder),
                 modifier = Modifier.weight(1f),
             )
             SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
@@ -210,9 +208,9 @@ fun CommandsScreen(
             item {
                 TabIntroHeader(
                     icon = PixelIcons.Command,
-                    title = "Commands",
-                    description = "All Minecraft Java 1.21.4 commands with syntax, descriptions, and permission levels.",
-                    stat = "${commands.size} commands",
+                    title = stringResource(R.string.commands_title),
+                    description = stringResource(R.string.commands_description),
+                    stat = stringResource(R.string.commands_stat, commands.size),
                 )
             }
             if (favoriteCommands.isNotEmpty()) {
@@ -286,8 +284,8 @@ fun CommandsScreen(
             if (commands.isEmpty()) item {
                 EmptyState(
                     icon = PixelIcons.SearchOff,
-                    title = "No commands found",
-                    subtitle = "Try a different search or filter",
+                    title = stringResource(R.string.commands_no_results_title),
+                    subtitle = stringResource(R.string.commands_no_results_subtitle),
                 )
             }
         }
@@ -298,7 +296,7 @@ fun CommandsScreen(
 private fun CommandDetailCard(cmd: CommandEntity, entityLinkIndex: EntityLinkIndex, onItemTap: (String) -> Unit, onMobTap: (String) -> Unit, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onEnchantTap: (String) -> Unit, tag: VersionTagEntity? = null, vFilter: VersionFilterState = VersionFilterState()) {
     ResultCard(modifier = Modifier.padding(top = 4.dp)) {
         Text(
-            "SYNTAX",
+            stringResource(R.string.commands_syntax),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.primary,
         )
@@ -327,7 +325,7 @@ private fun CommandDetailCard(cmd: CommandEntity, entityLinkIndex: EntityLinkInd
         )
         SpyglassDivider()
         StatRow(stringResource(R.string.category), categoryLabel(cmd.category))
-        StatRow("Permission", permissionLabel(cmd.permissionLevel))
+        StatRow(stringResource(R.string.commands_permission), permissionLabel(cmd.permissionLevel))
 
         SpyglassDivider()
         ReportProblemRow(entityType = "Command", entityName = cmd.name, entityId = cmd.name)

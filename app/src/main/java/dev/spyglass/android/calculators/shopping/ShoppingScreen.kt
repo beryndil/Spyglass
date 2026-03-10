@@ -65,8 +65,8 @@ private fun ListPicker(vm: ShoppingViewModel) {
         item {
             TabIntroHeader(
                 icon = PixelIcons.Storage,
-                title = "Shopping Lists",
-                description = "Plan your gathering and crafting with named lists",
+                title = stringResource(R.string.shopping_title),
+                description = stringResource(R.string.shopping_description),
             )
         }
 
@@ -78,7 +78,7 @@ private fun ListPicker(vm: ShoppingViewModel) {
             ) {
                 Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(18.dp))
                 Spacer(Modifier.width(6.dp))
-                Text("New List")
+                Text(stringResource(R.string.shopping_new_list))
             }
         }
 
@@ -86,8 +86,8 @@ private fun ListPicker(vm: ShoppingViewModel) {
             item {
                 EmptyState(
                     icon = PixelIcons.Storage,
-                    title = "No lists yet",
-                    subtitle = "Create a list to start tracking items",
+                    title = stringResource(R.string.shopping_no_lists_yet),
+                    subtitle = stringResource(R.string.shopping_no_lists_subtitle),
                 )
             }
         }
@@ -95,7 +95,7 @@ private fun ListPicker(vm: ShoppingViewModel) {
         items(lists, key = { it.id }) { list ->
             BrowseListItem(
                 headline = list.name,
-                supporting = "Created ${formatDate(list.createdAt)}",
+                supporting = stringResource(R.string.shopping_created, formatDate(list.createdAt)),
                 leadingIcon = PixelIcons.Storage,
                 modifier = Modifier.clickable { hapticClick(); vm.selectList(list.id) },
                 trailing = {
@@ -125,8 +125,8 @@ private fun ListPicker(vm: ShoppingViewModel) {
     listToDelete?.let { id ->
         AlertDialog(
             onDismissRequest = { listToDelete = null },
-            title = { Text("Delete list?", color = MaterialTheme.colorScheme.onSurface) },
-            text = { Text("This will permanently remove this list and all its items.", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+            title = { Text(stringResource(R.string.shopping_delete_list_title), color = MaterialTheme.colorScheme.onSurface) },
+            text = { Text(stringResource(R.string.shopping_delete_list_desc), color = MaterialTheme.colorScheme.onSurfaceVariant) },
             confirmButton = {
                 TextButton(onClick = { hapticConfirm(); vm.deleteList(id); listToDelete = null }) {
                     Text(stringResource(R.string.delete), color = NetherRed)
@@ -176,7 +176,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
                     Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back), tint = MaterialTheme.colorScheme.primary)
                 }
                 Text(
-                    currentList?.name ?: "List",
+                    currentList?.name ?: stringResource(R.string.shopping_list_label),
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.weight(1f),
@@ -184,11 +184,11 @@ private fun ListDetail(vm: ShoppingViewModel) {
                     overflow = TextOverflow.Ellipsis,
                 )
                 IconButton(onClick = { hapticClick(); showRenameDialog = true }, modifier = Modifier.size(32.dp)) {
-                    Icon(Icons.Default.Edit, contentDescription = "Rename list", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.shopping_rename_list_cd), tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(18.dp))
                 }
                 Spacer(Modifier.width(4.dp))
                 Text(
-                    "${items.size} items",
+                    stringResource(R.string.shopping_items_count, items.size),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
@@ -212,7 +212,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
                                 selectedName = ""
                             }
                         },
-                        placeholder = { Text("Search\u2026", color = MaterialTheme.colorScheme.secondary) },
+                        placeholder = { Text(stringResource(R.string.shopping_search_placeholder), color = MaterialTheme.colorScheme.secondary) },
                         singleLine = true,
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = if (selectedId != null) Emerald else MaterialTheme.colorScheme.primary,
@@ -224,7 +224,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
                     OutlinedTextField(
                         value = quantityInput,
                         onValueChange = { quantityInput = it.filter { c -> c.isDigit() } },
-                        label = { Text("Qty") },
+                        label = { Text(stringResource(R.string.shopping_qty)) },
                         singleLine = true,
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = OutlinedTextFieldDefaults.colors(
@@ -291,7 +291,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
         // ── Checklist ──
         if (items.isNotEmpty()) {
             item(key = "list_header") {
-                SectionHeader("Checklist", icon = PixelIcons.Storage)
+                SectionHeader(stringResource(R.string.shopping_checklist), icon = PixelIcons.Storage)
             }
         }
 
@@ -327,7 +327,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
                     grouped.entries.sortedBy { it.key }.forEachIndexed { index, (depth, steps) ->
                         if (index > 0) SpyglassDivider()
                         if (depth == 0) {
-                            Text("Gather", style = MaterialTheme.typography.labelSmall, color = Emerald)
+                            Text(stringResource(R.string.shopping_gather), style = MaterialTheme.typography.labelSmall, color = Emerald)
                             steps.forEach { step ->
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
@@ -467,7 +467,7 @@ private fun ShoppingItemRow(
                 if (qty != null && qty in 1..10_000_000) onQuantityChange(qty)
                 editingQty = false
             }) {
-                Text("OK", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.labelSmall)
+                Text(stringResource(R.string.shopping_ok), color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.labelSmall)
             }
         } else {
             Row(
@@ -524,7 +524,7 @@ private fun ItemBreakdown(
 
     ResultCard(modifier = Modifier.padding(start = 32.dp, top = 4.dp)) {
         if (craftedSteps.isNotEmpty()) {
-            Text("Craft", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.shopping_craft), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             craftedSteps.forEach { step ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -549,7 +549,7 @@ private fun ItemBreakdown(
         }
         if (rawSteps.isNotEmpty()) {
             if (craftedSteps.isNotEmpty()) SpyglassDivider()
-            Text("Gather", style = MaterialTheme.typography.labelSmall, color = Emerald)
+            Text(stringResource(R.string.shopping_gather), style = MaterialTheme.typography.labelSmall, color = Emerald)
             rawSteps.forEach { step ->
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     BreakdownStepIcon(step, Modifier.size(16.dp))
@@ -573,12 +573,12 @@ private fun NewListDialog(onConfirm: (String) -> Unit, onDismiss: () -> Unit) {
     var name by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("New Shopping List", color = MaterialTheme.colorScheme.onSurface) },
+        title = { Text(stringResource(R.string.shopping_new_list_dialog), color = MaterialTheme.colorScheme.onSurface) },
         text = {
             OutlinedTextField(
                 value = name,
                 onValueChange = { if (it.length <= 100) name = it },
-                placeholder = { Text("List name", color = MaterialTheme.colorScheme.secondary) },
+                placeholder = { Text(stringResource(R.string.shopping_list_name), color = MaterialTheme.colorScheme.secondary) },
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = MaterialTheme.colorScheme.primary, unfocusedBorderColor = MaterialTheme.colorScheme.outline, cursorColor = MaterialTheme.colorScheme.primary,
@@ -591,7 +591,7 @@ private fun NewListDialog(onConfirm: (String) -> Unit, onDismiss: () -> Unit) {
                 onClick = { hapticClick(); if (name.isNotBlank()) onConfirm(name.trim()) },
                 enabled = name.isNotBlank(),
             ) {
-                Text("Create", color = if (name.isNotBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
+                Text(stringResource(R.string.shopping_create), color = if (name.isNotBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
             }
         },
         dismissButton = {
@@ -607,7 +607,7 @@ private fun RenameDialog(currentName: String, onConfirm: (String) -> Unit, onDis
     var name by remember { mutableStateOf(currentName) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Rename List", color = MaterialTheme.colorScheme.onSurface) },
+        title = { Text(stringResource(R.string.shopping_rename_dialog), color = MaterialTheme.colorScheme.onSurface) },
         text = {
             OutlinedTextField(
                 value = name,
@@ -624,7 +624,7 @@ private fun RenameDialog(currentName: String, onConfirm: (String) -> Unit, onDis
                 onClick = { hapticClick(); if (name.isNotBlank()) onConfirm(name.trim()) },
                 enabled = name.isNotBlank(),
             ) {
-                Text("Rename", color = if (name.isNotBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
+                Text(stringResource(R.string.shopping_rename), color = if (name.isNotBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
             }
         },
         dismissButton = {

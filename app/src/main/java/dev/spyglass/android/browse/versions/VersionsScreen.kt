@@ -10,6 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.spyglass.android.core.ui.SectionHeader
 import dev.spyglass.android.core.ui.VersionCard
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.settings.MinecraftUpdates
 
 @Composable
@@ -22,9 +24,9 @@ fun VersionsScreen() {
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         item(key = "header") {
-            SectionHeader("Java Edition Version History")
+            SectionHeader(stringResource(R.string.versions_header))
             Text(
-                "${updates.size} major updates from 1.0 to ${updates.first().version}",
+                stringResource(R.string.versions_subtitle, updates.size, updates.first().version),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.secondary,
             )

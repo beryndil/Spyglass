@@ -9,7 +9,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import dev.spyglass.android.R
 import androidx.compose.ui.unit.dp
 import dev.spyglass.android.data.db.entities.TodoEntity
 import dev.spyglass.android.data.repository.GameDataRepository
@@ -32,7 +34,7 @@ fun AddToTodoSection(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text("Add to Todo List", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(R.string.core_add_to_todo), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -42,7 +44,7 @@ fun AddToTodoSection(
             OutlinedTextField(
                 value = quantityInput,
                 onValueChange = { quantityInput = it.filter { c -> c.isDigit() } },
-                label = { Text("Qty") },
+                label = { Text(stringResource(R.string.core_qty)) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 colors = OutlinedTextFieldDefaults.colors(
@@ -80,13 +82,13 @@ fun AddToTodoSection(
                                 quantity = q,
                             )
                         )
-                        feedback = "Added!"
+                        feedback = context.getString(R.string.core_added)
                     }
                 },
                 colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.primary),
                 modifier = Modifier.size(40.dp),
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add to todo", tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.core_add_to_todo_icon), tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
             }
         }
 

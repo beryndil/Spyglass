@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.PlayerSummary
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 @Composable
@@ -40,9 +42,9 @@ fun PlayersScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
             }
-            Text("Players", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.connect_players), style = MaterialTheme.typography.titleMedium)
         }
 
         if (playerList.isEmpty()) {
@@ -54,10 +56,10 @@ fun PlayersScreen(
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
                         Spacer(Modifier.height(12.dp))
-                        Text("Loading players...", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(stringResource(R.string.connect_loading_players), color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 } else {
-                    Text("No player data available", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.connect_no_player_data_available), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
             return
@@ -105,14 +107,14 @@ private fun PlayerCard(
             Column(modifier = Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        player.name ?: "Unknown",
+                        player.name ?: stringResource(R.string.connect_unknown),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     if (player.isOwner) {
                         Spacer(Modifier.width(6.dp))
                         Text(
-                            "Owner",
+                            stringResource(R.string.connect_owner),
                             style = MaterialTheme.typography.labelSmall,
                             color = Emerald,
                         )
@@ -147,7 +149,7 @@ private fun PlayerCard(
         if (showCompare) {
             Spacer(Modifier.height(4.dp))
             Text(
-                "Compare",
+                stringResource(R.string.connect_compare),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.clickable { onCompare() },

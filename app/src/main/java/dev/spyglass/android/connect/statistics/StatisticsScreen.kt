@@ -18,6 +18,8 @@ import dev.spyglass.android.connect.StatCategory
 import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.core.ui.ResultCard
 import dev.spyglass.android.core.ui.SectionHeader
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import timber.log.Timber
 
 // Stat categories where values are in centimeters (cm → blocks)
@@ -83,9 +85,9 @@ fun StatisticsScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
             }
-            Text("Player Statistics", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.connect_player_statistics), style = MaterialTheme.typography.titleMedium)
         }
 
         if (!isConnected && lastUpdated != null) {
@@ -107,7 +109,7 @@ private fun StatsContent(stats: PlayerStatsPayload?, isOffline: Boolean) {
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 if (isOffline) {
-                    Text("No cached statistics", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.connect_no_cached_statistics), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 } else {
                     CircularProgressIndicator(
                         modifier = Modifier.size(24.dp),
@@ -115,7 +117,7 @@ private fun StatsContent(stats: PlayerStatsPayload?, isOffline: Boolean) {
                         color = MaterialTheme.colorScheme.primary,
                     )
                     Spacer(Modifier.height(12.dp))
-                    Text("Loading statistics...", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.connect_loading_statistics), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
@@ -129,7 +131,7 @@ private fun StatsContent(stats: PlayerStatsPayload?, isOffline: Boolean) {
                 .padding(32.dp),
             contentAlignment = Alignment.Center,
         ) {
-            Text("No statistics found", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(R.string.connect_no_statistics), color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         return
     }

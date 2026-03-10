@@ -187,11 +187,11 @@ fun MobsScreen(
     val listState   = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
-    val mobSortOptions = remember { listOf(
-        SortOption("Name A\u2192Z", "name"),
-        SortOption("Health \u2193", "health"),
-        SortOption("XP \u2193", "xp"),
-    ) }
+    val mobSortOptions = listOf(
+        SortOption(stringResource(R.string.mobs_sort_name), "name"),
+        SortOption(stringResource(R.string.mobs_sort_health), "health"),
+        SortOption(stringResource(R.string.mobs_sort_xp), "xp"),
+    )
 
     val categories = listOf("all", "hostile", "neutral", "passive", "boss", "breedable")
 
@@ -217,7 +217,7 @@ fun MobsScreen(
         ) {
             SpyglassSearchBar(
                 query = query, onQueryChange = vm::setQuery,
-                category = "mobs", placeholder = "Search mobs\u2026",
+                category = "mobs", placeholder = stringResource(R.string.mobs_search_placeholder),
                 modifier = Modifier.weight(1f),
             )
             SortButton(options = mobSortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
@@ -240,9 +240,9 @@ fun MobsScreen(
             item {
                 TabIntroHeader(
                     icon = PixelIcons.Mob,
-                    title = "Mobs",
-                    description = "Every Minecraft mob with health, drops, spawn biomes, and strategy tips",
-                    stat = "${mobs.size} mobs",
+                    title = stringResource(R.string.mobs_title),
+                    description = stringResource(R.string.mobs_description),
+                    stat = stringResource(R.string.mobs_stat, mobs.size),
                 )
             }
             if (favoriteMobs.isNotEmpty()) {
@@ -330,8 +330,8 @@ fun MobsScreen(
             if (mobs.isEmpty()) item {
                 EmptyState(
                     icon     = PixelIcons.SearchOff,
-                    title    = "No mobs found",
-                    subtitle = "Try a different search or category",
+                    title    = stringResource(R.string.mobs_no_results_title),
+                    subtitle = stringResource(R.string.mobs_no_results_subtitle),
                 )
             }
         }
@@ -365,22 +365,22 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
         }
 
         // Stats
-        StatRow("Health", "${mob.health} HP")
-        if (mob.attackDamage.isNotBlank()) StatRow("Attack Damage", "${mob.attackDamage} HP")
-        StatRow("XP Drop", mob.xpDrop)
-        if (mob.isFireImmune) StatRow("Fire Immune", stringResource(R.string.yes))
+        StatRow(stringResource(R.string.mobs_health), stringResource(R.string.mobs_health_value, mob.health))
+        if (mob.attackDamage.isNotBlank()) StatRow(stringResource(R.string.mobs_attack_damage), stringResource(R.string.mobs_attack_damage_value, mob.attackDamage))
+        StatRow(stringResource(R.string.mobs_xp_drop), mob.xpDrop)
+        if (mob.isFireImmune) StatRow(stringResource(R.string.mobs_fire_immune), stringResource(R.string.yes))
 
         // Spawn conditions
         if (mob.spawnConditions.isNotBlank()) {
             SpyglassDivider()
-            Text("Spawn Conditions", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.mobs_spawn_conditions), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Text(mob.spawnConditions, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
         // Breeding
         if (mob.breeding.isNotEmpty()) {
             SpyglassDivider()
-            Text("Breeding", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.mobs_breeding), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 mob.breeding.split(",").map { it.trim() }.filter { it.isNotEmpty() }.forEach { food ->
                     AssistChip(
@@ -403,7 +403,7 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
         // Drops
         if (drops.isNotEmpty()) {
             SpyglassDivider()
-            Text("Drops", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.mobs_drops), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 drops.forEach { drop ->
                     val qtyLabel = when {
@@ -436,7 +436,7 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
         // Spawn biomes
         if (biomes.isNotEmpty()) {
             SpyglassDivider()
-            Text("Found in", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.mobs_found_in), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 biomes.forEach { biomeId ->
                     if (biomeId in STRUCTURE_IDS) {
@@ -474,7 +474,7 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 if (hasFoodDrops) {
                     Text(
-                        "Food Guide \u2192",
+                        stringResource(R.string.mobs_food_guide),
                         style = MaterialTheme.typography.labelSmall,
                         color = PotionBlue,
                         textDecoration = TextDecoration.Underline,
@@ -483,7 +483,7 @@ private fun MobDetailCard(mob: MobEntity, onBiomeTap: (String) -> Unit, onStruct
                 }
                 if (isHostile) {
                     Text(
-                        "Light Spacing \u2192",
+                        stringResource(R.string.mobs_light_spacing),
                         style = MaterialTheme.typography.labelSmall,
                         color = PotionBlue,
                         textDecoration = TextDecoration.Underline,

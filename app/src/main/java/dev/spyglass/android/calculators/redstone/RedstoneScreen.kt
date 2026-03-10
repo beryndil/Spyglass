@@ -10,6 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import kotlin.math.ceil
 import kotlin.math.floor
@@ -95,20 +97,20 @@ fun RedstoneScreen() {
     ) {
         TabIntroHeader(
             icon = PixelIcons.Blocks,
-            title = "Redstone Signal",
-            description = "Calculate comparator signal strength from container fill levels. Plan exact item counts for redstone contraptions.",
+            title = stringResource(R.string.redstone_title),
+            description = stringResource(R.string.redstone_description),
         )
 
         // ── Container Selector ──
-        SectionHeader("Container")
+        SectionHeader(stringResource(R.string.redstone_container))
         InputCard {
-            Text("SELECT CONTAINER", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.redstone_select_container), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             OutlinedButton(
                 onClick = { showContainerPicker = !showContainerPicker },
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.onSurface),
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text("${selectedContainer.name} (${selectedContainer.slots} slots)")
+                Text(stringResource(R.string.redstone_container_slots, selectedContainer.name, selectedContainer.slots))
             }
             if (showContainerPicker) {
                 CONTAINERS.forEach { container ->
@@ -127,7 +129,7 @@ fun RedstoneScreen() {
                             )
                         }
                         Text(
-                            "${container.slots} slots",
+                            stringResource(R.string.redstone_slots_label, container.slots),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.secondary,
                         )
@@ -137,13 +139,13 @@ fun RedstoneScreen() {
         }
 
         // ── Signal Calculator ──
-        SectionHeader("Calculate Signal from Items")
+        SectionHeader(stringResource(R.string.redstone_calc_signal))
         InputCard {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(
                     value = itemCountStr,
                     onValueChange = { itemCountStr = it },
-                    label = { Text("Item Count") },
+                    label = { Text(stringResource(R.string.redstone_item_count)) },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
@@ -152,7 +154,7 @@ fun RedstoneScreen() {
                 OutlinedTextField(
                     value = stackSizeStr,
                     onValueChange = { stackSizeStr = it },
-                    label = { Text("Stack Size") },
+                    label = { Text(stringResource(R.string.redstone_stack_size)) },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
@@ -160,26 +162,26 @@ fun RedstoneScreen() {
                 )
             }
             Spacer(Modifier.height(4.dp))
-            Text("Common: 64 (most items), 16 (eggs, ender pearls, snowballs), 1 (tools, armor)",
+            Text(stringResource(R.string.redstone_stack_hint),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
         }
 
         ResultCard {
-            StatRow("Fill Level", "${(fraction * 100).toInt()}%")
-            StatRow("Signal Strength", "$currentSignal / 15")
-            StatRow("Max Capacity", "${selectedContainer.slots * stackSize} items")
+            StatRow(stringResource(R.string.redstone_fill_level), "${(fraction * 100).toInt()}%")
+            StatRow(stringResource(R.string.redstone_signal_strength), stringResource(R.string.redstone_signal_out_of, currentSignal))
+            StatRow(stringResource(R.string.redstone_max_capacity), stringResource(R.string.redstone_max_capacity_val, selectedContainer.slots * stackSize))
             if (itemCount > 0) {
-                StatRow("Slots Used", "${ceil(itemCount.toDouble() / stackSize).toInt()} / ${selectedContainer.slots}")
+                StatRow(stringResource(R.string.redstone_slots_used), stringResource(R.string.redstone_slots_used_val, ceil(itemCount.toDouble() / stackSize).toInt(), selectedContainer.slots))
             }
         }
 
         // ── Reverse Calculator ──
-        SectionHeader("Items Needed for Target Signal")
+        SectionHeader(stringResource(R.string.redstone_items_needed_header))
         InputCard {
             OutlinedTextField(
                 value = targetSignalStr,
                 onValueChange = { targetSignalStr = it },
-                label = { Text("Target Signal (0-15)") },
+                label = { Text(stringResource(R.string.redstone_target_signal)) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
@@ -188,23 +190,23 @@ fun RedstoneScreen() {
         }
         if (itemsNeeded != null && targetSignal != null) {
             ResultCard {
-                StatRow("Target Signal", "$targetSignal")
-                StatRow("Items Needed", "$itemsNeeded (stack size $stackSize)")
+                StatRow(stringResource(R.string.redstone_target_signal_label), "$targetSignal")
+                StatRow(stringResource(R.string.redstone_items_needed), stringResource(R.string.redstone_items_needed_val, itemsNeeded, stackSize))
                 if (targetSignal > 0) {
                     val maxForSignal = if (targetSignal >= 15) selectedContainer.slots * stackSize
                     else {
                         val maxFraction = targetSignal.toDouble() / 14.0
                         floor(maxFraction * selectedContainer.slots * stackSize).toInt()
                     }
-                    StatRow("Max Items at Signal $targetSignal", "$maxForSignal")
+                    StatRow(stringResource(R.string.redstone_max_items_at_signal, targetSignal), "$maxForSignal")
                 }
             }
         }
 
         // ── Signal Reference Table ──
-        SectionHeader("Signal Reference")
+        SectionHeader(stringResource(R.string.redstone_signal_reference))
         ResultCard {
-            Text("SIGNAL TABLE FOR ${selectedContainer.name.uppercase()}",
+            Text(stringResource(R.string.redstone_signal_table_for, selectedContainer.name.uppercase()),
                 style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             for (sig in 0..15) {
@@ -215,28 +217,28 @@ fun RedstoneScreen() {
                     floor(maxFrac * selectedContainer.slots * stackSize).toInt()
                 }
                 val range = if (sig == 0) "0" else if (sig == 15) "$items+" else "$items - $maxItems"
-                StatRow("Signal $sig", "$range items")
+                StatRow(stringResource(R.string.redstone_signal_n, sig), stringResource(R.string.redstone_items_suffix, range))
             }
         }
 
         // ── Special Blocks ──
-        SectionHeader("Special Comparator Sources")
+        SectionHeader(stringResource(R.string.redstone_special_sources))
         ResultCard {
-            Text("NON-CONTAINER SOURCES", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.redstone_non_container_sources), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
-            StatRow("Cake", "Signal = 14 - (2 * slices eaten), max 14")
-            StatRow("Composter", "Signal = compost level (0-8)")
-            StatRow("Cauldron", "Signal = water level (0-3)")
-            StatRow("Beehive / Bee Nest", "Signal = honey level (0-5)")
-            StatRow("Lectern", "Signal = page number / total pages * 15")
-            StatRow("Respawn Anchor", "Signal = charges (0-4)")
-            StatRow("Sculk Sensor", "Signal based on vibration type (1-15)")
-            StatRow("End Portal Frame", "Signal 15 if has eye, 0 if empty")
-            StatRow("Jukebox", "Signal depends on disc (1-15)")
-            StatRow("Command Block", "Signal = success count")
-            StatRow("Item Frame", "Signal = rotation step (0-8)")
+            StatRow(stringResource(R.string.redstone_cake), stringResource(R.string.redstone_cake_val))
+            StatRow(stringResource(R.string.redstone_composter), stringResource(R.string.redstone_composter_val))
+            StatRow(stringResource(R.string.redstone_cauldron), stringResource(R.string.redstone_cauldron_val))
+            StatRow(stringResource(R.string.redstone_beehive), stringResource(R.string.redstone_beehive_val))
+            StatRow(stringResource(R.string.redstone_lectern), stringResource(R.string.redstone_lectern_val))
+            StatRow(stringResource(R.string.redstone_respawn_anchor), stringResource(R.string.redstone_respawn_anchor_val))
+            StatRow(stringResource(R.string.redstone_sculk_sensor), stringResource(R.string.redstone_sculk_sensor_val))
+            StatRow(stringResource(R.string.redstone_end_portal_frame), stringResource(R.string.redstone_end_portal_frame_val))
+            StatRow(stringResource(R.string.redstone_jukebox), stringResource(R.string.redstone_jukebox_val))
+            StatRow(stringResource(R.string.redstone_command_block), stringResource(R.string.redstone_command_block_val))
+            StatRow(stringResource(R.string.redstone_item_frame), stringResource(R.string.redstone_item_frame_val))
             SpyglassDivider()
-            Text("JUKEBOX DISC SIGNALS", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.redstone_jukebox_disc_signals), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             StatRow("13", "Signal 1")
             StatRow("Cat", "Signal 2")
@@ -256,33 +258,33 @@ fun RedstoneScreen() {
         }
 
         // ── Comparator Tips ──
-        SectionHeader("Comparator Tips")
+        SectionHeader(stringResource(R.string.redstone_comparator_tips))
         ResultCard {
-            Text("HOW COMPARATORS WORK", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.redstone_how_comparators_work), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             Text(
-                "A Redstone Comparator reads the fill level of a container behind it and outputs a signal strength from 0-15.",
+                stringResource(R.string.redstone_comparator_desc),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
-            Text("COMPARE MODE (front torch off)", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.redstone_compare_mode_label), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             Text(
-                "Output = rear signal if rear >= side signal, otherwise 0.",
+                stringResource(R.string.redstone_compare_mode_desc),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
-            Text("SUBTRACT MODE (front torch on)", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.redstone_subtract_mode_label), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             Text(
-                "Output = rear signal - side signal (minimum 0). Useful for arithmetic circuits.",
+                stringResource(R.string.redstone_subtract_mode_desc),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             SpyglassDivider()
-            Text("SIGNAL FORMULA", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.redstone_signal_formula), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(4.dp))
             Text(
-                "signal = floor(1 + (sum of item fractions / total slots) * 14)\nwhere item fraction = count / max_stack_size for each slot\nSignal is 0 when empty, 15 when completely full.",
+                stringResource(R.string.redstone_signal_formula_desc),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }

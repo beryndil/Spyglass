@@ -25,6 +25,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import android.graphics.Bitmap
 import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.core.ui.*
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 
 /**
  * Main Connect screen showing connection status, pairing controls,
@@ -75,10 +77,10 @@ fun ConnectScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = { hapticClick(); onBack() }) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.back))
             }
             Text(
-                "Spyglass Connect",
+                stringResource(R.string.connect_title),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .weight(1f)
@@ -91,7 +93,7 @@ fun ConnectScreen(
             )
             if (state.isConnected) {
                 IconButton(onClick = { hapticConfirm(); viewModel.disconnect() }) {
-                    Icon(Icons.Filled.LinkOff, contentDescription = "Disconnect", tint = Color(0xFFF44336))
+                    Icon(Icons.Filled.LinkOff, contentDescription = stringResource(R.string.connect_disconnect_desc), tint = Color(0xFFF44336))
                 }
             }
         }
@@ -197,7 +199,7 @@ private fun ConnectionStatusCard(state: ConnectionState) {
             }
             Column {
                 Text(
-                    if (state.isConnected) "Connected" else "Status",
+                    if (state.isConnected) stringResource(R.string.connect_status_connected) else stringResource(R.string.connect_status_label),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -246,7 +248,7 @@ private fun DisconnectedContent(
                     modifier = Modifier.size(20.dp),
                 )
                 Text(
-                    "Failed to connect to $displayName",
+                    stringResource(R.string.connect_failed_to_connect, displayName),
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color(0xFFF44336),
                 )
@@ -263,7 +265,7 @@ private fun DisconnectedContent(
         ) {
             Icon(Icons.Filled.QrCodeScanner, contentDescription = null, modifier = Modifier.size(20.dp))
             Spacer(Modifier.width(8.dp))
-            Text("Scan QR Code")
+            Text(stringResource(R.string.connect_scan_qr_button))
         }
 
         // Reconnect button
@@ -273,41 +275,39 @@ private fun DisconnectedContent(
         ) {
             Icon(Icons.Filled.Refresh, contentDescription = null, modifier = Modifier.size(20.dp))
             Spacer(Modifier.width(8.dp))
-            Text("Reconnect to Last Device")
+            Text(stringResource(R.string.connect_reconnect_last))
         }
 
         // Cached data quick links
         if (hasCachedData) {
-            SectionHeader("Cached Data (Offline)")
+            SectionHeader(stringResource(R.string.connect_cached_data_offline))
             val characterIcon: SpyglassIcon = if (playerSkin != null) SpyglassIcon.BitmapIcon(playerSkin) else PixelIcons.Steve
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                ConnectQuickLink("Character", characterIcon, Modifier.weight(1f), onClick = onCharacter)
-                ConnectQuickLink("Inventory", PixelIcons.Backpack, Modifier.weight(1f), tint = Color.Unspecified, onClick = onInventory)
+                ConnectQuickLink(stringResource(R.string.connect_character), characterIcon, Modifier.weight(1f), onClick = onCharacter)
+                ConnectQuickLink(stringResource(R.string.connect_inventory), PixelIcons.Backpack, Modifier.weight(1f), tint = Color.Unspecified, onClick = onInventory)
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                ConnectQuickLink("Ender Chest", PixelIcons.EnderChest, Modifier.weight(1f), tint = Color.Unspecified, onClick = onEnderChest)
-                ConnectQuickLink("Map", PixelIcons.Biome, Modifier.weight(1f), onClick = onMap)
+                ConnectQuickLink(stringResource(R.string.connect_ender_chest), PixelIcons.EnderChest, Modifier.weight(1f), tint = Color.Unspecified, onClick = onEnderChest)
+                ConnectQuickLink(stringResource(R.string.connect_map), PixelIcons.Biome, Modifier.weight(1f), onClick = onMap)
             }
         }
 
         // Instructions
         ResultCard {
             Text(
-                "How to connect:",
+                stringResource(R.string.connect_how_to_connect),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                "1. Open Spyglass Connect on your computer\n" +
-                    "2. Make sure both devices are on the same WiFi\n" +
-                    "3. Tap 'Scan QR Code' above and point at the QR on screen",
+                stringResource(R.string.connect_instructions),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -338,7 +338,7 @@ private fun ConnectedContent(
     val hapticConfirm = rememberHapticConfirm()
     // World selector
     if (worlds.isNotEmpty()) {
-        SectionHeader("Select World")
+        SectionHeader(stringResource(R.string.connect_select_world))
         worlds.forEach { world ->
             val isSelected = world.folderName == selectedWorld
             Row(
@@ -412,23 +412,23 @@ private fun ConnectedContent(
         Spacer(Modifier.height(8.dp))
 
         // Quick access grid
-        SectionHeader("World Viewer")
+        SectionHeader(stringResource(R.string.connect_world_viewer))
         Spacer(Modifier.height(4.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            ConnectQuickLink("Inventory", PixelIcons.Backpack, Modifier.weight(1f), tint = Color.Unspecified, enabled = capabilities.contains(Capability.PLAYER_DATA), onClick = onInventory)
-            ConnectQuickLink("Ender Chest", PixelIcons.EnderChest, Modifier.weight(1f), tint = Color.Unspecified, enabled = capabilities.contains(Capability.PLAYER_DATA), onClick = onEnderChest)
+            ConnectQuickLink(stringResource(R.string.connect_inventory), PixelIcons.Backpack, Modifier.weight(1f), tint = Color.Unspecified, enabled = capabilities.contains(Capability.PLAYER_DATA), onClick = onInventory)
+            ConnectQuickLink(stringResource(R.string.connect_ender_chest), PixelIcons.EnderChest, Modifier.weight(1f), tint = Color.Unspecified, enabled = capabilities.contains(Capability.PLAYER_DATA), onClick = onEnderChest)
         }
         Spacer(Modifier.height(8.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            ConnectQuickLink("Storage", PixelIcons.Search, Modifier.weight(1f), enabled = capabilities.contains(Capability.CHEST_CONTENTS), onClick = onChestFinder)
-            ConnectQuickLink("Map", PixelIcons.Biome, Modifier.weight(1f), enabled = capabilities.contains(Capability.MAP_RENDER), onClick = onMap)
+            ConnectQuickLink(stringResource(R.string.connect_storage), PixelIcons.Search, Modifier.weight(1f), enabled = capabilities.contains(Capability.CHEST_CONTENTS), onClick = onChestFinder)
+            ConnectQuickLink(stringResource(R.string.connect_map), PixelIcons.Biome, Modifier.weight(1f), enabled = capabilities.contains(Capability.MAP_RENDER), onClick = onMap)
         }
     }
 }
@@ -440,14 +440,14 @@ private fun PlayerSummaryCard(player: PlayerData) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
-            StatColumn("Health", "${player.health.toInt()} / 20")
-            StatColumn("Food", "${player.foodLevel} / 20")
-            StatColumn("XP Level", "${player.xpLevel}")
-            StatColumn("Dimension", player.dimension.replace("_", " ").replaceFirstChar { it.uppercase() })
+            StatColumn(stringResource(R.string.connect_health), "${player.health.toInt()} / 20")
+            StatColumn(stringResource(R.string.connect_food), "${player.foodLevel} / 20")
+            StatColumn(stringResource(R.string.connect_xp_level), "${player.xpLevel}")
+            StatColumn(stringResource(R.string.dimension), player.dimension.replace("_", " ").replaceFirstChar { it.uppercase() })
         }
         Spacer(Modifier.height(4.dp))
         Text(
-            "Position: ${player.posX.toInt()}, ${player.posY.toInt()}, ${player.posZ.toInt()}",
+            stringResource(R.string.connect_position_format, player.posX.toInt(), player.posY.toInt(), player.posZ.toInt()),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -472,7 +472,7 @@ private fun PlayerSelector(
     var showFairPlayWarning by remember { mutableStateOf(false) }
     val hasMultipleNonOwner = players.count { !it.isOwner } > 0
 
-    SectionHeader("Players (${players.size})")
+    SectionHeader(stringResource(R.string.connect_players_count, players.size))
 
     if (hasMultipleNonOwner) {
         ResultCard {
@@ -487,7 +487,7 @@ private fun PlayerSelector(
                     modifier = Modifier.size(18.dp),
                 )
                 Text(
-                    "Viewing other players' data may not align with fair play on multiplayer worlds.",
+                    stringResource(R.string.connect_fair_play_warning),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -530,7 +530,7 @@ private fun PlayerSelector(
                 )
                 if (player.isOwner) {
                     Text(
-                        "World Owner",
+                        stringResource(R.string.connect_world_owner),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary,
                     )
@@ -571,7 +571,7 @@ private fun ConnectQuickLink(
         }
         if (!enabled) {
             Text(
-                "Requires desktop update",
+                stringResource(R.string.connect_requires_desktop_update),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
             )

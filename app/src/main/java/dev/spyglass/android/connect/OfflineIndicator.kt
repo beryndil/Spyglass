@@ -9,7 +9,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.spyglass.android.R
 
 /**
  * Compact offline indicator shown on Connect screens when viewing cached data.
@@ -34,13 +36,8 @@ fun OfflineIndicator(lastUpdated: Long?, modifier: Modifier = Modifier) {
             modifier = Modifier.size(16.dp),
         )
         Text(
-            buildString {
-                append("Offline")
-                if (lastUpdated != null) {
-                    append(" \u00b7 Last updated ")
-                    append(formatTimeAgo(lastUpdated))
-                }
-            },
+            if (lastUpdated != null) stringResource(R.string.connect_offline_last_updated, formatTimeAgo(lastUpdated))
+            else stringResource(R.string.connect_offline),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )

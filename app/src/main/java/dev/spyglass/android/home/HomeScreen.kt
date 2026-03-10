@@ -59,22 +59,22 @@ private data class QuickLink(
 @Composable
 private fun browseLinks() = listOf(
     // ── Core Content ──
-    QuickLink(PixelIcons.Blocks,    "Blocks",       MaterialTheme.colorScheme.onSurfaceVariant) to 0,
-    QuickLink(PixelIcons.Item,      "Items",        MaterialTheme.colorScheme.primary)           to 1,
-    QuickLink(PixelIcons.Crafting,  "Recipes",      MaterialTheme.colorScheme.primary)           to 2,
+    QuickLink(PixelIcons.Blocks,    stringResource(R.string.home_link_blocks),       MaterialTheme.colorScheme.onSurfaceVariant) to 0,
+    QuickLink(PixelIcons.Item,      stringResource(R.string.home_link_items),        MaterialTheme.colorScheme.primary)           to 1,
+    QuickLink(PixelIcons.Crafting,  stringResource(R.string.home_link_recipes),      MaterialTheme.colorScheme.primary)           to 2,
     // ── World & Entities ──
-    QuickLink(PixelIcons.Mob,       "Mobs",         NetherRed)                                   to 3,
-    QuickLink(PixelIcons.Biome,     "Biomes",       Emerald)                                     to 5,
-    QuickLink(PixelIcons.Structure, "Structures",   MaterialTheme.colorScheme.primary)           to 6,
+    QuickLink(PixelIcons.Mob,       stringResource(R.string.home_link_mobs),         NetherRed)                                   to 3,
+    QuickLink(PixelIcons.Biome,     stringResource(R.string.home_link_biomes),       Emerald)                                     to 5,
+    QuickLink(PixelIcons.Structure, stringResource(R.string.home_link_structures),   MaterialTheme.colorScheme.primary)           to 6,
     // ── Game Mechanics ──
-    QuickLink(PixelIcons.Trade,     "Trades",       Emerald)                                     to 4,
-    QuickLink(PixelIcons.Enchant,   "Enchants",     EnderPurple)                                 to 7,
-    QuickLink(PixelIcons.Potion,    "Potions",      PotionBlue)                                  to 8,
+    QuickLink(PixelIcons.Trade,     stringResource(R.string.home_link_trades),       Emerald)                                     to 4,
+    QuickLink(PixelIcons.Enchant,   stringResource(R.string.home_link_enchants),     EnderPurple)                                 to 7,
+    QuickLink(PixelIcons.Potion,    stringResource(R.string.home_link_potions),      PotionBlue)                                  to 8,
     // ── Progress & Info ──
-    QuickLink(PixelIcons.Advancement, "Advancements", Emerald)                                         to 9,
-    QuickLink(PixelIcons.Command,   "Commands",     PotionBlue)                                  to 10,
-    QuickLink(PixelIcons.Bookmark,  "Reference",    MaterialTheme.colorScheme.primary)           to 11,
-    QuickLink(PixelIcons.Clock,     "Versions",     MaterialTheme.colorScheme.secondary)         to 12,
+    QuickLink(PixelIcons.Advancement, stringResource(R.string.home_link_advancements), Emerald)                                         to 9,
+    QuickLink(PixelIcons.Command,   stringResource(R.string.home_link_commands),     PotionBlue)                                  to 10,
+    QuickLink(PixelIcons.Bookmark,  stringResource(R.string.home_link_reference),    MaterialTheme.colorScheme.primary)           to 11,
+    QuickLink(PixelIcons.Clock,     stringResource(R.string.home_link_versions),     MaterialTheme.colorScheme.secondary)         to 12,
 )
 
 // Pair: QuickLink to calculator-tab index (allows visual reordering independent of tab order)
@@ -84,26 +84,27 @@ private data class CalcLink(
     val experimental: Boolean = false,
 )
 
-private val ALL_CALC_LINKS = listOf(
+@Composable
+private fun allCalcLinks() = listOf(
     // ── Planning & Organization ──
-    CalcLink(QuickLink(PixelIcons.Todo,      "Todo List"),              0),
-    CalcLink(QuickLink(PixelIcons.Storage,   "Shopping Lists"),         1),
-    CalcLink(QuickLink(PixelIcons.Bookmark,  "Notes"),                  11),
-    CalcLink(QuickLink(PixelIcons.Waypoints, "Waypoints",    Emerald), 12),
+    CalcLink(QuickLink(PixelIcons.Todo,      stringResource(R.string.home_link_todo_list)),              0),
+    CalcLink(QuickLink(PixelIcons.Storage,   stringResource(R.string.home_link_shopping_lists)),         1),
+    CalcLink(QuickLink(PixelIcons.Bookmark,  stringResource(R.string.home_link_notes)),                  11),
+    CalcLink(QuickLink(PixelIcons.Waypoints, stringResource(R.string.home_link_waypoints),    Emerald), 12),
     // ── Building & Design ──
-    CalcLink(QuickLink(PixelIcons.Fill,      "Block Fill"),             3),
-    CalcLink(QuickLink(PixelIcons.Shapes,    "Shapes"),                 4),
-    CalcLink(QuickLink(PixelIcons.Maze,      "Maze Maker"),             5),
-    CalcLink(QuickLink(PixelIcons.Storage,   "Storage"),                6),
+    CalcLink(QuickLink(PixelIcons.Fill,      stringResource(R.string.home_link_block_fill)),             3),
+    CalcLink(QuickLink(PixelIcons.Shapes,    stringResource(R.string.home_link_shapes)),                 4),
+    CalcLink(QuickLink(PixelIcons.Maze,      stringResource(R.string.home_link_maze_maker)),             5),
+    CalcLink(QuickLink(PixelIcons.Storage,   stringResource(R.string.home_link_storage)),                6),
     // ── Crafting & Resources ──
-    CalcLink(QuickLink(PixelIcons.Anvil,     "Enchanting"),             2),
-    CalcLink(QuickLink(PixelIcons.Smelt,     "Smelting"),               7),
+    CalcLink(QuickLink(PixelIcons.Anvil,     stringResource(R.string.home_link_enchanting)),             2),
+    CalcLink(QuickLink(PixelIcons.Smelt,     stringResource(R.string.home_link_smelting)),               7),
     // ── Reference ──
-    CalcLink(QuickLink(PixelIcons.Enchant,   "Librarian Guide"),       14, experimental = true),
-    CalcLink(QuickLink(PixelIcons.Torch,     "Light Spacing"),          10),
+    CalcLink(QuickLink(PixelIcons.Enchant,   stringResource(R.string.home_link_librarian_guide)),       14, experimental = true),
+    CalcLink(QuickLink(PixelIcons.Torch,     stringResource(R.string.home_link_light_spacing)),          10),
     // ── World & Navigation ──
-    CalcLink(QuickLink(PixelIcons.Nether,    "Nether Portal"),          8),
-    CalcLink(QuickLink(PixelIcons.Clock,     "Game Clock"),             9),
+    CalcLink(QuickLink(PixelIcons.Nether,    stringResource(R.string.home_link_nether_portal)),          8),
+    CalcLink(QuickLink(PixelIcons.Clock,     stringResource(R.string.home_link_game_clock)),             9),
 )
 
 // ── Browse tab index for favorite types ─────────────────────────────────────
@@ -265,8 +266,9 @@ fun HomeScreen(
 
         // ── C. Quick Access — Tools ──
         item(key = "tools") {
-            val calcLinks = remember(prefs.showExperimental) {
-                if (prefs.showExperimental) ALL_CALC_LINKS else ALL_CALC_LINKS.filter { !it.experimental }
+            val allCalc = allCalcLinks()
+            val calcLinks = remember(prefs.showExperimental, allCalc) {
+                if (prefs.showExperimental) allCalc else allCalc.filter { !it.experimental }
             }
             SectionHeader(stringResource(R.string.home_tools), icon = PixelIcons.Anvil)
             Spacer(Modifier.height(8.dp))
@@ -492,11 +494,11 @@ private fun HomeTipSection(tips: List<String>, startIndex: Int, onDisable: () ->
             Spacer(Modifier.weight(1f))
             Box {
                 IconButton(onClick = { menuExpanded = true }, modifier = Modifier.size(24.dp)) {
-                    Icon(Icons.Default.MoreVert, contentDescription = "Tip options", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
+                    Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.home_tip_options), tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
                 }
                 DropdownMenu(expanded = menuExpanded, onDismissRequest = { menuExpanded = false }) {
                     DropdownMenuItem(
-                        text = { Text("Disable tips") },
+                        text = { Text(stringResource(R.string.home_tip_disable)) },
                         onClick = {
                             menuExpanded = false
                             onDisable()
@@ -520,13 +522,13 @@ private fun HomeTipSection(tips: List<String>, startIndex: Int, onDisable: () ->
                 onClick = { tipIndex = Math.floorMod(tipIndex - 1, tips.size) },
                 modifier = Modifier.size(32.dp),
             ) {
-                Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "Previous tip", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = stringResource(R.string.home_tip_previous), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
             }
             IconButton(
                 onClick = { tipIndex = (tipIndex + 1) % tips.size },
                 modifier = Modifier.size(32.dp),
             ) {
-                Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "Next tip", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = stringResource(R.string.home_tip_next), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
             }
         }
     }
@@ -624,6 +626,7 @@ private fun HomeTodoRow(todo: TodoEntity, onToggle: () -> Unit) {
 
 // ── Spyglass Connect hub ─────────────────────────────────────────────────────
 
+@Composable
 private fun connectLinks(
     playerSkin: android.graphics.Bitmap?,
     playerCount: Int = 1,
@@ -634,19 +637,19 @@ private fun connectLinks(
         PixelIcons.Steve
     }
     return buildList {
-        add(QuickLink(characterIcon,          "Character")    to "connect_character")
-        add(QuickLink(PixelIcons.Backpack,    "Inventory")     to "connect_inventory")
-        add(QuickLink(PixelIcons.EnderChest,  "Ender Chest")   to "connect_enderchest")
-        add(QuickLink(PixelIcons.Storage,     "Storage")       to "connect_chestfinder")
-        add(QuickLink(PixelIcons.Biome,       "World Map")     to "connect_map")
-        add(QuickLink(PixelIcons.Waypoints,   "Waypoints")     to "connect_waypoints")
+        add(QuickLink(characterIcon,          stringResource(R.string.home_connect_link_character))    to "connect_character")
+        add(QuickLink(PixelIcons.Backpack,    stringResource(R.string.home_connect_link_inventory))     to "connect_inventory")
+        add(QuickLink(PixelIcons.EnderChest,  stringResource(R.string.home_connect_link_ender_chest))   to "connect_enderchest")
+        add(QuickLink(PixelIcons.Storage,     stringResource(R.string.home_connect_link_storage))       to "connect_chestfinder")
+        add(QuickLink(PixelIcons.Biome,       stringResource(R.string.home_connect_link_world_map))     to "connect_map")
+        add(QuickLink(PixelIcons.Waypoints,   stringResource(R.string.home_connect_link_waypoints))     to "connect_waypoints")
         val wolfIcon = MobTextures.get("wolf") ?: PixelIcons.Mob
-        add(QuickLink(wolfIcon,               "Pets")          to "connect_pets")
+        add(QuickLink(wolfIcon,               stringResource(R.string.home_connect_link_pets))          to "connect_pets")
         if (playerCount > 1) {
-            add(QuickLink(PixelIcons.Steve,   "Players")       to "connect_players")
+            add(QuickLink(PixelIcons.Steve,   stringResource(R.string.home_connect_link_players))       to "connect_players")
         }
-        add(QuickLink(PixelIcons.Anvil,       "Statistics")    to "connect_statistics")
-        add(QuickLink(PixelIcons.Advancement, "Advancements")       to "connect_advancements")
+        add(QuickLink(PixelIcons.Anvil,       stringResource(R.string.home_connect_link_statistics))    to "connect_statistics")
+        add(QuickLink(PixelIcons.Advancement, stringResource(R.string.home_connect_link_advancements))       to "connect_advancements")
     }
 }
 
@@ -669,7 +672,7 @@ private fun HomeConnectSection(
     when {
         // ── Connected, no world selected ──
         state.isConnected && selectedWorld == null -> {
-            SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
+            SectionHeader(stringResource(R.string.home_connect_title), icon = PixelIcons.Waypoints)
             Spacer(Modifier.height(8.dp))
             ConnectWorldSelector(
                 worlds = worlds,
@@ -705,7 +708,7 @@ private fun HomeConnectSection(
 
         // ── No cached data (any state) — show pairing card or connecting spinner ──
         else -> {
-            SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
+            SectionHeader(stringResource(R.string.home_connect_title), icon = PixelIcons.Waypoints)
             Spacer(Modifier.height(8.dp))
             if (!state.isConnected && state !is ConnectionState.Disconnected && state !is ConnectionState.Error) {
                 // Actively connecting/pairing — show spinner
@@ -758,12 +761,12 @@ private fun ConnectDisconnectedCard(
             )
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    "Stream Minecraft world data from your PC",
+                    stringResource(R.string.home_connect_stream),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    "Both devices on the same WiFi",
+                    stringResource(R.string.home_connect_wifi),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -777,7 +780,7 @@ private fun ConnectDisconnectedCard(
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
         ) {
-            Text("Scan QR Code")
+            Text(stringResource(R.string.home_connect_scan_qr))
         }
         if (showReconnect) {
             Spacer(Modifier.height(4.dp))
@@ -785,7 +788,7 @@ private fun ConnectDisconnectedCard(
                 onClick = onReconnect,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text("Reconnect to Last Device")
+                Text(stringResource(R.string.home_connect_reconnect_last))
             }
         }
 
@@ -820,25 +823,30 @@ private fun ConnectStatusLine(
         state is ConnectionState.Connecting || state is ConnectionState.Pairing
     val isDisconnected = state is ConnectionState.Disconnected || state is ConnectionState.Error
 
+    val connectedLabel = stringResource(R.string.home_connect_status_connected)
+    val reconnectingLabel = stringResource(R.string.home_connect_status_reconnecting)
+    val connectingLabel = stringResource(R.string.home_connect_status_connecting)
+    val reconnectLabel = stringResource(R.string.home_connect_status_reconnect)
+
     val (statusColor, statusLabel) = when {
-        state.isConnected -> Emerald to "Connected"
-        isInProgress -> Color(0xFFFFC107) to if (state is ConnectionState.Reconnecting) "Reconnecting" else "Connecting"
-        else -> Color(0xFFF44336) to "Reconnect"
+        state.isConnected -> Emerald to connectedLabel
+        isInProgress -> Color(0xFFFFC107) to if (state is ConnectionState.Reconnecting) reconnectingLabel else connectingLabel
+        else -> Color(0xFFF44336) to reconnectLabel
     }
 
     if (showClearDataDialog) {
         AlertDialog(
             onDismissRequest = { showClearDataDialog = false },
-            title = { Text("Clear Data") },
-            text = { Text("Clear all cached Connect data? Your device pairing will be kept.") },
+            title = { Text(stringResource(R.string.home_connect_clear_data_title)) },
+            text = { Text(stringResource(R.string.home_connect_clear_data_message)) },
             confirmButton = {
                 TextButton(onClick = {
                     showClearDataDialog = false
                     onClearData()
-                }) { Text("Clear") }
+                }) { Text(stringResource(R.string.home_connect_clear_data_confirm)) }
             },
             dismissButton = {
-                TextButton(onClick = { showClearDataDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showClearDataDialog = false }) { Text(stringResource(R.string.cancel)) }
             },
         )
     }
@@ -911,7 +919,7 @@ private fun ConnectStatusLine(
                 if (state.isConnected) {
                     if (worlds.size > 1) {
                         DropdownMenuItem(
-                            text = { Text("Switch World") },
+                            text = { Text(stringResource(R.string.home_connect_switch_world)) },
                             onClick = {
                                 statusMenuExpanded = false
                                 worldMenuExpanded = true
@@ -919,7 +927,7 @@ private fun ConnectStatusLine(
                         )
                     }
                     DropdownMenuItem(
-                        text = { Text("Disconnect") },
+                        text = { Text(stringResource(R.string.home_connect_disconnect)) },
                         onClick = {
                             statusMenuExpanded = false
                             onDisconnect()
@@ -927,7 +935,7 @@ private fun ConnectStatusLine(
                     )
                 } else if (isDisconnected) {
                     DropdownMenuItem(
-                        text = { Text("Reconnect") },
+                        text = { Text(stringResource(R.string.home_connect_status_reconnect)) },
                         onClick = {
                             statusMenuExpanded = false
                             onReconnect()
@@ -935,7 +943,7 @@ private fun ConnectStatusLine(
                     )
                 } else if (isInProgress) {
                     DropdownMenuItem(
-                        text = { Text("Cancel") },
+                        text = { Text(stringResource(R.string.cancel)) },
                         onClick = {
                             statusMenuExpanded = false
                             onDisconnect()
@@ -943,7 +951,7 @@ private fun ConnectStatusLine(
                     )
                 }
                 DropdownMenuItem(
-                    text = { Text("Scan New Device") },
+                    text = { Text(stringResource(R.string.home_connect_scan_new_device)) },
                     onClick = {
                         statusMenuExpanded = false
                         onScanQr()
@@ -951,7 +959,7 @@ private fun ConnectStatusLine(
                 )
                 SpyglassDivider()
                 DropdownMenuItem(
-                    text = { Text("Clear Data", color = Color(0xFFF44336)) },
+                    text = { Text(stringResource(R.string.home_connect_clear_data_title), color = Color(0xFFF44336)) },
                     onClick = {
                         statusMenuExpanded = false
                         showClearDataDialog = true
@@ -975,13 +983,13 @@ private fun ConnectWorldSelector(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                "Select a World",
+                stringResource(R.string.home_connect_select_world),
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.weight(1f),
             )
             Text(
-                "Disconnect",
+                stringResource(R.string.home_connect_disconnect),
                 style = MaterialTheme.typography.labelSmall,
                 color = Color(0xFFF44336),
                 modifier = Modifier.clickable { onDisconnect() },
@@ -1006,12 +1014,12 @@ private fun ConnectWorldSelector(
                 )
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        world.displayName + if (isModded) " (Modded)" else "",
+                        world.displayName + if (isModded) stringResource(R.string.home_connect_modded_suffix) else "",
                         style = MaterialTheme.typography.bodyMedium,
                         color = if (isModded) MaterialTheme.colorScheme.onSurfaceVariant else Color.Unspecified,
                     )
                     Text(
-                        "${world.gameMode.replaceFirstChar { it.uppercase() }} • ${world.difficulty.replaceFirstChar { it.uppercase() }}",
+                        stringResource(R.string.home_connect_game_mode_difficulty, world.gameMode.replaceFirstChar { it.uppercase() }, world.difficulty.replaceFirstChar { it.uppercase() }),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -1020,7 +1028,7 @@ private fun ConnectWorldSelector(
         }
         if (worlds.isEmpty()) {
             Text(
-                "No worlds found",
+                stringResource(R.string.home_connect_no_worlds),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
