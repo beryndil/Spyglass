@@ -1,0 +1,1451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Spyglass Connect</string>
+
+    <!-- Common -->
+    <string name="back">戻る</string>
+    <string name="search">検索</string>
+    <string name="save">保存</string>
+    <string name="cancel">キャンセル</string>
+    <string name="delete">削除</string>
+    <string name="edit">編集</string>
+    <string name="confirm_delete">削除の確認</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
+    <string name="all">すべて</string>
+    <string name="add">追加</string>
+    <string name="done">完了</string>
+    <string name="favorite">お気に入り</string>
+    <string name="favorites">お気に入り</string>
+    <string name="category">カテゴリ</string>
+    <string name="type">タイプ</string>
+    <string name="dimension">ディメンション</string>
+    <string name="copied">コピーしました！</string>
+    <string name="tap_to_copy">タップしてコピー</string>
+    <string name="menu">メニュー</string>
+    <string name="settings">設定</string>
+    <string name="changelog">変更履歴</string>
+    <string name="feedback">フィードバック</string>
+    <string name="help">ヘルプ</string>
+    <string name="news">ニュース</string>
+    <string name="about">このアプリについて</string>
+
+    <!-- Help Screen -->
+    <string name="help_title">ヘルプ</string>
+    <string name="help_wiki">Spyglass Wiki \u2192</string>
+
+    <!-- News Screen -->
+    <string name="news_title">ニュース</string>
+    <string name="news_placeholder">ニュースはまだありません。また後で確認してください！</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">ホーム</string>
+    <string name="nav_browse">閲覧</string>
+    <string name="nav_tools">ツール</string>
+    <string name="nav_search">検索</string>
+    <string name="top_bar_title">SPYGLASS CONNECT</string>
+
+    <!-- Home Screen -->
+    <string name="home_welcome">Spyglass Connectへようこそ</string>
+    <string name="home_update_available">アップデートあり</string>
+    <string name="home_subtitle">クラフト、建築、冒険のためのMinecraftコンパニオン</string>
+    <string name="home_minecraft_version">Minecraft Java 1.21.4</string>
+    <string name="home_todo_empty">今日の予定は？</string>
+    <string name="home_todo_open">タップしてやることリストを開く \u2192</string>
+    <string name="home_todo_view_all">全%d件のタスクを表示</string>
+    <string name="home_todo_edit">やることリストを編集</string>
+    <string name="home_tools">ツール</string>
+    <string name="home_browse">閲覧</string>
+    <string name="home_todo">やること</string>
+    <string name="home_did_you_know">知っていましたか？</string>
+    <string name="home_whats_new">新機能</string>
+    <string name="home_whats_new_blocks">%1$d ブロック &amp; %2$d アイテム</string>
+    <string name="home_whats_new_blocks_desc">カテゴリ、耐久値、レシピを含む完全なデータベース</string>
+    <string name="home_whats_new_enchant">エンチャント最適化</string>
+    <string name="home_whats_new_enchant_desc">金床でのエンチャント本の合成順序を最安経験値で計算</string>
+    <string name="home_whats_new_links">タブ間リンク</string>
+    <string name="home_whats_new_links_desc">アイテム、Mob、バイオーム、構造物をタップして詳細ページへ</string>
+    <string name="home_whats_new_search">すべてを検索</string>
+    <string name="home_whats_new_search_desc">ブロック、Mob、アイテム、レシピなどを横断検索</string>
+
+    <!-- Home Screen — Quick Link Labels (Browse) -->
+    <string name="home_link_blocks">ブロック</string>
+    <string name="home_link_items">アイテム</string>
+    <string name="home_link_recipes">レシピ</string>
+    <string name="home_link_mobs">Mob</string>
+    <string name="home_link_biomes">バイオーム</string>
+    <string name="home_link_structures">構造物</string>
+    <string name="home_link_trades">取引</string>
+    <string name="home_link_enchants">エンチャント</string>
+    <string name="home_link_potions">ポーション</string>
+    <string name="home_link_advancements">進捗</string>
+    <string name="home_link_commands">コマンド</string>
+    <string name="home_link_reference">リファレンス</string>
+    <string name="home_link_versions">バージョン</string>
+
+    <!-- Home Screen — Quick Link Labels (Tools) -->
+    <string name="home_link_todo_list">やることリスト</string>
+    <string name="home_link_shopping_lists">買い物リスト</string>
+    <string name="home_link_notes">メモ</string>
+    <string name="home_link_waypoints">ウェイポイント</string>
+    <string name="home_link_block_fill">ブロック充填</string>
+    <string name="home_link_shapes">形状</string>
+    <string name="home_link_maze_maker">迷路メーカー</string>
+    <string name="home_link_storage">ストレージ</string>
+    <string name="home_link_enchanting">エンチャント</string>
+    <string name="home_link_smelting">製錬</string>
+    <string name="home_link_librarian_guide">司書ガイド</string>
+    <string name="home_link_light_spacing">光源間隔</string>
+    <string name="home_link_nether_portal">ネザーポータル</string>
+    <string name="home_link_game_clock">ゲーム時計</string>
+
+    <!-- Home Screen — Tip Section -->
+    <string name="home_tip_options">ヒントオプション</string>
+    <string name="home_tip_disable">ヒントを無効にする</string>
+    <string name="home_tip_previous">前のヒント</string>
+    <string name="home_tip_next">次のヒント</string>
+
+    <!-- Home Screen — Connect Section -->
+    <string name="home_connect_title">Spyglass Connect</string>
+    <string name="home_connect_stream">PCからMinecraftのワールドデータをストリーミング</string>
+    <string name="home_connect_wifi">両方のデバイスを同じWiFiに接続</string>
+    <string name="home_connect_scan_qr">QRコードをスキャン</string>
+    <string name="home_connect_reconnect_last">前回のデバイスに再接続</string>
+    <string name="home_connect_status_connected">接続済み</string>
+    <string name="home_connect_status_reconnecting">再接続中</string>
+    <string name="home_connect_status_connecting">接続中</string>
+    <string name="home_connect_status_reconnect">再接続</string>
+    <string name="home_connect_clear_data_title">データを消去</string>
+    <string name="home_connect_clear_data_message">キャッシュされたConnectデータをすべて消去しますか？デバイスのペアリングは保持されます。</string>
+    <string name="home_connect_clear_data_confirm">消去</string>
+    <string name="home_connect_switch_world">ワールドを切り替え</string>
+    <string name="home_connect_disconnect">切断</string>
+    <string name="home_connect_scan_new_device">新しいデバイスをスキャン</string>
+    <string name="home_connect_select_world">ワールドを選択</string>
+    <string name="home_connect_modded_suffix"> (Mod入り)</string>
+    <string name="home_connect_no_worlds">ワールドが見つかりません</string>
+    <string name="home_connect_game_mode_difficulty">%1$s \u2022 %2$s</string>
+
+    <!-- Home Screen — Connect Quick Links -->
+    <string name="home_connect_link_character">キャラクター</string>
+    <string name="home_connect_link_inventory">インベントリ</string>
+    <string name="home_connect_link_ender_chest">エンダーチェスト</string>
+    <string name="home_connect_link_storage">ストレージ</string>
+    <string name="home_connect_link_world_map">ワールドマップ</string>
+    <string name="home_connect_link_waypoints">ウェイポイント</string>
+    <string name="home_connect_link_pets">ペット</string>
+    <string name="home_connect_link_players">プレイヤー</string>
+    <string name="home_connect_link_statistics">統計</string>
+    <string name="home_connect_link_advancements">進捗</string>
+
+    <!-- Consent Dialog -->
+    <string name="consent_title">プライバシー &amp; データ収集</string>
+    <string name="consent_body">Spyglass Connectはアプリの改善のために匿名データを収集することがあります。個人情報が共有されることはありません。</string>
+    <string name="consent_accept_all">すべて同意</string>
+    <string name="consent_decline_all">すべて拒否</string>
+    <string name="consent_customize">カスタマイズ</string>
+    <string name="consent_save_choices">選択を保存</string>
+    <string name="consent_analytics">アナリティクス</string>
+    <string name="consent_analytics_desc">機能改善のための使用パターン</string>
+    <string name="consent_crash_reports">クラッシュレポート</string>
+    <string name="consent_crash_reports_desc">バグ修正のための自動エラー報告</string>
+    <string name="consent_personalized_ads">パーソナライズ広告</string>
+    <string name="consent_personalized_ads_desc">興味に基づいた広告を表示します。無効にしても非パーソナライズ広告は表示されます。</string>
+    <string name="consent_privacy_policy_link">プライバシーポリシーの全文を読む</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_theme">テーマ</string>
+    <string name="settings_background">背景</string>
+    <string name="settings_default_browse_tab">デフォルトの閲覧タブ</string>
+    <string name="settings_browse_tab_desc">閲覧をタップした時に最初に開くタブ</string>
+    <string name="settings_default_tool_tab">デフォルトのツールタブ</string>
+    <string name="settings_tool_tab_desc">ツールをタップした時に最初に開くタブ</string>
+    <string name="settings_display">表示</string>
+    <string name="settings_tip_of_day">今日のヒントを表示</string>
+    <string name="settings_tip_of_day_desc">ホーム画面にMinecraftの日替わりヒントを表示</string>
+    <string name="settings_favorites_on_home">ホームにお気に入りを表示</string>
+    <string name="settings_favorites_on_home_desc">お気に入りに登録したアイテムをホームページに表示</string>
+    <string name="settings_game_clock">ゲーム時計</string>
+    <string name="settings_game_clock_desc">トップバーにミニ時計を表示</string>
+    <string name="settings_configure_clock">ゲーム時計を設定 \u2192</string>
+    <string name="settings_favorites">お気に入り</string>
+    <string name="settings_no_favorites">お気に入りはまだありません。閲覧タブでアイテムにスターを付けて追加してください。</string>
+    <string name="settings_favorites_count">%d 件のお気に入り</string>
+    <string name="settings_clear_all_favorites">お気に入りをすべて消去</string>
+    <string name="settings_privacy">プライバシー &amp; データ</string>
+    <string name="settings_privacy_policy">プライバシーポリシー \u2192</string>
+    <string name="settings_delete_data">すべてのデータを削除</string>
+    <string name="settings_delete_data_title">すべてのデータを削除しますか？</string>
+    <string name="settings_delete_data_message">やること、メモ、ウェイポイント、買い物リスト、お気に入り、進捗がすべて完全に削除されます。この操作は元に戻せません。</string>
+    <string name="settings_delete_data_confirm">すべて削除</string>
+
+    <!-- Settings — Section Headers -->
+    <string name="settings_appearance">外観</string>
+    <string name="settings_game_settings">ゲーム設定</string>
+    <string name="settings_defaults">デフォルト</string>
+    <string name="settings_data_sync">データ &amp; 同期</string>
+    <string name="settings_privacy_security">プライバシー &amp; セキュリティ</string>
+    <string name="settings_about_section">このアプリについて</string>
+
+    <!-- Settings — Appearance -->
+    <string name="settings_backgrounds">背景</string>
+    <string name="settings_my_photo">マイフォト</string>
+    <string name="settings_choose_photo">写真を選択</string>
+    <string name="settings_change_photo">変更</string>
+    <string name="settings_solid_colors">単色</string>
+    <string name="settings_default_theme">黒曜石</string>
+
+    <!-- Settings — Game Settings -->
+    <string name="settings_game_filter_desc">Minecraftのエディションとバージョンでコンテンツをフィルタリング</string>
+    <string name="settings_edition">エディション</string>
+    <string name="settings_edition_java">Java</string>
+    <string name="settings_edition_bedrock">Bedrock</string>
+    <string name="settings_version">バージョン</string>
+    <string name="settings_version_latest">最新</string>
+    <string name="settings_filter_mode">フィルターモード</string>
+    <string name="settings_filter_show_all">すべて表示</string>
+    <string name="settings_filter_highlight">入手不可をハイライト</string>
+    <string name="settings_filter_hide">入手不可を非表示</string>
+
+    <!-- Settings — Data & Sync (additional) -->
+    <string name="settings_syncing">同期中\u2026</string>
+    <string name="settings_sync_now">今すぐ同期</string>
+    <string name="settings_downloaded_textures">ダウンロード済みテクスチャ: %s</string>
+    <string name="settings_connect_title">Spyglass Connect</string>
+    <string name="settings_connect_desc">ローカルWiFi経由でPCからMinecraftのワールドデータをストリーミング。ペアリングはConnect画面から管理できます。</string>
+    <string name="settings_connect_download">PC版ダウンロード: hardknocks.com/spyglass-connect</string>
+
+    <!-- Settings — About (additional) -->
+    <string name="settings_wiki">Spyglass Wiki</string>
+    <string name="settings_wiki_desc">ガイド、ヒント、詳細なドキュメント</string>
+
+    <string name="settings_hide_unobtainable">クリエイティブ専用ブロックを非表示</string>
+    <string name="settings_hide_unobtainable_desc">サバイバルモードで入手できないブロックを非表示にする</string>
+    <string name="settings_show_experimental">実験的機能を表示</string>
+    <string name="settings_show_experimental_desc">Minecraftの実験的データパックの機能を含める（例: 司書取引リバランス）</string>
+    <string name="settings_haptic_feedback">触覚フィードバック</string>
+    <string name="settings_haptic_feedback_desc">タップや操作時に振動する</string>
+    <string name="settings_reduce_animations">アニメーションを削減</string>
+    <string name="settings_reduce_animations_desc">アプリ全体のモーションを最小化する</string>
+    <string name="settings_font_size">フォントサイズ</string>
+    <string name="settings_font_size_desc">アプリ全体のテキストサイズを調整</string>
+    <string name="settings_dynamic_color">ダイナミックカラー</string>
+    <string name="settings_dynamic_color_desc">壁紙の色を使用する（Android 12以降）</string>
+    <string name="settings_high_contrast">ハイコントラスト</string>
+    <string name="settings_high_contrast_desc">読みやすさのためにコントラストを上げる</string>
+    <string name="settings_startup_tab">デフォルトの起動画面</string>
+    <string name="settings_startup_tab_desc">アプリ起動時に開く画面</string>
+
+    <!-- Settings — Language -->
+    <string name="settings_language">言語</string>
+    <string name="settings_language_desc">Spyglass Connectの表示言語を選択してください。ゲームデータの翻訳は別途ダウンロードされます。</string>
+
+    <!-- Settings — Security -->
+    <string name="settings_security">セキュリティ</string>
+    <string name="settings_app_lock">アプリロック</string>
+    <string name="settings_app_lock_desc">アプリを開くのに生体認証またはPINが必要</string>
+    <string name="settings_app_lock_title">Spyglass Connectのロック解除</string>
+    <string name="settings_app_lock_subtitle">続行するには認証してください</string>
+
+    <!-- Settings — Data & Storage -->
+    <string name="settings_data_storage">データ &amp; ストレージ</string>
+    <string name="settings_sync_frequency">同期頻度</string>
+    <string name="settings_sync_frequency_desc">ゲームデータの更新をチェックする頻度</string>
+    <string name="settings_clear_cache">画像キャッシュを消去</string>
+    <string name="settings_clear_cache_desc">キャッシュされたテクスチャを削除して空き容量を確保</string>
+    <string name="settings_cache_cleared">キャッシュを消去しました</string>
+    <string name="settings_storage_usage">ストレージ使用量</string>
+    <string name="settings_offline_mode">オフラインモード</string>
+    <string name="settings_offline_mode_desc">バックグラウンドデータ同期を無効にする</string>
+
+    <!-- Settings — Quick Links -->
+    <string name="settings_quick_links">クイックリンク</string>
+    <string name="settings_rate_app">Play Storeで評価</string>
+    <string name="settings_rate_app_desc">レビューを書いてSpyglass Connectを応援</string>
+    <string name="settings_send_feedback">フィードバックを送信</string>
+    <string name="settings_send_feedback_desc">バグの報告や機能のリクエスト</string>
+    <string name="settings_about">Spyglass Connectについて</string>
+    <string name="settings_about_desc">バージョン情報、クレジット、ライセンス</string>
+    <string name="settings_changelog">変更履歴を表示</string>
+    <string name="settings_changelog_desc">最近のアップデート内容を確認</string>
+    <string name="settings_app_permissions">アプリの権限</string>
+    <string name="settings_app_permissions_desc">システム設定で権限を確認</string>
+
+    <!-- About Screen -->
+    <string name="about_app_title">Spyglass Connect</string>
+    <string name="about_version">%s</string>
+    <string name="about_companion">Minecraftコンパニオンツール。</string>
+    <string name="about_author">by Beryndil</string>
+    <string name="about_enjoy">Spyglass Connectを気に入りましたか？</string>
+    <string name="about_coffee">コーヒーをおごる</string>
+    <string name="about_disclaimer">Mojang StudiosおよびMicrosoftとは無関係です。</string>
+    <string name="about_game_data">ゲームデータ</string>
+    <string name="about_data_version">データバージョン</string>
+    <string name="about_minecraft_version">Java 1.21.4</string>
+    <string name="about_credits">クレジット &amp; ライセンス</string>
+    <string name="about_license_cc">全著作権所有 \u2014 ライセンスを表示</string>
+    <string name="about_pixel_perfection">Pixel Perfection</string>
+    <string name="about_by_xssheep">by XSSheep</string>
+    <string name="about_cc_by_sa">CC-BY-SA 4.0</string>
+    <string name="about_project_page">プロジェクトページ</string>
+    <string name="about_entity_icons">Entity-Icons</string>
+    <string name="about_cc0">CC0 1.0</string>
+    <string name="about_github">GitHub</string>
+    <string name="about_copyright">\u00A9 2026 Beryndil. All rights reserved.</string>
+    <string name="about_privacy">プライバシー</string>
+    <string name="about_privacy_text">すべてのゲームデータはデバイスにローカル保存されます。Spyglass ConnectはGoogle AdMobを通じて広告を表示し、同意の上で匿名のアナリティクスとクラッシュレポートを収集する場合があります。個人情報が共有されることはありません。</string>
+    <string name="about_report_bug">バグを報告</string>
+    <string name="about_request_feature">機能をリクエスト</string>
+
+    <!-- Disclaimer Screen -->
+    <string name="disclaimer_title">法的免責事項</string>
+    <string name="disclaimer_body">Spyglass Connectは、Minecraft: Java Editionの非公式ファンメイドコンパニオンアプリケーションです。\n\nこのアプリはMinecraftの公式製品ではありません。Mojang Studios、Microsoft Corporation、またはその子会社や関連会社によって承認されたものでも、関連するものでもありません。\n\n\"Minecraft\"はMojang Studiosの商標です。ゲームデータ、アイテム名、Mob名、バイオーム名、ブロック名を含むがこれに限定されないすべてのMinecraft関連コンテンツは、Mojang Studiosの知的財産です。\n\nこのアプリケーションに表示されるすべてのゲームデータは、Minecraft Wikiおよび公式Mojangリソースの公開情報から取得されています。このアプリはMinecraftのゲームサーバーを変更、操作、または接続することは一切ありません。\n\nこのアプリで使用されているピクセルアートテクスチャは、XSSheepによる\"Pixel Perfection\"リソースパックのもので、CC BY-SA 4.0ライセンスの下で提供されています。エンティティアイコンは\"Entity-Icons\"プロジェクトのもので、CC0 1.0ライセンスの下で提供されています。\n\nこのアプリケーションは「現状のまま」提供され、いかなる種類の保証もありません。開発者はこのアプリケーションの使用により生じるいかなる問題についても責任を負いません。</string>
+
+    <!-- License Screen -->
+    <string name="license_title">ライセンス</string>
+    <string name="license_full_name">プロプライエタリソフトウェアライセンス</string>
+    <string name="license_copyright">\u00A9 2026 Beryndil. All rights reserved.</string>
+    <string name="license_permitted_use">許可される使用</string>
+    <string name="license_permitted_use_desc">公式リリースチャネルを通じて配布されるSpyglass Connectアプリケーションを、個人的かつ非商用目的で使用するための非独占的、譲渡不可、取消可能なライセンスが付与されます。</string>
+    <string name="license_restrictions">制限事項</string>
+    <string name="license_restriction_copy">ソースコードまたはアプリケーションをコピー、複製、または複写することはできません。</string>
+    <string name="license_restriction_modify">改変、翻案、翻訳、または二次的著作物の作成はできません。</string>
+    <string name="license_restriction_distribute">アプリケーションを第三者に配布、サブライセンス、リース、レンタル、または譲渡することはできません。</string>
+    <string name="license_restriction_reverse">アプリケーションのリバースエンジニアリング、逆コンパイル、または逆アセンブルはできません。</string>
+    <string name="license_restriction_commercial">ソースコードまたはアプリケーションを商用目的で使用することはできません。</string>
+    <string name="license_third_party">このアプリケーションには、Aboutページに記載されている通り、独自のライセンスが適用されるサードパーティのアセットが含まれています。</string>
+    <string name="license_no_warranty">無保証</string>
+    <string name="license_no_warranty_desc">本ソフトウェアは「現状のまま」提供され、いかなる種類の保証もありません。開発者はこのアプリケーションの使用により生じるいかなる問題についても責任を負いません。</string>
+
+    <!-- Feedback Screen -->
+    <string name="feedback_title">フィードバック</string>
+    <string name="feedback_report_bug">バグを報告</string>
+    <string name="feedback_request_feature">機能をリクエスト</string>
+    <string name="feedback_rate">Play Storeで評価</string>
+    <string name="feedback_thanks">フィードバックはSpyglass Connectをより良くするのに役立ちます。ありがとうございます！</string>
+
+    <!-- Changelog Screen -->
+    <string name="changelog_title">変更履歴</string>
+
+    <!-- Search Screen -->
+    <string name="search_placeholder">すべてのMinecraftデータを検索\u2026</string>
+    <string name="search_empty_title">すべてを検索</string>
+    <string name="search_empty_subtitle">2文字以上入力して、ブロック、Mob、バイオーム、構造物、アイテム、レシピ、取引などを検索できます。</string>
+    <string name="search_no_results">結果なし</string>
+    <string name="search_no_matches">\"%s\"に一致するものがありません</string>
+
+    <!-- Browse Tabs -->
+    <string name="browse_tab_blocks">ブロック</string>
+    <string name="browse_tab_items">アイテム</string>
+    <string name="browse_tab_recipes">レシピ</string>
+    <string name="browse_tab_mobs">Mob</string>
+    <string name="browse_tab_trades">取引</string>
+    <string name="browse_tab_biomes">バイオーム</string>
+    <string name="browse_tab_structures">構造物</string>
+    <string name="browse_tab_enchants">エンチャント</string>
+    <string name="browse_tab_potions">ポーション</string>
+    <string name="browse_tab_advancements">進捗</string>
+    <string name="browse_tab_commands">コマンド</string>
+    <string name="browse_tab_reference">リファレンス</string>
+    <string name="browse_tab_versions">バージョン</string>
+
+    <!-- Calculator/Tool Tabs -->
+    <string name="calc_tab_todo">やること</string>
+    <string name="calc_tab_shopping">買い物</string>
+    <string name="calc_tab_enchanting">エンチャント</string>
+    <string name="calc_tab_fill">充填</string>
+    <string name="calc_tab_shapes">形状</string>
+    <string name="calc_tab_maze">迷路</string>
+    <string name="calc_tab_storage">ストレージ</string>
+    <string name="calc_tab_smelt">製錬</string>
+    <string name="calc_tab_nether">ネザー</string>
+    <string name="calc_tab_game_clock">ゲーム時計</string>
+    <string name="calc_tab_light">光源</string>
+    <string name="calc_tab_notes">メモ</string>
+    <string name="calc_tab_waypoints">ウェイポイント</string>
+    <string name="calc_tab_redstone">レッドストーン</string>
+    <string name="calc_tab_librarian">司書</string>
+    <string name="calc_tab_food">食料</string>
+    <string name="calc_tab_banners">旗</string>
+    <string name="calc_tab_trims">装飾</string>
+    <string name="calc_tab_loot">戦利品</string>
+
+    <!-- Browse Screens -->
+
+    <!-- Blocks -->
+    <string name="blocks_search_placeholder">ブロックを検索\u2026</string>
+    <string name="blocks_title">ブロック</string>
+    <string name="blocks_description">硬度やツール情報を含むすべての設置可能ブロック</string>
+    <string name="blocks_stat">%d ブロック</string>
+    <string name="blocks_no_results_title">ブロックが見つかりません</string>
+    <string name="blocks_no_results_subtitle">別の検索語を試してください</string>
+    <string name="blocks_badge_unobtainable">入手不可</string>
+    <string name="blocks_badge_flammable">可燃</string>
+    <string name="blocks_badge_transparent">透過</string>
+    <string name="blocks_badge_gravity">重力</string>
+    <string name="blocks_badge_waterloggable">水没可能</string>
+    <string name="blocks_badge_light">光源: %d</string>
+    <string name="blocks_stack_size">スタックサイズ</string>
+    <string name="blocks_hardness">硬度</string>
+    <string name="blocks_blast_resistance">爆破耐性</string>
+    <string name="blocks_tool_required">必要なツール</string>
+    <string name="blocks_min_tool_tier">最低ツールレベル</string>
+    <string name="blocks_light_level">光レベル</string>
+    <string name="blocks_light_level_value">%d/15</string>
+    <string name="blocks_ore_generation">鉱石生成</string>
+    <string name="blocks_min_y">Min Y</string>
+    <string name="blocks_max_y">Max Y</string>
+    <string name="blocks_peak_y">ピーク Y</string>
+    <string name="blocks_drops_nothing">ドロップなし</string>
+    <string name="blocks_drops">ドロップ</string>
+    <string name="blocks_job_block">職業ブロック</string>
+    <string name="blocks_job_block_for">職業ブロック: %s</string>
+    <string name="blocks_compostable_items">コンポスト可能アイテム</string>
+    <string name="blocks_compost_chance">%d%%の確率</string>
+    <string name="blocks_found_in_structures">構造物に存在</string>
+    <string name="blocks_glance_y_range">Y %1$d ～ %2$d</string>
+    <string name="blocks_glance_light">光源 %d</string>
+    <string name="blocks_glance_gravity">重力</string>
+    <string name="blocks_glance_redstone">レッドストーン</string>
+    <string name="blocks_glance_hardness">硬度 %s</string>
+
+    <!-- Blocks Sort Options -->
+    <string name="blocks_sort_name">名前 A\u2192Z</string>
+    <string name="blocks_sort_hardness">硬度 \u2193</string>
+    <string name="blocks_sort_blast_resistance">爆破耐性 \u2193</string>
+    <string name="blocks_sort_light_level">光レベル \u2193</string>
+
+    <!-- Items -->
+    <string name="items_search_placeholder">アイテムを検索\u2026</string>
+    <string name="items_title">アイテム</string>
+    <string name="items_description">ブロック以外のアイテム: ツール、武器、防具、食料、素材など -- 入手方法とリンク付き</string>
+    <string name="items_stat">%d アイテム</string>
+    <string name="items_no_results_title">アイテムが見つかりません</string>
+    <string name="items_no_results_subtitle">別の検索語やカテゴリを試してください</string>
+    <string name="items_badge_stack">スタック: %d</string>
+    <string name="items_badge_renewable">再生可能</string>
+    <string name="items_badge_non_renewable">再生不可</string>
+    <string name="items_how_to_obtain">入手方法</string>
+    <string name="items_combat_stats">戦闘ステータス</string>
+    <string name="items_durability">耐久値</string>
+    <string name="items_attack_damage">攻撃力</string>
+    <string name="items_attack_speed">攻撃速度</string>
+    <string name="items_dps">DPS</string>
+    <string name="items_enchantability">エンチャント適性</string>
+    <string name="items_armor_stats">防具ステータス</string>
+    <string name="items_defense_points">防御力</string>
+    <string name="items_armor_toughness">防具強度</string>
+    <string name="items_knockback_resistance">ノックバック耐性</string>
+    <string name="items_food_stats">食料ステータス</string>
+    <string name="items_hunger">空腹度</string>
+    <string name="items_saturation">隠し満腹度</string>
+    <string name="items_efficiency">効率</string>
+    <string name="items_effects">効果</string>
+    <string name="items_uses">使用回数</string>
+    <string name="items_compostable">コンポスト可能</string>
+    <string name="items_compost_chance">アイテムごとに%d%%の確率</string>
+    <string name="items_applicable_enchantments">適用可能なエンチャント</string>
+    <string name="items_recipe">レシピ</string>
+    <string name="items_crafting">クラフト</string>
+    <string name="items_dropped_by">ドロップ元</string>
+    <string name="items_used_to_breed">繁殖に使用</string>
+    <string name="items_mined_from">採掘元</string>
+    <string name="items_found_in_biomes">バイオームに存在</string>
+    <string name="items_found_in_structures">構造物に存在</string>
+    <string name="items_used_in_recipes">%d件のレシピで使用</string>
+
+    <!-- Items Sort Options -->
+    <string name="items_sort_name">名前 A\u2192Z</string>
+    <string name="items_sort_durability">耐久値 \u2193</string>
+    <string name="items_sort_attack_damage">攻撃力 \u2193</string>
+    <string name="items_sort_defense">防御力 \u2193</string>
+    <string name="items_sort_saturation">隠し満腹度 \u2193</string>
+
+    <!-- Recipes -->
+    <string name="recipes_search_placeholder">レシピを検索\u2026</string>
+    <string name="recipes_title">レシピ</string>
+    <string name="recipes_description">すべてのクラフト可能アイテムのレシピ</string>
+    <string name="recipes_stat">%d レシピ</string>
+    <string name="recipes_no_results_title">レシピが見つかりません</string>
+    <string name="recipes_no_results_subtitle">別の検索語を試してください</string>
+
+    <!-- Mobs -->
+    <string name="mobs_search_placeholder">Mobを検索\u2026</string>
+    <string name="mobs_title">Mob</string>
+    <string name="mobs_description">体力、ドロップ、スポーンバイオーム、攻略のヒントを含むすべてのMinecraft Mob</string>
+    <string name="mobs_stat">%d Mob</string>
+    <string name="mobs_no_results_title">Mobが見つかりません</string>
+    <string name="mobs_no_results_subtitle">別の検索語やカテゴリを試してください</string>
+    <string name="mobs_health">体力</string>
+    <string name="mobs_health_value">%s HP</string>
+    <string name="mobs_attack_damage">攻撃力</string>
+    <string name="mobs_attack_damage_value">%s HP</string>
+    <string name="mobs_xp_drop">経験値ドロップ</string>
+    <string name="mobs_fire_immune">火炎耐性</string>
+    <string name="mobs_spawn_conditions">スポーン条件</string>
+    <string name="mobs_breeding">繁殖</string>
+    <string name="mobs_drops">ドロップ</string>
+    <string name="mobs_found_in">生息地</string>
+    <string name="mobs_food_guide">食料ガイド \u2192</string>
+    <string name="mobs_light_spacing">光源間隔 \u2192</string>
+
+    <!-- Mobs Sort Options -->
+    <string name="mobs_sort_name">名前 A\u2192Z</string>
+    <string name="mobs_sort_health">体力 \u2193</string>
+    <string name="mobs_sort_xp">XP \u2193</string>
+
+    <!-- Biomes -->
+    <string name="biomes_search_placeholder">バイオームを検索\u2026</string>
+    <string name="biomes_title">バイオーム</string>
+    <string name="biomes_description">気温、Mob、構造物、マップカラーを含むすべてのMinecraftバイオーム</string>
+    <string name="biomes_stat">%d バイオーム</string>
+    <string name="biomes_no_results_title">バイオームが見つかりません</string>
+    <string name="biomes_no_results_subtitle">別の検索語を試してください</string>
+    <string name="biomes_temperature">気温</string>
+    <string name="biomes_precipitation">降水量</string>
+    <string name="biomes_features">特徴</string>
+    <string name="biomes_resources">資源</string>
+    <string name="biomes_building_palette">建築パレット</string>
+    <string name="biomes_structures">構造物</string>
+    <string name="biomes_mobs_found_here">ここに生息するMob</string>
+    <string name="biomes_librarian_guide">司書ガイド \u2192</string>
+    <string name="biomes_structure_loot">構造物の戦利品 \u2192</string>
+
+    <!-- Biomes Sort Options -->
+    <string name="biomes_sort_name">名前 A\u2192Z</string>
+    <string name="biomes_sort_temperature">気温 \u2193</string>
+
+    <!-- Structures -->
+    <string name="structures_search_placeholder">構造物を検索\u2026</string>
+    <string name="structures_title">構造物</string>
+    <string name="structures_description">バイオーム、Mob、戦利品、探し方を含むすべてのMinecraft構造物</string>
+    <string name="structures_stat">%d 構造物</string>
+    <string name="structures_no_results_title">構造物が見つかりません</string>
+    <string name="structures_no_results_subtitle">別の検索語やディメンションフィルターを試してください</string>
+    <string name="structures_how_to_find">探し方</string>
+    <string name="structures_biomes">バイオーム</string>
+    <string name="structures_mobs">Mob</string>
+    <string name="structures_loot">戦利品</string>
+    <string name="structures_unique_blocks">固有ブロック</string>
+    <string name="structures_loot_guide">戦利品ガイド \u2192</string>
+    <string name="structures_armor_trims">防具の装飾 \u2192</string>
+
+    <!-- Structures Sort Options -->
+    <string name="structures_sort_name">名前 A\u2192Z</string>
+    <string name="structures_sort_difficulty">難易度 \u2193</string>
+
+    <!-- Enchantments -->
+    <string name="enchants_search_placeholder">エンチャントを検索\u2026</string>
+    <string name="enchants_title">エンチャント</string>
+    <string name="enchants_description">対象、レアリティ、互換性で分類された全エンチャント</string>
+    <string name="enchants_stat">%d エンチャント</string>
+    <string name="enchants_no_results_title">エンチャントが見つかりません</string>
+    <string name="enchants_no_results_subtitle">別の検索語やフィルターを試してください</string>
+    <string name="enchants_open_librarian_guide">司書ガイドを開く \u2192</string>
+    <string name="enchants_anvil_only">金床のみ</string>
+    <string name="enchants_curse">呪い</string>
+    <string name="enchants_max_level">最大 %d</string>
+    <string name="enchants_anvil">金床</string>
+    <string name="enchants_max_level_label">最大レベル</string>
+    <string name="enchants_applies_to">適用対象</string>
+    <string name="enchants_rarity">レアリティ</string>
+    <string name="enchants_treasure">トレジャー</string>
+    <string name="enchants_treasure_value">はい（戦利品/金床のみ）</string>
+    <string name="enchants_incompatible_with">競合</string>
+
+    <!-- Enchantments Sort Options -->
+    <string name="enchants_sort_name">名前 A\u2192Z</string>
+    <string name="enchants_sort_max_level">最大レベル \u2193</string>
+    <string name="enchants_sort_rarity">レアリティ \u2193</string>
+
+    <!-- Potions -->
+    <string name="potions_search_placeholder">ポーションを検索\u2026</string>
+    <string name="potions_title">ポーション</string>
+    <string name="potions_description">すべてのポーションの醸造経路と効果</string>
+    <string name="potions_stat">%d ポーション</string>
+    <string name="potions_no_results_title">ポーションが見つかりません</string>
+    <string name="potions_no_results_subtitle">別の検索語を試してください</string>
+    <string name="potions_duration">持続時間</string>
+    <string name="potions_level">レベル</string>
+    <string name="potions_brewing_path">醸造経路</string>
+
+    <!-- Potions Sort Options -->
+    <string name="potions_sort_name">名前 A\u2192Z</string>
+    <string name="potions_sort_duration">持続時間 \u2193</string>
+    <string name="potions_sort_amplifier">効果レベル \u2193</string>
+
+    <!-- Trades -->
+    <string name="trades_search_placeholder">取引を検索\u2026</string>
+    <string name="trades_title">取引</string>
+    <string name="trades_description">職業とレベル別の村人取引</string>
+    <string name="trades_stat">%d 取引</string>
+    <string name="trades_no_results_title">取引が見つかりません</string>
+    <string name="trades_no_results_subtitle">別の検索語や職業を試してください</string>
+    <string name="trades_job_block">職業ブロック</string>
+    <string name="trades_ingredients">材料</string>
+    <string name="trades_level_badge">Lv %d</string>
+    <string name="trades_restock">%d/補充</string>
+
+    <!-- Advancements -->
+    <string name="advancements_search_placeholder">進捗を検索\u2026</string>
+    <string name="advancements_title">進捗プランナー</string>
+    <string name="advancements_description">実用的なガイドですべてのMinecraft進捗の達成状況を追跡</string>
+    <string name="advancements_stat">%1$d / %2$d 達成</string>
+    <string name="advancements_no_results_title">進捗が見つかりません</string>
+    <string name="advancements_no_results_subtitle">別の検索語やフィルターを試してください</string>
+    <string name="advancements_reset_progress">進捗をリセット</string>
+    <string name="advancements_reset_confirm">すべての進捗チェックマークを消去しますか？この操作は元に戻せません。</string>
+    <string name="advancements_reset">リセット</string>
+    <string name="advancements_toggle_children">子項目の表示切替</string>
+    <string name="advancements_children_count">%d 子項目</string>
+    <string name="advancements_completed">達成済み</string>
+    <string name="advancements_mark_complete">達成済みにする</string>
+    <string name="advancements_requirements">要件</string>
+    <string name="advancements_how_to_get">達成方法</string>
+    <string name="advancements_tutorial">チュートリアル</string>
+    <string name="advancements_stats">統計</string>
+    <string name="advancements_difficulty">難易度</string>
+    <string name="advancements_xp_reward">経験値報酬</string>
+    <string name="advancements_requires">前提条件</string>
+    <string name="advancements_related_items">関連アイテム</string>
+    <string name="advancements_related_mobs">関連Mob</string>
+    <string name="advancements_related_structures">関連構造物</string>
+    <string name="advancements_related_biomes">関連バイオーム</string>
+
+    <!-- Advancements Sort Options -->
+    <string name="advancements_sort_name">名前 A\u2192Z</string>
+    <string name="advancements_sort_type">タイプ \u2193</string>
+
+    <!-- Commands -->
+    <string name="commands_search_placeholder">コマンドを検索\u2026</string>
+    <string name="commands_title">コマンド</string>
+    <string name="commands_description">構文、説明、権限レベルを含むMinecraft Java 1.21.4の全コマンド。</string>
+    <string name="commands_stat">%d コマンド</string>
+    <string name="commands_no_results_title">コマンドが見つかりません</string>
+    <string name="commands_no_results_subtitle">別の検索語やフィルターを試してください</string>
+    <string name="commands_syntax">構文</string>
+    <string name="commands_permission">権限</string>
+
+    <!-- Commands Sort Options -->
+    <string name="commands_sort_name">名前 A\u2192Z</string>
+    <string name="commands_sort_permission">権限 \u2193</string>
+
+    <!-- Versions -->
+    <string name="versions_header">Java Editionバージョン履歴</string>
+    <string name="versions_subtitle">1.0から%2$sまでの%1$d回のメジャーアップデート</string>
+
+    <!-- Connect Screens -->
+    <string name="connect_title">Spyglass Connect</string>
+    <string name="connect_disconnect_desc">切断</string>
+    <string name="connect_status_connected">接続済み</string>
+    <string name="connect_status_label">ステータス</string>
+    <string name="connect_failed_to_connect">%sへの接続に失敗しました</string>
+    <string name="connect_scan_qr_button">QRコードをスキャン</string>
+    <string name="connect_reconnect_last">前回のデバイスに再接続</string>
+    <string name="connect_cached_data_offline">キャッシュデータ（オフライン）</string>
+    <string name="connect_character">キャラクター</string>
+    <string name="connect_inventory">インベントリ</string>
+    <string name="connect_ender_chest">エンダーチェスト</string>
+    <string name="connect_map">マップ</string>
+    <string name="connect_storage">ストレージ</string>
+    <string name="connect_how_to_connect">接続方法:</string>
+    <string name="connect_instructions">1. コンピュータでSpyglass Connectを開く\n2. 両方のデバイスが同じWiFiに接続されていることを確認\n3. 上の\'QRコードをスキャン\'をタップし、画面上のQRに向ける</string>
+    <string name="connect_select_world">ワールドを選択</string>
+    <string name="connect_world_viewer">ワールドビューアー</string>
+    <string name="connect_requires_desktop_update">デスクトップの更新が必要</string>
+    <string name="connect_health">体力</string>
+    <string name="connect_food">食料</string>
+    <string name="connect_xp_level">XPレベル</string>
+    <string name="connect_xp">XP</string>
+    <string name="connect_position_format">座標: %1$d, %2$d, %3$d</string>
+    <string name="connect_players_count">プレイヤー (%d)</string>
+    <string name="connect_fair_play_warning">他のプレイヤーのデータを閲覧することは、マルチプレイヤーワールドでのフェアプレイに反する可能性があります。</string>
+    <string name="connect_world_owner">ワールドオーナー</string>
+
+    <!-- Connect — QR Scanner -->
+    <string name="connect_qr_title">QRコードをスキャン</string>
+    <string name="connect_qr_instruction">コンピュータのQRコードに向けてください</string>
+    <string name="connect_qr_not_spyglass">Spyglass ConnectのQRコードではありません</string>
+    <string name="connect_qr_camera_required">QRコードのスキャンにはカメラの権限が必要です</string>
+    <string name="connect_qr_grant_permission">権限を許可</string>
+
+    <!-- Connect — Chest Loading Animation -->
+    <string name="connect_anim_error">接続エラー</string>
+    <string name="connect_anim_ready">準備完了！</string>
+    <string name="connect_anim_connected">接続完了！</string>
+    <string name="connect_anim_pairing">ペアリング中\u2026</string>
+    <string name="connect_anim_connecting">接続中\u2026</string>
+    <string name="connect_anim_reconnecting">再接続中（%d回目）\u2026</string>
+    <string name="connect_anim_getting_ready">準備中\u2026</string>
+
+    <!-- Connect — Offline Indicator -->
+    <string name="connect_offline">オフライン</string>
+    <string name="connect_offline_last_updated">オフライン \u00b7 最終更新 %s</string>
+    <string name="connect_time_just_now">たった今</string>
+    <string name="connect_time_minutes_ago">%d分前</string>
+    <string name="connect_time_hours_ago">%d時間前</string>
+    <string name="connect_time_yesterday">昨日</string>
+    <string name="connect_time_days_ago">%d日前</string>
+
+    <!-- Connect — Character Screen -->
+    <string name="connect_no_cached_player">キャッシュされたプレイヤーデータがありません</string>
+    <string name="connect_loading_player">プレイヤーデータを読み込み中\u2026</string>
+    <string name="connect_player_body">プレイヤーの体</string>
+    <string name="connect_player_head">プレイヤーの頭</string>
+    <string name="connect_player">プレイヤー</string>
+    <string name="connect_ign">IGN</string>
+    <string name="connect_unknown_player">不明なプレイヤー</string>
+    <string name="connect_uuid">UUID</string>
+    <string name="connect_last_death">最後の死亡地点: %1$d, %2$d, %3$d (%4$s)</string>
+    <string name="connect_spawn">スポーン地点: %1$d, %2$d, %3$d</string>
+    <string name="connect_spawn_forced">スポーン地点: %1$d, %2$d, %3$d (強制)</string>
+    <string name="connect_active_effects">アクティブな効果</string>
+    <string name="connect_equipment_analysis">装備分析</string>
+    <string name="connect_analyzing_gear">装備を分析中\u2026</string>
+    <string name="connect_slot_head">頭</string>
+    <string name="connect_slot_chest">胸</string>
+    <string name="connect_slot_legs">脚</string>
+    <string name="connect_slot_feet">足</string>
+    <string name="connect_slot_main_hand">メインハンド</string>
+    <string name="connect_slot_off_hand">オフハンド</string>
+    <string name="connect_empty">空</string>
+    <string name="connect_upgrade_to">%sにアップグレード \u2192</string>
+    <string name="connect_suggested">おすすめ: %s \u2192</string>
+
+    <!-- Connect — Inventory Screen -->
+    <string name="connect_no_cached_inventory">キャッシュされたインベントリデータがありません</string>
+    <string name="connect_no_player_data">プレイヤーデータがありません</string>
+    <string name="connect_equipment">装備</string>
+    <string name="connect_hotbar">ホットバー</string>
+    <string name="connect_armor_head">頭</string>
+    <string name="connect_armor_chest">胸</string>
+    <string name="connect_armor_legs">脚</string>
+    <string name="connect_armor_feet">足</string>
+    <string name="connect_armor_off">オフ</string>
+
+    <!-- Connect — Ender Chest Screen -->
+    <string name="connect_no_cached_ender_chest">キャッシュされたエンダーチェストデータがありません</string>
+    <string name="connect_no_ender_chest_data">エンダーチェストデータがありません</string>
+    <string name="connect_ender_chest_items">エンダーチェスト (%dアイテム)</string>
+
+    <!-- Connect — Chest Finder / Storage Screen -->
+    <string name="connect_search_items_placeholder">アイテムを検索（例: diamond, iron）</string>
+    <string name="connect_clear">消去</string>
+    <string name="connect_no_items_found">\"%s\"に一致するアイテムが見つかりません</string>
+    <string name="connect_showing_results">%d件中15件を表示 \u2014 検索を絞り込んでください</string>
+    <string name="connect_no_containers">コンテナが見つかりません</string>
+    <string name="connect_container_count">%dコンテナ</string>
+    <string name="connect_and_more_locations">\u2026他%d箇所</string>
+
+    <!-- Connect — Map Screen -->
+    <string name="connect_world_map">ワールドマップ</string>
+    <string name="connect_center_on_player">プレイヤーを中心に表示</string>
+
+    <!-- Connect — Players Screen -->
+    <string name="connect_players">プレイヤー</string>
+    <string name="connect_loading_players">プレイヤーを読み込み中\u2026</string>
+    <string name="connect_no_player_data_available">プレイヤーデータがありません</string>
+    <string name="connect_unknown">不明</string>
+    <string name="connect_owner">オーナー</string>
+    <string name="connect_compare">比較</string>
+
+    <!-- Connect — Compare Screen -->
+    <string name="connect_compare_players">プレイヤーを比較</string>
+    <string name="connect_loading_comparison">比較データを読み込み中\u2026</string>
+    <string name="connect_connect_to_compare">プレイヤーを比較するには接続してください</string>
+    <string name="connect_player_1">プレイヤー1</string>
+    <string name="connect_player_2">プレイヤー2</string>
+    <string name="connect_compare_dimension">ディメンション</string>
+    <string name="connect_compare_position">位置</string>
+    <string name="connect_compare_inventory">インベントリ</string>
+    <string name="connect_compare_armor">防具</string>
+    <string name="connect_items_format">%dアイテム</string>
+    <string name="connect_pieces_format">%d個</string>
+
+    <!-- Connect — Statistics Screen -->
+    <string name="connect_player_statistics">プレイヤー統計</string>
+    <string name="connect_no_cached_statistics">キャッシュされた統計がありません</string>
+    <string name="connect_loading_statistics">統計を読み込み中\u2026</string>
+    <string name="connect_no_statistics">統計が見つかりません</string>
+
+    <!-- Connect — Pets Screen -->
+    <string name="connect_pets">ペット</string>
+    <string name="connect_scanning_tamed">手懐けたMobを検索中\u2026</string>
+    <string name="connect_no_tamed_mobs">手懐けたMobが見つかりません</string>
+    <string name="connect_owner_label">\u00b7 飼い主: %s</string>
+    <string name="connect_collar">首輪: %s</string>
+    <string name="connect_variant">バリアント: %s</string>
+    <string name="connect_speed_format">速度: %s b/s</string>
+    <string name="connect_jump_format">ジャンプ: %sブロック</string>
+
+    <!-- Connect — Advancements Screen -->
+    <string name="connect_advancements">進捗</string>
+    <string name="connect_no_cached_advancements">キャッシュされた進捗がありません</string>
+    <string name="connect_loading_advancements">進捗を読み込み中\u2026</string>
+    <string name="connect_completed_count">%1$d / %2$d 達成</string>
+
+    <!-- Connect — Waypoints Screen -->
+    <string name="connect_waypoints">ウェイポイント</string>
+    <string name="connect_new_waypoint_desc">新しいウェイポイント</string>
+    <string name="connect_live_locations">ライブロケーション</string>
+    <string name="connect_custom_waypoints">カスタムウェイポイント</string>
+    <string name="connect_no_waypoints_dimension">このディメンションにはウェイポイントがありません</string>
+    <string name="connect_no_waypoints_yet">ウェイポイントはまだありません</string>
+    <string name="connect_connect_to_autodetect">ワールドに接続して位置を自動検出</string>
+    <string name="connect_locations_will_appear">ワールドデータの読み込み時に位置が表示されます</string>
+    <string name="connect_add_waypoint_at_position">現在の位置にウェイポイントを追加</string>
+    <string name="connect_new_waypoint_title">新しいウェイポイント</string>
+    <string name="connect_edit_waypoint_title">ウェイポイントを編集</string>
+    <string name="connect_waypoint_name">名前</string>
+    <string name="connect_waypoint_color">色</string>
+    <string name="connect_waypoint_notes">メモ（任意）</string>
+    <string name="connect_coordinates">座標</string>
+    <string name="connect_distances">距離</string>
+    <string name="connect_notes">メモ</string>
+    <string name="connect_auto_detected">ワールドデータから自動検出</string>
+    <string name="connect_different_dimension">別のディメンション</string>
+
+    <!-- Connect — World Selector Sheet -->
+    <string name="connect_world_selector_title">ワールドを選択</string>
+    <string name="connect_world_date_unknown">不明</string>
+
+    <!-- Connect — Connection States -->
+    <string name="connect_state_disconnected">切断済み</string>
+    <string name="connect_state_scanning">QRコードをスキャン中\u2026</string>
+    <string name="connect_state_connecting">%sに接続中\u2026</string>
+    <string name="connect_state_pairing">ペアリング中\u2026</string>
+    <string name="connect_state_connected">%sに接続済み</string>
+    <string name="connect_state_reconnecting">再接続中（%d回目）\u2026</string>
+    <string name="connect_state_error">エラー: %s</string>
+
+    <!-- Core UI -->
+    <string name="core_sort">並べ替え</string>
+    <string name="core_report_problem">問題を報告</string>
+    <string name="core_copied">コピーしました！</string>
+    <string name="core_tap_to_copy">タップしてコピー</string>
+    <string name="core_remove">削除</string>
+    <string name="core_clear_history">履歴を消去</string>
+    <string name="core_add_to_todo">やることリストに追加</string>
+    <string name="core_qty">数量</string>
+    <string name="core_add_to_todo_icon">やることに追加</string>
+    <string name="core_added">追加しました！</string>
+    <string name="core_add_to_shopping_list">買い物リストに追加</string>
+    <string name="core_no_shopping_lists">買い物リストがまだありません \u2014 買い物タブで作成してください</string>
+    <string name="core_add_to_list_icon">リストに追加</string>
+    <string name="core_show_less">折りたたむ</string>
+    <string name="core_show_more">+%d件\u2026</string>
+    <string name="core_java_only">Java限定</string>
+    <string name="core_bedrock_only">Bedrock限定</string>
+    <string name="core_both_editions">両エディション</string>
+    <string name="core_mechanics_changed">%sで仕様変更あり</string>
+
+    <!-- Calculator Screens -->
+
+    <!-- Smelting -->
+    <string name="smelting_header">製錬 / 燃料計算機</string>
+    <string name="smelting_label">製錬するアイテム数</string>
+    <string name="smelting_placeholder">例: 14スタック、5k、2チェスト</string>
+    <string name="smelting_parse_error">数量を解析できません</string>
+    <string name="smelting_wasted">%d 無駄</string>
+    <string name="smelting_help">製錬したいアイテム数を入力すると、各燃料の必要量が表示されます。緑のドットは高効率、金は中効率、灰色は低効率です。「14スタック」「5k」「2チェスト」のように入力してください。</string>
+
+    <!-- Reference -->
+    <string name="reference_title">クイックリファレンス</string>
+    <string name="reference_description">鉱石、XP、醸造、レッドストーン、時間、染料の早見表</string>
+    <string name="reference_ore_levels">Y座標別鉱石レベル</string>
+    <string name="reference_ore_y_range">Y %1$d ～ %2$d</string>
+    <string name="reference_ore_peak">ピーク %d</string>
+    <string name="reference_xp_table">XPテーブル</string>
+    <string name="reference_levels_0_16">レベル 0-16</string>
+    <string name="reference_xp_per_level">レベルごとのXP</string>
+    <string name="reference_xp_formula_low">2L + 7</string>
+    <string name="reference_total_to_16">16までの合計</string>
+    <string name="reference_xp_315">315 XP</string>
+    <string name="reference_levels_17_31">レベル 17-31</string>
+    <string name="reference_xp_formula_mid">5L - 38</string>
+    <string name="reference_total_to_30">30までの合計</string>
+    <string name="reference_xp_1395">1,395 XP</string>
+    <string name="reference_levels_32_plus">レベル 32以上</string>
+    <string name="reference_xp_formula_high">9L - 158</string>
+    <string name="reference_enchanting_table_slots">エンチャントテーブルのスロット</string>
+    <string name="reference_slot_1">スロット1（最安）</string>
+    <string name="reference_slot_1_cost">ラピスラズリ1個 + 1レベル</string>
+    <string name="reference_slot_2">スロット2（中間）</string>
+    <string name="reference_slot_2_cost">ラピスラズリ2個 + 2レベル</string>
+    <string name="reference_slot_3">スロット3（最高）</string>
+    <string name="reference_slot_3_cost">ラピスラズリ3個 + 3レベル</string>
+    <string name="reference_anvil">金床</string>
+    <string name="reference_too_expensive_cap">コストが高すぎる上限</string>
+    <string name="reference_too_expensive_val">40レベル</string>
+    <string name="reference_rename_cost">名前変更コスト</string>
+    <string name="reference_rename_cost_val">1レベル（初回）</string>
+    <string name="reference_cost_doubles">コスト倍増</string>
+    <string name="reference_cost_doubles_val">前回の作業ペナルティごと</string>
+    <string name="reference_brewing_chart">醸造チャート</string>
+    <string name="reference_base_chain">基本チェーン</string>
+    <string name="reference_water_bottle">水入り瓶</string>
+    <string name="reference_starting_point">出発点</string>
+    <string name="reference_plus_nether_wart">+ ネザーウォート</string>
+    <string name="reference_awkward_potion">奇妙なポーション</string>
+    <string name="reference_effect_ingredients">効果の材料</string>
+    <string name="reference_modifiers">修飾子</string>
+    <string name="reference_extends_duration">持続時間を延長</string>
+    <string name="reference_amplifies_effect">効果を増幅</string>
+    <string name="reference_corrupts">腐敗（反転）</string>
+    <string name="reference_splash_version">スプラッシュ版</string>
+    <string name="reference_lingering_version">残留版</string>
+    <string name="reference_redstone_basics">レッドストーンの基本</string>
+    <string name="reference_signal">信号</string>
+    <string name="reference_max_range">最大距離</string>
+    <string name="reference_max_range_val">15ブロック</string>
+    <string name="reference_strength_loss">強度低下</string>
+    <string name="reference_strength_loss_val">ブロックごとに1</string>
+    <string name="reference_redstone_tick">レッドストーンティック</string>
+    <string name="reference_redstone_tick_val">0.1秒（2ゲームティック）</string>
+    <string name="reference_repeater">リピーター</string>
+    <string name="reference_delay_settings">遅延設定</string>
+    <string name="reference_delay_val">1-4ティック（0.1-0.4秒）</string>
+    <string name="reference_resets_signal">信号リセット</string>
+    <string name="reference_resets_val">15に戻る</string>
+    <string name="reference_lock_mode">ロックモード</string>
+    <string name="reference_lock_mode_val">側面入力で状態を固定</string>
+    <string name="reference_comparator">コンパレーター</string>
+    <string name="reference_compare_mode">比較モード</string>
+    <string name="reference_compare_mode_val">出力 = 背面 >= 側面なら背面</string>
+    <string name="reference_subtract_mode">減算モード</string>
+    <string name="reference_subtract_mode_val">出力 = 背面 - 側面</string>
+    <string name="reference_container_read">コンテナ読み取り</string>
+    <string name="reference_container_read_val">信号 = 充填レベル（0-15）</string>
+    <string name="reference_key_components">主要コンポーネント</string>
+    <string name="reference_piston">ピストン</string>
+    <string name="reference_piston_val">最大12ブロック押し出し</string>
+    <string name="reference_sticky_piston">粘着ピストン</string>
+    <string name="reference_sticky_piston_val">押し引き可能</string>
+    <string name="reference_observer">オブザーバー</string>
+    <string name="reference_observer_val">ブロック更新を検出</string>
+    <string name="reference_hopper">ホッパー</string>
+    <string name="reference_hopper_val">毎秒5アイテム転送</string>
+    <string name="reference_dropper">ドロッパー</string>
+    <string name="reference_dropper_val">パルスごとに1アイテム排出</string>
+    <string name="reference_daylight_sensor">日照センサー</string>
+    <string name="reference_daylight_sensor_val">空の明るさに基づいて出力</string>
+    <string name="reference_times_durations">時間 &amp; 継続</string>
+    <string name="reference_day_night_cycle">昼夜サイクル</string>
+    <string name="reference_full_cycle">1サイクル</string>
+    <string name="reference_full_cycle_val">20分（24,000ティック）</string>
+    <string name="reference_daytime">昼間</string>
+    <string name="reference_daytime_val">10分（ティック 0-12,000）</string>
+    <string name="reference_sunset">夕暮れ</string>
+    <string name="reference_sunset_val">1.5分（ティック 12,000-13,800）</string>
+    <string name="reference_night">夜</string>
+    <string name="reference_night_val">7分（ティック 13,800-22,200）</string>
+    <string name="reference_sunrise">夜明け</string>
+    <string name="reference_sunrise_val">1.5分（ティック 22,200-24,000）</string>
+    <string name="reference_sleep_available">睡眠可能</string>
+    <string name="reference_sleep_available_val">ティック 12,542-23,460</string>
+    <string name="reference_breeding_growth">繁殖 &amp; 成長</string>
+    <string name="reference_breeding_cooldown">繁殖クールダウン</string>
+    <string name="reference_breeding_cooldown_val">5分</string>
+    <string name="reference_baby_growth">子供の成長時間</string>
+    <string name="reference_baby_growth_val">20分</string>
+    <string name="reference_speed_up_growth">成長を早める</string>
+    <string name="reference_speed_up_growth_val">子供に繁殖用の食料を与える</string>
+    <string name="reference_villager_restock">村人の補充</string>
+    <string name="reference_villager_restock_val">ゲーム内1日に2回</string>
+    <string name="reference_crop_growth">作物の成長（平均）</string>
+    <string name="reference_wheat">小麦 / ニンジン / ジャガイモ</string>
+    <string name="reference_wheat_val">約25分（8段階）</string>
+    <string name="reference_beetroot">ビートルート</string>
+    <string name="reference_beetroot_val">約25分（4段階）</string>
+    <string name="reference_nether_wart">ネザーウォート</string>
+    <string name="reference_nether_wart_val">約10分（4段階）</string>
+    <string name="reference_sugarcane">サトウキビ / サボテン</string>
+    <string name="reference_sugarcane_val">ブロックごとに約18分</string>
+    <string name="reference_bamboo">竹</string>
+    <string name="reference_bamboo_val">ブロックごとに約4分</string>
+    <string name="reference_melon_pumpkin">スイカ / カボチャの茎</string>
+    <string name="reference_melon_pumpkin_val">約25分、その後実がなる</string>
+    <string name="reference_other_timers">その他のタイマー</string>
+    <string name="reference_smelting_per_item">アイテムごとの製錬</string>
+    <string name="reference_smelting_per_item_val">10秒（200ティック）</string>
+    <string name="reference_item_despawn">アイテム消滅</string>
+    <string name="reference_item_despawn_val">5分</string>
+    <string name="reference_mob_despawn">Mobデスポーン</string>
+    <string name="reference_mob_despawn_val">128ブロック以上 = 即座</string>
+    <string name="reference_drowning">溺れ</string>
+    <string name="reference_drowning_val">15秒の空気、その後毎秒1HP</string>
+    <string name="reference_phantoms">ファントム出現</string>
+    <string name="reference_phantoms_val">3日以上睡眠なし</string>
+    <string name="reference_fire_spread">延焼チェック</string>
+    <string name="reference_fire_spread_val">2秒ごと</string>
+    <string name="reference_raid_timeout">襲撃タイムアウト</string>
+    <string name="reference_raid_timeout_val">40分</string>
+    <string name="reference_dye_colors">染料の色</string>
+
+    <!-- Redstone -->
+    <string name="redstone_title">レッドストーン信号</string>
+    <string name="redstone_description">コンテナの充填レベルからコンパレーターの信号強度を計算。レッドストーン装置に必要なアイテム数を計画。</string>
+    <string name="redstone_container">コンテナ</string>
+    <string name="redstone_select_container">コンテナを選択</string>
+    <string name="redstone_container_slots">%1$s（%2$dスロット）</string>
+    <string name="redstone_slots_label">%dスロット</string>
+    <string name="redstone_calc_signal">アイテムから信号を計算</string>
+    <string name="redstone_item_count">アイテム数</string>
+    <string name="redstone_stack_size">スタックサイズ</string>
+    <string name="redstone_stack_hint">一般的: 64（ほとんどのアイテム）、16（卵、エンダーパール、雪玉）、1（ツール、防具）</string>
+    <string name="redstone_fill_level">充填レベル</string>
+    <string name="redstone_signal_strength">信号強度</string>
+    <string name="redstone_signal_out_of">%d / 15</string>
+    <string name="redstone_max_capacity">最大容量</string>
+    <string name="redstone_max_capacity_val">%dアイテム</string>
+    <string name="redstone_slots_used">使用スロット</string>
+    <string name="redstone_slots_used_val">%1$d / %2$d</string>
+    <string name="redstone_items_needed_header">目標信号に必要なアイテム数</string>
+    <string name="redstone_target_signal">目標信号（0-15）</string>
+    <string name="redstone_target_signal_label">目標信号</string>
+    <string name="redstone_items_needed">必要アイテム数</string>
+    <string name="redstone_items_needed_val">%1$d（スタックサイズ %2$d）</string>
+    <string name="redstone_max_items_at_signal">信号%dでの最大アイテム数</string>
+    <string name="redstone_signal_reference">信号リファレンス</string>
+    <string name="redstone_signal_table_for">%sの信号テーブル</string>
+    <string name="redstone_signal_n">信号 %d</string>
+    <string name="redstone_items_suffix">%sアイテム</string>
+    <string name="redstone_special_sources">特殊なコンパレーターソース</string>
+    <string name="redstone_non_container_sources">コンテナ以外のソース</string>
+    <string name="redstone_cake">ケーキ</string>
+    <string name="redstone_cake_val">信号 = 14 - (2 × 食べた切れ数)、最大14</string>
+    <string name="redstone_composter">コンポスター</string>
+    <string name="redstone_composter_val">信号 = 堆肥レベル（0-8）</string>
+    <string name="redstone_cauldron">大釜</string>
+    <string name="redstone_cauldron_val">信号 = 水位（0-3）</string>
+    <string name="redstone_beehive">ミツバチの巣箱 / ミツバチの巣</string>
+    <string name="redstone_beehive_val">信号 = ハチミツレベル（0-5）</string>
+    <string name="redstone_lectern">書見台</string>
+    <string name="redstone_lectern_val">信号 = ページ番号 / 総ページ数 × 15</string>
+    <string name="redstone_respawn_anchor">リスポーンアンカー</string>
+    <string name="redstone_respawn_anchor_val">信号 = チャージ数（0-4）</string>
+    <string name="redstone_sculk_sensor">スカルクセンサー</string>
+    <string name="redstone_sculk_sensor_val">振動タイプに基づく信号（1-15）</string>
+    <string name="redstone_end_portal_frame">エンドポータルフレーム</string>
+    <string name="redstone_end_portal_frame_val">エンダーアイあり = 信号15、なし = 0</string>
+    <string name="redstone_jukebox">ジュークボックス</string>
+    <string name="redstone_jukebox_val">信号はディスクにより異なる（1-15）</string>
+    <string name="redstone_command_block">コマンドブロック</string>
+    <string name="redstone_command_block_val">信号 = 成功回数</string>
+    <string name="redstone_item_frame">額縁</string>
+    <string name="redstone_item_frame_val">信号 = 回転ステップ（0-8）</string>
+    <string name="redstone_jukebox_disc_signals">ジュークボックスのディスク信号</string>
+    <string name="redstone_comparator_tips">コンパレーターのヒント</string>
+    <string name="redstone_how_comparators_work">コンパレーターの仕組み</string>
+    <string name="redstone_comparator_desc">レッドストーンコンパレーターは背後のコンテナの充填レベルを読み取り、0-15の信号強度を出力します。</string>
+    <string name="redstone_compare_mode_label">比較モード（前面トーチオフ）</string>
+    <string name="redstone_compare_mode_desc">出力 = 背面信号 >= 側面信号なら背面信号、それ以外は0。</string>
+    <string name="redstone_subtract_mode_label">減算モード（前面トーチオン）</string>
+    <string name="redstone_subtract_mode_desc">出力 = 背面信号 - 側面信号（最小0）。算術回路に便利。</string>
+    <string name="redstone_signal_formula">信号の計算式</string>
+    <string name="redstone_signal_formula_desc">信号 = floor(1 + (アイテム比率の合計 / 総スロット数) × 14)\nアイテム比率 = 各スロットの数量 / 最大スタックサイズ\n空の場合は0、完全に満タンの場合は15。</string>
+
+    <!-- Notes -->
+    <string name="notes_search_placeholder">メモを検索\u2026</string>
+    <string name="notes_new_note_cd">新しいメモ</string>
+    <string name="notes_title">メモ</string>
+    <string name="notes_description">Minecraftのメモを書いて、ラベルを付けて整理。トピック別にグループ化できます。</string>
+    <string name="notes_stat">%d メモ</string>
+    <string name="notes_no_found">メモが見つかりません</string>
+    <string name="notes_no_yet">メモはまだありません</string>
+    <string name="notes_try_different">別の検索語やラベルを試してください</string>
+    <string name="notes_tap_to_create">+をタップして最初のメモを作成</string>
+    <string name="notes_label">ラベル</string>
+    <string name="notes_created">作成日</string>
+    <string name="notes_updated">更新日</string>
+    <string name="notes_new_note_dialog">新しいメモ</string>
+    <string name="notes_edit_note_dialog">メモを編集</string>
+    <string name="notes_field_title">タイトル</string>
+    <string name="notes_field_label">ラベル（任意）</string>
+    <string name="notes_field_content">内容</string>
+
+    <!-- Maze -->
+    <string name="maze_header">迷路メーカー</string>
+    <string name="maze_width_cells">幅（セル）</string>
+    <string name="maze_length_cells">長さ（セル）</string>
+    <string name="maze_rings">リング</string>
+    <string name="maze_floors">フロア</string>
+    <string name="maze_path_width">通路幅</string>
+    <string name="maze_wall_height">壁の高さ</string>
+    <string name="maze_generate">生成</string>
+    <string name="maze_shuffle">シャッフル</string>
+    <string name="maze_total_blocks">合計ブロック数</string>
+    <string name="maze_width_x">幅 (X)</string>
+    <string name="maze_depth_z">奥行 (Z)</string>
+    <string name="maze_height_y">高さ (Y)</string>
+    <string name="maze_dead_ends">行き止まり</string>
+    <string name="maze_longest_path">最長経路</string>
+    <string name="maze_longest_path_val">%dセル</string>
+    <string name="maze_y_layer">Yレイヤー: %d</string>
+    <string name="maze_help">Minecraft用の迷路を生成します。クラシックな生垣迷路には長方形、同心円迷路には円形、階段で接続された積み重ね迷路にはマルチフロアを選択してください。レイヤースライダーで層ごとに建設するか、3Dに切り替えてアイソメトリックプレビューを確認できます。</string>
+
+    <!-- Block Fill -->
+    <string name="blockfill_header">ブロック充填計算機</string>
+    <string name="blockfill_width">幅</string>
+    <string name="blockfill_length">長さ</string>
+    <string name="blockfill_height">高さ（ブロック）</string>
+    <string name="blockfill_blocks">ブロック</string>
+    <string name="blockfill_chunks">チャンク</string>
+    <string name="blockfill_hollow">中空（外殻のみ）</string>
+    <string name="blockfill_total_blocks">合計ブロック数</string>
+    <string name="blockfill_stacks">スタック (64)</string>
+    <string name="blockfill_stacks_val">%1$s + 残り%2$d</string>
+    <string name="blockfill_single_chests">シングルチェスト</string>
+    <string name="blockfill_double_chests">ダブルチェスト</string>
+    <string name="blockfill_shulker_boxes">シュルカーボックス</string>
+    <string name="blockfill_help">幅、長さ、高さを入力して、エリアを埋めるのに必要なブロック数を計算します。大規模建築ではブロックとチャンクを切り替えられます。結果はスタック、チェスト、シュルカーボックスで表示されます。</string>
+
+    <!-- Anvil / Enchanting -->
+    <string name="anvil_header">エンチャント</string>
+    <string name="anvil_weapons">武器</string>
+    <string name="anvil_tools">ツール</string>
+    <string name="anvil_armor">防具</string>
+    <string name="anvil_enchantments">エンチャント</string>
+    <string name="anvil_optimal_order">最適な順序</string>
+    <string name="anvil_step">ステップ %1$d: %2$s</string>
+    <string name="anvil_lvl_cost">%d レベル</string>
+    <string name="anvil_too_expensive">コストが高すぎます！</string>
+    <string name="anvil_total_xp">合計XP</string>
+    <string name="anvil_total_xp_val">%dレベル</string>
+    <string name="anvil_help">アイテムを選んで必要なエンチャントを選択してください。このツールは「コストが高すぎます」の上限を回避する最安のXP合成順序を計算します。エンチャントレベル（I\u2013V）をタップして調整できます。</string>
+    <string name="anvil_how_costs_work">金床コストの仕組み</string>
+    <string name="anvil_prior_work_penalty">前回の作業ペナルティ</string>
+    <string name="anvil_prior_work_desc">アイテムが金床で使用されるたびに、隠された「金床使用回数」カウンターが増加します。ペナルティは毎回倍増: 0、1、3、7、15、31レベル（式: 2\u207F \u2212 1）。これは対象アイテムと犠牲アイテムの両方に適用されます。</string>
+    <string name="anvil_too_expensive_title">「コストが高すぎます」</string>
+    <string name="anvil_too_expensive_desc">金床の1回の操作コストが40レベル以上になると、ゲームは完全にブロックします。6回の金床使用後、ペナルティだけで63レベルに達し \u2014 それ以上のエンチャントは不可能になります。</string>
+    <string name="anvil_why_order_matters">順序が重要な理由</string>
+    <string name="anvil_why_order_desc">出力アイテムの金床使用回数 = max(対象, 犠牲) + 1。本をペアで先に合成する（二分木）ことで、各本の金床使用回数を少なく抑えられます。安いエンチャントを先にすることで、小さな基本コストが増大するペナルティを吸収します。この計算機は最適な順序を自動的に見つけます。</string>
+
+    <!-- Waypoints -->
+    <string name="waypoints_title">ウェイポイント</string>
+    <string name="waypoints_description">Minecraftの重要な場所の座標を保存・整理。</string>
+    <string name="waypoints_stat">%d ウェイポイント</string>
+    <string name="waypoints_search_placeholder">ウェイポイントを検索\u2026</string>
+    <string name="waypoints_new_waypoint_cd">新しいウェイポイント</string>
+    <string name="waypoints_no_found">ウェイポイントが見つかりません</string>
+    <string name="waypoints_no_saved">保存されたウェイポイントがありません</string>
+    <string name="waypoints_try_different">別の検索語やフィルターを試してください</string>
+    <string name="waypoints_tap_to_save">+をタップして最初の場所を保存</string>
+    <string name="waypoints_coordinates">座標</string>
+    <string name="waypoints_save_as_waypoint">%sウェイポイントとして保存</string>
+    <string name="waypoints_notes_label">メモ</string>
+    <string name="waypoints_new_dialog">新しいウェイポイント</string>
+    <string name="waypoints_edit_dialog">ウェイポイントを編集</string>
+    <string name="waypoints_field_name">名前</string>
+    <string name="waypoints_color">色</string>
+    <string name="waypoints_field_notes">メモ（任意）</string>
+
+    <!-- Clock -->
+    <string name="clock_title">ゲーム時計</string>
+    <string name="clock_description">Minecraftの昼夜サイクルと今後のイベントを追跡。</string>
+    <string name="clock_sync">同期</string>
+    <string name="clock_not_synced">未同期 \u2014 以下の方法を選択してください</string>
+    <string name="clock_f3_sync">F3同期（最高精度）</string>
+    <string name="clock_f3_desc">F3デバッグ画面のティック値を入力</string>
+    <string name="clock_day_time_tick">デイタイムティック (0\u201323999)</string>
+    <string name="clock_sync_btn">同期</string>
+    <string name="clock_quick_sync">クイック同期</string>
+    <string name="clock_quick_sync_desc">ゲーム内でイベントが見えた時にタップ:</string>
+    <string name="clock_synced_via">同期方法</string>
+    <string name="clock_f3_debug">F3デバッグ</string>
+    <string name="clock_quick_sync_label">クイック同期</string>
+    <string name="clock_game_time">ゲーム時間</string>
+    <string name="clock_stop">時計を停止</string>
+    <string name="clock_current_time">現在の時刻</string>
+    <string name="clock_day_prefix">日目 </string>
+    <string name="clock_tick_format">  \u2022  Tick %d</string>
+    <string name="clock_your_events">あなたのイベント</string>
+    <string name="clock_no_events">イベントが設定されていません。以下をタップして追加してください。</string>
+    <string name="clock_add_event_arrow">イベントを追加 \u2192</string>
+    <string name="clock_upcoming_events">今後のイベント</string>
+    <string name="clock_no_events_configured">イベントが設定されていません。</string>
+    <string name="clock_how_to_sync">同期方法</string>
+    <string name="clock_using_f3">F3を使用（PC）</string>
+    <string name="clock_f3_step_1">1. MinecraftでF3を押してデバッグ画面を開く</string>
+    <string name="clock_f3_step_2">2. 左側の\u201cDay Time\u201dの値を見つける</string>
+    <string name="clock_f3_step_3">3. 上のフィールドにティック番号（0\u201323999）を入力</string>
+    <string name="clock_f3_step_4">4. \u201c同期\u201dをタップ \u2014 その時点から時計が追跡します</string>
+    <string name="clock_quick_sync_title">クイック同期</string>
+    <string name="clock_quick_sync_help">ゲーム内でイベントが発生した瞬間に、日の出、正午、または日没ボタンをタップしてください。</string>
+    <string name="clock_quick_sync_sunrise">\u2022 日の出 \u2014 太陽が地平線に最初に現れた時</string>
+    <string name="clock_quick_sync_noon">\u2022 正午 \u2014 太陽が真上にある時</string>
+    <string name="clock_quick_sync_sunset">\u2022 日没 \u2014 太陽が地平線の下に沈み始めた時</string>
+    <string name="clock_reading_countdowns">カウントダウンの読み方</string>
+    <string name="clock_countdown_help">イベントタイムラインは各イベントまでの残り時間を表示します。</string>
+    <string name="clock_1_mc_day">Minecraft 1日 = 現実の20分</string>
+    <string name="clock_1_mc_hour">Minecraft 1時間 \u2248 現実の50秒</string>
+    <string name="clock_color_coded">イベントは色分けされています: 緑（安全）、金（警告）、赤（危険）。</string>
+    <string name="clock_add_event_dialog">イベントを追加</string>
+    <string name="clock_predefined">定義済み</string>
+    <string name="clock_custom">カスタム</string>
+    <string name="clock_all_predefined_added">定義済みイベントはすべて追加済みです。</string>
+    <string name="clock_event_name">イベント名</string>
+    <string name="clock_event_tick">ティック (0\u201323999)</string>
+    <string name="clock_color_label">色</string>
+    <string name="clock_set_day_dialog">日数を設定</string>
+    <string name="clock_set_day_desc">F3デバッグ画面（Dayの行）から現在のゲーム内日数を入力してください。サーバーの再起動やクラッシュ後にいつでも更新できます。</string>
+    <string name="clock_day_number">日数</string>
+    <string name="clock_set">設定</string>
+
+    <!-- Food -->
+    <string name="food_search_placeholder">食料を検索\u2026</string>
+    <string name="food_sort">並べ替え:</string>
+    <string name="food_title">食料 &amp; 隠し満腹度</string>
+    <string name="food_description">空腹度、隠し満腹度、特殊効果を含む食料の完全リファレンス。隠し満腹度で並べ替えて最良の食料を見つけましょう。</string>
+    <string name="food_stat">%d 食料</string>
+    <string name="food_saturation_label">隠し満腹度</string>
+    <string name="food_how_saturation_works">隠し満腹度の仕組み</string>
+    <string name="food_saturation_desc">隠し満腹度は空腹ゲージが減り始めるまでの時間を決める隠しステータスです。隠し満腹度が高いほど、再び空腹になるまでの時間が長くなります。隠し満腹度は現在の空腹度を超えることはできません。</string>
+    <string name="food_best_by_category">カテゴリ別最高の食料</string>
+    <string name="food_best_overall">総合ベスト</string>
+    <string name="food_best_overall_val">金のニンジン (14.4 sat)</string>
+    <string name="food_best_meat">最高の焼き肉</string>
+    <string name="food_best_meat_val">ステーキ / 焼き豚 (12.8 sat)</string>
+    <string name="food_best_fish">最高の魚</string>
+    <string name="food_best_fish_val">焼き鮭 (9.6 sat)</string>
+    <string name="food_best_crop">最高の作物</string>
+    <string name="food_best_crop_val">ベイクドポテト (6.0 sat)</string>
+    <string name="food_best_stew">最高のシチュー</string>
+    <string name="food_best_stew_val">ウサギシチュー (12.0 sat)</string>
+
+    <!-- Todo -->
+    <string name="todo_title">やることリスト</string>
+    <string name="todo_description">タスクを追跡、収集目標を管理、ツールとリンク</string>
+    <string name="todo_free_form">自由入力</string>
+    <string name="todo_item_linked">アイテムリンク</string>
+    <string name="todo_freeform_placeholder">東の橋を建設\u2026</string>
+    <string name="todo_search_items_placeholder">アイテムを検索\u2026</string>
+    <string name="todo_qty">数量</string>
+    <string name="todo_tasks_header">タスク</string>
+    <string name="todo_no_tasks_yet">タスクはまだありません</string>
+    <string name="todo_add_first_task">上から最初のタスクを追加</string>
+    <string name="todo_clear_completed">完了した%d件を消去</string>
+    <string name="todo_edit_task">タスクを編集</string>
+    <string name="todo_link_to_tool">ツールにリンク</string>
+    <string name="todo_link_desc">\"%s\"を買い物リストにリンク</string>
+    <string name="todo_no_shopping_lists">買い物リストがまだありません</string>
+    <string name="todo_select_list">リストを選択</string>
+    <string name="todo_link_btn">リンク</string>
+    <string name="todo_unlink">リンク解除</string>
+    <string name="todo_link_cd">リンク</string>
+    <string name="todo_clear_link_cd">リンクを消去</string>
+    <string name="todo_link_shopping_optional">買い物リストにリンク（任意）</string>
+
+    <!-- Trim -->
+    <string name="trim_title">防具の装飾</string>
+    <string name="trim_description">18種類の装飾テンプレート、11種類の素材、そしてその入手先。</string>
+    <string name="trim_templates">テンプレート</string>
+    <string name="trim_materials">素材</string>
+    <string name="trim_how_to">やり方</string>
+    <string name="trim_templates_header">装飾テンプレート (18)</string>
+    <string name="trim_structure_label">構造物  </string>
+    <string name="trim_drop_chance">ドロップ確率</string>
+    <string name="trim_duplicate_with">複製に必要</string>
+    <string name="trim_duplicate_val">ダイヤモンド7個 + %s</string>
+    <string name="trim_materials_header">装飾素材 (11)</string>
+    <string name="trim_materials_desc">各素材は防具の装飾パターンの色を変えます。</string>
+    <string name="trim_materials_darker">装飾素材と防具の素材が同じ場合（例: ダイヤモンドの装飾をダイヤモンド防具に）、パターンはより暗い色になります。</string>
+    <string name="trim_combinations">組み合わせ</string>
+    <string name="trim_armor_types">防具の種類</string>
+    <string name="trim_armor_types_val">6種（革、チェーン、鉄、金、ダイヤモンド、ネザライト）</string>
+    <string name="trim_armor_pieces">防具の部位</string>
+    <string name="trim_armor_pieces_val">4種（ヘルメット、チェストプレート、レギンス、ブーツ）</string>
+    <string name="trim_total_looks">ユニークな見た目の合計</string>
+    <string name="trim_total_looks_val">18 \u00d7 11 \u00d7 6 \u00d7 4 = 4,752</string>
+    <string name="trim_how_to_header">防具の装飾方法</string>
+    <string name="trim_smithing_table">鍛冶台のレシピ</string>
+    <string name="trim_smithing_steps">1. 鍛冶台を開く\n2. 左のスロットに装飾テンプレートを置く\n3. 中央のスロットに防具を置く\n4. 右のスロットに装飾素材を置く\n5. 出力から装飾された防具を取る</string>
+    <string name="trim_key_notes">重要事項</string>
+    <string name="trim_key_notes_text">\u2022 テンプレートは装飾時に消費されます\n\u2022 装飾は見た目のみ（ゲームプレイへの影響なし）\n\u2022 防具を再装飾できます（前のパターンは上書き）\n\u2022 装飾時にエンチャントは保持されます\n\u2022 すべての防具素材で使用可能</string>
+    <string name="trim_duplicating">テンプレートの複製</string>
+    <string name="trim_duplicating_text">作業台で:\nテンプレート1個 + ダイヤモンド7個 + 複製素材1個 = テンプレート2個\n\n各テンプレートには固有の複製素材があります（テンプレートタブ参照）。これにより、最初の1個を見つければレアなテンプレートも再生可能になります。</string>
+
+    <!-- Banner -->
+    <string name="banner_title">旗デザイナー</string>
+    <string name="banner_description">織り機のようにカスタム旗をデザイン。ベースの色を選び、最大6層のパターンを追加して、リアルタイムでプレビュー。</string>
+    <string name="banner_base_color">ベースの色</string>
+    <string name="banner_preview">プレビュー</string>
+    <string name="banner_layers_count">%d/6 レイヤー</string>
+    <string name="banner_add_pattern">パターンを追加</string>
+    <string name="banner_requires_item"> (アイテムが必要)</string>
+    <string name="banner_layer_color">レイヤーの色</string>
+    <string name="banner_add_layer">レイヤーを追加</string>
+    <string name="banner_layer_stack">レイヤースタック</string>
+    <string name="banner_move_up">上に移動</string>
+    <string name="banner_move_down">下に移動</string>
+    <string name="banner_remove">削除</string>
+    <string name="banner_clear_all">すべて消去</string>
+    <string name="banner_materials_needed">必要な素材</string>
+    <string name="banner_banner_material">旗</string>
+    <string name="banner_banner_val">%sの旗 ×1</string>
+    <string name="banner_dye_count">%d個</string>
+    <string name="banner_reusable">1個（再利用可能）</string>
+    <string name="banner_hide_reference">リファレンスを隠す</string>
+    <string name="banner_show_reference">リファレンスを表示</string>
+    <string name="banner_special_items">特殊パターンアイテム</string>
+    <string name="banner_special_items_desc">これらのアイテムは織り機で特殊パターンを使用可能にします。使用時に消費されません。</string>
+    <string name="banner_obtained">入手方法</string>
+    <string name="banner_source">ソース</string>
+    <string name="banner_loom_patterns">織り機パターン（アイテム不要）</string>
+    <string name="banner_loom_patterns_desc">これらのパターンは特殊な旗パターンアイテムなしで織り機で使用できます。</string>
+    <string name="banner_all_16_dye">全16色の染料</string>
+    <string name="banner_dye_desc">これらの色はすべて織り機で旗にパターンを適用するのに使用できます。</string>
+    <string name="banner_how_to_use_loom">織り機の使い方</string>
+    <string name="banner_loom_steps">1. 左上のスロットに旗を置く\n2. 右上のスロットに染料を置く\n3. 必要に応じて中央のスロットにパターンアイテムを置く\n4. リストからパターンを選択\n5. 出力スロットから結果を取る</string>
+    <string name="banner_tips">ヒント</string>
+    <string name="banner_tips_text">\u2022 旗には最大6層のパターンを付けられます\n\u2022 パターンアイテムは使用しても消費されません\n\u2022 旗 + 空の旗を作業台に置くとコピーできます\n\u2022 旗は作業台で盾に付けることができます</string>
+
+    <!-- Shapes -->
+    <string name="shapes_header">形状デザイナー</string>
+    <string name="shapes_total_blocks">合計ブロック数</string>
+    <string name="shapes_width_x">幅 (X)</string>
+    <string name="shapes_depth_z">奥行 (Z)</string>
+    <string name="shapes_height_y">高さ (Y)</string>
+    <string name="shapes_y_layer">Yレイヤー: %d</string>
+    <string name="shapes_hollow">中空</string>
+    <string name="shapes_flipped">反転</string>
+    <string name="shapes_help">Minecraftで完璧な形状を構築。半径と高さを設定し、Yレイヤースライダーで各層に配置するブロックを確認するか、3Dに切り替えてアイソメトリックプレビューを表示します。</string>
+
+    <!-- Light -->
+    <string name="light_title">光源間隔</string>
+    <string name="light_description">松明や光源の間隔を計算して敵対Mobのスポーンを防止。</string>
+    <string name="light_source">光源</string>
+    <string name="light_select_source">光源を選択</string>
+    <string name="light_source_level">%1$s（レベル%2$d）</string>
+    <string name="light_level_label">レベル %d</string>
+    <string name="light_spacing_results">間隔の結果</string>
+    <string name="light_level">光レベル</string>
+    <string name="light_linear_reach">直線到達距離</string>
+    <string name="light_linear_reach_val">各方向%dブロック</string>
+    <string name="light_line_spacing">直線間隔</string>
+    <string name="light_line_spacing_val">%dブロック間隔</string>
+    <string name="light_line_place">直線（廊下、トンネル）に沿って%2$dブロックごとに%1$sを設置。</string>
+    <string name="light_grid_spacing">グリッド間隔</string>
+    <string name="light_grid_spacing_val">%dブロック間隔</string>
+    <string name="light_grid_place">平面でのMobスポーンを完全に防ぐため、XとZの両方向に%2$dブロックごとのグリッドパターンで%1$sを設置。</string>
+    <string name="light_not_practical">実用的でない</string>
+    <string name="light_too_dim">%1$sは効果的な湧き潰しには暗すぎます（レベル%2$d）。すべてのブロックで光レベル1以上が必要です。より明るい光源を検討してください。</string>
+    <string name="light_mob_spawning">Mobスポーンルール</string>
+    <string name="light_overworld">オーバーワールド (1.18以降)</string>
+    <string name="light_overworld_desc">敵対Mobはブロック光レベル0でのみスポーンします。光レベル1以上でスポーンを防止できます。</string>
+    <string name="light_nether_label">ネザー</string>
+    <string name="light_nether_desc">ほとんどの敵対Mobは光レベル11以下でスポーンします。ブレイズとウィザースケルトンは要塞で光レベル11以下でスポーンします。</string>
+    <string name="light_mob_spawners">Mobスポナー</string>
+    <string name="light_mob_spawners_desc">スポナーブロックは光レベル11以下で起動します。4ブロック以内に光源を設置して無効化できます。</string>
+    <string name="light_quick_reference">クイックリファレンス</string>
+    <string name="light_common_spacings">一般的な間隔</string>
+    <string name="light_torch_14">松明 (14)</string>
+    <string name="light_torch_14_val">12ブロックグリッド / 27ブロック直線</string>
+    <string name="light_lantern_15">ランタン (15)</string>
+    <string name="light_lantern_15_val">14ブロックグリッド / 29ブロック直線</string>
+    <string name="light_soul_torch_10">魂の松明 (10)</string>
+    <string name="light_soul_torch_10_val">6ブロックグリッド / 19ブロック直線</string>
+    <string name="light_how_light_spreads">光の広がり方</string>
+    <string name="light_spread_desc">光はブロックの距離（マンハッタン距離）ごとに1減少します。レベル14の松明は13ブロック先でレベル1に、14ブロック先でレベル0になります。</string>
+
+    <!-- Shopping -->
+    <string name="shopping_title">買い物リスト</string>
+    <string name="shopping_description">名前付きリストで収集とクラフトを計画</string>
+    <string name="shopping_new_list">新しいリスト</string>
+    <string name="shopping_no_lists_yet">リストはまだありません</string>
+    <string name="shopping_no_lists_subtitle">リストを作成してアイテムの追跡を開始</string>
+    <string name="shopping_created">作成日 %s</string>
+    <string name="shopping_delete_list_title">リストを削除しますか？</string>
+    <string name="shopping_delete_list_desc">このリストとすべてのアイテムが完全に削除されます。</string>
+    <string name="shopping_list_label">リスト</string>
+    <string name="shopping_items_count">%dアイテム</string>
+    <string name="shopping_rename_list_cd">リスト名を変更</string>
+    <string name="shopping_search_placeholder">検索\u2026</string>
+    <string name="shopping_qty">数量</string>
+    <string name="shopping_checklist">チェックリスト</string>
+    <string name="shopping_gather">収集</string>
+    <string name="shopping_craft">クラフト</string>
+    <string name="shopping_new_list_dialog">新しい買い物リスト</string>
+    <string name="shopping_list_name">リスト名</string>
+    <string name="shopping_create">作成</string>
+    <string name="shopping_rename_dialog">リスト名を変更</string>
+    <string name="shopping_rename">名前変更</string>
+    <string name="shopping_ok">OK</string>
+
+    <!-- Nether -->
+    <string name="nether_header">ネザーツール</string>
+    <string name="nether_convert">変換</string>
+    <string name="nether_obsidian">黒曜石</string>
+    <string name="nether_portals">ポータル</string>
+    <string name="nether_input_coords">座標を入力</string>
+    <string name="nether_y_unchanged">Y（変更なし）</string>
+    <string name="nether_facing">向き</string>
+    <string name="nether_portal_interior">ポータル内部のサイズ</string>
+    <string name="nether_width_min">幅（最小2）</string>
+    <string name="nether_height_min">高さ（最小3）</string>
+    <string name="nether_without_corners">角なし</string>
+    <string name="nether_without_corners_val">黒曜石 %d個</string>
+    <string name="nether_with_corners">角あり</string>
+    <string name="nether_with_corners_val">黒曜石 %d個</string>
+    <string name="nether_portal_name">ポータル名</string>
+    <string name="nether_save_portal">現在の座標をポータルとして保存</string>
+    <string name="nether_no_saved_portals">保存されたポータルがありません</string>
+    <string name="nether_no_saved_subtitle">上の座標を保存してポータルを追跡</string>
+    <string name="nether_help">オーバーワールドとネザー間の座標を変換（8:1の比率）、カスタムサイズのポータルに必要な黒曜石の量を計算、またはポータルの場所を保存してネットワークを管理できます。</string>
+
+    <!-- Librarian -->
+    <string name="librarian_title">司書ガイド</string>
+    <string name="librarian_description">村人取引リバランスデータパックが有効の場合、司書のエンチャントはバイオームに依存します。必要なエンチャントに適したバイオームを見つけましょう。</string>
+    <string name="librarian_experimental">実験的機能</string>
+    <string name="librarian_experimental_desc">村人取引リバランスデータパックが必要です。デフォルトのゲームプレイでは無効です。</string>
+    <string name="librarian_select_biome">バイオームを選択</string>
+    <string name="librarian_all_biomes">すべてのバイオーム</string>
+    <string name="librarian_master_exclusive">達人レベル限定</string>
+    <string name="librarian_master_guaranteed">達人レベルでエンチャント本の取引が確定。</string>
+    <string name="librarian_common_pool">共通プール</string>
+    <string name="librarian_common_available">新米から熟練者レベルで利用可能。</string>
+    <string name="librarian_how_it_works">仕組み</string>
+    <string name="librarian_biome_determination">バイオームの決定</string>
+    <string name="librarian_biome_determination_desc">司書が利用できるエンチャントは、最初に書見台を取得したバイオームで決まります。別のバイオームに移動してもエンチャントプールは変わりません。</string>
+    <string name="librarian_level_caps">エンチャントレベルの上限</string>
+    <string name="librarian_level_caps_desc">一部のエンチャントは司書から最大レベル未満に制限されています:\n\u2022 ダメージ軽減III（最大IVには金床での合成が必要）\n\u2022 幸運II（最大IIIには金床での合成が必要）\n\u2022 耐久力II（最大IIIには金床での合成が必要）</string>
+    <string name="librarian_strategy_tips">攻略のヒント</string>
+    <string name="librarian_strategy_tips_desc">\u2022 修繕には、沼地バイオームで村人を繁殖\n\u2022 シルクタッチには、雪のバイオームを使用\n\u2022 上限付きエンチャントは金床で合成して最大レベルに\n\u2022 書見台を壊して置き直すと取引をリロール</string>
+    <string name="librarian_not_available">司書から入手不可</string>
+    <string name="librarian_cannot_be_traded">これらのエンチャントは取引できません</string>
+    <string name="librarian_unavailable_list">\u2022 トライデント: 召雷、忠誠、激流、水生特効\n\u2022 クロスボウ: 拡散、貫通、クイックチャージ\n\u2022 釣竿: 宝釣り、入れ食い\n\u2022 トレジャー専用: ソウルスピード、スニーク速度上昇、ウィンドバースト\n\u2022 1.21以降: ブリーチ、高密度（メイスエンチャント）</string>
+    <string name="librarian_found_from">これらは戦利品チェスト、釣り、Mobドロップ、またはエンチャントテーブルから入手する必要があります。</string>
+
+    <!-- Storage -->
+    <string name="storage_header">ストレージ計算機</string>
+    <string name="storage_quantity">数量</string>
+    <string name="storage_placeholder">例: 14スタック、5k</string>
+    <string name="storage_item_dropdown">アイテム（ブロック圧縮用）</string>
+    <string name="storage_total_items">合計アイテム数</string>
+    <string name="storage_stacks">スタック</string>
+    <string name="storage_single_chests">シングルチェスト</string>
+    <string name="storage_double_chests">ダブルチェスト</string>
+    <string name="storage_shulker_boxes">シュルカーボックス</string>
+    <string name="storage_help">指定したアイテム数に必要なチェストとシュルカーボックスの数を計算します。ドロップダウンからアイテムを選ぶと、ブロック圧縮（例: 鉄インゴットから作れる鉄ブロックの数）も表示されます。</string>
+
+    <!-- Loot -->
+    <string name="loot_search_placeholder">戦利品や構造物を検索\u2026</string>
+    <string name="loot_title">構造物の戦利品</string>
+    <string name="loot_description">各Minecraft構造物で見つかる注目アイテムと限定アイテム。必要なものに合った構造物を見つけましょう。</string>
+    <string name="loot_stat">%d 構造物</string>
+    <string name="loot_exclusive_rare">限定 / レア</string>
+    <string name="loot_notable">注目の戦利品</string>
+    <string name="loot_rarest_items">最もレアな限定アイテム</string>
+    <string name="loot_elytra">エリトラ</string>
+    <string name="loot_elytra_val">エンドシティのみ</string>
+    <string name="loot_echo_shards">残響の欠片</string>
+    <string name="loot_echo_shards_val">古代都市のみ</string>
+    <string name="loot_heavy_core">ヘビーコア</string>
+    <string name="loot_heavy_core_val">トライアルチャンバーのみ</string>
+    <string name="loot_pigstep">Pigstepのレコード</string>
+    <string name="loot_pigstep_val">砦の遺跡のみ</string>
+    <string name="loot_silence_trim">静寂の装飾</string>
+    <string name="loot_silence_trim_val">古代都市 (1.2%)</string>
+    <string name="loot_swift_sneak">スニーク速度上昇</string>
+    <string name="loot_swift_sneak_val">古代都市のみ</string>
+</resources>
