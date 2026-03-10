@@ -368,6 +368,45 @@ interface VersionTagDao {
 }
 
 @Dao
+interface TranslationDao {
+    @Query("SELECT value FROM translations WHERE locale = :locale AND entityType = :entityType AND entityId = :entityId AND field = :field LIMIT 1")
+    fun get(locale: String, entityType: String, entityId: String, field: String): Flow<String?>
+
+    @Query("SELECT * FROM translations WHERE locale = :locale AND entityType = :entityType")
+    fun forType(locale: String, entityType: String): Flow<List<TranslationEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(items: List<TranslationEntity>)
+
+    @Query("SELECT COUNT(*) FROM translations WHERE locale = :locale")
+    suspend fun countForLocale(locale: String): Int
+
+    @Query("DELETE FROM translations WHERE locale = :locale")
+    suspend fun deleteLocale(locale: String)
+
+    @Query("DELETE FROM translations")
+    suspend fun deleteAll()
+}
+
+@Dao
+interface TranslationReportDao {
+    @Query("SELECT * FROM translation_reports ORDER BY reportedAt DESC")
+    fun all(): Flow<List<TranslationReportEntity>>
+
+    @Insert
+    suspend fun insert(report: TranslationReportEntity): Long
+
+    @Query("UPDATE translation_reports SET submitted = 1 WHERE id = :id")
+    suspend fun markSubmitted(id: Long)
+
+    @Query("DELETE FROM translation_reports WHERE id = :id")
+    suspend fun delete(id: Long)
+
+    @Query("DELETE FROM translation_reports")
+    suspend fun deleteAll()
+}
+
+@Dao
 interface CommandDao {
     @Query("SELECT * FROM commands WHERE name LIKE '%' || :q || '%' OR description LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name")
     fun search(q: String): Flow<List<CommandEntity>>

@@ -112,6 +112,18 @@ class GameDataRepository(context: Context) {
     fun versionTagsByType(type: String): Flow<List<VersionTagEntity>> = db.versionTagDao().byType(type)
     fun allVersionTags(): Flow<List<VersionTagEntity>> = db.versionTagDao().all()
 
+    // Translations (i18n overlay)
+    fun translationsForType(locale: String, entityType: String): Flow<List<TranslationEntity>> =
+        db.translationDao().forType(locale, entityType)
+    fun getTranslation(locale: String, entityType: String, entityId: String, field: String): Flow<String?> =
+        db.translationDao().get(locale, entityType, entityId, field)
+
+    // Translation Reports (user data)
+    fun allTranslationReports(): Flow<List<TranslationReportEntity>> = userDb.translationReportDao().all()
+    suspend fun createTranslationReport(report: TranslationReportEntity): Long = userDb.translationReportDao().insert(report)
+    suspend fun markReportSubmitted(id: Long) { userDb.translationReportDao().markSubmitted(id) }
+    suspend fun deleteTranslationReport(id: Long) { userDb.translationReportDao().delete(id) }
+
     // Commands
     fun searchCommands(q: String): Flow<List<CommandEntity>> = if (q.isBlank()) db.commandDao().all() else db.commandDao().search(q)
 

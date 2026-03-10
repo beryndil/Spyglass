@@ -42,6 +42,7 @@ import kotlinx.coroutines.withContext
 import dev.spyglass.android.R
 import dev.spyglass.android.core.shell.imageThemeDrawable
 import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.core.ui.SupportedLanguages
 
 @Composable
 private fun browseTabNames() = listOf(
@@ -109,6 +110,7 @@ fun SettingsScreen(
     val fontScale           by vm.fontScale.collectAsStateWithLifecycle()
     val textureState        by TextureManager.state.collectAsStateWithLifecycle()
     val syncing             by vm.syncing.collectAsStateWithLifecycle()
+    val appLanguage         by vm.appLanguage.collectAsStateWithLifecycle()
 
     val uriHandler = LocalUriHandler.current
     val context = LocalContext.current
@@ -371,6 +373,32 @@ fun SettingsScreen(
                     checked = reduceAnimations,
                     onCheckedChange = vm::setReduceAnimations,
                 )
+            }
+        }
+
+        // ══════════════════════════════════════════════════════════════════
+        // 1b. LANGUAGE — app locale selector
+        // ══════════════════════════════════════════════════════════════════
+        item(key = "language") {
+            SectionHeader(stringResource(R.string.settings_language))
+            ResultCard {
+                Text(
+                    stringResource(R.string.settings_language_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    SupportedLanguages.forEach { (code, label) ->
+                        FilterChip(
+                            selected = appLanguage == code,
+                            onClick = { hapticClick(); vm.setAppLanguage(code) },
+                            label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                        )
+                    }
+                }
             }
         }
 

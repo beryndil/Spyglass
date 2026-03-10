@@ -27,8 +27,9 @@ import timber.log.Timber
         TodoEntity::class,
         AdvancementProgressEntity::class,
         SearchHistoryEntity::class,
+        TranslationReportEntity::class,
     ],
-    version = 2,
+    version = 3,
     exportSchema = true,
 )
 abstract class UserDatabase : RoomDatabase() {
@@ -39,12 +40,31 @@ abstract class UserDatabase : RoomDatabase() {
     abstract fun todoDao(): TodoDao
     abstract fun advancementProgressDao(): AdvancementProgressDao
     abstract fun searchHistoryDao(): SearchHistoryDao
+    abstract fun translationReportDao(): TranslationReportDao
 
     companion object {
         private val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("CREATE TABLE IF NOT EXISTS search_history (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, category TEXT NOT NULL, query TEXT NOT NULL, searchedAt INTEGER NOT NULL)")
                 db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS index_search_history_category_query ON search_history (category, query)")
+            }
+        }
+
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS translation_reports (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        locale TEXT NOT NULL,
+                        screenName TEXT NOT NULL,
+                        entityType TEXT NOT NULL,
+                        stringKey TEXT NOT NULL,
+                        currentValue TEXT NOT NULL,
+                        comment TEXT NOT NULL DEFAULT '',
+                        reportedAt INTEGER NOT NULL,
+                        submitted INTEGER NOT NULL DEFAULT 0
+                    )
+                """.trimIndent())
             }
         }
 
@@ -69,7 +89,7 @@ abstract class UserDatabase : RoomDatabase() {
                 "spyglass_user.db",
             )
                 .addCallback(MigrateFromOldDbCallback(context))
-                .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                 .build()
         }
 

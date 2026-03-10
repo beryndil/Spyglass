@@ -31,7 +31,15 @@ object DataSyncManager {
         "advancements" to "advancements.json",
         "commands" to "commands.json",
         "version_tags" to "version_tags.json",
+        "translations_es" to "translations_es.json",
+        "translations_pt" to "translations_pt.json",
+        "translations_fr" to "translations_fr.json",
+        "translations_de" to "translations_de.json",
+        "translations_ja" to "translations_ja.json",
     )
+
+    /** Supported translation locales. */
+    val TRANSLATION_LOCALES = listOf("es", "pt", "fr", "de", "ja")
 
     /**
      * Runs a full sync cycle:

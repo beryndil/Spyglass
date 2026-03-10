@@ -242,6 +242,32 @@ data class CommandEntity(
 )
 
 @Entity(
+    tableName = "translations",
+    primaryKeys = ["locale", "entityType", "entityId", "field"],
+    indices = [Index(value = ["locale", "entityType", "entityId"])],
+)
+data class TranslationEntity(
+    val locale: String,      // "es", "pt", "fr", "de", "ja"
+    val entityType: String,  // "block", "item", "mob", etc.
+    val entityId: String,    // matches PK of target table
+    val field: String,       // "name", "description", "hint", etc.
+    val value: String,       // translated text
+)
+
+@Entity(tableName = "translation_reports")
+data class TranslationReportEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val locale: String,
+    val screenName: String,
+    val entityType: String,  // "ui" for chrome, or "block"/"item"/etc.
+    val stringKey: String,
+    val currentValue: String,
+    val comment: String = "",
+    val reportedAt: Long,
+    val submitted: Boolean = false,
+)
+
+@Entity(
     tableName = "version_tags",
     primaryKeys = ["entityType", "entityId"],
     indices = [Index(value = ["entityType"])],

@@ -24,8 +24,9 @@ import dev.spyglass.android.data.db.entities.*
         AdvancementEntity::class,
         CommandEntity::class,
         VersionTagEntity::class,
+        TranslationEntity::class,
     ],
-    version = 29,
+    version = 30,
     exportSchema = true,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
@@ -41,9 +42,27 @@ abstract class SpyglassDatabase : RoomDatabase() {
     abstract fun advancementDao():  AdvancementDao
     abstract fun commandDao():      CommandDao
     abstract fun versionTagDao():   VersionTagDao
+    abstract fun translationDao():  TranslationDao
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null
+
+        // Migration 29→30: add translations table for i18n overlay
+        private val MIGRATION_29_30 = object : Migration(29, 30) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS translations (
+                        locale TEXT NOT NULL,
+                        entityType TEXT NOT NULL,
+                        entityId TEXT NOT NULL,
+                        field TEXT NOT NULL,
+                        value TEXT NOT NULL,
+                        PRIMARY KEY (locale, entityType, entityId, field)
+                    )
+                """.trimIndent())
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_translations_locale_entityType_entityId ON translations(locale, entityType, entityId)")
+            }
+        }
 
         // Migration 28→29: add tutorial and difficulty columns to advancements
         private val MIGRATION_28_29 = object : Migration(28, 29) {
@@ -304,6 +323,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
                                 MIGRATION_20_21, MIGRATION_21_22, MIGRATION_22_23,
                                 MIGRATION_23_24, MIGRATION_24_25, MIGRATION_25_26,
                                 MIGRATION_26_27, MIGRATION_27_28, MIGRATION_28_29,
+                                MIGRATION_29_30,
                             )
                             // Game data can always be rebuilt from bundled assets or sync.
                             // This ensures the app never crashes due to a missing migration.

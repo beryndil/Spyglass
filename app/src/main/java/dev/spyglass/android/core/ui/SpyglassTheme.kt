@@ -37,6 +37,8 @@ val LocalIsWideScreen = compositionLocalOf { false }
 val LocalHapticEnabled = compositionLocalOf { true }
 val LocalReduceAnimations = compositionLocalOf { false }
 val LocalThemeKey = compositionLocalOf { DEFAULT_THEME }
+val LocalAppLocale = compositionLocalOf { "en" }
+val LocalScreenName = compositionLocalOf { "" }
 
 /** Theme keys that use a full-screen background image instead of a solid color. */
 val ImageThemeKeys = setOf(

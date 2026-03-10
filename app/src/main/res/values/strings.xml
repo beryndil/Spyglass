@@ -127,6 +127,10 @@
     <string name="settings_startup_tab">Default Startup Screen</string>
     <string name="settings_startup_tab_desc">Which screen opens when you launch the app</string>
 
+    <!-- Settings — Language -->
+    <string name="settings_language">Language</string>
+    <string name="settings_language_desc">Choose the display language for Spyglass Connect. Game data translations are downloaded separately.</string>
+
     <!-- Settings — Security -->
     <string name="settings_security">Security</string>
     <string name="settings_app_lock">App Lock</string>

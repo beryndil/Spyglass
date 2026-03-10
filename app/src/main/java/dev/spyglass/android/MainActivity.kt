@@ -17,7 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import dev.spyglass.android.core.ReviewHelper
 import dev.spyglass.android.core.ui.ConsentDialog
+import androidx.compose.runtime.CompositionLocalProvider
 import dev.spyglass.android.core.ui.DEFAULT_THEME
+import dev.spyglass.android.core.ui.LocalAppLocale
 import dev.spyglass.android.core.ui.SpyglassTheme
 import dev.spyglass.android.core.shell.ShellNavGraph
 import dev.spyglass.android.settings.PreferenceKeys
@@ -75,6 +77,16 @@ class MainActivity : FragmentActivity() {
                 .map { it[PreferenceKeys.FONT_SCALE] ?: 1 }
                 .collectAsStateWithLifecycle(initialValue = 1)
 
+            val appLanguagePref by dataStore.data
+                .map { it[PreferenceKeys.APP_LANGUAGE] ?: "system" }
+                .collectAsStateWithLifecycle(initialValue = "system")
+
+            val resolvedLocale = if (appLanguagePref == "system") {
+                java.util.Locale.getDefault().language.let { lang ->
+                    if (lang in listOf("es", "pt", "fr", "de", "ja")) lang else "en"
+                }
+            } else appLanguagePref
+
             val consentShown by dataStore.data
                 .map { it[PreferenceKeys.CONSENT_SHOWN] ?: false }
                 .collectAsStateWithLifecycle(initialValue = true) // default true to avoid flash
@@ -84,6 +96,7 @@ class MainActivity : FragmentActivity() {
             val configuration = LocalConfiguration.current
             val isWideScreen = configuration.screenWidthDp.dp >= 600.dp
 
+            CompositionLocalProvider(LocalAppLocale provides resolvedLocale) {
             SpyglassTheme(
                 theme = theme,
                 isWideScreen = isWideScreen,
@@ -110,6 +123,7 @@ class MainActivity : FragmentActivity() {
                     ShellNavGraph()
                 }
             }
+            } // CompositionLocalProvider
         }
     }
 

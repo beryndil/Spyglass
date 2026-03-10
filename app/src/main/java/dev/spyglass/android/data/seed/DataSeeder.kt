@@ -122,6 +122,11 @@ object DataSeeder {
         "items" to "items.json", "advancements" to "advancements.json",
         "commands" to "commands.json",
         "version_tags" to "version_tags.json",
+        "translations_es" to "translations_es.json",
+        "translations_pt" to "translations_pt.json",
+        "translations_fr" to "translations_fr.json",
+        "translations_de" to "translations_de.json",
+        "translations_ja" to "translations_ja.json",
     )
 
     /**
@@ -163,6 +168,13 @@ object DataSeeder {
             "advancements" -> { db.advancementDao().deleteAll(); seedAdvancementsFrom(raw, db) }
             "commands" -> { db.commandDao().deleteAll(); seedCommandsFrom(raw, db) }
             "version_tags" -> { db.versionTagDao().deleteAll(); seedVersionTagsFrom(raw, db) }
+            else -> {
+                if (tableName.startsWith("translations_")) {
+                    val locale = tableName.removePrefix("translations_")
+                    db.translationDao().deleteLocale(locale)
+                    seedTranslationsFrom(raw, locale, db)
+                }
+            }
         }
     }
 
@@ -454,6 +466,22 @@ object DataSeeder {
             VersionTagEntity(it.entityType, it.entityId, it.addedInJava, it.removedInJava,
                 it.addedInBedrock, it.removedInBedrock, it.javaOnly, it.bedrockOnly,
                 it.mechanicsChangedInJava, it.mechanicsChangedInBedrock, it.mechanicsChangeNotes)
+        })
+    }
+
+    // ── Translation seeding ──────────────────────────────────────────────────
+
+    @Serializable data class TranslationJson(
+        val entityType: String,
+        val entityId: String,
+        val field: String,
+        val value: String,
+    )
+
+    private suspend fun seedTranslationsFrom(raw: String, locale: String, db: SpyglassDatabase) {
+        val items = json.decodeFromString<List<TranslationJson>>(raw)
+        db.translationDao().insertAll(items.map {
+            TranslationEntity(locale, it.entityType, it.entityId, it.field, it.value)
         })
     }
 }

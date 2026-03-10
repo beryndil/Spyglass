@@ -187,6 +187,15 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         store.edit { it[PreferenceKeys.FONT_SCALE] = scale }
     }
 
+    // Language / i18n
+    val appLanguage: StateFlow<String> = store.data
+        .map { it[PreferenceKeys.APP_LANGUAGE] ?: "system" }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "system")
+
+    fun setAppLanguage(language: String) = viewModelScope.launch {
+        store.edit { it[PreferenceKeys.APP_LANGUAGE] = language }
+    }
+
     // Content Filtering
     val hideUnobtainableBlocks: StateFlow<Boolean> = store.data
         .map { it[PreferenceKeys.HIDE_UNOBTAINABLE_BLOCKS] ?: false }

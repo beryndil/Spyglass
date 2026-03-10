@@ -29,6 +29,11 @@ data class DataManifest(
     @SerialName("texture_map") val textureMap: String = "",
     val news: String = "",
     val tips: String = "",
+    @SerialName("translations_es") val translationsEs: String = "",
+    @SerialName("translations_pt") val translationsPt: String = "",
+    @SerialName("translations_fr") val translationsFr: String = "",
+    @SerialName("translations_de") val translationsDe: String = "",
+    @SerialName("translations_ja") val translationsJa: String = "",
     @SerialName("latest_app") val latestApp: String = "",
     /** Optional SHA-256 checksums per file. Empty map when server doesn't provide them. */
     val checksums: Map<String, String> = emptyMap(),
@@ -52,6 +57,11 @@ data class DataManifest(
         if (advancements != other.advancements) add("advancements")
         if (commands != other.commands) add("commands")
         if (versionTags != other.versionTags) add("version_tags")
+        if (translationsEs != other.translationsEs) add("translations_es")
+        if (translationsPt != other.translationsPt) add("translations_pt")
+        if (translationsFr != other.translationsFr) add("translations_fr")
+        if (translationsDe != other.translationsDe) add("translations_de")
+        if (translationsJa != other.translationsJa) add("translations_ja")
     }
 
     /** Returns a copy with the version for [table] updated to [version]. */
@@ -68,6 +78,11 @@ data class DataManifest(
         "advancements" -> copy(advancements = version)
         "commands" -> copy(commands = version)
         "version_tags" -> copy(versionTags = version)
+        "translations_es" -> copy(translationsEs = version)
+        "translations_pt" -> copy(translationsPt = version)
+        "translations_fr" -> copy(translationsFr = version)
+        "translations_de" -> copy(translationsDe = version)
+        "translations_ja" -> copy(translationsJa = version)
         else -> this
     }
 
@@ -85,6 +100,11 @@ data class DataManifest(
         "advancements" -> advancements
         "commands" -> commands
         "version_tags" -> versionTags
+        "translations_es" -> translationsEs
+        "translations_pt" -> translationsPt
+        "translations_fr" -> translationsFr
+        "translations_de" -> translationsDe
+        "translations_ja" -> translationsJa
         else -> ""
     }
 

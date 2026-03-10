@@ -46,6 +46,9 @@ object PreferenceKeys {
     val SYNC_FREQUENCY_HOURS    = intPreferencesKey("sync_frequency_hours")
     val OFFLINE_MODE            = booleanPreferencesKey("offline_mode")
 
+    // Language / i18n
+    val APP_LANGUAGE            = stringPreferencesKey("app_language") // "system", "en", "es", "pt", "fr", "de", "ja"
+
     // Spyglass Connect
     val CONNECT_PAIRED_DEVICE   = stringPreferencesKey("connect_paired_device")
     val CONNECT_AUTO_RECONNECT  = booleanPreferencesKey("connect_auto_reconnect")
