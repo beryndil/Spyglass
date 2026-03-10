@@ -39,6 +39,22 @@ class MainActivity : FragmentActivity() {
         // Track app opens and prompt for review after 10 launches (one-time)
         ReviewHelper.trackOpenAndPrompt(this)
 
+        // Apply saved locale override on startup so strings.xml picks up the right locale
+        kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
+            val savedLang = try {
+                dataStore.data.map { it[PreferenceKeys.APP_LANGUAGE] ?: "system" }.first()
+            } catch (_: Exception) { "system" }
+
+            val localeList = if (savedLang == "system") {
+                androidx.core.os.LocaleListCompat.getEmptyLocaleList()
+            } else {
+                androidx.core.os.LocaleListCompat.forLanguageTags(savedLang)
+            }
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(localeList)
+            }
+        }
+
         // Check if app lock is enabled — read async to avoid blocking main thread.
         // UI stays locked (isUnlocked=false) until check completes; biometric prompt
         // shows on top if needed, so no visible flash.

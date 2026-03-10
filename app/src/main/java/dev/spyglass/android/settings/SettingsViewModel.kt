@@ -194,6 +194,12 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setAppLanguage(language: String) = viewModelScope.launch {
         store.edit { it[PreferenceKeys.APP_LANGUAGE] = language }
+        val localeList = if (language == "system") {
+            androidx.core.os.LocaleListCompat.getEmptyLocaleList()
+        } else {
+            androidx.core.os.LocaleListCompat.forLanguageTags(language)
+        }
+        androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(localeList)
     }
 
     // Content Filtering

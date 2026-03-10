@@ -238,7 +238,8 @@
 
     <!-- Settings — Language -->
     <string name="settings_language">Idioma</string>
-    <string name="settings_language_desc">Escolha o idioma de exibição do Spyglass Connect. Traduções dos dados do jogo são baixadas separadamente.</string>
+    <string name="settings_language_desc">Escolha o idioma de exibição do Spyglass. Traduções dos dados do jogo são baixadas separadamente.</string>
+    <string name="settings_language_system_override">Abrir configurações de idioma do sistema</string>
 
     <!-- Settings — Security -->
     <string name="settings_security">Segurança</string>

@@ -26,6 +26,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="false"
         android:enableOnBackInvokedCallback="true"
+        android:localeConfig="@xml/locales_config"
         android:theme="@style/Theme.Spyglass">
         <activity
             android:name=".MainActivity"
