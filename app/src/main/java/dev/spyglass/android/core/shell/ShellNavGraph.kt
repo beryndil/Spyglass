@@ -62,7 +62,6 @@ import dev.spyglass.android.core.module.ModuleRoute
 import dev.spyglass.android.core.module.SettingsSectionScope
 import dev.spyglass.android.core.ui.AdBanner
 import dev.spyglass.android.core.ui.ImageThemeKeys
-import dev.spyglass.android.core.ui.LocalDynamicColor
 import dev.spyglass.android.core.ui.LocalThemeKey
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassIcon
@@ -211,13 +210,11 @@ fun ShellNavGraph() {
     // ── Scaffold ────────────────────────────────────────────────────────────
 
     val themeKey = LocalThemeKey.current
-    val isDynamic = LocalDynamicColor.current
     val isImageTheme = themeKey in ImageThemeKeys
-    val hasImageBg = isImageTheme || isDynamic
     val bgResId = imageThemeDrawable(themeKey)
 
     Box(modifier = Modifier.fillMaxSize()) {
-        if (!isDynamic && isImageTheme && bgResId != null) {
+        if (isImageTheme && bgResId != null) {
             Image(
                 painter = painterResource(bgResId),
                 contentDescription = null,
@@ -229,9 +226,9 @@ fun ShellNavGraph() {
         }
 
     Scaffold(
-        containerColor = if (hasImageBg) Color.Transparent else MaterialTheme.colorScheme.background,
+        containerColor = if (isImageTheme) Color.Transparent else MaterialTheme.colorScheme.background,
         topBar = {
-            ShellTopBar(navController, isImageTheme = hasImageBg, onClockTap = {
+            ShellTopBar(navController, isImageTheme = isImageTheme, onClockTap = {
                 pendingCalcTab = 9
                 navigateToTop("calculators")
             })
@@ -239,7 +236,7 @@ fun ShellNavGraph() {
         bottomBar = {
             Column(Modifier.navigationBarsPadding()) {
                 if (showBars) {
-                    ShellBottomNavBar(navController, destinations, hasImageBg) { route ->
+                    ShellBottomNavBar(navController, destinations, isImageTheme) { route ->
                         navigateToTop(route)
                     }
                 }

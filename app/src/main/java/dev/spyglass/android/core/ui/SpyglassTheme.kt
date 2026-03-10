@@ -38,7 +38,6 @@ val LocalSurfaceCard = compositionLocalOf { Color(0xFF211F1B) }
 val LocalIsWideScreen = compositionLocalOf { false }
 val LocalHapticEnabled = compositionLocalOf { true }
 val LocalReduceAnimations = compositionLocalOf { false }
-val LocalDynamicColor = compositionLocalOf { false }
 val LocalThemeKey = compositionLocalOf { DEFAULT_THEME }
 
 /** Theme keys that use a full-screen background image instead of a solid color. */
@@ -428,13 +427,7 @@ fun SpyglassTheme(
         isDynamicActive -> {
             val ctx = LocalContext.current
             val dynamic = if (isDark) dynamicDarkColorScheme(ctx) else dynamicLightColorScheme(ctx)
-            val base = if (highContrast) applyHighContrast(dynamic, isDark) else dynamic
-            // Semi-transparent surfaces so the wallpaper shows through
-            base.copy(
-                background = Color.Transparent,
-                surface = base.surface.copy(alpha = 0.85f),
-                surfaceVariant = base.surfaceVariant.copy(alpha = 0.85f),
-            )
+            if (highContrast) applyHighContrast(dynamic, isDark) else dynamic
         }
         highContrast -> applyHighContrast(colors.scheme, isDark)
         else -> colors.scheme
@@ -448,7 +441,6 @@ fun SpyglassTheme(
 
     CompositionLocalProvider(
         LocalThemeKey provides theme,
-        LocalDynamicColor provides (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S),
         LocalSurfaceCard provides cardColor,
         LocalIsWideScreen provides isWideScreen,
         LocalHapticEnabled provides hapticEnabled,
