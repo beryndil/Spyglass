@@ -26,9 +26,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.AddPhotoAlternate
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PriorityHigh
 import androidx.compose.material3.DropdownMenu
@@ -53,6 +57,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
@@ -74,6 +79,7 @@ import dev.spyglass.android.core.ui.SectionHeader
 import dev.spyglass.android.core.ui.SpyglassDivider
 import dev.spyglass.android.core.ui.SpyglassIcon
 import dev.spyglass.android.core.ui.SpyglassIconImage
+import dev.spyglass.android.core.ui.CustomWallpaper
 import dev.spyglass.android.core.ui.TextureManager
 import dev.spyglass.android.core.ui.ImageThemeOrder
 import dev.spyglass.android.core.ui.SolidThemeOrder
@@ -86,8 +92,8 @@ import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import timber.log.Timber
@@ -312,9 +318,18 @@ object CoreModule : SpyglassModule {
             context.dataStore.data.map { it[PreferenceKeys.BACKGROUND_THEME] ?: DEFAULT_THEME }
         }.collectAsStateWithLifecycle(initialValue = DEFAULT_THEME)
 
-        val dynamicColor by remember {
-            context.dataStore.data.map { it[PreferenceKeys.DYNAMIC_COLOR] ?: false }
-        }.collectAsStateWithLifecycle(initialValue = false)
+        val photoPickerLauncher = rememberLauncherForActivityResult(
+            ActivityResultContracts.PickVisualMedia()
+        ) { uri ->
+            if (uri != null) {
+                scope.launch(Dispatchers.IO) {
+                    CustomWallpaper.save(context, uri)
+                    withContext(Dispatchers.Main) {
+                        scope.launch { context.dataStore.edit { it[PreferenceKeys.BACKGROUND_THEME] = "custom" } }
+                    }
+                }
+            }
+        }
 
         val highContrast by remember {
             context.dataStore.data.map { it[PreferenceKeys.HIGH_CONTRAST] ?: false }
@@ -404,6 +419,80 @@ object CoreModule : SpyglassModule {
                         )
                     }
                 }
+                // Custom wallpaper card
+                run {
+                    val hasCustom = CustomWallpaper.hasWallpaper(context)
+                    val isSelected = backgroundTheme == "custom"
+                    val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+                    val shape = RoundedCornerShape(8.dp)
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.width(64.dp),
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(9f / 16f)
+                                .clip(shape)
+                                .background(Color(0xFF1A1A1A), shape)
+                                .border(
+                                    width = if (isSelected) 2.5.dp else 1.dp,
+                                    color = borderColor,
+                                    shape = shape,
+                                )
+                                .clickable {
+                                    hapticClick()
+                                    if (hasCustom) {
+                                        scope.launch { context.dataStore.edit { it[PreferenceKeys.BACKGROUND_THEME] = "custom" } }
+                                    } else {
+                                        photoPickerLauncher.launch(
+                                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                        )
+                                    }
+                                },
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            val thumb = CustomWallpaper.cachedBitmap
+                            if (hasCustom && thumb != null) {
+                                Image(
+                                    bitmap = thumb.asImageBitmap(),
+                                    contentDescription = "My Photo",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop,
+                                    alignment = Alignment.TopCenter,
+                                )
+                            } else {
+                                Icon(
+                                    Icons.Filled.AddPhotoAlternate,
+                                    contentDescription = "Choose photo",
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.size(24.dp),
+                                )
+                            }
+                        }
+                        Spacer(Modifier.height(3.dp))
+                        Text(
+                            "My Photo",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                        )
+                        if (isSelected && hasCustom) {
+                            Text(
+                                "Change",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.clickable {
+                                    hapticClick()
+                                    photoPickerLauncher.launch(
+                                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                    )
+                                },
+                            )
+                        }
+                    }
+                }
             }
             Spacer(Modifier.height(8.dp))
             Text(
@@ -445,16 +534,6 @@ object CoreModule : SpyglassModule {
             )
 
             SpyglassDivider()
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                SettingsToggle(
-                    title = stringResource(R.string.settings_dynamic_color),
-                    description = stringResource(R.string.settings_dynamic_color_desc),
-                    checked = dynamicColor,
-                    onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.DYNAMIC_COLOR] = !dynamicColor } } },
-                )
-                SpyglassDivider()
-            }
 
             SettingsToggle(
                 title = stringResource(R.string.settings_high_contrast),

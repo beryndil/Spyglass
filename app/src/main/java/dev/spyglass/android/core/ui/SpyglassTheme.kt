@@ -1,12 +1,10 @@
 package dev.spyglass.android.core.ui
 
-import android.os.Build
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
@@ -44,6 +42,7 @@ val LocalThemeKey = compositionLocalOf { DEFAULT_THEME }
 val ImageThemeKeys = setOf(
     "creeper", "ocean_monument", "deep_dark", "nether_fortress", "desert_sunset",
     "cherry_grove", "lush_cave", "end_city", "sunflower_plains",
+    "custom",
 )
 
 // ── Theme preset data ────────────────────────────────────────────────────────
@@ -108,6 +107,22 @@ private fun buildTheme(
     }
     return SpyglassColors(base, surfaceCard)
 }
+
+/** Public variant for custom wallpaper themes (always dark, transparent bg). */
+fun buildImageTheme(
+    surface: Color,
+    surfaceVariant: Color,
+    surfaceCard: Color,
+    outline: Color,
+    secondary: Color,
+    onSurfaceVariant: Color,
+    onSurface: Color,
+): SpyglassColors = buildTheme(
+    isDark = true, bg = Color.Transparent,
+    surface = surface, surfaceVariant = surfaceVariant,
+    surfaceCard = surfaceCard, outline = outline,
+    secondary = secondary, onSurfaceVariant = onSurfaceVariant, onSurface = onSurface,
+)
 
 val ThemePresets: Map<String, SpyglassColors> = mapOf(
     // ── Image themes (semi-transparent surfaces — background image shows through) ──
@@ -366,6 +381,7 @@ val ThemeInfoMap: Map<String, ThemeInfo> = mapOf(
     "lush_cave"         to ThemeInfo("Lush Cave",         Color(0xFF142010), isDark = true),
     "end_city"          to ThemeInfo("End City",           Color(0xFF1A1028), isDark = true),
     "sunflower_plains"  to ThemeInfo("Sunflower Plains",  Color(0xFF201C0C), isDark = true),
+    "custom"            to ThemeInfo("My Photo",          Color(0xFF1A1A1A), isDark = true),
     // Solid themes
     "obsidian"    to ThemeInfo("Obsidian",    Color(0xFF0E0C0A), isDark = true),
     "deepslate"   to ThemeInfo("Deepslate",   Color(0xFF17171B), isDark = true),
@@ -411,33 +427,22 @@ val FontScaleOptions = listOf("Small" to 0.85f, "Default" to 1.0f, "Large" to 1.
 fun SpyglassTheme(
     theme: String = DEFAULT_THEME,
     isWideScreen: Boolean = false,
-    dynamicColor: Boolean = false,
     highContrast: Boolean = false,
     hapticEnabled: Boolean = true,
     reduceAnimations: Boolean = false,
     fontScale: Int = 1,
     content: @Composable () -> Unit,
 ) {
-    val colors = ThemePresets[theme] ?: ThemePresets.getValue(DEFAULT_THEME)
+    val colors = if (theme == "custom") {
+        CustomWallpaper.cachedTheme ?: ThemePresets.getValue(DEFAULT_THEME)
+    } else {
+        ThemePresets[theme] ?: ThemePresets.getValue(DEFAULT_THEME)
+    }
     val isDark = ThemeInfoMap[theme]?.isDark ?: true
 
-    val isDynamicActive = dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    val scheme = if (highContrast) applyHighContrast(colors.scheme, isDark) else colors.scheme
 
-    val scheme = when {
-        isDynamicActive -> {
-            val ctx = LocalContext.current
-            val dynamic = if (isDark) dynamicDarkColorScheme(ctx) else dynamicLightColorScheme(ctx)
-            if (highContrast) applyHighContrast(dynamic, isDark) else dynamic
-        }
-        highContrast -> applyHighContrast(colors.scheme, isDark)
-        else -> colors.scheme
-    }
-
-    val cardColor = if (isDynamicActive) {
-        scheme.surfaceVariant
-    } else {
-        colors.surfaceCard
-    }
+    val cardColor = colors.surfaceCard
 
     CompositionLocalProvider(
         LocalThemeKey provides theme,

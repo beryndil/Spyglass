@@ -11,6 +11,7 @@ import dev.spyglass.android.core.module.CoreModule
 import dev.spyglass.android.core.module.BrowseModule
 import dev.spyglass.android.core.module.ModuleRegistry
 import dev.spyglass.android.core.module.ToolsModule
+import dev.spyglass.android.core.ui.CustomWallpaper
 import dev.spyglass.android.core.ui.TextureManager
 import dev.spyglass.android.data.repository.GameDataRepository
 import dev.spyglass.android.data.seed.DataSeeder
@@ -82,6 +83,9 @@ class SpyglassApp : Application() {
             appScope.launch(Dispatchers.IO) {
                 // Init TextureManager (checks if textures are already downloaded)
                 TextureManager.init(this@SpyglassApp)
+
+                // Init CustomWallpaper (loads cached theme from user's photo if set)
+                CustomWallpaper.init(this@SpyglassApp)
 
                 // Load texture mappings (block/item ID -> filename) from JSON
                 TextureManager.loadTextureMaps(this@SpyglassApp)

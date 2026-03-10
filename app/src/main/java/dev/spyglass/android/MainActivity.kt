@@ -59,10 +59,6 @@ class MainActivity : FragmentActivity() {
                 .map { it[PreferenceKeys.BACKGROUND_THEME] ?: DEFAULT_THEME }
                 .collectAsStateWithLifecycle(initialValue = DEFAULT_THEME)
 
-            val dynamicColor by dataStore.data
-                .map { it[PreferenceKeys.DYNAMIC_COLOR] ?: false }
-                .collectAsStateWithLifecycle(initialValue = false)
-
             val highContrast by dataStore.data
                 .map { it[PreferenceKeys.HIGH_CONTRAST] ?: false }
                 .collectAsStateWithLifecycle(initialValue = false)
@@ -91,7 +87,6 @@ class MainActivity : FragmentActivity() {
             SpyglassTheme(
                 theme = theme,
                 isWideScreen = isWideScreen,
-                dynamicColor = dynamicColor,
                 highContrast = highContrast,
                 hapticEnabled = hapticEnabled,
                 reduceAnimations = reduceAnimations,

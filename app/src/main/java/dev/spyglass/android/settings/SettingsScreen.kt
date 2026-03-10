@@ -4,6 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -12,12 +15,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.AddPhotoAlternate
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
@@ -27,8 +32,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import dev.spyglass.android.R
 import dev.spyglass.android.core.shell.imageThemeDrawable
 import dev.spyglass.android.core.ui.*
@@ -89,7 +99,6 @@ fun SettingsScreen(
     val adPersonalizationConsent by vm.adPersonalizationConsent.collectAsStateWithLifecycle()
     val hapticFeedback      by vm.hapticFeedback.collectAsStateWithLifecycle()
     val reduceAnimations    by vm.reduceAnimations.collectAsStateWithLifecycle()
-    val dynamicColor        by vm.dynamicColor.collectAsStateWithLifecycle()
     val highContrast        by vm.highContrast.collectAsStateWithLifecycle()
     val defaultStartupTab   by vm.defaultStartupTab.collectAsStateWithLifecycle()
     val hideUnobtainable    by vm.hideUnobtainableBlocks.collectAsStateWithLifecycle()
@@ -105,6 +114,18 @@ fun SettingsScreen(
     val context = LocalContext.current
     val hapticClick = rememberHapticClick()
     val hapticConfirm = rememberHapticConfirm()
+
+    val scope = rememberCoroutineScope()
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        if (uri != null) {
+            scope.launch(Dispatchers.IO) {
+                CustomWallpaper.save(context, uri)
+                withContext(Dispatchers.Main) { vm.setBackgroundTheme("custom") }
+            }
+        }
+    }
 
     var showDeleteConfirm by remember { mutableStateOf(false) }
     var versionExpanded by remember { mutableStateOf(false) }
@@ -183,6 +204,81 @@ fun SettingsScreen(
                             )
                         }
                     }
+                    // Custom wallpaper card
+                    run {
+                        val hasCustom = CustomWallpaper.hasWallpaper(context)
+                        val isSelected = backgroundTheme == "custom"
+                        val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+                        val shape = RoundedCornerShape(8.dp)
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.width(64.dp),
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .aspectRatio(9f / 16f)
+                                    .clip(shape)
+                                    .background(Color(0xFF1A1A1A), shape)
+                                    .border(
+                                        width = if (isSelected) 2.5.dp else 1.dp,
+                                        color = borderColor,
+                                        shape = shape,
+                                    )
+                                    .clickable {
+                                        hapticClick()
+                                        if (hasCustom) {
+                                            vm.setBackgroundTheme("custom")
+                                        } else {
+                                            photoPickerLauncher.launch(
+                                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                            )
+                                        }
+                                    },
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                val thumb = CustomWallpaper.cachedBitmap
+                                if (hasCustom && thumb != null) {
+                                    Image(
+                                        bitmap = thumb.asImageBitmap(),
+                                        contentDescription = "My Photo",
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentScale = ContentScale.Crop,
+                                        alignment = Alignment.TopCenter,
+                                    )
+                                } else {
+                                    Icon(
+                                        Icons.Filled.AddPhotoAlternate,
+                                        contentDescription = "Choose photo",
+                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        modifier = Modifier.size(24.dp),
+                                    )
+                                }
+                            }
+                            Spacer(Modifier.height(3.dp))
+                            Text(
+                                "My Photo",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+                                textAlign = TextAlign.Center,
+                                maxLines = 1,
+                            )
+                            // Change/Remove when custom is selected
+                            if (isSelected && hasCustom) {
+                                Text(
+                                    "Change",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.clickable {
+                                        hapticClick()
+                                        photoPickerLauncher.launch(
+                                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                        )
+                                    },
+                                )
+                            }
+                        }
+                    }
                 }
                 Spacer(Modifier.height(8.dp))
                 Text(
@@ -223,18 +319,6 @@ fun SettingsScreen(
 
             // ── Other appearance settings ──
             ResultCard {
-
-                // Dynamic Color (Material You) — Android 12+ only
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    SettingsToggle(
-                        title = stringResource(R.string.settings_dynamic_color),
-                        description = stringResource(R.string.settings_dynamic_color_desc),
-                        checked = dynamicColor,
-                        onCheckedChange = vm::setDynamicColor,
-                    )
-                    SpyglassDivider()
-                }
-
                 SettingsToggle(
                     title = stringResource(R.string.settings_high_contrast),
                     description = stringResource(R.string.settings_high_contrast_desc),

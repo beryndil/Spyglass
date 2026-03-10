@@ -46,6 +46,7 @@ play-publisher = "3.11.0"
 zxing-android-embedded = "4.3.0"
 camerax = "1.4.1"
 biometric = "1.2.0-alpha05"
+palette = "1.0.0"
 appcompat = "1.7.0"
 
 [libraries]
@@ -125,6 +126,7 @@ camerax-view = { group = "androidx.camera", name = "camera-view", version.ref = 
 
 # Biometric
 biometric = { group = "androidx.biometric", name = "biometric", version.ref = "biometric" }
+androidx-palette = { group = "androidx.palette", name = "palette-ktx", version.ref = "palette" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 # Testing

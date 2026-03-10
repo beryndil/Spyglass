@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -61,6 +62,7 @@ import dev.spyglass.android.core.module.ModuleRegistry
 import dev.spyglass.android.core.module.ModuleRoute
 import dev.spyglass.android.core.module.SettingsSectionScope
 import dev.spyglass.android.core.ui.AdBanner
+import dev.spyglass.android.core.ui.CustomWallpaper
 import dev.spyglass.android.core.ui.ImageThemeKeys
 import dev.spyglass.android.core.ui.LocalThemeKey
 import dev.spyglass.android.core.ui.PixelIcons
@@ -211,10 +213,22 @@ fun ShellNavGraph() {
 
     val themeKey = LocalThemeKey.current
     val isImageTheme = themeKey in ImageThemeKeys
-    val bgResId = imageThemeDrawable(themeKey)
+    val bgResId = if (themeKey != "custom") imageThemeDrawable(themeKey) else null
 
     Box(modifier = Modifier.fillMaxSize()) {
-        if (isImageTheme && bgResId != null) {
+        if (themeKey == "custom") {
+            val wallpaperBitmap = remember { CustomWallpaper.cachedBitmap }
+            if (wallpaperBitmap != null) {
+                Image(
+                    bitmap = wallpaperBitmap.asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.TopCenter,
+                    alpha = 0.45f,
+                )
+            }
+        } else if (isImageTheme && bgResId != null) {
             Image(
                 painter = painterResource(bgResId),
                 contentDescription = null,
