@@ -15,26 +15,39 @@ import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
-private val SHAPE_LABELS = mapOf(
-    ShapeType.CIRCLE   to "Circle",
-    ShapeType.SPHERE   to "Sphere",
-    ShapeType.DOME     to "Dome",
-    ShapeType.CYLINDER to "Cylinder",
-    ShapeType.CONE     to "Cone",
-    ShapeType.PYRAMID  to "Pyramid",
-    ShapeType.TORUS    to "Torus",
-    ShapeType.WALL     to "Wall",
-    ShapeType.ARCH     to "Arch",
-    ShapeType.ELLIPSOID to "Ellipsoid",
-    ShapeType.ARC_WALL to "Arc Wall",
-    ShapeType.SPIRAL   to "Spiral",
+@Composable
+private fun shapeLabels(): Map<ShapeType, String> = mapOf(
+    ShapeType.CIRCLE    to stringResource(R.string.shapes_circle),
+    ShapeType.SPHERE    to stringResource(R.string.shapes_sphere),
+    ShapeType.DOME      to stringResource(R.string.shapes_dome),
+    ShapeType.CYLINDER  to stringResource(R.string.shapes_cylinder),
+    ShapeType.CONE      to stringResource(R.string.shapes_cone),
+    ShapeType.PYRAMID   to stringResource(R.string.shapes_pyramid),
+    ShapeType.TORUS     to stringResource(R.string.shapes_torus),
+    ShapeType.WALL      to stringResource(R.string.shapes_wall),
+    ShapeType.ARCH      to stringResource(R.string.shapes_arch),
+    ShapeType.ELLIPSOID to stringResource(R.string.shapes_ellipsoid),
+    ShapeType.ARC_WALL  to stringResource(R.string.shapes_arc_wall),
+    ShapeType.SPIRAL    to stringResource(R.string.shapes_spiral),
 )
+
+@Composable
+private fun fmtBlocks(blocks: Int): String {
+    val chunks = blocks / 16
+    val rem = blocks % 16
+    return when {
+        chunks > 0 && rem > 0 -> stringResource(R.string.shapes_blocks_chunks_rem, blocks, chunks, rem)
+        chunks > 0            -> stringResource(R.string.shapes_blocks_chunks, blocks, chunks)
+        else                  -> stringResource(R.string.shapes_blocks_count, blocks)
+    }
+}
 
 @Composable
 fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
     var view3D by remember { mutableStateOf(false) }
     val hapticConfirm = rememberHapticConfirm()
+    val labels = shapeLabels()
 
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState()),
@@ -55,7 +68,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                     FilterChip(
                         selected = selected,
                         onClick  = { vm.setShape(type) },
-                        label    = { Text(SHAPE_LABELS[type] ?: type.name) },
+                        label    = { Text(labels[type] ?: type.name) },
                     )
                 }
             }
@@ -64,9 +77,9 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
             if (s.shapeType != ShapeType.WALL) {
                 val radiusVal = s.radiusInput.toIntOrNull() ?: 10
                 val radiusLabel = when (s.shapeType) {
-                    ShapeType.PYRAMID -> "Half-width"
-                    ShapeType.ELLIPSOID -> "Radius X"
-                    else -> "Radius"
+                    ShapeType.PYRAMID -> stringResource(R.string.shapes_half_width)
+                    ShapeType.ELLIPSOID -> stringResource(R.string.shapes_radius_x)
+                    else -> stringResource(R.string.shapes_radius)
                 }
                 LabeledSlider(radiusLabel, radiusVal, 1, 100) { vm.setRadius(it.toString()) }
             }
@@ -74,7 +87,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
             // Height slider for cylinder / cone / pyramid / wall / arc wall / spiral
             if (s.shapeType in setOf(ShapeType.CYLINDER, ShapeType.CONE, ShapeType.PYRAMID, ShapeType.WALL, ShapeType.ARC_WALL, ShapeType.SPIRAL)) {
                 val heightVal = s.heightInput.toIntOrNull() ?: 10
-                LabeledSlider("Height", heightVal, 1, 256) { vm.setHeight(it.toString()) }
+                LabeledSlider(stringResource(R.string.shapes_height), heightVal, 1, 256) { vm.setHeight(it.toString()) }
             }
 
             // Tube radius slider for torus
@@ -82,7 +95,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                 val radiusVal = s.radiusInput.toIntOrNull() ?: 10
                 val tubeVal = s.tubeInput.toIntOrNull() ?: 3
                 val maxTube = radiusVal.coerceAtLeast(1)
-                LabeledSlider("Tube radius", tubeVal, 1, maxTube) { vm.setTube(it.toString()) }
+                LabeledSlider(stringResource(R.string.shapes_tube_radius), tubeVal, 1, maxTube) { vm.setTube(it.toString()) }
             }
 
             // Thickness slider for sphere, dome, torus, arch, ellipsoid, arc wall
@@ -92,47 +105,47 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                     ShapeType.ARC_WALL -> 5
                     else -> 3
                 }
-                LabeledSlider("Thickness", s.thickness.coerceIn(1, maxThick), 1, maxThick) { vm.setThickness(it) }
+                LabeledSlider(stringResource(R.string.shapes_thickness), s.thickness.coerceIn(1, maxThick), 1, maxThick) { vm.setThickness(it) }
             }
 
             // Wall-specific: X/Z offset sliders
             if (s.shapeType == ShapeType.WALL) {
                 val dxVal = s.wallDxInput.toIntOrNull() ?: 20
-                LabeledSlider("X Offset", dxVal, -100, 100) { vm.setWallDx(it.toString()) }
+                LabeledSlider(stringResource(R.string.shapes_x_offset), dxVal, -100, 100) { vm.setWallDx(it.toString()) }
                 val dzVal = s.wallDzInput.toIntOrNull() ?: 10
-                LabeledSlider("Z Offset", dzVal, -100, 100) { vm.setWallDz(it.toString()) }
+                LabeledSlider(stringResource(R.string.shapes_z_offset), dzVal, -100, 100) { vm.setWallDz(it.toString()) }
             }
 
             // Width slider for wall / spiral
             if (s.shapeType in setOf(ShapeType.WALL, ShapeType.SPIRAL)) {
                 val widthVal = s.widthInput.toIntOrNull() ?: 2
-                LabeledSlider("Width", widthVal, 1, 5) { vm.setWidth(it.toString()) }
+                LabeledSlider(stringResource(R.string.shapes_width), widthVal, 1, 5) { vm.setWidth(it.toString()) }
             }
 
             // Ellipsoid-specific: Radius Y and Radius Z
             if (s.shapeType == ShapeType.ELLIPSOID) {
                 val ryVal = s.radiusYInput.toIntOrNull() ?: 10
-                LabeledSlider("Radius Y", ryVal, 1, 100) { vm.setRadiusY(it.toString()) }
+                LabeledSlider(stringResource(R.string.shapes_radius_y), ryVal, 1, 100) { vm.setRadiusY(it.toString()) }
                 val rzVal = s.radiusZInput.toIntOrNull() ?: 10
-                LabeledSlider("Radius Z", rzVal, 1, 100) { vm.setRadiusZ(it.toString()) }
+                LabeledSlider(stringResource(R.string.shapes_radius_z), rzVal, 1, 100) { vm.setRadiusZ(it.toString()) }
             }
 
             // Arch-specific: Length slider
             if (s.shapeType == ShapeType.ARCH) {
                 val lenVal = s.lengthInput.toIntOrNull() ?: 10
-                LabeledSlider("Length", lenVal, 1, 100) { vm.setLength(it.toString()) }
+                LabeledSlider(stringResource(R.string.shapes_length), lenVal, 1, 100) { vm.setLength(it.toString()) }
             }
 
             // Arc wall-specific: Angle slider
             if (s.shapeType == ShapeType.ARC_WALL) {
                 val angleVal = s.angleInput.toIntOrNull() ?: 180
-                LabeledSlider("Angle", angleVal, 10, 360) { vm.setAngle(it.toString()) }
+                LabeledSlider(stringResource(R.string.shapes_angle), angleVal, 10, 360) { vm.setAngle(it.toString()) }
             }
 
             // Spiral-specific: Step height slider
             if (s.shapeType == ShapeType.SPIRAL) {
                 val stepVal = s.stepInput.toIntOrNull() ?: 1
-                LabeledSlider("Step Height", stepVal, 1, 5) { vm.setStep(it.toString()) }
+                LabeledSlider(stringResource(R.string.shapes_step_height), stepVal, 1, 5) { vm.setStep(it.toString()) }
             }
 
             // Hollow toggle for cylinder
@@ -171,7 +184,7 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
         if (s.layers.isNotEmpty()) {
             // View toggle
             TogglePill(
-                listOf("Layer", "3D"),
+                listOf(stringResource(R.string.shapes_view_layer), stringResource(R.string.shapes_view_3d)),
                 if (view3D) 1 else 0,
                 { view3D = it == 1 },
             )
@@ -185,15 +198,9 @@ fun ShapesScreen(vm: ShapesViewModel = viewModel()) {
                 val width  = allXs.max() - allXs.min() + 1
                 val depth  = allZs.max() - allZs.min() + 1
                 val height = s.layerMax - s.layerMin + 1
-                fun fmt(blocks: Int): String {
-                    val chunks = blocks / 16
-                    val rem = blocks % 16
-                    return if (chunks > 0) "$blocks blocks ($chunks chunk${if (chunks > 1) "s" else ""}${if (rem > 0) " + $rem" else ""})"
-                    else "$blocks blocks"
-                }
-                StatRow(stringResource(R.string.shapes_width_x),  fmt(width))
-                StatRow(stringResource(R.string.shapes_depth_z),  fmt(depth))
-                StatRow(stringResource(R.string.shapes_height_y), fmt(height))
+                StatRow(stringResource(R.string.shapes_width_x),  fmtBlocks(width))
+                StatRow(stringResource(R.string.shapes_depth_z),  fmtBlocks(depth))
+                StatRow(stringResource(R.string.shapes_height_y), fmtBlocks(height))
             }
 
             SpyglassDivider()
