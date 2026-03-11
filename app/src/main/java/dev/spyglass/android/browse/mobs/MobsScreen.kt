@@ -307,7 +307,7 @@ fun MobsScreen(
                                     }
                                     CategoryBadge(label = m.category, color = categoryColor)
                                     Spacer(Modifier.height(2.dp))
-                                    Text("HP ${m.health}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                                    Text(stringResource(R.string.mobs_hp_label, m.health), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                                 }
                                 Spacer(Modifier.width(6.dp))
                                 val isFav = m.id in favoriteIds

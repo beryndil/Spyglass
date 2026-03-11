@@ -57,6 +57,18 @@ private val BIOME_ENCHANTS = listOf(
     ),
 )
 
+@Composable
+private fun biomeLabel(key: String): String = when (key) {
+    "Plains"  -> stringResource(R.string.librarian_biome_plains)
+    "Desert"  -> stringResource(R.string.librarian_biome_desert)
+    "Savanna" -> stringResource(R.string.librarian_biome_savanna)
+    "Snow"    -> stringResource(R.string.librarian_biome_snow)
+    "Taiga"   -> stringResource(R.string.librarian_biome_taiga)
+    "Jungle"  -> stringResource(R.string.librarian_biome_jungle)
+    "Swamp"   -> stringResource(R.string.librarian_biome_swamp)
+    else      -> key
+}
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun LibrarianScreen() {
@@ -113,7 +125,7 @@ fun LibrarianScreen() {
                 FilterChip(
                     selected = selectedBiome == be.biome,
                     onClick = { hapticClick(); selectedBiome = be.biome },
-                    label = { Text(be.biome, style = MaterialTheme.typography.labelSmall) },
+                    label = { Text(biomeLabel(be.biome), style = MaterialTheme.typography.labelSmall) },
                 )
             }
         }
@@ -124,7 +136,7 @@ fun LibrarianScreen() {
         else BIOME_ENCHANTS
 
         displayed.forEach { be ->
-            SectionHeader(be.biome)
+            SectionHeader(biomeLabel(be.biome))
             ResultCard {
                 Text(stringResource(R.string.librarian_master_exclusive), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.height(4.dp))

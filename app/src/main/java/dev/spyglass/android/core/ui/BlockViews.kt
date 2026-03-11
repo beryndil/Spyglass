@@ -14,6 +14,8 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
 import kotlin.math.max
 import kotlin.math.min
 
@@ -69,7 +71,7 @@ fun LayerGrid(blocks: Set<Pair<Int, Int>>) {
             }
         }
         Text(
-            "${blocks.size} blocks in this layer  \u2022  X ${minX}\u2013${maxX}  Z ${minZ}\u2013${maxZ}",
+            stringResource(R.string.blockviews_layer_summary, blocks.size, minX, maxX, minZ, maxZ),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.secondary,
         )
@@ -216,7 +218,7 @@ fun IsometricView(layers: Map<Int, Set<Pair<Int, Int>>>) {
             }
         }
         Text(
-            "${allBlocks.size} total blocks",
+            stringResource(R.string.blockviews_total_blocks, allBlocks.size),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.secondary,
         )
