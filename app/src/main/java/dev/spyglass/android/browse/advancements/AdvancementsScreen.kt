@@ -227,19 +227,21 @@ class AdvancementsViewModel(app: Application) : AndroidViewModel(app) {
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
+@Composable
 private fun typeLabel(type: String): String = when (type) {
-    "task" -> "Task"
-    "goal" -> "Goal"
-    "challenge" -> "Challenge"
+    "task" -> stringResource(R.string.adv_type_task)
+    "goal" -> stringResource(R.string.adv_type_goal)
+    "challenge" -> stringResource(R.string.adv_type_challenge)
     else -> type.replaceFirstChar { it.uppercase() }
 }
 
+@Composable
 private fun categoryLabel(cat: String): String = when (cat) {
-    "minecraft" -> "Minecraft"
-    "nether" -> "Nether"
-    "end" -> "The End"
-    "adventure" -> "Adventure"
-    "husbandry" -> "Husbandry"
+    "minecraft" -> stringResource(R.string.adv_tab_minecraft)
+    "nether" -> stringResource(R.string.adv_tab_nether)
+    "end" -> stringResource(R.string.adv_tab_end)
+    "adventure" -> stringResource(R.string.adv_tab_adventure)
+    "husbandry" -> stringResource(R.string.adv_tab_husbandry)
     else -> cat.replaceFirstChar { it.uppercase() }
 }
 

@@ -49,13 +49,15 @@ private data class AdvancementNode(
 private enum class AdvState { COMPLETED, AVAILABLE, LOCKED }
 
 private val TAB_ORDER = listOf("minecraft", "adventure", "nether", "end", "husbandry")
-private val TAB_LABELS = mapOf(
-    "minecraft" to "Minecraft",
-    "adventure" to "Adventure",
-    "nether" to "Nether",
-    "end" to "The End",
-    "husbandry" to "Husbandry",
-)
+@Composable
+private fun advTabLabel(key: String): String = when (key) {
+    "minecraft" -> stringResource(R.string.adv_tab_minecraft)
+    "adventure" -> stringResource(R.string.adv_tab_adventure)
+    "nether" -> stringResource(R.string.adv_tab_nether)
+    "end" -> stringResource(R.string.adv_tab_end)
+    "husbandry" -> stringResource(R.string.adv_tab_husbandry)
+    else -> key
+}
 
 @Composable
 fun AdvancementsScreen(
@@ -237,7 +239,7 @@ private fun AdvancementsContent(
                 FilterChip(
                     selected = selectedTab == tab,
                     onClick = { hapticClick(); selectedTab = if (selectedTab == tab) null else tab },
-                    label = { Text(TAB_LABELS[tab] ?: tab) },
+                    label = { Text(advTabLabel(tab)) },
                 )
             }
         }
@@ -249,7 +251,7 @@ private fun AdvancementsContent(
                 lastCategory = node.meta.category
                 if (selectedTab == null) {
                     Spacer(Modifier.height(4.dp))
-                    SectionHeader(title = TAB_LABELS[node.meta.category] ?: node.meta.category)
+                    SectionHeader(title = advTabLabel(node.meta.category))
                 }
             }
             AdvancementRow(node)

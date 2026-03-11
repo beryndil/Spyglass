@@ -1573,4 +1573,113 @@
     <string name="connect_invalid_qr">Código QR inválido: %1$s</string>
     <string name="biomes_category_unknown">Desconhecido</string>
     <string name="todo_gather_prefix">Coletar %1$s</string>
+
+    <!-- Dimension labels -->
+    <string name="dimension_overworld">Superfície</string>
+    <string name="dimension_nether">Nether</string>
+    <string name="dimension_the_end">O End</string>
+    <string name="dimension_deep_dark">Escuridão Profunda</string>
+    <string name="dimension_ocean">Oceano</string>
+    <!-- Waypoint category labels -->
+    <string name="waypoint_category_base">Base</string>
+    <string name="waypoint_category_farm">Fazenda</string>
+    <string name="waypoint_category_portal">Portal</string>
+    <string name="waypoint_category_spawner">Gerador</string>
+    <string name="waypoint_category_village">Vila</string>
+    <string name="waypoint_category_monument">Monumento</string>
+    <string name="waypoint_category_other">Outro</string>
+    <!-- Waypoint detail labels -->
+    <string name="waypoint_converted_coords">COORDS %1$s</string>
+    <string name="waypoint_converted_from">Convertido de %1$s: %2$d, %3$d, %4$d</string>
+    <string name="waypoint_linked_name">%1$s (%2$s)</string>
+    <!-- Nether calculator -->
+    <string name="nether_dim_x">%1$s X</string>
+    <string name="nether_dim_z">%1$s Z</string>
+    <!-- Trim template data -->
+    <string name="trim_location_overworld">Superfície</string>
+    <string name="trim_location_nether">Nether</string>
+    <string name="trim_location_the_end">O End</string>
+    <string name="trim_location_deep_dark">Escuridão Profunda</string>
+    <string name="trim_location_ocean">Oceano</string>
+    <string name="trim_note_rarest">Modelo de ajuste mais raro</string>
+    <string name="trim_note_mob_drop">Único ajuste obtido de um mob</string>
+    <string name="trim_note_brushing">Requer escovação</string>
+    <string name="trim_note_ominous">Exclusivo de cofre ominoso</string>
+    <string name="trim_color_silver_gray">Prateado/cinza</string>
+    <string name="trim_color_reddish_orange">Laranja avermelhado</string>
+    <string name="trim_color_golden_yellow">Amarelo dourado</string>
+    <string name="trim_color_deep_blue">Azul profundo</string>
+    <string name="trim_color_green">Verde</string>
+    <string name="trim_color_light_blue">Azul claro/ciano</string>
+    <string name="trim_color_dark_gray">Cinza escuro/preto</string>
+    <string name="trim_color_red">Vermelho</string>
+    <string name="trim_color_purple">Roxo</string>
+    <string name="trim_color_white">Branco/claro</string>
+    <string name="trim_color_yellow_orange">Amarelo/laranja (1.21.4)</string>
+
+    <!-- Advancement labels -->
+    <string name="adv_tab_minecraft">Minecraft</string>
+    <string name="adv_tab_adventure">Aventura</string>
+    <string name="adv_tab_nether">Nether</string>
+    <string name="adv_tab_end">O End</string>
+    <string name="adv_tab_husbandry">Pecuária</string>
+    <string name="adv_type_task">Tarefa</string>
+    <string name="adv_type_goal">Objetivo</string>
+    <string name="adv_type_challenge">Desafio</string>
+    <!-- Shape calculator -->
+    <string name="shapes_circle">Círculo</string>
+    <string name="shapes_sphere">Esfera</string>
+    <string name="shapes_dome">Domo</string>
+    <string name="shapes_cylinder">Cilindro</string>
+    <string name="shapes_cone">Cone</string>
+    <string name="shapes_pyramid">Pirâmide</string>
+    <string name="shapes_torus">Toro</string>
+    <string name="shapes_wall">Muro</string>
+    <string name="shapes_arch">Arco</string>
+    <string name="shapes_ellipsoid">Elipsoide</string>
+    <string name="shapes_arc_wall">Muro curvo</string>
+    <string name="shapes_spiral">Espiral</string>
+    <string name="shapes_half_width">Meia largura</string>
+    <string name="shapes_radius_x">Raio X</string>
+    <string name="shapes_radius">Raio</string>
+    <string name="shapes_height">Altura</string>
+    <string name="shapes_tube_radius">Raio do tubo</string>
+    <string name="shapes_thickness">Espessura</string>
+    <string name="shapes_x_offset">Deslocamento X</string>
+    <string name="shapes_z_offset">Deslocamento Z</string>
+    <string name="shapes_width">Largura</string>
+    <string name="shapes_radius_y">Raio Y</string>
+    <string name="shapes_radius_z">Raio Z</string>
+    <string name="shapes_length">Comprimento</string>
+    <string name="shapes_angle">Ângulo</string>
+    <string name="shapes_step_height">Altura do degrau</string>
+    <string name="shapes_view_layer">Camada</string>
+    <string name="shapes_view_3d">3D</string>
+    <string name="shapes_blocks_count">%1$d blocos</string>
+    <string name="shapes_blocks_chunks">%1$d blocos (%2$d chunks)</string>
+    <string name="shapes_blocks_chunks_rem">%1$d blocos (%2$d chunks + %3$d)</string>
+    <!-- Maze calculator -->
+    <string name="maze_type_rect">Ret</string>
+    <string name="maze_type_circle">Círculo</string>
+    <string name="maze_type_floors">Andares</string>
+    <!-- Mob HP -->
+    <string name="mobs_hp_label">HP %1$s</string>
+    <!-- Block views -->
+    <string name="blockviews_layer_summary">%1$d blocos nesta camada  •  X %2$d–%3$d  Z %4$d–%5$d</string>
+    <string name="blockviews_total_blocks">%1$d blocos no total</string>
+    <!-- Librarian biomes -->
+    <string name="librarian_biome_plains">Planícies</string>
+    <string name="librarian_biome_desert">Deserto</string>
+    <string name="librarian_biome_savanna">Savana</string>
+    <string name="librarian_biome_snow">Neve</string>
+    <string name="librarian_biome_taiga">Taiga</string>
+    <string name="librarian_biome_jungle">Selva</string>
+    <string name="librarian_biome_swamp">Pântano</string>
+    <!-- Clock events -->
+    <string name="clock_event_sunrise">Nascer do sol</string>
+    <string name="clock_event_noon">Meio-dia</string>
+    <string name="clock_event_sunset">Pôr do sol</string>
+    <string name="clock_color_green">Verde</string>
+    <string name="clock_color_gold">Dourado</string>
+    <string name="clock_color_red">Vermelho</string>
 </resources>

@@ -1573,4 +1573,113 @@
     <string name="connect_invalid_qr">無効なQRコード: %1$s</string>
     <string name="biomes_category_unknown">不明</string>
     <string name="todo_gather_prefix">%1$sを採集</string>
+
+    <!-- Dimension labels -->
+    <string name="dimension_overworld">オーバーワールド</string>
+    <string name="dimension_nether">ネザー</string>
+    <string name="dimension_the_end">ジ・エンド</string>
+    <string name="dimension_deep_dark">ディープダーク</string>
+    <string name="dimension_ocean">海洋</string>
+    <!-- Waypoint category labels -->
+    <string name="waypoint_category_base">拠点</string>
+    <string name="waypoint_category_farm">農場</string>
+    <string name="waypoint_category_portal">ポータル</string>
+    <string name="waypoint_category_spawner">スポナー</string>
+    <string name="waypoint_category_village">村</string>
+    <string name="waypoint_category_monument">モニュメント</string>
+    <string name="waypoint_category_other">その他</string>
+    <!-- Waypoint detail labels -->
+    <string name="waypoint_converted_coords">%1$s 座標</string>
+    <string name="waypoint_converted_from">%1$sから変換: %2$d, %3$d, %4$d</string>
+    <string name="waypoint_linked_name">%1$s (%2$s)</string>
+    <!-- Nether calculator -->
+    <string name="nether_dim_x">%1$s X</string>
+    <string name="nether_dim_z">%1$s Z</string>
+    <!-- Trim template data -->
+    <string name="trim_location_overworld">オーバーワールド</string>
+    <string name="trim_location_nether">ネザー</string>
+    <string name="trim_location_the_end">ジ・エンド</string>
+    <string name="trim_location_deep_dark">ディープダーク</string>
+    <string name="trim_location_ocean">海洋</string>
+    <string name="trim_note_rarest">最も希少な鍛冶型</string>
+    <string name="trim_note_mob_drop">モブドロップ唯一の鍛冶型</string>
+    <string name="trim_note_brushing">ブラッシングが必要</string>
+    <string name="trim_note_ominous">不吉な宝物庫限定</string>
+    <string name="trim_color_silver_gray">シルバー/グレー</string>
+    <string name="trim_color_reddish_orange">赤みがかったオレンジ</string>
+    <string name="trim_color_golden_yellow">ゴールデンイエロー</string>
+    <string name="trim_color_deep_blue">ディープブルー</string>
+    <string name="trim_color_green">グリーン</string>
+    <string name="trim_color_light_blue">ライトブルー/シアン</string>
+    <string name="trim_color_dark_gray">ダークグレー/ブラック</string>
+    <string name="trim_color_red">レッド</string>
+    <string name="trim_color_purple">パープル</string>
+    <string name="trim_color_white">ホワイト/ライト</string>
+    <string name="trim_color_yellow_orange">イエロー/オレンジ (1.21.4)</string>
+
+    <!-- Advancement labels -->
+    <string name="adv_tab_minecraft">Minecraft</string>
+    <string name="adv_tab_adventure">冒険</string>
+    <string name="adv_tab_nether">ネザー</string>
+    <string name="adv_tab_end">ジ・エンド</string>
+    <string name="adv_tab_husbandry">畜産</string>
+    <string name="adv_type_task">タスク</string>
+    <string name="adv_type_goal">ゴール</string>
+    <string name="adv_type_challenge">チャレンジ</string>
+    <!-- Shape calculator -->
+    <string name="shapes_circle">円</string>
+    <string name="shapes_sphere">球</string>
+    <string name="shapes_dome">ドーム</string>
+    <string name="shapes_cylinder">円柱</string>
+    <string name="shapes_cone">円錐</string>
+    <string name="shapes_pyramid">ピラミッド</string>
+    <string name="shapes_torus">トーラス</string>
+    <string name="shapes_wall">壁</string>
+    <string name="shapes_arch">アーチ</string>
+    <string name="shapes_ellipsoid">楕円体</string>
+    <string name="shapes_arc_wall">弧壁</string>
+    <string name="shapes_spiral">螺旋</string>
+    <string name="shapes_half_width">半幅</string>
+    <string name="shapes_radius_x">半径 X</string>
+    <string name="shapes_radius">半径</string>
+    <string name="shapes_height">高さ</string>
+    <string name="shapes_tube_radius">チューブ半径</string>
+    <string name="shapes_thickness">厚さ</string>
+    <string name="shapes_x_offset">Xオフセット</string>
+    <string name="shapes_z_offset">Zオフセット</string>
+    <string name="shapes_width">幅</string>
+    <string name="shapes_radius_y">半径 Y</string>
+    <string name="shapes_radius_z">半径 Z</string>
+    <string name="shapes_length">長さ</string>
+    <string name="shapes_angle">角度</string>
+    <string name="shapes_step_height">段差の高さ</string>
+    <string name="shapes_view_layer">レイヤー</string>
+    <string name="shapes_view_3d">3D</string>
+    <string name="shapes_blocks_count">%1$dブロック</string>
+    <string name="shapes_blocks_chunks">%1$dブロック（%2$dチャンク）</string>
+    <string name="shapes_blocks_chunks_rem">%1$dブロック（%2$dチャンク + %3$d）</string>
+    <!-- Maze calculator -->
+    <string name="maze_type_rect">四角</string>
+    <string name="maze_type_circle">円形</string>
+    <string name="maze_type_floors">階層</string>
+    <!-- Mob HP -->
+    <string name="mobs_hp_label">HP %1$s</string>
+    <!-- Block views -->
+    <string name="blockviews_layer_summary">このレイヤーに%1$dブロック  •  X %2$d–%3$d  Z %4$d–%5$d</string>
+    <string name="blockviews_total_blocks">合計%1$dブロック</string>
+    <!-- Librarian biomes -->
+    <string name="librarian_biome_plains">平原</string>
+    <string name="librarian_biome_desert">砂漠</string>
+    <string name="librarian_biome_savanna">サバンナ</string>
+    <string name="librarian_biome_snow">雪原</string>
+    <string name="librarian_biome_taiga">タイガ</string>
+    <string name="librarian_biome_jungle">ジャングル</string>
+    <string name="librarian_biome_swamp">湿地</string>
+    <!-- Clock events -->
+    <string name="clock_event_sunrise">日の出</string>
+    <string name="clock_event_noon">正午</string>
+    <string name="clock_event_sunset">日没</string>
+    <string name="clock_color_green">緑</string>
+    <string name="clock_color_gold">金</string>
+    <string name="clock_color_red">赤</string>
 </resources>

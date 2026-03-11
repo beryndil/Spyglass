@@ -48,14 +48,25 @@ private fun waypointColor(color: String, primary: Color): Color = when (color) {
     else -> primary
 }
 
+@Composable
 private fun dimensionLabel(dim: String): String = when (dim) {
-    "overworld" -> "Overworld"
-    "the_nether" -> "Nether"
-    "the_end" -> "The End"
+    "overworld" -> stringResource(R.string.dimension_overworld)
+    "the_nether" -> stringResource(R.string.dimension_nether)
+    "the_end" -> stringResource(R.string.dimension_the_end)
     else -> dim.replaceFirstChar { it.uppercase() }
 }
 
-private fun categoryLabel(cat: String): String = cat.replaceFirstChar { it.uppercase() }
+@Composable
+private fun categoryLabel(cat: String): String = when (cat) {
+    "base" -> stringResource(R.string.waypoint_category_base)
+    "farm" -> stringResource(R.string.waypoint_category_farm)
+    "portal" -> stringResource(R.string.waypoint_category_portal)
+    "spawner" -> stringResource(R.string.waypoint_category_spawner)
+    "village" -> stringResource(R.string.waypoint_category_village)
+    "monument" -> stringResource(R.string.waypoint_category_monument)
+    "other" -> stringResource(R.string.waypoint_category_other)
+    else -> cat.replaceFirstChar { it.uppercase() }
+}
 
 /** Calculate 3D distance between two points, applying nether scaling when needed. */
 private fun distanceBetween(

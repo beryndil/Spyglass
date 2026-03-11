@@ -13,13 +13,16 @@ import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
-private val MAZE_TYPE_LABELS = listOf("Rect", "Circle", "Floors")
-
 @Composable
 fun MazeScreen(vm: MazeViewModel = viewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
     var view3D by remember { mutableStateOf(false) }
     val hapticClick = rememberHapticClick()
+    val mazeTypeLabels = listOf(
+        stringResource(R.string.maze_type_rect),
+        stringResource(R.string.maze_type_circle),
+        stringResource(R.string.maze_type_floors),
+    )
 
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState()),
@@ -30,7 +33,7 @@ fun MazeScreen(vm: MazeViewModel = viewModel()) {
         InputCard {
             // Maze type selector
             TogglePill(
-                options  = MAZE_TYPE_LABELS,
+                options  = mazeTypeLabels,
                 selected = s.mazeType.ordinal,
                 onSelect = { vm.setMazeType(MazeType.entries[it]) },
             )
@@ -78,7 +81,7 @@ fun MazeScreen(vm: MazeViewModel = viewModel()) {
         if (s.layers.isNotEmpty()) {
             // View toggle
             TogglePill(
-                listOf("Layer", "3D"),
+                listOf(stringResource(R.string.shapes_view_layer), stringResource(R.string.shapes_view_3d)),
                 if (view3D) 1 else 0,
                 { view3D = it == 1 },
             )
@@ -92,11 +95,15 @@ fun MazeScreen(vm: MazeViewModel = viewModel()) {
                 val width  = allXs.max() - allXs.min() + 1
                 val depth  = allZs.max() - allZs.min() + 1
                 val height = s.layerMax - s.layerMin + 1
+                @Composable
                 fun fmt(blocks: Int): String {
                     val chunks = blocks / 16
                     val rem = blocks % 16
-                    return if (chunks > 0) "$blocks blocks ($chunks chunk${if (chunks > 1) "s" else ""}${if (rem > 0) " + $rem" else ""})"
-                    else "$blocks blocks"
+                    return when {
+                        chunks > 0 && rem > 0 -> stringResource(R.string.shapes_blocks_chunks_rem, blocks, chunks, rem)
+                        chunks > 0            -> stringResource(R.string.shapes_blocks_chunks, blocks, chunks)
+                        else                  -> stringResource(R.string.shapes_blocks_count, blocks)
+                    }
                 }
                 StatRow(stringResource(R.string.maze_width_x),  fmt(width))
                 StatRow(stringResource(R.string.maze_depth_z),  fmt(depth))

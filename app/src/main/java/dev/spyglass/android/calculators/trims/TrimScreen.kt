@@ -15,7 +15,7 @@ import dev.spyglass.android.core.ui.*
 
 private data class TrimTemplate(
     val name: String,
-    val location: String,
+    val locationKey: String,
     val structure: String,
     val structureId: String,
     val chance: String,
@@ -23,45 +23,80 @@ private data class TrimTemplate(
     val notes: String = "",
 )
 
+@Composable
+private fun trimLocationLabel(key: String): String = when (key) {
+    "overworld" -> stringResource(R.string.trim_location_overworld)
+    "nether" -> stringResource(R.string.trim_location_nether)
+    "the_end" -> stringResource(R.string.trim_location_the_end)
+    "deep_dark" -> stringResource(R.string.trim_location_deep_dark)
+    "ocean" -> stringResource(R.string.trim_location_ocean)
+    else -> key
+}
+
+@Composable
+private fun trimNoteLabel(note: String): String = when (note) {
+    "rarest" -> stringResource(R.string.trim_note_rarest)
+    "mob_drop" -> stringResource(R.string.trim_note_mob_drop)
+    "brushing" -> stringResource(R.string.trim_note_brushing)
+    "ominous" -> stringResource(R.string.trim_note_ominous)
+    else -> note
+}
+
 private val TRIM_TEMPLATES = listOf(
-    TrimTemplate("Sentry", "Overworld", "Pillager Outpost", "pillager_outpost", "~20%", "Cobblestone"),
-    TrimTemplate("Dune", "Overworld", "Desert Pyramid", "desert_pyramid", "Standard", "Sandstone"),
-    TrimTemplate("Coast", "Overworld", "Shipwreck", "shipwreck", "Standard", "Cobblestone"),
-    TrimTemplate("Wild", "Overworld", "Jungle Pyramid", "jungle_pyramid", "Standard", "Mossy Cobblestone"),
-    TrimTemplate("Vex", "Overworld", "Woodland Mansion", "woodland_mansion", "~4.8%", "Cobblestone"),
-    TrimTemplate("Eye", "Overworld", "Stronghold Library", "stronghold", "Standard", "End Stone"),
-    TrimTemplate("Ward", "Deep Dark", "Ancient City", "ancient_city", "Rare", "Cobbled Deepslate"),
-    TrimTemplate("Silence", "Deep Dark", "Ancient City", "ancient_city", "1.2%", "Cobbled Deepslate", "Rarest trim template"),
-    TrimTemplate("Snout", "Nether", "Bastion Remnant", "bastion_remnant", "~4.8%", "Blackstone"),
-    TrimTemplate("Rib", "Nether", "Nether Fortress", "nether_fortress", "Standard", "Netherrack"),
-    TrimTemplate("Spire", "The End", "End City", "end_city", "Standard", "Purpur Block"),
-    TrimTemplate("Tide", "Ocean", "Elder Guardian Drop", "ocean_monument", "20%", "Prismarine", "Only trim from mob drop"),
-    TrimTemplate("Wayfinder", "Overworld", "Trail Ruins", "trail_ruins", "~8.3%", "Terracotta", "Requires brushing"),
-    TrimTemplate("Raiser", "Overworld", "Trail Ruins", "trail_ruins", "~8.3%", "Terracotta", "Requires brushing"),
-    TrimTemplate("Shaper", "Overworld", "Trail Ruins", "trail_ruins", "~8.3%", "Terracotta", "Requires brushing"),
-    TrimTemplate("Host", "Overworld", "Trail Ruins", "trail_ruins", "~8.3%", "Terracotta", "Requires brushing"),
-    TrimTemplate("Bolt", "Overworld", "Trial Chambers Vault", "trial_chambers", "~6.3%", "Copper Block"),
-    TrimTemplate("Flow", "Overworld", "Trial Chambers Ominous Vault", "trial_chambers", "22.5%", "Breeze Rod", "Ominous vault exclusive"),
+    TrimTemplate("Sentry", "overworld", "Pillager Outpost", "pillager_outpost", "~20%", "Cobblestone"),
+    TrimTemplate("Dune", "overworld", "Desert Pyramid", "desert_pyramid", "Standard", "Sandstone"),
+    TrimTemplate("Coast", "overworld", "Shipwreck", "shipwreck", "Standard", "Cobblestone"),
+    TrimTemplate("Wild", "overworld", "Jungle Pyramid", "jungle_pyramid", "Standard", "Mossy Cobblestone"),
+    TrimTemplate("Vex", "overworld", "Woodland Mansion", "woodland_mansion", "~4.8%", "Cobblestone"),
+    TrimTemplate("Eye", "overworld", "Stronghold Library", "stronghold", "Standard", "End Stone"),
+    TrimTemplate("Ward", "deep_dark", "Ancient City", "ancient_city", "Rare", "Cobbled Deepslate"),
+    TrimTemplate("Silence", "deep_dark", "Ancient City", "ancient_city", "1.2%", "Cobbled Deepslate", "rarest"),
+    TrimTemplate("Snout", "nether", "Bastion Remnant", "bastion_remnant", "~4.8%", "Blackstone"),
+    TrimTemplate("Rib", "nether", "Nether Fortress", "nether_fortress", "Standard", "Netherrack"),
+    TrimTemplate("Spire", "the_end", "End City", "end_city", "Standard", "Purpur Block"),
+    TrimTemplate("Tide", "ocean", "Elder Guardian Drop", "ocean_monument", "20%", "Prismarine", "mob_drop"),
+    TrimTemplate("Wayfinder", "overworld", "Trail Ruins", "trail_ruins", "~8.3%", "Terracotta", "brushing"),
+    TrimTemplate("Raiser", "overworld", "Trail Ruins", "trail_ruins", "~8.3%", "Terracotta", "brushing"),
+    TrimTemplate("Shaper", "overworld", "Trail Ruins", "trail_ruins", "~8.3%", "Terracotta", "brushing"),
+    TrimTemplate("Host", "overworld", "Trail Ruins", "trail_ruins", "~8.3%", "Terracotta", "brushing"),
+    TrimTemplate("Bolt", "overworld", "Trial Chambers Vault", "trial_chambers", "~6.3%", "Copper Block"),
+    TrimTemplate("Flow", "overworld", "Trial Chambers Ominous Vault", "trial_chambers", "22.5%", "Breeze Rod", "ominous"),
 )
 
 private data class TrimMaterial(
     val name: String,
     val item: String,
-    val colorDesc: String,
+    val colorKey: String,
 )
 
+@Composable
+private fun trimColorLabel(key: String): String = when (key) {
+    "silver_gray" -> stringResource(R.string.trim_color_silver_gray)
+    "reddish_orange" -> stringResource(R.string.trim_color_reddish_orange)
+    "golden_yellow" -> stringResource(R.string.trim_color_golden_yellow)
+    "deep_blue" -> stringResource(R.string.trim_color_deep_blue)
+    "green" -> stringResource(R.string.trim_color_green)
+    "light_blue" -> stringResource(R.string.trim_color_light_blue)
+    "dark_gray" -> stringResource(R.string.trim_color_dark_gray)
+    "red" -> stringResource(R.string.trim_color_red)
+    "purple" -> stringResource(R.string.trim_color_purple)
+    "white" -> stringResource(R.string.trim_color_white)
+    "yellow_orange" -> stringResource(R.string.trim_color_yellow_orange)
+    else -> key
+}
+
 private val TRIM_MATERIALS = listOf(
-    TrimMaterial("Iron", "Iron Ingot", "Silver/gray"),
-    TrimMaterial("Copper", "Copper Ingot", "Reddish orange"),
-    TrimMaterial("Gold", "Gold Ingot", "Golden yellow"),
-    TrimMaterial("Lapis", "Lapis Lazuli", "Deep blue"),
-    TrimMaterial("Emerald", "Emerald", "Green"),
-    TrimMaterial("Diamond", "Diamond", "Light blue/cyan"),
-    TrimMaterial("Netherite", "Netherite Ingot", "Dark gray/black"),
-    TrimMaterial("Redstone", "Redstone Dust", "Red"),
-    TrimMaterial("Amethyst", "Amethyst Shard", "Purple"),
-    TrimMaterial("Quartz", "Nether Quartz", "White/light"),
-    TrimMaterial("Resin", "Resin Brick", "Yellow/orange (1.21.4)"),
+    TrimMaterial("Iron", "Iron Ingot", "silver_gray"),
+    TrimMaterial("Copper", "Copper Ingot", "reddish_orange"),
+    TrimMaterial("Gold", "Gold Ingot", "golden_yellow"),
+    TrimMaterial("Lapis", "Lapis Lazuli", "deep_blue"),
+    TrimMaterial("Emerald", "Emerald", "green"),
+    TrimMaterial("Diamond", "Diamond", "light_blue"),
+    TrimMaterial("Netherite", "Netherite Ingot", "dark_gray"),
+    TrimMaterial("Redstone", "Redstone Dust", "red"),
+    TrimMaterial("Amethyst", "Amethyst Shard", "purple"),
+    TrimMaterial("Quartz", "Nether Quartz", "white"),
+    TrimMaterial("Resin", "Resin Brick", "yellow_orange"),
 )
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -111,11 +146,11 @@ private fun TemplatesSection(onStructureTap: (String) -> Unit = {}) {
     SectionHeader(stringResource(R.string.trim_templates_header))
 
     TRIM_TEMPLATES.forEach { template ->
-        val locationColor = when (template.location) {
-            "Nether" -> NetherRed
-            "The End" -> EnderPurple
-            "Deep Dark" -> PotionBlue
-            "Ocean" -> PotionBlue
+        val locationColor = when (template.locationKey) {
+            "nether" -> NetherRed
+            "the_end" -> EnderPurple
+            "deep_dark" -> PotionBlue
+            "ocean" -> PotionBlue
             else -> Emerald
         }
         ResultCard {
@@ -125,7 +160,7 @@ private fun TemplatesSection(onStructureTap: (String) -> Unit = {}) {
                 verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
             ) {
                 Text(template.name, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurface)
-                CategoryBadge(label = template.location, color = locationColor)
+                CategoryBadge(label = trimLocationLabel(template.locationKey), color = locationColor)
             }
             Spacer(Modifier.height(4.dp))
             Row {
@@ -141,7 +176,7 @@ private fun TemplatesSection(onStructureTap: (String) -> Unit = {}) {
             StatRow(stringResource(R.string.trim_drop_chance), template.chance)
             StatRow(stringResource(R.string.trim_duplicate_with), stringResource(R.string.trim_duplicate_val, template.duplicationMaterial))
             if (template.notes.isNotBlank()) {
-                Text(template.notes, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+                Text(trimNoteLabel(template.notes), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
             }
         }
     }
@@ -157,7 +192,7 @@ private fun MaterialsSection() {
         )
         SpyglassDivider()
         TRIM_MATERIALS.forEach { mat ->
-            StatRow(mat.name, "${mat.item} \u2022 ${mat.colorDesc}")
+            StatRow(mat.name, "${mat.item} \u2022 ${trimColorLabel(mat.colorKey)}")
         }
         SpyglassDivider()
         Text(

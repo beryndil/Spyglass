@@ -55,11 +55,23 @@ internal fun waypointColor(color: String): Color = when (color) {
     else -> MaterialTheme.colorScheme.primary
 }
 
-private fun categoryLabel(cat: String): String = cat.replaceFirstChar { it.uppercase() }
+@Composable
+private fun categoryLabel(cat: String): String = when (cat) {
+    "base" -> stringResource(R.string.waypoint_category_base)
+    "farm" -> stringResource(R.string.waypoint_category_farm)
+    "portal" -> stringResource(R.string.waypoint_category_portal)
+    "spawner" -> stringResource(R.string.waypoint_category_spawner)
+    "village" -> stringResource(R.string.waypoint_category_village)
+    "monument" -> stringResource(R.string.waypoint_category_monument)
+    "other" -> stringResource(R.string.waypoint_category_other)
+    else -> cat.replaceFirstChar { it.uppercase() }
+}
+
+@Composable
 private fun dimensionLabel(dim: String): String = when (dim) {
-    "overworld" -> "Overworld"
-    "nether" -> "Nether"
-    "end" -> "The End"
+    "overworld" -> stringResource(R.string.dimension_overworld)
+    "nether" -> stringResource(R.string.dimension_nether)
+    "end" -> stringResource(R.string.dimension_the_end)
     else -> dim.replaceFirstChar { it.uppercase() }
 }
 
@@ -325,14 +337,14 @@ private fun WaypointDetailCard(
         }
 
         SpyglassDivider()
-        StatRow("Dimension", dimensionLabel(wp.dimension))
-        StatRow("Category", categoryLabel(wp.category))
+        StatRow(stringResource(R.string.dimension), dimensionLabel(wp.dimension))
+        StatRow(stringResource(R.string.category), categoryLabel(wp.category))
 
         // Nether/Overworld coordinate conversion
         if (hasConversion) {
             SpyglassDivider()
             Text(
-                "${dimensionLabel(convertedDim).uppercase()} COORDS",
+                stringResource(R.string.waypoint_converted_coords, dimensionLabel(convertedDim)),
                 style = MaterialTheme.typography.labelSmall,
                 color = if (convertedDim == "nether") NetherRed else Emerald,
             )
@@ -342,14 +354,16 @@ private fun WaypointDetailCard(
                 color = if (convertedDim == "nether") NetherRed else Emerald,
             )
             Spacer(Modifier.height(4.dp))
+            val linkedName = stringResource(R.string.waypoint_linked_name, wp.name, dimensionLabel(convertedDim))
+            val convertedNote = stringResource(R.string.waypoint_converted_from, dimensionLabel(wp.dimension), wp.x, wp.y, wp.z)
             TextButton(
                 onClick = {
                     hapticClick()
                     onCreateLinkedWaypoint(
-                        "${wp.name} (${dimensionLabel(convertedDim)})",
+                        linkedName,
                         convertedX, wp.y, convertedZ,
                         convertedDim, wp.category, wp.color,
-                        "Converted from ${dimensionLabel(wp.dimension)}: ${wp.x}, ${wp.y}, ${wp.z}",
+                        convertedNote,
                     )
                 },
                 colors = ButtonDefaults.textButtonColors(contentColor = if (convertedDim == "nether") NetherRed else Emerald),

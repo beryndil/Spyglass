@@ -52,7 +52,7 @@ fun NetherScreen(vm: NetherViewModel = viewModel()) {
 @Composable
 private fun ConvertTab(s: NetherState, vm: NetherViewModel) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        TogglePill(listOf("Overworld", "Nether"), if (s.dimension == NetherDimension.OVERWORLD) 0 else 1,
+        TogglePill(listOf(stringResource(R.string.dimension_overworld), stringResource(R.string.dimension_nether)), if (s.dimension == NetherDimension.OVERWORLD) 0 else 1,
             { vm.setDimension(if (it == 0) NetherDimension.OVERWORLD else NetherDimension.NETHER) })
 
         InputCard {
@@ -66,10 +66,10 @@ private fun ConvertTab(s: NetherState, vm: NetherViewModel) {
 
         if (s.xOut.isNotEmpty() || s.yOut.isNotEmpty() || s.zOut.isNotEmpty()) {
             ResultCard {
-                val outDim = if (s.dimension == NetherDimension.OVERWORLD) "Nether" else "Overworld"
-                if (s.xOut.isNotEmpty()) StatRow("$outDim X", s.xOut)
+                val outDim = if (s.dimension == NetherDimension.OVERWORLD) stringResource(R.string.dimension_nether) else stringResource(R.string.dimension_overworld)
+                if (s.xOut.isNotEmpty()) StatRow(stringResource(R.string.nether_dim_x, outDim), s.xOut)
                 if (s.yOut.isNotEmpty()) StatRow(stringResource(R.string.nether_y_unchanged), s.yOut)
-                if (s.zOut.isNotEmpty()) StatRow("$outDim Z", s.zOut)
+                if (s.zOut.isNotEmpty()) StatRow(stringResource(R.string.nether_dim_z, outDim), s.zOut)
                 if (s.facing.isNotEmpty()) StatRow(stringResource(R.string.nether_facing), s.facing)
             }
         }
@@ -123,8 +123,8 @@ private fun PortalsTab(s: NetherState, vm: NetherViewModel) {
                             Icon(Icons.Default.Delete, stringResource(R.string.delete), tint = MaterialTheme.colorScheme.secondary)
                         }
                     }
-                    StatRow("Overworld", "${p.owX}, ${p.owZ}")
-                    StatRow("Nether",    "${p.netX}, ${p.netZ}")
+                    StatRow(stringResource(R.string.dimension_overworld), "${p.owX}, ${p.owZ}")
+                    StatRow(stringResource(R.string.dimension_nether),    "${p.netX}, ${p.netZ}")
                 }
             }
         }

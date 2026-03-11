@@ -1573,4 +1573,113 @@
     <string name="connect_invalid_qr">Ungültiger QR-Code: %1$s</string>
     <string name="biomes_category_unknown">Unbekannt</string>
     <string name="todo_gather_prefix">Sammeln %1$s</string>
+
+    <!-- Dimension labels -->
+    <string name="dimension_overworld">Oberwelt</string>
+    <string name="dimension_nether">Nether</string>
+    <string name="dimension_the_end">Das Ende</string>
+    <string name="dimension_deep_dark">Tiefe Dunkelheit</string>
+    <string name="dimension_ocean">Ozean</string>
+    <!-- Waypoint category labels -->
+    <string name="waypoint_category_base">Basis</string>
+    <string name="waypoint_category_farm">Farm</string>
+    <string name="waypoint_category_portal">Portal</string>
+    <string name="waypoint_category_spawner">Spawner</string>
+    <string name="waypoint_category_village">Dorf</string>
+    <string name="waypoint_category_monument">Monument</string>
+    <string name="waypoint_category_other">Sonstiges</string>
+    <!-- Waypoint detail labels -->
+    <string name="waypoint_converted_coords">%1$s KOORD.</string>
+    <string name="waypoint_converted_from">Umgerechnet von %1$s: %2$d, %3$d, %4$d</string>
+    <string name="waypoint_linked_name">%1$s (%2$s)</string>
+    <!-- Nether calculator -->
+    <string name="nether_dim_x">%1$s X</string>
+    <string name="nether_dim_z">%1$s Z</string>
+    <!-- Trim template data -->
+    <string name="trim_location_overworld">Oberwelt</string>
+    <string name="trim_location_nether">Nether</string>
+    <string name="trim_location_the_end">Das Ende</string>
+    <string name="trim_location_deep_dark">Tiefe Dunkelheit</string>
+    <string name="trim_location_ocean">Ozean</string>
+    <string name="trim_note_rarest">Seltenste Schmiedevorlage</string>
+    <string name="trim_note_mob_drop">Einzige Vorlage von Mob-Drop</string>
+    <string name="trim_note_brushing">Erfordert Bürsten</string>
+    <string name="trim_note_ominous">Exklusiv aus ominösem Tresor</string>
+    <string name="trim_color_silver_gray">Silber/grau</string>
+    <string name="trim_color_reddish_orange">Rötlich orange</string>
+    <string name="trim_color_golden_yellow">Goldgelb</string>
+    <string name="trim_color_deep_blue">Tiefblau</string>
+    <string name="trim_color_green">Grün</string>
+    <string name="trim_color_light_blue">Hellblau/cyan</string>
+    <string name="trim_color_dark_gray">Dunkelgrau/schwarz</string>
+    <string name="trim_color_red">Rot</string>
+    <string name="trim_color_purple">Lila</string>
+    <string name="trim_color_white">Weiß/hell</string>
+    <string name="trim_color_yellow_orange">Gelb/orange (1.21.4)</string>
+
+    <!-- Advancement labels -->
+    <string name="adv_tab_minecraft">Minecraft</string>
+    <string name="adv_tab_adventure">Abenteuer</string>
+    <string name="adv_tab_nether">Nether</string>
+    <string name="adv_tab_end">Das Ende</string>
+    <string name="adv_tab_husbandry">Landwirtschaft</string>
+    <string name="adv_type_task">Aufgabe</string>
+    <string name="adv_type_goal">Ziel</string>
+    <string name="adv_type_challenge">Herausforderung</string>
+    <!-- Shape calculator -->
+    <string name="shapes_circle">Kreis</string>
+    <string name="shapes_sphere">Kugel</string>
+    <string name="shapes_dome">Kuppel</string>
+    <string name="shapes_cylinder">Zylinder</string>
+    <string name="shapes_cone">Kegel</string>
+    <string name="shapes_pyramid">Pyramide</string>
+    <string name="shapes_torus">Torus</string>
+    <string name="shapes_wall">Wand</string>
+    <string name="shapes_arch">Bogen</string>
+    <string name="shapes_ellipsoid">Ellipsoid</string>
+    <string name="shapes_arc_wall">Bogenwand</string>
+    <string name="shapes_spiral">Spirale</string>
+    <string name="shapes_half_width">Halbe Breite</string>
+    <string name="shapes_radius_x">Radius X</string>
+    <string name="shapes_radius">Radius</string>
+    <string name="shapes_height">Höhe</string>
+    <string name="shapes_tube_radius">Rohrradius</string>
+    <string name="shapes_thickness">Dicke</string>
+    <string name="shapes_x_offset">X-Versatz</string>
+    <string name="shapes_z_offset">Z-Versatz</string>
+    <string name="shapes_width">Breite</string>
+    <string name="shapes_radius_y">Radius Y</string>
+    <string name="shapes_radius_z">Radius Z</string>
+    <string name="shapes_length">Länge</string>
+    <string name="shapes_angle">Winkel</string>
+    <string name="shapes_step_height">Stufenhöhe</string>
+    <string name="shapes_view_layer">Schicht</string>
+    <string name="shapes_view_3d">3D</string>
+    <string name="shapes_blocks_count">%1$d Blöcke</string>
+    <string name="shapes_blocks_chunks">%1$d Blöcke (%2$d Chunks)</string>
+    <string name="shapes_blocks_chunks_rem">%1$d Blöcke (%2$d Chunks + %3$d)</string>
+    <!-- Maze calculator -->
+    <string name="maze_type_rect">Rect</string>
+    <string name="maze_type_circle">Kreis</string>
+    <string name="maze_type_floors">Etagen</string>
+    <!-- Mob HP -->
+    <string name="mobs_hp_label">HP %1$s</string>
+    <!-- Block views -->
+    <string name="blockviews_layer_summary">%1$d Blöcke in dieser Schicht  •  X %2$d–%3$d  Z %4$d–%5$d</string>
+    <string name="blockviews_total_blocks">%1$d Blöcke gesamt</string>
+    <!-- Librarian biomes -->
+    <string name="librarian_biome_plains">Ebene</string>
+    <string name="librarian_biome_desert">Wüste</string>
+    <string name="librarian_biome_savanna">Savanne</string>
+    <string name="librarian_biome_snow">Schnee</string>
+    <string name="librarian_biome_taiga">Taiga</string>
+    <string name="librarian_biome_jungle">Dschungel</string>
+    <string name="librarian_biome_swamp">Sumpf</string>
+    <!-- Clock events -->
+    <string name="clock_event_sunrise">Sonnenaufgang</string>
+    <string name="clock_event_noon">Mittag</string>
+    <string name="clock_event_sunset">Sonnenuntergang</string>
+    <string name="clock_color_green">Grün</string>
+    <string name="clock_color_gold">Gold</string>
+    <string name="clock_color_red">Rot</string>
 </resources>
