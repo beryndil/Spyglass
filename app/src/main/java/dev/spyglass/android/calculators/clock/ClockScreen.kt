@@ -107,14 +107,19 @@ fun ClockScreen(vm: ClockViewModel = viewModel()) {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.secondary,
                 )
+                val syncEvents = listOf(
+                    "Sunrise" to stringResource(R.string.clock_event_sunrise),
+                    "Noon" to stringResource(R.string.clock_event_noon),
+                    "Sunset" to stringResource(R.string.clock_event_sunset),
+                )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf("Sunrise", "Noon", "Sunset").forEach { event ->
+                    syncEvents.forEach { (key, label) ->
                         OutlinedButton(
-                            onClick = { hapticClick(); vm.syncManual(event) },
+                            onClick = { hapticClick(); vm.syncManual(key) },
                             colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.onSurface),
                             modifier = Modifier.weight(1f),
                         ) {
-                            Text(event, style = MaterialTheme.typography.labelSmall)
+                            Text(label, style = MaterialTheme.typography.labelSmall)
                         }
                     }
                 }
@@ -493,8 +498,13 @@ private fun AddEventDialog(
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.secondary,
                     )
+                    val colorChoices = listOf(
+                        Triple("green", stringResource(R.string.clock_color_green), eventColor("green")),
+                        Triple("gold", stringResource(R.string.clock_color_gold), eventColor("gold")),
+                        Triple("red", stringResource(R.string.clock_color_red), eventColor("red")),
+                    )
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        listOf("green" to "Green", "gold" to "Gold", "red" to "Red").forEach { (value, label) ->
+                        colorChoices.forEach { (value, label, color) ->
                             FilterChip(
                                 selected = customColor == value,
                                 onClick = { hapticClick(); customColor = value },
@@ -504,12 +514,12 @@ private fun AddEventDialog(
                                         modifier = Modifier
                                             .size(8.dp)
                                             .clip(CircleShape)
-                                            .background(eventColor(value)),
+                                            .background(color),
                                     )
                                 },
                                 colors = FilterChipDefaults.filterChipColors(
-                                    selectedContainerColor = eventColor(value).copy(alpha = 0.2f),
-                                    selectedLabelColor = eventColor(value),
+                                    selectedContainerColor = color.copy(alpha = 0.2f),
+                                    selectedLabelColor = color,
                                     labelColor = MaterialTheme.colorScheme.onSurfaceVariant,
                                 ),
                             )
