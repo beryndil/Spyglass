@@ -1,5 +1,9 @@
 package dev.spyglass.android.connect.client
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import dev.spyglass.android.R
+
 /**
  * Sealed class representing all possible connection states for Spyglass Connect.
  */
@@ -13,14 +17,16 @@ sealed class ConnectionState {
     data class Error(val message: String) : ConnectionState()
 
     val isConnected: Boolean get() = this is Connected
-    val statusText: String
-        get() = when (this) {
-            is Disconnected -> "Disconnected"
-            is Scanning -> "Scanning QR code..."
-            is Connecting -> "Connecting to $ip..."
-            is Pairing -> "Pairing..."
-            is Connected -> "Connected to $deviceName"
-            is Reconnecting -> "Reconnecting (attempt $attempt)..."
-            is Error -> "Error: $message"
-        }
+}
+
+/** Resolves the localized status text for a [ConnectionState] using string resources. */
+@Composable
+fun connectionStatusText(state: ConnectionState): String = when (state) {
+    is ConnectionState.Disconnected -> stringResource(R.string.connect_state_disconnected)
+    is ConnectionState.Scanning -> stringResource(R.string.connect_state_scanning)
+    is ConnectionState.Connecting -> stringResource(R.string.connect_state_connecting, state.ip)
+    is ConnectionState.Pairing -> stringResource(R.string.connect_state_pairing)
+    is ConnectionState.Connected -> stringResource(R.string.connect_state_connected, state.deviceName)
+    is ConnectionState.Reconnecting -> stringResource(R.string.connect_state_reconnecting, state.attempt)
+    is ConnectionState.Error -> stringResource(R.string.connect_state_error, state.message)
 }

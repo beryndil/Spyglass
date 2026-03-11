@@ -41,6 +41,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import dev.spyglass.android.connect.*
 import dev.spyglass.android.connect.client.ConnectionState
+import dev.spyglass.android.connect.client.connectionStatusText
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import timber.log.Timber
@@ -723,7 +724,7 @@ private fun HomeConnectSection(
                             color = MaterialTheme.colorScheme.primary,
                         )
                         Text(
-                            state.statusText,
+                            connectionStatusText(state),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface,
                         )

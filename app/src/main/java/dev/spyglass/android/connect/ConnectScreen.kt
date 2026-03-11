@@ -27,6 +27,7 @@ import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.core.ui.*
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
+import dev.spyglass.android.connect.client.connectionStatusText
 
 /**
  * Main Connect screen showing connection status, pairing controls,
@@ -204,7 +205,7 @@ private fun ConnectionStatusCard(state: ConnectionState) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Text(
-                    state.statusText,
+                    connectionStatusText(state),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )

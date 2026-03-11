@@ -52,6 +52,7 @@ import dev.spyglass.android.connect.players.CompareScreen
 import dev.spyglass.android.connect.pets.PetsScreen
 import dev.spyglass.android.connect.waypoints.ConnectWaypointsScreen
 import dev.spyglass.android.connect.client.ConnectionState
+import dev.spyglass.android.connect.client.connectionStatusText
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.Emerald
 import dev.spyglass.android.core.ui.MobTextures
@@ -264,7 +265,7 @@ object ConnectModule : SpyglassModule {
                                 color = MaterialTheme.colorScheme.primary,
                             )
                             Text(
-                                state.statusText,
+                                connectionStatusText(state),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurface,
                             )
@@ -429,6 +430,7 @@ object ConnectModule : SpyglassModule {
         val iconTint: Color = Color.Unspecified,
     )
 
+    @Composable
     private fun connectLinks(
         playerSkin: android.graphics.Bitmap?,
         playerCount: Int = 1,
@@ -439,19 +441,19 @@ object ConnectModule : SpyglassModule {
             PixelIcons.Steve
         }
         return buildList {
-            add(QuickLink(characterIcon, "Character") to "connect_character")
-            add(QuickLink(PixelIcons.Backpack, "Inventory") to "connect_inventory")
-            add(QuickLink(PixelIcons.EnderChest, "Ender Chest") to "connect_enderchest")
-            add(QuickLink(PixelIcons.Storage, "Storage") to "connect_chestfinder")
-            add(QuickLink(PixelIcons.Biome, "World Map") to "connect_map")
-            add(QuickLink(PixelIcons.Waypoints, "Waypoints") to "connect_waypoints")
+            add(QuickLink(characterIcon, stringResource(R.string.home_connect_link_character)) to "connect_character")
+            add(QuickLink(PixelIcons.Backpack, stringResource(R.string.home_connect_link_inventory)) to "connect_inventory")
+            add(QuickLink(PixelIcons.EnderChest, stringResource(R.string.home_connect_link_ender_chest)) to "connect_enderchest")
+            add(QuickLink(PixelIcons.Storage, stringResource(R.string.home_connect_link_storage)) to "connect_chestfinder")
+            add(QuickLink(PixelIcons.Biome, stringResource(R.string.home_connect_link_world_map)) to "connect_map")
+            add(QuickLink(PixelIcons.Waypoints, stringResource(R.string.home_connect_link_waypoints)) to "connect_waypoints")
             val wolfIcon = MobTextures.get("wolf") ?: PixelIcons.Mob
-            add(QuickLink(wolfIcon, "Pets") to "connect_pets")
+            add(QuickLink(wolfIcon, stringResource(R.string.home_connect_link_pets)) to "connect_pets")
             if (playerCount > 1) {
-                add(QuickLink(PixelIcons.Steve, "Players") to "connect_players")
+                add(QuickLink(PixelIcons.Steve, stringResource(R.string.home_connect_link_players)) to "connect_players")
             }
-            add(QuickLink(PixelIcons.Anvil, "Statistics") to "connect_statistics")
-            add(QuickLink(PixelIcons.Advancement, "Advancements") to "connect_advancements")
+            add(QuickLink(PixelIcons.Anvil, stringResource(R.string.home_connect_link_statistics)) to "connect_statistics")
+            add(QuickLink(PixelIcons.Advancement, stringResource(R.string.home_connect_link_advancements)) to "connect_advancements")
         }
     }
 
@@ -725,7 +727,7 @@ object ConnectModule : SpyglassModule {
         ) {
             Box(modifier = Modifier.size(8.dp).background(Emerald, CircleShape))
             Text(
-                stringResource(R.string.home_connect_status_connected) + if (deviceName.isNotEmpty()) " to $deviceName" else "",
+                if (deviceName.isNotEmpty()) stringResource(R.string.home_connect_connected_to, deviceName) else stringResource(R.string.home_connect_status_connected),
                 style = MaterialTheme.typography.labelSmall,
                 color = Emerald,
                 modifier = Modifier.weight(1f),
@@ -753,8 +755,8 @@ object ConnectModule : SpyglassModule {
                 ) {
                     SpyglassIconImage(PixelIcons.Globe, contentDescription = null, tint = if (world.isModded) MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f) else MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                     Column(modifier = Modifier.weight(1f)) {
-                        Text(world.displayName + if (world.isModded) " (Modded)" else "", style = MaterialTheme.typography.bodyMedium, color = if (world.isModded) MaterialTheme.colorScheme.onSurfaceVariant else Color.Unspecified)
-                        Text("${world.gameMode.replaceFirstChar { it.uppercase() }} \u2022 ${world.difficulty.replaceFirstChar { it.uppercase() }}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(world.displayName + if (world.isModded) stringResource(R.string.home_connect_modded_suffix) else "", style = MaterialTheme.typography.bodyMedium, color = if (world.isModded) MaterialTheme.colorScheme.onSurfaceVariant else Color.Unspecified)
+                        Text(stringResource(R.string.home_connect_game_mode_difficulty, world.gameMode.replaceFirstChar { it.uppercase() }, world.difficulty.replaceFirstChar { it.uppercase() }), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
             }
@@ -782,7 +784,7 @@ object ConnectModule : SpyglassModule {
             SpyglassIconImage(PixelIcons.Globe, contentDescription = null, tint = Emerald, modifier = Modifier.size(20.dp))
             Box(modifier = Modifier.weight(1f)) {
                 Text(
-                    currentWorld?.displayName ?: "Unknown World",
+                    currentWorld?.displayName ?: stringResource(R.string.home_connect_unknown_world),
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.clickable { expanded = true },
