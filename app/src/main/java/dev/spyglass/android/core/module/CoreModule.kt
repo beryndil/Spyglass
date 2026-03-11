@@ -86,6 +86,7 @@ import dev.spyglass.android.core.ui.SolidThemeOrder
 import dev.spyglass.android.core.ui.ThemeInfoMap
 import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.core.shell.imageThemeDrawable
+import dev.spyglass.android.core.ui.SupportedLanguages
 import dev.spyglass.android.core.ui.rememberHapticConfirm
 import dev.spyglass.android.home.TipsLoader
 import dev.spyglass.android.settings.PreferenceKeys
@@ -125,6 +126,7 @@ object CoreModule : SpyglassModule {
     // ── Settings sections ───────────────────────────────────────────────────
 
     override fun settingsSections(): List<SettingsSection> = listOf(
+        SettingsSection("language", "Language", -10) { LanguageContent() },
         SettingsSection("appearance", "Appearance", 0) { AppearanceContent() },
         SettingsSection("data_sync", "Data & Sync", 70) { DataSyncContent() },
         SettingsSection("privacy_security", "Privacy & Security", 80) { PrivacySecurityContent() },
@@ -306,6 +308,111 @@ object CoreModule : SpyglassModule {
     }
 
     // ── Settings section composables ────────────────────────────────────────
+
+    @OptIn(ExperimentalLayoutApi::class)
+    @Composable
+    private fun LanguageContent() {
+        val context = LocalContext.current
+        val scope = rememberCoroutineScope()
+        val hapticClick = rememberHapticClick()
+
+        val appLanguage by remember {
+            context.dataStore.data.map { it[PreferenceKeys.APP_LANGUAGE] ?: "system" }
+        }.collectAsStateWithLifecycle(initialValue = "system")
+
+        val translateGameData by remember {
+            context.dataStore.data.map { it[PreferenceKeys.TRANSLATE_GAME_DATA] ?: true }
+        }.collectAsStateWithLifecycle(initialValue = true)
+
+        val showOriginalNames by remember {
+            context.dataStore.data.map { it[PreferenceKeys.SHOW_ORIGINAL_NAMES] ?: false }
+        }.collectAsStateWithLifecycle(initialValue = false)
+
+        SectionHeader(stringResource(R.string.settings_language))
+        ResultCard {
+            Text(
+                stringResource(R.string.settings_language_desc),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                SupportedLanguages.forEach { (code, label) ->
+                    FilterChip(
+                        selected = appLanguage == code,
+                        onClick = {
+                            hapticClick()
+                            scope.launch {
+                                context.dataStore.edit { it[PreferenceKeys.APP_LANGUAGE] = code }
+                                val localeList = if (code == "system") {
+                                    androidx.core.os.LocaleListCompat.getEmptyLocaleList()
+                                } else {
+                                    androidx.core.os.LocaleListCompat.forLanguageTags(code)
+                                }
+                                withContext(Dispatchers.Main) {
+                                    androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(localeList)
+                                }
+                            }
+                        },
+                        label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                    )
+                }
+            }
+            if (appLanguage != "en" && appLanguage != "system") {
+                SpyglassDivider()
+                SettingsToggle(
+                    title = stringResource(R.string.settings_translate_game_data),
+                    description = stringResource(R.string.settings_translate_game_data_desc),
+                    checked = translateGameData,
+                    onCheckedChange = { newVal ->
+                        scope.launch { context.dataStore.edit { it[PreferenceKeys.TRANSLATE_GAME_DATA] = newVal } }
+                    },
+                )
+                SettingsToggle(
+                    title = stringResource(R.string.settings_show_original_names),
+                    description = stringResource(R.string.settings_show_original_names_desc),
+                    checked = showOriginalNames,
+                    onCheckedChange = { newVal ->
+                        scope.launch { context.dataStore.edit { it[PreferenceKeys.SHOW_ORIGINAL_NAMES] = newVal } }
+                    },
+                )
+            }
+            SpyglassDivider()
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            Intent(Settings.ACTION_APP_LOCALE_SETTINGS).apply {
+                                data = Uri.parse("package:${context.packageName}")
+                            }
+                        } else {
+                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                data = Uri.parse("package:${context.packageName}")
+                            }
+                        }
+                        context.startActivity(intent)
+                    }
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    stringResource(R.string.settings_language_system_override),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.weight(1f),
+                )
+                Icon(
+                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+            }
+        }
+    }
 
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
