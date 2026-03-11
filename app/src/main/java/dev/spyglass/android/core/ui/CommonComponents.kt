@@ -753,9 +753,9 @@ fun VersionEditionSection(tag: VersionTagEntity, filter: VersionFilterState) {
     ) {
         Column {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Java $addedJava", style = MaterialTheme.typography.bodySmall, color = PotionBlue)
+                Text(stringResource(R.string.version_java_label, addedJava), style = MaterialTheme.typography.bodySmall, color = PotionBlue)
                 if (addedBedrock != null && !tag.javaOnly) {
-                    Text("Bedrock $addedBedrock", style = MaterialTheme.typography.bodySmall, color = Emerald)
+                    Text(stringResource(R.string.version_bedrock_label, addedBedrock), style = MaterialTheme.typography.bodySmall, color = Emerald)
                 }
             }
         }

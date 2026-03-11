@@ -13,9 +13,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.spyglass.android.R
 import dev.spyglass.android.data.BiomeResourceMap
 import dev.spyglass.android.data.CompostData
 import dev.spyglass.android.data.ItemTags
@@ -227,7 +229,7 @@ fun ItemDetailPager(
                 .padding(2.dp),
         ) {
             val usesCount = recipesUsingItem.size + if (CompostData.chanceFor(itemId) != null) 1 else 0
-            listOf("Recipe", "Uses ($usesCount)").forEachIndexed { i, label ->
+            listOf(stringResource(R.string.items_recipe), stringResource(R.string.items_uses_count, usesCount)).forEachIndexed { i, label ->
                 val isSelected = pagerState.currentPage == i
                 Box(
                     contentAlignment = Alignment.Center,
@@ -281,9 +283,9 @@ private fun RecipePage(
         if (recipes.isEmpty()) {
             // No recipe — show biome sources
             val biomes = BiomeResourceMap.biomesForItem(itemId)
-            Text("No crafting recipe", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
+            Text(stringResource(R.string.items_no_recipe), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.secondary)
             if (biomes.isNotEmpty()) {
-                Text("Found in", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.items_found_in), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -328,7 +330,7 @@ private fun RecipePage(
                         merged[key] = (merged[key] ?: 0) + count
                         tagIds.putIfAbsent(key, tag)
                     }
-                    Text("Ingredients", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource(R.string.items_ingredients), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -358,7 +360,7 @@ private fun RecipePage(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        if (recipe.type.contains("crafting")) "Crafting"
+                        if (recipe.type.contains("crafting")) stringResource(R.string.items_crafting)
                         else recipe.type.replace('_', ' ').replaceFirstChar { it.uppercase() },
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.secondary,
@@ -415,12 +417,12 @@ private fun UsesPage(
                 }
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        "Compostable",
+                        stringResource(R.string.items_compostable),
                         style = MaterialTheme.typography.bodyMedium,
                         color = Emerald,
                     )
                     Text(
-                        "$compostChance% chance per item",
+                        stringResource(R.string.items_compost_chance, compostChance),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.secondary,
                     )
@@ -431,7 +433,7 @@ private fun UsesPage(
         // Recipe uses
         if (recipesUsingItem.isEmpty() && compostChance == null) {
             Text(
-                "No known uses",
+                stringResource(R.string.items_no_uses),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.secondary,
             )
@@ -463,7 +465,7 @@ private fun UsesPage(
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
-                        if (recipe.type.contains("crafting")) "Crafting"
+                        if (recipe.type.contains("crafting")) stringResource(R.string.items_crafting)
                         else recipe.type.replace('_', ' ').replaceFirstChar { it.uppercase() },
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.secondary,
@@ -503,13 +505,13 @@ private fun ChainCalculatorSection(
     val quantity = quantityInput.toLongOrNull() ?: 0L
 
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text("Chain Calculator", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+        Text(stringResource(R.string.items_chain_calculator), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
 
         OutlinedTextField(
             value = quantityInput,
             onValueChange = { quantityInput = it.filter { c -> c.isDigit() } },
-            label = { Text("How many?") },
-            placeholder = { Text("e.g. 55", color = MaterialTheme.colorScheme.secondary) },
+            label = { Text(stringResource(R.string.items_chain_how_many)) },
+            placeholder = { Text(stringResource(R.string.items_chain_example), color = MaterialTheme.colorScheme.secondary) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             colors = OutlinedTextFieldDefaults.colors(
@@ -542,7 +544,7 @@ private fun ChainCalculatorSection(
                 ) {
                     // Top tier — crafted ingredients
                     if (craftedSteps.isNotEmpty()) {
-                        Text("Craft", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                        Text(stringResource(R.string.items_chain_craft), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                         craftedSteps.forEach { step ->
                             Row(
                                 modifier = Modifier
@@ -561,7 +563,7 @@ private fun ChainCalculatorSection(
                                     )
                                 }
                                 Text(
-                                    "${step.craftsNeeded} crafts",
+                                    stringResource(R.string.items_chain_crafts_count, step.craftsNeeded),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.secondary,
                                 )
@@ -572,7 +574,7 @@ private fun ChainCalculatorSection(
                     // Bottom tier — raw materials
                     if (rawSteps.isNotEmpty()) {
                         if (craftedSteps.isNotEmpty()) SpyglassDivider()
-                        Text("Gather", style = MaterialTheme.typography.labelSmall, color = Emerald)
+                        Text(stringResource(R.string.items_chain_gather), style = MaterialTheme.typography.labelSmall, color = Emerald)
                         rawSteps.forEach { step ->
                             Row(
                                 modifier = Modifier

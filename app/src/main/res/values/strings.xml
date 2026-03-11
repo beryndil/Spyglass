@@ -137,6 +137,11 @@
     <string name="home_connect_link_players">Players</string>
     <string name="home_connect_link_statistics">Statistics</string>
     <string name="home_connect_link_advancements">Advancements</string>
+    <!-- Home Screen — Connect (additional) -->
+    <string name="home_connect_unknown_world">Unknown World</string>
+    <string name="home_connect_connected_to">Connected to %1$s</string>
+    <string name="home_connect_notification_title">Connected to %1$s</string>
+    <string name="home_connect_notification_active">Spyglass Connect is active</string>
 
     <!-- Consent Dialog -->
     <string name="consent_title">Privacy &amp; Data Collection</string>
@@ -200,6 +205,8 @@
     <string name="settings_edition">Edition</string>
     <string name="settings_edition_java">Java</string>
     <string name="settings_edition_bedrock">Bedrock</string>
+    <string name="version_java_label">Java %1$s</string>
+    <string name="version_bedrock_label">Bedrock %1$s</string>
     <string name="settings_version">Version</string>
     <string name="settings_version_latest">Latest</string>
     <string name="settings_filter_mode">Filter Mode</string>
@@ -254,6 +261,10 @@
     <string name="settings_reduce_animations_desc">Minimize motion throughout the app</string>
     <string name="settings_font_size">Font Size</string>
     <string name="settings_font_size_desc">Adjust text size throughout the app</string>
+    <string name="settings_font_scale_small">Small</string>
+    <string name="settings_font_scale_default">Default</string>
+    <string name="settings_font_scale_large">Large</string>
+    <string name="settings_font_scale_extra_large">Extra Large</string>
     <string name="settings_dynamic_color">Dynamic Color</string>
     <string name="settings_dynamic_color_desc">Use your wallpaper colors (Android 12+)</string>
     <string name="settings_high_contrast">High Contrast</string>
@@ -311,6 +322,8 @@
     <string name="about_disclaimer">Not affiliated with Mojang Studios or Microsoft.</string>
     <string name="about_game_data">Game Data</string>
     <string name="about_data_version">Data Version</string>
+    <string name="about_images_version">Images Version</string>
+    <string name="about_author_name">Beryndil</string>
     <string name="about_minecraft_version">Java 1.21.4</string>
     <string name="about_credits">Credits &amp; Licenses</string>
     <string name="about_license_cc">All Rights Reserved \u2014 View License</string>
@@ -359,10 +372,24 @@
 
     <!-- Search Screen -->
     <string name="search_placeholder">Search all Minecraft data\u2026</string>
+    <string name="search_everything">Search everything\u2026</string>
     <string name="search_empty_title">Search everything</string>
     <string name="search_empty_subtitle">Type at least 2 characters to search blocks, mobs, biomes, structures, items, recipes, trades, and more.</string>
     <string name="search_no_results">No results</string>
     <string name="search_no_matches">No matches for \"%s\"</string>
+
+    <!-- Search Result Type Labels -->
+    <string name="search_type_block">Block</string>
+    <string name="search_type_item">Item</string>
+    <string name="search_type_recipe">Recipe</string>
+    <string name="search_type_mob">Mob</string>
+    <string name="search_type_biome">Biome</string>
+    <string name="search_type_enchantment">Enchantment</string>
+    <string name="search_type_potion">Potion</string>
+    <string name="search_type_trade">Trade</string>
+    <string name="search_type_structure">Structure</string>
+    <string name="search_type_advancement">Advancement</string>
+    <string name="search_type_command">Command</string>
 
     <!-- Browse Tabs -->
     <string name="browse_tab_blocks">Blocks</string>
@@ -482,6 +509,18 @@
     <string name="items_mined_from">Mined from</string>
     <string name="items_found_in_biomes">Found in Biomes</string>
     <string name="items_found_in_structures">Found in Structures</string>
+    <!-- Items — Detail Pager -->
+    <string name="items_no_recipe">No crafting recipe</string>
+    <string name="items_found_in">Found in</string>
+    <string name="items_ingredients">Ingredients</string>
+    <string name="items_chain_calculator">Chain Calculator</string>
+    <string name="items_chain_how_many">How many?</string>
+    <string name="items_chain_example">e.g. 55</string>
+    <string name="items_chain_craft">Craft</string>
+    <string name="items_chain_gather">Gather</string>
+    <string name="items_chain_crafts_count">%1$d crafts</string>
+    <string name="items_uses_count">Uses (%1$d)</string>
+    <string name="items_no_uses">No known uses</string>
     <string name="items_used_in_recipes">Used in %d recipe(s)</string>
 
     <!-- Items Sort Options -->
@@ -655,6 +694,21 @@
     <string name="commands_no_results_subtitle">Try a different search or filter</string>
     <string name="commands_syntax">SYNTAX</string>
     <string name="commands_permission">Permission</string>
+
+    <!-- Commands Categories -->
+    <string name="commands_category_chat">Chat</string>
+    <string name="commands_category_player">Player</string>
+    <string name="commands_category_entity">Entity</string>
+    <string name="commands_category_world">World</string>
+    <string name="commands_category_server">Server</string>
+    <string name="commands_category_operator">Operator</string>
+    <string name="commands_category_debug">Debug</string>
+
+    <!-- Commands Permission Levels -->
+    <string name="commands_permission_all">All Players</string>
+    <string name="commands_permission_op">Operator (OP)</string>
+    <string name="commands_permission_admin">Admin</string>
+    <string name="commands_permission_owner">Server Owner</string>
 
     <!-- Commands Sort Options -->
     <string name="commands_sort_name">Name A\u2192Z</string>
@@ -1162,6 +1216,9 @@
     <string name="waypoints_title">Waypoints</string>
     <string name="waypoints_description">Save and organize coordinates for your important Minecraft locations.</string>
     <string name="waypoints_stat">%d waypoints</string>
+    <string name="waypoint_coord_x">X</string>
+    <string name="waypoint_coord_y">Y</string>
+    <string name="waypoint_coord_z">Z</string>
     <string name="waypoints_search_placeholder">Search waypoints\u2026</string>
     <string name="waypoints_new_waypoint_cd">New waypoint</string>
     <string name="waypoints_no_found">No waypoints found</string>
@@ -1398,6 +1455,8 @@
     <string name="shopping_items_count">%d items</string>
     <string name="shopping_rename_list_cd">Rename list</string>
     <string name="shopping_search_placeholder">Search\u2026</string>
+    <!-- Shopping — additional -->
+    <string name="shopping_crafting_plan">Crafting Plan</string>
     <string name="shopping_qty">Qty</string>
     <string name="shopping_checklist">Checklist</string>
     <string name="shopping_gather">Gather</string>
@@ -1485,4 +1544,33 @@
     <string name="loot_silence_trim_val">Ancient Cities (1.2%)</string>
     <string name="loot_swift_sneak">Swift Sneak</string>
     <string name="loot_swift_sneak_val">Ancient Cities only</string>
+
+    <!-- Loot Structure Names -->
+    <string name="loot_structure_trial_chambers">Trial Chambers</string>
+    <string name="loot_structure_ancient_city">Ancient City</string>
+    <string name="loot_structure_bastion_remnant">Bastion Remnant</string>
+    <string name="loot_structure_end_city">End City</string>
+    <string name="loot_structure_woodland_mansion">Woodland Mansion</string>
+    <string name="loot_structure_stronghold">Stronghold</string>
+    <string name="loot_structure_ocean_monument">Ocean Monument</string>
+    <string name="loot_structure_nether_fortress">Nether Fortress</string>
+    <string name="loot_structure_desert_pyramid">Desert Pyramid</string>
+    <string name="loot_structure_jungle_pyramid">Jungle Pyramid</string>
+    <string name="loot_structure_shipwreck">Shipwreck</string>
+    <string name="loot_structure_trail_ruins">Trail Ruins</string>
+    <string name="loot_structure_pillager_outpost">Pillager Outpost</string>
+    <string name="loot_structure_mineshaft">Mineshaft</string>
+
+    <!-- Loot Dimension Labels -->
+    <string name="loot_dimension_overworld">Overworld</string>
+    <string name="loot_dimension_nether">Nether</string>
+    <string name="loot_dimension_end">The End</string>
+
+    <!-- Hardcoded string fixes -->
+    <string name="connect_notification_channel_desc">Shows when connected to a PC via Spyglass Connect</string>
+    <string name="connect_pairing_rejected">Pairing rejected</string>
+    <string name="connect_connection_failed">Connection failed</string>
+    <string name="connect_invalid_qr">Invalid QR code: %1$s</string>
+    <string name="biomes_category_unknown">Unknown</string>
+    <string name="todo_gather_prefix">Gather %1$s</string>
 </resources>

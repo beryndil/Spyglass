@@ -137,6 +137,11 @@
     <string name="home_connect_link_players">プレイヤー</string>
     <string name="home_connect_link_statistics">統計</string>
     <string name="home_connect_link_advancements">進捗</string>
+    <!-- Home Screen — Connect (additional) -->
+    <string name="home_connect_unknown_world">不明なワールド</string>
+    <string name="home_connect_connected_to">%1$sに接続済み</string>
+    <string name="home_connect_notification_title">%1$sに接続済み</string>
+    <string name="home_connect_notification_active">Spyglass Connectがアクティブです</string>
 
     <!-- Consent Dialog -->
     <string name="consent_title">プライバシー &amp; データ収集</string>
@@ -200,6 +205,8 @@
     <string name="settings_edition">エディション</string>
     <string name="settings_edition_java">Java</string>
     <string name="settings_edition_bedrock">Bedrock</string>
+    <string name="version_java_label">Java %1$s</string>
+    <string name="version_bedrock_label">Bedrock %1$s</string>
     <string name="settings_version">バージョン</string>
     <string name="settings_version_latest">最新</string>
     <string name="settings_filter_mode">フィルターモード</string>
@@ -254,6 +261,10 @@
     <string name="settings_reduce_animations_desc">アプリ全体のモーションを最小化する</string>
     <string name="settings_font_size">フォントサイズ</string>
     <string name="settings_font_size_desc">アプリ全体のテキストサイズを調整</string>
+    <string name="settings_font_scale_small">小</string>
+    <string name="settings_font_scale_default">デフォルト</string>
+    <string name="settings_font_scale_large">大</string>
+    <string name="settings_font_scale_extra_large">特大</string>
     <string name="settings_dynamic_color">ダイナミックカラー</string>
     <string name="settings_dynamic_color_desc">壁紙の色を使用する（Android 12以降）</string>
     <string name="settings_high_contrast">ハイコントラスト</string>
@@ -311,6 +322,8 @@
     <string name="about_disclaimer">Mojang StudiosおよびMicrosoftとは無関係です。</string>
     <string name="about_game_data">ゲームデータ</string>
     <string name="about_data_version">データバージョン</string>
+    <string name="about_images_version">画像バージョン</string>
+    <string name="about_author_name">Beryndil</string>
     <string name="about_minecraft_version">Java 1.21.4</string>
     <string name="about_credits">クレジット &amp; ライセンス</string>
     <string name="about_license_cc">全著作権所有 \u2014 ライセンスを表示</string>
@@ -359,10 +372,24 @@
 
     <!-- Search Screen -->
     <string name="search_placeholder">すべてのMinecraftデータを検索\u2026</string>
+    <string name="search_everything">すべてを検索\u2026</string>
     <string name="search_empty_title">すべてを検索</string>
     <string name="search_empty_subtitle">2文字以上入力して、ブロック、Mob、バイオーム、構造物、アイテム、レシピ、取引などを検索できます。</string>
     <string name="search_no_results">結果なし</string>
     <string name="search_no_matches">\"%s\"に一致するものがありません</string>
+
+    <!-- Search Result Type Labels -->
+    <string name="search_type_block">ブロック</string>
+    <string name="search_type_item">アイテム</string>
+    <string name="search_type_recipe">レシピ</string>
+    <string name="search_type_mob">Mob</string>
+    <string name="search_type_biome">バイオーム</string>
+    <string name="search_type_enchantment">エンチャント</string>
+    <string name="search_type_potion">ポーション</string>
+    <string name="search_type_trade">取引</string>
+    <string name="search_type_structure">構造物</string>
+    <string name="search_type_advancement">進捗</string>
+    <string name="search_type_command">コマンド</string>
 
     <!-- Browse Tabs -->
     <string name="browse_tab_blocks">ブロック</string>
@@ -482,6 +509,18 @@
     <string name="items_mined_from">採掘元</string>
     <string name="items_found_in_biomes">バイオームに存在</string>
     <string name="items_found_in_structures">構造物に存在</string>
+    <!-- Items — Detail Pager -->
+    <string name="items_no_recipe">クラフトレシピなし</string>
+    <string name="items_found_in">生成場所</string>
+    <string name="items_ingredients">材料</string>
+    <string name="items_chain_calculator">チェーン計算機</string>
+    <string name="items_chain_how_many">いくつ？</string>
+    <string name="items_chain_example">例: 55</string>
+    <string name="items_chain_craft">クラフト</string>
+    <string name="items_chain_gather">採集</string>
+    <string name="items_chain_crafts_count">%1$d回クラフト</string>
+    <string name="items_uses_count">用途 (%1$d)</string>
+    <string name="items_no_uses">既知の用途なし</string>
     <string name="items_used_in_recipes">%d件のレシピで使用</string>
 
     <!-- Items Sort Options -->
@@ -1162,6 +1201,9 @@
     <string name="waypoints_title">ウェイポイント</string>
     <string name="waypoints_description">Minecraftの重要な場所の座標を保存・整理。</string>
     <string name="waypoints_stat">%d ウェイポイント</string>
+    <string name="waypoint_coord_x">X</string>
+    <string name="waypoint_coord_y">Y</string>
+    <string name="waypoint_coord_z">Z</string>
     <string name="waypoints_search_placeholder">ウェイポイントを検索\u2026</string>
     <string name="waypoints_new_waypoint_cd">新しいウェイポイント</string>
     <string name="waypoints_no_found">ウェイポイントが見つかりません</string>
@@ -1398,6 +1440,8 @@
     <string name="shopping_items_count">%dアイテム</string>
     <string name="shopping_rename_list_cd">リスト名を変更</string>
     <string name="shopping_search_placeholder">検索\u2026</string>
+    <!-- Shopping — additional -->
+    <string name="shopping_crafting_plan">クラフト計画</string>
     <string name="shopping_qty">数量</string>
     <string name="shopping_checklist">チェックリスト</string>
     <string name="shopping_gather">収集</string>
@@ -1485,4 +1529,12 @@
     <string name="loot_silence_trim_val">古代都市 (1.2%)</string>
     <string name="loot_swift_sneak">スニーク速度上昇</string>
     <string name="loot_swift_sneak_val">古代都市のみ</string>
+
+    <!-- Hardcoded string fixes -->
+    <string name="connect_notification_channel_desc">Spyglass Connect経由でPCに接続中に表示されます</string>
+    <string name="connect_pairing_rejected">ペアリングが拒否されました</string>
+    <string name="connect_connection_failed">接続に失敗しました</string>
+    <string name="connect_invalid_qr">無効なQRコード: %1$s</string>
+    <string name="biomes_category_unknown">不明</string>
+    <string name="todo_gather_prefix">%1$sを採集</string>
 </resources>

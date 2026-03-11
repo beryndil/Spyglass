@@ -128,6 +128,22 @@ private fun typeColor(type: String) = when (type) {
 }
 
 @Composable
+private fun typeLabel(type: String): String = when (type) {
+    "Block"       -> stringResource(R.string.search_type_block)
+    "Item"        -> stringResource(R.string.search_type_item)
+    "Recipe"      -> stringResource(R.string.search_type_recipe)
+    "Mob"         -> stringResource(R.string.search_type_mob)
+    "Biome"       -> stringResource(R.string.search_type_biome)
+    "Enchantment" -> stringResource(R.string.search_type_enchantment)
+    "Potion"      -> stringResource(R.string.search_type_potion)
+    "Trade"       -> stringResource(R.string.search_type_trade)
+    "Structure"   -> stringResource(R.string.search_type_structure)
+    "Advancement" -> stringResource(R.string.search_type_advancement)
+    "Command"     -> stringResource(R.string.search_type_command)
+    else          -> type
+}
+
+@Composable
 fun SearchScreen(
     onResultTap: (tab: Int, id: String) -> Unit = { _, _ -> },
     vm: SearchViewModel = viewModel(),
@@ -139,7 +155,7 @@ fun SearchScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         SpyglassSearchBar(
             query = query, onQueryChange = vm::setQuery,
-            category = "global", placeholder = "Search everything\u2026",
+            category = "global", placeholder = stringResource(R.string.search_everything),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
 
@@ -164,7 +180,7 @@ fun SearchScreen(
                         modifier    = Modifier.clickable { hapticClick(); onResultTap(browseTabForType(r.type), r.id) },
                         trailing    = {
                             Column(horizontalAlignment = androidx.compose.ui.Alignment.End) {
-                                CategoryBadge(label = r.type, color = typeColor(r.type))
+                                CategoryBadge(label = typeLabel(r.type), color = typeColor(r.type))
                                 if (r.detail.isNotBlank()) {
                                     Spacer(Modifier.height(2.dp))
                                     Text(r.detail, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)

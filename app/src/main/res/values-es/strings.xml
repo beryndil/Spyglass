@@ -137,6 +137,11 @@
     <string name="home_connect_link_players">Jugadores</string>
     <string name="home_connect_link_statistics">Estadísticas</string>
     <string name="home_connect_link_advancements">Logros</string>
+    <!-- Home Screen — Connect (additional) -->
+    <string name="home_connect_unknown_world">Mundo desconocido</string>
+    <string name="home_connect_connected_to">Conectado a %1$s</string>
+    <string name="home_connect_notification_title">Conectado a %1$s</string>
+    <string name="home_connect_notification_active">Spyglass Connect está activo</string>
 
     <!-- Consent Dialog -->
     <string name="consent_title">Privacidad &amp; recopilación de datos</string>
@@ -200,6 +205,8 @@
     <string name="settings_edition">Edición</string>
     <string name="settings_edition_java">Java</string>
     <string name="settings_edition_bedrock">Bedrock</string>
+    <string name="version_java_label">Java %1$s</string>
+    <string name="version_bedrock_label">Bedrock %1$s</string>
     <string name="settings_version">Versión</string>
     <string name="settings_version_latest">Última</string>
     <string name="settings_filter_mode">Modo de filtro</string>
@@ -254,6 +261,10 @@
     <string name="settings_reduce_animations_desc">Minimizar movimiento en toda la app</string>
     <string name="settings_font_size">Tamaño de fuente</string>
     <string name="settings_font_size_desc">Ajustar tamaño de texto en toda la app</string>
+    <string name="settings_font_scale_small">Pequeño</string>
+    <string name="settings_font_scale_default">Predeterminado</string>
+    <string name="settings_font_scale_large">Grande</string>
+    <string name="settings_font_scale_extra_large">Extra grande</string>
     <string name="settings_dynamic_color">Color dinámico</string>
     <string name="settings_dynamic_color_desc">Usar los colores de tu fondo de pantalla (Android 12+)</string>
     <string name="settings_high_contrast">Alto contraste</string>
@@ -311,6 +322,8 @@
     <string name="about_disclaimer">No afiliado a Mojang Studios ni Microsoft.</string>
     <string name="about_game_data">Datos del juego</string>
     <string name="about_data_version">Versión de datos</string>
+    <string name="about_images_version">Versión de imágenes</string>
+    <string name="about_author_name">Beryndil</string>
     <string name="about_minecraft_version">Java 1.21.4</string>
     <string name="about_credits">Créditos &amp; licencias</string>
     <string name="about_license_cc">Todos los derechos reservados \u2014 Ver licencia</string>
@@ -359,10 +372,24 @@
 
     <!-- Search Screen -->
     <string name="search_placeholder">Buscar en todos los datos de Minecraft\u2026</string>
+    <string name="search_everything">Buscar todo\u2026</string>
     <string name="search_empty_title">Buscar todo</string>
     <string name="search_empty_subtitle">Escribe al menos 2 caracteres para buscar bloques, mobs, biomas, estructuras, objetos, recetas, comercios y más.</string>
     <string name="search_no_results">Sin resultados</string>
     <string name="search_no_matches">Sin coincidencias para \"%s\"</string>
+
+    <!-- Search Result Type Labels -->
+    <string name="search_type_block">Bloque</string>
+    <string name="search_type_item">Objeto</string>
+    <string name="search_type_recipe">Receta</string>
+    <string name="search_type_mob">Mob</string>
+    <string name="search_type_biome">Bioma</string>
+    <string name="search_type_enchantment">Encantamiento</string>
+    <string name="search_type_potion">Poción</string>
+    <string name="search_type_trade">Comercio</string>
+    <string name="search_type_structure">Estructura</string>
+    <string name="search_type_advancement">Logro</string>
+    <string name="search_type_command">Comando</string>
 
     <!-- Browse Tabs -->
     <string name="browse_tab_blocks">Bloques</string>
@@ -482,6 +509,18 @@
     <string name="items_mined_from">Extraído de</string>
     <string name="items_found_in_biomes">Se encuentra en biomas</string>
     <string name="items_found_in_structures">Se encuentra en estructuras</string>
+    <!-- Items — Detail Pager -->
+    <string name="items_no_recipe">Sin receta de fabricación</string>
+    <string name="items_found_in">Se encuentra en</string>
+    <string name="items_ingredients">Ingredientes</string>
+    <string name="items_chain_calculator">Calculadora en cadena</string>
+    <string name="items_chain_how_many">¿Cuántos?</string>
+    <string name="items_chain_example">ej. 55</string>
+    <string name="items_chain_craft">Fabricar</string>
+    <string name="items_chain_gather">Recolectar</string>
+    <string name="items_chain_crafts_count">%1$d fabricaciones</string>
+    <string name="items_uses_count">Usos (%1$d)</string>
+    <string name="items_no_uses">Sin usos conocidos</string>
     <string name="items_used_in_recipes">Usado en %d receta(s)</string>
 
     <!-- Items Sort Options -->
@@ -655,6 +694,21 @@
     <string name="commands_no_results_subtitle">Prueba una búsqueda o filtro diferente</string>
     <string name="commands_syntax">SINTAXIS</string>
     <string name="commands_permission">Permiso</string>
+
+    <!-- Commands Categories -->
+    <string name="commands_category_chat">Chat</string>
+    <string name="commands_category_player">Jugador</string>
+    <string name="commands_category_entity">Entidad</string>
+    <string name="commands_category_world">Mundo</string>
+    <string name="commands_category_server">Servidor</string>
+    <string name="commands_category_operator">Operador</string>
+    <string name="commands_category_debug">Depuración</string>
+
+    <!-- Commands Permission Levels -->
+    <string name="commands_permission_all">Todos los jugadores</string>
+    <string name="commands_permission_op">Operador (OP)</string>
+    <string name="commands_permission_admin">Administrador</string>
+    <string name="commands_permission_owner">Propietario del servidor</string>
 
     <!-- Commands Sort Options -->
     <string name="commands_sort_name">Nombre A\u2192Z</string>
@@ -1162,6 +1216,9 @@
     <string name="waypoints_title">Puntos</string>
     <string name="waypoints_description">Guarda y organiza coordenadas de tus ubicaciones importantes de Minecraft.</string>
     <string name="waypoints_stat">%d puntos</string>
+    <string name="waypoint_coord_x">X</string>
+    <string name="waypoint_coord_y">Y</string>
+    <string name="waypoint_coord_z">Z</string>
     <string name="waypoints_search_placeholder">Buscar puntos\u2026</string>
     <string name="waypoints_new_waypoint_cd">Nuevo punto</string>
     <string name="waypoints_no_found">No se encontraron puntos</string>
@@ -1398,6 +1455,8 @@
     <string name="shopping_items_count">%d objetos</string>
     <string name="shopping_rename_list_cd">Renombrar lista</string>
     <string name="shopping_search_placeholder">Buscar\u2026</string>
+    <!-- Shopping — additional -->
+    <string name="shopping_crafting_plan">Plan de fabricación</string>
     <string name="shopping_qty">Cant.</string>
     <string name="shopping_checklist">Lista de verificación</string>
     <string name="shopping_gather">Recolectar</string>
@@ -1485,4 +1544,33 @@
     <string name="loot_silence_trim_val">Ciudades antiguas (1.2%)</string>
     <string name="loot_swift_sneak">Sigilo veloz</string>
     <string name="loot_swift_sneak_val">Solo Ciudades antiguas</string>
+
+    <!-- Loot Structure Names -->
+    <string name="loot_structure_trial_chambers">Cámaras de prueba</string>
+    <string name="loot_structure_ancient_city">Ciudad antigua</string>
+    <string name="loot_structure_bastion_remnant">Bastión en ruinas</string>
+    <string name="loot_structure_end_city">Ciudad del End</string>
+    <string name="loot_structure_woodland_mansion">Mansión del bosque</string>
+    <string name="loot_structure_stronghold">Fortaleza</string>
+    <string name="loot_structure_ocean_monument">Monumento oceánico</string>
+    <string name="loot_structure_nether_fortress">Fortaleza del Nether</string>
+    <string name="loot_structure_desert_pyramid">Pirámide del desierto</string>
+    <string name="loot_structure_jungle_pyramid">Pirámide de la jungla</string>
+    <string name="loot_structure_shipwreck">Naufragio</string>
+    <string name="loot_structure_trail_ruins">Ruinas del sendero</string>
+    <string name="loot_structure_pillager_outpost">Puesto de saqueadores</string>
+    <string name="loot_structure_mineshaft">Mina abandonada</string>
+
+    <!-- Loot Dimension Labels -->
+    <string name="loot_dimension_overworld">Supramundo</string>
+    <string name="loot_dimension_nether">Nether</string>
+    <string name="loot_dimension_end">El End</string>
+
+    <!-- Hardcoded string fixes -->
+    <string name="connect_notification_channel_desc">Se muestra cuando está conectado a un PC a través de Spyglass Connect</string>
+    <string name="connect_pairing_rejected">Emparejamiento rechazado</string>
+    <string name="connect_connection_failed">Conexión fallida</string>
+    <string name="connect_invalid_qr">Código QR no válido: %1$s</string>
+    <string name="biomes_category_unknown">Desconocido</string>
+    <string name="todo_gather_prefix">Recolectar %1$s</string>
 </resources>

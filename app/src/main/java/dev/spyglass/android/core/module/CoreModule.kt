@@ -266,7 +266,7 @@ object CoreModule : SpyglassModule {
                 Spacer(Modifier.weight(1f))
                 Box {
                     IconButton(onClick = { hapticClick(); menuExpanded = true }, modifier = Modifier.size(24.dp)) {
-                        Icon(Icons.Default.MoreVert, contentDescription = "Tip options", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
+                        Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.home_tip_options), tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
                     }
                     DropdownMenu(expanded = menuExpanded, onDismissRequest = { menuExpanded = false }) {
                         DropdownMenuItem(
@@ -295,13 +295,13 @@ object CoreModule : SpyglassModule {
                     onClick = { hapticClick(); tipIndex = Math.floorMod(tipIndex - 1, tips.size) },
                     modifier = Modifier.size(32.dp),
                 ) {
-                    Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "Previous tip", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                    Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = stringResource(R.string.home_tip_previous), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                 }
                 IconButton(
                     onClick = { hapticClick(); tipIndex = (tipIndex + 1) % tips.size },
                     modifier = Modifier.size(32.dp),
                 ) {
-                    Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "Next tip", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                    Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = stringResource(R.string.home_tip_next), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                 }
             }
         }
@@ -673,11 +673,17 @@ object CoreModule : SpyglassModule {
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                FontScaleOptions.forEachIndexed { i, (label, _) ->
+                val fontScaleLabels = listOf(
+                    stringResource(R.string.settings_font_scale_small),
+                    stringResource(R.string.settings_font_scale_default),
+                    stringResource(R.string.settings_font_scale_large),
+                    stringResource(R.string.settings_font_scale_extra_large),
+                )
+                FontScaleOptions.forEachIndexed { i, _ ->
                     FilterChip(
                         selected = fontScale == i,
                         onClick = { hapticClick(); scope.launch { context.dataStore.edit { it[PreferenceKeys.FONT_SCALE] = i } } },
-                        label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                        label = { Text(fontScaleLabels[i], style = MaterialTheme.typography.labelSmall) },
                     )
                 }
             }

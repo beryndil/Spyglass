@@ -319,7 +319,7 @@ private fun ListDetail(vm: ShoppingViewModel) {
         // ── Crafting plan ──
         if (craftingPlan.isNotEmpty()) {
             item(key = "plan_header") {
-                SectionHeader("Crafting Plan", icon = PixelIcons.Crafting)
+                SectionHeader(stringResource(R.string.shopping_crafting_plan), icon = PixelIcons.Crafting)
             }
             item(key = "plan_card") {
                 val grouped = craftingPlan.groupBy { it.depth }

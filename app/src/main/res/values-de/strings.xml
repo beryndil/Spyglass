@@ -137,6 +137,11 @@
     <string name="home_connect_link_players">Spieler</string>
     <string name="home_connect_link_statistics">Statistiken</string>
     <string name="home_connect_link_advancements">Fortschritte</string>
+    <!-- Home Screen — Connect (additional) -->
+    <string name="home_connect_unknown_world">Unbekannte Welt</string>
+    <string name="home_connect_connected_to">Verbunden mit %1$s</string>
+    <string name="home_connect_notification_title">Verbunden mit %1$s</string>
+    <string name="home_connect_notification_active">Spyglass Connect ist aktiv</string>
 
     <!-- Consent Dialog -->
     <string name="consent_title">Datenschutz &amp; Datenerhebung</string>
@@ -200,6 +205,8 @@
     <string name="settings_edition">Edition</string>
     <string name="settings_edition_java">Java</string>
     <string name="settings_edition_bedrock">Bedrock</string>
+    <string name="version_java_label">Java %1$s</string>
+    <string name="version_bedrock_label">Bedrock %1$s</string>
     <string name="settings_version">Version</string>
     <string name="settings_version_latest">Neueste</string>
     <string name="settings_filter_mode">Filtermodus</string>
@@ -254,6 +261,10 @@
     <string name="settings_reduce_animations_desc">Bewegungen in der gesamten App minimieren</string>
     <string name="settings_font_size">Schriftgröße</string>
     <string name="settings_font_size_desc">Textgröße in der gesamten App anpassen</string>
+    <string name="settings_font_scale_small">Klein</string>
+    <string name="settings_font_scale_default">Standard</string>
+    <string name="settings_font_scale_large">Groß</string>
+    <string name="settings_font_scale_extra_large">Sehr groß</string>
     <string name="settings_dynamic_color">Dynamische Farben</string>
     <string name="settings_dynamic_color_desc">Hintergrundfarben verwenden (Android 12+)</string>
     <string name="settings_high_contrast">Hoher Kontrast</string>
@@ -311,6 +322,8 @@
     <string name="about_disclaimer">Nicht verbunden mit Mojang Studios oder Microsoft.</string>
     <string name="about_game_data">Spieldaten</string>
     <string name="about_data_version">Datenversion</string>
+    <string name="about_images_version">Bilderversion</string>
+    <string name="about_author_name">Beryndil</string>
     <string name="about_minecraft_version">Java 1.21.4</string>
     <string name="about_credits">Danksagungen &amp; Lizenzen</string>
     <string name="about_license_cc">Alle Rechte vorbehalten \u2014 Lizenz anzeigen</string>
@@ -359,10 +372,24 @@
 
     <!-- Search Screen -->
     <string name="search_placeholder">Alle Minecraft-Daten durchsuchen\u2026</string>
+    <string name="search_everything">Alles durchsuchen\u2026</string>
     <string name="search_empty_title">Alles durchsuchen</string>
     <string name="search_empty_subtitle">Gib mindestens 2 Zeichen ein, um Blöcke, Mobs, Biome, Bauwerke, Gegenstände, Rezepte, Handel und mehr zu durchsuchen.</string>
     <string name="search_no_results">Keine Ergebnisse</string>
     <string name="search_no_matches">Keine Treffer für \"%s\"</string>
+
+    <!-- Search Result Type Labels -->
+    <string name="search_type_block">Block</string>
+    <string name="search_type_item">Gegenstand</string>
+    <string name="search_type_recipe">Rezept</string>
+    <string name="search_type_mob">Mob</string>
+    <string name="search_type_biome">Biom</string>
+    <string name="search_type_enchantment">Verzauberung</string>
+    <string name="search_type_potion">Trank</string>
+    <string name="search_type_trade">Handel</string>
+    <string name="search_type_structure">Bauwerk</string>
+    <string name="search_type_advancement">Fortschritt</string>
+    <string name="search_type_command">Befehl</string>
 
     <!-- Browse Tabs -->
     <string name="browse_tab_blocks">Blöcke</string>
@@ -482,6 +509,18 @@
     <string name="items_mined_from">Abgebaut von</string>
     <string name="items_found_in_biomes">In Biomen zu finden</string>
     <string name="items_found_in_structures">In Bauwerken zu finden</string>
+    <!-- Items — Detail Pager -->
+    <string name="items_no_recipe">Kein Herstellungsrezept</string>
+    <string name="items_found_in">Gefunden in</string>
+    <string name="items_ingredients">Zutaten</string>
+    <string name="items_chain_calculator">Kettenrechner</string>
+    <string name="items_chain_how_many">Wie viele?</string>
+    <string name="items_chain_example">z.B. 55</string>
+    <string name="items_chain_craft">Herstellen</string>
+    <string name="items_chain_gather">Sammeln</string>
+    <string name="items_chain_crafts_count">%1$d Herstellungen</string>
+    <string name="items_uses_count">Verwendungen (%1$d)</string>
+    <string name="items_no_uses">Keine bekannten Verwendungen</string>
     <string name="items_used_in_recipes">Verwendet in %d Rezept(en)</string>
 
     <!-- Items Sort Options -->
@@ -1162,6 +1201,9 @@
     <string name="waypoints_title">Wegpunkte</string>
     <string name="waypoints_description">Speichere und organisiere Koordinaten für deine wichtigen Minecraft-Orte.</string>
     <string name="waypoints_stat">%d Wegpunkte</string>
+    <string name="waypoint_coord_x">X</string>
+    <string name="waypoint_coord_y">Y</string>
+    <string name="waypoint_coord_z">Z</string>
     <string name="waypoints_search_placeholder">Wegpunkte suchen\u2026</string>
     <string name="waypoints_new_waypoint_cd">Neuer Wegpunkt</string>
     <string name="waypoints_no_found">Keine Wegpunkte gefunden</string>
@@ -1398,6 +1440,8 @@
     <string name="shopping_items_count">%d Gegenstände</string>
     <string name="shopping_rename_list_cd">Liste umbenennen</string>
     <string name="shopping_search_placeholder">Suchen\u2026</string>
+    <!-- Shopping — additional -->
+    <string name="shopping_crafting_plan">Herstellungsplan</string>
     <string name="shopping_qty">Menge</string>
     <string name="shopping_checklist">Checkliste</string>
     <string name="shopping_gather">Sammeln</string>
@@ -1485,4 +1529,12 @@
     <string name="loot_silence_trim_val">Antike Städte (1,2%)</string>
     <string name="loot_swift_sneak">Schnelles Schleichen</string>
     <string name="loot_swift_sneak_val">Nur in Antiken Städten</string>
+
+    <!-- Hardcoded string fixes -->
+    <string name="connect_notification_channel_desc">Wird angezeigt, wenn eine Verbindung zu einem PC über Spyglass Connect besteht</string>
+    <string name="connect_pairing_rejected">Kopplung abgelehnt</string>
+    <string name="connect_connection_failed">Verbindung fehlgeschlagen</string>
+    <string name="connect_invalid_qr">Ungültiger QR-Code: %1$s</string>
+    <string name="biomes_category_unknown">Unbekannt</string>
+    <string name="todo_gather_prefix">Sammeln %1$s</string>
 </resources>

@@ -102,7 +102,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}, onDisclaime
                 Spacer(Modifier.height(8.dp))
                 SpyglassIconImage(
                     icon = SpyglassIcon.Drawable(R.drawable.about_beryndil),
-                    contentDescription = "Beryndil",
+                    contentDescription = stringResource(R.string.about_author_name),
                     modifier = Modifier.height(140.dp),
                     tint = Color.Unspecified,
                 )
@@ -147,7 +147,7 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}, onDisclaime
             SectionHeader(stringResource(R.string.about_game_data))
             ResultCard {
                 StatRow(stringResource(R.string.about_data_version), manifest?.effectiveVersion?.ifEmpty { "—" } ?: "—")
-                StatRow("Images Version", manifest?.textures?.ifEmpty { "—" } ?: "—")
+                StatRow(stringResource(R.string.about_images_version), manifest?.textures?.ifEmpty { "—" } ?: "—")
             }
         }
 

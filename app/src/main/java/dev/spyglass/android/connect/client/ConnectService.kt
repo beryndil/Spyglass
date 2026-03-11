@@ -84,8 +84,8 @@ class ConnectService : Service() {
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle("Connected to $deviceName")
-            .setContentText("Spyglass Connect is active")
+            .setContentTitle(getString(R.string.home_connect_notification_title, deviceName))
+            .setContentText(getString(R.string.home_connect_notification_active))
             .setContentIntent(pendingIntent)
             .setOngoing(true)
             .setSilent(true)

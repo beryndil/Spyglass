@@ -441,21 +441,21 @@ private fun WaypointDialog(
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedTextField(
                         value = x, onValueChange = { x = it },
-                        label = { Text("X") },
+                        label = { Text(stringResource(R.string.waypoint_coord_x)) },
                         singleLine = true,
                         colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                         modifier = Modifier.weight(1f),
                     )
                     OutlinedTextField(
                         value = y, onValueChange = { y = it },
-                        label = { Text("Y") },
+                        label = { Text(stringResource(R.string.waypoint_coord_y)) },
                         singleLine = true,
                         colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                         modifier = Modifier.weight(1f),
                     )
                     OutlinedTextField(
                         value = z, onValueChange = { z = it },
-                        label = { Text("Z") },
+                        label = { Text(stringResource(R.string.waypoint_coord_z)) },
                         singleLine = true,
                         colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.primary, cursorColor = MaterialTheme.colorScheme.primary),
                         modifier = Modifier.weight(1f),

@@ -331,19 +331,19 @@ object BrowseModule : SpyglassModule {
 
     @Composable
     private fun browseLinks() = listOf(
-        QuickLink(PixelIcons.Blocks, "Blocks", MaterialTheme.colorScheme.onSurfaceVariant) to 0,
-        QuickLink(PixelIcons.Item, "Items", MaterialTheme.colorScheme.primary) to 1,
-        QuickLink(PixelIcons.Crafting, "Recipes", MaterialTheme.colorScheme.primary) to 2,
-        QuickLink(PixelIcons.Mob, "Mobs", NetherRed) to 3,
-        QuickLink(PixelIcons.Biome, "Biomes", Emerald) to 5,
-        QuickLink(PixelIcons.Structure, "Structures", MaterialTheme.colorScheme.primary) to 6,
-        QuickLink(PixelIcons.Trade, "Trades", Emerald) to 4,
-        QuickLink(PixelIcons.Enchant, "Enchants", EnderPurple) to 7,
-        QuickLink(PixelIcons.Potion, "Potions", PotionBlue) to 8,
-        QuickLink(PixelIcons.Advancement, "Advancements", Emerald) to 9,
-        QuickLink(PixelIcons.Command, "Commands", PotionBlue) to 10,
-        QuickLink(PixelIcons.Bookmark, "Reference", MaterialTheme.colorScheme.primary) to 11,
-        QuickLink(PixelIcons.Clock, "Versions", MaterialTheme.colorScheme.secondary) to 12,
+        QuickLink(PixelIcons.Blocks, stringResource(R.string.browse_tab_blocks), MaterialTheme.colorScheme.onSurfaceVariant) to 0,
+        QuickLink(PixelIcons.Item, stringResource(R.string.browse_tab_items), MaterialTheme.colorScheme.primary) to 1,
+        QuickLink(PixelIcons.Crafting, stringResource(R.string.browse_tab_recipes), MaterialTheme.colorScheme.primary) to 2,
+        QuickLink(PixelIcons.Mob, stringResource(R.string.browse_tab_mobs), NetherRed) to 3,
+        QuickLink(PixelIcons.Biome, stringResource(R.string.browse_tab_biomes), Emerald) to 5,
+        QuickLink(PixelIcons.Structure, stringResource(R.string.browse_tab_structures), MaterialTheme.colorScheme.primary) to 6,
+        QuickLink(PixelIcons.Trade, stringResource(R.string.browse_tab_trades), Emerald) to 4,
+        QuickLink(PixelIcons.Enchant, stringResource(R.string.browse_tab_enchants), EnderPurple) to 7,
+        QuickLink(PixelIcons.Potion, stringResource(R.string.browse_tab_potions), PotionBlue) to 8,
+        QuickLink(PixelIcons.Advancement, stringResource(R.string.browse_tab_advancements), Emerald) to 9,
+        QuickLink(PixelIcons.Command, stringResource(R.string.browse_tab_commands), PotionBlue) to 10,
+        QuickLink(PixelIcons.Bookmark, stringResource(R.string.browse_tab_reference), MaterialTheme.colorScheme.primary) to 11,
+        QuickLink(PixelIcons.Clock, stringResource(R.string.browse_tab_versions), MaterialTheme.colorScheme.secondary) to 12,
     )
 
     @Composable
