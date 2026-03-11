@@ -112,14 +112,15 @@ class CommandsViewModel(app: Application) : AndroidViewModel(app) {
     }
 }
 
+@Composable
 private fun categoryLabel(cat: String): String = when (cat) {
-    "chat" -> "Chat"
-    "player" -> "Player"
-    "entity" -> "Entity"
-    "world" -> "World"
-    "server" -> "Server"
-    "operator" -> "Operator"
-    "debug" -> "Debug"
+    "chat" -> stringResource(R.string.commands_category_chat)
+    "player" -> stringResource(R.string.commands_category_player)
+    "entity" -> stringResource(R.string.commands_category_entity)
+    "world" -> stringResource(R.string.commands_category_world)
+    "server" -> stringResource(R.string.commands_category_server)
+    "operator" -> stringResource(R.string.commands_category_operator)
+    "debug" -> stringResource(R.string.commands_category_debug)
     else -> cat.replaceFirstChar { it.uppercase() }
 }
 
@@ -135,11 +136,12 @@ private fun categoryColor(cat: String) = when (cat) {
     else -> MaterialTheme.colorScheme.secondary
 }
 
+@Composable
 private fun permissionLabel(level: Int): String = when (level) {
-    0 -> "All Players"
-    2 -> "Operator (OP)"
-    3 -> "Admin"
-    4 -> "Server Owner"
+    0 -> stringResource(R.string.commands_permission_all)
+    2 -> stringResource(R.string.commands_permission_op)
+    3 -> stringResource(R.string.commands_permission_admin)
+    4 -> stringResource(R.string.commands_permission_owner)
     else -> "Level $level"
 }
 

@@ -12,12 +12,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.annotation.StringRes
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 
 private data class StructureLoot(
+    @StringRes val nameResId: Int,
     val name: String,
     val dimension: String,
     val structureId: String,
@@ -27,72 +29,72 @@ private data class StructureLoot(
 
 private val STRUCTURE_LOOT = listOf(
     StructureLoot(
-        "Trial Chambers", "overworld", "trial_chambers",
+        R.string.loot_structure_trial_chambers, "Trial Chambers", "overworld", "trial_chambers",
         listOf("Heavy Core (Mace crafting)", "Trial Keys", "Ominous Trial Keys", "Ominous Bottles", "Breeze Rods", "Wind Charges"),
         listOf("Flow Armor Trim (22.5%)", "Bolt Armor Trim (6.3%)", "Density/Breach/Wind Burst enchanted books"),
     ),
     StructureLoot(
-        "Ancient City", "overworld", "ancient_city",
+        R.string.loot_structure_ancient_city, "Ancient City", "overworld", "ancient_city",
         listOf("Echo Shards", "Disc Fragments (music disc 5)", "Swift Sneak enchanted books"),
         listOf("Silence Armor Trim (1.2% - rarest)", "Ward Armor Trim (5%)", "Sculk catalysts/sensors", "Enchanted diamond gear"),
     ),
     StructureLoot(
-        "Bastion Remnant", "nether", "bastion_remnant",
+        R.string.loot_structure_bastion_remnant, "Bastion Remnant", "nether", "bastion_remnant",
         listOf("Pigstep Music Disc", "Snout Banner Pattern", "Netherite Upgrade Templates"),
         listOf("Snout Armor Trim (8-10%)", "Ancient Debris", "Gold blocks/ingots", "Enchanted diamond gear"),
     ),
     StructureLoot(
-        "End City", "end", "end_city",
+        R.string.loot_structure_end_city, "End City", "end", "end_city",
         listOf("Elytra (ONLY source - end ships)"),
         listOf("Spire Armor Trim (6.7%)", "Shulker Shells", "Enchanted diamond tools/armor", "Diamond horse armor"),
     ),
     StructureLoot(
-        "Woodland Mansion", "overworld", "woodland_mansion",
+        R.string.loot_structure_woodland_mansion, "Woodland Mansion", "overworld", "woodland_mansion",
         listOf("Totem of Undying (from Evokers)"),
         listOf("Vex Armor Trim (50%)", "Diamond blocks (secret rooms)", "Enchanted books", "Dark oak logs"),
     ),
     StructureLoot(
-        "Stronghold", "overworld", "stronghold",
+        R.string.loot_structure_stronghold, "Stronghold", "overworld", "stronghold",
         listOf("Eyes of Ender (end portal)"),
         listOf("Eye Armor Trim (100% in library)", "Enchanted books", "Iron/diamond gear", "Golden apples"),
     ),
     StructureLoot(
-        "Ocean Monument", "overworld", "ocean_monument",
+        R.string.loot_structure_ocean_monument, "Ocean Monument", "overworld", "ocean_monument",
         listOf("Sponges (wet, from ceilings)"),
         listOf("Tide Armor Trim (Elder Guardian 20%)", "Gold blocks (8 in treasure room)", "Prismarine/Sea lanterns"),
     ),
     StructureLoot(
-        "Nether Fortress", "nether", "nether_fortress",
+        R.string.loot_structure_nether_fortress, "Nether Fortress", "nether", "nether_fortress",
         listOf("Nether Wart (17.9%)", "Blaze Rods (from Blazes)"),
         listOf("Rib Armor Trim (6.7%)", "Saddles (33.3%)", "Golden horse armor (27.4%)", "Diamonds"),
     ),
     StructureLoot(
-        "Desert Pyramid", "overworld", "desert_pyramid",
+        R.string.loot_structure_desert_pyramid, "Desert Pyramid", "overworld", "desert_pyramid",
         emptyList(),
         listOf("Dune Armor Trim (14.3%)", "Golden Apples (regular + enchanted)", "TNT trap", "Enchanted books", "Horse armor", "Diamonds/emeralds"),
     ),
     StructureLoot(
-        "Jungle Pyramid", "overworld", "jungle_pyramid",
+        R.string.loot_structure_jungle_pyramid, "Jungle Pyramid", "overworld", "jungle_pyramid",
         emptyList(),
         listOf("Wild Armor Trim (33.3%)", "Enchanted books (level 30)", "Bamboo", "Diamonds/emeralds", "Horse armor"),
     ),
     StructureLoot(
-        "Shipwreck", "overworld", "shipwreck",
+        R.string.loot_structure_shipwreck, "Shipwreck", "overworld", "shipwreck",
         listOf("Buried Treasure Maps"),
         listOf("Coast Armor Trim (16.7%)", "Iron ingots (97%)", "Diamonds/emeralds", "Enchanted books"),
     ),
     StructureLoot(
-        "Trail Ruins", "overworld", "trail_ruins",
+        R.string.loot_structure_trail_ruins, "Trail Ruins", "overworld", "trail_ruins",
         listOf("Pottery Sherds (archaeology)"),
         listOf("Wayfinder Trim (8.3%)", "Raiser Trim (8.3%)", "Shaper Trim (8.3%)", "Host Trim (8.3%)"),
     ),
     StructureLoot(
-        "Pillager Outpost", "overworld", "pillager_outpost",
+        R.string.loot_structure_pillager_outpost, "Pillager Outpost", "overworld", "pillager_outpost",
         listOf("Goat Horns"),
         listOf("Sentry Armor Trim (25%)", "Crossbow (50%)", "Bottles of Enchanting (61%)", "Dark oak logs"),
     ),
     StructureLoot(
-        "Mineshaft", "overworld", "mineshaft",
+        R.string.loot_structure_mineshaft, "Mineshaft", "overworld", "mineshaft",
         emptyList(),
         listOf("Golden Apples", "Enchanted books", "Powered/Detector Rails", "Name tags", "Iron/gold ingots"),
     ),
@@ -104,10 +106,11 @@ private fun dimensionColor(dim: String): Color = when (dim) {
     else -> Emerald
 }
 
+@Composable
 private fun dimensionLabel(dim: String): String = when (dim) {
-    "overworld" -> "Overworld"
-    "nether" -> "Nether"
-    "end" -> "The End"
+    "overworld" -> stringResource(R.string.loot_dimension_overworld)
+    "nether" -> stringResource(R.string.loot_dimension_nether)
+    "end" -> stringResource(R.string.loot_dimension_end)
     else -> dim.replaceFirstChar { it.uppercase() }
 }
 
@@ -198,7 +201,7 @@ private fun StructureLootCard(loot: StructureLoot, onStructureTap: () -> Unit = 
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                loot.name,
+                stringResource(loot.nameResId),
                 style = MaterialTheme.typography.titleMedium,
                 color = PotionBlue,
                 textDecoration = TextDecoration.Underline,
