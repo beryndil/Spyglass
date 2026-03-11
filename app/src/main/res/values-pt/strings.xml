@@ -1565,4 +1565,12 @@
     <string name="loot_dimension_overworld">Superfície</string>
     <string name="loot_dimension_nether">Nether</string>
     <string name="loot_dimension_end">O End</string>
+
+    <!-- Hardcoded string fixes -->
+    <string name="connect_notification_channel_desc">Exibido quando conectado a um PC via Spyglass Connect</string>
+    <string name="connect_pairing_rejected">Emparelhamento rejeitado</string>
+    <string name="connect_connection_failed">Conexão falhou</string>
+    <string name="connect_invalid_qr">Código QR inválido: %1$s</string>
+    <string name="biomes_category_unknown">Desconhecido</string>
+    <string name="todo_gather_prefix">Coletar %1$s</string>
 </resources>

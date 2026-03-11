@@ -695,6 +695,21 @@
     <string name="commands_syntax">SYNTAX</string>
     <string name="commands_permission">Berechtigung</string>
 
+    <!-- Commands Categories -->
+    <string name="commands_category_chat">Chat</string>
+    <string name="commands_category_player">Spieler</string>
+    <string name="commands_category_entity">Entität</string>
+    <string name="commands_category_world">Welt</string>
+    <string name="commands_category_server">Server</string>
+    <string name="commands_category_operator">Operator</string>
+    <string name="commands_category_debug">Debug</string>
+
+    <!-- Commands Permission Levels -->
+    <string name="commands_permission_all">Alle Spieler</string>
+    <string name="commands_permission_op">Operator (OP)</string>
+    <string name="commands_permission_admin">Administrator</string>
+    <string name="commands_permission_owner">Serverbesitzer</string>
+
     <!-- Commands Sort Options -->
     <string name="commands_sort_name">Name A\u2192Z</string>
     <string name="commands_sort_permission">Berechtigung \u2193</string>
@@ -1529,6 +1544,27 @@
     <string name="loot_silence_trim_val">Antike Städte (1,2%)</string>
     <string name="loot_swift_sneak">Schnelles Schleichen</string>
     <string name="loot_swift_sneak_val">Nur in Antiken Städten</string>
+
+    <!-- Loot Structure Names -->
+    <string name="loot_structure_trial_chambers">Prüfungskammern</string>
+    <string name="loot_structure_ancient_city">Antike Stadt</string>
+    <string name="loot_structure_bastion_remnant">Bastionsruine</string>
+    <string name="loot_structure_end_city">Endstadt</string>
+    <string name="loot_structure_woodland_mansion">Waldanwesen</string>
+    <string name="loot_structure_stronghold">Festung</string>
+    <string name="loot_structure_ocean_monument">Ozeanmonument</string>
+    <string name="loot_structure_nether_fortress">Netherfestung</string>
+    <string name="loot_structure_desert_pyramid">Wüstenpyramide</string>
+    <string name="loot_structure_jungle_pyramid">Dschungelpyramide</string>
+    <string name="loot_structure_shipwreck">Schiffswrack</string>
+    <string name="loot_structure_trail_ruins">Pfadruinen</string>
+    <string name="loot_structure_pillager_outpost">Plünderer-Außenposten</string>
+    <string name="loot_structure_mineshaft">Verlassener Minenschacht</string>
+
+    <!-- Loot Dimension Labels -->
+    <string name="loot_dimension_overworld">Oberwelt</string>
+    <string name="loot_dimension_nether">Nether</string>
+    <string name="loot_dimension_end">Das Ende</string>
 
     <!-- Hardcoded string fixes -->
     <string name="connect_notification_channel_desc">Wird angezeigt, wenn eine Verbindung zu einem PC über Spyglass Connect besteht</string>

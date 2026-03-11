@@ -1,7 +1,9 @@
 package dev.spyglass.android.connect.client
 
+import android.content.Context
 import dev.spyglass.android.connect.*
 import dev.spyglass.android.BuildConfig
+import dev.spyglass.android.R
 import dev.spyglass.android.core.CrashReporter
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,7 +22,7 @@ import java.util.concurrent.TimeUnit
  * OkHttp WebSocket client for Spyglass Connect.
  * Handles connection, pairing, message send/receive, and heartbeat monitoring.
  */
-class SpyglassClient {
+class SpyglassClient(private val context: Context) {
 
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
@@ -97,7 +99,7 @@ class SpyglassClient {
                     if (message.type == MessageType.PAIR_ACCEPT) {
                         val accept = json.decodeFromJsonElement(PairAcceptPayload.serializer(), message.payload)
                         if (!accept.accepted) {
-                            val reason = accept.rejectionReason ?: "Pairing rejected"
+                            val reason = accept.rejectionReason ?: context.getString(R.string.connect_pairing_rejected)
                             Timber.w("Pairing rejected by desktop: $reason")
                             _connectionState.value = ConnectionState.Error(reason)
                             webSocket.close(1000, "Pairing rejected")
@@ -171,7 +173,7 @@ class SpyglassClient {
                     Timber.w(t, "WebSocket failure")
                     CrashReporter.recordException(t, "WebSocket failure")
                 }
-                _connectionState.value = ConnectionState.Error(t.message ?: "Connection failed")
+                _connectionState.value = ConnectionState.Error(t.message ?: context.getString(R.string.connect_connection_failed))
             }
         })
     }

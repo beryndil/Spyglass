@@ -695,6 +695,21 @@
     <string name="commands_syntax">構文</string>
     <string name="commands_permission">権限</string>
 
+    <!-- Commands Categories -->
+    <string name="commands_category_chat">チャット</string>
+    <string name="commands_category_player">プレイヤー</string>
+    <string name="commands_category_entity">エンティティ</string>
+    <string name="commands_category_world">ワールド</string>
+    <string name="commands_category_server">サーバー</string>
+    <string name="commands_category_operator">オペレーター</string>
+    <string name="commands_category_debug">デバッグ</string>
+
+    <!-- Commands Permission Levels -->
+    <string name="commands_permission_all">全プレイヤー</string>
+    <string name="commands_permission_op">オペレーター (OP)</string>
+    <string name="commands_permission_admin">管理者</string>
+    <string name="commands_permission_owner">サーバーオーナー</string>
+
     <!-- Commands Sort Options -->
     <string name="commands_sort_name">名前 A\u2192Z</string>
     <string name="commands_sort_permission">権限 \u2193</string>
@@ -1529,6 +1544,27 @@
     <string name="loot_silence_trim_val">古代都市 (1.2%)</string>
     <string name="loot_swift_sneak">スニーク速度上昇</string>
     <string name="loot_swift_sneak_val">古代都市のみ</string>
+
+    <!-- Loot Structure Names -->
+    <string name="loot_structure_trial_chambers">トライアルチャンバー</string>
+    <string name="loot_structure_ancient_city">古代都市</string>
+    <string name="loot_structure_bastion_remnant">砦の遺跡</string>
+    <string name="loot_structure_end_city">エンドシティ</string>
+    <string name="loot_structure_woodland_mansion">森の洋館</string>
+    <string name="loot_structure_stronghold">要塞</string>
+    <string name="loot_structure_ocean_monument">海底神殿</string>
+    <string name="loot_structure_nether_fortress">ネザー要塞</string>
+    <string name="loot_structure_desert_pyramid">砂漠の寺院</string>
+    <string name="loot_structure_jungle_pyramid">ジャングルの寺院</string>
+    <string name="loot_structure_shipwreck">難破船</string>
+    <string name="loot_structure_trail_ruins">旅路の遺跡</string>
+    <string name="loot_structure_pillager_outpost">ピリジャーの前哨基地</string>
+    <string name="loot_structure_mineshaft">廃坑</string>
+
+    <!-- Loot Dimension Labels -->
+    <string name="loot_dimension_overworld">オーバーワールド</string>
+    <string name="loot_dimension_nether">ネザー</string>
+    <string name="loot_dimension_end">ジ・エンド</string>
 
     <!-- Hardcoded string fixes -->
     <string name="connect_notification_channel_desc">Spyglass Connect経由でPCに接続中に表示されます</string>

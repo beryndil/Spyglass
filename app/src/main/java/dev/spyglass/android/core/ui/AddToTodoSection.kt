@@ -56,10 +56,10 @@ fun AddToTodoSection(
 
             // Preview of what will be added
             val qty = quantityInput.toIntOrNull() ?: 0
-            val preview = if (qty > 0) "Gather $qty $itemName" else ""
-            if (preview.isNotEmpty()) {
+            val gatherFmt = stringResource(R.string.todo_gather_prefix)
+            if (qty > 0) {
                 Text(
-                    formatForDisplay(qty, itemName),
+                    formatForDisplay(qty, itemName, gatherFmt),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1f),
@@ -76,7 +76,7 @@ fun AddToTodoSection(
                     scope.launch {
                         repo.createTodo(
                             TodoEntity(
-                                title = "Gather $q $itemName",
+                                title = context.getString(R.string.todo_gather_prefix, "$q $itemName"),
                                 itemId = itemId,
                                 itemName = itemName,
                                 quantity = q,
@@ -103,7 +103,7 @@ fun AddToTodoSection(
     }
 }
 
-private fun formatForDisplay(quantity: Int, itemName: String): String {
+private fun formatForDisplay(quantity: Int, itemName: String, gatherFmt: String): String {
     val chests = quantity / 1728
     val afterChests = quantity % 1728
     val stacks = afterChests / 64
@@ -113,6 +113,7 @@ private fun formatForDisplay(quantity: Int, itemName: String): String {
     if (chests > 0) parts += "$chests chest${if (chests > 1) "s" else ""}"
     if (stacks > 0) parts += "$stacks stack${if (stacks > 1) "s" else ""}"
     if (items > 0)  parts += "$items"
-    return if (parts.isEmpty()) "Gather 0 $itemName"
-    else "Gather ${parts.joinToString(", ")} $itemName"
+    val detail = if (parts.isEmpty()) "0 $itemName"
+    else "${parts.joinToString(", ")} $itemName"
+    return gatherFmt.replace("%1\$s", detail)
 }

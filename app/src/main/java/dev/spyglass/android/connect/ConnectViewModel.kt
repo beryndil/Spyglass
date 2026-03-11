@@ -27,7 +27,7 @@ import timber.log.Timber
 class ConnectViewModel(application: Application) : AndroidViewModel(application) {
 
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
-    val client = SpyglassClient()
+    val client = SpyglassClient(application)
     private val reconnectManager = ReconnectManager()
     private var mdnsDiscovery: MdnsDiscovery? = null
     private var reconnectJob: Job? = null

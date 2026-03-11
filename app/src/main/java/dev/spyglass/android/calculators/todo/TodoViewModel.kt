@@ -3,6 +3,7 @@ package dev.spyglass.android.calculators.todo
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import dev.spyglass.android.R
 import dev.spyglass.android.data.db.entities.ShoppingListEntity
 import dev.spyglass.android.data.db.entities.TodoEntity
 import dev.spyglass.android.data.repository.GameDataRepository
@@ -55,7 +56,7 @@ class TodoViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             repo.createTodo(
                 TodoEntity(
-                    title = "Gather $quantity $itemName",
+                    title = getApplication<Application>().getString(R.string.todo_gather_prefix, "$quantity $itemName"),
                     itemId = itemId,
                     itemName = itemName,
                     quantity = quantity,

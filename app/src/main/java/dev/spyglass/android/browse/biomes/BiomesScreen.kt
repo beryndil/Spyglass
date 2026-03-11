@@ -313,7 +313,7 @@ private fun BiomeListItem(b: BiomeEntity, isFavorite: Boolean, onToggleFavorite:
                         VersionBadge(addedIn)
                         Spacer(Modifier.height(2.dp))
                     }
-                    CategoryBadge(label = b.category.ifEmpty { "unknown" }, color = Emerald)
+                    CategoryBadge(label = b.category.ifEmpty { stringResource(R.string.biomes_category_unknown) }, color = Emerald)
                     Spacer(Modifier.height(2.dp))
                     Text("${b.temperature}\u00B0  ${b.precipitation}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                 }

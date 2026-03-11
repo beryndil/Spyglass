@@ -68,7 +68,7 @@ class ConnectService : Service() {
             "Spyglass Connect",
             NotificationManager.IMPORTANCE_LOW,
         ).apply {
-            description = "Shows when connected to a PC via Spyglass Connect"
+            description = getString(R.string.connect_notification_channel_desc)
             setShowBadge(false)
         }
         getSystemService(NotificationManager::class.java).createNotificationChannel(channel)

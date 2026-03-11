@@ -122,7 +122,7 @@ fun QrScannerScreen(
                             }
                         } catch (e: Exception) {
                             Timber.w(e, "Failed to parse QR data: ${e.message}")
-                            scanError = "Invalid QR code: ${e.message?.take(80)}"
+                            scanError = context.getString(R.string.connect_invalid_qr, e.message?.take(80) ?: "")
                         }
                     },
                 )

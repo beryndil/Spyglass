@@ -695,6 +695,21 @@
     <string name="commands_syntax">SYNTAXE</string>
     <string name="commands_permission">Permission</string>
 
+    <!-- Commands Categories -->
+    <string name="commands_category_chat">Discussion</string>
+    <string name="commands_category_player">Joueur</string>
+    <string name="commands_category_entity">Entité</string>
+    <string name="commands_category_world">Monde</string>
+    <string name="commands_category_server">Serveur</string>
+    <string name="commands_category_operator">Opérateur</string>
+    <string name="commands_category_debug">Débogage</string>
+
+    <!-- Commands Permission Levels -->
+    <string name="commands_permission_all">Tous les joueurs</string>
+    <string name="commands_permission_op">Opérateur (OP)</string>
+    <string name="commands_permission_admin">Administrateur</string>
+    <string name="commands_permission_owner">Propriétaire du serveur</string>
+
     <!-- Commands Sort Options -->
     <string name="commands_sort_name">Nom A\u2192Z</string>
     <string name="commands_sort_permission">Permission \u2193</string>
@@ -1529,6 +1544,27 @@
     <string name="loot_silence_trim_val">Cités anciennes (1,2%)</string>
     <string name="loot_swift_sneak">Furtivité rapide</string>
     <string name="loot_swift_sneak_val">Cités anciennes uniquement</string>
+
+    <!-- Loot Structure Names -->
+    <string name="loot_structure_trial_chambers">Chambres d\'épreuve</string>
+    <string name="loot_structure_ancient_city">Cité antique</string>
+    <string name="loot_structure_bastion_remnant">Vestige de bastion</string>
+    <string name="loot_structure_end_city">Cité de l\'End</string>
+    <string name="loot_structure_woodland_mansion">Manoir</string>
+    <string name="loot_structure_stronghold">Forteresse</string>
+    <string name="loot_structure_ocean_monument">Monument océanique</string>
+    <string name="loot_structure_nether_fortress">Forteresse du Nether</string>
+    <string name="loot_structure_desert_pyramid">Pyramide du désert</string>
+    <string name="loot_structure_jungle_pyramid">Pyramide de la jungle</string>
+    <string name="loot_structure_shipwreck">Épave</string>
+    <string name="loot_structure_trail_ruins">Ruines du sentier</string>
+    <string name="loot_structure_pillager_outpost">Avant-poste de pillards</string>
+    <string name="loot_structure_mineshaft">Mine abandonnée</string>
+
+    <!-- Loot Dimension Labels -->
+    <string name="loot_dimension_overworld">Surface</string>
+    <string name="loot_dimension_nether">Nether</string>
+    <string name="loot_dimension_end">L\'End</string>
 
     <!-- Hardcoded string fixes -->
     <string name="connect_notification_channel_desc">Affiché lors de la connexion à un PC via Spyglass Connect</string>
