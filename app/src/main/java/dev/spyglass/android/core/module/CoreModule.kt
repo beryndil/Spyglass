@@ -344,7 +344,11 @@ object CoreModule : SpyglassModule {
                         selected = appLanguage == code,
                         onClick = {
                             hapticClick()
-                            scope.launch {
+                            // Save preference first, then apply locale on Main thread.
+                            // setApplicationLocales recreates the Activity, so the
+                            // coroutine scope may be cancelled — use GlobalScope to
+                            // ensure the locale switch completes.
+                            kotlinx.coroutines.GlobalScope.launch(Dispatchers.IO) {
                                 context.dataStore.edit { it[PreferenceKeys.APP_LANGUAGE] = code }
                                 val localeList = if (code == "system") {
                                     androidx.core.os.LocaleListCompat.getEmptyLocaleList()
