@@ -187,7 +187,7 @@ object ToolsModule : SpyglassModule {
             context.dataStore.data.map { it[PreferenceKeys.GAME_CLOCK_ENABLED] ?: false }
         }.collectAsStateWithLifecycle(initialValue = false)
 
-        SectionHeader("Tools")
+        SectionHeader(stringResource(R.string.nav_tools))
         ResultCard {
             // Default tool tab
             Text(

@@ -173,31 +173,32 @@ object BrowseModule : SpyglassModule {
 
         var versionExpanded by remember { mutableStateOf(false) }
 
-        SectionHeader("Game Version")
+        SectionHeader(stringResource(R.string.settings_game_version))
         ResultCard {
             Text(
-                "Filter content by Minecraft edition and version",
+                stringResource(R.string.settings_game_filter_desc),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.secondary,
             )
 
-            Text("Edition", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+            Text(stringResource(R.string.settings_edition), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
             dev.spyglass.android.core.ui.TogglePill(
-                options = listOf("Java", "Bedrock"),
+                options = listOf(stringResource(R.string.settings_edition_java), stringResource(R.string.settings_edition_bedrock)),
                 selected = if (minecraftEdition == "bedrock") 1 else 0,
                 onSelect = { selected -> scope.launch { context.dataStore.edit { prefs -> prefs[PreferenceKeys.MINECRAFT_EDITION] = if (selected == 1) "bedrock" else "java" } } },
             )
 
             val versions = if (minecraftEdition == "bedrock") MinecraftVersions.BEDROCK_VERSIONS else MinecraftVersions.JAVA_VERSIONS
-            val displayVersion = minecraftVersion.ifBlank { "Latest" }
-            Text("Version", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+            val latestLabel = stringResource(R.string.settings_version_latest)
+            val displayVersion = minecraftVersion.ifBlank { latestLabel }
+            Text(stringResource(R.string.settings_version), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
             Box {
                 OutlinedButton(onClick = { versionExpanded = true }) {
                     Text(displayVersion, color = MaterialTheme.colorScheme.onSurface)
                 }
                 DropdownMenu(expanded = versionExpanded, onDismissRequest = { versionExpanded = false }) {
                     DropdownMenuItem(
-                        text = { Text("Latest", color = if (minecraftVersion.isBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface) },
+                        text = { Text(latestLabel, color = if (minecraftVersion.isBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface) },
                         onClick = { scope.launch { context.dataStore.edit { it[PreferenceKeys.MINECRAFT_VERSION] = "" } }; versionExpanded = false },
                     )
                     versions.reversed().forEach { v ->
@@ -209,12 +210,12 @@ object BrowseModule : SpyglassModule {
                 }
             }
 
-            Text("Filter Mode", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+            Text(stringResource(R.string.settings_filter_mode), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                val modes = listOf("show_all" to "Show All", "highlight" to "Highlight Unavailable", "hide" to "Hide Unavailable")
+                val modes = listOf("show_all" to stringResource(R.string.settings_filter_show_all), "highlight" to stringResource(R.string.settings_filter_highlight), "hide" to stringResource(R.string.settings_filter_hide))
                 modes.forEach { (key, label) ->
                     FilterChip(
                         selected = versionFilterMode == key,
@@ -257,7 +258,7 @@ object BrowseModule : SpyglassModule {
             repo?.allFavorites()?.collect { value = it } ?: return@produceState
         }
 
-        SectionHeader("Browse")
+        SectionHeader(stringResource(R.string.nav_browse))
         ResultCard {
             // Default browse tab
             Text(

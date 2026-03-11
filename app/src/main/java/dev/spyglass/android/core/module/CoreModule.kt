@@ -270,7 +270,7 @@ object CoreModule : SpyglassModule {
                     }
                     DropdownMenu(expanded = menuExpanded, onDismissRequest = { menuExpanded = false }) {
                         DropdownMenuItem(
-                            text = { Text("Disable tips") },
+                            text = { Text(stringResource(R.string.home_tip_disable)) },
                             onClick = {
                                 hapticClick()
                                 menuExpanded = false
@@ -474,7 +474,7 @@ object CoreModule : SpyglassModule {
             context.dataStore.data.map { it[PreferenceKeys.DEFAULT_STARTUP_TAB] ?: 0 }
         }.collectAsStateWithLifecycle(initialValue = 0)
 
-        SectionHeader("Appearance")
+        SectionHeader(stringResource(R.string.settings_appearance))
         ResultCard {
             // Image background themes
             Text(
@@ -567,7 +567,7 @@ object CoreModule : SpyglassModule {
                             if (hasCustom && thumb != null) {
                                 Image(
                                     bitmap = thumb.asImageBitmap(),
-                                    contentDescription = "My Photo",
+                                    contentDescription = stringResource(R.string.settings_my_photo),
                                     modifier = Modifier.fillMaxSize(),
                                     contentScale = ContentScale.Crop,
                                     alignment = Alignment.TopCenter,
@@ -575,7 +575,7 @@ object CoreModule : SpyglassModule {
                             } else {
                                 Icon(
                                     Icons.Filled.AddPhotoAlternate,
-                                    contentDescription = "Choose photo",
+                                    contentDescription = stringResource(R.string.settings_choose_photo),
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                     modifier = Modifier.size(24.dp),
                                 )
@@ -584,7 +584,7 @@ object CoreModule : SpyglassModule {
                         Spacer(Modifier.height(3.dp))
                         if (isSelected && hasCustom) {
                             Text(
-                                "Change",
+                                stringResource(R.string.settings_change_photo),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.primary,
                                 textAlign = TextAlign.Center,
@@ -598,7 +598,7 @@ object CoreModule : SpyglassModule {
                             )
                         } else {
                             Text(
-                                "My Photo",
+                                stringResource(R.string.settings_my_photo),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
                                 textAlign = TextAlign.Center,
@@ -610,7 +610,7 @@ object CoreModule : SpyglassModule {
             }
             Spacer(Modifier.height(8.dp))
             Text(
-                "Solid Colors",
+                stringResource(R.string.settings_solid_colors),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -781,7 +781,7 @@ object CoreModule : SpyglassModule {
 
         var syncing by remember { mutableStateOf(false) }
 
-        SectionHeader("Data & Sync")
+        SectionHeader(stringResource(R.string.settings_data_sync))
         ResultCard {
             // Sync Now
             Row(
@@ -790,8 +790,8 @@ object CoreModule : SpyglassModule {
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Sync Now", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-                    Text("Check for updated game data and textures", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
+                    Text(stringResource(R.string.settings_sync_now), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                    Text(stringResource(R.string.settings_sync_check_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
                 }
                 if (syncing) {
                     androidx.compose.material3.CircularProgressIndicator(
@@ -816,7 +816,7 @@ object CoreModule : SpyglassModule {
                         },
                         enabled = !offlineMode,
                     ) {
-                        Text("Sync", color = if (offlineMode) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.primary)
+                        Text(stringResource(R.string.settings_sync_btn), color = if (offlineMode) MaterialTheme.colorScheme.outline else MaterialTheme.colorScheme.primary)
                     }
                 }
             }
@@ -878,7 +878,7 @@ object CoreModule : SpyglassModule {
                 color = MaterialTheme.colorScheme.onSurface,
             )
             Text(
-                "Downloaded textures: ${formatBytes(storageBytes)}",
+                stringResource(R.string.settings_downloaded_textures, formatBytes(storageBytes)),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.secondary,
             )
@@ -920,7 +920,7 @@ object CoreModule : SpyglassModule {
             context.dataStore.data.map { it[PreferenceKeys.APP_LOCK_ENABLED] ?: false }
         }.collectAsStateWithLifecycle(initialValue = false)
 
-        SectionHeader("Privacy & Security")
+        SectionHeader(stringResource(R.string.settings_privacy_security))
         ResultCard {
             SettingsToggle(
                 title = stringResource(R.string.settings_app_lock),
@@ -1014,10 +1014,10 @@ object CoreModule : SpyglassModule {
         val uriHandler = LocalUriHandler.current
         val context = LocalContext.current
 
-        SectionHeader("About")
+        SectionHeader(stringResource(R.string.settings_about_section))
         ResultCard {
             Text(
-                "Spyglass v${BuildConfig.VERSION_NAME}",
+                stringResource(R.string.settings_version_label, BuildConfig.VERSION_NAME),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.secondary,
             )

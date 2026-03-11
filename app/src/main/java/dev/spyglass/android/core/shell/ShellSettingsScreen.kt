@@ -92,10 +92,10 @@ fun ShellSettingsScreen(
         val toggleableModules = modules.filter { it.canDisable }
         if (toggleableModules.isNotEmpty()) {
             item(key = "modules") {
-                SectionHeader("Modules")
+                SectionHeader(stringResource(R.string.settings_modules))
                 ResultCard {
                     Text(
-                        "Enable or disable app features",
+                        stringResource(R.string.settings_modules_desc),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.secondary,
                     )

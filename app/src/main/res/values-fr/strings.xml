@@ -215,6 +215,31 @@
     <string name="settings_connect_desc">Diffusez les données de votre monde Minecraft depuis votre PC via WiFi local. L\'appairage est géré depuis l\'écran Connect.</string>
     <string name="settings_connect_download">Télécharger pour PC : hardknocks.com/spyglass-connect</string>
 
+    <!-- Settings — Modules -->
+    <string name="settings_modules">Modules</string>
+    <string name="settings_modules_desc">Activer ou désactiver les fonctionnalités</string>
+
+    <!-- Settings — Game Version -->
+    <string name="settings_game_version">Version du jeu</string>
+
+    <!-- Settings — Sync -->
+    <string name="settings_sync_check_desc">Rechercher les données de jeu et textures mises à jour</string>
+    <string name="settings_sync_btn">Synchroniser</string>
+
+    <!-- Settings — About (version) -->
+    <string name="settings_version_label">Spyglass v%1$s</string>
+
+    <!-- Settings — Connect -->
+    <string name="settings_connect_stream">Diffusez les données du monde depuis votre PC en WiFi local</string>
+    <string name="settings_connect_managed">Les paramètres de connexion sont gérés depuis l\'écran Connect.</string>
+    <string name="settings_connect_download_label">Téléchargez Spyglass Connect pour votre ordinateur :</string>
+    <string name="settings_connect_cached_data">Données en cache</string>
+    <string name="settings_connect_clear_all">Effacer toutes les données</string>
+    <string name="settings_connect_clear_all_confirm">Tout effacer</string>
+    <string name="settings_connect_clear_all_message">Effacer toutes les données Connect en cache ? L\'appairage sera conservé.</string>
+    <string name="settings_connect_clear_world_title">Effacer les données du monde</string>
+    <string name="settings_connect_clear_world_message">Effacer les données en cache de « %1$s » ?</string>
+
     <!-- Settings — About (additional) -->
     <string name="settings_wiki">Wiki Spyglass</string>
     <string name="settings_wiki_desc">Guides, astuces et documentation détaillée</string>

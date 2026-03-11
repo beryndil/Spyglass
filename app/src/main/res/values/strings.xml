@@ -215,6 +215,31 @@
     <string name="settings_connect_desc">Stream Minecraft world data from your PC over local WiFi. Pairing is managed from the Connect screen.</string>
     <string name="settings_connect_download">Download for PC: hardknocks.com/spyglass-connect</string>
 
+    <!-- Settings — Modules -->
+    <string name="settings_modules">Modules</string>
+    <string name="settings_modules_desc">Enable or disable app features</string>
+
+    <!-- Settings — Game Version -->
+    <string name="settings_game_version">Game Version</string>
+
+    <!-- Settings — Sync -->
+    <string name="settings_sync_check_desc">Check for updated game data and textures</string>
+    <string name="settings_sync_btn">Sync</string>
+
+    <!-- Settings — About (version) -->
+    <string name="settings_version_label">Spyglass v%1$s</string>
+
+    <!-- Settings — Connect -->
+    <string name="settings_connect_stream">Stream Minecraft world data from your PC over local WiFi</string>
+    <string name="settings_connect_managed">Paired device info and connection settings are managed from the Connect screen.</string>
+    <string name="settings_connect_download_label">Download Spyglass Connect for your computer:</string>
+    <string name="settings_connect_cached_data">Cached Data</string>
+    <string name="settings_connect_clear_all">Clear All Data</string>
+    <string name="settings_connect_clear_all_confirm">Clear All</string>
+    <string name="settings_connect_clear_all_message">Clear all cached Connect data for every world? Your device pairing will be kept.</string>
+    <string name="settings_connect_clear_world_title">Clear World Data</string>
+    <string name="settings_connect_clear_world_message">Clear cached data for \"%1$s\"?</string>
+
     <!-- Settings — About (additional) -->
     <string name="settings_wiki">Spyglass Wiki</string>
     <string name="settings_wiki_desc">Guides, tips, and detailed documentation</string>

@@ -215,6 +215,31 @@
     <string name="settings_connect_desc">ローカルWiFi経由でPCからMinecraftのワールドデータをストリーミング。ペアリングはConnect画面から管理できます。</string>
     <string name="settings_connect_download">PC版ダウンロード: hardknocks.com/spyglass-connect</string>
 
+    <!-- Settings — Modules -->
+    <string name="settings_modules">モジュール</string>
+    <string name="settings_modules_desc">アプリの機能を有効または無効にする</string>
+
+    <!-- Settings — Game Version -->
+    <string name="settings_game_version">ゲームバージョン</string>
+
+    <!-- Settings — Sync -->
+    <string name="settings_sync_check_desc">ゲームデータとテクスチャの更新を確認する</string>
+    <string name="settings_sync_btn">同期</string>
+
+    <!-- Settings — About (version) -->
+    <string name="settings_version_label">Spyglass v%1$s</string>
+
+    <!-- Settings — Connect -->
+    <string name="settings_connect_stream">ローカルWiFi経由でPCからワールドデータをストリーミング</string>
+    <string name="settings_connect_managed">接続設定はConnect画面で管理されます。</string>
+    <string name="settings_connect_download_label">お使いのコンピュータ用のSpyglass Connectをダウンロード：</string>
+    <string name="settings_connect_cached_data">キャッシュデータ</string>
+    <string name="settings_connect_clear_all">すべてのデータを消去</string>
+    <string name="settings_connect_clear_all_confirm">すべて消去</string>
+    <string name="settings_connect_clear_all_message">すべてのキャッシュされたConnectデータを消去しますか？ペアリングは保持されます。</string>
+    <string name="settings_connect_clear_world_title">ワールドデータを消去</string>
+    <string name="settings_connect_clear_world_message">「%1$s」のキャッシュデータを消去しますか？</string>
+
     <!-- Settings — About (additional) -->
     <string name="settings_wiki">Spyglass Wiki</string>
     <string name="settings_wiki_desc">ガイド、ヒント、詳細なドキュメント</string>

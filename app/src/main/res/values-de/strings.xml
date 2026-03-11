@@ -215,6 +215,31 @@
     <string name="settings_connect_desc">Minecraft-Weltdaten von deinem PC über lokales WLAN streamen. Die Kopplung wird über den Connect-Bildschirm verwaltet.</string>
     <string name="settings_connect_download">Für PC herunterladen: hardknocks.com/spyglass-connect</string>
 
+    <!-- Settings — Modules -->
+    <string name="settings_modules">Module</string>
+    <string name="settings_modules_desc">App-Funktionen aktivieren oder deaktivieren</string>
+
+    <!-- Settings — Game Version -->
+    <string name="settings_game_version">Spielversion</string>
+
+    <!-- Settings — Sync -->
+    <string name="settings_sync_check_desc">Nach aktualisierten Spieldaten und Texturen suchen</string>
+    <string name="settings_sync_btn">Synchronisieren</string>
+
+    <!-- Settings — About (version) -->
+    <string name="settings_version_label">Spyglass v%1$s</string>
+
+    <!-- Settings — Connect -->
+    <string name="settings_connect_stream">Minecraft-Weltdaten über lokales WLAN streamen</string>
+    <string name="settings_connect_managed">Verbindungseinstellungen werden im Connect-Bildschirm verwaltet.</string>
+    <string name="settings_connect_download_label">Spyglass Connect für deinen Computer herunterladen:</string>
+    <string name="settings_connect_cached_data">Zwischengespeicherte Daten</string>
+    <string name="settings_connect_clear_all">Alle Daten löschen</string>
+    <string name="settings_connect_clear_all_confirm">Alles löschen</string>
+    <string name="settings_connect_clear_all_message">Alle Connect-Daten löschen? Die Gerätekopplung bleibt erhalten.</string>
+    <string name="settings_connect_clear_world_title">Weltdaten löschen</string>
+    <string name="settings_connect_clear_world_message">Daten für \"%1$s\" löschen?</string>
+
     <!-- Settings — About (additional) -->
     <string name="settings_wiki">Spyglass Wiki</string>
     <string name="settings_wiki_desc">Anleitungen, Tipps und ausführliche Dokumentation</string>

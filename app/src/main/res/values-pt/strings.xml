@@ -215,6 +215,31 @@
     <string name="settings_connect_desc">Transmita dados do mundo Minecraft do seu PC pela rede WiFi local. O pareamento é gerenciado na tela do Connect.</string>
     <string name="settings_connect_download">Baixar para PC: hardknocks.com/spyglass-connect</string>
 
+    <!-- Settings — Modules -->
+    <string name="settings_modules">Módulos</string>
+    <string name="settings_modules_desc">Ativar ou desativar funcionalidades do app</string>
+
+    <!-- Settings — Game Version -->
+    <string name="settings_game_version">Versão do jogo</string>
+
+    <!-- Settings — Sync -->
+    <string name="settings_sync_check_desc">Verificar dados do jogo e texturas atualizados</string>
+    <string name="settings_sync_btn">Sincronizar</string>
+
+    <!-- Settings — About (version) -->
+    <string name="settings_version_label">Spyglass v%1$s</string>
+
+    <!-- Settings — Connect -->
+    <string name="settings_connect_stream">Transmita dados do mundo do seu PC por WiFi local</string>
+    <string name="settings_connect_managed">As configurações de conexão são gerenciadas na tela Connect.</string>
+    <string name="settings_connect_download_label">Baixe o Spyglass Connect para o seu computador:</string>
+    <string name="settings_connect_cached_data">Dados em cache</string>
+    <string name="settings_connect_clear_all">Limpar todos os dados</string>
+    <string name="settings_connect_clear_all_confirm">Limpar tudo</string>
+    <string name="settings_connect_clear_all_message">Limpar todos os dados de Connect em cache? O emparelhamento será mantido.</string>
+    <string name="settings_connect_clear_world_title">Limpar dados do mundo</string>
+    <string name="settings_connect_clear_world_message">Limpar os dados em cache de \"%1$s\"?</string>
+
     <!-- Settings — About (additional) -->
     <string name="settings_wiki">Spyglass Wiki</string>
     <string name="settings_wiki_desc">Guias, dicas e documentação detalhada</string>

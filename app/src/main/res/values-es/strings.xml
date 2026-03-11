@@ -215,6 +215,31 @@
     <string name="settings_connect_desc">Transmite datos del mundo Minecraft desde tu PC por WiFi local. El emparejamiento se gestiona desde la pantalla Connect.</string>
     <string name="settings_connect_download">Descargar para PC: hardknocks.com/spyglass-connect</string>
 
+    <!-- Settings — Modules -->
+    <string name="settings_modules">Módulos</string>
+    <string name="settings_modules_desc">Activar o desactivar funciones de la app</string>
+
+    <!-- Settings — Game Version -->
+    <string name="settings_game_version">Versión del juego</string>
+
+    <!-- Settings — Sync -->
+    <string name="settings_sync_check_desc">Buscar datos del juego y texturas actualizados</string>
+    <string name="settings_sync_btn">Sincronizar</string>
+
+    <!-- Settings — About (version) -->
+    <string name="settings_version_label">Spyglass v%1$s</string>
+
+    <!-- Settings — Connect -->
+    <string name="settings_connect_stream">Transmite datos del mundo desde tu PC por WiFi local</string>
+    <string name="settings_connect_managed">Los ajustes de conexión se gestionan desde la pantalla Connect.</string>
+    <string name="settings_connect_download_label">Descarga Spyglass Connect para tu computadora:</string>
+    <string name="settings_connect_cached_data">Datos en caché</string>
+    <string name="settings_connect_clear_all">Borrar todos los datos</string>
+    <string name="settings_connect_clear_all_confirm">Borrar todo</string>
+    <string name="settings_connect_clear_all_message">¿Borrar todos los datos de Connect en caché? El emparejamiento se mantendrá.</string>
+    <string name="settings_connect_clear_world_title">Borrar datos del mundo</string>
+    <string name="settings_connect_clear_world_message">¿Borrar los datos en caché de \"%1$s\"?</string>
+
     <!-- Settings — About (additional) -->
     <string name="settings_wiki">Wiki de Spyglass</string>
     <string name="settings_wiki_desc">Guías, consejos y documentación detallada</string>

@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -51,6 +52,7 @@ import dev.spyglass.android.connect.players.CompareScreen
 import dev.spyglass.android.connect.pets.PetsScreen
 import dev.spyglass.android.connect.waypoints.ConnectWaypointsScreen
 import dev.spyglass.android.connect.client.ConnectionState
+import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.Emerald
 import dev.spyglass.android.core.ui.MobTextures
 import dev.spyglass.android.core.ui.PixelIcons
@@ -211,7 +213,7 @@ object ConnectModule : SpyglassModule {
         val links = connectLinks(playerSkin, playerList.size)
         val hasCachedData = selectedWorld != null
 
-        SectionHeader("Spyglass Connect", icon = PixelIcons.Waypoints)
+        SectionHeader(stringResource(R.string.settings_connect_title), icon = PixelIcons.Waypoints)
         Spacer(Modifier.height(8.dp))
 
         when {
@@ -302,17 +304,17 @@ object ConnectModule : SpyglassModule {
         if (showClearAllDialog) {
             AlertDialog(
                 onDismissRequest = { showClearAllDialog = false },
-                title = { Text("Clear All Data") },
-                text = { Text("Clear all cached Connect data for every world? Your device pairing will be kept.") },
+                title = { Text(stringResource(R.string.settings_connect_clear_all)) },
+                text = { Text(stringResource(R.string.settings_connect_clear_all_message)) },
                 confirmButton = {
                     TextButton(onClick = {
                         showClearAllDialog = false
                         connectViewModel.clearCachedData()
                         cachedWorlds = emptyList()
-                    }) { Text("Clear All") }
+                    }) { Text(stringResource(R.string.settings_connect_clear_all_confirm)) }
                 },
                 dismissButton = {
-                    TextButton(onClick = { showClearAllDialog = false }) { Text("Cancel") }
+                    TextButton(onClick = { showClearAllDialog = false }) { Text(stringResource(R.string.cancel)) }
                 },
             )
         }
@@ -320,8 +322,8 @@ object ConnectModule : SpyglassModule {
         worldToDelete?.let { world ->
             AlertDialog(
                 onDismissRequest = { worldToDelete = null },
-                title = { Text("Clear World Data") },
-                text = { Text("Clear cached data for \"$world\"?") },
+                title = { Text(stringResource(R.string.settings_connect_clear_world_title)) },
+                text = { Text(stringResource(R.string.settings_connect_clear_world_message, world)) },
                 confirmButton = {
                     TextButton(onClick = {
                         val w = world
@@ -330,30 +332,30 @@ object ConnectModule : SpyglassModule {
                             dev.spyglass.android.connect.client.ConnectCache.deleteWorld(context, w)
                             cachedWorlds = dev.spyglass.android.connect.client.ConnectCache.listCachedWorlds(context)
                         }
-                    }) { Text("Clear") }
+                    }) { Text(stringResource(R.string.home_connect_clear_data_confirm)) }
                 },
                 dismissButton = {
-                    TextButton(onClick = { worldToDelete = null }) { Text("Cancel") }
+                    TextButton(onClick = { worldToDelete = null }) { Text(stringResource(R.string.cancel)) }
                 },
             )
         }
 
-        SectionHeader("Spyglass Connect")
+        SectionHeader(stringResource(R.string.settings_connect_title))
         ResultCard {
             Text(
-                "Stream Minecraft world data from your PC over local WiFi",
+                stringResource(R.string.settings_connect_stream),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.secondary,
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                "Paired device info and connection settings are managed from the Connect screen.",
+                stringResource(R.string.settings_connect_managed),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                "Download Spyglass Connect for your computer:",
+                stringResource(R.string.settings_connect_download_label),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -371,7 +373,7 @@ object ConnectModule : SpyglassModule {
         if (cachedWorlds.isNotEmpty()) {
             Spacer(Modifier.height(12.dp))
             Text(
-                "Cached Data",
+                stringResource(R.string.settings_connect_cached_data),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.primary,
             )
@@ -398,7 +400,7 @@ object ConnectModule : SpyglassModule {
                             modifier = Modifier.weight(1f),
                         )
                         Text(
-                            "Clear",
+                            stringResource(R.string.home_connect_clear_data_confirm),
                             style = MaterialTheme.typography.labelSmall,
                             color = Color(0xFFF44336),
                             modifier = Modifier.clickable { worldToDelete = world },
@@ -408,7 +410,7 @@ object ConnectModule : SpyglassModule {
                 SpyglassDivider()
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    "Clear All Data",
+                    stringResource(R.string.settings_connect_clear_all),
                     style = MaterialTheme.typography.labelSmall,
                     color = Color(0xFFF44336),
                     modifier = Modifier
@@ -508,12 +510,12 @@ object ConnectModule : SpyglassModule {
                 )
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        "Stream Minecraft world data from your PC",
+                        stringResource(R.string.home_connect_stream),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     Text(
-                        "Both devices on the same WiFi",
+                        stringResource(R.string.home_connect_wifi),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -525,7 +527,7 @@ object ConnectModule : SpyglassModule {
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
             ) {
-                Text("Scan QR Code")
+                Text(stringResource(R.string.home_connect_scan_qr))
             }
             if (showReconnect) {
                 Spacer(Modifier.height(4.dp))
@@ -533,7 +535,7 @@ object ConnectModule : SpyglassModule {
                     onClick = onReconnect,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text("Reconnect to Last Device")
+                    Text(stringResource(R.string.home_connect_reconnect_last))
                 }
             }
             if (state is ConnectionState.Error) {
@@ -563,25 +565,30 @@ object ConnectModule : SpyglassModule {
             state is ConnectionState.Connecting || state is ConnectionState.Pairing
         val isDisconnected = state is ConnectionState.Disconnected || state is ConnectionState.Error
 
+        val connectedLabel = stringResource(R.string.home_connect_status_connected)
+        val reconnectingLabel = stringResource(R.string.home_connect_status_reconnecting)
+        val connectingLabel = stringResource(R.string.home_connect_status_connecting)
+        val reconnectLabel = stringResource(R.string.home_connect_status_reconnect)
+
         val (statusColor, statusLabel) = when {
-            state.isConnected -> Emerald to "Connected"
-            isInProgress -> Color(0xFFFFC107) to if (state is ConnectionState.Reconnecting) "Reconnecting" else "Connecting"
-            else -> Color(0xFFF44336) to "Reconnect"
+            state.isConnected -> Emerald to connectedLabel
+            isInProgress -> Color(0xFFFFC107) to if (state is ConnectionState.Reconnecting) reconnectingLabel else connectingLabel
+            else -> Color(0xFFF44336) to reconnectLabel
         }
 
         if (showClearDataDialog) {
             AlertDialog(
                 onDismissRequest = { showClearDataDialog = false },
-                title = { Text("Clear Data") },
-                text = { Text("Clear all cached Connect data? Your device pairing will be kept.") },
+                title = { Text(stringResource(R.string.home_connect_clear_data_title)) },
+                text = { Text(stringResource(R.string.home_connect_clear_data_message)) },
                 confirmButton = {
                     TextButton(onClick = {
                         showClearDataDialog = false
                         onClearData()
-                    }) { Text("Clear") }
+                    }) { Text(stringResource(R.string.home_connect_clear_data_confirm)) }
                 },
                 dismissButton = {
-                    TextButton(onClick = { showClearDataDialog = false }) { Text("Cancel") }
+                    TextButton(onClick = { showClearDataDialog = false }) { Text(stringResource(R.string.cancel)) }
                 },
             )
         }
@@ -654,7 +661,7 @@ object ConnectModule : SpyglassModule {
                     if (state.isConnected) {
                         if (worlds.size > 1) {
                             DropdownMenuItem(
-                                text = { Text("Switch World") },
+                                text = { Text(stringResource(R.string.home_connect_switch_world)) },
                                 onClick = {
                                     statusMenuExpanded = false
                                     worldMenuExpanded = true
@@ -662,7 +669,7 @@ object ConnectModule : SpyglassModule {
                             )
                         }
                         DropdownMenuItem(
-                            text = { Text("Disconnect") },
+                            text = { Text(stringResource(R.string.home_connect_disconnect)) },
                             onClick = {
                                 statusMenuExpanded = false
                                 onDisconnect()
@@ -670,7 +677,7 @@ object ConnectModule : SpyglassModule {
                         )
                     } else if (isDisconnected) {
                         DropdownMenuItem(
-                            text = { Text("Reconnect") },
+                            text = { Text(reconnectLabel) },
                             onClick = {
                                 statusMenuExpanded = false
                                 onReconnect()
@@ -678,7 +685,7 @@ object ConnectModule : SpyglassModule {
                         )
                     } else if (isInProgress) {
                         DropdownMenuItem(
-                            text = { Text("Cancel") },
+                            text = { Text(stringResource(R.string.cancel)) },
                             onClick = {
                                 statusMenuExpanded = false
                                 onDisconnect()
@@ -686,7 +693,7 @@ object ConnectModule : SpyglassModule {
                         )
                     }
                     DropdownMenuItem(
-                        text = { Text("Scan New Device") },
+                        text = { Text(stringResource(R.string.home_connect_scan_new_device)) },
                         onClick = {
                             statusMenuExpanded = false
                             onScanQr()
@@ -694,7 +701,7 @@ object ConnectModule : SpyglassModule {
                     )
                     SpyglassDivider()
                     DropdownMenuItem(
-                        text = { Text("Clear Data", color = Color(0xFFF44336)) },
+                        text = { Text(stringResource(R.string.home_connect_clear_data_title), color = Color(0xFFF44336)) },
                         onClick = {
                             statusMenuExpanded = false
                             showClearDataDialog = true
@@ -718,7 +725,7 @@ object ConnectModule : SpyglassModule {
         ) {
             Box(modifier = Modifier.size(8.dp).background(Emerald, CircleShape))
             Text(
-                "Connected" + if (deviceName.isNotEmpty()) " to $deviceName" else "",
+                stringResource(R.string.home_connect_status_connected) + if (deviceName.isNotEmpty()) " to $deviceName" else "",
                 style = MaterialTheme.typography.labelSmall,
                 color = Emerald,
                 modifier = Modifier.weight(1f),
@@ -734,8 +741,8 @@ object ConnectModule : SpyglassModule {
     ) {
         ResultCard {
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Text("Select a World", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
-                Text("Disconnect", style = MaterialTheme.typography.labelSmall, color = Color(0xFFF44336), modifier = Modifier.clickable { onDisconnect() })
+                Text(stringResource(R.string.home_connect_select_world), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
+                Text(stringResource(R.string.home_connect_disconnect), style = MaterialTheme.typography.labelSmall, color = Color(0xFFF44336), modifier = Modifier.clickable { onDisconnect() })
             }
             Spacer(Modifier.height(8.dp))
             worlds.forEach { world ->
@@ -752,7 +759,7 @@ object ConnectModule : SpyglassModule {
                 }
             }
             if (worlds.isEmpty()) {
-                Text("No worlds found", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.home_connect_no_worlds), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
     }
@@ -789,7 +796,7 @@ object ConnectModule : SpyglassModule {
                     }
                 }
             }
-            Text("Disconnect", style = MaterialTheme.typography.labelSmall, color = Color(0xFFF44336), modifier = Modifier.clickable { onDisconnect() })
+            Text(stringResource(R.string.home_connect_disconnect), style = MaterialTheme.typography.labelSmall, color = Color(0xFFF44336), modifier = Modifier.clickable { onDisconnect() })
         }
     }
 }
