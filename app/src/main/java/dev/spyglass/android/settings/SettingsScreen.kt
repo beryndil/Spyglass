@@ -183,7 +183,10 @@ fun SettingsScreen(
                         FilterChip(
                             selected = appLanguage == code,
                             onClick = { hapticClick(); vm.setAppLanguage(code) },
-                            label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                            label = {
+                                val displayLabel = if (code == "system") stringResource(R.string.settings_language_system_default) else label
+                                Text(displayLabel, style = MaterialTheme.typography.labelSmall)
+                            },
                         )
                     }
                 }

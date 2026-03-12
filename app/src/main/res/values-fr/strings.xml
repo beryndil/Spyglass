@@ -279,6 +279,7 @@
     <string name="settings_translate_game_data_desc">Afficher les noms et descriptions traduits pour les blocs, objets, créatures et autres données du jeu</string>
     <string name="settings_show_original_names">Afficher les noms originaux en anglais</string>
     <string name="settings_show_original_names_desc">Afficher le nom anglais à côté des traductions comme référence</string>
+    <string name="settings_language_system_default">Par défaut du système</string>
     <string name="settings_language_system_override">Ouvrir les paramètres de langue du système</string>
 
     <!-- Settings — Security -->

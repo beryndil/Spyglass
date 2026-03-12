@@ -279,6 +279,7 @@
     <string name="settings_translate_game_data_desc">Show translated names and descriptions for blocks, items, mobs, and other game data</string>
     <string name="settings_show_original_names">Show original English names</string>
     <string name="settings_show_original_names_desc">Display the English name alongside translations for reference</string>
+    <string name="settings_language_system_default">System Default</string>
     <string name="settings_language_system_override">Open system language settings</string>
 
     <!-- Settings — Security -->
