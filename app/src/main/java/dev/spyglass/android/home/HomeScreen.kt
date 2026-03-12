@@ -178,10 +178,10 @@ fun HomeScreen(
     }.collectAsStateWithLifecycle(initialValue = HomePrefs())
 
     // Load and filter tips by edition (async to avoid main thread I/O)
-    val filteredTips by produceState(emptyList<String>(), prefs.minecraftEdition) {
+    val filteredTips by produceState(emptyList<Tip>(), prefs.minecraftEdition) {
         val allTips = TipsLoader.load(context)
         val edition = prefs.minecraftEdition
-        value = allTips.filter { it.edition == "both" || it.edition == edition }.map { it.text }
+        value = allTips.filter { it.edition == "both" || it.edition == edition }
     }
     val tipStartIndex = remember { Calendar.getInstance().get(Calendar.DAY_OF_YEAR) }
 
@@ -282,6 +282,7 @@ fun HomeScreen(
                 HomeTipSection(
                     tips = filteredTips,
                     startIndex = tipStartIndex % filteredTips.size,
+                    repo = repo,
                     onDisable = {
                         scope.launch {
                             context.dataStore.edit { it[PreferenceKeys.SHOW_TIP_OF_DAY] = false }
@@ -483,9 +484,13 @@ private fun HomeFavoritesSection(
 }
 
 @Composable
-private fun HomeTipSection(tips: List<String>, startIndex: Int, onDisable: () -> Unit) {
+private fun HomeTipSection(tips: List<Tip>, startIndex: Int, repo: GameDataRepository?, onDisable: () -> Unit) {
     var tipIndex by remember { mutableIntStateOf(startIndex) }
     var menuExpanded by remember { mutableStateOf(false) }
+    val currentTip = tips[tipIndex]
+    val tipText = if (repo != null) {
+        translatedText(repo, "tip", currentTip.id.toString(), "text", currentTip.text)
+    } else currentTip.text
 
     ResultCard {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -510,7 +515,7 @@ private fun HomeTipSection(tips: List<String>, startIndex: Int, onDisable: () ->
         }
         Spacer(Modifier.height(8.dp))
         Text(
-            tips[tipIndex],
+            tipText,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )

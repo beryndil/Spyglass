@@ -36,6 +36,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,6 +47,7 @@ import dev.spyglass.android.R
 import dev.spyglass.android.core.shell.imageThemeDrawable
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.core.ui.SupportedLanguages
+import dev.spyglass.android.data.repository.GameDataRepository
 
 @Composable
 private fun browseTabNames() = listOf(
@@ -117,6 +121,14 @@ fun SettingsScreen(
 
     val uriHandler = LocalUriHandler.current
     val context = LocalContext.current
+    val app = context.applicationContext as android.app.Application
+    val mcRepo by produceState<GameDataRepository?>(null) {
+        value = kotlinx.coroutines.withContext(Dispatchers.IO) { GameDataRepository.get(app) }
+    }
+    val mcUpdateTx by remember(mcRepo) {
+        mcRepo?.let { translationMapFlow(app.dataStore, it, "mc_update") }
+            ?: kotlinx.coroutines.flow.flowOf(emptyMap())
+    }.collectAsState(initial = emptyMap())
     val hapticClick = rememberHapticClick()
     val hapticConfirm = rememberHapticConfirm()
 
@@ -546,14 +558,17 @@ fun SettingsScreen(
             val selectedVersion = minecraftVersion.ifBlank { MinecraftVersions.JAVA_VERSIONS.last() }
             val updateInfo = remember(selectedVersion) { MinecraftUpdates.forVersion(selectedVersion) }
             if (updateInfo != null) {
+                val tx = mcUpdateTx[updateInfo.version]
                 Spacer(Modifier.height(4.dp))
                 VersionCard(
                     version = updateInfo.version,
-                    name = updateInfo.name,
-                    releaseDate = updateInfo.releaseDate,
+                    name = tx?.get("name") ?: updateInfo.name,
+                    releaseDate = tx?.get("date") ?: updateInfo.releaseDate,
                     accentColor = updateInfo.color,
                     icon = updateInfo.icon,
-                    changelog = updateInfo.changelog,
+                    changelog = updateInfo.changelog.mapIndexed { i, fallback ->
+                        tx?.get("c${i + 1}") ?: fallback
+                    },
                 )
             }
         }
