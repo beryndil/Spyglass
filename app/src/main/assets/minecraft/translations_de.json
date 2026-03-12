@@ -1,1 +1,524 @@
-[]
+[
+  {
+    "entityType": "tip",
+    "entityId": "1",
+    "field": "text",
+    "value": "Glück III auf einer Hacke erhöht die Ernte von Feldfrüchten wie Karotten, Kartoffeln und Netherwarzen — nicht nur von Erzen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "2",
+    "field": "text",
+    "value": "Feldfrüchte wachsen schneller, wenn nicht auf allen vier Seiten derselbe Pflanzentyp steht. Abwechselnde Reihen oder Schachbrettmuster maximieren die Wachstumsgeschwindigkeit."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "3",
+    "field": "text",
+    "value": "Wasser bewässert Ackerland bis zu 4 Blöcke weit — du brauchst nicht in jeder Reihe eine Wasserquelle."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "4",
+    "field": "text",
+    "value": "Feldfrüchte hören nachts auf zu wachsen, wenn das Lichtlevel unter 9 fällt. Fackeln halten Farmen rund um die Uhr am Laufen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "5",
+    "field": "text",
+    "value": "Ein Komposter verwandelt überschüssiges Pflanzenmaterial in Knochenmehl — ideal, um große Farmen im Kreislauf zu halten."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "6",
+    "field": "text",
+    "value": "Kürbisse und Melonen brauchen ihren Stängel nur auf bewässertem Ackerland — der Fruchtblock kann auf trockenem Erdblock wachsen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "7",
+    "field": "text",
+    "value": "Feueraspekt auf einem Schwert gart Fleisch von Tieren, bevor es den Boden berührt — kein Ofen nötig."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "8",
+    "field": "text",
+    "value": "Glück und Behutsamkeit schließen sich gegenseitig aus — du kannst nie beides auf demselben Werkzeug haben."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "9",
+    "field": "text",
+    "value": "Plünderung-Boni gelten nicht, wenn ein Mob durch Feuerschaden stirbt — nur direkte Kills zählen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "10",
+    "field": "text",
+    "value": "Reparatur repariert den Gegenstand, den du gerade in der Hand hältst oder trägst, mithilfe von Erfahrungskugeln — nicht alles gleichzeitig."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "11",
+    "field": "text",
+    "value": "Haltbarkeit III vervierfacht die Haltbarkeit eines Diamantwerkzeugs effektiv."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "12",
+    "field": "text",
+    "value": "Glück III auf Kies erhöht die Feuerstein-Dropchance drastisch — ideal für Pfeile."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "13",
+    "field": "text",
+    "value": "Wasseraffinität entfernt die Abbaugeschwindigkeits-Strafe unter Wasser."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "14",
+    "field": "text",
+    "value": "Tiefenschreiter III auf Stiefeln lässt dich unter Wasser fast mit normaler Gehgeschwindigkeit bewegen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "15",
+    "field": "text",
+    "value": "Wenn du einem Diener mit einem Namensschild den Namen \\\"Johnny\" gibst, greift er jeden Mob in der Nähe an — einschließlich anderer Illager."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "16",
+    "field": "text",
+    "value": "Wenn du einem Schaf mit einem Namensschild den Namen \\\"jeb_\" gibst, wechselt seine Wolle durch alle Farben, aber beim Scheren fällt trotzdem die Originalfarbe."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "17",
+    "field": "text",
+    "value": "Wenn du einen geschnitzten Kürbis auf dem Kopf trägst, kannst du Endermen direkt ansehen, ohne sie wütend zu machen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "18",
+    "field": "text",
+    "value": "Ghast-Geräusche sind veränderte Aufnahmen von C418s Katze, die im Schlaf gestört wurde."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "19",
+    "field": "text",
+    "value": "Der Creeper entstand durch einen Programmierfehler — Notch vertauschte versehentlich Höhe und Länge beim Modellieren eines Schweins."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "20",
+    "field": "text",
+    "value": "Einem Papagei einen Keks zu füttern tötet ihn — Schokolade ist für echte Papageien giftig, und Mojang hat das im Spiel nachgebildet."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "21",
+    "field": "text",
+    "value": "Wölfe können verrottetes Fleisch fressen, ohne den Hunger-Statuseffekt zu bekommen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "22",
+    "field": "text",
+    "value": "Ghasts können Bruchstein mit ihren Explosionen nicht zerstören — er hat eine zu hohe Explosionsresistenz."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "23",
+    "field": "text",
+    "value": "Ghast-Feuerbälle können mit jedem Treffer zurückgeschlagen werden — Fäuste, Schwerter oder ein anderer Feuerball."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "24",
+    "field": "text",
+    "value": "Piglins ignorieren dich komplett, wenn du mindestens ein Stück Goldrüstung trägst — egal welches Teil, egal welcher Slot."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "25",
+    "field": "text",
+    "value": "Das Heilen eines Zombie-Dorfbewohners mit einem Wurftrank der Schwäche und einem Goldenen Apfel schaltet dauerhaft massive Handelsrabatte frei."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "26",
+    "field": "text",
+    "value": "Spinnen passen durch 1 Block breite Lücken; Höhlenspinnen können sich durch noch engere Stellen quetschen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "27",
+    "field": "text",
+    "value": "Enderman-Sprache besteht aus englischen Phrasen wie \\\"Hello\" und \\\"What's up?\", rückwärts abgespielt und verzerrt."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "28",
+    "field": "text",
+    "value": "Kürbisse sind als natürlich vorkommende Blöcke in der Oberwelt seltener als Diamanten."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "29",
+    "field": "text",
+    "value": "Stufen, Treppen und Falltüren können mit Wasser gefüllt werden — nützlich für nahtlose Unterwasserbauten."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "30",
+    "field": "text",
+    "value": "Schilder oder Leitern unter Sand oder Kies halten sie in der Luft — sie fallen nicht, auch ohne festen Block darunter."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "31",
+    "field": "text",
+    "value": "Erde, die unterirdisch platziert und über einen Pfad mit der Oberfläche verbunden wird, lässt Gras mit der Zeit nach unten wachsen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "32",
+    "field": "text",
+    "value": "Blitzableiter ziehen Blitze auch an, wenn sie frei in der Luft schweben, ohne einen Block darunter."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "33",
+    "field": "text",
+    "value": "Amethystknospen-Blöcke können nicht von Kolben bewegt oder mit Behutsamkeit abgebaut werden — sie müssen an Ort und Stelle wachsen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "34",
+    "field": "text",
+    "value": "Waldanwesen können einen geheimen Raum mit einem falschen Endportal aus Wolle und einen weiteren mit versteckten Diamantblöcken enthalten."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "35",
+    "field": "text",
+    "value": "Stein widersteht TNT-Explosionen besser als Erde, Sand oder Holz."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "36",
+    "field": "text",
+    "value": "Angeln im Regen erhöht die Anbissrate deutlich — wirf die Angel bei einem Sturm aus für schnelle Fänge."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "37",
+    "field": "text",
+    "value": "Glück des Meeres III erhöht die Chance auf Schätze (verzauberte Bücher, Sättel, Namensschilder) drastisch."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "38",
+    "field": "text",
+    "value": "Köder III reduziert die durchschnittliche Wartezeit zwischen Anbissen auf nur wenige Sekunden."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "39",
+    "field": "text",
+    "value": "Platziere Fackeln beim Erkunden von Höhlen nur auf einer Seite, damit du den Rückweg findest, indem du folgst, auf welcher Seite sie stehen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "40",
+    "field": "text",
+    "value": "Wenn du aus tödlicher Höhe fällst, platziere kurz vor dem Aufprall schnell Wasser aus einem Eimer, um den Fall abzufangen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "41",
+    "field": "text",
+    "value": "Eine Leiter oder Ranke am Ende eines langen Falls stoppt deinen Schwung und verhindert den Tod."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "42",
+    "field": "text",
+    "value": "Schlafen während eines Gewitters funktioniert auch tagsüber — überspringe direkt zum Morgen, ohne zu warten."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "43",
+    "field": "text",
+    "value": "Sprint-Springen auf Eis ist schneller als Sprinten auf jeder anderen Oberfläche."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "44",
+    "field": "text",
+    "value": "Dorfbewohner-Handelsangebote werden neu gewürfelt, wenn du ihre Arbeitsstation zerstörst und ersetzt — wechsle Bibliothekare durch, bis du das gewünschte verzauberte Buch bekommst."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "45",
+    "field": "text",
+    "value": "Ein geheilter Zombie-Dorfbewohner senkt seine Handelspreise dauerhaft — nach zwei Heilungen sind die meisten Angebote fast kostenlos."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "46",
+    "field": "text",
+    "value": "Dorfbewohner zählen die Betten in ihrem Dorf — keine freien Betten bedeutet keine Vermehrung, egal wie viel Essen vorhanden ist."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "47",
+    "field": "text",
+    "value": "Es gibt eine 0,01%-Chance, dass im Hauptmenü bei jedem Start \\\"Minceraft\" statt \\\"Minecraft\" angezeigt wird."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "48",
+    "field": "text",
+    "value": "Lederrüstung kann in 12.326.391 verschiedenen Farbkombinationen gefärbt werden."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "49",
+    "field": "text",
+    "value": "Kaninchenragout stellt weniger Hunger wieder her als die einzelnen Zutaten separat zu essen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "50",
+    "field": "text",
+    "value": "Kekse enthalten keinen Zucker im Herstellungsrezept — nur Weizen und Kakaobohnen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "51",
+    "field": "text",
+    "value": "Der ursprüngliche Name von Minecraft war \\\"Cave Game\"."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "52",
+    "field": "text",
+    "value": "Ein vom Wither fallengelassener Netherstern kann nicht durch Explosionen zerstört werden."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "53",
+    "field": "text",
+    "value": "Es gibt ungefähr eine 0,4%-Chance, dass aus einem einzigen geworfenen Ei vier Küken gleichzeitig schlüpfen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "54",
+    "field": "text",
+    "value": "Die Schallplatte \\\"11\" ist genau 1:11,111 Minuten lang und gibt ein Komparator-Signal mit genau Stärke 11 aus."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "55",
+    "field": "text",
+    "value": "Mondphasen in der Java Edition beeinflussen die Schleim-Spawns in Sümpfen — bei Vollmond erscheinen viel mehr Schleime, bei Neumond deutlich weniger."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "56",
+    "field": "text",
+    "value": "Quasi-Konnektivität erlaubt es, Kolben und Werfer durch ein Redstone-Signal einen Block direkt über ihnen zu aktivieren — auch ohne direkte Kabelverbindung. Das gibt es in der Bedrock Edition nicht."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "57",
+    "field": "text",
+    "value": "Block-Update-Unterdrückung (BUD) kann normalerweise unmögliche Strukturen wie schwebenden Sand oder quellenloses Wasser erzeugen, indem sie das Spiel daran hindert, Blockzustandsänderungen zu verarbeiten. Nur in der Java Edition möglich."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "58",
+    "field": "text",
+    "value": "Die \\\"Südost-Regel\" bedeutet, dass viele Gleichstands-Entscheidungen im Spiel — Block-Updates, Redstone, Item-Drops — standardmäßig in Richtung Süden oder Osten aufgelöst werden."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "59",
+    "field": "text",
+    "value": "Endermen, die in einem Boot oder einer Lore gefangen sind, können in der Java Edition nicht wegteleportieren — die Grundlage der meisten Enderman-Farmen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "60",
+    "field": "text",
+    "value": "Wenn du eine Tür unter Wasser platzierst, entsteht eine Lufttasche — du kannst darin atmen. Das funktioniert nicht in der Bedrock Edition."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "61",
+    "field": "text",
+    "value": "Ein Boot als MLG-Landung (Landung in der Luft) rettet dich in der Java Edition vor allem Fallschaden. In der Bedrock Edition stirbst du trotzdem."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "62",
+    "field": "text",
+    "value": "Du kannst eine Fackel in den Nebenhand-Slot legen, die dann Umgebungslicht um dich herum erzeugt, ohne sie zu platzieren — ein subtiler Höhlentrick. In der Bedrock Edition funktioniert die Nebenhand nicht auf dieselbe Weise."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "63",
+    "field": "text",
+    "value": "Der Nahkampf in Java hat eine Abklingzeit — warte, bis der Schwertindikator wieder voll ist, bevor du erneut zuschlagst, um vollen Schaden zu verursachen. Spamklicken macht deutlich weniger Schaden."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "64",
+    "field": "text",
+    "value": "Banner können in der Java Edition als benutzerdefinierte Markierungen auf einer Karte platziert werden — nützlich zum Beschriften deiner Welt. Nicht verfügbar in der Bedrock Edition."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "65",
+    "field": "text",
+    "value": "In Java pausiert das Pausieren des Spiels tatsächlich die Welt. In Bedrock bewirkt die Pause-Taste nichts — das Spiel läuft weiter und du kannst sterben, während du \\\"pausiert\" hast."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "66",
+    "field": "text",
+    "value": "Der Wither hat in der Java Edition 300 LP — die Hälfte seines Bedrock-Gegenstücks."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "67",
+    "field": "text",
+    "value": "Aufspießen V auf einem Dreizack verursacht in der Java Edition Bonusschaden gegen alle Wassermobs — einschließlich Wächter, Ertrunkene und Große Wächter."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "68",
+    "field": "text",
+    "value": "Das Totem der Unsterblichkeit gewährt in der Java Edition 45 Sekunden Regeneration II (Bedrock gibt nur 40 Sekunden)."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "69",
+    "field": "text",
+    "value": "Nur natürlich generierte Sculk-Kreischer können in der Java Edition den Warden herbeirufen — vom Spieler platzierte tun nichts."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "70",
+    "field": "text",
+    "value": "F3+H zeigt Haltbarkeit und Daten-Tags in Tooltips an. F3+B zeigt Hitboxen aller Entitäten in der Nähe. Java-Debug-Werkzeuge."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "71",
+    "field": "text",
+    "value": "F3+C für 10 Sekunden gedrückt halten lässt das Spiel absichtlich abstürzen — nützlich zum Erzwingen eines Beendens, ohne den letzten Fortschritt zu verlieren."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "72",
+    "field": "text",
+    "value": "Effizienz V auf einer Diamantspitzhacke kombiniert mit Eile II von einem Leuchtfeuer ermöglicht Sofortabbau der meisten Blöcke."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "73",
+    "field": "text",
+    "value": "Jede Amboss-Operation erhöht die \\\"Vorarbeitskosten\". Verzauberungen in der falschen Reihenfolge anzuwenden kann ein Werkzeug dauerhaft auf \\\"Zu teuer!\" sperren — die Reihenfolge ist entscheidend."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "74",
+    "field": "text",
+    "value": "Die Bedrock Edition unterstützt plattformübergreifenden Multiplayer — Xbox, PlayStation, Nintendo Switch, Mobilgeräte und PC können alle zusammen in derselben Welt spielen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "75",
+    "field": "text",
+    "value": "In der Bedrock Edition pausiert das Spiel NICHT wirklich, wenn du das Pausemenü öffnest — Mobs bewegen sich weiter und du kannst sterben, während du \\\"pausiert\" hast. Suche immer zuerst Schutz."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "76",
+    "field": "text",
+    "value": "Der Wither hat in Bedrock 600 LP — das Doppelte seines Java-Gegenstücks. Auf dem Schwierigkeitsgrad Schwer beschwört er mitten im Kampf auch Witherskelette."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "77",
+    "field": "text",
+    "value": "Knochenmehl funktioniert bei Zuckerrohr in der Bedrock Edition — du kannst es sofort wachsen lassen. In Java funktioniert das nicht."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "78",
+    "field": "text",
+    "value": "Kessel können in der Bedrock Edition mit Tränken gefüllt werden und zum Herstellen von Effektpfeilen verwendet werden, ohne eine Braustation einrichten zu müssen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "79",
+    "field": "text",
+    "value": "Wasser in einem Kessel kann in der Bedrock Edition gefärbt werden, sodass du Lederrüstung direkt im Kessel färben kannst."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "80",
+    "field": "text",
+    "value": "Feldfrüchte und Pflanzen wachsen in der Bedrock Edition generell langsamer als in Java — plane deine Farmen entsprechend."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "81",
+    "field": "text",
+    "value": "Pflanzen können in der Bedrock Edition \\\"schneegefüllt\" werden — Schnee kann sich in Pflanzenblöcken schichten, was in verschneiten Biomen sogar natürlich vorkommt."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "82",
+    "field": "text",
+    "value": "In der Bedrock Edition können Baby-Tintenfische spawnen — die gibt es in Java nicht."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "83",
+    "field": "text",
+    "value": "Endermen KÖNNEN sich in der Bedrock Edition aus Booten teleportieren — anders als in Java hält ein Boot sie nicht fest."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "84",
+    "field": "text",
+    "value": "Die Bedrock Edition hat keine Nahkampf-Abklingzeit — du kannst so schnell zuschlagen, wie du klicken/tippen kannst, ohne Schadenseinbußen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "85",
+    "field": "text",
+    "value": "Der Marktplatz in der Bedrock Edition bietet offizielle Skin-Pakete, Welten und Add-ons direkt im Spiel an — keine Drittanbieter-Seiten nötig."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "86",
+    "field": "text",
+    "value": "Spawner erscheinen im Bedrock-Kreativinventar — in Java braucht man Befehle, um einen zu bekommen."
+  },
+  {
+    "entityType": "tip",
+    "entityId": "87",
+    "field": "text",
+    "value": "Baby-Zombies können in Bedrock auf einer größeren Vielfalt von passiven Mobs reiten — Hühner, Schafe und sogar erwachsene Zombies."
+  }
+]
