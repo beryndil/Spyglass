@@ -874,6 +874,9 @@
     <string name="connect_no_cached_advancements">No cached advancements</string>
     <string name="connect_loading_advancements">Loading advancements\u2026</string>
     <string name="connect_completed_count">%1$d / %2$d completed</string>
+    <string name="connect_adv_completed">Completed</string>
+    <string name="connect_adv_available">Available</string>
+    <string name="connect_adv_locked">Locked</string>
 
     <!-- Connect — Waypoints Screen -->
     <string name="connect_waypoints">Waypoints</string>

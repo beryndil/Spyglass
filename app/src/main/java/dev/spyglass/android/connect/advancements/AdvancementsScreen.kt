@@ -1,7 +1,11 @@
 package dev.spyglass.android.connect.advancements
 
 import android.content.Context
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,6 +41,16 @@ private data class AdvancementMeta(
     val category: String = "",
     val type: String = "task",
     val parent: String? = null,
+    val hint: String = "",
+    val tutorial: String = "",
+    val requirements: String = "",
+    val relatedItems: String = "",
+    val relatedMobs: String = "",
+    val relatedStructures: String = "",
+    val relatedBiomes: String = "",
+    val dimension: String = "",
+    val xpReward: String = "",
+    val difficulty: String = "",
 )
 
 /** Merged advancement with player status. */
@@ -156,8 +170,16 @@ private fun AdvancementsContent(
     val hapticClick = rememberHapticClick()
     var selectedTab by remember { mutableStateOf<String?>(null) }
 
+    // State filter checkboxes
+    var showCompleted by remember { mutableStateOf(true) }
+    var showAvailable by remember { mutableStateOf(true) }
+    var showLocked by remember { mutableStateOf(true) }
+
+    // Single-expansion: track which advancement ID is expanded
+    var expandedId by remember { mutableStateOf<String?>(null) }
+
     // Merge and build tree
-    val nodes = remember(allMeta, playerMap, selectedTab) {
+    val nodes = remember(allMeta, playerMap, selectedTab, showCompleted, showAvailable, showLocked) {
         val completedIds = playerMap.filter { it.value.done }.keys
         val metaById = allMeta.associateBy { it.id }
 
@@ -189,6 +211,12 @@ private fun AdvancementsContent(
                 state = advState(meta),
                 depth = depth(meta),
             )
+        }.filter { node ->
+            when (node.state) {
+                AdvState.COMPLETED -> showCompleted
+                AdvState.AVAILABLE -> showAvailable
+                AdvState.LOCKED -> showLocked
+            }
         }.sortedWith(compareBy({ TAB_ORDER.indexOf(it.meta.category).let { i -> if (i < 0) 99 else i } }, { it.depth }, { it.meta.name }))
     }
 
@@ -244,17 +272,53 @@ private fun AdvancementsContent(
             }
         }
 
+        // State filter checkboxes
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = showCompleted,
+                    onCheckedChange = { showCompleted = it },
+                    colors = CheckboxDefaults.colors(checkedColor = Emerald),
+                )
+                Text(stringResource(R.string.connect_adv_completed), style = MaterialTheme.typography.bodySmall)
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = showAvailable,
+                    onCheckedChange = { showAvailable = it },
+                    colors = CheckboxDefaults.colors(checkedColor = Emerald),
+                )
+                Text(stringResource(R.string.connect_adv_available), style = MaterialTheme.typography.bodySmall)
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = showLocked,
+                    onCheckedChange = { showLocked = it },
+                    colors = CheckboxDefaults.colors(checkedColor = Emerald),
+                )
+                Text(stringResource(R.string.connect_adv_locked), style = MaterialTheme.typography.bodySmall)
+            }
+        }
+
         // Group by category
         var lastCategory = ""
         nodes.forEach { node ->
             if (node.meta.category != lastCategory) {
                 lastCategory = node.meta.category
                 if (selectedTab == null) {
-                    Spacer(Modifier.height(4.dp))
                     SectionHeader(title = advTabLabel(node.meta.category))
                 }
             }
-            AdvancementRow(node)
+            AdvancementRow(
+                node = node,
+                isExpanded = expandedId == node.meta.id,
+                onToggle = {
+                    expandedId = if (expandedId == node.meta.id) null else node.meta.id
+                },
+            )
         }
 
         Spacer(Modifier.height(16.dp))
@@ -262,7 +326,12 @@ private fun AdvancementsContent(
 }
 
 @Composable
-private fun AdvancementRow(node: AdvancementNode) {
+private fun AdvancementRow(
+    node: AdvancementNode,
+    isExpanded: Boolean,
+    onToggle: () -> Unit,
+) {
+    val hapticClick = rememberHapticClick()
     val alpha = when (node.state) {
         AdvState.COMPLETED -> 0.5f
         AdvState.AVAILABLE -> 1.0f
@@ -270,7 +339,9 @@ private fun AdvancementRow(node: AdvancementNode) {
     }
 
     ResultCard(
-        modifier = Modifier.padding(start = (node.depth * 12).dp),
+        modifier = Modifier
+            .padding(start = (node.depth * 12).dp)
+            .clickable { hapticClick(); onToggle() },
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -311,7 +382,7 @@ private fun AdvancementRow(node: AdvancementNode) {
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
-                if (node.meta.description.isNotBlank()) {
+                if (node.meta.description.isNotBlank() && !isExpanded) {
                     Text(
                         node.meta.description,
                         style = MaterialTheme.typography.bodySmall,
@@ -341,7 +412,114 @@ private fun AdvancementRow(node: AdvancementNode) {
                 AdvState.LOCKED -> {}
             }
         }
+
+        // Expandable detail card
+        AnimatedVisibility(
+            visible = isExpanded,
+            enter = expandVertically(),
+            exit = shrinkVertically(),
+        ) {
+            AdvancementDetail(node.meta)
+        }
     }
+}
+
+@Composable
+private fun AdvancementDetail(meta: AdvancementMeta) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        SpyglassDivider()
+
+        // Full description
+        if (meta.description.isNotBlank()) {
+            Text(
+                meta.description,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+
+        // Requirements
+        if (meta.requirements.isNotBlank()) {
+            SectionHeader(title = stringResource(R.string.advancements_requirements))
+            Text(
+                meta.requirements,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+
+        // How to Get This (hint)
+        if (meta.hint.isNotBlank()) {
+            SectionHeader(title = stringResource(R.string.advancements_how_to_get))
+            Text(
+                meta.hint,
+                style = MaterialTheme.typography.bodySmall,
+                color = Emerald,
+            )
+        }
+
+        // Tutorial
+        if (meta.tutorial.isNotBlank()) {
+            SectionHeader(title = stringResource(R.string.advancements_tutorial))
+            Text(
+                meta.tutorial,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+
+        // Stats
+        val hasStats = meta.difficulty.isNotBlank() || meta.xpReward.isNotBlank() || meta.dimension.isNotBlank()
+        if (hasStats) {
+            SectionHeader(title = stringResource(R.string.advancements_stats))
+            if (meta.difficulty.isNotBlank()) {
+                StatRow(
+                    label = stringResource(R.string.advancements_difficulty),
+                    value = meta.difficulty.replaceFirstChar { it.uppercase() },
+                )
+            }
+            if (meta.xpReward.isNotBlank()) {
+                StatRow(
+                    label = stringResource(R.string.advancements_xp_reward),
+                    value = meta.xpReward,
+                )
+            }
+            if (meta.dimension.isNotBlank()) {
+                StatRow(
+                    label = stringResource(R.string.dimension),
+                    value = meta.dimension.replaceFirstChar { it.uppercase() },
+                )
+            }
+        }
+
+        // Related sections
+        val relatedItems = formatRelated(meta.relatedItems)
+        val relatedMobs = formatRelated(meta.relatedMobs)
+        val relatedStructures = formatRelated(meta.relatedStructures)
+        val relatedBiomes = formatRelated(meta.relatedBiomes)
+
+        if (relatedItems.isNotBlank()) {
+            StatRow(label = stringResource(R.string.advancements_related_items), value = relatedItems)
+        }
+        if (relatedMobs.isNotBlank()) {
+            StatRow(label = stringResource(R.string.advancements_related_mobs), value = relatedMobs)
+        }
+        if (relatedStructures.isNotBlank()) {
+            StatRow(label = stringResource(R.string.advancements_related_structures), value = relatedStructures)
+        }
+        if (relatedBiomes.isNotBlank()) {
+            StatRow(label = stringResource(R.string.advancements_related_biomes), value = relatedBiomes)
+        }
+    }
+}
+
+/** Strip `minecraft:` prefix, replace underscores with spaces, title-case, join with commas. */
+private fun formatRelated(raw: String): String {
+    if (raw.isBlank()) return ""
+    return raw.split(",")
+        .map { it.trim().removePrefix("minecraft:").replace("_", " ") }
+        .filter { it.isNotBlank() }
+        .joinToString(", ") { it.replaceFirstChar { c -> c.uppercase() } }
 }
 
 private val advJson = Json { ignoreUnknownKeys = true }
