@@ -72,10 +72,9 @@ private fun browseLinks() = listOf(
     QuickLink(PixelIcons.Enchant,   stringResource(R.string.home_link_enchants),     EnderPurple)                                 to 7,
     QuickLink(PixelIcons.Potion,    stringResource(R.string.home_link_potions),      PotionBlue)                                  to 8,
     // ── Progress & Info ──
-    QuickLink(PixelIcons.Advancement, stringResource(R.string.home_link_advancements), Emerald)                                         to 9,
-    QuickLink(PixelIcons.Command,   stringResource(R.string.home_link_commands),     PotionBlue)                                  to 10,
-    QuickLink(PixelIcons.Bookmark,  stringResource(R.string.home_link_reference),    MaterialTheme.colorScheme.primary)           to 11,
-    QuickLink(PixelIcons.Clock,     stringResource(R.string.home_link_versions),     MaterialTheme.colorScheme.secondary)         to 12,
+    QuickLink(PixelIcons.Command,   stringResource(R.string.home_link_commands),     PotionBlue)                                  to 9,
+    QuickLink(PixelIcons.Bookmark,  stringResource(R.string.home_link_reference),    MaterialTheme.colorScheme.primary)           to 10,
+    QuickLink(PixelIcons.Clock,     stringResource(R.string.home_link_versions),     MaterialTheme.colorScheme.secondary)         to 11,
 )
 
 // Pair: QuickLink to calculator-tab index (allows visual reordering independent of tab order)
@@ -120,8 +119,7 @@ private fun browseTabForType(type: String): Int = when (type) {
     "structure" -> 6
     "enchant"   -> 7
     "potion"      -> 8
-    "advancement" -> 9
-    "command"     -> 10
+    "command"     -> 9
     else          -> 0
 }
 
@@ -656,7 +654,6 @@ private fun connectLinks(
             add(QuickLink(PixelIcons.Steve,   stringResource(R.string.home_connect_link_players))       to "connect_players")
         }
         add(QuickLink(PixelIcons.Anvil,       stringResource(R.string.home_connect_link_statistics))    to "connect_statistics")
-        add(QuickLink(PixelIcons.Advancement, stringResource(R.string.home_connect_link_advancements))       to "tracker")
     }
 }
 
@@ -696,12 +693,7 @@ private fun HomeConnectSection(
         // ── Has cached data (any connection state) — data-first ──
         hasCachedData -> {
             QuickLinkGrid(links.map { it.first }) { index ->
-                val route = links[index].second
-                if (route == "tracker") {
-                    onCalcTab(19)
-                } else {
-                    onConnectNav(route)
-                }
+                onConnectNav(links[index].second)
             }
             Spacer(Modifier.height(6.dp))
             ConnectStatusLine(

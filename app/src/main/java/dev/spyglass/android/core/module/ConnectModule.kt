@@ -239,12 +239,7 @@ object ConnectModule : SpyglassModule {
                 )
                 Spacer(Modifier.height(6.dp))
                 QuickLinkGrid(links.map { it.first }) { index ->
-                    val route = links[index].second
-                    if (route == "tracker") {
-                        scope.navigateToCalcTab(19)
-                    } else {
-                        scope.navigateTo(route)
-                    }
+                    scope.navigateTo(links[index].second)
                 }
             }
 
@@ -450,7 +445,6 @@ object ConnectModule : SpyglassModule {
                 add(QuickLink(PixelIcons.Steve, stringResource(R.string.home_connect_link_players)) to "connect_players")
             }
             add(QuickLink(PixelIcons.Anvil, stringResource(R.string.home_connect_link_statistics)) to "connect_statistics")
-            add(QuickLink(PixelIcons.Advancement, stringResource(R.string.home_connect_link_advancements)) to "tracker")
         }
     }
 

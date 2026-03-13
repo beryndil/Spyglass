@@ -14,8 +14,7 @@ class BrowseTabMappingTest {
     @Test fun structure()   = assertEquals(6, browseTabForType("Structure"))
     @Test fun enchantment() = assertEquals(7, browseTabForType("Enchantment"))
     @Test fun potion()      = assertEquals(8, browseTabForType("Potion"))
-    @Test fun advancement() = assertEquals(9, browseTabForType("Advancement"))
-    @Test fun command()     = assertEquals(10, browseTabForType("Command"))
+    @Test fun command()     = assertEquals(9, browseTabForType("Command"))
 
     @Test
     fun unknownType_defaultsToZero() {

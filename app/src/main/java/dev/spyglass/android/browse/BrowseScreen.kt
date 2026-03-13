@@ -19,7 +19,6 @@ import dev.spyglass.android.browse.items.ItemsScreen
 import dev.spyglass.android.browse.mobs.MobsScreen
 import dev.spyglass.android.browse.potions.PotionsScreen
 import dev.spyglass.android.browse.structures.StructuresScreen
-import dev.spyglass.android.browse.advancements.AdvancementsScreen
 import dev.spyglass.android.browse.commands.CommandsScreen
 import dev.spyglass.android.browse.trades.TradesScreen
 import dev.spyglass.android.browse.versions.VersionsScreen
@@ -48,10 +47,9 @@ private fun browseTabs() = listOf(
     SpyglassTab(stringResource(R.string.browse_tab_structures),   PixelIcons.Structure),    // 6
     SpyglassTab(stringResource(R.string.browse_tab_enchants),     PixelIcons.Enchant, untinted = true), // 7
     SpyglassTab(stringResource(R.string.browse_tab_potions),      PixelIcons.Potion),       // 8
-    SpyglassTab(stringResource(R.string.browse_tab_advancements), PixelIcons.Advancement, untinted = true), // 9
-    SpyglassTab(stringResource(R.string.browse_tab_commands),     PixelIcons.Command),      // 10
-    SpyglassTab(stringResource(R.string.browse_tab_reference),    PixelIcons.Bookmark),     // 11
-    SpyglassTab(stringResource(R.string.browse_tab_versions),    PixelIcons.Clock),        // 12
+    SpyglassTab(stringResource(R.string.browse_tab_commands),     PixelIcons.Command),      // 9
+    SpyglassTab(stringResource(R.string.browse_tab_reference),    PixelIcons.Bookmark),     // 10
+    SpyglassTab(stringResource(R.string.browse_tab_versions),    PixelIcons.Clock),        // 11
 )
 
 @Composable
@@ -80,7 +78,6 @@ fun BrowseScreen(
     var targetStructureId by remember { mutableStateOf<String?>(null) }
     var targetItemId by remember { mutableStateOf<String?>(null) }
     var targetProfession by remember { mutableStateOf<String?>(null) }
-    var targetAdvancementId by remember { mutableStateOf<String?>(null) }
     var targetCommandId by remember { mutableStateOf<String?>(null) }
     var targetEnchantId by remember { mutableStateOf<String?>(null) }
 
@@ -90,8 +87,7 @@ fun BrowseScreen(
             tab = initialTarget.tab
             targetMobId = null; targetBiomeId = null; targetBlockId = null
             targetRecipeId = null; targetStructureId = null; targetItemId = null
-            targetProfession = null; targetAdvancementId = null; targetCommandId = null
-            targetEnchantId = null
+            targetProfession = null; targetCommandId = null; targetEnchantId = null
             when (initialTarget.tab) {
                 0 -> targetBlockId = initialTarget.id
                 1 -> targetItemId = initialTarget.id
@@ -101,8 +97,7 @@ fun BrowseScreen(
                 5 -> targetBiomeId = initialTarget.id
                 6 -> targetStructureId = initialTarget.id
                 7 -> targetEnchantId = initialTarget.id
-                9 -> targetAdvancementId = initialTarget.id
-                10 -> targetCommandId = initialTarget.id
+                9 -> targetCommandId = initialTarget.id
             }
         }
     }
@@ -146,7 +141,6 @@ fun BrowseScreen(
         targetStructureId = null
         targetItemId = null
         targetProfession = null
-        targetAdvancementId = null
         targetCommandId = null
         targetEnchantId = null
     }
@@ -271,17 +265,7 @@ fun BrowseScreen(
                 entityLinkIndex = entityLinkIndex,
             )
             8 -> PotionsScreen(onItemTap = onItemTap)
-            9 -> AdvancementsScreen(
-                targetAdvancementId = targetAdvancementId,
-                onItemTap = onItemTap,
-                onMobTap = onMobTap,
-                onStructureTap = onStructureTap,
-                onBiomeTap = onBiomeTap,
-                onCalcTab = onCalcTab,
-                onEnchantTap = onEnchantTap,
-                entityLinkIndex = entityLinkIndex,
-            )
-            10 -> CommandsScreen(
+            9 -> CommandsScreen(
                 targetCommandId = targetCommandId,
                 onItemTap = onItemTap,
                 onMobTap = onMobTap,
@@ -290,8 +274,8 @@ fun BrowseScreen(
                 onEnchantTap = onEnchantTap,
                 entityLinkIndex = entityLinkIndex,
             )
-            11 -> ReferenceScreen()
-            12 -> VersionsScreen()
+            10 -> ReferenceScreen()
+            11 -> VersionsScreen()
         }
     }
 }

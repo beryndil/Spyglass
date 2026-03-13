@@ -91,8 +91,7 @@ fun browseTabForType(type: String): Int = when (type) {
     "Structure"   -> 6
     "Enchantment" -> 7
     "Potion"      -> 8
-    "Advancement" -> 9
-    "Command"     -> 10
+    "Command"     -> 9
     else          -> 0
 }
 

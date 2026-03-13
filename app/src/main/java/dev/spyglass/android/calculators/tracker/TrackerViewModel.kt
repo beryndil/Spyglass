@@ -3,7 +3,6 @@ package dev.spyglass.android.calculators.tracker
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import dev.spyglass.android.browse.advancements.TreeNode
 import dev.spyglass.android.connect.PlayerAdvancementsPayload
 import dev.spyglass.android.core.VersionFilterState
 import dev.spyglass.android.core.applyVersionFilter
@@ -20,6 +19,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+
+data class TreeNode(
+    val advancement: AdvancementEntity,
+    val depth: Int,
+    val children: List<TreeNode>,
+    val totalDescendantCount: Int,
+)
 
 enum class AdvState { COMPLETED, AVAILABLE, LOCKED }
 
@@ -89,7 +95,7 @@ class TrackerViewModel(app: Application) : AndroidViewModel(app) {
         .map { payload ->
             payload?.advancements
                 ?.filter { it.done }
-                ?.map { it.id }
+                ?.map { it.id.removePrefix("minecraft:") }
                 ?.toSet()
                 ?: emptySet()
         }
@@ -110,7 +116,7 @@ class TrackerViewModel(app: Application) : AndroidViewModel(app) {
     fun setConnectAdvancements(payload: PlayerAdvancementsPayload?) {
         _connectPayload.value = payload
         if (payload != null) {
-            val ids = payload.advancements.filter { it.done }.map { it.id }.toSet()
+            val ids = payload.advancements.filter { it.done }.map { it.id.removePrefix("minecraft:") }.toSet()
             bulkSyncFromConnect(ids)
         }
     }
@@ -184,7 +190,18 @@ class TrackerViewModel(app: Application) : AndroidViewModel(app) {
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
     fun setQuery(q: String) { _query.value = q }
-    fun setCategory(c: String) { _category.value = c }
+    fun setCategory(c: String) {
+        _category.value = c
+        // Auto-expand root nodes when switching categories
+        if (c != "all") {
+            viewModelScope.launch {
+                advancements.first { it.isNotEmpty() }.let { advs ->
+                    val rootIds = advs.filter { it.parent.isEmpty() }.map { it.id }.toSet()
+                    _treeExpandedIds.value = _treeExpandedIds.value + rootIds
+                }
+            }
+        }
+    }
 
     fun toggleExpanded(id: String) {
         val current = _expandedIds.value
