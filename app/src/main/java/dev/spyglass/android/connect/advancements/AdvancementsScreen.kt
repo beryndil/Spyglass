@@ -6,6 +6,7 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -256,6 +257,7 @@ private fun AdvancementsContent(
 
         // Tab filter chips
         Row(
+            modifier = Modifier.horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             FilterChip(
@@ -274,7 +276,8 @@ private fun AdvancementsContent(
 
         // State filter checkboxes
         Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -282,7 +285,9 @@ private fun AdvancementsContent(
                     checked = showCompleted,
                     onCheckedChange = { showCompleted = it },
                     colors = CheckboxDefaults.colors(checkedColor = Emerald),
+                    modifier = Modifier.size(32.dp),
                 )
+                Spacer(Modifier.width(4.dp))
                 Text(stringResource(R.string.connect_adv_completed), style = MaterialTheme.typography.bodySmall)
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -290,7 +295,9 @@ private fun AdvancementsContent(
                     checked = showAvailable,
                     onCheckedChange = { showAvailable = it },
                     colors = CheckboxDefaults.colors(checkedColor = Emerald),
+                    modifier = Modifier.size(32.dp),
                 )
+                Spacer(Modifier.width(4.dp))
                 Text(stringResource(R.string.connect_adv_available), style = MaterialTheme.typography.bodySmall)
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -298,7 +305,9 @@ private fun AdvancementsContent(
                     checked = showLocked,
                     onCheckedChange = { showLocked = it },
                     colors = CheckboxDefaults.colors(checkedColor = Emerald),
+                    modifier = Modifier.size(32.dp),
                 )
+                Spacer(Modifier.width(4.dp))
                 Text(stringResource(R.string.connect_adv_locked), style = MaterialTheme.typography.bodySmall)
             }
         }
