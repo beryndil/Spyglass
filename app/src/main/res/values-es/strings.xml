@@ -1683,4 +1683,9 @@
     <string name="clock_color_green">Verde</string>
     <string name="clock_color_gold">Dorado</string>
     <string name="clock_color_red">Rojo</string>
+    <string name="calc_tab_tracker">Seguimiento</string>
+    <string name="tracker_title">Seguimiento de Logros</string>
+    <string name="tracker_description">Sigue tu progreso en todos los logros de Minecraft. Se sincroniza en vivo con Spyglass Connect.</string>
+    <string name="tracker_connect_live">En vivo desde %s</string>
+    <string name="tracker_connect_managed">Progreso sincronizado desde Connect</string>
 </resources>

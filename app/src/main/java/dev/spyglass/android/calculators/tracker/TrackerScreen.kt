@@ -1,0 +1,682 @@
+package dev.spyglass.android.calculators.tracker
+
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.spyglass.android.R
+import dev.spyglass.android.connect.ConnectViewModel
+import dev.spyglass.android.connect.PlayerAdvancementsPayload
+import dev.spyglass.android.connect.client.ConnectionState
+import dev.spyglass.android.core.VersionAvailability
+import dev.spyglass.android.core.VersionFilterState
+import dev.spyglass.android.core.checkAvailability
+import dev.spyglass.android.core.ui.*
+import dev.spyglass.android.data.db.entities.AdvancementEntity
+import dev.spyglass.android.data.db.entities.VersionTagEntity
+import kotlinx.coroutines.launch
+
+// ── Helpers ─────────────────────────────────────────────────────────────────
+
+@Composable
+private fun typeLabel(type: String): String = when (type) {
+    "task" -> stringResource(R.string.adv_type_task)
+    "goal" -> stringResource(R.string.adv_type_goal)
+    "challenge" -> stringResource(R.string.adv_type_challenge)
+    else -> type.replaceFirstChar { it.uppercase() }
+}
+
+@Composable
+private fun categoryLabel(cat: String): String = when (cat) {
+    "minecraft" -> stringResource(R.string.adv_tab_minecraft)
+    "nether" -> stringResource(R.string.adv_tab_nether)
+    "end" -> stringResource(R.string.adv_tab_end)
+    "adventure" -> stringResource(R.string.adv_tab_adventure)
+    "husbandry" -> stringResource(R.string.adv_tab_husbandry)
+    else -> cat.replaceFirstChar { it.uppercase() }
+}
+
+private fun difficultyColor(difficulty: String): Color = when (difficulty) {
+    "trivial" -> Emerald
+    "easy" -> PotionBlue
+    "medium" -> Color(0xFFFFA726)
+    "hard" -> NetherRed
+    "expert" -> EnderPurple
+    else -> Color.Gray
+}
+
+private fun formatId(id: String): String =
+    id.removePrefix("minecraft:").split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
+
+private fun parseCommaSeparated(csv: String): List<String> {
+    if (csv.isBlank()) return emptyList()
+    return csv.split(",").map { it.trim() }.filter { it.isNotEmpty() }
+}
+
+// ── Main Screen ─────────────────────────────────────────────────────────────
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun TrackerScreen(
+    connectViewModel: ConnectViewModel? = null,
+    onItemTap: (String) -> Unit = {},
+    onMobTap: (String) -> Unit = {},
+    onStructureTap: (String) -> Unit = {},
+    onBiomeTap: (String) -> Unit = {},
+    onEnchantTap: (String) -> Unit = {},
+    entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
+    vm: TrackerViewModel = viewModel(),
+) {
+    val query by vm.query.collectAsStateWithLifecycle()
+    val category by vm.category.collectAsStateWithLifecycle()
+    val advancements by vm.advancements.collectAsStateWithLifecycle()
+    val filteredFlatTreeItems by vm.filteredFlatTreeItems.collectAsStateWithLifecycle()
+    val expandedIds by vm.expandedIds.collectAsStateWithLifecycle()
+    val treeExpandedIds by vm.treeExpandedIds.collectAsStateWithLifecycle()
+    val completedIds by vm.completedIds.collectAsStateWithLifecycle()
+    val effectiveCompletedIds by vm.effectiveCompletedIds.collectAsStateWithLifecycle()
+    val completedCount by vm.completedCount.collectAsStateWithLifecycle()
+    val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
+    val favoriteAdvancements by vm.favoriteAdvancements.collectAsStateWithLifecycle()
+    val categoryCounts by vm.categoryCounts.collectAsStateWithLifecycle()
+    val sortKey by vm.sortKey.collectAsStateWithLifecycle()
+    val vFilter by vm.versionFilter.collectAsStateWithLifecycle()
+    val vTags by vm.versionTags.collectAsStateWithLifecycle()
+    val txMap by vm.translations.collectAsStateWithLifecycle()
+    val isConnectActive by vm.isConnectActive.collectAsStateWithLifecycle()
+    val connectWorldName by vm.connectWorldName.collectAsStateWithLifecycle()
+    val showCompleted by vm.showCompleted.collectAsStateWithLifecycle()
+    val showAvailable by vm.showAvailable.collectAsStateWithLifecycle()
+    val showLocked by vm.showLocked.collectAsStateWithLifecycle()
+
+    val listState = rememberLazyListState()
+    val hapticConfirm = rememberHapticConfirm()
+    val reduceMotion = LocalReduceAnimations.current
+    val hapticClick = rememberHapticClick()
+    var showResetDialog by remember { mutableStateOf(false) }
+    val isSearching = query.isNotBlank()
+
+    // ── Connect integration ─────────────────────────────────────────────────
+    val playerAdv = connectViewModel?.playerAdvancements?.collectAsStateWithLifecycle()?.value
+    val connectionState = connectViewModel?.connectionState?.collectAsStateWithLifecycle()?.value
+    val isConnected = connectionState?.isConnected == true
+
+    if (connectViewModel != null) {
+        DisposableEffect(Unit) {
+            connectViewModel.setActiveScreen("advancements")
+            onDispose { connectViewModel.setActiveScreen(null) }
+        }
+
+        LaunchedEffect(isConnected) {
+            if (isConnected) {
+                connectViewModel.requestAdvancements()
+            }
+        }
+
+        LaunchedEffect(playerAdv) {
+            vm.setConnectAdvancements(playerAdv)
+        }
+    }
+
+    val effectiveCompleted = effectiveCompletedIds.size
+    val totalCount = advancements.size
+
+    val sortOptions = listOf(
+        SortOption(stringResource(R.string.advancements_sort_name), "name"),
+        SortOption(stringResource(R.string.advancements_sort_type), "type"),
+    )
+
+    if (showResetDialog) {
+        AlertDialog(
+            onDismissRequest = { showResetDialog = false },
+            title = { Text(stringResource(R.string.advancements_reset_progress), color = MaterialTheme.colorScheme.onSurface) },
+            text = { Text(stringResource(R.string.advancements_reset_confirm), color = MaterialTheme.colorScheme.onSurfaceVariant) },
+            confirmButton = {
+                TextButton(onClick = { vm.resetAllProgress(); showResetDialog = false }) {
+                    Text(stringResource(R.string.advancements_reset), color = Red400)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showResetDialog = false }) {
+                    Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.secondary)
+                }
+            },
+            containerColor = MaterialTheme.colorScheme.surface,
+        )
+    }
+
+    LazyColumn(
+        state = listState,
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        // Search bar + sort button
+        item(key = "search_bar") {
+            Row(
+                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp, end = 0.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                SpyglassSearchBar(
+                    query = query, onQueryChange = vm::setQuery,
+                    category = "advancements", placeholder = stringResource(R.string.advancements_search_placeholder),
+                    modifier = Modifier.weight(1f),
+                )
+                SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
+            }
+        }
+
+        // Category chips
+        item(key = "category_chips") {
+            FlowRow(
+                modifier = Modifier.padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                listOf("all", "minecraft", "nether", "end", "adventure", "husbandry").forEach { cat ->
+                    val counts = if (cat == "all") null else categoryCounts[cat]
+                    val chipLabel = if (cat == "all") stringResource(R.string.all)
+                    else if (counts != null) "${categoryLabel(cat)} (${counts.first}/${counts.second})"
+                    else categoryLabel(cat)
+                    FilterChip(
+                        selected = category == cat,
+                        onClick = { hapticClick(); vm.setCategory(cat) },
+                        label = { Text(chipLabel, style = MaterialTheme.typography.labelSmall) },
+                    )
+                }
+            }
+        }
+
+        // State filter checkboxes
+        item(key = "state_filters") {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(
+                        checked = showCompleted,
+                        onCheckedChange = { vm.setShowCompleted(it) },
+                        colors = CheckboxDefaults.colors(checkedColor = Emerald),
+                        modifier = Modifier.size(32.dp),
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(stringResource(R.string.connect_adv_completed), style = MaterialTheme.typography.bodySmall)
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(
+                        checked = showAvailable,
+                        onCheckedChange = { vm.setShowAvailable(it) },
+                        colors = CheckboxDefaults.colors(checkedColor = Emerald),
+                        modifier = Modifier.size(32.dp),
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(stringResource(R.string.connect_adv_available), style = MaterialTheme.typography.bodySmall)
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(
+                        checked = showLocked,
+                        onCheckedChange = { vm.setShowLocked(it) },
+                        colors = CheckboxDefaults.colors(checkedColor = Emerald),
+                        modifier = Modifier.size(32.dp),
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(stringResource(R.string.connect_adv_locked), style = MaterialTheme.typography.bodySmall)
+                }
+            }
+        }
+
+        // Live from Connect indicator
+        if (isConnectActive && connectWorldName != null) {
+            item(key = "connect_live") {
+                ResultCard(
+                    modifier = Modifier.padding(vertical = 4.dp),
+                ) {
+                    Text(
+                        stringResource(R.string.tracker_connect_live, connectWorldName ?: ""),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Emerald,
+                    )
+                }
+            }
+        }
+
+        // Header
+        item(key = "header") {
+            TabIntroHeader(
+                icon = PixelIcons.Advancement,
+                title = stringResource(R.string.tracker_title),
+                description = stringResource(R.string.tracker_description),
+                stat = stringResource(R.string.advancements_stat, effectiveCompleted, totalCount),
+            )
+        }
+
+        // Progress bar
+        item(key = "progress_bar") {
+            val progress = if (totalCount > 0) effectiveCompleted.toFloat() / totalCount else 0f
+            Column(modifier = Modifier.padding(bottom = 4.dp)) {
+                LinearProgressIndicator(
+                    progress = { progress },
+                    modifier = Modifier.fillMaxWidth().height(6.dp),
+                    color = Emerald,
+                    trackColor = MaterialTheme.colorScheme.outline,
+                    strokeCap = androidx.compose.ui.graphics.StrokeCap.Round,
+                )
+                Spacer(Modifier.height(4.dp))
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text("${(progress * 100).toInt()}%", style = MaterialTheme.typography.labelSmall, color = Emerald)
+                    if (!isConnectActive) {
+                        Text(
+                            stringResource(R.string.advancements_reset_progress),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.secondary,
+                            modifier = Modifier.clickable { showResetDialog = true },
+                        )
+                    }
+                }
+            }
+        }
+
+        // Favorites section
+        if (favoriteAdvancements.isNotEmpty()) {
+            item(key = "fav_header") {
+                Text(
+                    stringResource(R.string.favorites), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(top = 8.dp, bottom = 4.dp),
+                )
+            }
+            items(favoriteAdvancements, key = { "fav_${it.id}" }) { fav ->
+                val isComplete = fav.id in effectiveCompletedIds
+                BrowseListItem(
+                    headline = fav.displayName,
+                    supporting = "",
+                    supportingMaxLines = 1,
+                    leadingIcon = PixelIcons.Advancement,
+                    leadingIconTint = if (isComplete) Emerald else MaterialTheme.colorScheme.onSurfaceVariant,
+                    trailing = {
+                        IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                            Icon(Icons.Filled.Star, contentDescription = stringResource(R.string.favorite), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                        }
+                    },
+                )
+            }
+        }
+
+        // Tree view items
+        items(filteredFlatTreeItems, key = { it.first.id }) { (adv, depth) ->
+            val tag = vTags["advancement:${adv.id}"]
+            val availability = checkAvailability(tag, vFilter)
+            val vAlpha = when (availability) {
+                VersionAvailability.NOT_YET_ADDED -> 0.5f
+                VersionAvailability.REMOVED, VersionAvailability.WRONG_EDITION -> 0.4f
+                else -> 1f
+            }
+            val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
+            val isDetailExpanded = adv.id in expandedIds
+            val isTreeExpanded = adv.id in treeExpandedIds
+            val isComplete = adv.id in effectiveCompletedIds
+            val hasChildren = advancements.any { it.parent == adv.id }
+
+            Column(modifier = Modifier.alpha(vAlpha)) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = (depth * 24).dp)
+                        .background(LocalSurfaceCard.current, RoundedCornerShape(10.dp))
+                        .clickable { vm.toggleExpanded(adv.id) }
+                        .padding(horizontal = 10.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    // Checkbox
+                    Checkbox(
+                        checked = isComplete,
+                        onCheckedChange = if (isConnectActive) null else { _ -> vm.toggleCompleted(adv.id) },
+                        enabled = !isConnectActive,
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = Emerald,
+                            uncheckedColor = MaterialTheme.colorScheme.secondary,
+                            checkmarkColor = MaterialTheme.colorScheme.onPrimary,
+                            disabledCheckedColor = Emerald.copy(alpha = 0.6f),
+                            disabledUncheckedColor = MaterialTheme.colorScheme.secondary.copy(alpha = 0.6f),
+                        ),
+                        modifier = Modifier.size(24.dp),
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    // Tree expand/collapse
+                    if (hasChildren) {
+                        IconButton(
+                            onClick = { vm.toggleTreeExpanded(adv.id) },
+                            modifier = Modifier.size(24.dp),
+                        ) {
+                            Icon(
+                                if (isTreeExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                                contentDescription = stringResource(R.string.advancements_toggle_children),
+                                tint = MaterialTheme.colorScheme.secondary,
+                                modifier = Modifier.size(18.dp),
+                            )
+                        }
+                        Spacer(Modifier.width(4.dp))
+                    }
+                    // Name
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            txMap[adv.id]?.get("name") ?: adv.name,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = if (isComplete) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface,
+                            textDecoration = if (isComplete) TextDecoration.LineThrough else TextDecoration.None,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                    Spacer(Modifier.width(4.dp))
+                    // Badges
+                    Column(horizontalAlignment = Alignment.End) {
+                        if (addedIn.isNotBlank() && availability != VersionAvailability.AVAILABLE) {
+                            VersionBadge(addedIn)
+                            Spacer(Modifier.height(2.dp))
+                        }
+                        val typeColor = when (adv.type) {
+                            "challenge" -> MaterialTheme.colorScheme.primary
+                            "goal" -> PotionBlue
+                            else -> Emerald
+                        }
+                        CategoryBadge(label = typeLabel(adv.type), color = typeColor)
+                        if (adv.difficulty.isNotEmpty()) {
+                            Spacer(Modifier.height(2.dp))
+                            CategoryBadge(label = adv.difficulty.replaceFirstChar { it.uppercase() }, color = difficultyColor(adv.difficulty))
+                        }
+                        if (hasChildren) {
+                            Spacer(Modifier.height(2.dp))
+                            val childCount = advancements.count { it.parent == adv.id }
+                            CategoryBadge(label = stringResource(R.string.advancements_children_count, childCount), color = MaterialTheme.colorScheme.secondary)
+                        }
+                    }
+                    Spacer(Modifier.width(4.dp))
+                    // Favorite star
+                    val isFav = adv.id in favoriteIds
+                    IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(adv.id, adv.name) }, modifier = Modifier.size(28.dp)) {
+                        Icon(
+                            Icons.Filled.Star,
+                            contentDescription = stringResource(R.string.favorite),
+                            tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
+                            modifier = Modifier.size(18.dp),
+                        )
+                    }
+                }
+                // Detail card
+                @Suppress("NAME_SHADOWING")
+                val reduceMotion = LocalReduceAnimations.current
+                AnimatedVisibility(
+                    visible = isDetailExpanded,
+                    enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
+                    exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
+                ) {
+                    TrackerDetailCard(
+                        adv = adv,
+                        isComplete = isComplete,
+                        isConnectManaged = isConnectActive,
+                        allAdvancements = advancements,
+                        onToggleComplete = { vm.toggleCompleted(adv.id) },
+                        onItemTap = onItemTap,
+                        onMobTap = onMobTap,
+                        onStructureTap = onStructureTap,
+                        onBiomeTap = onBiomeTap,
+                        onEnchantTap = onEnchantTap,
+                        entityLinkIndex = entityLinkIndex,
+                        tag = tag,
+                        vFilter = vFilter,
+                        txMap = txMap,
+                        onAdvancementTap = { parentId ->
+                            vm.navigateToAdvancement(parentId, advancements)
+                            val idx = filteredFlatTreeItems.indexOfFirst { it.first.id == parentId }
+                            if (idx >= 0) {
+                                vm.viewModelScope.launch {
+                                    if (reduceMotion) listState.scrollToItem(idx + 2)
+                                    else listState.animateScrollToItem(idx + 2)
+                                }
+                            }
+                        },
+                        modifier = Modifier.padding(start = (depth * 24).dp, top = 4.dp),
+                    )
+                }
+            }
+        }
+
+        if (filteredFlatTreeItems.isEmpty()) item {
+            EmptyState(
+                icon = PixelIcons.SearchOff,
+                title = stringResource(R.string.advancements_no_results_title),
+                subtitle = stringResource(R.string.advancements_no_results_subtitle),
+            )
+        }
+    }
+}
+
+// ── Detail Card ─────────────────────────────────────────────────────────────
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun TrackerDetailCard(
+    adv: AdvancementEntity,
+    isComplete: Boolean,
+    isConnectManaged: Boolean,
+    allAdvancements: List<AdvancementEntity>,
+    onToggleComplete: () -> Unit,
+    onItemTap: (String) -> Unit,
+    onMobTap: (String) -> Unit,
+    onStructureTap: (String) -> Unit,
+    onBiomeTap: (String) -> Unit,
+    onEnchantTap: (String) -> Unit,
+    entityLinkIndex: EntityLinkIndex,
+    tag: VersionTagEntity? = null,
+    vFilter: VersionFilterState = VersionFilterState(),
+    txMap: Map<String, Map<String, String>> = emptyMap(),
+    onAdvancementTap: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    ResultCard(modifier = modifier) {
+        MinecraftIdRow(adv.id)
+        if (tag != null) {
+            VersionEditionSection(tag, vFilter)
+        }
+        if (adv.description.isNotEmpty()) {
+            LinkedDescription(
+                description = txMap[adv.id]?.get("description") ?: adv.description,
+                linkIndex = entityLinkIndex,
+                selfId = adv.id,
+                onItemTap = onItemTap,
+                onMobTap = onMobTap,
+                onBiomeTap = onBiomeTap,
+                onStructureTap = onStructureTap,
+                onEnchantTap = onEnchantTap,
+            )
+        }
+
+        // Requirements section
+        if (adv.requirements.isNotEmpty()) {
+            SectionHeader(title = stringResource(R.string.advancements_requirements))
+            Text(txMap[adv.id]?.get("requirements") ?: adv.requirements, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+        }
+
+        // How to get this section
+        if (adv.hint.isNotEmpty()) {
+            SectionHeader(title = stringResource(R.string.advancements_how_to_get))
+            Text(txMap[adv.id]?.get("hint") ?: adv.hint, style = MaterialTheme.typography.bodyMedium, color = Emerald)
+        }
+
+        // Tutorial section
+        if (adv.tutorial.isNotEmpty()) {
+            SectionHeader(title = stringResource(R.string.advancements_tutorial))
+            Text(txMap[adv.id]?.get("tutorial") ?: adv.tutorial, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+        }
+
+        // Stats
+        SectionHeader(title = stringResource(R.string.advancements_stats))
+        StatRow(stringResource(R.string.category), categoryLabel(adv.category))
+        StatRow(stringResource(R.string.type), typeLabel(adv.type))
+        if (adv.difficulty.isNotEmpty()) {
+            StatRow(stringResource(R.string.advancements_difficulty), adv.difficulty.replaceFirstChar { it.uppercase() })
+        }
+        if (adv.dimension.isNotEmpty()) {
+            StatRow(stringResource(R.string.dimension), adv.dimension.replaceFirstChar { it.uppercase() })
+        }
+        if (adv.xpReward.isNotEmpty() && adv.xpReward != "0") {
+            StatRow(stringResource(R.string.advancements_xp_reward), adv.xpReward)
+        }
+
+        // Requires (parent advancement)
+        if (adv.parent.isNotEmpty()) {
+            SectionHeader(title = stringResource(R.string.advancements_requires))
+            val parentAdv = allAdvancements.find { it.id == adv.parent }
+            val parentName = parentAdv?.name ?: adv.parent.substringAfterLast('/').replace('_', ' ').replaceFirstChar { it.uppercase() }
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                AssistChip(
+                    onClick = { onAdvancementTap(adv.parent) },
+                    label = { Text(parentName, style = MaterialTheme.typography.labelSmall) },
+                    colors = AssistChipDefaults.assistChipColors(
+                        labelColor = PotionBlue,
+                        containerColor = PotionBlue.copy(alpha = 0.12f),
+                    ),
+                    border = null,
+                )
+            }
+        }
+
+        // Related Items
+        val relatedItems = parseCommaSeparated(adv.relatedItems)
+        if (relatedItems.isNotEmpty()) {
+            SectionHeader(title = stringResource(R.string.advancements_related_items))
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                relatedItems.forEach { itemId ->
+                    AssistChip(
+                        onClick = { onItemTap(itemId) },
+                        label = { Text(formatId(itemId), style = MaterialTheme.typography.labelSmall) },
+                        colors = AssistChipDefaults.assistChipColors(
+                            labelColor = MaterialTheme.colorScheme.primary,
+                            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
+                        ),
+                        border = null,
+                    )
+                }
+            }
+        }
+
+        // Related Mobs
+        val relatedMobs = parseCommaSeparated(adv.relatedMobs)
+        if (relatedMobs.isNotEmpty()) {
+            SectionHeader(title = stringResource(R.string.advancements_related_mobs))
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                relatedMobs.forEach { mobId ->
+                    AssistChip(
+                        onClick = { onMobTap(mobId) },
+                        label = { Text(formatId(mobId), style = MaterialTheme.typography.labelSmall) },
+                        colors = AssistChipDefaults.assistChipColors(
+                            labelColor = NetherRed,
+                            containerColor = NetherRed.copy(alpha = 0.12f),
+                        ),
+                        border = null,
+                    )
+                }
+            }
+        }
+
+        // Related Structures
+        val relatedStructures = parseCommaSeparated(adv.relatedStructures)
+        if (relatedStructures.isNotEmpty()) {
+            SectionHeader(title = stringResource(R.string.advancements_related_structures))
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                relatedStructures.forEach { structureId ->
+                    AssistChip(
+                        onClick = { onStructureTap(structureId) },
+                        label = { Text(formatId(structureId), style = MaterialTheme.typography.labelSmall) },
+                        colors = AssistChipDefaults.assistChipColors(
+                            labelColor = EnderPurple,
+                            containerColor = EnderPurple.copy(alpha = 0.12f),
+                        ),
+                        border = null,
+                    )
+                }
+            }
+        }
+
+        // Related Biomes
+        val relatedBiomes = parseCommaSeparated(adv.relatedBiomes)
+        if (relatedBiomes.isNotEmpty()) {
+            SectionHeader(title = stringResource(R.string.advancements_related_biomes))
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                relatedBiomes.forEach { biomeId ->
+                    AssistChip(
+                        onClick = { onBiomeTap(biomeId) },
+                        label = { Text(formatId(biomeId), style = MaterialTheme.typography.labelSmall) },
+                        colors = AssistChipDefaults.assistChipColors(
+                            labelColor = Emerald,
+                            containerColor = Emerald.copy(alpha = 0.12f),
+                        ),
+                        border = null,
+                    )
+                }
+            }
+        }
+
+        // Completion toggle
+        SpyglassDivider()
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            if (isConnectManaged) {
+                Text(
+                    stringResource(R.string.tracker_connect_managed),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = Emerald,
+                    modifier = Modifier.padding(vertical = 8.dp),
+                )
+            } else {
+                TextButton(onClick = onToggleComplete) {
+                    Icon(
+                        Icons.Default.Check,
+                        contentDescription = null,
+                        tint = if (isComplete) Emerald else MaterialTheme.colorScheme.secondary,
+                        modifier = Modifier.size(18.dp),
+                    )
+                    Spacer(Modifier.width(6.dp))
+                    Text(
+                        if (isComplete) stringResource(R.string.advancements_completed) else stringResource(R.string.advancements_mark_complete),
+                        color = if (isComplete) Emerald else MaterialTheme.colorScheme.secondary,
+                        style = MaterialTheme.typography.labelSmall,
+                    )
+                }
+            }
+        }
+
+        SpyglassDivider()
+        ReportProblemRow(entityType = "Advancement", entityName = adv.name, entityId = adv.id)
+        ReportTranslationRow(entityType = "Advancement", entityName = adv.name, entityId = adv.id)
+    }
+}

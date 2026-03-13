@@ -239,6 +239,7 @@ fun HomeScreen(
                     onScanQr = onScanQr,
                     onBrowseTarget = onBrowseTarget,
                     onConnectNav = onConnectNav,
+                    onCalcTab = onCalcTab,
                 )
             }
         }
@@ -655,7 +656,7 @@ private fun connectLinks(
             add(QuickLink(PixelIcons.Steve,   stringResource(R.string.home_connect_link_players))       to "connect_players")
         }
         add(QuickLink(PixelIcons.Anvil,       stringResource(R.string.home_connect_link_statistics))    to "connect_statistics")
-        add(QuickLink(PixelIcons.Advancement, stringResource(R.string.home_connect_link_advancements))       to "connect_advancements")
+        add(QuickLink(PixelIcons.Advancement, stringResource(R.string.home_connect_link_advancements))       to "tracker")
     }
 }
 
@@ -665,6 +666,7 @@ private fun HomeConnectSection(
     onScanQr: () -> Unit,
     onBrowseTarget: (dev.spyglass.android.navigation.BrowseTarget) -> Unit = {},
     onConnectNav: (String) -> Unit = {},
+    onCalcTab: (Int) -> Unit = {},
 ) {
     val state by connectViewModel.connectionState.collectAsStateWithLifecycle()
     val worlds by connectViewModel.worlds.collectAsStateWithLifecycle()
@@ -694,7 +696,12 @@ private fun HomeConnectSection(
         // ── Has cached data (any connection state) — data-first ──
         hasCachedData -> {
             QuickLinkGrid(links.map { it.first }) { index ->
-                onConnectNav(links[index].second)
+                val route = links[index].second
+                if (route == "tracker") {
+                    onCalcTab(19)
+                } else {
+                    onConnectNav(route)
+                }
             }
             Spacer(Modifier.height(6.dp))
             ConnectStatusLine(

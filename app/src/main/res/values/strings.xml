@@ -137,6 +137,10 @@
     <string name="home_connect_link_players">Players</string>
     <string name="home_connect_link_statistics">Statistics</string>
     <string name="home_connect_link_advancements">Advancements</string>
+    <string name="tracker_title">Advancement Tracker</string>
+    <string name="tracker_description">Track your progress through all Minecraft advancements. Syncs live when connected to Spyglass Connect.</string>
+    <string name="tracker_connect_live">Live from %s</string>
+    <string name="tracker_connect_managed">Progress synced from Connect</string>
     <!-- Home Screen — Connect (additional) -->
     <string name="home_connect_unknown_world">Unknown World</string>
     <string name="home_connect_connected_to">Connected to %1$s</string>
@@ -433,6 +437,7 @@
     <string name="calc_tab_banners">Banners</string>
     <string name="calc_tab_trims">Trims</string>
     <string name="calc_tab_loot">Loot</string>
+    <string name="calc_tab_tracker">Tracker</string>
 
     <!-- Browse Screens -->
 

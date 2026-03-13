@@ -28,12 +28,16 @@ import dev.spyglass.android.calculators.notes.NotesScreen
 import dev.spyglass.android.calculators.redstone.RedstoneScreen
 import dev.spyglass.android.calculators.waypoints.WaypointsScreen
 import dev.spyglass.android.calculators.todo.TodoScreen
+import dev.spyglass.android.calculators.tracker.TrackerScreen
+import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassTab
 import dev.spyglass.android.core.ui.SpyglassTabRow
 import dev.spyglass.android.navigation.BrowseTarget
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
+import androidx.activity.ComponentActivity
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.map
 
 /** Stable string key for each calculator tab — decoupled from visual index. */
@@ -64,6 +68,7 @@ private fun allCalcTabs() = listOf(
     CalcTabEntry("banners",    SpyglassTab(stringResource(R.string.calc_tab_banners),     PixelIcons.Blocks)),
     CalcTabEntry("trims",      SpyglassTab(stringResource(R.string.calc_tab_trims),       PixelIcons.Item)),
     CalcTabEntry("loot",       SpyglassTab(stringResource(R.string.calc_tab_loot),        PixelIcons.Structure)),
+    CalcTabEntry("tracker",    SpyglassTab(stringResource(R.string.calc_tab_tracker),    PixelIcons.Advancement)),
 )
 
 /** Map legacy integer tab index → stable key for external callers (HomeScreen, etc.) */
@@ -72,6 +77,7 @@ fun calcTabKey(legacyIndex: Int): String = when (legacyIndex) {
     5 -> "maze"; 6 -> "storage"; 7 -> "smelt"; 8 -> "nether"; 9 -> "clock"
     10 -> "light"; 11 -> "notes"; 12 -> "waypoints"; 13 -> "redstone"; 14 -> "librarian"
     15 -> "food"; 16 -> "banners"; 17 -> "trims"; 18 -> "loot"
+    19 -> "tracker"
     else -> "todo"
 }
 
@@ -121,33 +127,49 @@ fun CalculatorsScreen(
         )
         HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp)
 
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-        ) {
-            val onStructureTap: (String) -> Unit = { structureId ->
-                onBrowseTarget(BrowseTarget(6, structureId))
+        when (selectedKey) {
+            "tracker" -> {
+                val activity = LocalContext.current as ComponentActivity
+                val connectVm: ConnectViewModel = viewModel(activity)
+                TrackerScreen(
+                    connectViewModel = connectVm,
+                    onItemTap = { id -> onBrowseTarget(BrowseTarget(1, id)) },
+                    onMobTap = { id -> onBrowseTarget(BrowseTarget(3, id)) },
+                    onStructureTap = { id -> onBrowseTarget(BrowseTarget(6, id)) },
+                    onBiomeTap = { id -> onBrowseTarget(BrowseTarget(5, id)) },
+                    onEnchantTap = { id -> onBrowseTarget(BrowseTarget(7, id)) },
+                )
             }
-            when (selectedKey) {
-                "todo"       -> TodoScreen()
-                "shopping"   -> ShoppingScreen()
-                "enchanting" -> AnvilScreen()
-                "fill"       -> BlockFillScreen()
-                "shapes"     -> ShapesScreen()
-                "maze"       -> MazeScreen()
-                "storage"    -> StorageScreen()
-                "smelt"      -> SmeltingScreen()
-                "nether"     -> NetherScreen()
-                "clock"      -> ClockScreen()
-                "light"      -> LightScreen()
-                "notes"      -> NotesScreen()
-                "waypoints"  -> WaypointsScreen()
-                "redstone"   -> RedstoneScreen()
-                "librarian"  -> LibrarianScreen()
-                "food"       -> FoodScreen()
-                "banners"    -> BannerScreen()
-                "trims"      -> TrimScreen(onStructureTap = onStructureTap)
-                "loot"       -> LootScreen(onStructureTap = onStructureTap)
+            else -> {
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                ) {
+                    val onStructureTap: (String) -> Unit = { structureId ->
+                        onBrowseTarget(BrowseTarget(6, structureId))
+                    }
+                    when (selectedKey) {
+                        "todo"       -> TodoScreen()
+                        "shopping"   -> ShoppingScreen()
+                        "enchanting" -> AnvilScreen()
+                        "fill"       -> BlockFillScreen()
+                        "shapes"     -> ShapesScreen()
+                        "maze"       -> MazeScreen()
+                        "storage"    -> StorageScreen()
+                        "smelt"      -> SmeltingScreen()
+                        "nether"     -> NetherScreen()
+                        "clock"      -> ClockScreen()
+                        "light"      -> LightScreen()
+                        "notes"      -> NotesScreen()
+                        "waypoints"  -> WaypointsScreen()
+                        "redstone"   -> RedstoneScreen()
+                        "librarian"  -> LibrarianScreen()
+                        "food"       -> FoodScreen()
+                        "banners"    -> BannerScreen()
+                        "trims"      -> TrimScreen(onStructureTap = onStructureTap)
+                        "loot"       -> LootScreen(onStructureTap = onStructureTap)
+                    }
+                }
             }
         }
     }

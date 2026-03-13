@@ -266,6 +266,7 @@ object ToolsModule : SpyglassModule {
         CalcLink(QuickLink(PixelIcons.Torch, stringResource(R.string.home_link_light_spacing)), 10),
         CalcLink(QuickLink(PixelIcons.Nether, stringResource(R.string.home_link_nether_portal)), 8),
         CalcLink(QuickLink(PixelIcons.Clock, stringResource(R.string.home_link_game_clock)), 9),
+        CalcLink(QuickLink(PixelIcons.Advancement, stringResource(R.string.home_link_advancements), Emerald), 19),
     )
 
     @Composable
@@ -280,6 +281,7 @@ object ToolsModule : SpyglassModule {
         stringResource(R.string.calc_tab_librarian), stringResource(R.string.calc_tab_food),
         stringResource(R.string.calc_tab_banners), stringResource(R.string.calc_tab_trims),
         stringResource(R.string.calc_tab_loot),
+        stringResource(R.string.calc_tab_tracker),
     )
 
     @Composable

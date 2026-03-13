@@ -1683,4 +1683,9 @@
     <string name="clock_color_green">緑</string>
     <string name="clock_color_gold">金</string>
     <string name="clock_color_red">赤</string>
+    <string name="calc_tab_tracker">トラッカー</string>
+    <string name="tracker_title">進捗トラッカー</string>
+    <string name="tracker_description">すべてのMinecraftの進捗を追跡します。Spyglass Connectに接続するとライブ同期されます。</string>
+    <string name="tracker_connect_live">%s からライブ</string>
+    <string name="tracker_connect_managed">Connectから進捗を同期中</string>
 </resources>

@@ -46,7 +46,6 @@ import dev.spyglass.android.connect.inventory.EnderChestScreen
 import dev.spyglass.android.connect.chestfinder.ChestFinderScreen
 import dev.spyglass.android.connect.map.MapScreen
 import dev.spyglass.android.connect.statistics.StatisticsScreen
-import dev.spyglass.android.connect.advancements.AdvancementsScreen
 import dev.spyglass.android.connect.players.PlayersScreen
 import dev.spyglass.android.connect.players.CompareScreen
 import dev.spyglass.android.connect.pets.PetsScreen
@@ -150,13 +149,6 @@ object ConnectModule : SpyglassModule {
                     onBack = { nav.navigateBack() },
                 )
             },
-            ModuleRoute("connect_advancements") { _, nav ->
-                val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
-                AdvancementsScreen(
-                    viewModel = connectViewModel,
-                    onBack = { nav.navigateBack() },
-                )
-            },
             ModuleRoute("connect_players") { _, nav ->
                 val connectViewModel: ConnectViewModel = viewModel(LocalContext.current as ComponentActivity)
                 PlayersScreen(
@@ -247,7 +239,12 @@ object ConnectModule : SpyglassModule {
                 )
                 Spacer(Modifier.height(6.dp))
                 QuickLinkGrid(links.map { it.first }) { index ->
-                    scope.navigateTo(links[index].second)
+                    val route = links[index].second
+                    if (route == "tracker") {
+                        scope.navigateToCalcTab(19)
+                    } else {
+                        scope.navigateTo(route)
+                    }
                 }
             }
 
@@ -453,7 +450,7 @@ object ConnectModule : SpyglassModule {
                 add(QuickLink(PixelIcons.Steve, stringResource(R.string.home_connect_link_players)) to "connect_players")
             }
             add(QuickLink(PixelIcons.Anvil, stringResource(R.string.home_connect_link_statistics)) to "connect_statistics")
-            add(QuickLink(PixelIcons.Advancement, stringResource(R.string.home_connect_link_advancements)) to "connect_advancements")
+            add(QuickLink(PixelIcons.Advancement, stringResource(R.string.home_connect_link_advancements)) to "tracker")
         }
     }
 

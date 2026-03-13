@@ -36,7 +36,6 @@ import dev.spyglass.android.connect.inventory.EnderChestScreen
 import dev.spyglass.android.connect.chestfinder.ChestFinderScreen
 import dev.spyglass.android.connect.map.MapScreen
 import dev.spyglass.android.connect.statistics.StatisticsScreen
-import dev.spyglass.android.connect.advancements.AdvancementsScreen
 import dev.spyglass.android.disclaimer.DisclaimerScreen
 import dev.spyglass.android.feedback.FeedbackScreen
 import dev.spyglass.android.license.LicenseScreen
@@ -59,7 +58,7 @@ private val SUB_ROUTES = setOf(
     "about", "settings", "changelog", "feedback", "license", "disclaimer",
     "connect_scan", "connect_character", "connect_inventory",
     "connect_enderchest", "connect_chestfinder", "connect_map",
-    "connect_statistics", "connect_advancements", "connect_waypoints",
+    "connect_statistics", "connect_waypoints",
 )
 
 /** Pending navigation target from Search -> Browse */
@@ -264,12 +263,6 @@ fun AppNavGraph() {
             }
             composable("connect_statistics") {
                 StatisticsScreen(
-                    viewModel = connectViewModel,
-                    onBack = { navController.popBackStack() },
-                )
-            }
-            composable("connect_advancements") {
-                AdvancementsScreen(
                     viewModel = connectViewModel,
                     onBack = { navController.popBackStack() },
                 )

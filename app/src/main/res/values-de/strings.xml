@@ -1683,4 +1683,9 @@
     <string name="clock_color_green">Grün</string>
     <string name="clock_color_gold">Gold</string>
     <string name="clock_color_red">Rot</string>
+    <string name="calc_tab_tracker">Tracker</string>
+    <string name="tracker_title">Fortschritts-Tracker</string>
+    <string name="tracker_description">Verfolge deinen Fortschritt bei allen Minecraft-Fortschritten. Synchronisiert live mit Spyglass Connect.</string>
+    <string name="tracker_connect_live">Live von %s</string>
+    <string name="tracker_connect_managed">Fortschritt von Connect synchronisiert</string>
 </resources>
