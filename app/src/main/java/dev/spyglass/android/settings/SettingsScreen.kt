@@ -166,8 +166,9 @@ fun SettingsScreen(
 
         // ══════════════════════════════════════════════════════════════════
         // 0. LANGUAGE — app locale selector (top of settings)
+        //    Hidden until i18n translations are revisited. All infrastructure remains intact.
         // ══════════════════════════════════════════════════════════════════
-        item(key = "language") {
+        if (false) item(key = "language") {
             SectionHeader(stringResource(R.string.settings_language))
             ResultCard {
                 Text(
