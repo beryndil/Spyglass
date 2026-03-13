@@ -349,7 +349,7 @@ private fun AdvancementRow(
 
     ResultCard(
         modifier = Modifier
-            .padding(start = (node.depth * 12).dp)
+            .padding(start = (node.depth.coerceAtMost(3) * 12).dp)
             .clickable { hapticClick(); onToggle() },
     ) {
         Row(
