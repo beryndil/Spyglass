@@ -126,11 +126,18 @@ object CoreModule : SpyglassModule {
     // ── Settings sections ───────────────────────────────────────────────────
 
     override fun settingsSections(): List<SettingsSection> = listOf(
-        SettingsSection("language", "Language", -10) { LanguageContent() },
-        SettingsSection("appearance", "Appearance", 0) { AppearanceContent() },
-        SettingsSection("data_sync", "Data & Sync", 70) { DataSyncContent() },
-        SettingsSection("privacy_security", "Privacy & Security", 80) { PrivacySecurityContent() },
-        SettingsSection("about", "About", 90) { scope -> AboutContent(scope) },
+        // Tab 0: Appearance
+        SettingsSection("appearance", "Appearance", 0, tab = 0) { AppearanceContent() },
+        // Tab 1: Gameplay
+        SettingsSection("game_filters", "Game Filters", 0, tab = 1) { GameFiltersContent() },
+        SettingsSection("default_tabs", "Default Tabs", 10, tab = 1) { DefaultTabsContent() },
+        // Tab 2: General
+        SettingsSection("app_behavior", "App Behavior", 0, tab = 2) { AppBehaviorContent() },
+        SettingsSection("data_sync", "Data & Sync", 10, tab = 2) { DataSyncContent() },
+        SettingsSection("favorites", "Favorites", 20, tab = 2) { FavoritesContent() },
+        // Tab 3: About & Privacy
+        SettingsSection("privacy_security", "Privacy & Security", 0, tab = 3) { PrivacySecurityContent() },
+        SettingsSection("about", "About", 10, tab = 3) { scope -> AboutContent(scope) },
     )
 
     // ── Nav routes ──────────────────────────────────────────────────────────
@@ -430,6 +437,8 @@ object CoreModule : SpyglassModule {
         }
     }
 
+    // ── Tab 0: Appearance ──────────────────────────────────────────────────
+
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
     private fun AppearanceContent() {
@@ -458,14 +467,6 @@ object CoreModule : SpyglassModule {
             context.dataStore.data.map { it[PreferenceKeys.HIGH_CONTRAST] ?: false }
         }.collectAsStateWithLifecycle(initialValue = false)
 
-        val showTipOfDay by remember {
-            context.dataStore.data.map { it[PreferenceKeys.SHOW_TIP_OF_DAY] ?: true }
-        }.collectAsStateWithLifecycle(initialValue = true)
-
-        val showFavoritesOnHome by remember {
-            context.dataStore.data.map { it[PreferenceKeys.SHOW_FAVORITES_ON_HOME] ?: false }
-        }.collectAsStateWithLifecycle(initialValue = false)
-
         val hapticFeedback by remember {
             context.dataStore.data.map { it[PreferenceKeys.HAPTIC_FEEDBACK] ?: true }
         }.collectAsStateWithLifecycle(initialValue = true)
@@ -477,14 +478,6 @@ object CoreModule : SpyglassModule {
         val fontScale by remember {
             context.dataStore.data.map { it[PreferenceKeys.FONT_SCALE] ?: 1 }
         }.collectAsStateWithLifecycle(initialValue = 1)
-
-        val showExperimental by remember {
-            context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: false }
-        }.collectAsStateWithLifecycle(initialValue = false)
-
-        val defaultStartupTab by remember {
-            context.dataStore.data.map { it[PreferenceKeys.DEFAULT_STARTUP_TAB] ?: 0 }
-        }.collectAsStateWithLifecycle(initialValue = 0)
 
         SectionHeader(stringResource(R.string.settings_appearance))
         ResultCard {
@@ -658,9 +651,9 @@ object CoreModule : SpyglassModule {
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.secondary,
             )
+        }
 
-            SpyglassDivider()
-
+        ResultCard {
             SettingsToggle(
                 title = stringResource(R.string.settings_high_contrast),
                 description = stringResource(R.string.settings_high_contrast_desc),
@@ -702,7 +695,254 @@ object CoreModule : SpyglassModule {
 
             SpyglassDivider()
 
-            // Startup screen
+            SettingsToggle(
+                title = stringResource(R.string.settings_haptic_feedback),
+                description = stringResource(R.string.settings_haptic_feedback_desc),
+                checked = hapticFeedback,
+                onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.HAPTIC_FEEDBACK] = !hapticFeedback } } },
+            )
+
+            SpyglassDivider()
+
+            SettingsToggle(
+                title = stringResource(R.string.settings_reduce_animations),
+                description = stringResource(R.string.settings_reduce_animations_desc),
+                checked = reduceAnimations,
+                onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.REDUCE_ANIMATIONS] = !reduceAnimations } } },
+            )
+        }
+    }
+
+    // ── Tab 1: Gameplay ─────────────────────────────────────────────────────
+
+    @OptIn(ExperimentalLayoutApi::class)
+    @Composable
+    private fun GameFiltersContent() {
+        val context = LocalContext.current
+        val scope = rememberCoroutineScope()
+        val hapticClick = rememberHapticClick()
+
+        val minecraftEdition by remember {
+            context.dataStore.data.map { it[PreferenceKeys.MINECRAFT_EDITION] ?: "java" }
+        }.collectAsStateWithLifecycle(initialValue = "java")
+
+        val minecraftVersion by remember {
+            context.dataStore.data.map { it[PreferenceKeys.MINECRAFT_VERSION] ?: "" }
+        }.collectAsStateWithLifecycle(initialValue = "")
+
+        val versionFilterMode by remember {
+            context.dataStore.data.map { it[PreferenceKeys.VERSION_FILTER_MODE] ?: "show_all" }
+        }.collectAsStateWithLifecycle(initialValue = "show_all")
+
+        val hideUnobtainable by remember {
+            context.dataStore.data.map { it[PreferenceKeys.HIDE_UNOBTAINABLE_BLOCKS] ?: false }
+        }.collectAsStateWithLifecycle(initialValue = false)
+
+        val showExperimental by remember {
+            context.dataStore.data.map { it[PreferenceKeys.SHOW_EXPERIMENTAL] ?: false }
+        }.collectAsStateWithLifecycle(initialValue = false)
+
+        val gameClockEnabled by remember {
+            context.dataStore.data.map { it[PreferenceKeys.GAME_CLOCK_ENABLED] ?: false }
+        }.collectAsStateWithLifecycle(initialValue = false)
+
+        var versionExpanded by remember { mutableStateOf(false) }
+
+        SectionHeader(stringResource(R.string.settings_game_settings))
+        ResultCard {
+            Text(
+                stringResource(R.string.settings_game_filter_desc),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+
+            Text(stringResource(R.string.settings_edition), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+            dev.spyglass.android.core.ui.TogglePill(
+                options = listOf(stringResource(R.string.settings_edition_java), stringResource(R.string.settings_edition_bedrock)),
+                selected = if (minecraftEdition == "bedrock") 1 else 0,
+                onSelect = {
+                    val edition = if (it == 1) "bedrock" else "java"
+                    scope.launch { context.dataStore.edit { prefs -> prefs[PreferenceKeys.MINECRAFT_EDITION] = edition } }
+                },
+            )
+
+            val versions = if (minecraftEdition == "bedrock") dev.spyglass.android.settings.MinecraftVersions.BEDROCK_VERSIONS else dev.spyglass.android.settings.MinecraftVersions.JAVA_VERSIONS
+            val latestLabel = stringResource(R.string.settings_version_latest)
+            val displayVersion = minecraftVersion.ifBlank { latestLabel }
+            Text(stringResource(R.string.settings_version), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+            Box {
+                androidx.compose.material3.OutlinedButton(onClick = { hapticClick(); versionExpanded = true }) {
+                    Text(displayVersion, color = MaterialTheme.colorScheme.onSurface)
+                }
+                DropdownMenu(expanded = versionExpanded, onDismissRequest = { versionExpanded = false }) {
+                    DropdownMenuItem(
+                        text = { Text(latestLabel, color = if (minecraftVersion.isBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface) },
+                        onClick = { hapticClick(); scope.launch { context.dataStore.edit { it[PreferenceKeys.MINECRAFT_VERSION] = "" } }; versionExpanded = false },
+                    )
+                    versions.reversed().forEach { v ->
+                        DropdownMenuItem(
+                            text = { Text(v, color = if (minecraftVersion == v) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface) },
+                            onClick = { hapticClick(); scope.launch { context.dataStore.edit { it[PreferenceKeys.MINECRAFT_VERSION] = v } }; versionExpanded = false },
+                        )
+                    }
+                }
+            }
+
+            Text(stringResource(R.string.settings_filter_mode), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                val modes = listOf("show_all" to stringResource(R.string.settings_filter_show_all), "highlight" to stringResource(R.string.settings_filter_highlight), "hide" to stringResource(R.string.settings_filter_hide))
+                modes.forEach { (key, label) ->
+                    FilterChip(
+                        selected = versionFilterMode == key,
+                        onClick = { hapticClick(); scope.launch { context.dataStore.edit { it[PreferenceKeys.VERSION_FILTER_MODE] = key } } },
+                        label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                    )
+                }
+            }
+
+            SpyglassDivider()
+
+            SettingsToggle(
+                title = stringResource(R.string.settings_hide_unobtainable),
+                description = stringResource(R.string.settings_hide_unobtainable_desc),
+                checked = hideUnobtainable,
+                onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.HIDE_UNOBTAINABLE_BLOCKS] = !hideUnobtainable } } },
+            )
+
+            SpyglassDivider()
+
+            SettingsToggle(
+                title = stringResource(R.string.settings_show_experimental),
+                description = stringResource(R.string.settings_show_experimental_desc),
+                checked = showExperimental,
+                onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.SHOW_EXPERIMENTAL] = !showExperimental } } },
+            )
+
+            SpyglassDivider()
+
+            SettingsToggle(
+                title = stringResource(R.string.settings_game_clock),
+                description = stringResource(R.string.settings_game_clock_desc),
+                checked = gameClockEnabled,
+                onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.GAME_CLOCK_ENABLED] = !gameClockEnabled } } },
+            )
+        }
+    }
+
+    @OptIn(ExperimentalLayoutApi::class)
+    @Composable
+    private fun DefaultTabsContent() {
+        val context = LocalContext.current
+        val scope = rememberCoroutineScope()
+        val hapticClick = rememberHapticClick()
+
+        val defaultBrowseTab by remember {
+            context.dataStore.data.map { it[PreferenceKeys.DEFAULT_BROWSE_TAB] ?: 0 }
+        }.collectAsStateWithLifecycle(initialValue = 0)
+
+        val defaultToolTab by remember {
+            context.dataStore.data.map { it[PreferenceKeys.DEFAULT_TOOL_TAB] ?: 0 }
+        }.collectAsStateWithLifecycle(initialValue = 0)
+
+        SectionHeader(stringResource(R.string.settings_defaults))
+        ResultCard {
+            Text(
+                stringResource(R.string.settings_default_browse_tab),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+            Text(
+                stringResource(R.string.settings_browse_tab_desc),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                val browseNames = listOf(
+                    stringResource(R.string.browse_tab_blocks), stringResource(R.string.browse_tab_items),
+                    stringResource(R.string.browse_tab_recipes), stringResource(R.string.browse_tab_mobs),
+                    stringResource(R.string.browse_tab_trades), stringResource(R.string.browse_tab_biomes),
+                    stringResource(R.string.browse_tab_structures), stringResource(R.string.browse_tab_enchants),
+                    stringResource(R.string.browse_tab_potions), stringResource(R.string.browse_tab_advancements),
+                    stringResource(R.string.browse_tab_commands), stringResource(R.string.browse_tab_reference),
+                    stringResource(R.string.browse_tab_versions),
+                )
+                browseNames.forEachIndexed { i, name ->
+                    FilterChip(
+                        selected = defaultBrowseTab == i,
+                        onClick = { hapticClick(); scope.launch { context.dataStore.edit { it[PreferenceKeys.DEFAULT_BROWSE_TAB] = i } } },
+                        label = { Text(name, style = MaterialTheme.typography.labelSmall) },
+                    )
+                }
+            }
+
+            SpyglassDivider()
+
+            Text(
+                stringResource(R.string.settings_default_tool_tab),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+            Text(
+                stringResource(R.string.settings_tool_tab_desc),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary,
+            )
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                val toolNames = listOf(
+                    stringResource(R.string.calc_tab_todo), stringResource(R.string.calc_tab_shopping),
+                    stringResource(R.string.calc_tab_enchanting), stringResource(R.string.calc_tab_fill),
+                    stringResource(R.string.calc_tab_shapes), stringResource(R.string.calc_tab_maze),
+                    stringResource(R.string.calc_tab_storage), stringResource(R.string.calc_tab_smelt),
+                    stringResource(R.string.calc_tab_nether), stringResource(R.string.calc_tab_game_clock),
+                    stringResource(R.string.calc_tab_light), stringResource(R.string.calc_tab_notes),
+                    stringResource(R.string.calc_tab_waypoints), stringResource(R.string.calc_tab_redstone),
+                    stringResource(R.string.calc_tab_librarian), stringResource(R.string.calc_tab_food),
+                    stringResource(R.string.calc_tab_banners), stringResource(R.string.calc_tab_trims),
+                    stringResource(R.string.calc_tab_loot),
+                )
+                toolNames.forEachIndexed { i, name ->
+                    FilterChip(
+                        selected = defaultToolTab == i,
+                        onClick = { hapticClick(); scope.launch { context.dataStore.edit { it[PreferenceKeys.DEFAULT_TOOL_TAB] = i } } },
+                        label = { Text(name, style = MaterialTheme.typography.labelSmall) },
+                    )
+                }
+            }
+        }
+    }
+
+    // ── Tab 2: General ──────────────────────────────────────────────────────
+
+    @OptIn(ExperimentalLayoutApi::class)
+    @Composable
+    private fun AppBehaviorContent() {
+        val context = LocalContext.current
+        val scope = rememberCoroutineScope()
+        val hapticClick = rememberHapticClick()
+
+        val defaultStartupTab by remember {
+            context.dataStore.data.map { it[PreferenceKeys.DEFAULT_STARTUP_TAB] ?: 0 }
+        }.collectAsStateWithLifecycle(initialValue = 0)
+
+        val showTipOfDay by remember {
+            context.dataStore.data.map { it[PreferenceKeys.SHOW_TIP_OF_DAY] ?: true }
+        }.collectAsStateWithLifecycle(initialValue = true)
+
+        val showFavoritesOnHome by remember {
+            context.dataStore.data.map { it[PreferenceKeys.SHOW_FAVORITES_ON_HOME] ?: false }
+        }.collectAsStateWithLifecycle(initialValue = false)
+
+        SectionHeader(stringResource(R.string.settings_defaults))
+        ResultCard {
             Text(
                 stringResource(R.string.settings_startup_tab),
                 style = MaterialTheme.typography.bodyMedium,
@@ -734,43 +974,75 @@ object CoreModule : SpyglassModule {
 
             SpyglassDivider()
 
-            // Display toggles
             SettingsToggle(
                 title = stringResource(R.string.settings_tip_of_day),
                 description = stringResource(R.string.settings_tip_of_day_desc),
                 checked = showTipOfDay,
                 onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.SHOW_TIP_OF_DAY] = !showTipOfDay } } },
             )
+
             SpyglassDivider()
+
             SettingsToggle(
                 title = stringResource(R.string.settings_favorites_on_home),
                 description = stringResource(R.string.settings_favorites_on_home_desc),
                 checked = showFavoritesOnHome,
                 onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.SHOW_FAVORITES_ON_HOME] = !showFavoritesOnHome } } },
             )
-            SpyglassDivider()
-            SettingsToggle(
-                title = stringResource(R.string.settings_show_experimental),
-                description = stringResource(R.string.settings_show_experimental_desc),
-                checked = showExperimental,
-                onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.SHOW_EXPERIMENTAL] = !showExperimental } } },
-            )
-            SpyglassDivider()
-            SettingsToggle(
-                title = stringResource(R.string.settings_haptic_feedback),
-                description = stringResource(R.string.settings_haptic_feedback_desc),
-                checked = hapticFeedback,
-                onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.HAPTIC_FEEDBACK] = !hapticFeedback } } },
-            )
-            SpyglassDivider()
-            SettingsToggle(
-                title = stringResource(R.string.settings_reduce_animations),
-                description = stringResource(R.string.settings_reduce_animations_desc),
-                checked = reduceAnimations,
-                onCheckedChange = { scope.launch { context.dataStore.edit { it[PreferenceKeys.REDUCE_ANIMATIONS] = !reduceAnimations } } },
-            )
         }
     }
+
+    @Composable
+    private fun FavoritesContent() {
+        val context = LocalContext.current
+        val scope = rememberCoroutineScope()
+        val hapticConfirm = rememberHapticConfirm()
+
+        val repo by androidx.compose.runtime.produceState<dev.spyglass.android.data.repository.GameDataRepository?>(null) {
+            value = withContext(Dispatchers.IO) { dev.spyglass.android.data.repository.GameDataRepository.get(context) }
+        }
+        val allFavorites by remember(repo) {
+            repo?.allFavorites() ?: kotlinx.coroutines.flow.flowOf(emptyList())
+        }.collectAsStateWithLifecycle(initialValue = emptyList())
+
+        ResultCard {
+            Text(
+                stringResource(R.string.settings_favorites),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+            if (allFavorites.isEmpty()) {
+                Text(
+                    stringResource(R.string.settings_no_favorites),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+            } else {
+                Text(
+                    stringResource(R.string.settings_favorites_count, allFavorites.size),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                allFavorites.forEach { fav ->
+                    Text(
+                        "\u2605  ${fav.displayName}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                SpyglassDivider()
+                TextButton(onClick = {
+                    hapticConfirm()
+                    scope.launch(Dispatchers.IO) { repo?.deleteAllFavorites() }
+                }) {
+                    Text(stringResource(R.string.settings_clear_all_favorites), color = Red400)
+                }
+            }
+        }
+    }
+
+    // ── Tab 2: Data & Sync (unchanged) ──────────────────────────────────────
+    // ── Tab 3: Privacy & Security, About (unchanged) ────────────────────────
 
     @OptIn(ExperimentalLayoutApi::class)
     @Composable

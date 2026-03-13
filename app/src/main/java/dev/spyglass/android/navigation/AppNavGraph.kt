@@ -41,7 +41,6 @@ import dev.spyglass.android.disclaimer.DisclaimerScreen
 import dev.spyglass.android.feedback.FeedbackScreen
 import dev.spyglass.android.license.LicenseScreen
 import dev.spyglass.android.settings.PreferenceKeys
-import dev.spyglass.android.settings.SettingsScreen
 import dev.spyglass.android.settings.dataStore
 import androidx.compose.foundation.clickable
 import kotlinx.coroutines.delay
@@ -197,23 +196,8 @@ fun AppNavGraph() {
             composable("license") { LicenseScreen(onBack = { navController.popBackStack() }) }
             composable("disclaimer") { DisclaimerScreen(onBack = { navController.popBackStack() }) }
             composable("settings") {
-                SettingsScreen(
-                    onBack = { navController.popBackStack() },
-                    onCalcTab = { tab ->
-                        pendingCalcTab = tab
-                        navController.popBackStack()
-                        navigateTo(TopDest.Calculators.route)
-                    },
-                    onAbout = {
-                        navController.navigate("about") { launchSingleTop = true }
-                    },
-                    onFeedback = {
-                        navController.navigate("feedback") { launchSingleTop = true }
-                    },
-                    onChangelog = {
-                        navController.navigate("changelog") { launchSingleTop = true }
-                    },
-                )
+                // Settings is now handled by ShellSettingsScreen via ShellNavGraph
+                navController.popBackStack()
             }
             composable("changelog") { ChangelogScreen(onBack = { navController.popBackStack() }) }
             composable("feedback") { FeedbackScreen(onBack = { navController.popBackStack() }) }

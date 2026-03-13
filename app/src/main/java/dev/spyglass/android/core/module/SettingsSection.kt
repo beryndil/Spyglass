@@ -10,6 +10,7 @@ data class SettingsSection(
     val key: String,
     val title: String,
     val weight: Int,
+    val tab: Int = 0,
     val content: @Composable (SettingsSectionScope) -> Unit,
 )
 
