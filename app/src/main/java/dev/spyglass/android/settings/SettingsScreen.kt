@@ -80,6 +80,14 @@ private fun formatBytes(bytes: Long): String = when {
     else -> "%.1f MB".format(bytes / (1024.0 * 1024.0))
 }
 
+@Composable
+private fun settingsTabs() = listOf(
+    SpyglassTab(stringResource(R.string.settings_tab_appearance), PixelIcons.Enchant, untinted = true),
+    SpyglassTab(stringResource(R.string.settings_tab_gameplay), PixelIcons.Blocks),
+    SpyglassTab(stringResource(R.string.settings_tab_general), PixelIcons.Storage),
+    SpyglassTab(stringResource(R.string.settings_tab_about_privacy), PixelIcons.Globe),
+)
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SettingsScreen(
@@ -147,13 +155,16 @@ fun SettingsScreen(
     var showDeleteConfirm by remember { mutableStateOf(false) }
     var versionExpanded by remember { mutableStateOf(false) }
     var storageBytes by remember { mutableStateOf(vm.getTextureStorageBytes()) }
+    var selectedTab by remember { mutableIntStateOf(0) }
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        item(key = "back") {
+    Column(modifier = Modifier.fillMaxSize()) {
+        // Header row — always visible
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 4.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             IconButton(onClick = { hapticClick(); onBack() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -161,102 +172,134 @@ fun SettingsScreen(
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-            SectionHeader(stringResource(R.string.settings))
+            Text(
+                stringResource(R.string.settings),
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
         }
 
-        // ══════════════════════════════════════════════════════════════════
-        // 0. LANGUAGE — app locale selector (top of settings)
-        //    Hidden until i18n translations are revisited. All infrastructure remains intact.
-        // ══════════════════════════════════════════════════════════════════
-        if (false) item(key = "language") {
-            SectionHeader(stringResource(R.string.settings_language))
-            ResultCard {
+        // Tab row
+        SpyglassTabRow(
+            tabs = settingsTabs(),
+            selectedIndex = selectedTab,
+            onSelect = { selectedTab = it },
+        )
+        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp)
+
+        when (selectedTab) {
+            0 -> AppearanceTab(
+                backgroundTheme = backgroundTheme,
+                highContrast = highContrast,
+                fontScale = fontScale,
+                hapticFeedback = hapticFeedback,
+                reduceAnimations = reduceAnimations,
+                hapticClick = hapticClick,
+                hapticConfirm = hapticConfirm,
+                photoPickerLauncher = photoPickerLauncher,
+                vm = vm,
+            )
+            1 -> GameplayTab(
+                minecraftEdition = minecraftEdition,
+                minecraftVersion = minecraftVersion,
+                versionFilterMode = versionFilterMode,
+                hideUnobtainable = hideUnobtainable,
+                showExperimental = showExperimental,
+                gameClockEnabled = gameClockEnabled,
+                defaultBrowseTab = defaultBrowseTab,
+                defaultToolTab = defaultToolTab,
+                versionExpanded = versionExpanded,
+                onVersionExpandedChange = { versionExpanded = it },
+                mcUpdateTx = mcUpdateTx,
+                hapticClick = hapticClick,
+                onCalcTab = onCalcTab,
+                vm = vm,
+            )
+            2 -> GeneralTab(
+                defaultStartupTab = defaultStartupTab,
+                showTipOfDay = showTipOfDay,
+                showFavoritesOnHome = showFavoritesOnHome,
+                offlineMode = offlineMode,
+                syncFrequencyHours = syncFrequencyHours,
+                syncing = syncing,
+                textureState = textureState,
+                storageBytes = storageBytes,
+                allFavorites = allFavorites,
+                hapticClick = hapticClick,
+                hapticConfirm = hapticConfirm,
+                onStorageBytesChange = { storageBytes = it },
+                vm = vm,
+            )
+            3 -> AboutPrivacyTab(
+                appLockEnabled = appLockEnabled,
+                analyticsConsent = analyticsConsent,
+                crashConsent = crashConsent,
+                adPersonalizationConsent = adPersonalizationConsent,
+                hapticClick = hapticClick,
+                hapticConfirm = hapticConfirm,
+                onShowDeleteConfirm = { showDeleteConfirm = true },
+                onAbout = onAbout,
+                onChangelog = onChangelog,
+                onFeedback = onFeedback,
+                vm = vm,
+            )
+        }
+    }
+
+    if (showDeleteConfirm) {
+        AlertDialog(
+            onDismissRequest = { showDeleteConfirm = false },
+            title = { Text(stringResource(R.string.settings_delete_data_title), color = MaterialTheme.colorScheme.onSurface) },
+            text = {
                 Text(
-                    stringResource(R.string.settings_language_desc),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
+                    stringResource(R.string.settings_delete_data_message),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    SupportedLanguages.forEach { (code, label) ->
-                        FilterChip(
-                            selected = appLanguage == code,
-                            onClick = { hapticClick(); vm.setAppLanguage(code) },
-                            label = {
-                                val displayLabel = if (code == "system") {
-                                    // Always show in the phone's system language, not the app's override
-                                    val ctx = LocalContext.current
-                                    remember {
-                                        val sysConfig = android.content.res.Configuration(ctx.resources.configuration).apply {
-                                            setLocale(java.util.Locale.getDefault())
-                                        }
-                                        ctx.createConfigurationContext(sysConfig).getString(R.string.settings_language_system_default)
-                                    }
-                                } else label
-                                Text(displayLabel, style = MaterialTheme.typography.labelSmall)
-                            },
-                        )
-                    }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    hapticConfirm()
+                    vm.deleteAllUserData()
+                    showDeleteConfirm = false
+                }) {
+                    Text(stringResource(R.string.settings_delete_data_confirm), color = Red400)
                 }
-                if (appLanguage != "en" && appLanguage != "system") {
-                    SpyglassDivider()
-                    SettingsToggle(
-                        title = stringResource(R.string.settings_translate_game_data),
-                        description = stringResource(R.string.settings_translate_game_data_desc),
-                        checked = translateGameData,
-                        onCheckedChange = vm::setTranslateGameData,
-                    )
-                    SettingsToggle(
-                        title = stringResource(R.string.settings_show_original_names),
-                        description = stringResource(R.string.settings_show_original_names_desc),
-                        checked = showOriginalNames,
-                        onCheckedChange = vm::setShowOriginalNames,
-                    )
+            },
+            dismissButton = {
+                TextButton(onClick = { hapticClick(); showDeleteConfirm = false }) {
+                    Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
-                val langContext = LocalContext.current
-                SpyglassDivider()
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                Intent(Settings.ACTION_APP_LOCALE_SETTINGS).apply {
-                                    data = Uri.parse("package:${langContext.packageName}")
-                                }
-                            } else {
-                                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                    data = Uri.parse("package:${langContext.packageName}")
-                                }
-                            }
-                            langContext.startActivity(intent)
-                        }
-                        .padding(vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        stringResource(R.string.settings_language_system_override),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.weight(1f),
-                    )
-                    Icon(
-                        Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = null,
-                        modifier = Modifier.size(16.dp).graphicsLayer { rotationZ = 180f },
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
-                }
-            }
-        }
+            },
+            containerColor = MaterialTheme.colorScheme.surface,
+        )
+    }
+}
 
-        // ══════════════════════════════════════════════════════════════════
-        // 1. APPEARANCE — theme, colors, font, haptics, animations
-        // ══════════════════════════════════════════════════════════════════
-        item(key = "appearance") {
-            SectionHeader(stringResource(R.string.settings_appearance))
-            // ── Theme picker ──
+// ══════════════════════════════════════════════════════════════════
+// Tab 0: Appearance
+// ══════════════════════════════════════════════════════════════════
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun AppearanceTab(
+    backgroundTheme: String,
+    highContrast: Boolean,
+    fontScale: Int,
+    hapticFeedback: Boolean,
+    reduceAnimations: Boolean,
+    hapticClick: () -> Unit,
+    hapticConfirm: () -> Unit,
+    photoPickerLauncher: androidx.activity.result.ActivityResultLauncher<PickVisualMediaRequest>,
+    vm: SettingsViewModel,
+) {
+    val context = LocalContext.current
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        // ── Theme picker ──
+        item(key = "theme_picker") {
             ResultCard {
                 Text(
                     stringResource(R.string.settings_backgrounds),
@@ -422,8 +465,10 @@ fun SettingsScreen(
                     color = MaterialTheme.colorScheme.secondary,
                 )
             }
+        }
 
-            // ── Other appearance settings ──
+        // ── Other appearance settings ──
+        item(key = "appearance_settings") {
             ResultCard {
                 SettingsToggle(
                     title = stringResource(R.string.settings_high_contrast),
@@ -478,10 +523,39 @@ fun SettingsScreen(
             }
         }
 
-        // ══════════════════════════════════════════════════════════════════
-        // 2. GAME SETTINGS — edition, version, filters, game clock
-        // ══════════════════════════════════════════════════════════════════
-        item(key = "game_settings") {
+        item(key = "bottom_spacer") { Spacer(Modifier.height(8.dp)) }
+    }
+}
+
+// ══════════════════════════════════════════════════════════════════
+// Tab 1: Gameplay
+// ══════════════════════════════════════════════════════════════════
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun GameplayTab(
+    minecraftEdition: String,
+    minecraftVersion: String,
+    versionFilterMode: String,
+    hideUnobtainable: Boolean,
+    showExperimental: Boolean,
+    gameClockEnabled: Boolean,
+    defaultBrowseTab: Int,
+    defaultToolTab: Int,
+    versionExpanded: Boolean,
+    onVersionExpandedChange: (Boolean) -> Unit,
+    mcUpdateTx: Map<String, Map<String, String>>,
+    hapticClick: () -> Unit,
+    onCalcTab: (Int) -> Unit,
+    vm: SettingsViewModel,
+) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        // ── Game Filters ──
+        item(key = "game_filters") {
             SectionHeader(stringResource(R.string.settings_game_settings))
             ResultCard {
                 Text(
@@ -502,18 +576,18 @@ fun SettingsScreen(
                 val displayVersion = minecraftVersion.ifBlank { latestLabel }
                 Text(stringResource(R.string.settings_version), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                 Box {
-                    OutlinedButton(onClick = { hapticClick(); versionExpanded = true }) {
+                    OutlinedButton(onClick = { hapticClick(); onVersionExpandedChange(true) }) {
                         Text(displayVersion, color = MaterialTheme.colorScheme.onSurface)
                     }
-                    DropdownMenu(expanded = versionExpanded, onDismissRequest = { versionExpanded = false }) {
+                    DropdownMenu(expanded = versionExpanded, onDismissRequest = { onVersionExpandedChange(false) }) {
                         DropdownMenuItem(
                             text = { Text(latestLabel, color = if (minecraftVersion.isBlank()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface) },
-                            onClick = { hapticClick(); vm.setMinecraftVersion(""); versionExpanded = false },
+                            onClick = { hapticClick(); vm.setMinecraftVersion(""); onVersionExpandedChange(false) },
                         )
                         versions.reversed().forEach { v ->
                             DropdownMenuItem(
                                 text = { Text(v, color = if (minecraftVersion == v) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface) },
-                                onClick = { hapticClick(); vm.setMinecraftVersion(v); versionExpanded = false },
+                                onClick = { hapticClick(); vm.setMinecraftVersion(v); onVersionExpandedChange(false) },
                             )
                         }
                     }
@@ -586,44 +660,10 @@ fun SettingsScreen(
             }
         }
 
-        // ══════════════════════════════════════════════════════════════════
-        // 3. DEFAULTS — startup screen, browse tab, tool tab, home screen
-        // ══════════════════════════════════════════════════════════════════
-        item(key = "defaults") {
+        // ── Default Tabs ──
+        item(key = "default_tabs") {
             SectionHeader(stringResource(R.string.settings_defaults))
             ResultCard {
-                // Startup screen
-                Text(
-                    stringResource(R.string.settings_startup_tab),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                Text(
-                    stringResource(R.string.settings_startup_tab_desc),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(6.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                ) {
-                    val tabs = listOf(
-                        stringResource(R.string.nav_home),
-                        stringResource(R.string.nav_browse),
-                        stringResource(R.string.nav_tools),
-                        stringResource(R.string.nav_search),
-                    )
-                    tabs.forEachIndexed { i, name ->
-                        FilterChip(
-                            selected = defaultStartupTab == i,
-                            onClick = { hapticClick(); vm.setDefaultStartupTab(i) },
-                            label = { Text(name, style = MaterialTheme.typography.labelSmall) },
-                        )
-                    }
-                }
-
-                SpyglassDivider()
-
                 // Default browse tab
                 Text(
                     stringResource(R.string.settings_default_browse_tab),
@@ -673,10 +713,76 @@ fun SettingsScreen(
                         )
                     }
                 }
+            }
+        }
+
+        item(key = "bottom_spacer") { Spacer(Modifier.height(8.dp)) }
+    }
+}
+
+// ══════════════════════════════════════════════════════════════════
+// Tab 2: General
+// ══════════════════════════════════════════════════════════════════
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun GeneralTab(
+    defaultStartupTab: Int,
+    showTipOfDay: Boolean,
+    showFavoritesOnHome: Boolean,
+    offlineMode: Boolean,
+    syncFrequencyHours: Int,
+    syncing: Boolean,
+    textureState: TextureManager.TextureState,
+    storageBytes: Long,
+    allFavorites: List<dev.spyglass.android.data.db.entities.FavoriteEntity>,
+    hapticClick: () -> Unit,
+    hapticConfirm: () -> Unit,
+    onStorageBytesChange: (Long) -> Unit,
+    vm: SettingsViewModel,
+) {
+    val uriHandler = LocalUriHandler.current
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        // ── App Behavior ──
+        item(key = "app_behavior") {
+            SectionHeader(stringResource(R.string.settings_defaults))
+            ResultCard {
+                // Startup screen
+                Text(
+                    stringResource(R.string.settings_startup_tab),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    stringResource(R.string.settings_startup_tab_desc),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    val tabs = listOf(
+                        stringResource(R.string.nav_home),
+                        stringResource(R.string.nav_browse),
+                        stringResource(R.string.nav_tools),
+                        stringResource(R.string.nav_search),
+                    )
+                    tabs.forEachIndexed { i, name ->
+                        FilterChip(
+                            selected = defaultStartupTab == i,
+                            onClick = { hapticClick(); vm.setDefaultStartupTab(i) },
+                            label = { Text(name, style = MaterialTheme.typography.labelSmall) },
+                        )
+                    }
+                }
 
                 SpyglassDivider()
 
-                // Home screen toggles
                 SettingsToggle(
                     title = stringResource(R.string.settings_tip_of_day),
                     description = stringResource(R.string.settings_tip_of_day_desc),
@@ -695,9 +801,7 @@ fun SettingsScreen(
             }
         }
 
-        // ══════════════════════════════════════════════════════════════════
-        // 4. DATA & SYNC — offline, sync, storage, Connect link
-        // ══════════════════════════════════════════════════════════════════
+        // ── Data & Sync ──
         item(key = "data_sync") {
             SectionHeader(stringResource(R.string.settings_data_sync))
             ResultCard {
@@ -768,7 +872,7 @@ fun SettingsScreen(
                     TextButton(onClick = {
                         hapticConfirm()
                         vm.clearTextureCache()
-                        storageBytes = 0L
+                        onStorageBytesChange(0L)
                     }) {
                         Text(stringResource(R.string.settings_clear_cache), color = MaterialTheme.colorScheme.primary)
                     }
@@ -799,9 +903,71 @@ fun SettingsScreen(
             }
         }
 
-        // ══════════════════════════════════════════════════════════════════
-        // 5. PRIVACY & SECURITY — app lock, analytics, data deletion
-        // ══════════════════════════════════════════════════════════════════
+        // ── Favorites ──
+        item(key = "favorites") {
+            ResultCard {
+                Text(
+                    stringResource(R.string.settings_favorites),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                if (allFavorites.isEmpty()) {
+                    Text(
+                        stringResource(R.string.settings_no_favorites),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                } else {
+                    Text(
+                        stringResource(R.string.settings_favorites_count, allFavorites.size),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    allFavorites.forEach { fav ->
+                        Text(
+                            "\u2605  ${fav.displayName}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    SpyglassDivider()
+                    TextButton(onClick = { hapticConfirm(); vm.clearAllFavorites() }) {
+                        Text(stringResource(R.string.settings_clear_all_favorites), color = Red400)
+                    }
+                }
+            }
+        }
+
+        item(key = "bottom_spacer") { Spacer(Modifier.height(8.dp)) }
+    }
+}
+
+// ══════════════════════════════════════════════════════════════════
+// Tab 3: About & Privacy
+// ══════════════════════════════════════════════════════════════════
+
+@Composable
+private fun AboutPrivacyTab(
+    appLockEnabled: Boolean,
+    analyticsConsent: Boolean,
+    crashConsent: Boolean,
+    adPersonalizationConsent: Boolean,
+    hapticClick: () -> Unit,
+    hapticConfirm: () -> Unit,
+    onShowDeleteConfirm: () -> Unit,
+    onAbout: () -> Unit,
+    onChangelog: () -> Unit,
+    onFeedback: () -> Unit,
+    vm: SettingsViewModel,
+) {
+    val uriHandler = LocalUriHandler.current
+    val context = LocalContext.current
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        // ── Privacy & Security ──
         item(key = "privacy_security") {
             SectionHeader(stringResource(R.string.settings_privacy_security))
             ResultCard {
@@ -853,15 +1019,13 @@ fun SettingsScreen(
 
                 SpyglassDivider()
 
-                TextButton(onClick = { hapticConfirm(); showDeleteConfirm = true }) {
+                TextButton(onClick = { hapticConfirm(); onShowDeleteConfirm() }) {
                     Text(stringResource(R.string.settings_delete_data), color = Red400)
                 }
             }
         }
 
-        // ══════════════════════════════════════════════════════════════════
-        // 6. ABOUT — links, favorites, feedback
-        // ══════════════════════════════════════════════════════════════════
+        // ── About ──
         item(key = "about") {
             SectionHeader(stringResource(R.string.settings_about_section))
             ResultCard {
@@ -912,70 +1076,7 @@ fun SettingsScreen(
             }
         }
 
-        // Favorites management
-        item(key = "favorites") {
-            ResultCard {
-                Text(
-                    stringResource(R.string.settings_favorites),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                if (allFavorites.isEmpty()) {
-                    Text(
-                        stringResource(R.string.settings_no_favorites),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                } else {
-                    Text(
-                        stringResource(R.string.settings_favorites_count, allFavorites.size),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    allFavorites.forEach { fav ->
-                        Text(
-                            "\u2605  ${fav.displayName}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    SpyglassDivider()
-                    TextButton(onClick = { hapticConfirm(); vm.clearAllFavorites() }) {
-                        Text(stringResource(R.string.settings_clear_all_favorites), color = Red400)
-                    }
-                }
-            }
-        }
-
         item(key = "bottom_spacer") { Spacer(Modifier.height(8.dp)) }
-    }
-
-    if (showDeleteConfirm) {
-        AlertDialog(
-            onDismissRequest = { showDeleteConfirm = false },
-            title = { Text(stringResource(R.string.settings_delete_data_title), color = MaterialTheme.colorScheme.onSurface) },
-            text = {
-                Text(
-                    stringResource(R.string.settings_delete_data_message),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            },
-            confirmButton = {
-                TextButton(onClick = {
-                    hapticConfirm()
-                    vm.deleteAllUserData()
-                    showDeleteConfirm = false
-                }) {
-                    Text(stringResource(R.string.settings_delete_data_confirm), color = Red400)
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { hapticClick(); showDeleteConfirm = false }) {
-                    Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-            },
-            containerColor = MaterialTheme.colorScheme.surface,
-        )
     }
 }
 

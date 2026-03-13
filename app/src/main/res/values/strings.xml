@@ -184,6 +184,12 @@
     <string name="settings_delete_data_message">This will permanently delete all your todos, notes, waypoints, shopping lists, favorites, and advancement progress. This cannot be undone.</string>
     <string name="settings_delete_data_confirm">Delete Everything</string>
 
+    <!-- Settings — Tab Labels -->
+    <string name="settings_tab_appearance">Appearance</string>
+    <string name="settings_tab_gameplay">Gameplay</string>
+    <string name="settings_tab_general">General</string>
+    <string name="settings_tab_about_privacy">About &amp; Privacy</string>
+
     <!-- Settings — Section Headers -->
     <string name="settings_appearance">Appearance</string>
     <string name="settings_game_settings">Game Settings</string>
