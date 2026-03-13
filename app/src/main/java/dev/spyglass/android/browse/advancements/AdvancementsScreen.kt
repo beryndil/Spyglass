@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Star
@@ -24,7 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
@@ -107,13 +105,6 @@ class AdvancementsViewModel(app: Application) : AndroidViewModel(app) {
      .applyVersionFilter(versionFilter, versionTags, "advancement") { it.id }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    val completedIds: StateFlow<Set<String>> = repo.advancementCompletedIds()
-        .map { it.toSet() }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
-
-    val completedCount: StateFlow<Int> = repo.advancementCompletedCount()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
-
     val favoriteIds: StateFlow<Set<String>> = repo.allFavoriteIds()
         .map { it.toSet() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
@@ -131,16 +122,6 @@ class AdvancementsViewModel(app: Application) : AndroidViewModel(app) {
             flattenTree(tree, expanded)
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
-
-    // Per-category completed/total counts
-    val categoryCounts: StateFlow<Map<String, Pair<Int, Int>>> = combine(advancements, completedIds) { advs, completed ->
-        // Get all advancements (not filtered) for category counts
-        val byCategory = advs.groupBy { it.category }
-        byCategory.mapValues { (_, catAdvs) ->
-            val completedInCat = catAdvs.count { it.id in completed }
-            completedInCat to catAdvs.size
-        }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
     fun setQuery(q: String) { _query.value = q }
     fun setCategory(c: String) { _category.value = c }
@@ -163,22 +144,11 @@ class AdvancementsViewModel(app: Application) : AndroidViewModel(app) {
         _treeExpandedIds.value = _treeExpandedIds.value + id
     }
 
-    fun toggleCompleted(id: String) {
-        viewModelScope.launch {
-            val isCompleted = id in completedIds.value
-            repo.toggleAdvancementCompleted(id, !isCompleted)
-        }
-    }
-
     fun toggleFavorite(id: String, displayName: String) {
         viewModelScope.launch {
             if (id in favoriteIds.value) repo.deleteFavorite(id)
             else repo.insertFavorite(FavoriteEntity(id = id, type = "advancement", displayName = displayName))
         }
-    }
-
-    fun resetAllProgress() {
-        viewModelScope.launch { repo.resetAllAdvancementProgress() }
     }
 
     // Navigate to a parent advancement: expand its tree path and detail card
@@ -283,11 +253,8 @@ fun AdvancementsScreen(
     val flatTreeItems by vm.flatTreeItems.collectAsStateWithLifecycle()
     val expandedIds by vm.expandedIds.collectAsStateWithLifecycle()
     val treeExpandedIds by vm.treeExpandedIds.collectAsStateWithLifecycle()
-    val completedIds by vm.completedIds.collectAsStateWithLifecycle()
-    val completedCount by vm.completedCount.collectAsStateWithLifecycle()
     val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
     val favoriteAdvancements by vm.favoriteAdvancements.collectAsStateWithLifecycle()
-    val categoryCounts by vm.categoryCounts.collectAsStateWithLifecycle()
     val sortKey by vm.sortKey.collectAsStateWithLifecycle()
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
@@ -296,7 +263,6 @@ fun AdvancementsScreen(
     val hapticConfirm = rememberHapticConfirm()
     val reduceMotion = LocalReduceAnimations.current
     val hapticClick = rememberHapticClick()
-    var showResetDialog by remember { mutableStateOf(false) }
     val isSearching = query.isNotBlank()
 
     val sortOptions = listOf(
@@ -317,254 +283,195 @@ fun AdvancementsScreen(
         }
     }
 
-    if (showResetDialog) {
-        AlertDialog(
-            onDismissRequest = { showResetDialog = false },
-            title = { Text(stringResource(R.string.advancements_reset_progress), color = MaterialTheme.colorScheme.onSurface) },
-            text = { Text(stringResource(R.string.advancements_reset_confirm), color = MaterialTheme.colorScheme.onSurfaceVariant) },
-            confirmButton = {
-                TextButton(onClick = { vm.resetAllProgress(); showResetDialog = false }) {
-                    Text(stringResource(R.string.advancements_reset), color = Red400)
+    LazyColumn(
+        state = listState,
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        item(key = "search_bar") {
+            Row(
+                modifier = Modifier.padding(end = 0.dp, top = 16.dp, bottom = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                SpyglassSearchBar(
+                    query = query, onQueryChange = vm::setQuery,
+                    category = "advancements", placeholder = stringResource(R.string.advancements_search_placeholder),
+                    modifier = Modifier.weight(1f),
+                )
+                SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
+            }
+        }
+        item(key = "category_chips") {
+            FlowRow(
+                modifier = Modifier.padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                listOf("all", "minecraft", "nether", "end", "adventure", "husbandry").forEach { cat ->
+                    val chipLabel = if (cat == "all") stringResource(R.string.all)
+                        else categoryLabel(cat)
+                    FilterChip(
+                        selected = category == cat,
+                        onClick = { hapticClick(); vm.setCategory(cat) },
+                        label = { Text(chipLabel, style = MaterialTheme.typography.labelSmall) },
+                    )
                 }
-            },
-            dismissButton = {
-                TextButton(onClick = { showResetDialog = false }) {
-                    Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.secondary)
-                }
-            },
-            containerColor = MaterialTheme.colorScheme.surface,
-        )
-    }
-
-    Column(modifier = Modifier.fillMaxSize()) {
-        Row(
-            modifier = Modifier.padding(start = 16.dp, end = 4.dp, top = 16.dp, bottom = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            SpyglassSearchBar(
-                query = query, onQueryChange = vm::setQuery,
-                category = "advancements", placeholder = stringResource(R.string.advancements_search_placeholder),
-                modifier = Modifier.weight(1f),
+            }
+        }
+        item {
+            TabIntroHeader(
+                icon = PixelIcons.Advancement,
+                title = stringResource(R.string.advancements_title),
+                description = stringResource(R.string.advancements_description),
+                stat = "${advancements.size} advancements",
             )
-            SortButton(options = sortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
         }
-        FlowRow(
-            modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            listOf("all", "minecraft", "nether", "end", "adventure", "husbandry").forEach { cat ->
-                val counts = if (cat == "all") null else categoryCounts[cat]
-                val chipLabel = if (cat == "all") stringResource(R.string.all)
-                    else if (counts != null) "${categoryLabel(cat)} (${counts.first}/${counts.second})"
-                    else categoryLabel(cat)
-                FilterChip(
-                    selected = category == cat,
-                    onClick = { hapticClick(); vm.setCategory(cat) },
-                    label = { Text(chipLabel, style = MaterialTheme.typography.labelSmall) },
+        // Favorites section
+        if (favoriteAdvancements.isNotEmpty()) {
+            item(key = "fav_header") {
+                Text(stringResource(R.string.favorites), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
+            }
+            items(favoriteAdvancements, key = { "fav_${it.id}" }) { fav ->
+                BrowseListItem(
+                    headline = fav.displayName,
+                    supporting = "",
+                    supportingMaxLines = 1,
+                    leadingIcon = PixelIcons.Advancement,
+                    trailing = {
+                        IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
+                            Icon(Icons.Filled.Star, contentDescription = stringResource(R.string.favorite), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
+                        }
+                    },
                 )
             }
         }
-        LazyColumn(
-            state = listState,
-            contentPadding = PaddingValues(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            item {
-                TabIntroHeader(
-                    icon = PixelIcons.Advancement,
-                    title = stringResource(R.string.advancements_title),
-                    description = stringResource(R.string.advancements_description),
-                    stat = stringResource(R.string.advancements_stat, completedCount, advancements.size),
-                )
+        // Tree view items
+        items(flatTreeItems, key = { it.first.id }) { (adv, depth) ->
+            val tag = vTags["advancement:${adv.id}"]
+            val availability = checkAvailability(tag, vFilter)
+            val vAlpha = when (availability) {
+                VersionAvailability.NOT_YET_ADDED -> 0.5f
+                VersionAvailability.REMOVED, VersionAvailability.WRONG_EDITION -> 0.4f
+                else -> 1f
             }
-            // Progress bar
-            item(key = "progress_bar") {
-                val progress = if (advancements.isNotEmpty()) completedCount.toFloat() / advancements.size else 0f
-                Column(modifier = Modifier.padding(bottom = 4.dp)) {
-                    LinearProgressIndicator(
-                        progress = { progress },
-                        modifier = Modifier.fillMaxWidth().height(6.dp),
-                        color = Emerald,
-                        trackColor = MaterialTheme.colorScheme.outline,
-                        strokeCap = androidx.compose.ui.graphics.StrokeCap.Round,
-                    )
-                    Spacer(Modifier.height(4.dp))
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        Text("${(progress * 100).toInt()}%", style = MaterialTheme.typography.labelSmall, color = Emerald)
-                        Text(
-                            stringResource(R.string.advancements_reset_progress),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.secondary,
-                            modifier = Modifier.clickable { showResetDialog = true },
-                        )
-                    }
-                }
-            }
-            // Favorites section
-            if (favoriteAdvancements.isNotEmpty()) {
-                item(key = "fav_header") {
-                    Text(stringResource(R.string.favorites), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
-                }
-                items(favoriteAdvancements, key = { "fav_${it.id}" }) { fav ->
-                    val isComplete = fav.id in completedIds
-                    BrowseListItem(
-                        headline = fav.displayName,
-                        supporting = "",
-                        supportingMaxLines = 1,
-                        leadingIcon = PixelIcons.Advancement,
-                        leadingIconTint = if (isComplete) Emerald else MaterialTheme.colorScheme.onSurfaceVariant,
-                        trailing = {
-                            IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(fav.id, fav.displayName) }, modifier = Modifier.size(32.dp)) {
-                                Icon(Icons.Filled.Star, contentDescription = stringResource(R.string.favorite), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
-                            }
-                        },
-                    )
-                }
-            }
-            // Tree view items
-            items(flatTreeItems, key = { it.first.id }) { (adv, depth) ->
-                val tag = vTags["advancement:${adv.id}"]
-                val availability = checkAvailability(tag, vFilter)
-                val vAlpha = when (availability) {
-                    VersionAvailability.NOT_YET_ADDED -> 0.5f
-                    VersionAvailability.REMOVED, VersionAvailability.WRONG_EDITION -> 0.4f
-                    else -> 1f
-                }
-                val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
-                val isDetailExpanded = adv.id in expandedIds
-                val isTreeExpanded = adv.id in treeExpandedIds
-                val isComplete = adv.id in completedIds
-                val hasChildren = advancements.any { it.parent == adv.id }
+            val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
+            val isDetailExpanded = adv.id in expandedIds
+            val isTreeExpanded = adv.id in treeExpandedIds
+            val hasChildren = advancements.any { it.parent == adv.id }
 
-                Column(modifier = Modifier.alpha(vAlpha)) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = (depth * 24).dp)
-                            .background(LocalSurfaceCard.current, RoundedCornerShape(10.dp))
-                            .clickable { vm.toggleExpanded(adv.id) }
-                            .padding(horizontal = 10.dp, vertical = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        // Checkbox
-                        Checkbox(
-                            checked = isComplete,
-                            onCheckedChange = { vm.toggleCompleted(adv.id) },
-                            colors = CheckboxDefaults.colors(
-                                checkedColor = Emerald,
-                                uncheckedColor = MaterialTheme.colorScheme.secondary,
-                                checkmarkColor = MaterialTheme.colorScheme.onPrimary,
-                            ),
+            Column(modifier = Modifier.alpha(vAlpha)) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = (depth * 24).dp)
+                        .background(LocalSurfaceCard.current, RoundedCornerShape(10.dp))
+                        .clickable { vm.toggleExpanded(adv.id) }
+                        .padding(horizontal = 10.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    // Tree expand/collapse
+                    if (hasChildren) {
+                        IconButton(
+                            onClick = { vm.toggleTreeExpanded(adv.id) },
                             modifier = Modifier.size(24.dp),
-                        )
-                        Spacer(Modifier.width(8.dp))
-                        // Tree expand/collapse
-                        if (hasChildren) {
-                            IconButton(
-                                onClick = { vm.toggleTreeExpanded(adv.id) },
-                                modifier = Modifier.size(24.dp),
-                            ) {
-                                Icon(
-                                    if (isTreeExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                                    contentDescription = stringResource(R.string.advancements_toggle_children),
-                                    tint = MaterialTheme.colorScheme.secondary,
-                                    modifier = Modifier.size(18.dp),
-                                )
-                            }
-                            Spacer(Modifier.width(4.dp))
-                        }
-                        // Name
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(
-                                txMap[adv.id]?.get("name") ?: adv.name,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = if (isComplete) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface,
-                                textDecoration = if (isComplete) TextDecoration.LineThrough else TextDecoration.None,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                        }
-                        Spacer(Modifier.width(4.dp))
-                        // Badges
-                        Column(horizontalAlignment = Alignment.End) {
-                            if (addedIn.isNotBlank() && availability != VersionAvailability.AVAILABLE) {
-                                VersionBadge(addedIn)
-                                Spacer(Modifier.height(2.dp))
-                            }
-                            val typeColor = when (adv.type) {
-                                "challenge" -> MaterialTheme.colorScheme.primary
-                                "goal" -> PotionBlue
-                                else -> Emerald
-                            }
-                            CategoryBadge(label = typeLabel(adv.type), color = typeColor)
-                            if (adv.difficulty.isNotEmpty()) {
-                                Spacer(Modifier.height(2.dp))
-                                CategoryBadge(label = adv.difficulty.replaceFirstChar { it.uppercase() }, color = difficultyColor(adv.difficulty))
-                            }
-                            if (hasChildren) {
-                                Spacer(Modifier.height(2.dp))
-                                val childCount = advancements.count { it.parent == adv.id }
-                                CategoryBadge(label = stringResource(R.string.advancements_children_count, childCount), color = MaterialTheme.colorScheme.secondary)
-                            }
-                        }
-                        Spacer(Modifier.width(4.dp))
-                        // Favorite star
-                        val isFav = adv.id in favoriteIds
-                        IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(adv.id, adv.name) }, modifier = Modifier.size(28.dp)) {
+                        ) {
                             Icon(
-                                Icons.Filled.Star,
-                                contentDescription = stringResource(R.string.favorite),
-                                tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
+                                if (isTreeExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                                contentDescription = stringResource(R.string.advancements_toggle_children),
+                                tint = MaterialTheme.colorScheme.secondary,
                                 modifier = Modifier.size(18.dp),
                             )
                         }
+                        Spacer(Modifier.width(4.dp))
                     }
-                    // Detail card
-                    val reduceMotion = LocalReduceAnimations.current
-                    AnimatedVisibility(
-                        visible = isDetailExpanded,
-                        enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
-                        exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
-                    ) {
-                        AdvancementDetailCard(
-                            adv = adv,
-                            isComplete = isComplete,
-                            allAdvancements = advancements,
-                            onToggleComplete = { vm.toggleCompleted(adv.id) },
-                            onItemTap = onItemTap,
-                            onMobTap = onMobTap,
-                            onStructureTap = onStructureTap,
-                            onBiomeTap = onBiomeTap,
-                            onEnchantTap = onEnchantTap,
-                            entityLinkIndex = entityLinkIndex,
-                            tag = tag,
-                            vFilter = vFilter,
-                            txMap = txMap,
-                            onAdvancementTap = { parentId ->
-                                vm.navigateToAdvancement(parentId, advancements)
-                                // Scroll to it
-                                val idx = flatTreeItems.indexOfFirst { it.first.id == parentId }
-                                if (idx >= 0) {
-                                    vm.viewModelScope.launch {
-                                        if (reduceMotion) listState.scrollToItem(idx + 2)
-                                        else listState.animateScrollToItem(idx + 2)
-                                    }
-                                }
-                            },
-                            modifier = Modifier.padding(start = (depth * 24).dp, top = 4.dp),
+                    // Name
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            txMap[adv.id]?.get("name") ?: adv.name,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                    Spacer(Modifier.width(4.dp))
+                    // Badges
+                    Column(horizontalAlignment = Alignment.End) {
+                        if (addedIn.isNotBlank() && availability != VersionAvailability.AVAILABLE) {
+                            VersionBadge(addedIn)
+                            Spacer(Modifier.height(2.dp))
+                        }
+                        val typeColor = when (adv.type) {
+                            "challenge" -> MaterialTheme.colorScheme.primary
+                            "goal" -> PotionBlue
+                            else -> Emerald
+                        }
+                        CategoryBadge(label = typeLabel(adv.type), color = typeColor)
+                        if (adv.difficulty.isNotEmpty()) {
+                            Spacer(Modifier.height(2.dp))
+                            CategoryBadge(label = adv.difficulty.replaceFirstChar { it.uppercase() }, color = difficultyColor(adv.difficulty))
+                        }
+                        if (hasChildren) {
+                            Spacer(Modifier.height(2.dp))
+                            val childCount = advancements.count { it.parent == adv.id }
+                            CategoryBadge(label = stringResource(R.string.advancements_children_count, childCount), color = MaterialTheme.colorScheme.secondary)
+                        }
+                    }
+                    Spacer(Modifier.width(4.dp))
+                    // Favorite star
+                    val isFav = adv.id in favoriteIds
+                    IconButton(onClick = { hapticConfirm(); vm.toggleFavorite(adv.id, adv.name) }, modifier = Modifier.size(28.dp)) {
+                        Icon(
+                            Icons.Filled.Star,
+                            contentDescription = stringResource(R.string.favorite),
+                            tint = if (isFav) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
+                            modifier = Modifier.size(18.dp),
                         )
                     }
                 }
+                // Detail card
+                val reduceMotion = LocalReduceAnimations.current
+                AnimatedVisibility(
+                    visible = isDetailExpanded,
+                    enter = if (reduceMotion) expandVertically(snap()) else expandVertically(),
+                    exit = if (reduceMotion) shrinkVertically(snap()) else shrinkVertically(),
+                ) {
+                    AdvancementDetailCard(
+                        adv = adv,
+                        allAdvancements = advancements,
+                        onItemTap = onItemTap,
+                        onMobTap = onMobTap,
+                        onStructureTap = onStructureTap,
+                        onBiomeTap = onBiomeTap,
+                        onEnchantTap = onEnchantTap,
+                        entityLinkIndex = entityLinkIndex,
+                        tag = tag,
+                        vFilter = vFilter,
+                        txMap = txMap,
+                        onAdvancementTap = { parentId ->
+                            vm.navigateToAdvancement(parentId, advancements)
+                            // Scroll to it
+                            val idx = flatTreeItems.indexOfFirst { it.first.id == parentId }
+                            if (idx >= 0) {
+                                vm.viewModelScope.launch {
+                                    if (reduceMotion) listState.scrollToItem(idx + 2)
+                                    else listState.animateScrollToItem(idx + 2)
+                                }
+                            }
+                        },
+                        modifier = Modifier.padding(start = (depth * 24).dp, top = 4.dp),
+                    )
+                }
             }
-            if (flatTreeItems.isEmpty()) item {
-                EmptyState(
-                    icon = PixelIcons.SearchOff,
-                    title = stringResource(R.string.advancements_no_results_title),
-                    subtitle = stringResource(R.string.advancements_no_results_subtitle),
-                )
-            }
+        }
+        if (flatTreeItems.isEmpty()) item {
+            EmptyState(
+                icon = PixelIcons.SearchOff,
+                title = stringResource(R.string.advancements_no_results_title),
+                subtitle = stringResource(R.string.advancements_no_results_subtitle),
+            )
         }
     }
 }
@@ -575,9 +482,7 @@ fun AdvancementsScreen(
 @Composable
 private fun AdvancementDetailCard(
     adv: AdvancementEntity,
-    isComplete: Boolean,
     allAdvancements: List<AdvancementEntity>,
-    onToggleComplete: () -> Unit,
     onItemTap: (String) -> Unit,
     onMobTap: (String) -> Unit,
     onStructureTap: (String) -> Unit,
@@ -731,28 +636,6 @@ private fun AdvancementDetailCard(
                         border = null,
                     )
                 }
-            }
-        }
-
-        // Completion toggle
-        SpyglassDivider()
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-        ) {
-            TextButton(onClick = onToggleComplete) {
-                Icon(
-                    Icons.Default.Check,
-                    contentDescription = null,
-                    tint = if (isComplete) Emerald else MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.size(18.dp),
-                )
-                Spacer(Modifier.width(6.dp))
-                Text(
-                    if (isComplete) stringResource(R.string.advancements_completed) else stringResource(R.string.advancements_mark_complete),
-                    color = if (isComplete) Emerald else MaterialTheme.colorScheme.secondary,
-                    style = MaterialTheme.typography.labelSmall,
-                )
             }
         }
 
