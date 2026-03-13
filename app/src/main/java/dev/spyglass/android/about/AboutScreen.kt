@@ -1,5 +1,6 @@
 package dev.spyglass.android.about
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -19,7 +20,10 @@ import androidx.compose.ui.text.style.TextAlign
 import dev.spyglass.android.data.sync.DataManifest
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -100,11 +104,13 @@ fun AboutScreen(onBack: () -> Unit = {}, onLicense: () -> Unit = {}, onDisclaime
                     },
                 )
                 Spacer(Modifier.height(8.dp))
-                SpyglassIconImage(
-                    icon = SpyglassIcon.Drawable(R.drawable.about_beryndil),
+                Image(
+                    painter = painterResource(R.drawable.about_beryndil),
                     contentDescription = stringResource(R.string.about_author_name),
-                    modifier = Modifier.height(140.dp),
-                    tint = Color.Unspecified,
+                    modifier = Modifier
+                        .size(160.dp)
+                        .clip(RoundedCornerShape(16.dp)),
+                    contentScale = ContentScale.Crop,
                 )
                 Spacer(Modifier.height(12.dp))
                 val coffeeUrl = "https://hardknocks.university/developer.html"
