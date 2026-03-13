@@ -361,7 +361,16 @@ object CoreModule : SpyglassModule {
                             }
                         },
                         label = {
-                            val displayLabel = if (code == "system") stringResource(R.string.settings_language_system_default) else label
+                            val displayLabel = if (code == "system") {
+                                // Always show in the phone's system language, not the app's override
+                                val ctx = LocalContext.current
+                                remember {
+                                    val sysConfig = android.content.res.Configuration(ctx.resources.configuration).apply {
+                                        setLocale(java.util.Locale.getDefault())
+                                    }
+                                    ctx.createConfigurationContext(sysConfig).getString(R.string.settings_language_system_default)
+                                }
+                            } else label
                             Text(displayLabel, style = MaterialTheme.typography.labelSmall)
                         },
                     )
