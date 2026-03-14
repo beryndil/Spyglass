@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.spyglass.android.connect.ChestDiamondLoader
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.PetData
 import dev.spyglass.android.connect.OfflineIndicator
@@ -70,11 +71,7 @@ fun PetsScreen(
                 contentAlignment = Alignment.Center,
             ) {
                 if (isConnected) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
-                        Spacer(Modifier.height(12.dp))
-                        Text(stringResource(R.string.connect_scanning_tamed), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
+                    ChestDiamondLoader()
                 } else {
                     Text(stringResource(R.string.connect_no_tamed_mobs), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }

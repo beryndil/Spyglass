@@ -23,6 +23,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.spyglass.android.connect.ChestDiamondLoader
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.client.ConnectionState
@@ -132,18 +133,10 @@ private fun CharacterContent(
                 .padding(32.dp),
             contentAlignment = Alignment.Center,
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                if (isOffline) {
-                    Text(stringResource(R.string.connect_no_cached_player), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                } else {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        strokeWidth = 2.dp,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    Spacer(Modifier.height(12.dp))
-                    Text(stringResource(R.string.connect_loading_player), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
+            if (isOffline) {
+                Text(stringResource(R.string.connect_no_cached_player), color = MaterialTheme.colorScheme.onSurfaceVariant)
+            } else {
+                ChestDiamondLoader()
             }
         }
         return

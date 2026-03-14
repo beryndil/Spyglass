@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.spyglass.android.connect.ChestDiamondLoader
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.PlayerStatsPayload
@@ -107,18 +108,10 @@ private fun StatsContent(stats: PlayerStatsPayload?, isOffline: Boolean) {
                 .padding(32.dp),
             contentAlignment = Alignment.Center,
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                if (isOffline) {
-                    Text(stringResource(R.string.connect_no_cached_statistics), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                } else {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        strokeWidth = 2.dp,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    Spacer(Modifier.height(12.dp))
-                    Text(stringResource(R.string.connect_loading_statistics), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
+            if (isOffline) {
+                Text(stringResource(R.string.connect_no_cached_statistics), color = MaterialTheme.colorScheme.onSurfaceVariant)
+            } else {
+                ChestDiamondLoader()
             }
         }
         return
