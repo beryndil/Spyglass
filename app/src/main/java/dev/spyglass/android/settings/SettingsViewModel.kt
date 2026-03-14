@@ -21,6 +21,8 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
     private val store = app.dataStore
     private val repo  = GameDataRepository.get(app)
 
+    // ── Home & Navigation ────────────────────────────────────────────────────
+
     val defaultBrowseTab: StateFlow<Int> = store.data
         .map { it[PreferenceKeys.DEFAULT_BROWSE_TAB] ?: 0 }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
@@ -72,7 +74,8 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         store.edit { it[PreferenceKeys.BACKGROUND_THEME] = theme }
     }
 
-    // Game Version filter
+    // ── Game Version Filter ──────────────────────────────────────────────────
+
     val minecraftEdition: StateFlow<String> = store.data
         .map { it[PreferenceKeys.MINECRAFT_EDITION] ?: "java" }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "java")
@@ -107,7 +110,8 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         repo.deleteAllFavorites()
     }
 
-    // Privacy & Consent
+    // ── Privacy & Consent ────────────────────────────────────────────────────
+
     val analyticsConsent: StateFlow<Boolean> = store.data
         .map { it[PreferenceKeys.ANALYTICS_CONSENT] ?: false }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
@@ -138,7 +142,8 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         repo.deleteAllUserData()
     }
 
-    // Appearance & Accessibility
+    // ── Appearance & Accessibility ───────────────────────────────────────────
+
     val hapticFeedback: StateFlow<Boolean> = store.data
         .map { it[PreferenceKeys.HAPTIC_FEEDBACK] ?: true }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), true)
@@ -187,7 +192,8 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         store.edit { it[PreferenceKeys.FONT_SCALE] = scale }
     }
 
-    // Language / i18n
+    // ── Language / i18n ──────────────────────────────────────────────────────
+
     val appLanguage: StateFlow<String> = store.data
         .map { it[PreferenceKeys.APP_LANGUAGE] ?: "system" }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "system")
@@ -218,7 +224,8 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         store.edit { it[PreferenceKeys.SHOW_ORIGINAL_NAMES] = enabled }
     }
 
-    // Content Filtering
+    // ── Content Filtering ────────────────────────────────────────────────────
+
     val hideUnobtainableBlocks: StateFlow<Boolean> = store.data
         .map { it[PreferenceKeys.HIDE_UNOBTAINABLE_BLOCKS] ?: false }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
@@ -235,7 +242,8 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         store.edit { it[PreferenceKeys.SHOW_EXPERIMENTAL] = enabled }
     }
 
-    // Security
+    // ── Security ─────────────────────────────────────────────────────────────
+
     val appLockEnabled: StateFlow<Boolean> = store.data
         .map { it[PreferenceKeys.APP_LOCK_ENABLED] ?: false }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), false)
@@ -244,7 +252,8 @@ class SettingsViewModel(app: Application) : AndroidViewModel(app) {
         store.edit { it[PreferenceKeys.APP_LOCK_ENABLED] = enabled }
     }
 
-    // Data & Sync
+    // ── Data & Sync ──────────────────────────────────────────────────────────
+
     val syncFrequencyHours: StateFlow<Int> = store.data
         .map { it[PreferenceKeys.SYNC_FREQUENCY_HOURS] ?: 12 }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 12)
