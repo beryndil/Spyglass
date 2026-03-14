@@ -55,6 +55,7 @@ private fun browseTabs() = listOf(
 @Composable
 fun BrowseScreen(
     initialTarget: BrowseTarget? = null,
+    scrollToTopTrigger: Int = 0,
     onCalcTab: (Int) -> Unit = {},
 ) {
     val context = LocalContext.current

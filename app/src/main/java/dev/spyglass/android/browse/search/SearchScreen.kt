@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -143,12 +144,18 @@ private fun typeLabel(type: String): String = when (type) {
 
 @Composable
 fun SearchScreen(
+    scrollToTopTrigger: Int = 0,
     onResultTap: (tab: Int, id: String) -> Unit = { _, _ -> },
     vm: SearchViewModel = viewModel(),
 ) {
     val hapticClick = rememberHapticClick()
     val query   by vm.query.collectAsStateWithLifecycle()
     val results by vm.results.collectAsStateWithLifecycle()
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(scrollToTopTrigger) {
+        if (scrollToTopTrigger > 0) listState.animateScrollToItem(0)
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         SpyglassSearchBar(
@@ -165,6 +172,7 @@ fun SearchScreen(
             )
         } else {
             LazyColumn(
+                state = listState,
                 contentPadding = PaddingValues(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {

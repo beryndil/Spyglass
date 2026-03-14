@@ -83,6 +83,7 @@ fun calcTabKey(legacyIndex: Int): String = when (legacyIndex) {
 @Composable
 fun CalculatorsScreen(
     initialTab: Int? = null,
+    scrollToTopTrigger: Int = 0,
     onBrowseTarget: (BrowseTarget) -> Unit = {},
 ) {
     val context = LocalContext.current

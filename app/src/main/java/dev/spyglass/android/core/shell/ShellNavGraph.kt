@@ -144,13 +144,9 @@ fun ShellNavGraph() {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route
 
-    // Sub-routes don't show top/bottom bars
-    val subRoutes = remember(moduleRoutes) {
-        moduleRoutes.map { it.route }.toSet()
-    }
-    val showBars = currentRoute !in subRoutes
-
     // ── Navigation helpers ──────────────────────────────────────────────────
+
+    val topLevelRoutes = remember(destinations) { destinations.map { it.route }.toSet() }
 
     fun navigateToTop(route: String) {
         try {
@@ -158,7 +154,12 @@ fun ShellNavGraph() {
                 scrollToTopTrigger++
                 return
             }
-            if (route == "home") scrollToTopTrigger++
+            scrollToTopTrigger++
+            // Pop sub-routes (settings, changelog, etc.) off the back stack first
+            // so they don't get saved as part of the parent tab's state
+            if (currentRoute != null && currentRoute !in topLevelRoutes) {
+                navController.popBackStack()
+            }
             navController.navigate(route) {
                 popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                 launchSingleTop = true
@@ -249,10 +250,8 @@ fun ShellNavGraph() {
         },
         bottomBar = {
             Column(Modifier.navigationBarsPadding()) {
-                if (showBars) {
-                    ShellBottomNavBar(navController, destinations, isImageTheme) { route ->
-                        navigateToTop(route)
-                    }
+                ShellBottomNavBar(navController, destinations, isImageTheme) { route ->
+                    navigateToTop(route)
                 }
                 AdBanner()
             }
@@ -270,7 +269,7 @@ fun ShellNavGraph() {
 
             // Search — provided by DatabaseModule or fallback
             composable("search") {
-                dev.spyglass.android.browse.search.SearchScreen(onResultTap = { tab, id ->
+                dev.spyglass.android.browse.search.SearchScreen(scrollToTopTrigger = scrollToTopTrigger, onResultTap = { tab, id ->
                     pendingTarget = BrowseTarget(tab, id)
                     navController.navigate("browse") {
                         popUpTo(navController.graph.findStartDestination().id) { saveState = true }
@@ -285,6 +284,7 @@ fun ShellNavGraph() {
                 pendingTarget = null
                 dev.spyglass.android.browse.BrowseScreen(
                     initialTarget = target,
+                    scrollToTopTrigger = scrollToTopTrigger,
                     onCalcTab = { tab ->
                         pendingCalcTab = tab
                         navigateToTop("calculators")
@@ -298,6 +298,7 @@ fun ShellNavGraph() {
                 pendingCalcTab = null
                 dev.spyglass.android.calculators.CalculatorsScreen(
                     initialTab = calcTab,
+                    scrollToTopTrigger = scrollToTopTrigger,
                     onBrowseTarget = { target ->
                         pendingTarget = target
                         navigateToTop("browse")
