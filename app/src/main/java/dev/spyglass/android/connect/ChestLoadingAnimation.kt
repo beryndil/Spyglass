@@ -20,6 +20,12 @@ import dev.spyglass.android.R
 import dev.spyglass.android.connect.client.ConnectionState
 import kotlin.math.*
 
+/** Smooth ease-in-out interpolation (Hermite) */
+private fun smoothStep(t: Float): Float {
+    val x = t.coerceIn(0f, 1f)
+    return x * x * (3f - 2f * x)
+}
+
 private enum class Phase { LOADING, COMPLETE, DONE }
 
 private data class BurstParticle(
@@ -392,6 +398,261 @@ fun ChestLoadingOneShot(modifier: Modifier = Modifier, onComplete: () -> Unit) {
         connectionState = state,
         modifier = modifier,
     )
+}
+
+/**
+ * Simple chest loading animation — closed chest with diamonds orbiting around it.
+ * Used on the Storage screen while waiting for chest data from the desktop.
+ */
+@Composable
+fun ChestDiamondLoader(
+    modifier: Modifier = Modifier,
+    statusText: String? = null,
+) {
+    var time by remember { mutableFloatStateOf(0f) }
+    LaunchedEffect(Unit) {
+        var lastNanos = withFrameNanos { it }
+        while (true) {
+            withFrameNanos { nanos ->
+                val dt = (nanos - lastNanos) / 1_000_000_000f
+                lastNanos = nanos
+                time += dt
+            }
+        }
+    }
+
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Canvas(
+            modifier = Modifier.fillMaxWidth().height(200.dp),
+        ) {
+            val w = size.width
+            val h = size.height
+            val cx = w / 2
+            val cy = h * 0.45f
+
+            val chestW = 90f
+            val chestH = 62f
+            val lidH = 22f
+            val chestLeft = cx - chestW / 2
+            val chestTop = cy - chestH / 2
+            val plankColor = Color(0xFF5D3A2A).copy(alpha = 0.5f)
+
+            // Glow behind chest — pulses gently
+            val glowAlpha = 0.10f + 0.05f * sin(time * 1.8f)
+            drawCircle(
+                brush = Brush.radialGradient(
+                    colors = listOf(
+                        Color(0xFF00BCD4).copy(alpha = glowAlpha),
+                        Color.Transparent,
+                    ),
+                    center = Offset(cx, cy),
+                    radius = 120f,
+                ),
+                center = Offset(cx, cy),
+                radius = 120f,
+            )
+
+            // ── Orbiting diamonds (8) ────────────────────────────────────────
+            val orbitRadius = 80f
+            val diamondSize = 9f
+            val numDiamonds = 8
+            for (i in 0 until numDiamonds) {
+                val baseAngle = (i * 360f / numDiamonds)
+                val angle = Math.toRadians((baseAngle + time * 50f).toDouble())
+                // Vertical bob per diamond
+                val bob = 3f * sin(time * 2.5f + i * 0.8f)
+                val dx = cx + orbitRadius * cos(angle).toFloat()
+                val dy = cy + orbitRadius * 0.45f * sin(angle).toFloat() + bob
+
+                // Depth-based alpha: diamonds behind the chest are dimmer
+                val depthAlpha = 0.4f + 0.6f * ((sin(angle).toFloat() + 1f) / 2f)
+
+                // Trail (3 fading copies)
+                for (t in 3 downTo 1) {
+                    val trailAngle = Math.toRadians((baseAngle + (time * 50f) - t * 7f).toDouble())
+                    val tdx = cx + orbitRadius * cos(trailAngle).toFloat()
+                    val tdy = cy + orbitRadius * 0.45f * sin(trailAngle).toFloat() + bob
+                    val trailAlpha = (0.12f - t * 0.03f) * depthAlpha
+                    val trailPath = Path().apply {
+                        moveTo(tdx, tdy - diamondSize * 0.4f)
+                        lineTo(tdx + diamondSize * 0.3f, tdy)
+                        lineTo(tdx, tdy + diamondSize * 0.4f)
+                        lineTo(tdx - diamondSize * 0.3f, tdy)
+                        close()
+                    }
+                    drawPath(trailPath, Color(0xFF00BCD4).copy(alpha = trailAlpha))
+                }
+
+                // Diamond shape
+                val diamondPath = Path().apply {
+                    moveTo(dx, dy - diamondSize)
+                    lineTo(dx + diamondSize * 0.6f, dy)
+                    lineTo(dx, dy + diamondSize)
+                    lineTo(dx - diamondSize * 0.6f, dy)
+                    close()
+                }
+                drawPath(diamondPath, Color(0xFF00BCD4).copy(alpha = depthAlpha))
+                drawPath(
+                    diamondPath,
+                    Color.White.copy(alpha = 0.25f * depthAlpha),
+                    style = Stroke(1f),
+                )
+            }
+
+            // ── Chest body ───────────────────────────────────────────────────
+            // Shadow
+            drawRoundRect(
+                color = Color(0xFF3E2723),
+                topLeft = Offset(chestLeft - 2, chestTop + 2),
+                size = Size(chestW + 4, chestH + 2),
+                cornerRadius = CornerRadius(4f),
+            )
+            // Body fill
+            drawRoundRect(
+                brush = Brush.verticalGradient(
+                    colors = listOf(Color(0xFF8D6E4C), Color(0xFF6D4C3A)),
+                    startY = chestTop,
+                    endY = chestTop + chestH,
+                ),
+                topLeft = Offset(chestLeft, chestTop),
+                size = Size(chestW, chestH),
+                cornerRadius = CornerRadius(4f),
+            )
+            // Plank lines
+            for (py in 1..2) {
+                val lineY = chestTop + chestH * py / 3f
+                drawLine(plankColor, Offset(chestLeft + 4, lineY), Offset(chestLeft + chestW - 4, lineY), 1f)
+            }
+            // Edge highlight (top of body)
+            drawLine(
+                Color.White.copy(alpha = 0.15f),
+                Offset(chestLeft + 2, chestTop + 1),
+                Offset(chestLeft + chestW - 2, chestTop + 1),
+                1.5f,
+            )
+
+            // ── Lid (gently opens and closes on a loop) ─────────────────────
+            // Smooth ease-in-out: opens to 35°, pauses, closes back
+            val cycleTime = time % 3.5f  // 3.5s cycle
+            val lidOpenAngle = when {
+                cycleTime < 1.0f -> -35f * smoothStep(cycleTime / 1.0f)         // open over 1s
+                cycleTime < 2.0f -> -35f                                         // hold open 1s
+                cycleTime < 3.0f -> -35f * (1f - smoothStep((cycleTime - 2.0f) / 1.0f))  // close over 1s
+                else -> 0f                                                       // hold closed 0.5s
+            }
+
+            // Light rays when lid is open
+            if (lidOpenAngle < -5f) {
+                val rayAlpha = ((-lidOpenAngle - 5f) / 35f).coerceIn(0f, 0.3f)
+                val rayCount = 5
+                for (r in 0 until rayCount) {
+                    val rayAngle = Math.toRadians((-150.0 + r * 15.0))
+                    val rayLen = 35f + 15f * sin(time * 3f + r)
+                    drawLine(
+                        color = Color(0xFFFFD700).copy(alpha = rayAlpha * (0.5f + 0.5f * sin(time * 4f + r))),
+                        start = Offset(cx, chestTop - lidH * 0.5f),
+                        end = Offset(
+                            cx + rayLen * cos(rayAngle).toFloat(),
+                            chestTop - lidH * 0.5f + rayLen * sin(rayAngle).toFloat(),
+                        ),
+                        strokeWidth = 2f,
+                        cap = StrokeCap.Round,
+                    )
+                }
+            }
+
+            withTransform({
+                rotate(lidOpenAngle, Offset(cx, chestTop))
+            }) {
+                // Lid shadow
+                drawRoundRect(
+                    color = Color(0xFF3E2723),
+                    topLeft = Offset(chestLeft - 2, chestTop - lidH),
+                    size = Size(chestW + 4, lidH + 2),
+                    cornerRadius = CornerRadius(4f),
+                )
+                // Lid fill
+                drawRoundRect(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(Color(0xFFA0845C), Color(0xFF8D6E4C)),
+                        startY = chestTop - lidH,
+                        endY = chestTop,
+                    ),
+                    topLeft = Offset(chestLeft, chestTop - lidH),
+                    size = Size(chestW, lidH),
+                    cornerRadius = CornerRadius(4f),
+                )
+                // Lid edge highlight
+                drawLine(
+                    Color.White.copy(alpha = 0.2f),
+                    Offset(chestLeft + 2, chestTop - lidH + 1),
+                    Offset(chestLeft + chestW - 2, chestTop - lidH + 1),
+                    1.5f,
+                )
+                // Lid plank line
+                drawLine(
+                    plankColor,
+                    Offset(chestLeft + 4, chestTop - lidH / 2),
+                    Offset(chestLeft + chestW - 4, chestTop - lidH / 2),
+                    1f,
+                )
+            }
+
+            // ── Latch (moves with lid when open) ─────────────────────────────
+            val latchW = 8f
+            val latchH = 12f
+            val latchAngle = Math.toRadians(lidOpenAngle.toDouble())
+            val latchCenterY = chestTop + 2
+            val latchOffsetX = (latchH / 2) * sin(latchAngle).toFloat()
+            val latchOffsetY = (latchH / 2) * (1f - cos(latchAngle).toFloat())
+            withTransform({
+                rotate(lidOpenAngle, Offset(cx + latchOffsetX, latchCenterY - latchOffsetY))
+            }) {
+                drawRoundRect(
+                    color = Color(0xFFFFD700),
+                    topLeft = Offset(cx - latchW / 2 + latchOffsetX, chestTop - latchH / 2 + 2 - latchOffsetY),
+                    size = Size(latchW, latchH),
+                    cornerRadius = CornerRadius(2f),
+                )
+            }
+
+            // ── Sparkle dots around the chest ────────────────────────────────
+            for (i in 0 until 5) {
+                val sparkAngle = time * 1.2f + i * 1.3f
+                val sparkAlpha = (0.4f + 0.3f * sin(sparkAngle * 3f)).coerceIn(0f, 0.7f)
+                val sparkDist = 55f + 15f * sin(sparkAngle * 0.7f)
+                val sparkA = Math.toRadians((i * 72f + time * 15f).toDouble())
+                val sx = cx + sparkDist * cos(sparkA).toFloat()
+                val sy = cy + sparkDist * 0.5f * sin(sparkA).toFloat()
+                drawCircle(
+                    color = Color(0xFF00BCD4).copy(alpha = sparkAlpha),
+                    radius = 2f,
+                    center = Offset(sx, sy),
+                )
+            }
+        }
+
+        if (statusText != null) {
+            Spacer(Modifier.height(8.dp))
+            Text(
+                statusText,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF121212)
+@Composable
+private fun PreviewChestDiamondLoader() {
+    MaterialTheme(colorScheme = darkColorScheme()) {
+        ChestDiamondLoader(statusText = "Loading chests…")
+    }
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFF121212)

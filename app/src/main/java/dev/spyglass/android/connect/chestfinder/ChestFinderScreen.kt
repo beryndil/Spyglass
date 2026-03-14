@@ -15,11 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.spyglass.android.connect.ChestLoadingAnimation
+import dev.spyglass.android.connect.ChestDiamondLoader
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.ContainerInfo
 import dev.spyglass.android.connect.SearchHit
-import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.connect.inventory.InventorySlotView
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
@@ -77,10 +76,9 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
     val chestContents by viewModel.chestContents.collectAsStateWithLifecycle()
 
-    val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
     val hits = results?.results ?: emptyList()
     val containers = chestContents?.containers ?: emptyList()
-    val isLoading = chestContents == null && connectionState.isConnected
+    val isLoading = chestContents == null
     val isSearching = query.isNotBlank()
 
     LazyColumn(
@@ -152,8 +150,8 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
         if (!isSearching) {
             if (isLoading) {
                 item(key = "loading") {
-                    ChestLoadingAnimation(
-                        connectionState = connectionState,
+                    ChestDiamondLoader(
+                        statusText = stringResource(R.string.connect_anim_getting_ready),
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(300.dp),
