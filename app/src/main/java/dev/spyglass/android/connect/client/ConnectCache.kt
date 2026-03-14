@@ -186,6 +186,32 @@ object ConnectCache {
             }
         }
 
+    // ── Chest Contents ──────────────────────────────────────────────────────
+
+    suspend fun saveChests(context: Context, worldFolder: String, data: ChestContentsPayload) =
+        withContext(Dispatchers.IO) {
+            try {
+                val dir = worldDir(context, worldFolder)
+                dir.mkdirs()
+                File(dir, "chests.json").writeText(json.encodeToString(data))
+                saveLastUpdated(context, worldFolder)
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to save chests cache")
+            }
+        }
+
+    suspend fun loadChests(context: Context, worldFolder: String): ChestContentsPayload? =
+        withContext(Dispatchers.IO) {
+            try {
+                val file = File(worldDir(context, worldFolder), "chests.json")
+                if (!file.exists()) return@withContext null
+                json.decodeFromString<ChestContentsPayload>(file.readText())
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to load chests cache")
+                null
+            }
+        }
+
     // ── Skin Bitmaps ─────────────────────────────────────────────────────────
 
     suspend fun saveSkinAvatar(context: Context, worldFolder: String, bitmap: Bitmap) =

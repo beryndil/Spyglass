@@ -253,6 +253,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         ConnectCache.loadPlayerData(ctx, worldFolder)?.let { _playerData.value = it }
         ConnectCache.loadStructures(ctx, worldFolder)?.let { _structures.value = it }
         ConnectCache.loadMapData(ctx, worldFolder)?.let { _mapTiles.value = it }
+        ConnectCache.loadChests(ctx, worldFolder)?.let { _chestContents.value = it }
         ConnectCache.loadStats(ctx, worldFolder)?.let { _playerStats.value = it }
         ConnectCache.loadAdvancements(ctx, worldFolder)?.let { _playerAdvancements.value = it }
         ConnectCache.loadSkinAvatar(ctx, worldFolder)?.let { _playerSkin.value = it }
@@ -709,7 +710,17 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 MessageType.CHEST_CONTENTS -> {
                     val payload = json.decodeFromJsonElement(ChestContentsPayload.serializer(), message.payload)
                     Timber.i("  ${payload.containers.size} containers (${payload.totalItemStacks} item stacks)")
+                    val changed = _chestContents.value != payload
                     _chestContents.value = payload
+                    if (changed) {
+                        val world = _selectedWorld.value
+                        if (world != null) {
+                            val ctx = getApplication<Application>()
+                            viewModelScope.launch(Dispatchers.IO) {
+                                ConnectCache.saveChests(ctx, world, payload)
+                            }
+                        }
+                    }
                 }
                 MessageType.SEARCH_RESULTS -> {
                     val payload = json.decodeFromJsonElement(SearchResultsPayload.serializer(), message.payload)
