@@ -256,6 +256,14 @@
     <string name="settings_connect_clear_all_message">Clear all cached Connect data for every world? Your device pairing will be kept.</string>
     <string name="settings_connect_clear_world_title">Clear World Data</string>
     <string name="settings_connect_clear_world_message">Clear cached data for \"%1$s\"?</string>
+    <string name="settings_player_ign">Minecraft Username</string>
+    <string name="settings_player_ign_desc">Used to auto-select your player in Connect</string>
+
+    <!-- IGN Dialog -->
+    <string name="ign_dialog_title">What\'s your Minecraft username?</string>
+    <string name="ign_dialog_hint">Username</string>
+    <string name="ign_dialog_continue">Continue</string>
+    <string name="ign_dialog_skip">Skip</string>
 
     <!-- Settings — About (additional) -->
     <string name="settings_wiki">Spyglass Wiki</string>

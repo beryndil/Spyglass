@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
 import dev.spyglass.android.core.ReviewHelper
 import dev.spyglass.android.core.ui.ConsentDialog
+import dev.spyglass.android.core.ui.IgnDialog
 import androidx.compose.runtime.CompositionLocalProvider
 import dev.spyglass.android.core.ui.DEFAULT_THEME
 import dev.spyglass.android.core.ui.LocalAppLocale
@@ -108,6 +109,10 @@ class MainActivity : AppCompatActivity() {
                 .map { it[PreferenceKeys.CONSENT_SHOWN] ?: false }
                 .collectAsStateWithLifecycle(initialValue = true) // default true to avoid flash
 
+            val playerIgn by dataStore.data
+                .map { it[PreferenceKeys.PLAYER_IGN] }
+                .collectAsStateWithLifecycle(initialValue = "")
+
             val scope = rememberCoroutineScope()
 
             val configuration = LocalConfiguration.current
@@ -133,6 +138,19 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                     }
+                } else if (playerIgn == null) {
+                    IgnDialog(
+                        onContinue = { name ->
+                            scope.launch {
+                                dataStore.edit { it[PreferenceKeys.PLAYER_IGN] = name }
+                            }
+                        },
+                        onSkip = {
+                            scope.launch {
+                                dataStore.edit { it[PreferenceKeys.PLAYER_IGN] = "" }
+                            }
+                        },
+                    )
                 }
 
                 val unlocked by isUnlocked

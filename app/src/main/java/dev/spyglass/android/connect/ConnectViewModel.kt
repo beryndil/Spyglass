@@ -11,6 +11,8 @@ import dev.spyglass.android.connect.gear.GearAnalyzer
 import dev.spyglass.android.connect.waypoints.ConnectWaypoint
 import dev.spyglass.android.core.CrashReporter
 import dev.spyglass.android.data.repository.GameDataRepository
+import dev.spyglass.android.settings.PreferenceKeys
+import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -110,6 +112,9 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     private val repo by lazy { GameDataRepository.get(getApplication()) }
 
+    /** Cached IGN from DataStore for auto-selecting player. */
+    private var cachedIgn: String = ""
+
     init {
         // Plant the log tree so warnings/errors/crashes are captured and sent to desktop
         Timber.plant(logTree)
@@ -117,6 +122,13 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
         // Load cached data on startup
         viewModelScope.launch(Dispatchers.IO) {
+            // Load IGN from DataStore
+            try {
+                val app = getApplication<Application>()
+                val prefs = app.dataStore.data.first()
+                cachedIgn = prefs[PreferenceKeys.PLAYER_IGN] ?: ""
+            } catch (_: Exception) { /* leave empty */ }
+
             val meta = ConnectCache.loadMeta(getApplication())
             if (meta != null) {
                 Timber.i("Cache loaded: ${meta.worlds.size} worlds, selected=${meta.selectedWorld ?: "none"}")
@@ -124,11 +136,6 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 _selectedWorld.value = meta.selectedWorld
                 val world = meta.selectedWorld
                 if (world != null) {
-                    // Restore preferred player for this world
-                    val preferredUuid = meta.preferredPlayers[world]
-                    if (preferredUuid != null) {
-                        _selectedPlayerUuid.value = preferredUuid
-                    }
                     loadCachedWorldData(world)
                 }
             } else {
@@ -468,21 +475,14 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         Timber.i("Selecting world: $folderName")
         _selectedWorld.value = folderName
         _playerList.value = emptyList()
-        // Load preferred player for this world, or reset to null
+        _selectedPlayerUuid.value = null
         viewModelScope.launch(Dispatchers.IO) {
-            val preferredUuid = ConnectCache.loadPreferredPlayer(getApplication(), folderName)
-            _selectedPlayerUuid.value = preferredUuid
             ConnectCache.saveMeta(
                 getApplication(),
                 ConnectCache.CacheMeta(selectedWorld = folderName, worlds = _worlds.value),
             )
             // Load cached data for newly selected world (shows instantly while fresh data loads)
             loadCachedWorldData(folderName)
-            // Only request player data now if we have a preferred player — otherwise
-            // wait for PLAYER_LIST to arrive so the user can choose first
-            if (preferredUuid != null && connectionState.value.isConnected) {
-                requestPlayerData()
-            }
         }
         if (connectionState.value.isConnected) {
             val payload = json.encodeToJsonElement(SelectWorldPayload(folderName))
@@ -510,13 +510,6 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     /** Select a specific player by UUID and refresh their data. */
     fun selectPlayer(uuid: String?) {
         _selectedPlayerUuid.value = uuid
-        // Persist preferred player for this world
-        val world = _selectedWorld.value
-        if (world != null && uuid != null) {
-            viewModelScope.launch(Dispatchers.IO) {
-                ConnectCache.savePreferredPlayer(getApplication(), world, uuid)
-            }
-        }
         if (connectionState.value.isConnected) {
             requestPlayerData()
         }
@@ -699,17 +692,18 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     val payload = json.decodeFromJsonElement(PlayerListPayload.serializer(), message.payload)
                     Timber.i("  ${payload.players.size} players: ${payload.players.joinToString { it.name ?: it.uuid.take(8) }}")
                     _playerList.value = payload.players
-                    // Load the right player based on preference
-                    val currentUuid = _selectedPlayerUuid.value
-                    if (currentUuid != null) {
-                        // Preferred player saved — fetch their data (replaces owner if different)
-                        requestPlayerData()
-                    } else if (payload.players.size == 1) {
+                    if (payload.players.size == 1) {
                         // Single-player world — auto-select the only player
                         selectPlayer(payload.players.first().uuid)
+                    } else if (cachedIgn.isNotBlank()) {
+                        // Multi-player — match IGN to auto-select
+                        val match = payload.players.find { it.name.equals(cachedIgn, ignoreCase = true) }
+                        if (match != null) {
+                            Timber.i("  IGN '$cachedIgn' matched player ${match.uuid} — auto-selecting")
+                            selectPlayer(match.uuid)
+                        }
+                        // No match → owner's data already showing, user can switch manually
                     }
-                    // Multi-player with no preferred: owner's data already showing,
-                    // player selector + prompt visible — user taps their player to switch
                 }
                 MessageType.PLAYER_DATA -> {
                     val payload = json.decodeFromJsonElement(PlayerData.serializer(), message.payload)

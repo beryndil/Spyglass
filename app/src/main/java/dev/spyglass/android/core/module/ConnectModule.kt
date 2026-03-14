@@ -53,6 +53,8 @@ import dev.spyglass.android.connect.waypoints.ConnectWaypointsScreen
 import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.connect.client.connectionStatusText
 import dev.spyglass.android.R
+import dev.spyglass.android.settings.PreferenceKeys
+import dev.spyglass.android.settings.dataStore
 import dev.spyglass.android.core.ui.Emerald
 import dev.spyglass.android.core.ui.MobTextures
 import dev.spyglass.android.core.ui.PixelIcons
@@ -63,7 +65,10 @@ import dev.spyglass.android.core.ui.SpyglassIcon
 import dev.spyglass.android.core.ui.SpyglassIconImage
 import dev.spyglass.android.navigation.BrowseTarget
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TextButton
+import androidx.datastore.preferences.core.edit
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 /**
@@ -285,6 +290,10 @@ object ConnectModule : SpyglassModule {
         val worlds by connectViewModel.worlds.collectAsStateWithLifecycle()
         val scope = androidx.compose.runtime.rememberCoroutineScope()
 
+        val playerIgn by context.dataStore.data
+            .map { it[PreferenceKeys.PLAYER_IGN] ?: "" }
+            .collectAsStateWithLifecycle(initialValue = "")
+        var showIgnDialog by remember { mutableStateOf(false) }
         var cachedWorlds by remember { mutableStateOf<List<String>>(emptyList()) }
         var showClearAllDialog by remember { mutableStateOf(false) }
         var worldToDelete by remember { mutableStateOf<String?>(null) }
@@ -292,6 +301,35 @@ object ConnectModule : SpyglassModule {
         // Load cached world list
         androidx.compose.runtime.LaunchedEffect(Unit) {
             cachedWorlds = dev.spyglass.android.connect.client.ConnectCache.listCachedWorlds(context)
+        }
+
+        if (showIgnDialog) {
+            var ignInput by remember { mutableStateOf(playerIgn) }
+            AlertDialog(
+                onDismissRequest = { showIgnDialog = false },
+                title = { Text(stringResource(R.string.settings_player_ign)) },
+                text = {
+                    OutlinedTextField(
+                        value = ignInput,
+                        onValueChange = { ignInput = it },
+                        label = { Text(stringResource(R.string.ign_dialog_hint)) },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                },
+                confirmButton = {
+                    TextButton(onClick = {
+                        showIgnDialog = false
+                        val trimmed = ignInput.trim()
+                        scope.launch {
+                            context.dataStore.edit { it[PreferenceKeys.PLAYER_IGN] = trimmed }
+                        }
+                    }) { Text(stringResource(R.string.save)) }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showIgnDialog = false }) { Text(stringResource(R.string.cancel)) }
+                },
+            )
         }
 
         if (showClearAllDialog) {
@@ -360,6 +398,28 @@ object ConnectModule : SpyglassModule {
                     uriHandler.openUri("https://hardknocks.com/spyglass-connect")
                 },
             )
+            SpyglassDivider()
+            Spacer(Modifier.height(4.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { showIgnDialog = true }
+                    .padding(vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        stringResource(R.string.settings_player_ign),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                    Text(
+                        if (playerIgn.isNotBlank()) playerIgn else stringResource(R.string.settings_player_ign_desc),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
         }
 
         // ── Cached Data Management ──
