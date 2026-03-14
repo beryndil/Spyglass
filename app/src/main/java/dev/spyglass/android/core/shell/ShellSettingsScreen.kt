@@ -9,11 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,7 +31,6 @@ import dev.spyglass.android.core.module.SettingsSectionScope
 import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassTab
 import dev.spyglass.android.core.ui.SpyglassTabRow
-import dev.spyglass.android.core.ui.rememberHapticClick
 
 /**
  * Shell settings screen — 4-tab layout (Appearance, Gameplay, General, About & Privacy).
@@ -47,8 +42,6 @@ fun ShellSettingsScreen(
     onBack: () -> Unit,
 ) {
     val context = LocalContext.current
-    val hapticClick = rememberHapticClick()
-
     val revision by ModuleRegistry.revision.collectAsStateWithLifecycle()
 
     val sections by produceState(emptyList<SettingsSection>(), revision) {
@@ -74,13 +67,6 @@ fun ShellSettingsScreen(
                 .height(56.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(onClick = { hapticClick(); onBack() }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.back),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
             Text(
                 stringResource(R.string.settings),
                 style = MaterialTheme.typography.titleLarge,

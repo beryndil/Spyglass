@@ -69,6 +69,8 @@ import dev.spyglass.android.core.ui.PixelIcons
 import dev.spyglass.android.core.ui.SpyglassIcon
 import dev.spyglass.android.core.ui.SpyglassIconImage
 import dev.spyglass.android.core.ui.rememberHapticClick
+import dev.spyglass.android.core.navigation.NavigationHistory
+import dev.spyglass.android.core.navigation.SwipeNavigationWrapper
 import dev.spyglass.android.navigation.BrowseTarget
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
@@ -137,6 +139,7 @@ fun ShellNavGraph() {
     var pendingTarget by remember { mutableStateOf<BrowseTarget?>(null) }
     var pendingCalcTab by remember { mutableStateOf<Int?>(null) }
     val connectViewModel: ConnectViewModel = viewModel()
+    val navHistory = remember { NavigationHistory() }
 
     // Scroll-to-top trigger — increments when user re-taps the current tab
     var scrollToTopTrigger by remember { mutableIntStateOf(0) }
@@ -150,6 +153,7 @@ fun ShellNavGraph() {
 
     fun navigateToTop(route: String) {
         try {
+            navHistory.onNewNavigation()
             if (currentRoute == route) {
                 scrollToTopTrigger++
                 return
@@ -168,8 +172,19 @@ fun ShellNavGraph() {
         } catch (_: IllegalStateException) { }
     }
 
-    fun navigateToSub(route: String) {
+    fun navigateToSub(route: String, isForward: Boolean = false) {
+        if (!isForward) navHistory.onNewNavigation()
         navController.navigate(route) { launchSingleTop = true }
+    }
+
+    fun navigateCrossLink(route: String) {
+        navHistory.onNewNavigation()
+        navController.navigate(route) { launchSingleTop = true }
+    }
+
+    fun navigateForward() {
+        val route = navHistory.onNavigateForward() ?: return
+        navigateToSub(route, isForward = true)
     }
 
     // ── Scope implementations ───────────────────────────────────────────────
@@ -199,14 +214,17 @@ fun ShellNavGraph() {
 
     val moduleNavActions = object : ModuleNavActions {
         override fun navigateTo(route: String) = navigateToSub(route)
-        override fun navigateBack() { navController.popBackStack() }
+        override fun navigateBack() {
+            if (currentRoute != null) navHistory.onNavigateBack(currentRoute!!)
+            navController.popBackStack()
+        }
         override fun navigateToBrowseTab(tab: Int, id: String) {
             pendingTarget = BrowseTarget(tab, id)
-            navigateToTop("browse")
+            navigateCrossLink("browse")
         }
         override fun navigateToCalcTab(tab: Int) {
             pendingCalcTab = tab
-            navigateToTop("calculators")
+            navigateCrossLink("calculators")
         }
     }
 
@@ -257,6 +275,18 @@ fun ShellNavGraph() {
             }
         },
     ) { innerPadding ->
+        val canGoBack = navController.previousBackStackEntry != null
+        SwipeNavigationWrapper(
+            canGoBack = canGoBack,
+            canGoForward = navHistory.canGoForward,
+            onSwipeBack = {
+                if (canGoBack) {
+                    if (currentRoute != null) navHistory.onNavigateBack(currentRoute!!)
+                    navController.popBackStack()
+                }
+            },
+            onSwipeForward = { navigateForward() },
+        ) {
         NavHost(
             navController = navController,
             startDestination = startDest,
@@ -271,10 +301,7 @@ fun ShellNavGraph() {
             composable("search") {
                 dev.spyglass.android.browse.search.SearchScreen(scrollToTopTrigger = scrollToTopTrigger, onResultTap = { tab, id ->
                     pendingTarget = BrowseTarget(tab, id)
-                    navController.navigate("browse") {
-                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                        launchSingleTop = true
-                    }
+                    navigateCrossLink("browse")
                 })
             }
 
@@ -321,6 +348,7 @@ fun ShellNavGraph() {
                 }
             }
         }
+    } // SwipeNavigationWrapper
     }
     } // Box
 
