@@ -1,0 +1,340 @@
+================================================================================
+  FULL CODEBASE CLEANUP — CHANGELOG
+  Date: 2026-03-14
+================================================================================
+
+Summary: 9 batches, ~50 files touched across 164 Kotlin files reviewed.
+All 45 unit tests pass. No behavior changes — cosmetic/structural only.
+
+Total lines removed: ~700+ (dead code, commented-out blocks, unused imports)
+Total lines added: ~100 (section headers, proper imports)
+
+================================================================================
+  BATCH 1: Core Infrastructure
+================================================================================
+
+core/module/CoreModule.kt (1,437 → 1,319)
+  REMOVED:
+    - LanguageContent() composable (118 lines) — dead code, never called
+      from settingsSections() or anywhere else
+    - Stale section comments ("unchanged" markers)
+    - Unused SupportedLanguages import
+  RESTRUCTURED:
+    - Cleaned up section header for Data & Sync tab
+
+core/module/ConnectModule.kt (855 → 799)
+  REMOVED:
+    - StatusBar() composable (19 lines) — dead code, never called
+    - WorldHeader() composable (34 lines) — dead code, never called
+    - Unused CircleShape import (was only used by StatusBar)
+
+core/module/BrowseModule.kt — already clean
+core/module/ToolsModule.kt — already clean
+core/module/ModuleRegistry.kt — already clean (74 lines, well-documented)
+core/module/SpyglassModule.kt — already clean (53 lines, full KDoc)
+core/module/BottomNavItem.kt — already clean (13 lines)
+core/module/HomeSection.kt — already clean (25 lines)
+core/module/SearchProvider.kt — already clean (20 lines)
+core/module/ModuleRoute.kt — already clean (22 lines)
+core/module/SettingsSection.kt — already clean (24 lines)
+
+================================================================================
+  BATCH 2: App Entrypoints + Navigation
+================================================================================
+
+navigation/AppNavGraph.kt (463 → 4)
+  REMOVED:
+    - Entire old AppNavGraph() composable (~250 lines) — dead code,
+      replaced by ShellNavGraph
+    - TopDest sealed class + TOP_DESTINATIONS — dead code
+    - SUB_ROUTES set — dead code (private, only used by AppNavGraph)
+    - SpyglassTopBar() composable — dead code (replaced by ShellTopBar)
+    - BottomNavBar() composable — dead code (replaced by ShellBottomNavBar)
+    - MiniGameClock() composable — dead code (duplicate of ShellNavGraph version)
+    - ClockPrefs data class — dead code (duplicate of ShellNavGraph version)
+    - All 47 imports — dead code
+  KEPT:
+    - BrowseTarget data class (still imported by CalculatorsScreen, ShellNavGraph)
+
+MainActivity.kt (218 → 202)
+  REMOVED:
+    - Commented-out i18n locale override block (15 lines, onCreate)
+    - Commented-out i18n locale resolution block (9 lines, setContent)
+  ADDED:
+    - Missing blank line between imports and class declaration
+
+SpyglassApp.kt — already clean (well-organized with comments)
+core/shell/ShellNavGraph.kt — already clean (good section headers)
+core/shell/ShellHomeScreen.kt — already clean (75 lines, KDoc)
+core/shell/ShellSettingsScreen.kt — already clean (115 lines, KDoc)
+
+================================================================================
+  BATCH 3: Home + Settings
+================================================================================
+
+home/HomeScreen.kt (1,046 → 1,045)
+  RESTRUCTURED:
+    - Merged split import blocks into single alphabetically sorted group
+    - Removed redundant explicit mutableIntStateOf import (covered by wildcard)
+
+settings/SettingsViewModel.kt (292 → 301)
+  ADDED:
+    - 8 consistent `// ── Section ──` divider headers replacing plain comments
+    - New `// ── Home & Navigation ──` header for previously unlabeled section
+
+home/TipsLoader.kt — already clean (45 lines)
+settings/UserPreferences.kt — already clean (58 lines)
+settings/MinecraftVersions.kt — already clean (29 lines)
+settings/MinecraftUpdates.kt — already clean (467 lines, pure data)
+
+================================================================================
+  BATCH 4: Core UI Components
+================================================================================
+
+core/ui/CommonComponents.kt (798 → 796)
+  REMOVED:
+    - Redundant FQ TextAlign.Center reference (import already present)
+    - Redundant FQ kotlinx.coroutines.delay (import already present)
+    - Orphaned duplicate section header
+
+core/ui/ItemDetailPager.kt (617 → 616)
+  REMOVED:
+    - Unused TextAlign import
+
+core/ui/BiomeTextures.kt (113 → 112)
+  REMOVED:
+    - Duplicate "savanna_plateau" map entry (Kotlin silently keeps last)
+
+core/ui/AddToListSection.kt (139 → 139)
+  RESTRUCTURED:
+    - Added delay import, replaced FQ kotlinx.coroutines.delay with imported name
+
+core/ui/AddToTodoSection.kt (119 → 119)
+  RESTRUCTURED:
+    - Added delay import, replaced FQ kotlinx.coroutines.delay with imported name
+
+core/ui/SpyglassTheme.kt — already clean
+core/ui/TextureManager.kt — already clean
+core/ui/SpyglassIcon.kt — already clean
+core/ui/BlockTextures.kt — already clean
+core/ui/ItemTextures.kt — already clean
+core/ui/MobTextures.kt — already clean
+core/ui/EnchantTextures.kt — already clean
+core/ui/StructureTextures.kt — already clean
+core/ui/PotionTextures.kt — already clean
+core/ui/PixelIcons.kt — already clean
++ 10 more small core/ui files — already clean
+
+================================================================================
+  BATCH 5: Data Layer
+================================================================================
+
+data/db/SpyglassDatabase.kt (338 → 345)
+  ADDED:
+    - `// ── DAO Accessors ──` section header
+    - `// ── Migrations ──` section header
+    - `// ── Database Builder ──` section header
+
+data/db/entities/Entities.kt (287 → 291)
+  ADDED:
+    - `// ── Game Data Entities ──` section header
+    - `// ── User Data Entities ──` section header
+
+data/db/daos/Daos.kt (434 → 438)
+  ADDED:
+    - `// ── Game Data DAOs ──` section header
+    - `// ── User Data DAOs ──` section header
+
+data/db/UserDatabase.kt — already clean
+data/seed/DataSeeder.kt — already clean (has section headers)
+data/sync/DataSyncManager.kt — already clean
+data/sync/DataManifest.kt — already clean
+data/sync/GitHubDataClient.kt — already clean
+data/sync/DataSyncWorker.kt — already clean
+data/repository/GameDataRepository.kt — already clean
+
+================================================================================
+  BATCH 6: Browse Screens
+================================================================================
+
+browse/blocks/BlocksScreen.kt (662 → 657)
+  REMOVED:
+    - Unused checkMechanicsChanged import
+    - Unused MechanicsInfo import
+    - 4 redundant explicit core.ui sub-imports (covered by wildcard)
+
+browse/items/ItemsScreen.kt (795 → 791)
+  REMOVED:
+    - Unused checkMechanicsChanged import
+    - 3 redundant explicit core.ui sub-imports
+
+browse/mobs/MobsScreen.kt (512 → 520)
+  REMOVED:
+    - 3 redundant explicit core.ui sub-imports
+  ADDED:
+    - Proper LazyRow import (was using FQ name inline)
+    - 4 section headers (Constants, ViewModel, Helpers, Screen, Mob detail)
+
+browse/biomes/BiomesScreen.kt (539 → 548)
+  REMOVED:
+    - Unused checkMechanicsChanged import
+    - 3 redundant explicit core.ui sub-imports
+  ADDED:
+    - 5 section headers
+
+browse/potions/PotionsScreen.kt (414 → 421)
+  REMOVED:
+    - 3 redundant explicit core.ui sub-imports
+  ADDED:
+    - 5 section headers
+
+browse/enchants/EnchantsScreen.kt (487 → 492)
+  REMOVED:
+    - 3 redundant explicit core.ui sub-imports
+  ADDED:
+    - 4 section headers
+
+browse/trades/TradesScreen.kt (422 → 423)
+  ADDED:
+    - Proper LazyRow import replacing FQ inline usage
+
+browse/commands/CommandsScreen.kt (341 → 346)
+  REMOVED:
+    - 3 redundant explicit core.ui sub-imports
+  ADDED:
+    - 4 section headers
+
+browse/structures/StructuresScreen.kt (451 → 458)
+  REMOVED:
+    - 3 redundant explicit core.ui sub-imports
+  ADDED:
+    - 5 section headers
+
+browse/crafting/CraftingScreen.kt (276 → 278)
+  REMOVED:
+    - 3 redundant explicit core.ui sub-imports
+  ADDED:
+    - 3 section headers
+
+browse/search/SearchScreen.kt (203 → 202)
+  REMOVED:
+    - 1 redundant explicit core.ui sub-import
+
+browse/BrowseScreen.kt — already clean
+browse/versions/VersionsScreen.kt — already clean (72 lines)
+
+================================================================================
+  BATCH 7: Calculator Screens
+================================================================================
+
+calculators/maze/MazeViewModel.kt (563 → 562)
+  REMOVED:
+    - Redundant roundToInt import (covered by kotlin.math.* wildcard)
+
+calculators/notes/NotesScreen.kt (346 → 351)
+  REMOVED:
+    - Redundant SpyglassSearchBar import (covered by star import)
+  ADDED:
+    - 5 section headers (ViewModel, Screen, Detail Card, Dialog, Helpers)
+
+calculators/librarian/LibrarianScreen.kt (209 → 208)
+  REMOVED:
+    - Dead no-op modifier: Modifier.padding(horizontal = 0.dp)
+
+calculators/food/FoodScreen.kt (237 → 239)
+  SIMPLIFIED:
+    - "${"%.1f".format(food.saturation)}" → "%.1f".format(food.saturation)
+  ADDED:
+    - `// ── Item Card` section header
+
+calculators/anvil/AnvilScreen.kt (222 → 222)
+  RESTRUCTURED:
+    - Promoted 4 inline comments to `// ──` section headers
+
+calculators/trims/TrimScreen.kt (241 → 247)
+  SIMPLIFIED:
+    - Combined identical when-branches: "deep_dark", "ocean" → PotionBlue
+  ADDED:
+    - 3 section headers (Templates, Materials, How To)
+
+calculators/waypoints/WaypointsScreen.kt (547 → 551)
+  ADDED:
+    - 4 section headers (ViewModel, Screen, Detail Card, Dialog)
+
+29 other calculator files — already clean
+
+================================================================================
+  BATCH 8: Connect Package
+================================================================================
+
+connect/ConnectScreen.kt (602 → 615)
+  REMOVED:
+    - Dead showFairPlayWarning variable (declared, never read)
+  ADDED:
+    - 6 section headers
+
+connect/ChestLoadingAnimation.kt (679 → 689)
+  ADDED:
+    - 5 section headers
+
+connect/character/CharacterScreen.kt (572 → 584)
+  ADDED:
+    - 6 section headers
+
+connect/waypoints/ConnectWaypointsScreen.kt (672 → 682)
+  ADDED:
+    - 5 section headers
+
+connect/statistics/StatisticsScreen.kt (224 → 221)
+  REMOVED:
+    - Dead damage_hearts computation block (computed value then discarded it)
+    - Unused ConnectionState import
+
+connect/gear/GearAnalyzer.kt (285 → 293)
+  ADDED:
+    - 5 section headers
+
+connect/client/SpyglassClient.kt (253 → 259)
+  ADDED:
+    - 3 section headers
+
+connect/inventory/InventoryScreen.kt (191 → 190)
+  REMOVED:
+    - Unused ConnectionState import
+
+connect/inventory/EnderChestScreen.kt (115 → 114)
+  REMOVED:
+    - Unused ConnectionState import
+
+connect/pets/PetsScreen.kt (167 → 166)
+  REMOVED:
+    - Unused ConnectionState import
+
+connect/map/MapScreen.kt (218 → 216)
+  REMOVED:
+    - Unused ConnectionState import
+
+Protocol.kt, QrScannerScreen.kt, ConnectCache.kt, EncryptionHelper.kt,
+ConnectLogTree.kt, and 10+ other connect files — already clean
+
+================================================================================
+  BATCH 9: Misc Screens
+================================================================================
+
+about/AboutScreen.kt (284 → 284)
+  RESTRUCTURED:
+    - Reordered imports into proper alphabetical groups
+
+changelog/ChangelogScreen.kt (192 → 195)
+  ADDED:
+    - 3 proper imports (Dispatchers, flowOf, withContext)
+  RESTRUCTURED:
+    - Replaced FQ references with imported names
+
+disclaimer/DisclaimerScreen.kt — already clean
+help/HelpScreen.kt — already clean
+license/LicenseScreen.kt — already clean
+feedback/FeedbackScreen.kt — already clean
+news/NewsScreen.kt — already clean
+core/FirebaseHelper.kt — already clean
+core/ReviewHelper.kt — already clean
