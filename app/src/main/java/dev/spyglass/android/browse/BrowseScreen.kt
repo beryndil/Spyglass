@@ -1,5 +1,6 @@
 package dev.spyglass.android.browse
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -82,9 +83,48 @@ fun BrowseScreen(
     var targetCommandId by remember { mutableStateOf<String?>(null) }
     var targetEnchantId by remember { mutableStateOf<String?>(null) }
 
-    // Handle incoming navigation from Search
+    // Internal back stack for system back button support
+    val backStack = remember { mutableStateListOf<Pair<Int, String?>>() }
+
+    fun clearAllTargets() {
+        targetMobId = null; targetBiomeId = null; targetBlockId = null
+        targetRecipeId = null; targetStructureId = null; targetItemId = null
+        targetProfession = null; targetCommandId = null; targetEnchantId = null
+    }
+
+    fun currentTargetId(): String? = when (tab) {
+        0 -> targetBlockId; 1 -> targetItemId; 2 -> targetRecipeId
+        3 -> targetMobId; 4 -> targetProfession; 5 -> targetBiomeId
+        6 -> targetStructureId; 7 -> targetEnchantId; 9 -> targetCommandId
+        else -> null
+    }
+
+    fun setTargetForTab(t: Int, id: String?) {
+        when (t) {
+            0 -> targetBlockId = id; 1 -> targetItemId = id; 2 -> targetRecipeId = id
+            3 -> targetMobId = id; 4 -> targetProfession = id; 5 -> targetBiomeId = id
+            6 -> targetStructureId = id; 7 -> targetEnchantId = id; 9 -> targetCommandId = id
+        }
+    }
+
+    fun pushAndNavigate(newTab: Int, newTargetId: String?) {
+        backStack.add(tab to currentTargetId())
+        clearAllTargets()
+        setTargetForTab(newTab, newTargetId)
+        tab = newTab
+    }
+
+    BackHandler(enabled = backStack.isNotEmpty()) {
+        val (prevTab, prevTargetId) = backStack.removeLast()
+        clearAllTargets()
+        setTargetForTab(prevTab, prevTargetId)
+        tab = prevTab
+    }
+
+    // Handle incoming navigation from Search or cross-link
     LaunchedEffect(initialTarget) {
         if (initialTarget != null) {
+            backStack.clear()
             tab = initialTarget.tab
             targetMobId = null; targetBiomeId = null; targetBlockId = null
             targetRecipeId = null; targetStructureId = null; targetItemId = null
@@ -134,62 +174,21 @@ fun BrowseScreen(
         }.collect { value = it }
     }
 
-    fun clearAllTargets() {
-        targetMobId = null
-        targetBiomeId = null
-        targetBlockId = null
-        targetRecipeId = null
-        targetStructureId = null
-        targetItemId = null
-        targetProfession = null
-        targetCommandId = null
-        targetEnchantId = null
-    }
-
     // Cross-tab item navigation — 3-way routing: Blocks → Items → Recipes
     val onItemTap: (String) -> Unit = { itemId ->
-        clearAllTargets()
-        if (itemId in blockIds) {
-            targetBlockId = itemId
-            tab = 0  // Blocks
-        } else if (itemId in itemIds) {
-            targetItemId = itemId
-            tab = 1  // Items
-        } else {
-            targetRecipeId = itemId
-            tab = 2  // Recipes
+        val targetTab = when {
+            itemId in blockIds -> 0
+            itemId in itemIds -> 1
+            else -> 2
         }
+        pushAndNavigate(targetTab, itemId)
     }
 
-    val onMobTap: (String) -> Unit = { mobId ->
-        clearAllTargets()
-        targetMobId = mobId
-        tab = 3  // Mobs
-    }
-
-    val onBiomeTap: (String) -> Unit = { biomeId ->
-        clearAllTargets()
-        targetBiomeId = biomeId
-        tab = 5  // Biomes
-    }
-
-    val onStructureTap: (String) -> Unit = { structureId ->
-        clearAllTargets()
-        targetStructureId = structureId
-        tab = 6  // Structures
-    }
-
-    val onTradeTap: (String) -> Unit = { profession ->
-        clearAllTargets()
-        targetProfession = profession
-        tab = 4  // Trades
-    }
-
-    val onEnchantTap: (String) -> Unit = { enchantId ->
-        clearAllTargets()
-        targetEnchantId = enchantId
-        tab = 7  // Enchants
-    }
+    val onMobTap: (String) -> Unit = { mobId -> pushAndNavigate(3, mobId) }
+    val onBiomeTap: (String) -> Unit = { biomeId -> pushAndNavigate(5, biomeId) }
+    val onStructureTap: (String) -> Unit = { structureId -> pushAndNavigate(6, structureId) }
+    val onTradeTap: (String) -> Unit = { profession -> pushAndNavigate(4, profession) }
+    val onEnchantTap: (String) -> Unit = { enchantId -> pushAndNavigate(7, enchantId) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         SpyglassTabRow(
