@@ -75,6 +75,8 @@ private fun dimensionLabel(dim: String): String = when (dim) {
     else -> dim.replaceFirstChar { it.uppercase() }
 }
 
+// ── ViewModel ────────────────────────────────────────────────────────────────
+
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class WaypointsViewModel(app: Application) : AndroidViewModel(app) {
     private val repo = GameDataRepository.get(app)
@@ -120,6 +122,8 @@ class WaypointsViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 }
+
+// ── Screen ───────────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -275,6 +279,8 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
     }
 }
 
+// ── Detail Card ──────────────────────────────────────────────────────────────
+
 @Composable
 private fun WaypointDetailCard(
     wp: WaypointEntity,
@@ -407,6 +413,8 @@ private fun WaypointDetailCard(
         }
     }
 }
+
+// ── Dialog ───────────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

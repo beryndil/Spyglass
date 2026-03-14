@@ -67,8 +67,8 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
     ) {
         SectionHeader(stringResource(R.string.anvil_header), icon = PixelIcons.Anvil)
 
+        // ── Item Selector ────────────────────────────────────────────────────
         InputCard {
-            // Item selector — grouped by category
             Text(stringResource(R.string.anvil_weapons), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 WEAPONS.forEach { t ->
@@ -109,7 +109,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
             }
         }
 
-        // Enchantment picker
+        // ── Enchantment Picker ───────────────────────────────────────────────
         InputCard {
             Text(stringResource(R.string.anvil_enchantments), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.secondary)
             available.forEach { e ->
@@ -148,7 +148,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
             }
         }
 
-        // Results
+        // ── Results ──────────────────────────────────────────────────────────
         if (s.steps.isNotEmpty()) {
             ResultCard {
                 Text(stringResource(R.string.anvil_optimal_order), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
@@ -180,7 +180,7 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
             color = MaterialTheme.colorScheme.secondary,
         )
 
-        // Expandable prior-work penalty explanation
+        // ── How Costs Work ───────────────────────────────────────────────────
         var showInfo by remember { mutableStateOf(false) }
         ResultCard {
             Row(

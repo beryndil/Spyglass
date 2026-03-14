@@ -140,6 +140,8 @@ fun TrimScreen(onStructureTap: (String) -> Unit = {}) {
     }
 }
 
+// ── Templates ────────────────────────────────────────────────────────────────
+
 @Composable
 private fun TemplatesSection(onStructureTap: (String) -> Unit = {}) {
     val hapticClick = rememberHapticClick()
@@ -147,11 +149,10 @@ private fun TemplatesSection(onStructureTap: (String) -> Unit = {}) {
 
     TRIM_TEMPLATES.forEach { template ->
         val locationColor = when (template.locationKey) {
-            "nether" -> NetherRed
-            "the_end" -> EnderPurple
-            "deep_dark" -> PotionBlue
-            "ocean" -> PotionBlue
-            else -> Emerald
+            "nether"               -> NetherRed
+            "the_end"              -> EnderPurple
+            "deep_dark", "ocean"   -> PotionBlue
+            else                   -> Emerald
         }
         ResultCard {
             Row(
@@ -182,6 +183,8 @@ private fun TemplatesSection(onStructureTap: (String) -> Unit = {}) {
     }
 }
 
+// ── Materials ────────────────────────────────────────────────────────────────
+
 @Composable
 private fun MaterialsSection() {
     SectionHeader(stringResource(R.string.trim_materials_header))
@@ -211,6 +214,8 @@ private fun MaterialsSection() {
         StatRow(stringResource(R.string.trim_total_looks), stringResource(R.string.trim_total_looks_val))
     }
 }
+
+// ── How To ───────────────────────────────────────────────────────────────────
 
 @Composable
 private fun HowToSection() {

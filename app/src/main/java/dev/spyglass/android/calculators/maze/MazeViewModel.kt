@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlin.math.*
-import kotlin.math.roundToInt
 import kotlin.random.Random
 
 enum class MazeType { RECT, CIRCLE, FLOORS }

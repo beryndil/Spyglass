@@ -112,7 +112,6 @@ fun LibrarianScreen() {
         // ── Biome Filter ──
         SectionHeader(stringResource(R.string.librarian_select_biome))
         FlowRow(
-            modifier = Modifier.padding(horizontal = 0.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {

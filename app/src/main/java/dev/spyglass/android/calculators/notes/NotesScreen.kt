@@ -25,13 +25,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
-import dev.spyglass.android.core.ui.SpyglassSearchBar
 import dev.spyglass.android.data.db.entities.NoteEntity
 import dev.spyglass.android.data.repository.GameDataRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+
+// ── ViewModel ───────────────────────────────────────────────────────────────
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class NotesViewModel(app: Application) : AndroidViewModel(app) {
@@ -78,6 +79,8 @@ class NotesViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 }
+
+// ── Screen ───────────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -220,6 +223,8 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
     }
 }
 
+// ── Detail Card ──────────────────────────────────────────────────────────────
+
 @Composable
 private fun NoteDetailCard(
     note: NoteEntity,
@@ -264,6 +269,8 @@ private fun NoteDetailCard(
         }
     }
 }
+
+// ── Dialog ───────────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -338,6 +345,8 @@ private fun NoteDialog(
         },
     )
 }
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
 
 private fun formatTimestamp(millis: Long): String {
     val sdf = java.text.SimpleDateFormat("MMM d, yyyy h:mm a", java.util.Locale.getDefault())

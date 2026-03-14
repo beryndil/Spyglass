@@ -201,6 +201,8 @@ fun FoodScreen() {
     }
 }
 
+// ── Item Card ────────────────────────────────────────────────────────────────
+
 @Composable
 private fun FoodItemCard(food: FoodItem) {
     val satColor = when {
@@ -221,7 +223,7 @@ private fun FoodItemCard(food: FoodItem) {
         trailing = {
             Column(horizontalAlignment = Alignment.End) {
                 Text(
-                    "${"%.1f".format(food.saturation)}",
+                    "%.1f".format(food.saturation),
                     style = MaterialTheme.typography.titleMedium,
                     color = satColor,
                 )
