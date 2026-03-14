@@ -4,6 +4,8 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
+// ── Game Data Entities ────────────────────────────────────────────────────────
+
 @Entity(
     tableName = "blocks",
     indices = [Index(value = ["name"]), Index(value = ["category"])],
@@ -203,6 +205,8 @@ data class ItemEntity(
     val isRenewable: Boolean = true,     // most items are renewable
     val enchantTarget: String = "",      // "sword", "armor,boots" — matches enchant target field
 )
+
+// ── User Data Entities ────────────────────────────────────────────────────────
 
 @Entity(tableName = "notes")
 data class NoteEntity(

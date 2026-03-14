@@ -30,6 +30,9 @@ import dev.spyglass.android.data.db.entities.*
     exportSchema = true,
 )
 abstract class SpyglassDatabase : RoomDatabase() {
+
+    // ── DAO Accessors ─────────────────────────────────────────────────────────
+
     abstract fun blockDao():        BlockDao
     abstract fun recipeDao():       RecipeDao
     abstract fun mobDao():          MobDao
@@ -38,7 +41,7 @@ abstract class SpyglassDatabase : RoomDatabase() {
     abstract fun potionDao():       PotionDao
     abstract fun tradeDao():        TradeDao
     abstract fun structureDao():    StructureDao
-    abstract fun itemDao():          ItemDao
+    abstract fun itemDao():         ItemDao
     abstract fun advancementDao():  AdvancementDao
     abstract fun commandDao():      CommandDao
     abstract fun versionTagDao():   VersionTagDao
@@ -46,6 +49,8 @@ abstract class SpyglassDatabase : RoomDatabase() {
 
     companion object {
         @Volatile private var INSTANCE: SpyglassDatabase? = null
+
+        // ── Migrations ────────────────────────────────────────────────────────
 
         // Migration 29→30: add translations table for i18n overlay
         private val MIGRATION_29_30 = object : Migration(29, 30) {
@@ -306,6 +311,8 @@ abstract class SpyglassDatabase : RoomDatabase() {
                 db.execSQL("CREATE INDEX IF NOT EXISTS index_shopping_list_items_listId ON shopping_list_items(listId)")
             }
         }
+
+        // ── Database Builder ──────────────────────────────────────────────────
 
         fun get(context: Context): SpyglassDatabase =
             INSTANCE ?: synchronized(this) {

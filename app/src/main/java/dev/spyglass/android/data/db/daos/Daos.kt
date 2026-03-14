@@ -4,6 +4,8 @@ import androidx.room.*
 import dev.spyglass.android.data.db.entities.*
 import kotlinx.coroutines.flow.Flow
 
+// ── Game Data DAOs ────────────────────────────────────────────────────────────
+
 @Dao
 interface BlockDao {
     @Query("SELECT * FROM blocks WHERE name LIKE '%' || :q || '%' OR id LIKE '%' || :q || '%' ORDER BY name")
@@ -267,6 +269,8 @@ interface ItemDao {
     @Query("DELETE FROM items")
     suspend fun deleteAll()
 }
+
+// ── User Data DAOs ────────────────────────────────────────────────────────────
 
 @Dao
 interface NoteDao {
