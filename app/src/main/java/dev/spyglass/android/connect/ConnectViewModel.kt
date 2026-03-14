@@ -271,7 +271,21 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         val ctx = getApplication<Application>()
         // Load waypoints FIRST so autoPopulateWaypoints (triggered by playerData) merges correctly
         ConnectCache.loadWaypoints(ctx, worldFolder)?.let { _connectWaypoints.value = it }
-        ConnectCache.loadPlayerData(ctx, worldFolder)?.let { _playerData.value = it }
+
+        // Only restore cached player data if it matches the IGN (or single-player/no IGN set)
+        val cachedPlayer = ConnectCache.loadPlayerData(ctx, worldFolder)
+        if (cachedPlayer != null) {
+            val ign = try {
+                ctx.dataStore.data.first()[PreferenceKeys.PLAYER_IGN] ?: ""
+            } catch (_: Exception) { "" }
+            val isMatch = ign.isBlank() || cachedPlayer.playerName.equals(ign, ignoreCase = true)
+            if (isMatch) {
+                _playerData.value = cachedPlayer
+            } else {
+                Timber.d("Skipping cached player data — cached '${cachedPlayer.playerName}' doesn't match IGN '$ign'")
+            }
+        }
+
         ConnectCache.loadStructures(ctx, worldFolder)?.let { _structures.value = it }
         ConnectCache.loadMapData(ctx, worldFolder)?.let { _mapTiles.value = it }
         ConnectCache.loadChests(ctx, worldFolder)?.let { _chestContents.value = it }
@@ -506,9 +520,11 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         if (uuid != null) {
             val payload = json.encodeToJsonElement(RequestPlayerPayload(uuid))
             client.sendRequest(MessageType.REQUEST_PLAYER, payload)
-        } else {
+        } else if (_playerList.value.size <= 1) {
+            // Single-player world or player list not loaded yet — request default
             client.sendRequest(MessageType.REQUEST_PLAYER)
         }
+        // Multi-player with no selection: skip — wait for IGN match or manual pick
     }
 
     /** Request the list of all players in the selected world. */
