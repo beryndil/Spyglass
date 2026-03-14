@@ -282,7 +282,7 @@ fun TabIntroHeader(
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier.padding(horizontal = 24.dp),
-            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+            textAlign = TextAlign.Center,
         )
         if (stat.isNotEmpty()) {
             Spacer(Modifier.height(6.dp))
@@ -355,7 +355,7 @@ fun MinecraftIdRow(id: String) {
 
     LaunchedEffect(copied) {
         if (copied) {
-            kotlinx.coroutines.delay(1500)
+            delay(1500)
             copied = false
         }
     }
@@ -392,8 +392,6 @@ fun ReportProblemRow(
         Text(stringResource(R.string.core_report_problem), style = MaterialTheme.typography.labelSmall, color = textColor)
     }
 }
-
-// ── Tab row — reusable icon+text tabs for Calculators and Browse ────────────
 
 // ── Texture-based crafting grid ──────────────────────────────────────────────
 

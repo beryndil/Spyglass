@@ -12,7 +12,6 @@ object BiomeTextures {
         "sunflower_plains" to "block_hay_block",
         "savanna" to "block_acacia_log",
         "savanna_plateau" to "block_acacia_planks",
-        "savanna_plateau" to "block_acacia_planks",
         "windswept_savanna" to "block_acacia_leaves",
         "meadow" to "block_flowering_azalea_leaves",
 

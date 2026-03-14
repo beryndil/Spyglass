@@ -16,6 +16,7 @@ import dev.spyglass.android.R
 import androidx.compose.ui.unit.dp
 import dev.spyglass.android.data.db.entities.ShoppingListEntity
 import dev.spyglass.android.data.repository.GameDataRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -130,7 +131,7 @@ fun AddToListSection(
         if (feedback != null) {
             Text(feedback!!, style = MaterialTheme.typography.bodySmall, color = Emerald)
             LaunchedEffect(feedback) {
-                kotlinx.coroutines.delay(2000)
+                delay(2000)
                 feedback = null
             }
         }
