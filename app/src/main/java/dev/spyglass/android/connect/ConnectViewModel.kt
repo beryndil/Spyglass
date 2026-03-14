@@ -715,10 +715,10 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     Timber.i("  ${payload.players.size} players: ${payload.players.joinToString { it.name ?: it.uuid.take(8) }}")
                     _playerList.value = payload.players
                     if (payload.players.size == 1) {
-                        // Single-player world — auto-select the only player
+                        // Only one player — auto-select
                         selectPlayer(payload.players.first().uuid)
-                    } else {
-                        // Multi-player — read IGN fresh from DataStore to auto-select
+                    } else if (payload.players.isNotEmpty()) {
+                        // Multi-player — only select if IGN matches
                         viewModelScope.launch(Dispatchers.IO) {
                             val ign = try {
                                 val app = getApplication<Application>()
@@ -729,7 +729,11 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                                 if (match != null) {
                                     Timber.i("  IGN '$ign' matched player ${match.uuid} — auto-selecting")
                                     selectPlayer(match.uuid)
+                                } else {
+                                    Timber.w("  IGN '$ign' did not match any player — names: ${payload.players.joinToString { "'${it.name}'" }}")
                                 }
+                            } else {
+                                Timber.w("  No IGN set and multiple players — waiting for manual pick")
                             }
                         }
                     }
