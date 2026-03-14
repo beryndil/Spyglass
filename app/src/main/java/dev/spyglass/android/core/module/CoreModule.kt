@@ -86,7 +86,6 @@ import dev.spyglass.android.core.ui.SolidThemeOrder
 import dev.spyglass.android.core.ui.ThemeInfoMap
 import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.core.shell.imageThemeDrawable
-import dev.spyglass.android.core.ui.SupportedLanguages
 import dev.spyglass.android.core.ui.rememberHapticConfirm
 import dev.spyglass.android.home.TipsLoader
 import dev.spyglass.android.settings.PreferenceKeys
@@ -315,127 +314,6 @@ object CoreModule : SpyglassModule {
     }
 
     // ── Settings section composables ────────────────────────────────────────
-
-    @OptIn(ExperimentalLayoutApi::class)
-    @Composable
-    private fun LanguageContent() {
-        val context = LocalContext.current
-        val scope = rememberCoroutineScope()
-        val hapticClick = rememberHapticClick()
-
-        val appLanguage by remember {
-            context.dataStore.data.map { it[PreferenceKeys.APP_LANGUAGE] ?: "system" }
-        }.collectAsStateWithLifecycle(initialValue = "system")
-
-        val translateGameData by remember {
-            context.dataStore.data.map { it[PreferenceKeys.TRANSLATE_GAME_DATA] ?: true }
-        }.collectAsStateWithLifecycle(initialValue = true)
-
-        val showOriginalNames by remember {
-            context.dataStore.data.map { it[PreferenceKeys.SHOW_ORIGINAL_NAMES] ?: false }
-        }.collectAsStateWithLifecycle(initialValue = false)
-
-        SectionHeader(stringResource(R.string.settings_language))
-        ResultCard {
-            Text(
-                stringResource(R.string.settings_language_desc),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.secondary,
-            )
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp),
-            ) {
-                SupportedLanguages.forEach { (code, label) ->
-                    FilterChip(
-                        selected = appLanguage == code,
-                        onClick = {
-                            hapticClick()
-                            // Save preference first, then apply locale on Main thread.
-                            // setApplicationLocales recreates the Activity, so the
-                            // coroutine scope may be cancelled — use GlobalScope to
-                            // ensure the locale switch completes.
-                            kotlinx.coroutines.GlobalScope.launch(Dispatchers.IO) {
-                                context.dataStore.edit { it[PreferenceKeys.APP_LANGUAGE] = code }
-                                val localeList = if (code == "system") {
-                                    androidx.core.os.LocaleListCompat.getEmptyLocaleList()
-                                } else {
-                                    androidx.core.os.LocaleListCompat.forLanguageTags(code)
-                                }
-                                withContext(Dispatchers.Main) {
-                                    androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(localeList)
-                                }
-                            }
-                        },
-                        label = {
-                            val displayLabel = if (code == "system") {
-                                // Always show in the phone's system language, not the app's override
-                                val ctx = LocalContext.current
-                                remember {
-                                    val sysConfig = android.content.res.Configuration(ctx.resources.configuration).apply {
-                                        setLocale(java.util.Locale.getDefault())
-                                    }
-                                    ctx.createConfigurationContext(sysConfig).getString(R.string.settings_language_system_default)
-                                }
-                            } else label
-                            Text(displayLabel, style = MaterialTheme.typography.labelSmall)
-                        },
-                    )
-                }
-            }
-            if (appLanguage != "en" && appLanguage != "system") {
-                SpyglassDivider()
-                SettingsToggle(
-                    title = stringResource(R.string.settings_translate_game_data),
-                    description = stringResource(R.string.settings_translate_game_data_desc),
-                    checked = translateGameData,
-                    onCheckedChange = { newVal ->
-                        scope.launch { context.dataStore.edit { it[PreferenceKeys.TRANSLATE_GAME_DATA] = newVal } }
-                    },
-                )
-                SettingsToggle(
-                    title = stringResource(R.string.settings_show_original_names),
-                    description = stringResource(R.string.settings_show_original_names_desc),
-                    checked = showOriginalNames,
-                    onCheckedChange = { newVal ->
-                        scope.launch { context.dataStore.edit { it[PreferenceKeys.SHOW_ORIGINAL_NAMES] = newVal } }
-                    },
-                )
-            }
-            SpyglassDivider()
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                            Intent(Settings.ACTION_APP_LOCALE_SETTINGS).apply {
-                                data = Uri.parse("package:${context.packageName}")
-                            }
-                        } else {
-                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                                data = Uri.parse("package:${context.packageName}")
-                            }
-                        }
-                        context.startActivity(intent)
-                    }
-                    .padding(vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    stringResource(R.string.settings_language_system_override),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.weight(1f),
-                )
-                Icon(
-                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = null,
-                    modifier = Modifier.size(16.dp),
-                    tint = MaterialTheme.colorScheme.primary,
-                )
-            }
-        }
-    }
 
     // ── Tab 0: Appearance ──────────────────────────────────────────────────
 
@@ -1041,8 +919,7 @@ object CoreModule : SpyglassModule {
         }
     }
 
-    // ── Tab 2: Data & Sync (unchanged) ──────────────────────────────────────
-    // ── Tab 3: Privacy & Security, About (unchanged) ────────────────────────
+    // ── Tab 2: Data & Sync ────────────────────────────────────────────────
 
     @OptIn(ExperimentalLayoutApi::class)
     @Composable

@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -766,27 +765,6 @@ object ConnectModule : SpyglassModule {
     }
 
     @Composable
-    private fun StatusBar(state: ConnectionState) {
-        val deviceName = (state as? ConnectionState.Connected)?.deviceName ?: ""
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Emerald.copy(alpha = 0.1f), RoundedCornerShape(8.dp))
-                .padding(horizontal = 12.dp, vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Box(modifier = Modifier.size(8.dp).background(Emerald, CircleShape))
-            Text(
-                if (deviceName.isNotEmpty()) stringResource(R.string.home_connect_connected_to, deviceName) else stringResource(R.string.home_connect_status_connected),
-                style = MaterialTheme.typography.labelSmall,
-                color = Emerald,
-                modifier = Modifier.weight(1f),
-            )
-        }
-    }
-
-    @Composable
     private fun WorldSelector(
         worlds: List<WorldInfo>,
         onSelectWorld: (String) -> Unit,
@@ -817,39 +795,4 @@ object ConnectModule : SpyglassModule {
         }
     }
 
-    @Composable
-    private fun WorldHeader(
-        worlds: List<WorldInfo>,
-        selectedWorld: String?,
-        onSelectWorld: (String) -> Unit,
-        onDisconnect: () -> Unit,
-    ) {
-        val currentWorld = worlds.firstOrNull { it.folderName == selectedWorld }
-        var expanded by remember { mutableStateOf(false) }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            SpyglassIconImage(PixelIcons.Globe, contentDescription = null, tint = Emerald, modifier = Modifier.size(20.dp))
-            Box(modifier = Modifier.weight(1f)) {
-                Text(
-                    currentWorld?.displayName ?: stringResource(R.string.home_connect_unknown_world),
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.clickable { expanded = true },
-                )
-                DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                    worlds.forEach { world ->
-                        DropdownMenuItem(
-                            text = { Text(world.displayName) },
-                            onClick = { expanded = false; onSelectWorld(world.folderName) },
-                        )
-                    }
-                }
-            }
-            Text(stringResource(R.string.home_connect_disconnect), style = MaterialTheme.typography.labelSmall, color = Color(0xFFF44336), modifier = Modifier.clickable { onDisconnect() })
-        }
-    }
 }
