@@ -746,6 +746,7 @@
     <string name="connect_players_count">Jugadores (%d)</string>
     <string name="connect_fair_play_warning">Ver los datos de otros jugadores puede no ser compatible con el juego limpio en mundos multijugador.</string>
     <string name="connect_world_owner">Dueño del mundo</string>
+    <string name="connect_choose_player">Toca tu jugador para establecerlo como predeterminado en este mundo</string>
 
     <!-- Connect — QR Scanner -->
     <string name="connect_qr_title">Escanear código QR</string>

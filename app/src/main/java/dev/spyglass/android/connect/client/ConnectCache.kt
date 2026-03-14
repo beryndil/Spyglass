@@ -25,6 +25,7 @@ object ConnectCache {
     data class CacheMeta(
         val selectedWorld: String? = null,
         val worlds: List<WorldInfo> = emptyList(),
+        val preferredPlayers: Map<String, String> = emptyMap(),
     )
 
     // ── Directories ──────────────────────────────────────────────────────────
@@ -57,6 +58,29 @@ object ConnectCache {
             null
         }
     }
+
+    // ── Preferred Player ───────────────────────────────────────────────────
+
+    suspend fun savePreferredPlayer(context: Context, worldFolder: String, uuid: String) =
+        withContext(Dispatchers.IO) {
+            try {
+                val meta = loadMeta(context) ?: CacheMeta()
+                val updated = meta.copy(preferredPlayers = meta.preferredPlayers + (worldFolder to uuid))
+                saveMeta(context, updated)
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to save preferred player")
+            }
+        }
+
+    suspend fun loadPreferredPlayer(context: Context, worldFolder: String): String? =
+        withContext(Dispatchers.IO) {
+            try {
+                loadMeta(context)?.preferredPlayers?.get(worldFolder)
+            } catch (e: Exception) {
+                Timber.w(e, "Failed to load preferred player")
+                null
+            }
+        }
 
     // ── Player Data ──────────────────────────────────────────────────────────
 

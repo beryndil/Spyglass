@@ -396,9 +396,33 @@ private fun ConnectedContent(
         }
     }
 
-    // Player selector (only shown when multiple players exist)
-    if (playerList.size > 1 && selectedWorld != null) {
+    // Player selector (shown whenever a world is selected and player list has loaded)
+    if (playerList.isNotEmpty() && selectedWorld != null) {
         Spacer(Modifier.height(4.dp))
+
+        // First-connect prompt for multi-player worlds when no player chosen yet
+        if (playerList.size > 1 && selectedPlayerUuid == null) {
+            ResultCard {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Icon(
+                        Icons.Filled.Info,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(18.dp),
+                    )
+                    Text(
+                        stringResource(R.string.connect_choose_player),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+            Spacer(Modifier.height(4.dp))
+        }
+
         PlayerSelector(
             players = playerList,
             selectedUuid = selectedPlayerUuid,
@@ -498,7 +522,7 @@ private fun PlayerSelector(
     }
 
     players.forEach { player ->
-        val isSelected = player.uuid == (selectedUuid ?: players.firstOrNull { it.isOwner }?.uuid)
+        val isSelected = player.uuid == (selectedUuid ?: players.firstOrNull()?.uuid)
         Row(
             modifier = Modifier
                 .fillMaxWidth()

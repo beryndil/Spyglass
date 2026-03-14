@@ -746,6 +746,7 @@
     <string name="connect_players_count">Spieler (%d)</string>
     <string name="connect_fair_play_warning">Das Anzeigen der Daten anderer Spieler entspricht möglicherweise nicht dem fairen Spielen in Mehrspieler-Welten.</string>
     <string name="connect_world_owner">Weltbesitzer</string>
+    <string name="connect_choose_player">Tippe auf deinen Spieler, um ihn als Standard für diese Welt festzulegen</string>
 
     <!-- Connect — QR Scanner -->
     <string name="connect_qr_title">QR-Code scannen</string>

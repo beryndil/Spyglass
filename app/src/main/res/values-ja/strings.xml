@@ -746,6 +746,7 @@
     <string name="connect_players_count">プレイヤー (%d)</string>
     <string name="connect_fair_play_warning">他のプレイヤーのデータを閲覧することは、マルチプレイヤーワールドでのフェアプレイに反する可能性があります。</string>
     <string name="connect_world_owner">ワールドオーナー</string>
+    <string name="connect_choose_player">プレイヤーをタップして、このワールドのデフォルトに設定します</string>
 
     <!-- Connect — QR Scanner -->
     <string name="connect_qr_title">QRコードをスキャン</string>

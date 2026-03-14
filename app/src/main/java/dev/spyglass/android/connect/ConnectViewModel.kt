@@ -124,6 +124,11 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 _selectedWorld.value = meta.selectedWorld
                 val world = meta.selectedWorld
                 if (world != null) {
+                    // Restore preferred player for this world
+                    val preferredUuid = meta.preferredPlayers[world]
+                    if (preferredUuid != null) {
+                        _selectedPlayerUuid.value = preferredUuid
+                    }
                     loadCachedWorldData(world)
                 }
             } else {
@@ -462,8 +467,11 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     fun selectWorld(folderName: String) {
         Timber.i("Selecting world: $folderName")
         _selectedWorld.value = folderName
-        // Save meta with new selection
+        _playerList.value = emptyList()
+        // Load preferred player for this world, or reset to null
         viewModelScope.launch(Dispatchers.IO) {
+            val preferredUuid = ConnectCache.loadPreferredPlayer(getApplication(), folderName)
+            _selectedPlayerUuid.value = preferredUuid
             ConnectCache.saveMeta(
                 getApplication(),
                 ConnectCache.CacheMeta(selectedWorld = folderName, worlds = _worlds.value),
@@ -471,8 +479,6 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             // Load cached data for newly selected world (shows instantly while fresh data loads)
             loadCachedWorldData(folderName)
         }
-        _selectedPlayerUuid.value = null // Reset player selection on world change
-        _playerList.value = emptyList()
         if (connectionState.value.isConnected) {
             val payload = json.encodeToJsonElement(SelectWorldPayload(folderName))
             client.sendRequest(MessageType.SELECT_WORLD, payload)
@@ -500,6 +506,13 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     /** Select a specific player by UUID and refresh their data. */
     fun selectPlayer(uuid: String?) {
         _selectedPlayerUuid.value = uuid
+        // Persist preferred player for this world
+        val world = _selectedWorld.value
+        if (world != null && uuid != null) {
+            viewModelScope.launch(Dispatchers.IO) {
+                ConnectCache.savePreferredPlayer(getApplication(), world, uuid)
+            }
+        }
         if (connectionState.value.isConnected) {
             requestPlayerData()
         }

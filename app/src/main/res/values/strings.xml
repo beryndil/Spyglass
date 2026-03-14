@@ -757,6 +757,7 @@
     <string name="connect_players_count">Players (%d)</string>
     <string name="connect_fair_play_warning">Viewing other players\' data may not align with fair play on multiplayer worlds.</string>
     <string name="connect_world_owner">World Owner</string>
+    <string name="connect_choose_player">Tap your player to set them as default for this world</string>
 
     <!-- Connect — QR Scanner -->
     <string name="connect_qr_title">Scan QR Code</string>
