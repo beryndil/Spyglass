@@ -31,6 +31,7 @@ import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+
 class MainActivity : AppCompatActivity() {
 
     private val isUnlocked = mutableStateOf(false)
@@ -42,22 +43,6 @@ class MainActivity : AppCompatActivity() {
 
         // Track app opens and prompt for review after 10 launches (one-time)
         ReviewHelper.trackOpenAndPrompt(this)
-
-        // i18n locale override disabled — app is English-only for now.
-        // Keeping code commented for easy re-enable when translations are revisited.
-        // kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
-        //     val savedLang = try {
-        //         dataStore.data.map { it[PreferenceKeys.APP_LANGUAGE] ?: "system" }.first()
-        //     } catch (_: Exception) { "system" }
-        //     val localeList = if (savedLang == "system") {
-        //         androidx.core.os.LocaleListCompat.getEmptyLocaleList()
-        //     } else {
-        //         androidx.core.os.LocaleListCompat.forLanguageTags(savedLang)
-        //     }
-        //     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
-        //         androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(localeList)
-        //     }
-        // }
 
         // Check if app lock is enabled — read async to avoid blocking main thread.
         // UI stays locked (isUnlocked=false) until check completes; biometric prompt
@@ -97,15 +82,6 @@ class MainActivity : AppCompatActivity() {
                 .map { it[PreferenceKeys.FONT_SCALE] ?: 1 }
                 .collectAsStateWithLifecycle(initialValue = 1)
 
-            // i18n disabled — force English locale. Keeping code for easy re-enable.
-            // val appLanguagePref by dataStore.data
-            //     .map { it[PreferenceKeys.APP_LANGUAGE] ?: "system" }
-            //     .collectAsStateWithLifecycle(initialValue = "system")
-            // val resolvedLocale = if (appLanguagePref == "system") {
-            //     java.util.Locale.getDefault().language.let { lang ->
-            //         if (lang in listOf("es", "pt", "fr", "de", "ja")) lang else "en"
-            //     }
-            // } else appLanguagePref
             val resolvedLocale = "en"
 
             val consentShown by dataStore.data
