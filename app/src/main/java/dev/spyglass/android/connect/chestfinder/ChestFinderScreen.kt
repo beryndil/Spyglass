@@ -81,6 +81,18 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
     val isLoading = chestContents == null
     val isSearching = query.isNotBlank()
 
+    // Local fallback search through loaded containers when server search returns empty
+    val localMatches = remember(containers, query, hits) {
+        if (!isSearching || hits.isNotEmpty() || containers.isEmpty()) emptyList()
+        else {
+            val q = query.lowercase()
+            containers.filter { c ->
+                c.items.any { it.id.lowercase().contains(q) } ||
+                    c.customName?.lowercase()?.contains(q) == true
+            }
+        }
+    }
+
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
         contentPadding = PaddingValues(bottom = 16.dp),
@@ -108,23 +120,9 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
             Spacer(Modifier.height(8.dp))
         }
 
-        // Search results
+        // Search results — try server hits first, fall back to local container filter
         if (isSearching) {
-            if (hits.isEmpty()) {
-                item(key = "no_results") {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(32.dp),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Text(
-                            stringResource(R.string.connect_no_items_found, query),
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                }
-            } else {
+            if (hits.isNotEmpty()) {
                 items(hits.take(15), key = { "hit_${it.itemId}" }) { hit ->
                     SearchHitCard(
                         hit = hit,
@@ -143,6 +141,35 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
                         )
                     }
                 }
+            } else if (localMatches.isNotEmpty()) {
+                item(key = "local_match_header") {
+                    Text(
+                        stringResource(R.string.connect_container_count, localMatches.size),
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                items(localMatches, key = { "local_${it.type}_${it.x}_${it.y}_${it.z}" }) { container ->
+                    ContainerCard(
+                        container = container,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                    )
+                }
+            } else {
+                item(key = "no_results") {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(32.dp),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            stringResource(R.string.connect_no_items_found, query),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
             }
         }
 
@@ -151,7 +178,7 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
             if (isLoading) {
                 item(key = "loading") {
                     ChestDiamondLoader(
-                        statusText = stringResource(R.string.connect_anim_getting_ready),
+                        statusText = stringResource(R.string.connect_anim_scanning_chests),
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(300.dp),
