@@ -314,7 +314,7 @@ fun ShellNavGraph() {
                     scrollToTopTrigger = scrollToTopTrigger,
                     onCalcTab = { tab ->
                         pendingCalcTab = tab
-                        navigateToTop("calculators")
+                        navigateCrossLink("calculators")
                     },
                 )
             }
@@ -328,7 +328,7 @@ fun ShellNavGraph() {
                     scrollToTopTrigger = scrollToTopTrigger,
                     onBrowseTarget = { target ->
                         pendingTarget = target
-                        navigateToTop("browse")
+                        navigateCrossLink("browse")
                     },
                 )
             }
