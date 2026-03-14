@@ -158,7 +158,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 .distinctUntilChanged()
                 .collect { ign ->
                     val players = _playerList.value
-                    if (ign.isNotBlank() && players.size > 1 && _selectedPlayerUuid.value == null) {
+                    if (ign.isNotBlank() && players.isNotEmpty() && _selectedPlayerUuid.value == null) {
                         val match = players.find { it.name.equals(ign, ignoreCase = true) }
                         if (match != null) {
                             Timber.i("IGN changed to '$ign' — auto-selecting player ${match.uuid}")
@@ -514,17 +514,14 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    /** Request player data for the selected world (optionally for a specific player). */
+    /** Request player data for the selected world. Only sends if a player is selected. */
     fun requestPlayerData() {
         val uuid = _selectedPlayerUuid.value
         if (uuid != null) {
             val payload = json.encodeToJsonElement(RequestPlayerPayload(uuid))
             client.sendRequest(MessageType.REQUEST_PLAYER, payload)
-        } else if (_playerList.value.size <= 1) {
-            // Single-player world or player list not loaded yet — request default
-            client.sendRequest(MessageType.REQUEST_PLAYER)
         }
-        // Multi-player with no selection: skip — wait for IGN match or manual pick
+        // No selection: skip — wait for IGN match or manual pick via PLAYER_LIST
     }
 
     /** Request the list of all players in the selected world. */
