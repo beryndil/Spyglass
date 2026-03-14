@@ -535,29 +535,32 @@ fun ChestDiamondLoader(
                 1.5f,
             )
 
-            // ── Lid (gently opens and closes on a loop) ─────────────────────
-            // Smooth ease-in-out: opens to 35°, pauses, closes back
-            val cycleTime = time % 3.5f  // 3.5s cycle
-            val lidOpenAngle = when {
-                cycleTime < 1.0f -> -35f * smoothStep(cycleTime / 1.0f)         // open over 1s
-                cycleTime < 2.0f -> -35f                                         // hold open 1s
-                cycleTime < 3.0f -> -35f * (1f - smoothStep((cycleTime - 2.0f) / 1.0f))  // close over 1s
-                else -> 0f                                                       // hold closed 0.5s
+            // ── Lid (lifts straight up and back down on a loop) ─────────────
+            val lidLift = 16f  // max pixels the lid rises
+            val cycleTime = time % 3.0f  // 3s cycle
+            val lidOffset = when {
+                cycleTime < 0.8f -> lidLift * smoothStep(cycleTime / 0.8f)               // lift over 0.8s
+                cycleTime < 1.6f -> lidLift                                               // hold up 0.8s
+                cycleTime < 2.4f -> lidLift * (1f - smoothStep((cycleTime - 1.6f) / 0.8f)) // lower over 0.8s
+                else -> 0f                                                                 // hold closed 0.6s
             }
 
-            // Light rays when lid is open
-            if (lidOpenAngle < -5f) {
-                val rayAlpha = ((-lidOpenAngle - 5f) / 35f).coerceIn(0f, 0.3f)
+            val lidY = chestTop - lidH - lidOffset
+
+            // Light rays when lid is lifted
+            if (lidOffset > 2f) {
+                val rayAlpha = (lidOffset / lidLift * 0.3f).coerceIn(0f, 0.3f)
+                val gapCenter = chestTop - lidOffset / 2
                 val rayCount = 5
                 for (r in 0 until rayCount) {
                     val rayAngle = Math.toRadians((-150.0 + r * 15.0))
-                    val rayLen = 35f + 15f * sin(time * 3f + r)
+                    val rayLen = 30f + 12f * sin(time * 3f + r)
                     drawLine(
                         color = Color(0xFFFFD700).copy(alpha = rayAlpha * (0.5f + 0.5f * sin(time * 4f + r))),
-                        start = Offset(cx, chestTop - lidH * 0.5f),
+                        start = Offset(cx, gapCenter),
                         end = Offset(
                             cx + rayLen * cos(rayAngle).toFloat(),
-                            chestTop - lidH * 0.5f + rayLen * sin(rayAngle).toFloat(),
+                            gapCenter + rayLen * sin(rayAngle).toFloat(),
                         ),
                         strokeWidth = 2f,
                         cap = StrokeCap.Round,
@@ -565,60 +568,48 @@ fun ChestDiamondLoader(
                 }
             }
 
-            withTransform({
-                rotate(lidOpenAngle, Offset(cx, chestTop))
-            }) {
-                // Lid shadow
-                drawRoundRect(
-                    color = Color(0xFF3E2723),
-                    topLeft = Offset(chestLeft - 2, chestTop - lidH),
-                    size = Size(chestW + 4, lidH + 2),
-                    cornerRadius = CornerRadius(4f),
-                )
-                // Lid fill
-                drawRoundRect(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(Color(0xFFA0845C), Color(0xFF8D6E4C)),
-                        startY = chestTop - lidH,
-                        endY = chestTop,
-                    ),
-                    topLeft = Offset(chestLeft, chestTop - lidH),
-                    size = Size(chestW, lidH),
-                    cornerRadius = CornerRadius(4f),
-                )
-                // Lid edge highlight
-                drawLine(
-                    Color.White.copy(alpha = 0.2f),
-                    Offset(chestLeft + 2, chestTop - lidH + 1),
-                    Offset(chestLeft + chestW - 2, chestTop - lidH + 1),
-                    1.5f,
-                )
-                // Lid plank line
-                drawLine(
-                    plankColor,
-                    Offset(chestLeft + 4, chestTop - lidH / 2),
-                    Offset(chestLeft + chestW - 4, chestTop - lidH / 2),
-                    1f,
-                )
-            }
+            // Lid shadow
+            drawRoundRect(
+                color = Color(0xFF3E2723),
+                topLeft = Offset(chestLeft - 2, lidY),
+                size = Size(chestW + 4, lidH + 2),
+                cornerRadius = CornerRadius(4f),
+            )
+            // Lid fill
+            drawRoundRect(
+                brush = Brush.verticalGradient(
+                    colors = listOf(Color(0xFFA0845C), Color(0xFF8D6E4C)),
+                    startY = lidY,
+                    endY = lidY + lidH,
+                ),
+                topLeft = Offset(chestLeft, lidY),
+                size = Size(chestW, lidH),
+                cornerRadius = CornerRadius(4f),
+            )
+            // Lid edge highlight
+            drawLine(
+                Color.White.copy(alpha = 0.2f),
+                Offset(chestLeft + 2, lidY + 1),
+                Offset(chestLeft + chestW - 2, lidY + 1),
+                1.5f,
+            )
+            // Lid plank line
+            drawLine(
+                plankColor,
+                Offset(chestLeft + 4, lidY + lidH / 2),
+                Offset(chestLeft + chestW - 4, lidY + lidH / 2),
+                1f,
+            )
 
-            // ── Latch (moves with lid when open) ─────────────────────────────
+            // ── Latch (moves with lid) ───────────────────────────────────────
             val latchW = 8f
             val latchH = 12f
-            val latchAngle = Math.toRadians(lidOpenAngle.toDouble())
-            val latchCenterY = chestTop + 2
-            val latchOffsetX = (latchH / 2) * sin(latchAngle).toFloat()
-            val latchOffsetY = (latchH / 2) * (1f - cos(latchAngle).toFloat())
-            withTransform({
-                rotate(lidOpenAngle, Offset(cx + latchOffsetX, latchCenterY - latchOffsetY))
-            }) {
-                drawRoundRect(
-                    color = Color(0xFFFFD700),
-                    topLeft = Offset(cx - latchW / 2 + latchOffsetX, chestTop - latchH / 2 + 2 - latchOffsetY),
-                    size = Size(latchW, latchH),
-                    cornerRadius = CornerRadius(2f),
-                )
-            }
+            drawRoundRect(
+                color = Color(0xFFFFD700),
+                topLeft = Offset(cx - latchW / 2, lidY + lidH - latchH / 2),
+                size = Size(latchW, latchH),
+                cornerRadius = CornerRadius(2f),
+            )
 
             // ── Sparkle dots around the chest ────────────────────────────────
             for (i in 0 until 5) {
