@@ -137,7 +137,6 @@ fun ConnectScreen(
                         capabilities = capabilities,
                         onSelectWorld = { viewModel.selectWorld(it) },
                         onSelectPlayer = { viewModel.selectPlayer(it) },
-                        onRequestPlayer = { viewModel.requestPlayerData() },
                         onInventory = onInventory,
                         onEnderChest = onEnderChest,
                         onChestFinder = onChestFinder,
@@ -328,7 +327,6 @@ private fun ConnectedContent(
     capabilities: Set<String>,
     onSelectWorld: (String) -> Unit,
     onSelectPlayer: (String?) -> Unit,
-    onRequestPlayer: () -> Unit,
     onInventory: () -> Unit,
     onEnderChest: () -> Unit,
     onChestFinder: () -> Unit,
@@ -360,7 +358,6 @@ private fun ConnectedContent(
                             onTap = {
                                 hapticClick()
                                 onSelectWorld(world.folderName)
-                                onRequestPlayer()
                             },
                             onLongPress = if (isSelected) {
                                 { hapticConfirm(); onLongPressGlobe() }
