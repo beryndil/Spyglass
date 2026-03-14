@@ -160,15 +160,10 @@ fun ShellNavGraph() {
             }
             scrollToTopTrigger++
             // Pop sub-routes (settings, changelog, etc.) off the back stack first
-            // so they don't get saved as part of the parent tab's state
             if (currentRoute != null && currentRoute !in topLevelRoutes) {
                 navController.popBackStack()
             }
-            navController.navigate(route) {
-                popUpTo(navController.graph.findStartDestination().id) { saveState = true }
-                launchSingleTop = true
-                restoreState = true
-            }
+            navController.navigate(route) { launchSingleTop = true }
         } catch (_: IllegalStateException) { }
     }
 

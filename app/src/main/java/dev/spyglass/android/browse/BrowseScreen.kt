@@ -34,6 +34,7 @@ import dev.spyglass.android.core.ui.SpyglassTabRow
 import dev.spyglass.android.data.repository.GameDataRepository
 import dev.spyglass.android.navigation.BrowseTarget
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -88,7 +89,8 @@ fun BrowseScreen(
     val listStates = remember { (0..11).associateWith { LazyListState() } }
 
     // Internal back stack for system back button support
-    val backStack = remember { mutableStateListOf<Pair<Int, String?>>() }
+    data class BrowseBackEntry(val tab: Int, val targetId: String?, val scrollIndex: Int, val scrollOffset: Int)
+    val backStack = remember { mutableStateListOf<BrowseBackEntry>() }
 
     fun clearAllTargets() {
         targetMobId = null; targetBiomeId = null; targetBlockId = null
@@ -112,17 +114,28 @@ fun BrowseScreen(
     }
 
     fun pushAndNavigate(newTab: Int, newTargetId: String?) {
-        backStack.add(tab to currentTargetId())
+        val ls = listStates[tab]
+        backStack.add(BrowseBackEntry(
+            tab = tab,
+            targetId = currentTargetId(),
+            scrollIndex = ls?.firstVisibleItemIndex ?: 0,
+            scrollOffset = ls?.firstVisibleItemScrollOffset ?: 0,
+        ))
         clearAllTargets()
         setTargetForTab(newTab, newTargetId)
         tab = newTab
     }
 
+    val scope = rememberCoroutineScope()
     BackHandler(enabled = backStack.isNotEmpty()) {
-        val (prevTab, prevTargetId) = backStack.removeLast()
+        val entry = backStack.removeLast()
         clearAllTargets()
-        setTargetForTab(prevTab, prevTargetId)
-        tab = prevTab
+        setTargetForTab(entry.tab, entry.targetId)
+        tab = entry.tab
+        // Restore scroll position after composition settles
+        scope.launch {
+            listStates[entry.tab]?.scrollToItem(entry.scrollIndex, entry.scrollOffset)
+        }
     }
 
     // Handle incoming navigation from Search or cross-link
