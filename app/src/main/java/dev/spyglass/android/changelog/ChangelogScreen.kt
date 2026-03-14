@@ -23,6 +23,9 @@ import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.data.repository.GameDataRepository
 import dev.spyglass.android.settings.dataStore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.withContext
 
 private data class VersionData(
     val version: String,
@@ -131,13 +134,13 @@ private val VERSIONS = listOf(
 fun ChangelogScreen(onBack: () -> Unit = {}) {
     val app = LocalContext.current.applicationContext as Application
     val repo by produceState<GameDataRepository?>(null) {
-        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+        value = withContext(Dispatchers.IO) {
             GameDataRepository.get(app)
         }
     }
     val txMap by remember(repo) {
         repo?.let { translationMapFlow(app.dataStore, it, "changelog") }
-            ?: kotlinx.coroutines.flow.flowOf(emptyMap())
+            ?: flowOf(emptyMap())
     }.collectAsState(initial = emptyMap())
 
     LazyColumn(
