@@ -478,12 +478,16 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             )
             // Load cached data for newly selected world (shows instantly while fresh data loads)
             loadCachedWorldData(folderName)
+            // Only request player data now if we have a preferred player — otherwise
+            // wait for PLAYER_LIST to arrive so the user can choose first
+            if (preferredUuid != null && connectionState.value.isConnected) {
+                requestPlayerData()
+            }
         }
         if (connectionState.value.isConnected) {
             val payload = json.encodeToJsonElement(SelectWorldPayload(folderName))
             client.sendRequest(MessageType.SELECT_WORLD, payload)
             requestPlayerList()
-            requestPlayerData()
         }
     }
 
@@ -695,6 +699,16 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     val payload = json.decodeFromJsonElement(PlayerListPayload.serializer(), message.payload)
                     Timber.i("  ${payload.players.size} players: ${payload.players.joinToString { it.name ?: it.uuid.take(8) }}")
                     _playerList.value = payload.players
+                    // Auto-request player data if we already know who to load
+                    val currentUuid = _selectedPlayerUuid.value
+                    if (currentUuid != null) {
+                        // Preferred player already set — fetch their data
+                        requestPlayerData()
+                    } else if (payload.players.size == 1) {
+                        // Single-player world — auto-select the only player
+                        selectPlayer(payload.players.first().uuid)
+                    }
+                    // Multi-player with no preferred: wait for user to tap a player
                 }
                 MessageType.PLAYER_DATA -> {
                     val payload = json.decodeFromJsonElement(PlayerData.serializer(), message.payload)
