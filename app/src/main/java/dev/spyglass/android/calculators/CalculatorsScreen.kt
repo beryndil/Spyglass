@@ -51,6 +51,9 @@ private data class CalcTabEntry(
 private fun allCalcTabs() = listOf(
     CalcTabEntry("todo",       SpyglassTab(stringResource(R.string.calc_tab_todo),        PixelIcons.Todo)),
     CalcTabEntry("shopping",   SpyglassTab(stringResource(R.string.calc_tab_shopping),    PixelIcons.Storage)),
+    CalcTabEntry("notes",      SpyglassTab(stringResource(R.string.calc_tab_notes),       PixelIcons.Bookmark)),
+    CalcTabEntry("waypoints",  SpyglassTab(stringResource(R.string.calc_tab_waypoints),   PixelIcons.Waypoints)),
+    CalcTabEntry("tracker",    SpyglassTab(stringResource(R.string.calc_tab_tracker),     PixelIcons.Advancement)),
     CalcTabEntry("enchanting", SpyglassTab(stringResource(R.string.calc_tab_enchanting),  PixelIcons.Anvil)),
     CalcTabEntry("fill",       SpyglassTab(stringResource(R.string.calc_tab_fill),        PixelIcons.Fill)),
     CalcTabEntry("shapes",     SpyglassTab(stringResource(R.string.calc_tab_shapes),      PixelIcons.Shapes)),
@@ -60,24 +63,20 @@ private fun allCalcTabs() = listOf(
     CalcTabEntry("nether",     SpyglassTab(stringResource(R.string.calc_tab_nether),      PixelIcons.Nether)),
     CalcTabEntry("clock",      SpyglassTab(stringResource(R.string.calc_tab_game_clock),  PixelIcons.Clock)),
     CalcTabEntry("light",      SpyglassTab(stringResource(R.string.calc_tab_light),       PixelIcons.Torch)),
-    CalcTabEntry("notes",      SpyglassTab(stringResource(R.string.calc_tab_notes),       PixelIcons.Bookmark)),
-    CalcTabEntry("waypoints",  SpyglassTab(stringResource(R.string.calc_tab_waypoints),   PixelIcons.Waypoints)),
     CalcTabEntry("redstone",   SpyglassTab(stringResource(R.string.calc_tab_redstone),    PixelIcons.Blocks)),
     CalcTabEntry("librarian",  SpyglassTab(stringResource(R.string.calc_tab_librarian),   PixelIcons.Enchant), experimental = true),
     CalcTabEntry("food",       SpyglassTab(stringResource(R.string.calc_tab_food),        PixelIcons.Item)),
     CalcTabEntry("banners",    SpyglassTab(stringResource(R.string.calc_tab_banners),     PixelIcons.Blocks)),
     CalcTabEntry("trims",      SpyglassTab(stringResource(R.string.calc_tab_trims),       PixelIcons.Item)),
     CalcTabEntry("loot",       SpyglassTab(stringResource(R.string.calc_tab_loot),        PixelIcons.Structure)),
-    CalcTabEntry("tracker",    SpyglassTab(stringResource(R.string.calc_tab_tracker),    PixelIcons.Advancement)),
 )
 
 /** Map legacy integer tab index → stable key for external callers (HomeScreen, etc.) */
 fun calcTabKey(legacyIndex: Int): String = when (legacyIndex) {
-    0 -> "todo"; 1 -> "shopping"; 2 -> "enchanting"; 3 -> "fill"; 4 -> "shapes"
-    5 -> "maze"; 6 -> "storage"; 7 -> "smelt"; 8 -> "nether"; 9 -> "clock"
-    10 -> "light"; 11 -> "notes"; 12 -> "waypoints"; 13 -> "redstone"; 14 -> "librarian"
-    15 -> "food"; 16 -> "banners"; 17 -> "trims"; 18 -> "loot"
-    19 -> "tracker"
+    0 -> "todo"; 1 -> "shopping"; 2 -> "notes"; 3 -> "waypoints"; 4 -> "tracker"
+    5 -> "enchanting"; 6 -> "fill"; 7 -> "shapes"; 8 -> "maze"; 9 -> "storage"
+    10 -> "smelt"; 11 -> "nether"; 12 -> "clock"; 13 -> "light"; 14 -> "redstone"
+    15 -> "librarian"; 16 -> "food"; 17 -> "banners"; 18 -> "trims"; 19 -> "loot"
     else -> "todo"
 }
 

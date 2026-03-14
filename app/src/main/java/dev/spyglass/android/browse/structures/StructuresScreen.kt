@@ -432,14 +432,14 @@ private fun StructureDetailCard(
                     style = MaterialTheme.typography.labelSmall,
                     color = PotionBlue,
                     textDecoration = TextDecoration.Underline,
-                    modifier = Modifier.clickable { onCalcTab(18) },
+                    modifier = Modifier.clickable { onCalcTab(19) },
                 )
                 Text(
                     stringResource(R.string.structures_armor_trims),
                     style = MaterialTheme.typography.labelSmall,
                     color = PotionBlue,
                     textDecoration = TextDecoration.Underline,
-                    modifier = Modifier.clickable { onCalcTab(17) },
+                    modifier = Modifier.clickable { onCalcTab(18) },
                 )
             }
         }

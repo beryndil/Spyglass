@@ -899,15 +899,15 @@ object CoreModule : SpyglassModule {
             ) {
                 val toolNames = listOf(
                     stringResource(R.string.calc_tab_todo), stringResource(R.string.calc_tab_shopping),
-                    stringResource(R.string.calc_tab_enchanting), stringResource(R.string.calc_tab_fill),
-                    stringResource(R.string.calc_tab_shapes), stringResource(R.string.calc_tab_maze),
-                    stringResource(R.string.calc_tab_storage), stringResource(R.string.calc_tab_smelt),
-                    stringResource(R.string.calc_tab_nether), stringResource(R.string.calc_tab_game_clock),
-                    stringResource(R.string.calc_tab_light), stringResource(R.string.calc_tab_notes),
-                    stringResource(R.string.calc_tab_waypoints), stringResource(R.string.calc_tab_redstone),
-                    stringResource(R.string.calc_tab_librarian), stringResource(R.string.calc_tab_food),
-                    stringResource(R.string.calc_tab_banners), stringResource(R.string.calc_tab_trims),
-                    stringResource(R.string.calc_tab_loot),
+                    stringResource(R.string.calc_tab_notes), stringResource(R.string.calc_tab_waypoints),
+                    stringResource(R.string.calc_tab_tracker), stringResource(R.string.calc_tab_enchanting),
+                    stringResource(R.string.calc_tab_fill), stringResource(R.string.calc_tab_shapes),
+                    stringResource(R.string.calc_tab_maze), stringResource(R.string.calc_tab_storage),
+                    stringResource(R.string.calc_tab_smelt), stringResource(R.string.calc_tab_nether),
+                    stringResource(R.string.calc_tab_game_clock), stringResource(R.string.calc_tab_light),
+                    stringResource(R.string.calc_tab_redstone), stringResource(R.string.calc_tab_librarian),
+                    stringResource(R.string.calc_tab_food), stringResource(R.string.calc_tab_banners),
+                    stringResource(R.string.calc_tab_trims), stringResource(R.string.calc_tab_loot),
                 )
                 toolNames.forEachIndexed { i, name ->
                     FilterChip(
