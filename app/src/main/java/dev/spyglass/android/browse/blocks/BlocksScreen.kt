@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -197,6 +198,7 @@ fun BlocksScreen(
     onBiomeTap: (String) -> Unit = {},
     onTradeTap: (String) -> Unit = {},
     onStructureTap: (String) -> Unit = {},
+    listState: LazyListState = rememberLazyListState(),
     vm: BlocksViewModel = viewModel(),
 ) {
     val query       by vm.query.collectAsStateWithLifecycle()
@@ -211,7 +213,6 @@ fun BlocksScreen(
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val txMap       by vm.translations.collectAsStateWithLifecycle()
-    val listState   = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
     val blockSortOptions = listOf(

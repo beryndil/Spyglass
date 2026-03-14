@@ -8,6 +8,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -183,6 +184,7 @@ fun MobsScreen(
     onMobTap: (String) -> Unit = {},
     onCalcTab: (Int) -> Unit = {},
     entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
+    listState: LazyListState = rememberLazyListState(),
     vm: MobsViewModel = viewModel(),
 ) {
     val query       by vm.query.collectAsStateWithLifecycle()
@@ -195,7 +197,6 @@ fun MobsScreen(
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val txMap       by vm.translations.collectAsStateWithLifecycle()
-    val listState   = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
     val mobSortOptions = listOf(

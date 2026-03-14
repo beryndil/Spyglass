@@ -3,7 +3,9 @@ package dev.spyglass.android.browse.versions
 import android.app.Application
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +26,7 @@ import dev.spyglass.android.settings.MinecraftUpdates
 import dev.spyglass.android.settings.dataStore
 
 @Composable
-fun VersionsScreen() {
+fun VersionsScreen(listState: LazyListState = rememberLazyListState()) {
     val updates = MinecraftUpdates.JAVA_UPDATES.asReversed()
     val app = LocalContext.current.applicationContext as Application
     val repo by produceState<GameDataRepository?>(null) {
@@ -38,6 +40,7 @@ fun VersionsScreen() {
     }.collectAsState(initial = emptyMap())
 
     LazyColumn(
+        state = listState,
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),

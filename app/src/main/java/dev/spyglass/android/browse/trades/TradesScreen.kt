@@ -6,8 +6,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -156,6 +158,7 @@ class TradesViewModel(app: Application) : AndroidViewModel(app) {
 fun TradesScreen(
     targetProfession: String? = null,
     onItemTap: (String) -> Unit = {},
+    listState: LazyListState = rememberLazyListState(),
     vm: TradesViewModel = viewModel(),
 ) {
     val query      by vm.query.collectAsStateWithLifecycle()
@@ -190,6 +193,7 @@ fun TradesScreen(
             }
         }
         LazyColumn(
+            state = listState,
             contentPadding = PaddingValues(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {

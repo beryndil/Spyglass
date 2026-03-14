@@ -2,6 +2,7 @@ package dev.spyglass.android.browse
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -82,6 +83,9 @@ fun BrowseScreen(
     var targetProfession by remember { mutableStateOf<String?>(null) }
     var targetCommandId by remember { mutableStateOf<String?>(null) }
     var targetEnchantId by remember { mutableStateOf<String?>(null) }
+
+    // Persistent scroll states per tab — survive tab switches
+    val listStates = remember { (0..11).associateWith { LazyListState() } }
 
     // Internal back stack for system back button support
     val backStack = remember { mutableStateListOf<Pair<Int, String?>>() }
@@ -205,25 +209,24 @@ fun BrowseScreen(
                 onBiomeTap = onBiomeTap,
                 onTradeTap = onTradeTap,
                 onStructureTap = onStructureTap,
+                listState = listStates[0]!!,
             )
             1 -> ItemsScreen(
                 targetItemId = targetItemId,
                 onMobTap = onMobTap,
-                onBlockTap = { blockId ->
-                    clearAllTargets()
-                    targetBlockId = blockId
-                    tab = 0
-                },
+                onBlockTap = { blockId -> pushAndNavigate(0, blockId) },
                 onItemTap = onItemTap,
                 onStructureTap = onStructureTap,
                 onBiomeTap = onBiomeTap,
                 onEnchantTap = onEnchantTap,
                 entityLinkIndex = entityLinkIndex,
+                listState = listStates[1]!!,
             )
             2 -> CraftingScreen(
                 targetRecipeId = targetRecipeId,
                 onItemTap = onItemTap,
                 onBiomeTap = onBiomeTap,
+                listState = listStates[2]!!,
             )
             3 -> MobsScreen(
                 targetMobId = targetMobId,
@@ -233,10 +236,12 @@ fun BrowseScreen(
                 onMobTap = onMobTap,
                 onCalcTab = onCalcTab,
                 entityLinkIndex = entityLinkIndex,
+                listState = listStates[3]!!,
             )
             4 -> TradesScreen(
                 targetProfession = targetProfession,
                 onItemTap = onItemTap,
+                listState = listStates[4]!!,
             )
             5 -> BiomesScreen(
                 targetBiomeId = targetBiomeId,
@@ -244,6 +249,7 @@ fun BrowseScreen(
                 onNavigateToStructure = onStructureTap,
                 onItemTap = onItemTap,
                 onCalcTab = onCalcTab,
+                listState = listStates[5]!!,
             )
             6 -> StructuresScreen(
                 targetStructureId = targetStructureId,
@@ -253,6 +259,7 @@ fun BrowseScreen(
                 onCalcTab = onCalcTab,
                 entityLinkIndex = entityLinkIndex,
                 onEnchantTap = onEnchantTap,
+                listState = listStates[6]!!,
             )
             7 -> EnchantsScreen(
                 targetEnchantId = targetEnchantId,
@@ -263,8 +270,9 @@ fun BrowseScreen(
                 onStructureTap = onStructureTap,
                 onEnchantTap = onEnchantTap,
                 entityLinkIndex = entityLinkIndex,
+                listState = listStates[7]!!,
             )
-            8 -> PotionsScreen(onItemTap = onItemTap)
+            8 -> PotionsScreen(onItemTap = onItemTap, listState = listStates[8]!!)
             9 -> CommandsScreen(
                 targetCommandId = targetCommandId,
                 onItemTap = onItemTap,
@@ -273,9 +281,10 @@ fun BrowseScreen(
                 onStructureTap = onStructureTap,
                 onEnchantTap = onEnchantTap,
                 entityLinkIndex = entityLinkIndex,
+                listState = listStates[9]!!,
             )
             10 -> ReferenceScreen()
-            11 -> VersionsScreen()
+            11 -> VersionsScreen(listState = listStates[11]!!)
         }
     }
 }

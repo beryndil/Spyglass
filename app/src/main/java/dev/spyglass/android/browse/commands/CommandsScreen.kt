@@ -9,7 +9,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
@@ -158,6 +160,7 @@ fun CommandsScreen(
     onStructureTap: (String) -> Unit = {},
     onEnchantTap: (String) -> Unit = {},
     entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
+    listState: LazyListState = rememberLazyListState(),
     vm: CommandsViewModel = viewModel(),
 ) {
     val query by vm.query.collectAsStateWithLifecycle()
@@ -212,6 +215,7 @@ fun CommandsScreen(
             }
         }
         LazyColumn(
+            state = listState,
             contentPadding = PaddingValues(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {

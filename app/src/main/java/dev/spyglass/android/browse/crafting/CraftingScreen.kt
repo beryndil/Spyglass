@@ -10,6 +10,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -111,6 +112,7 @@ fun CraftingScreen(
     targetRecipeId: String? = null,
     onItemTap: (String) -> Unit = {},
     onBiomeTap: (String) -> Unit = {},
+    listState: LazyListState = rememberLazyListState(),
     vm: CraftingViewModel = viewModel(),
 ) {
     val query       by vm.query.collectAsStateWithLifecycle()
@@ -120,7 +122,6 @@ fun CraftingScreen(
     val allRecipes  by vm.allRecipes.collectAsStateWithLifecycle()
     val favoriteIds     by vm.favoriteIds.collectAsStateWithLifecycle()
     val favoriteRecipes by vm.favoriteRecipes.collectAsStateWithLifecycle()
-    val listState   = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
 

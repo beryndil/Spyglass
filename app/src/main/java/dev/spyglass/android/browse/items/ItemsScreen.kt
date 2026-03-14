@@ -10,6 +10,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -212,6 +213,7 @@ fun ItemsScreen(
     onBiomeTap: (String) -> Unit = {},
     onEnchantTap: (String) -> Unit = {},
     entityLinkIndex: EntityLinkIndex = EntityLinkIndex(emptyList()),
+    listState: LazyListState = rememberLazyListState(),
     vm: ItemsViewModel = viewModel(),
 ) {
     val query      by vm.query.collectAsStateWithLifecycle()
@@ -226,7 +228,6 @@ fun ItemsScreen(
     val vFilter     by vm.versionFilter.collectAsStateWithLifecycle()
     val vTags       by vm.versionTags.collectAsStateWithLifecycle()
     val txMap       by vm.translations.collectAsStateWithLifecycle()
-    val listState   = rememberLazyListState()
     val hapticConfirm = rememberHapticConfirm()
     val hapticClick = rememberHapticClick()
     val itemSortOptions = listOf(
