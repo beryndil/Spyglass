@@ -145,47 +145,59 @@ fun ChestLoadingAnimation(
                     radius = 100f,
                 )
 
-                // Orbiting diamonds (6)
+                // Orbiting diamonds (6) — split into behind/front for 3D effect
                 val orbitRadius = 70f
                 val diamondSize = 8f
                 val numDiamonds = 6
-                for (i in 0 until numDiamonds) {
-                    val baseAngle = (i * 360f / numDiamonds)
-                    val angle = Math.toRadians((baseAngle + time * 60f).toDouble())
-                    val dx = cx + orbitRadius * cos(angle).toFloat()
-                    val dy = cy + orbitRadius * 0.5f * sin(angle).toFloat()
 
-                    // Trail (3 fading copies)
-                    for (t in 3 downTo 1) {
-                        val trailAngle = Math.toRadians((baseAngle + (time * 60f) - t * 8f).toDouble())
-                        val tdx = cx + orbitRadius * cos(trailAngle).toFloat()
-                        val tdy = cy + orbitRadius * 0.5f * sin(trailAngle).toFloat()
-                        val trailAlpha = 0.15f - t * 0.04f
-                        val trailPath = Path().apply {
-                            moveTo(tdx, tdy - diamondSize * 0.5f)
-                            lineTo(tdx + diamondSize * 0.35f, tdy)
-                            lineTo(tdx, tdy + diamondSize * 0.5f)
-                            lineTo(tdx - diamondSize * 0.35f, tdy)
+                val drawDiamonds = { front: Boolean ->
+                    for (i in 0 until numDiamonds) {
+                        val baseAngle = (i * 360f / numDiamonds)
+                        val angle = Math.toRadians((baseAngle + time * 60f).toDouble())
+                        val isFront = sin(angle).toFloat() >= 0f
+                        if (isFront != front) continue
+
+                        val dx = cx + orbitRadius * cos(angle).toFloat()
+                        val dy = cy + orbitRadius * 0.5f * sin(angle).toFloat()
+
+                        // Depth alpha: behind diamonds are dimmer
+                        val depthAlpha = 0.4f + 0.6f * ((sin(angle).toFloat() + 1f) / 2f)
+
+                        // Trail (3 fading copies)
+                        for (t in 3 downTo 1) {
+                            val trailAngle = Math.toRadians((baseAngle + (time * 60f) - t * 8f).toDouble())
+                            val tdx = cx + orbitRadius * cos(trailAngle).toFloat()
+                            val tdy = cy + orbitRadius * 0.5f * sin(trailAngle).toFloat()
+                            val trailAlpha = (0.15f - t * 0.04f) * depthAlpha
+                            val trailPath = Path().apply {
+                                moveTo(tdx, tdy - diamondSize * 0.5f)
+                                lineTo(tdx + diamondSize * 0.35f, tdy)
+                                lineTo(tdx, tdy + diamondSize * 0.5f)
+                                lineTo(tdx - diamondSize * 0.35f, tdy)
+                                close()
+                            }
+                            drawPath(trailPath, Color(0xFF00BCD4).copy(alpha = trailAlpha))
+                        }
+
+                        // Diamond
+                        val diamondPath = Path().apply {
+                            moveTo(dx, dy - diamondSize)
+                            lineTo(dx + diamondSize * 0.6f, dy)
+                            lineTo(dx, dy + diamondSize)
+                            lineTo(dx - diamondSize * 0.6f, dy)
                             close()
                         }
-                        drawPath(trailPath, Color(0xFF00BCD4).copy(alpha = trailAlpha))
+                        drawPath(diamondPath, Color(0xFF00BCD4).copy(alpha = depthAlpha))
+                        drawPath(
+                            diamondPath,
+                            Color.White.copy(alpha = 0.3f * depthAlpha),
+                            style = Stroke(1f),
+                        )
                     }
-
-                    // Diamond
-                    val diamondPath = Path().apply {
-                        moveTo(dx, dy - diamondSize)
-                        lineTo(dx + diamondSize * 0.6f, dy)
-                        lineTo(dx, dy + diamondSize)
-                        lineTo(dx - diamondSize * 0.6f, dy)
-                        close()
-                    }
-                    drawPath(diamondPath, Color(0xFF00BCD4))
-                    drawPath(
-                        diamondPath,
-                        Color.White.copy(alpha = 0.3f),
-                        style = Stroke(1f),
-                    )
                 }
+
+                // Behind diamonds (upper arc, sin < 0)
+                drawDiamonds(false)
 
                 // Chest body
                 val chestLeft = cx - chestW / 2
@@ -284,6 +296,9 @@ fun ChestLoadingAnimation(
                         1f,
                     )
                 }
+
+                // Front diamonds (lower arc, sin >= 0)
+                drawDiamonds(true)
 
                 // Light rays when lid opens
                 if (lidOpenAngle < -5f) {
@@ -464,52 +479,61 @@ fun ChestDiamondLoader(
                 radius = 200f,
             )
 
-            // ── Orbiting diamonds (8) ────────────────────────────────────────
+            // ── Orbiting diamonds (8) — split into behind/front for 3D effect
             val orbitRadius = 150f
             val diamondSize = 14f
             val numDiamonds = 8
-            for (i in 0 until numDiamonds) {
-                val baseAngle = (i * 360f / numDiamonds)
-                val angle = Math.toRadians((baseAngle + time * 50f).toDouble())
-                // Vertical bob per diamond
-                val bob = 6f * sin(time * 2.5f + i * 0.8f)
-                val dx = cx + orbitRadius * cos(angle).toFloat()
-                val dy = cy + orbitRadius * 0.45f * sin(angle).toFloat() + bob
 
-                // Depth-based alpha: diamonds behind the chest are dimmer
-                val depthAlpha = 0.4f + 0.6f * ((sin(angle).toFloat() + 1f) / 2f)
+            val drawDiamonds = { front: Boolean ->
+                for (i in 0 until numDiamonds) {
+                    val baseAngle = (i * 360f / numDiamonds)
+                    val angle = Math.toRadians((baseAngle + time * 50f).toDouble())
+                    val isFront = sin(angle).toFloat() >= 0f
+                    if (isFront != front) continue
 
-                // Trail (3 fading copies)
-                for (t in 3 downTo 1) {
-                    val trailAngle = Math.toRadians((baseAngle + (time * 50f) - t * 7f).toDouble())
-                    val tdx = cx + orbitRadius * cos(trailAngle).toFloat()
-                    val tdy = cy + orbitRadius * 0.45f * sin(trailAngle).toFloat() + bob
-                    val trailAlpha = (0.12f - t * 0.03f) * depthAlpha
-                    val trailPath = Path().apply {
-                        moveTo(tdx, tdy - diamondSize * 0.4f)
-                        lineTo(tdx + diamondSize * 0.3f, tdy)
-                        lineTo(tdx, tdy + diamondSize * 0.4f)
-                        lineTo(tdx - diamondSize * 0.3f, tdy)
+                    // Vertical bob per diamond
+                    val bob = 6f * sin(time * 2.5f + i * 0.8f)
+                    val dx = cx + orbitRadius * cos(angle).toFloat()
+                    val dy = cy + orbitRadius * 0.45f * sin(angle).toFloat() + bob
+
+                    // Depth-based alpha: diamonds behind the chest are dimmer
+                    val depthAlpha = 0.4f + 0.6f * ((sin(angle).toFloat() + 1f) / 2f)
+
+                    // Trail (3 fading copies)
+                    for (t in 3 downTo 1) {
+                        val trailAngle = Math.toRadians((baseAngle + (time * 50f) - t * 7f).toDouble())
+                        val tdx = cx + orbitRadius * cos(trailAngle).toFloat()
+                        val tdy = cy + orbitRadius * 0.45f * sin(trailAngle).toFloat() + bob
+                        val trailAlpha = (0.12f - t * 0.03f) * depthAlpha
+                        val trailPath = Path().apply {
+                            moveTo(tdx, tdy - diamondSize * 0.4f)
+                            lineTo(tdx + diamondSize * 0.3f, tdy)
+                            lineTo(tdx, tdy + diamondSize * 0.4f)
+                            lineTo(tdx - diamondSize * 0.3f, tdy)
+                            close()
+                        }
+                        drawPath(trailPath, Color(0xFF00BCD4).copy(alpha = trailAlpha))
+                    }
+
+                    // Diamond shape
+                    val diamondPath = Path().apply {
+                        moveTo(dx, dy - diamondSize)
+                        lineTo(dx + diamondSize * 0.6f, dy)
+                        lineTo(dx, dy + diamondSize)
+                        lineTo(dx - diamondSize * 0.6f, dy)
                         close()
                     }
-                    drawPath(trailPath, Color(0xFF00BCD4).copy(alpha = trailAlpha))
+                    drawPath(diamondPath, Color(0xFF00BCD4).copy(alpha = depthAlpha))
+                    drawPath(
+                        diamondPath,
+                        Color.White.copy(alpha = 0.25f * depthAlpha),
+                        style = Stroke(1f),
+                    )
                 }
-
-                // Diamond shape
-                val diamondPath = Path().apply {
-                    moveTo(dx, dy - diamondSize)
-                    lineTo(dx + diamondSize * 0.6f, dy)
-                    lineTo(dx, dy + diamondSize)
-                    lineTo(dx - diamondSize * 0.6f, dy)
-                    close()
-                }
-                drawPath(diamondPath, Color(0xFF00BCD4).copy(alpha = depthAlpha))
-                drawPath(
-                    diamondPath,
-                    Color.White.copy(alpha = 0.25f * depthAlpha),
-                    style = Stroke(1f),
-                )
             }
+
+            // Behind diamonds (upper arc, sin < 0)
+            drawDiamonds(false)
 
             // ── Chest body ───────────────────────────────────────────────────
             // Shadow
@@ -618,6 +642,9 @@ fun ChestDiamondLoader(
                 size = Size(latchW, latchH),
                 cornerRadius = CornerRadius(2f),
             )
+
+            // Front diamonds (lower arc, sin >= 0)
+            drawDiamonds(true)
 
             // ── Sparkle dots around the chest ────────────────────────────────
             for (i in 0 until 5) {
