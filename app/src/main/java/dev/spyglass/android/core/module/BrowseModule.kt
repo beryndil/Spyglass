@@ -340,10 +340,9 @@ object BrowseModule : SpyglassModule {
         QuickLink(PixelIcons.Trade, stringResource(R.string.browse_tab_trades), Emerald) to 4,
         QuickLink(PixelIcons.Enchant, stringResource(R.string.browse_tab_enchants), EnderPurple) to 7,
         QuickLink(PixelIcons.Potion, stringResource(R.string.browse_tab_potions), PotionBlue) to 8,
-        QuickLink(PixelIcons.Advancement, stringResource(R.string.browse_tab_advancements), Emerald) to 9,
-        QuickLink(PixelIcons.Command, stringResource(R.string.browse_tab_commands), PotionBlue) to 10,
-        QuickLink(PixelIcons.Bookmark, stringResource(R.string.browse_tab_reference), MaterialTheme.colorScheme.primary) to 11,
-        QuickLink(PixelIcons.Clock, stringResource(R.string.browse_tab_versions), MaterialTheme.colorScheme.secondary) to 12,
+        QuickLink(PixelIcons.Command, stringResource(R.string.browse_tab_commands), PotionBlue) to 9,
+        QuickLink(PixelIcons.Bookmark, stringResource(R.string.browse_tab_reference), MaterialTheme.colorScheme.primary) to 10,
+        QuickLink(PixelIcons.Clock, stringResource(R.string.browse_tab_versions), MaterialTheme.colorScheme.secondary) to 11,
     )
 
     @Composable
@@ -352,7 +351,7 @@ object BrowseModule : SpyglassModule {
         stringResource(R.string.browse_tab_recipes), stringResource(R.string.browse_tab_mobs),
         stringResource(R.string.browse_tab_trades), stringResource(R.string.browse_tab_biomes),
         stringResource(R.string.browse_tab_structures), stringResource(R.string.browse_tab_enchants),
-        stringResource(R.string.browse_tab_potions), stringResource(R.string.browse_tab_advancements),
+        stringResource(R.string.browse_tab_potions),
         stringResource(R.string.browse_tab_commands), stringResource(R.string.browse_tab_reference),
         stringResource(R.string.browse_tab_versions),
     )
@@ -392,7 +391,7 @@ object BrowseModule : SpyglassModule {
     private fun browseTabForType(type: String): Int = when (type) {
         "block" -> 0; "item" -> 1; "recipe" -> 2; "mob" -> 3; "trade" -> 4
         "biome" -> 5; "structure" -> 6; "enchant" -> 7; "potion" -> 8
-        "advancement" -> 9; "command" -> 10; else -> 0
+        "command" -> 9; else -> 0
     }
 
     private fun iconForFavorite(type: String, id: String): SpyglassIcon = when (type) {

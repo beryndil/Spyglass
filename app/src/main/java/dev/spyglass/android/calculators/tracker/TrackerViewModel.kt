@@ -73,6 +73,16 @@ class TrackerViewModel(app: Application) : AndroidViewModel(app) {
      .applyVersionFilter(versionFilter, versionTags, "advancement") { it.id }
      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    init {
+        // Auto-expand root nodes when advancements first load
+        viewModelScope.launch {
+            advancements.first { it.isNotEmpty() }.let { advs ->
+                val rootIds = advs.filter { it.parent.isEmpty() }.map { it.id }.toSet()
+                _treeExpandedIds.value = _treeExpandedIds.value + rootIds
+            }
+        }
+    }
+
     val completedIds: StateFlow<Set<String>> = repo.advancementCompletedIds()
         .map { it.toSet() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
