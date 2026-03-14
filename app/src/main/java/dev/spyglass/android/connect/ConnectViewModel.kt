@@ -149,6 +149,25 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             }
         }
 
+        // Watch for IGN changes — re-evaluate auto-select against current player list.
+        // Handles the case where PLAYER_LIST arrived before the user set their IGN.
+        viewModelScope.launch(Dispatchers.IO) {
+            val app = getApplication<Application>()
+            app.dataStore.data
+                .map { it[PreferenceKeys.PLAYER_IGN] ?: "" }
+                .distinctUntilChanged()
+                .collect { ign ->
+                    val players = _playerList.value
+                    if (ign.isNotBlank() && players.size > 1 && _selectedPlayerUuid.value == null) {
+                        val match = players.find { it.name.equals(ign, ignoreCase = true) }
+                        if (match != null) {
+                            Timber.i("IGN changed to '$ign' — auto-selecting player ${match.uuid}")
+                            selectPlayer(match.uuid)
+                        }
+                    }
+                }
+        }
+
         // Compute gear analysis immediately when player data arrives
         viewModelScope.launch {
             _playerData.collectLatest { data ->
