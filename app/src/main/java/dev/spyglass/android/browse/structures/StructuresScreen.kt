@@ -32,9 +32,6 @@ import dev.spyglass.android.core.checkAvailability
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
-import dev.spyglass.android.core.ui.SpyglassSearchBar
-import dev.spyglass.android.core.ui.rememberHapticConfirm
-import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.StructureEntity
 import dev.spyglass.android.data.db.entities.VersionTagEntity
@@ -45,6 +42,8 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
+// ── Helpers ─────────────────────────────────────────────────────────────────
+
 private fun formatId(id: String): String =
     id.split('_').joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
 
@@ -52,6 +51,8 @@ private fun parseCommaSeparated(csv: String): List<String> {
     if (csv.isBlank()) return emptyList()
     return csv.split(",").map { it.trim() }.filter { it.isNotEmpty() }
 }
+
+// ── ViewModel ───────────────────────────────────────────────────────────────
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class StructuresViewModel(app: Application) : AndroidViewModel(app) {
@@ -116,6 +117,8 @@ class StructuresViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 }
+
+// ── Screen ──────────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -255,6 +258,8 @@ fun StructuresScreen(
     }
 }
 
+// ── Structure list item ──────────────────────────────────────────────────────
+
 @Composable
 private fun StructureListItem(s: StructureEntity, isFavorite: Boolean, onToggleFavorite: () -> Unit, onClick: () -> Unit, addedIn: String = "", availability: VersionAvailability = VersionAvailability.AVAILABLE, txMap: Map<String, Map<String, String>> = emptyMap()) {
     val dimensionColor = when (s.dimension) {
@@ -299,6 +304,8 @@ private fun StructureListItem(s: StructureEntity, isFavorite: Boolean, onToggleF
         },
     )
 }
+
+// ── Structure detail ─────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

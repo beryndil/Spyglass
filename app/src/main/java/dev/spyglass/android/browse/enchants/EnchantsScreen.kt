@@ -31,9 +31,6 @@ import dev.spyglass.android.core.checkAvailability
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
-import dev.spyglass.android.core.ui.SpyglassSearchBar
-import dev.spyglass.android.core.ui.rememberHapticConfirm
-import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.db.entities.EnchantEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.VersionTagEntity
@@ -50,6 +47,8 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+
+// ── ViewModel ───────────────────────────────────────────────────────────────
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class EnchantsViewModel(app: Application) : AndroidViewModel(app) {
@@ -139,6 +138,8 @@ class EnchantsViewModel(app: Application) : AndroidViewModel(app) {
     }
 }
 
+// ── Helpers ─────────────────────────────────────────────────────────────────
+
 private fun formatTarget(target: String): String =
     target.split(",").joinToString(", ") {
         it.trim().replace('_', ' ').replaceFirstChar { c -> c.uppercase() }
@@ -180,6 +181,8 @@ private fun targetIcon(target: String): SpyglassIcon? = when (target) {
     "fishing_rod" -> ItemTextures.get("fishing_rod")
     else          -> null
 }
+
+// ── Screen ──────────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -240,13 +243,13 @@ fun EnchantsScreen(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
     val sortOptions = listOf(
         SortOption(stringResource(R.string.enchants_sort_name), "name"),
         SortOption(stringResource(R.string.enchants_sort_max_level), "max_level"),
         SortOption(stringResource(R.string.enchants_sort_rarity), "rarity"),
     )
 
+    Box(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
             modifier = Modifier.padding(start = 16.dp, end = 4.dp, top = 16.dp, bottom = 16.dp),
@@ -399,6 +402,8 @@ fun EnchantsScreen(
     )
     }
 }
+
+// ── Enchant detail ───────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

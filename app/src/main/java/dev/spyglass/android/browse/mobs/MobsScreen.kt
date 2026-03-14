@@ -8,6 +8,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -32,9 +33,6 @@ import dev.spyglass.android.core.checkAvailability
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
-import dev.spyglass.android.core.ui.SpyglassSearchBar
-import dev.spyglass.android.core.ui.rememberHapticConfirm
-import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.MobEntity
 import dev.spyglass.android.data.db.entities.VersionTagEntity
@@ -47,11 +45,15 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
+// ── Constants ───────────────────────────────────────────────────────────────
+
 // Non-biome, non-structure spawn locations shown as plain badges
 private val SPECIAL_LOCATIONS = setOf(
     "all_overworld", "slime_chunks", "caves", "raid", "bred", "summoned",
     "underground_ocean", "nether_overworld", "breeds_only", "extreme_hills",
 )
+
+// ── ViewModel ───────────────────────────────────────────────────────────────
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class MobsViewModel(app: Application) : AndroidViewModel(app) {
@@ -121,6 +123,8 @@ class MobsViewModel(app: Application) : AndroidViewModel(app) {
     }
 }
 
+// ── Helpers ─────────────────────────────────────────────────────────────────
+
 @Serializable
 private data class MobDrop(
     val id: String,
@@ -166,6 +170,8 @@ private val STRUCTURE_IDS = setOf(
     "stronghold", "village", "swamp_hut", "bastion_remnant", "trial_chambers",
     "mineshaft", "dungeon", "ancient_city", "end_city",
 )
+
+// ── Screen ──────────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -227,7 +233,7 @@ fun MobsScreen(
             )
             SortButton(options = mobSortOptions, selectedKey = sortKey, onSelect = vm::setSortKey)
         }
-        androidx.compose.foundation.lazy.LazyRow(
+        LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             modifier = Modifier.padding(bottom = 8.dp),
@@ -342,6 +348,8 @@ fun MobsScreen(
         }
     }
 }
+
+// ── Mob detail ──────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

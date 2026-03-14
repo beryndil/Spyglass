@@ -33,9 +33,6 @@ import dev.spyglass.android.core.checkAvailability
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
-import dev.spyglass.android.core.ui.SpyglassSearchBar
-import dev.spyglass.android.core.ui.rememberHapticConfirm
-import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.db.entities.CommandEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.VersionTagEntity
@@ -45,6 +42,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+
+// ── ViewModel ───────────────────────────────────────────────────────────────
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class CommandsViewModel(app: Application) : AndroidViewModel(app) {
@@ -112,6 +111,8 @@ class CommandsViewModel(app: Application) : AndroidViewModel(app) {
     }
 }
 
+// ── Helpers ─────────────────────────────────────────────────────────────────
+
 @Composable
 private fun categoryLabel(cat: String): String = when (cat) {
     "chat" -> stringResource(R.string.commands_category_chat)
@@ -144,6 +145,8 @@ private fun permissionLabel(level: Int): String = when (level) {
     4 -> stringResource(R.string.commands_permission_owner)
     else -> "Level $level"
 }
+
+// ── Screen ──────────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -298,6 +301,8 @@ fun CommandsScreen(
         }
     }
 }
+
+// ── Command detail ───────────────────────────────────────────────────────────
 
 @Composable
 private fun CommandDetailCard(cmd: CommandEntity, entityLinkIndex: EntityLinkIndex, onItemTap: (String) -> Unit, onMobTap: (String) -> Unit, onBiomeTap: (String) -> Unit, onStructureTap: (String) -> Unit, onEnchantTap: (String) -> Unit, tag: VersionTagEntity? = null, vFilter: VersionFilterState = VersionFilterState(), txMap: Map<String, Map<String, String>> = emptyMap()) {

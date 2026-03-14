@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -178,7 +179,7 @@ fun TradesScreen(
             category = "trades", placeholder = stringResource(R.string.trades_search_placeholder),
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         )
-        androidx.compose.foundation.lazy.LazyRow(
+        LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             modifier = Modifier.padding(bottom = 8.dp),

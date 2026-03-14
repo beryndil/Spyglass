@@ -31,9 +31,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
-import dev.spyglass.android.core.ui.SpyglassSearchBar
-import dev.spyglass.android.core.ui.rememberHapticConfirm
-import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.ItemTags
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.RecipeEntity
@@ -43,6 +40,8 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.*
+
+// ── ViewModel ───────────────────────────────────────────────────────────────
 
 private val RECIPE_TYPES = listOf("all", "shaped", "shapeless", "smelting", "food", "smithing", "stonecutting", "loom")
 
@@ -104,6 +103,8 @@ class CraftingViewModel(app: Application) : AndroidViewModel(app) {
     fun recipesForItem(itemId: String) = repo.recipesForItem(itemId)
     fun recipesUsingItem(itemId: String) = repo.recipesUsingIngredient(itemId)
 }
+
+// ── Screen ──────────────────────────────────────────────────────────────────
 
 @Composable
 fun CraftingScreen(
@@ -253,6 +254,8 @@ fun CraftingScreen(
     }
 }
 
+// ── Recipe detail ────────────────────────────────────────────────────────────
+
 @Composable
 private fun RecipeDetailContent(
     outputItem: String,
@@ -273,4 +276,3 @@ private fun RecipeDetailContent(
         onBiomeTap = onBiomeTap,
     )
 }
-

@@ -31,9 +31,6 @@ import dev.spyglass.android.core.checkAvailability
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
-import dev.spyglass.android.core.ui.SpyglassSearchBar
-import dev.spyglass.android.core.ui.rememberHapticConfirm
-import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.db.entities.FavoriteEntity
 import dev.spyglass.android.data.db.entities.PotionEntity
 import dev.spyglass.android.data.db.entities.VersionTagEntity
@@ -43,6 +40,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+
+// ── Constants ───────────────────────────────────────────────────────────────
 
 private val POTION_CATEGORIES = listOf("all", "positive", "negative", "special")
 
@@ -108,6 +107,8 @@ private val EFFECT_DESCRIPTIONS = mapOf(
     "Infested" to "Spawn silverfish when hurt",
 )
 
+// ── ViewModel ───────────────────────────────────────────────────────────────
+
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class PotionsViewModel(app: Application) : AndroidViewModel(app) {
     private val repo = GameDataRepository.get(app)
@@ -167,6 +168,8 @@ class PotionsViewModel(app: Application) : AndroidViewModel(app) {
     }
 }
 
+// ── Helpers ─────────────────────────────────────────────────────────────────
+
 /** Parse an ingredient path like "nether_wart → sugar → redstone" into clickable tokens. */
 private fun parseIngredientPath(path: String): List<Pair<String, String?>> {
     if (path.isBlank()) return emptyList()
@@ -176,6 +179,8 @@ private fun parseIngredientPath(path: String): List<Pair<String, String?>> {
         trimmed to itemId
     }
 }
+
+// ── Screen ──────────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -335,6 +340,8 @@ fun PotionsScreen(
         }
     }
 }
+
+// ── Potion detail ────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

@@ -30,13 +30,9 @@ import dev.spyglass.android.core.VersionAvailability
 import dev.spyglass.android.core.VersionFilterState
 import dev.spyglass.android.core.applyVersionFilter
 import dev.spyglass.android.core.checkAvailability
-import dev.spyglass.android.core.checkMechanicsChanged
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
-import dev.spyglass.android.core.ui.SpyglassSearchBar
-import dev.spyglass.android.core.ui.rememberHapticConfirm
-import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.BiomeResourceMap
 import dev.spyglass.android.data.CompostData
 import dev.spyglass.android.data.db.entities.EnchantEntity

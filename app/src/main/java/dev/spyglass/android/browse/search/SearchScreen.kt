@@ -16,7 +16,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.spyglass.android.core.ui.*
-import dev.spyglass.android.core.ui.SpyglassSearchBar
 import dev.spyglass.android.data.db.entities.*
 import dev.spyglass.android.data.repository.GameDataRepository
 import dev.spyglass.android.settings.PreferenceKeys

@@ -36,9 +36,6 @@ import dev.spyglass.android.core.checkAvailability
 import dev.spyglass.android.core.toTagMap
 import dev.spyglass.android.core.versionFilterFrom
 import dev.spyglass.android.core.ui.*
-import dev.spyglass.android.core.ui.SpyglassSearchBar
-import dev.spyglass.android.core.ui.rememberHapticConfirm
-import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.data.BiomeResourceMap
 import dev.spyglass.android.data.db.entities.BiomeEntity
 import dev.spyglass.android.data.db.entities.FavoriteEntity
@@ -51,6 +48,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+
+// ── Constants ───────────────────────────────────────────────────────────────
 
 // Mob IDs known to exist in the mobs table
 private val KNOWN_MOB_IDS = setOf(
@@ -68,6 +67,8 @@ private val KNOWN_MOB_IDS = setOf(
 )
 
 private val BIOME_CATEGORIES = listOf("all", "forest", "ocean", "desert", "mountain", "cave", "nether", "end")
+
+// ── ViewModel ───────────────────────────────────────────────────────────────
 
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 class BiomesViewModel(app: Application) : AndroidViewModel(app) {
@@ -129,6 +130,8 @@ class BiomesViewModel(app: Application) : AndroidViewModel(app) {
     }
 }
 
+// ── Helpers ─────────────────────────────────────────────────────────────────
+
 private fun parseMobs(mobsJson: String): List<String> {
     val trimmed = mobsJson.trim()
     if (trimmed.isBlank() || trimmed == "[]") return emptyList()
@@ -149,6 +152,8 @@ private fun formatId(id: String): String =
 
 private fun parseBiomeColor(hex: String): Color? =
     if (hex.isNotEmpty()) runCatching { Color(android.graphics.Color.parseColor(hex)) }.getOrNull() else null
+
+// ── Screen ──────────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -297,6 +302,8 @@ fun BiomesScreen(
     }
 }
 
+// ── Biome list item ──────────────────────────────────────────────────────────
+
 @Composable
 private fun BiomeListItem(b: BiomeEntity, isFavorite: Boolean, onToggleFavorite: () -> Unit, onClick: () -> Unit, addedIn: String = "", availability: VersionAvailability = VersionAvailability.AVAILABLE, txMap: Map<String, Map<String, String>> = emptyMap()) {
     val biomeColor = parseBiomeColor(b.color)
@@ -330,6 +337,8 @@ private fun BiomeListItem(b: BiomeEntity, isFavorite: Boolean, onToggleFavorite:
         },
     )
 }
+
+// ── Biome detail ─────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
