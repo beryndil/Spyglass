@@ -699,16 +699,17 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     val payload = json.decodeFromJsonElement(PlayerListPayload.serializer(), message.payload)
                     Timber.i("  ${payload.players.size} players: ${payload.players.joinToString { it.name ?: it.uuid.take(8) }}")
                     _playerList.value = payload.players
-                    // Auto-request player data if we already know who to load
+                    // Load the right player based on preference
                     val currentUuid = _selectedPlayerUuid.value
                     if (currentUuid != null) {
-                        // Preferred player already set — fetch their data
+                        // Preferred player saved — fetch their data (replaces owner if different)
                         requestPlayerData()
                     } else if (payload.players.size == 1) {
                         // Single-player world — auto-select the only player
                         selectPlayer(payload.players.first().uuid)
                     }
-                    // Multi-player with no preferred: wait for user to tap a player
+                    // Multi-player with no preferred: owner's data already showing,
+                    // player selector + prompt visible — user taps their player to switch
                 }
                 MessageType.PLAYER_DATA -> {
                     val payload = json.decodeFromJsonElement(PlayerData.serializer(), message.payload)
@@ -718,14 +719,6 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     if (compareUuid != null && payload.playerUuid.equals(compareUuid, ignoreCase = true)) {
                         _comparePlayerData.value = payload
                         pendingCompareUuid = null
-                    } else if (_selectedPlayerUuid.value == null) {
-                        // No player selected yet — ignore unsolicited data from desktop
-                        // (waiting for user to choose on multi-player, or PLAYER_LIST auto-select on single-player)
-                        Timber.i("  Ignoring unsolicited player data — no player selected yet")
-                    } else if (_selectedPlayerUuid.value != null && payload.playerUuid != null &&
-                        !payload.playerUuid.equals(_selectedPlayerUuid.value, ignoreCase = true)) {
-                        // Data is for a different player than we selected — ignore (stale response from desktop)
-                        Timber.i("  Ignoring player data for ${payload.playerUuid?.take(8)} — selected is ${_selectedPlayerUuid.value?.take(8)}")
                     } else {
                         val changed = _playerData.value != payload
                         _playerData.value = payload
