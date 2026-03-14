@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
@@ -44,18 +45,24 @@ fun SwipeNavigationWrapper(
     val offsetX = remember { Animatable(0f) }
     val scope = rememberCoroutineScope()
 
+    // Keep fresh references so the pointerInput block never uses stale captures
+    val currentCanGoBack = rememberUpdatedState(canGoBack)
+    val currentCanGoForward = rememberUpdatedState(canGoForward)
+    val currentOnSwipeBack = rememberUpdatedState(onSwipeBack)
+    val currentOnSwipeForward = rememberUpdatedState(onSwipeForward)
+
     Box(
         modifier = Modifier
-            .pointerInput(canGoBack, canGoForward) {
+            .pointerInput(Unit) {
                 var totalDrag = 0f
                 detectHorizontalDragGestures(
                     onDragStart = { totalDrag = 0f },
                     onDragEnd = {
                         val triggered = totalDrag.absoluteValue >= thresholdPx
-                        if (triggered && totalDrag > 0 && canGoBack) {
-                            onSwipeBack()
-                        } else if (triggered && totalDrag < 0 && canGoForward) {
-                            onSwipeForward()
+                        if (triggered && totalDrag > 0 && currentCanGoBack.value) {
+                            currentOnSwipeBack.value()
+                        } else if (triggered && totalDrag < 0 && currentCanGoForward.value) {
+                            currentOnSwipeForward.value()
                         }
                         scope.launch { offsetX.animateTo(0f, tween(150)) }
                     },
@@ -64,8 +71,7 @@ fun SwipeNavigationWrapper(
                     },
                     onHorizontalDrag = { _, dragAmount ->
                         totalDrag += dragAmount
-                        // Only show visual feedback if swipe direction is actionable
-                        val canAct = (totalDrag > 0 && canGoBack) || (totalDrag < 0 && canGoForward)
+                        val canAct = (totalDrag > 0 && currentCanGoBack.value) || (totalDrag < 0 && currentCanGoForward.value)
                         val target = if (canAct) {
                             totalDrag.coerceIn(-maxOffsetPx, maxOffsetPx)
                         } else {

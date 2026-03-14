@@ -159,11 +159,11 @@ fun ShellNavGraph() {
                 return
             }
             scrollToTopTrigger++
-            // Pop sub-routes (settings, changelog, etc.) off the back stack first
-            if (currentRoute != null && currentRoute !in topLevelRoutes) {
-                navController.popBackStack()
+            navController.navigate(route) {
+                popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                launchSingleTop = true
+                restoreState = true
             }
-            navController.navigate(route) { launchSingleTop = true }
         } catch (_: IllegalStateException) { }
     }
 
@@ -179,7 +179,15 @@ fun ShellNavGraph() {
 
     fun navigateForward() {
         val route = navHistory.onNavigateForward() ?: return
-        navigateToSub(route, isForward = true)
+        if (route in topLevelRoutes) {
+            navController.navigate(route) {
+                popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                launchSingleTop = true
+                restoreState = true
+            }
+        } else {
+            navigateToSub(route, isForward = true)
+        }
     }
 
     // ── Scope implementations ───────────────────────────────────────────────
