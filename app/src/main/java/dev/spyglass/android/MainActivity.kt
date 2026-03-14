@@ -109,9 +109,12 @@ class MainActivity : AppCompatActivity() {
                 .map { it[PreferenceKeys.CONSENT_SHOWN] ?: false }
                 .collectAsStateWithLifecycle(initialValue = true) // default true to avoid flash
 
+            // null = not yet loaded or never set; "" = skipped; "name" = set
+            // Use UNSET sentinel as initialValue to avoid flashing dialog before DataStore loads
+            val ignSentinel = "\u0000"
             val playerIgn by dataStore.data
                 .map { it[PreferenceKeys.PLAYER_IGN] }
-                .collectAsStateWithLifecycle(initialValue = "")
+                .collectAsStateWithLifecycle(initialValue = ignSentinel)
 
             val scope = rememberCoroutineScope()
 
