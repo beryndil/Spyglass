@@ -9,9 +9,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
@@ -109,12 +112,16 @@ class MainActivity : AppCompatActivity() {
                 .map { it[PreferenceKeys.CONSENT_SHOWN] ?: false }
                 .collectAsStateWithLifecycle(initialValue = true) // default true to avoid flash
 
-            // null = not yet loaded or never set; "" = skipped; "name" = set
-            // Use UNSET sentinel as initialValue to avoid flashing dialog before DataStore loads
-            val ignSentinel = "\u0000"
-            val playerIgn by dataStore.data
-                .map { it[PreferenceKeys.PLAYER_IGN] }
-                .collectAsStateWithLifecycle(initialValue = ignSentinel)
+            var showIgnPrompt by remember { mutableStateOf(false) }
+
+            LaunchedEffect(consentShown) {
+                if (consentShown) {
+                    val prefs = dataStore.data.first()
+                    if (prefs[PreferenceKeys.PLAYER_IGN] == null) {
+                        showIgnPrompt = true
+                    }
+                }
+            }
 
             val scope = rememberCoroutineScope()
 
@@ -141,14 +148,16 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                     }
-                } else if (playerIgn == null) {
+                } else if (showIgnPrompt) {
                     IgnDialog(
                         onContinue = { name ->
+                            showIgnPrompt = false
                             scope.launch {
                                 dataStore.edit { it[PreferenceKeys.PLAYER_IGN] = name }
                             }
                         },
                         onSkip = {
+                            showIgnPrompt = false
                             scope.launch {
                                 dataStore.edit { it[PreferenceKeys.PLAYER_IGN] = "" }
                             }

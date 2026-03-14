@@ -112,9 +112,6 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     private val repo by lazy { GameDataRepository.get(getApplication()) }
 
-    /** Cached IGN from DataStore for auto-selecting player. */
-    private var cachedIgn: String = ""
-
     init {
         // Plant the log tree so warnings/errors/crashes are captured and sent to desktop
         Timber.plant(logTree)
@@ -122,13 +119,6 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
         // Load cached data on startup
         viewModelScope.launch(Dispatchers.IO) {
-            // Load IGN from DataStore
-            try {
-                val app = getApplication<Application>()
-                val prefs = app.dataStore.data.first()
-                cachedIgn = prefs[PreferenceKeys.PLAYER_IGN] ?: ""
-            } catch (_: Exception) { /* leave empty */ }
-
             val meta = ConnectCache.loadMeta(getApplication())
             if (meta != null) {
                 Timber.i("Cache loaded: ${meta.worlds.size} worlds, selected=${meta.selectedWorld ?: "none"}")
@@ -695,14 +685,21 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                     if (payload.players.size == 1) {
                         // Single-player world — auto-select the only player
                         selectPlayer(payload.players.first().uuid)
-                    } else if (cachedIgn.isNotBlank()) {
-                        // Multi-player — match IGN to auto-select
-                        val match = payload.players.find { it.name.equals(cachedIgn, ignoreCase = true) }
-                        if (match != null) {
-                            Timber.i("  IGN '$cachedIgn' matched player ${match.uuid} — auto-selecting")
-                            selectPlayer(match.uuid)
+                    } else {
+                        // Multi-player — read IGN fresh from DataStore to auto-select
+                        viewModelScope.launch(Dispatchers.IO) {
+                            val ign = try {
+                                val app = getApplication<Application>()
+                                app.dataStore.data.first()[PreferenceKeys.PLAYER_IGN] ?: ""
+                            } catch (_: Exception) { "" }
+                            if (ign.isNotBlank()) {
+                                val match = payload.players.find { it.name.equals(ign, ignoreCase = true) }
+                                if (match != null) {
+                                    Timber.i("  IGN '$ign' matched player ${match.uuid} — auto-selecting")
+                                    selectPlayer(match.uuid)
+                                }
+                            }
                         }
-                        // No match → owner's data already showing, user can switch manually
                     }
                 }
                 MessageType.PLAYER_DATA -> {
