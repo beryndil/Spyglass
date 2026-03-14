@@ -35,11 +35,13 @@ data class EnchantRecommendation(
     val enchants: List<EnchantEntity>,
 )
 
+// ── Analyzer ──────────────────────────────────────────────────────────────────
+
 object GearAnalyzer {
 
     private val json = Json { ignoreUnknownKeys = true }
 
-    // Material tier hierarchies
+    // ── Tier data ─────────────────────────────────────────────────────────────
     // Chainmail skipped — too difficult to obtain (mob drops only, no crafting recipe)
     private val ARMOR_TIERS = listOf("leather", "copper", "iron", "diamond", "netherite")
     private val TOOL_TIERS = listOf("wooden", "stone", "iron", "diamond", "netherite")
@@ -61,6 +63,8 @@ object GearAnalyzer {
         SlotType.MAIN_HAND to "wooden_sword",
         SlotType.OFF_HAND to "shield",
     )
+
+    // ── Public API ────────────────────────────────────────────────────────────
 
     suspend fun analyze(playerData: PlayerData, repo: GameDataRepository): GearAnalysis {
         val slots = SlotType.entries.map { slotType ->
@@ -189,6 +193,8 @@ object GearAnalyzer {
         }
     }
 
+    // ── Recommendation builder ────────────────────────────────────────────────
+
     private val RARITY_ORDER = mapOf(
         "common" to 0,
         "uncommon" to 1,
@@ -240,6 +246,8 @@ object GearAnalyzer {
 
         return groups
     }
+
+    // ── Tier upgrade ──────────────────────────────────────────────────────────
 
     private suspend fun findTierUpgrade(
         itemId: String,

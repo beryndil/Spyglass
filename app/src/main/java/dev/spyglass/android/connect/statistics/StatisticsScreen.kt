@@ -16,12 +16,13 @@ import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.PlayerStatsPayload
 import dev.spyglass.android.connect.StatCategory
-import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.core.ui.ResultCard
 import dev.spyglass.android.core.ui.SectionHeader
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
 import timber.log.Timber
+
+// ── Stat metadata ─────────────────────────────────────────────────────────────
 
 // Stat categories where values are in centimeters (cm → blocks)
 private val DISTANCE_STATS = setOf(
@@ -49,6 +50,8 @@ private val CATEGORY_NAMES = mapOf(
     "killed" to "Mobs Killed",
     "killed_by" to "Killed By",
 )
+
+// ── Screen ────────────────────────────────────────────────────────────────────
 
 @Composable
 fun StatisticsScreen(
@@ -175,6 +178,8 @@ private fun StatCategorySection(category: StatCategory) {
     }
 }
 
+// ── Formatting ────────────────────────────────────────────────────────────────
+
 /** Format a stat key: replace underscores with spaces, title case. */
 private fun formatKey(key: String): String {
     return key.replace("_one_cm", "")
@@ -198,13 +203,6 @@ private fun formatStatValue(key: String, value: Long, category: String): String 
     // Time stats: convert ticks to human-readable
     if (key in TIME_STATS) {
         return formatTicks(value)
-    }
-
-    // Damage stats: convert half-hearts to hearts
-    if (key.startsWith("damage_")) {
-        val hearts = value / 20.0 // Damage is in 0.05 HP units actually, but MC stores raw
-        // MC damage stats are stored in tenths of half-hearts, so /10 for half-hearts
-        return "%,d".format(value)
     }
 
     return "%,d".format(value)

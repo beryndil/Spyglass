@@ -47,6 +47,8 @@ class SpyglassClient(private val context: Context) {
     /** Whether the last disconnect was user-initiated. */
     private var userDisconnect = false
 
+    // ── Connection ────────────────────────────────────────────────────────────
+
     /** Returns true if the IP is a private/LAN address (RFC 1918 + loopback). */
     private fun isPrivateIp(ip: String): Boolean {
         return ip.startsWith("10.") ||
@@ -178,6 +180,8 @@ class SpyglassClient(private val context: Context) {
         })
     }
 
+    // ── Send helpers ──────────────────────────────────────────────────────────
+
     /** Send a pairing request with our ECDH public key and protocol version. */
     fun sendPairRequest(deviceName: String, desktopPublicKey: String) {
         val message = SpyglassMessage(
@@ -220,6 +224,8 @@ class SpyglassClient(private val context: Context) {
         send(SpyglassMessage(type = type, requestId = requestId, payload = payload))
         return requestId
     }
+
+    // ── State management ──────────────────────────────────────────────────────
 
     /** Disconnect from the desktop (user-initiated). */
     fun disconnect() {

@@ -28,7 +28,6 @@ import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.connect.MapTile
 import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.StructureLocation
-import dev.spyglass.android.connect.client.ConnectionState
 
 /**
  * Canvas-based overhead map: receives base64 PNG tiles from desktop,

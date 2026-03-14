@@ -15,7 +15,6 @@ import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.ItemStack
 import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.PlayerData
-import dev.spyglass.android.connect.client.ConnectionState
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.SectionHeader

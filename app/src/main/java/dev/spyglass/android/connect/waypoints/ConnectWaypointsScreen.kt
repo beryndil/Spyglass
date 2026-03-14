@@ -39,6 +39,8 @@ import dev.spyglass.android.core.ui.*
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
 private fun waypointColor(color: String, primary: Color): Color = when (color) {
     "gold" -> primary
     "green" -> Emerald
@@ -102,6 +104,8 @@ private fun formatDistance(dist: Int?): String = when {
     dist >= 1000 -> "${dist / 1000}.${(dist % 1000) / 100}k blocks"
     else -> "$dist blocks"
 }
+
+// ── Screen ────────────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -341,6 +345,8 @@ fun ConnectWaypointsScreen(
     }
 }
 
+// ── Waypoint card ─────────────────────────────────────────────────────────────
+
 @Composable
 private fun WaypointCard(
     wp: ConnectWaypoint,
@@ -396,6 +402,8 @@ private fun WaypointCard(
         }
     }
 }
+
+// ── Waypoint detail ───────────────────────────────────────────────────────────
 
 @Composable
 private fun WaypointDetail(
@@ -535,6 +543,8 @@ private fun WaypointDetail(
         }
     }
 }
+
+// ── Waypoint dialog ───────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

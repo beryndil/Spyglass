@@ -29,6 +29,8 @@ import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
 import dev.spyglass.android.connect.client.connectionStatusText
 
+// ── Hub screen ───────────────────────────────────────────────────────────────
+
 /**
  * Main Connect screen showing connection status, pairing controls,
  * and navigation to world viewer features.
@@ -174,6 +176,8 @@ fun ConnectScreen(
     } // Box
 }
 
+// ── Status card ───────────────────────────────────────────────────────────────
+
 @Composable
 private fun ConnectionStatusCard(state: ConnectionState) {
     val (color, icon) = when (state) {
@@ -212,6 +216,8 @@ private fun ConnectionStatusCard(state: ConnectionState) {
         }
     }
 }
+
+// ── Disconnected content ─────────────────────────────────────────────────────
 
 @Composable
 private fun DisconnectedContent(
@@ -315,6 +321,8 @@ private fun DisconnectedContent(
 
     }
 }
+
+// ── Connected content ─────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -455,6 +463,8 @@ private fun ConnectedContent(
     }
 }
 
+// ── Player summary ────────────────────────────────────────────────────────────
+
 @Composable
 private fun PlayerSummaryCard(player: PlayerData) {
     ResultCard {
@@ -484,6 +494,8 @@ private fun StatColumn(label: String, value: String) {
     }
 }
 
+// ── Player selector ───────────────────────────────────────────────────────────
+
 @Composable
 private fun PlayerSelector(
     players: List<PlayerSummary>,
@@ -491,7 +503,6 @@ private fun PlayerSelector(
     onSelectPlayer: (String?) -> Unit,
 ) {
     val hapticClick = rememberHapticClick()
-    var showFairPlayWarning by remember { mutableStateOf(false) }
     val hasMultipleNonOwner = players.count { !it.isOwner } > 0
 
     SectionHeader(stringResource(R.string.connect_players_count, players.size))
@@ -564,6 +575,8 @@ private fun PlayerSelector(
         }
     }
 }
+
+// ── Quick link card ───────────────────────────────────────────────────────────
 
 @Composable
 private fun ConnectQuickLink(

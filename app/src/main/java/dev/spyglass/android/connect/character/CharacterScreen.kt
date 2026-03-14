@@ -42,6 +42,8 @@ import dev.spyglass.android.navigation.BrowseTarget
 
 private val UpgradeOrange = Color(0xFFFF9800)
 
+// ── Screen ────────────────────────────────────────────────────────────────────
+
 @Composable
 fun CharacterScreen(
     viewModel: ConnectViewModel,
@@ -114,6 +116,8 @@ fun CharacterScreen(
         )
     }
 }
+
+// ── Content ───────────────────────────────────────────────────────────────────
 
 @Composable
 private fun CharacterContent(
@@ -333,6 +337,8 @@ private fun CharacterContent(
     }
 }
 
+// ── Stat column ───────────────────────────────────────────────────────────────
+
 @Composable
 private fun StatColumn(label: String, value: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -358,6 +364,8 @@ private fun romanNumeral(level: Int): String = when (level) {
     1 -> "I"; 2 -> "II"; 3 -> "III"; 4 -> "IV"; 5 -> "V"
     else -> level.toString()
 }
+
+// ── Gear slot card ────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -499,6 +507,8 @@ private fun GearSlotCard(
     }
 }
 
+// ── Active effects ────────────────────────────────────────────────────────────
+
 private val HARMFUL_EFFECTS = setOf(
     "slowness", "mining_fatigue", "instant_damage", "nausea", "blindness",
     "hunger", "weakness", "poison", "wither", "levitation", "unluck",
@@ -540,6 +550,8 @@ private fun ActiveEffectsSection(effects: List<ActiveEffect>) {
         }
     }
 }
+
+// ── Enchant recommendations ───────────────────────────────────────────────────
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

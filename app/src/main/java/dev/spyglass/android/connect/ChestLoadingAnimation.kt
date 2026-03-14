@@ -20,6 +20,8 @@ import dev.spyglass.android.R
 import dev.spyglass.android.connect.client.ConnectionState
 import kotlin.math.*
 
+// ── Utilities ─────────────────────────────────────────────────────────────────
+
 /** Smooth ease-in-out interpolation (Hermite) */
 private fun smoothStep(t: Float): Float {
     val x = t.coerceIn(0f, 1f)
@@ -34,6 +36,8 @@ private data class BurstParticle(
     val size: Float,
     val color: Color,
 )
+
+// ── ChestLoadingAnimation (connection progress) ───────────────────────────────
 
 @Composable
 fun ChestLoadingAnimation(
@@ -376,6 +380,8 @@ fun ChestLoadingAnimation(
     }
 }
 
+// ── ChestLoadingOneShot (easter egg) ─────────────────────────────────────────
+
 /**
  * One-shot chest loading animation — plays through the full connection
  * sequence once, then calls [onComplete] when done.
@@ -399,6 +405,8 @@ fun ChestLoadingOneShot(modifier: Modifier = Modifier, onComplete: () -> Unit) {
         modifier = modifier,
     )
 }
+
+// ── ChestDiamondLoader (storage waiting state) ────────────────────────────────
 
 /**
  * Simple chest loading animation — closed chest with diamonds orbiting around it.
@@ -637,6 +645,8 @@ fun ChestDiamondLoader(
         }
     }
 }
+
+// ── Previews ──────────────────────────────────────────────────────────────────
 
 @Preview(showBackground = true, backgroundColor = 0xFF121212)
 @Composable
