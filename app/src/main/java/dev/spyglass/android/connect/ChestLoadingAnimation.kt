@@ -427,16 +427,16 @@ fun ChestDiamondLoader(
         verticalArrangement = Arrangement.Center,
     ) {
         Canvas(
-            modifier = Modifier.fillMaxWidth().height(200.dp),
+            modifier = Modifier.fillMaxWidth().height(350.dp),
         ) {
             val w = size.width
             val h = size.height
             val cx = w / 2
             val cy = h * 0.45f
 
-            val chestW = 90f
-            val chestH = 62f
-            val lidH = 22f
+            val chestW = 180f
+            val chestH = 124f
+            val lidH = 44f
             val chestLeft = cx - chestW / 2
             val chestTop = cy - chestH / 2
             val plankColor = Color(0xFF5D3A2A).copy(alpha = 0.5f)
@@ -450,21 +450,21 @@ fun ChestDiamondLoader(
                         Color.Transparent,
                     ),
                     center = Offset(cx, cy),
-                    radius = 120f,
+                    radius = 200f,
                 ),
                 center = Offset(cx, cy),
-                radius = 120f,
+                radius = 200f,
             )
 
             // ── Orbiting diamonds (8) ────────────────────────────────────────
-            val orbitRadius = 80f
-            val diamondSize = 9f
+            val orbitRadius = 150f
+            val diamondSize = 14f
             val numDiamonds = 8
             for (i in 0 until numDiamonds) {
                 val baseAngle = (i * 360f / numDiamonds)
                 val angle = Math.toRadians((baseAngle + time * 50f).toDouble())
                 // Vertical bob per diamond
-                val bob = 3f * sin(time * 2.5f + i * 0.8f)
+                val bob = 6f * sin(time * 2.5f + i * 0.8f)
                 val dx = cx + orbitRadius * cos(angle).toFloat()
                 val dy = cy + orbitRadius * 0.45f * sin(angle).toFloat() + bob
 
@@ -536,7 +536,7 @@ fun ChestDiamondLoader(
             )
 
             // ── Lid (lifts straight up and back down on a loop) ─────────────
-            val lidLift = 16f  // max pixels the lid rises
+            val lidLift = 32f  // max pixels the lid rises
             val cycleTime = time % 3.0f  // 3s cycle
             val lidOffset = when {
                 cycleTime < 0.8f -> lidLift * smoothStep(cycleTime / 0.8f)               // lift over 0.8s
@@ -554,7 +554,7 @@ fun ChestDiamondLoader(
                 val rayCount = 5
                 for (r in 0 until rayCount) {
                     val rayAngle = Math.toRadians((-150.0 + r * 15.0))
-                    val rayLen = 30f + 12f * sin(time * 3f + r)
+                    val rayLen = 60f + 24f * sin(time * 3f + r)
                     drawLine(
                         color = Color(0xFFFFD700).copy(alpha = rayAlpha * (0.5f + 0.5f * sin(time * 4f + r))),
                         start = Offset(cx, gapCenter),
@@ -602,8 +602,8 @@ fun ChestDiamondLoader(
             )
 
             // ── Latch (moves with lid) ───────────────────────────────────────
-            val latchW = 8f
-            val latchH = 12f
+            val latchW = 16f
+            val latchH = 24f
             drawRoundRect(
                 color = Color(0xFFFFD700),
                 topLeft = Offset(cx - latchW / 2, lidY + lidH - latchH / 2),
@@ -615,7 +615,7 @@ fun ChestDiamondLoader(
             for (i in 0 until 5) {
                 val sparkAngle = time * 1.2f + i * 1.3f
                 val sparkAlpha = (0.4f + 0.3f * sin(sparkAngle * 3f)).coerceIn(0f, 0.7f)
-                val sparkDist = 55f + 15f * sin(sparkAngle * 0.7f)
+                val sparkDist = 110f + 30f * sin(sparkAngle * 0.7f)
                 val sparkA = Math.toRadians((i * 72f + time * 15f).toDouble())
                 val sx = cx + sparkDist * cos(sparkA).toFloat()
                 val sy = cy + sparkDist * 0.5f * sin(sparkA).toFloat()
