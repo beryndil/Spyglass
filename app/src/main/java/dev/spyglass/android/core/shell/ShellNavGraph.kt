@@ -162,7 +162,7 @@ fun ShellNavGraph() {
             navController.navigate(route) {
                 popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                 launchSingleTop = true
-                restoreState = true
+                restoreState = route != "home"  // Home always starts at top
             }
         } catch (_: IllegalStateException) { }
     }
