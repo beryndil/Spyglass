@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -51,6 +52,7 @@ fun ShellSettingsScreen(
     }
 
     var selectedTab by remember { mutableIntStateOf(0) }
+    val listStates = remember { List(4) { LazyListState() } }
 
     val tabs = listOf(
         SpyglassTab(stringResource(R.string.settings_tab_appearance), PixelIcons.Enchant, untinted = true),
@@ -85,6 +87,7 @@ fun ShellSettingsScreen(
         // ── Tab content ──
         val tabSections = sections.filter { it.tab == selectedTab }
         LazyColumn(
+            state = listStates[selectedTab],
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),

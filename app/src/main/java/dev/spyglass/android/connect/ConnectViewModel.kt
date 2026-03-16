@@ -13,6 +13,7 @@ import dev.spyglass.android.core.CrashReporter
 import dev.spyglass.android.data.repository.GameDataRepository
 import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
+import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -763,6 +764,13 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
             _comparePlayerData.value = payload
             pendingCompareUuid = null
             return
+        }
+
+        // Persist UUID to DataStore so Settings can show it when disconnected
+        payload.playerUuid?.let { uuid ->
+            viewModelScope.launch(Dispatchers.IO) {
+                getApplication<Application>().dataStore.edit { it[PreferenceKeys.PLAYER_UUID] = uuid }
+            }
         }
 
         val changed = _playerData.value != payload

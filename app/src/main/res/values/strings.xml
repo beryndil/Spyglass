@@ -181,6 +181,8 @@
     <string name="settings_no_favorites">No favorites yet. Star items in the Browse tabs to add them here.</string>
     <string name="settings_favorites_count">%d favorite(s)</string>
     <string name="settings_clear_all_favorites">Clear All Favorites</string>
+    <string name="settings_player_profile">Player Profile</string>
+    <string name="settings_not_set">Not set</string>
     <string name="settings_privacy">Privacy &amp; Data</string>
     <string name="settings_privacy_policy">Privacy Policy \u2192</string>
     <string name="settings_delete_data">Delete All My Data</string>

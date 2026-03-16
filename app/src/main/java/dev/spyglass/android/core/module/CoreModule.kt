@@ -63,6 +63,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.edit
@@ -128,6 +129,7 @@ object CoreModule : SpyglassModule {
         // Tab 0: Appearance
         SettingsSection("appearance", "Appearance", 0, tab = 0) { AppearanceContent() },
         // Tab 1: Gameplay
+        SettingsSection("player_profile", "Player", -10, tab = 1) { PlayerProfileContent() },
         SettingsSection("game_filters", "Game Filters", 0, tab = 1) { GameFiltersContent() },
         SettingsSection("default_tabs", "Default Tabs", 10, tab = 1) { DefaultTabsContent() },
         // Tab 2: General
@@ -1059,6 +1061,91 @@ object CoreModule : SpyglassModule {
                     Text(stringResource(R.string.settings_clear_cache), color = MaterialTheme.colorScheme.primary)
                 }
             }
+        }
+    }
+
+    @Composable
+    private fun PlayerProfileContent() {
+        val context = LocalContext.current
+        val scope = rememberCoroutineScope()
+        val hapticConfirm = rememberHapticConfirm()
+        val hapticClick = rememberHapticClick()
+        var showDeleteConfirm by remember { mutableStateOf(false) }
+
+        val ign by remember {
+            context.dataStore.data.map { it[PreferenceKeys.PLAYER_IGN] ?: "" }
+        }.collectAsStateWithLifecycle(initialValue = "")
+
+        val uuid by remember {
+            context.dataStore.data.map { it[PreferenceKeys.PLAYER_UUID] ?: "" }
+        }.collectAsStateWithLifecycle(initialValue = "")
+
+        SectionHeader(stringResource(R.string.settings_player_profile))
+        ResultCard {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    stringResource(R.string.connect_ign),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Text(
+                    ign.ifBlank { stringResource(R.string.settings_not_set) },
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = if (ign.isBlank()) MaterialTheme.colorScheme.onSurfaceVariant
+                            else MaterialTheme.colorScheme.onSurface,
+                )
+            }
+            SpyglassDivider()
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    stringResource(R.string.connect_uuid),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Text(
+                    uuid.ifBlank { "\u2014" },
+                    style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+                    color = if (uuid.isBlank()) MaterialTheme.colorScheme.onSurfaceVariant
+                            else MaterialTheme.colorScheme.onSurface,
+                )
+            }
+            SpyglassDivider()
+            TextButton(onClick = { hapticConfirm(); showDeleteConfirm = true }) {
+                Text(stringResource(R.string.settings_delete_data), color = Red400)
+            }
+        }
+
+        if (showDeleteConfirm) {
+            AlertDialog(
+                onDismissRequest = { showDeleteConfirm = false },
+                title = { Text(stringResource(R.string.settings_delete_data_title), color = MaterialTheme.colorScheme.onSurface) },
+                text = {
+                    Text(stringResource(R.string.settings_delete_data_message), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                },
+                confirmButton = {
+                    TextButton(onClick = {
+                        hapticConfirm()
+                        scope.launch {
+                            dev.spyglass.android.data.repository.GameDataRepository.get(context).deleteAllUserData()
+                        }
+                        showDeleteConfirm = false
+                    }) {
+                        Text(stringResource(R.string.settings_delete_data_confirm), color = Red400)
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { hapticClick(); showDeleteConfirm = false }) {
+                        Text(stringResource(R.string.cancel), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                },
+                containerColor = MaterialTheme.colorScheme.surface,
+            )
         }
     }
 

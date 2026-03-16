@@ -55,4 +55,5 @@ object PreferenceKeys {
     val CONNECT_PAIRED_DEVICE   = stringPreferencesKey("connect_paired_device")
     val CONNECT_AUTO_RECONNECT  = booleanPreferencesKey("connect_auto_reconnect")
     val PLAYER_IGN              = stringPreferencesKey("player_ign")
+    val PLAYER_UUID             = stringPreferencesKey("player_uuid")
 }
