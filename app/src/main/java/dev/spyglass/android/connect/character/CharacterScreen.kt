@@ -39,6 +39,11 @@ import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
 import dev.spyglass.android.navigation.BrowseTarget
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.PlainTooltip
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 
 private val UpgradeOrange = Color(0xFFFF9800)
 
@@ -157,7 +162,7 @@ private fun CharacterContent(
             // Body render (dungeons pose)
             Box(
                 modifier = Modifier
-                    .heightIn(min = 100.dp)
+                    .height(100.dp)
                     .widthIn(min = 50.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(if (playerBodySkin == null) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent),
@@ -218,25 +223,15 @@ private fun CharacterContent(
 
                 // Armor boxes — horizontal row
                 Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                    val armorSlotTypes = listOf(SlotType.HEAD, SlotType.CHEST, SlotType.LEGS, SlotType.FEET)
-                    armorSlotTypes.forEach { slotType ->
-                        val slotAnalysis = gearAnalysis?.slots?.find { it.slotType == slotType }
-                        Box(
-                            modifier = Modifier
-                                .size(40.dp)
-                                .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(6.dp)),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            val itemId = slotAnalysis?.item?.id
-                            if (itemId != null) {
-                                val tex = ItemTextures.get(itemId)
-                                if (tex != null) {
-                                    SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(28.dp))
-                                } else {
-                                    SpyglassIconImage(PixelIcons.Item, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(28.dp))
-                                }
-                            }
-                        }
+                    listOf(SlotType.HEAD, SlotType.CHEST, SlotType.LEGS, SlotType.FEET).forEach { slotType ->
+                        EquipmentSlotBox(gearAnalysis?.slots?.find { it.slotType == slotType })
+                    }
+                }
+
+                // Main hand + off hand boxes
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    listOf(SlotType.MAIN_HAND, SlotType.OFF_HAND).forEach { slotType ->
+                        EquipmentSlotBox(gearAnalysis?.slots?.find { it.slotType == slotType })
                     }
                 }
             }
@@ -336,6 +331,45 @@ private fun CharacterContent(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+            }
+        }
+    }
+}
+
+// ── Equipment slot box ────────────────────────────────────────────────────────
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun EquipmentSlotBox(slotAnalysis: SlotAnalysis?) {
+    val tooltipState = rememberTooltipState()
+    val scope = rememberCoroutineScope()
+    TooltipBox(
+        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+        tooltip = {
+            PlainTooltip {
+                Text(
+                    slotAnalysis?.item?.let { it.customName ?: formatItemName(it.id) }
+                        ?: stringResource(R.string.connect_empty),
+                )
+            }
+        },
+        state = tooltipState,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(6.dp))
+                .clickable { scope.launch { tooltipState.show() } },
+            contentAlignment = Alignment.Center,
+        ) {
+            val itemId = slotAnalysis?.item?.id
+            if (itemId != null) {
+                val tex = ItemTextures.get(itemId)
+                if (tex != null) {
+                    SpyglassIconImage(tex, contentDescription = null, modifier = Modifier.size(28.dp))
+                } else {
+                    SpyglassIconImage(PixelIcons.Item, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(28.dp))
+                }
             }
         }
     }
