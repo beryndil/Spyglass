@@ -842,6 +842,7 @@
     <string name="connect_armor_chest">Chest</string>
     <string name="connect_armor_legs">Legs</string>
     <string name="connect_armor_feet">Feet</string>
+    <string name="connect_armor_main">Main</string>
     <string name="connect_armor_off">Off</string>
 
     <!-- Connect — Ender Chest Screen -->

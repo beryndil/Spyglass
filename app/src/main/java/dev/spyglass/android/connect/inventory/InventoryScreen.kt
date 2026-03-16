@@ -99,21 +99,26 @@ fun InventoryContent(
     ) {
         // Armor + Offhand
         SectionHeader(stringResource(R.string.connect_equipment))
+        val mainHandItem = player.inventory.firstOrNull { it.slot == player.selectedSlot }
+        val equipmentItems = (player.armor.ifEmpty {
+            player.inventory.filter { it.slot in 100..103 }
+        }).sortedByDescending { it.slot }
+            .mapIndexed { i, item -> item.copy(slot = 100 + i) } +
+            listOfNotNull(mainHandItem?.copy(slot = 104)) +
+            listOfNotNull(player.offhand?.copy(slot = 105))
+
         InventoryGrid(
-            items = player.armor.ifEmpty {
-                // Fall back to inventory armor slots
-                player.inventory.filter { it.slot in 100..103 }
-            } + listOfNotNull(player.offhand?.copy(slot = 104)),
+            items = equipmentItems,
             startSlot = 100,
-            endSlot = 104,
-            columns = 5,
+            endSlot = 105,
+            columns = 6,
             onLongPressItem = onLongPressItem,
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(2.dp),
         ) {
-            listOf(stringResource(R.string.connect_armor_head), stringResource(R.string.connect_armor_chest), stringResource(R.string.connect_armor_legs), stringResource(R.string.connect_armor_feet), stringResource(R.string.connect_armor_off)).forEach {
+            listOf(stringResource(R.string.connect_armor_head), stringResource(R.string.connect_armor_chest), stringResource(R.string.connect_armor_legs), stringResource(R.string.connect_armor_feet), stringResource(R.string.connect_armor_main), stringResource(R.string.connect_armor_off)).forEach {
                 Text(
                     it,
                     modifier = Modifier.weight(1f),
