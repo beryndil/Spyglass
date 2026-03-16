@@ -29,6 +29,8 @@ import timber.log.Timber
 import dev.spyglass.android.connect.ActiveEffect
 import dev.spyglass.android.connect.PlayerData
 import kotlinx.coroutines.launch
+import dev.spyglass.android.connect.gear.DefenseCalculator
+import dev.spyglass.android.connect.gear.DefenseStats
 import dev.spyglass.android.connect.gear.EnchantRecommendation
 import dev.spyglass.android.connect.gear.GearAnalysis
 import dev.spyglass.android.connect.gear.SlotAnalysis
@@ -155,8 +157,8 @@ private fun CharacterContent(
             // Body render (dungeons pose)
             Box(
                 modifier = Modifier
-                    .heightIn(min = 200.dp)
-                    .widthIn(min = 100.dp)
+                    .heightIn(min = 100.dp)
+                    .widthIn(min = 50.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(if (playerBodySkin == null) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent),
                 contentAlignment = Alignment.Center,
@@ -171,21 +173,20 @@ private fun CharacterContent(
                     playerSkin != null -> Image(
                         bitmap = playerSkin.asImageBitmap(),
                         contentDescription = stringResource(R.string.connect_player_head),
-                        modifier = Modifier.size(64.dp),
+                        modifier = Modifier.size(32.dp),
                         contentScale = ContentScale.Fit,
                     )
                     else -> SpyglassIconImage(
                         PixelIcons.Steve,
                         contentDescription = stringResource(R.string.connect_player),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(48.dp),
+                        modifier = Modifier.size(24.dp),
                     )
                 }
             }
 
             // Right side: IGN, UUID, then armor boxes
             Column(
-                modifier = Modifier.heightIn(min = 200.dp),
                 verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 // IGN
@@ -293,6 +294,14 @@ private fun CharacterContent(
                 StatColumn(stringResource(R.string.connect_food), "${playerData.foodLevel} / 20")
                 StatColumn(stringResource(R.string.connect_xp), "${playerData.xpLevel}")
             }
+        }
+
+        // ── Defense Stats ──
+        if (gearAnalysis != null) {
+            val defenseStats = remember(gearAnalysis, playerData.health) {
+                DefenseCalculator.calculate(gearAnalysis, playerData.health)
+            }
+            DefenseStatsSection(defenseStats)
         }
 
         // ── Active Effects ──
@@ -575,5 +584,89 @@ private fun EnchantRecommendations(
                     .padding(horizontal = 6.dp, vertical = 2.dp),
             )
         }
+    }
+}
+
+// ── Defense stats ─────────────────────────────────────────────────────────────
+
+@Composable
+private fun DefenseStatsSection(stats: DefenseStats) {
+    Text(
+        stringResource(R.string.connect_defense_stats),
+        style = MaterialTheme.typography.labelSmall,
+        color = MaterialTheme.colorScheme.primary,
+    )
+    ResultCard {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+        ) {
+            StatColumn(stringResource(R.string.connect_total_armor), "${stats.totalArmor} / 20")
+            StatColumn(stringResource(R.string.connect_toughness), "%.1f".format(stats.armorToughness))
+            StatColumn(
+                stringResource(R.string.connect_kb_resist),
+                "${(stats.knockbackResistance * 100).toInt()}%",
+            )
+        }
+
+        SpyglassDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+        DamageTypeRow(stringResource(R.string.connect_damage_generic), stats.genericReduction)
+        DamageTypeRow(stringResource(R.string.connect_damage_fire), stats.fireReduction)
+        DamageTypeRow(stringResource(R.string.connect_damage_blast), stats.blastReduction)
+        DamageTypeRow(stringResource(R.string.connect_damage_projectile), stats.projectileReduction)
+        DamageTypeRow(stringResource(R.string.connect_damage_fall), stats.fallReduction)
+
+        SpyglassDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                stringResource(R.string.connect_max_fall),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(
+                stringResource(R.string.connect_blocks_format, stats.maxSurvivableFall),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.primary,
+            )
+        }
+    }
+}
+
+@Composable
+private fun DamageTypeRow(label: String, reductionPercent: Int) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            label,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.width(80.dp),
+        )
+        LinearProgressIndicator(
+            progress = { reductionPercent / 100f },
+            modifier = Modifier
+                .weight(1f)
+                .height(6.dp)
+                .clip(RoundedCornerShape(3.dp)),
+            color = MaterialTheme.colorScheme.primary,
+            trackColor = MaterialTheme.colorScheme.surfaceVariant,
+        )
+        Text(
+            "$reductionPercent%",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.width(36.dp),
+            textAlign = androidx.compose.ui.text.style.TextAlign.End,
+        )
     }
 }

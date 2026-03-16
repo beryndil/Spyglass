@@ -820,6 +820,19 @@
     <string name="connect_upgrade_to">Upgrade to %s \u2192</string>
     <string name="connect_suggested">Suggested: %s \u2192</string>
 
+    <!-- Connect — Defense Stats -->
+    <string name="connect_defense_stats">Defense Stats</string>
+    <string name="connect_total_armor">Armor</string>
+    <string name="connect_toughness">Toughness</string>
+    <string name="connect_kb_resist">KB Resist</string>
+    <string name="connect_damage_generic">Generic</string>
+    <string name="connect_damage_fire">Fire</string>
+    <string name="connect_damage_blast">Blast</string>
+    <string name="connect_damage_projectile">Projectile</string>
+    <string name="connect_damage_fall">Fall</string>
+    <string name="connect_max_fall">Max Survivable Fall</string>
+    <string name="connect_blocks_format">%d blocks</string>
+
     <!-- Connect — Inventory Screen -->
     <string name="connect_no_cached_inventory">No cached inventory data</string>
     <string name="connect_no_player_data">No player data</string>
