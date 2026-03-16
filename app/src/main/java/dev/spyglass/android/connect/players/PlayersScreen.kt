@@ -1,5 +1,6 @@
 package dev.spyglass.android.connect.players
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -13,9 +14,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ChestDiamondLoader
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.PlayerSummary
+import dev.spyglass.android.connect.client.SkinManager
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.*
+import kotlinx.coroutines.launch
 
 @Composable
 fun PlayersScreen(
@@ -27,9 +30,22 @@ fun PlayersScreen(
     val playerList by viewModel.playerList.collectAsStateWithLifecycle()
     val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
+    val headCache = remember { mutableStateMapOf<String, Bitmap>() }
 
     LaunchedEffect(isConnected) {
         if (isConnected) viewModel.requestPlayerList()
+    }
+
+    LaunchedEffect(playerList) {
+        playerList.forEach { player ->
+            if (player.uuid !in headCache) {
+                launch {
+                    SkinManager.fetchSkin(player.uuid)?.let {
+                        headCache[player.uuid] = it
+                    }
+                }
+            }
+        }
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -66,6 +82,7 @@ fun PlayersScreen(
             playerList.forEach { player ->
                 PlayerCard(
                     player = player,
+                    headBitmap = headCache[player.uuid],
                     onTap = { onSelectPlayer(player.uuid) },
                     onCompare = { onCompare(player.uuid) },
                     showCompare = playerList.size > 1,
@@ -78,6 +95,7 @@ fun PlayersScreen(
 @Composable
 private fun PlayerCard(
     player: PlayerSummary,
+    headBitmap: Bitmap?,
     onTap: () -> Unit,
     onCompare: () -> Unit,
     showCompare: Boolean,
@@ -90,12 +108,20 @@ private fun PlayerCard(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            SpyglassIconImage(
-                PixelIcons.Steve,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(28.dp),
-            )
+            if (headBitmap != null) {
+                SpyglassIconImage(
+                    SpyglassIcon.BitmapIcon(headBitmap),
+                    contentDescription = null,
+                    modifier = Modifier.size(28.dp),
+                )
+            } else {
+                SpyglassIconImage(
+                    PixelIcons.Steve,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(28.dp),
+                )
+            }
             Column(modifier = Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(

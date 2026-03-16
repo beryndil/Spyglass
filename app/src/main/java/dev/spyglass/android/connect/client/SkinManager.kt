@@ -7,11 +7,13 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import timber.log.Timber
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 
 /**
- * Fetches Minecraft player skin avatars from Crafatar.
- * Single-entry in-memory cache (one player at a time).
+ * Fetches Minecraft player skin avatars.
+ * Head avatars use a multi-entry cache (for Players screen).
+ * Body renders + player names use single-entry caches (one player at a time).
  */
 object SkinManager {
 
@@ -20,10 +22,11 @@ object SkinManager {
         .readTimeout(5, TimeUnit.SECONDS)
         .build()
 
-    private var cachedUuid: String? = null
-    private var cachedBitmap: Bitmap? = null
+    private val headCache = ConcurrentHashMap<String, Bitmap>()
     private var cachedBodyBitmap: Bitmap? = null
     private var cachedPlayerName: String? = null
+    private var cachedBodyPlayerName: String? = null
+    private var cachedNameUuid: String? = null
 
     private val AVATAR_URLS = listOf(
         "https://mc-heads.net/avatar/%s/64",
@@ -31,8 +34,7 @@ object SkinManager {
     )
 
     suspend fun fetchSkin(uuid: String): Bitmap? {
-        // Return cached if same player
-        if (uuid == cachedUuid && cachedBitmap != null) return cachedBitmap
+        headCache[uuid]?.let { return it }
 
         val cleanUuid = uuid.replace("-", "")
         return withContext(Dispatchers.IO) {
@@ -46,8 +48,7 @@ object SkinManager {
                         val bytes = response.body?.bytes() ?: return@use
                         val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                         if (bitmap != null) {
-                            cachedUuid = uuid
-                            cachedBitmap = bitmap
+                            headCache[uuid] = bitmap
                             return@withContext bitmap
                         }
                     }
@@ -61,7 +62,7 @@ object SkinManager {
 
     /** Fetch full body render from Starlight SkinAPI (dungeons pose). */
     suspend fun fetchBodyRender(playerName: String): Bitmap? {
-        if (playerName == cachedPlayerName && cachedBodyBitmap != null) return cachedBodyBitmap
+        if (playerName == cachedBodyPlayerName && cachedBodyBitmap != null) return cachedBodyBitmap
 
         return withContext(Dispatchers.IO) {
             try {
@@ -73,6 +74,7 @@ object SkinManager {
                     val bytes = response.body?.bytes() ?: return@withContext null
                     val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                     if (bitmap != null) {
+                        cachedBodyPlayerName = playerName
                         cachedBodyBitmap = bitmap
                     }
                     bitmap
@@ -86,7 +88,7 @@ object SkinManager {
 
     /** Fetch player name from Mojang session API. */
     suspend fun fetchPlayerName(uuid: String): String? {
-        if (uuid == cachedUuid && cachedPlayerName != null) return cachedPlayerName
+        if (uuid == cachedNameUuid && cachedPlayerName != null) return cachedPlayerName
 
         return withContext(Dispatchers.IO) {
             try {
@@ -100,6 +102,7 @@ object SkinManager {
                     val nameMatch = Regex(""""name"\s*:\s*"([^"]+)"""").find(body)
                     val name = nameMatch?.groupValues?.get(1)
                     if (name != null) {
+                        cachedNameUuid = uuid
                         cachedPlayerName = name
                     }
                     name
@@ -112,9 +115,10 @@ object SkinManager {
     }
 
     fun clear() {
-        cachedUuid = null
-        cachedBitmap = null
+        headCache.clear()
         cachedBodyBitmap = null
+        cachedBodyPlayerName = null
         cachedPlayerName = null
+        cachedNameUuid = null
     }
 }
