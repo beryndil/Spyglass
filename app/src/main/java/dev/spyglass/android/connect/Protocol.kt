@@ -31,6 +31,7 @@ object MessageType {
     const val PLAYER_STATS = "player_stats"
     const val PLAYER_ADVANCEMENTS = "player_advancements"
     const val PETS_LIST = "pets_list"
+    const val SCAN_PROGRESS = "scan_progress"
 
     // Phone → Desktop
     const val SELECT_WORLD = "select_world"
@@ -162,6 +163,15 @@ data class ChestContentsPayload(
     val containers: List<ContainerInfo>,
     val totalContainers: Int = 0,
     val totalItemStacks: Int = 0,
+)
+
+@Serializable
+data class ScanProgressPayload(
+    val dimension: String,
+    val currentRegion: Int,
+    val totalRegions: Int,
+    val regionFile: String,
+    val containersFound: Int,
 )
 
 @Serializable

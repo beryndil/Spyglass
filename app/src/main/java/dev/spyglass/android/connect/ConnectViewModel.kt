@@ -685,6 +685,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 MessageType.PLAYER_STATS    -> handlePlayerStats(message)
                 MessageType.PLAYER_ADVANCEMENTS -> handlePlayerAdvancements(message)
                 MessageType.PETS_LIST       -> handlePetsList(message)
+                MessageType.SCAN_PROGRESS   -> handleScanProgress(message)
                 MessageType.WORLD_CHANGED   -> handleWorldChanged()
                 MessageType.ERROR           -> handleError(message)
             }
@@ -882,6 +883,13 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 _lastUpdated.value = System.currentTimeMillis()
             }
         }
+    }
+
+    /** Scan progress update from desktop — update loading status with real-time feedback. */
+    private fun handleScanProgress(message: SpyglassMessage) {
+        val payload = json.decodeFromJsonElement(ScanProgressPayload.serializer(), message.payload)
+        val dim = payload.dimension.replace("_", " ").replaceFirstChar { it.uppercase() }
+        _loadingStatus.value = "Scanning $dim\u2026 ${payload.regionFile} (${payload.currentRegion}/${payload.totalRegions}) \u00B7 ${payload.containersFound} found"
     }
 
     /** World file changed on disk — refresh the selected player's data. */
