@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ChestDiamondLoader
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.OfflineIndicator
+import dev.spyglass.android.connect.ServerSyncNote
 import dev.spyglass.android.connect.client.ConnectionState
 import timber.log.Timber
 import dev.spyglass.android.connect.ActiveEffect
@@ -63,7 +64,9 @@ fun CharacterScreen(
     val gearAnalysis by viewModel.gearAnalysis.collectAsStateWithLifecycle()
     val loadingStatus by viewModel.loadingStatus.collectAsStateWithLifecycle()
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
+    val selectedWorld by viewModel.selectedWorld.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
+    val isServerWorld = selectedWorld?.startsWith("ptero_") == true
     val scope = rememberCoroutineScope()
 
     // Track active screen for live refresh
@@ -100,6 +103,8 @@ fun CharacterScreen(
 
         if (!isConnected && lastUpdated != null) {
             OfflineIndicator(lastUpdated, modifier = Modifier.padding(horizontal = 16.dp))
+        } else if (isConnected && isServerWorld) {
+            ServerSyncNote(modifier = Modifier.padding(horizontal = 16.dp))
         }
 
         CharacterContent(

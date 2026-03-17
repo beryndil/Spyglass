@@ -13,6 +13,7 @@ import dev.spyglass.android.connect.ChestDiamondLoader
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.ItemStack
 import dev.spyglass.android.connect.OfflineIndicator
+import dev.spyglass.android.connect.ServerSyncNote
 import dev.spyglass.android.connect.PlayerData
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
@@ -35,7 +36,9 @@ fun InventoryScreen(
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
     val loadingStatus by viewModel.loadingStatus.collectAsStateWithLifecycle()
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
+    val selectedWorld by viewModel.selectedWorld.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
+    val isServerWorld = selectedWorld?.startsWith("ptero_") == true
     val scope = rememberCoroutineScope()
     val hapticClick = rememberHapticClick()
 
@@ -58,6 +61,9 @@ fun InventoryScreen(
 
         if (!isConnected && lastUpdated != null) {
             OfflineIndicator(lastUpdated, modifier = Modifier.padding(horizontal = 16.dp))
+            Spacer(Modifier.height(8.dp))
+        } else if (isConnected && isServerWorld) {
+            ServerSyncNote(modifier = Modifier.padding(horizontal = 16.dp))
             Spacer(Modifier.height(8.dp))
         }
 

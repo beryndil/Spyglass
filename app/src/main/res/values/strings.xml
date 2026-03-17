@@ -789,6 +789,7 @@
     <!-- Connect — Offline Indicator -->
     <string name="connect_offline">Offline</string>
     <string name="connect_offline_last_updated">Offline \u00b7 Last updated %s</string>
+    <string name="connect_server_sync_note">Server world \u00b7 Data updates every ~5 min (on server autosave)</string>
     <string name="connect_time_just_now">just now</string>
     <string name="connect_time_minutes_ago">%dm ago</string>
     <string name="connect_time_hours_ago">%dh ago</string>
