@@ -725,11 +725,18 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         // Re-select world after reconnect (desktop forgets selection on new WebSocket session)
         val currentWorld = _selectedWorld.value
         if (currentWorld != null && connectionState.value.isConnected && !worldReselected) {
-            worldReselected = true
-            Timber.i("  Re-selecting previously chosen world: $currentWorld")
-            val selectPayload = json.encodeToJsonElement(SelectWorldPayload(currentWorld))
-            client.sendRequest(MessageType.SELECT_WORLD, selectPayload)
-            requestPlayerList()
+            // Only re-select if the world is actually in the list the desktop sent
+            val worldAvailable = payload.worlds.any { it.folderName == currentWorld }
+            if (worldAvailable) {
+                worldReselected = true
+                Timber.i("  Re-selecting previously chosen world: $currentWorld")
+                val selectPayload = json.encodeToJsonElement(SelectWorldPayload(currentWorld))
+                client.sendRequest(MessageType.SELECT_WORLD, selectPayload)
+                requestPlayerList()
+            } else {
+                Timber.w("  Previously selected world '$currentWorld' not in world list — clearing selection")
+                _selectedWorld.value = null
+            }
         }
     }
 
