@@ -70,6 +70,7 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
     val query by finderState.query.collectAsStateWithLifecycle()
     val results by finderState.results.collectAsStateWithLifecycle()
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
+    val loadingStatus by viewModel.loadingStatus.collectAsStateWithLifecycle()
     val chestContents by viewModel.chestContents.collectAsStateWithLifecycle()
 
     val hits = results?.results ?: emptyList()
@@ -174,10 +175,8 @@ fun ChestFinderContent(viewModel: ConnectViewModel) {
             if (isLoading) {
                 item(key = "loading") {
                     ChestDiamondLoader(
-                        statusText = stringResource(R.string.connect_anim_scanning_chests),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(300.dp),
+                        statusText = loadingStatus ?: stringResource(R.string.connect_anim_scanning_chests),
+                        modifier = Modifier.fillMaxWidth(),
                     )
                 }
             } else if (containers.isEmpty()) {
