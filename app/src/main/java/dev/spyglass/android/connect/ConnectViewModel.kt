@@ -369,21 +369,35 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /**
      * Periodically refresh data for the active Connect sub-screen.
-     * Runs every 10 seconds while connected. Stops when disconnected.
+     * Uses screen-aware intervals — player screens use long intervals (push handles
+     * normal updates), while expensive operations like chest scanning poll infrequently.
+     * Screen changes immediately reset the timer via collectLatest.
      */
     private fun startLiveRefresh() {
         liveRefreshJob?.cancel()
         liveRefreshJob = viewModelScope.launch(Dispatchers.IO) {
-            while (true) {
-                kotlinx.coroutines.delay(10_000)
-                if (!client.isConnected) break
-                when (_activeScreen.value) {
-                    "character", "inventory", "enderchest", "waypoints" -> requestPlayerData()
-                    "chestfinder"  -> requestChests()
-                    "statistics"   -> requestStats()
-                    "advancements" -> requestAdvancements()
-                    "pets"         -> requestPets()
-                    "connect"      -> requestPlayerList()
+            _activeScreen.collectLatest { screen ->
+                while (true) {
+                    val intervalMs = when (screen) {
+                        "character", "inventory", "enderchest", "waypoints" -> 30_000L
+                        "chestfinder"  -> 120_000L
+                        "statistics"   -> 60_000L
+                        "advancements" -> 60_000L
+                        "pets"         -> 120_000L
+                        "connect"      -> 30_000L
+                        "map"          -> Long.MAX_VALUE // no polling — on-demand only
+                        else           -> 30_000L
+                    }
+                    kotlinx.coroutines.delay(intervalMs)
+                    if (!client.isConnected) break
+                    when (screen) {
+                        "character", "inventory", "enderchest", "waypoints" -> requestPlayerData()
+                        "chestfinder"  -> requestChests()
+                        "statistics"   -> requestStats()
+                        "advancements" -> requestAdvancements()
+                        "pets"         -> requestPets()
+                        "connect"      -> requestPlayerList()
+                    }
                 }
             }
         }
@@ -686,7 +700,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 MessageType.PLAYER_ADVANCEMENTS -> handlePlayerAdvancements(message)
                 MessageType.PETS_LIST       -> handlePetsList(message)
                 MessageType.SCAN_PROGRESS   -> handleScanProgress(message)
-                MessageType.WORLD_CHANGED   -> handleWorldChanged()
+                MessageType.WORLD_CHANGED   -> handleWorldChanged(message)
                 MessageType.ERROR           -> handleError(message)
             }
         } catch (e: Exception) {
@@ -893,10 +907,34 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         _loadingStatus.value = "Scanning $dim (${payload.currentRegion} of ${payload.totalRegions})$containers"
     }
 
-    /** World file changed on disk — refresh the selected player's data. */
-    private fun handleWorldChanged() {
-        Timber.i("  World state changed — refreshing player data")
-        requestPlayerData()
+    /** World file changed on disk — refresh only data relevant to the active screen. */
+    private fun handleWorldChanged(message: SpyglassMessage) {
+        val payload = try {
+            json.decodeFromJsonElement(WorldChangedPayload.serializer(), message.payload)
+        } catch (_: Exception) {
+            // Fallback: refresh player data if payload can't be decoded
+            Timber.i("  World changed (no categories) — refreshing player data")
+            requestPlayerData()
+            return
+        }
+        val categories = payload.changedCategories.toSet()
+        val screen = _activeScreen.value
+        Timber.i("  World changed — categories=$categories, screen=$screen")
+
+        // Player/level changes are handled by server push (Phase 1), but refresh
+        // player list on the connect hub in case players joined/left
+        if (categories.contains("player") || categories.contains("level")) {
+            if (screen == "connect") requestPlayerList()
+        }
+
+        // Region changes — only refresh if the user is on a screen that needs it
+        val hasRegionChange = categories.any { it.startsWith("region_") }
+        if (hasRegionChange) {
+            when (screen) {
+                "chestfinder" -> requestChests()
+                "pets" -> requestPets()
+            }
+        }
     }
 
     /** Desktop reported an error. */
