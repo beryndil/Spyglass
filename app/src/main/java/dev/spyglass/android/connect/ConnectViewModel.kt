@@ -384,9 +384,8 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                         "statistics"   -> 60_000L
                         "advancements" -> 60_000L
                         "pets"         -> 120_000L
-                        "connect"      -> 30_000L
                         "map"          -> Long.MAX_VALUE // no polling — on-demand only
-                        else           -> 30_000L
+                        else           -> 30_000L // null, "connect", or unknown
                     }
                     kotlinx.coroutines.delay(intervalMs)
                     if (!client.isConnected) break
@@ -396,7 +395,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                         "statistics"   -> requestStats()
                         "advancements" -> requestAdvancements()
                         "pets"         -> requestPets()
-                        "connect"      -> requestPlayerList()
+                        else           -> requestPlayerData() // default: keep player data fresh
                     }
                 }
             }
