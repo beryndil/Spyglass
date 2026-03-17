@@ -32,6 +32,7 @@ fun PetsScreen(
 ) {
     val pets by viewModel.pets.collectAsStateWithLifecycle()
     val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
+    val loadingStatus by viewModel.loadingStatus.collectAsStateWithLifecycle()
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
 
@@ -65,7 +66,7 @@ fun PetsScreen(
                 contentAlignment = Alignment.Center,
             ) {
                 if (isConnected) {
-                    ChestDiamondLoader()
+                    ChestDiamondLoader(statusText = loadingStatus)
                 } else {
                     Text(stringResource(R.string.connect_no_tamed_mobs), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }

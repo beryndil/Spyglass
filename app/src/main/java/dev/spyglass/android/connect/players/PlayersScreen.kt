@@ -29,6 +29,7 @@ fun PlayersScreen(
 ) {
     val playerList by viewModel.playerList.collectAsStateWithLifecycle()
     val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
+    val loadingStatus by viewModel.loadingStatus.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
     val headCache = remember { mutableStateMapOf<String, Bitmap>() }
 
@@ -65,7 +66,7 @@ fun PlayersScreen(
                 contentAlignment = Alignment.Center,
             ) {
                 if (isConnected) {
-                    ChestDiamondLoader()
+                    ChestDiamondLoader(statusText = loadingStatus)
                 } else {
                     Text(stringResource(R.string.connect_no_player_data_available), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }

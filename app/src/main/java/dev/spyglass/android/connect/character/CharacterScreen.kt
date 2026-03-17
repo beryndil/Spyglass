@@ -61,6 +61,7 @@ fun CharacterScreen(
     val playerBodySkin by viewModel.playerBodySkin.collectAsStateWithLifecycle()
     val playerName by viewModel.playerName.collectAsStateWithLifecycle()
     val gearAnalysis by viewModel.gearAnalysis.collectAsStateWithLifecycle()
+    val loadingStatus by viewModel.loadingStatus.collectAsStateWithLifecycle()
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
     val scope = rememberCoroutineScope()
@@ -108,6 +109,7 @@ fun CharacterScreen(
             playerName = playerName,
             gearAnalysis = gearAnalysis,
             isOffline = !isConnected,
+            loadingStatus = loadingStatus,
             onBrowseItem = { itemId ->
                 scope.launch {
                     val tab = viewModel.resolveBrowseTab(itemId)
@@ -129,6 +131,7 @@ private fun CharacterContent(
     playerName: String?,
     gearAnalysis: GearAnalysis?,
     isOffline: Boolean = false,
+    loadingStatus: String? = null,
     onBrowseItem: (String) -> Unit,
     onBrowseEnchant: (String) -> Unit,
 ) {
@@ -142,7 +145,7 @@ private fun CharacterContent(
             if (isOffline) {
                 Text(stringResource(R.string.connect_no_cached_player), color = MaterialTheme.colorScheme.onSurfaceVariant)
             } else {
-                ChestDiamondLoader()
+                ChestDiamondLoader(statusText = loadingStatus)
             }
         }
         return

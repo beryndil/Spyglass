@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.spyglass.android.connect.ChestDiamondLoader
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.ItemStack
 import dev.spyglass.android.connect.OfflineIndicator
@@ -32,6 +33,7 @@ fun EnderChestScreen(
 ) {
     val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
+    val loadingStatus by viewModel.loadingStatus.collectAsStateWithLifecycle()
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
     val scope = rememberCoroutineScope()
@@ -61,6 +63,7 @@ fun EnderChestScreen(
         EnderChestContent(
             playerData = playerData,
             isOffline = !isConnected,
+            loadingStatus = loadingStatus,
             onLongPressItem = { item ->
                 scope.launch {
                     val tab = viewModel.resolveBrowseTab(item.id)
@@ -75,14 +78,29 @@ fun EnderChestScreen(
 fun EnderChestContent(
     playerData: PlayerData?,
     isOffline: Boolean = false,
+    loadingStatus: String? = null,
     onLongPressItem: ((ItemStack) -> Unit)? = null,
 ) {
     val player = playerData
 
-    if (player == null || player.enderChest.isEmpty()) {
+    if (player == null) {
+        Box(modifier = Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
+            if (isOffline) {
+                Text(
+                    stringResource(R.string.connect_no_cached_ender_chest),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            } else {
+                ChestDiamondLoader(statusText = loadingStatus)
+            }
+        }
+        return
+    }
+
+    if (player.enderChest.isEmpty()) {
         Box(modifier = Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
             Text(
-                if (isOffline) stringResource(R.string.connect_no_cached_ender_chest) else stringResource(R.string.connect_no_ender_chest_data),
+                stringResource(R.string.connect_no_ender_chest_data),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }

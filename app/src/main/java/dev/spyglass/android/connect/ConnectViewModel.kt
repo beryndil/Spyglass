@@ -60,6 +60,10 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private val _activeScreen = MutableStateFlow<String?>(null)
     fun setActiveScreen(screen: String?) { _activeScreen.value = screen }
 
+    /** Transient loading status text shown below ChestDiamondLoader on Connect screens. */
+    private val _loadingStatus = MutableStateFlow<String?>(null)
+    val loadingStatus: StateFlow<String?> = _loadingStatus
+
     private val repo by lazy { GameDataRepository.get(getApplication()) }
 
     // ── Observable state ─────────────────────────────────────────────────
@@ -575,12 +579,14 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
      */
     fun requestPlayerData() {
         val uuid = _selectedPlayerUuid.value ?: return
+        _loadingStatus.value = "Requesting player data\u2026"
         val payload = json.encodeToJsonElement(RequestPlayerPayload(uuid))
         client.sendRequest(MessageType.REQUEST_PLAYER, payload)
     }
 
     /** Request the list of all players in the selected world. */
     fun requestPlayerList() {
+        _loadingStatus.value = "Requesting player list\u2026"
         client.sendRequest(MessageType.REQUEST_PLAYER_LIST)
     }
 
@@ -597,6 +603,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Request chest contents scan for the selected world. */
     fun requestChests() {
+        _loadingStatus.value = "Scanning containers\u2026"
         client.sendRequest(MessageType.REQUEST_CHESTS)
     }
 
@@ -607,27 +614,32 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Request map tiles around a position (defaults to origin, overworld). */
     fun requestMap(centerX: Int = 0, centerZ: Int = 0, radius: Int = 8, dimension: String = "overworld") {
+        _loadingStatus.value = "Requesting map data\u2026"
         val payload = json.encodeToJsonElement(RequestMapPayload(centerX, centerZ, radius, dimension))
         client.sendRequest(MessageType.REQUEST_MAP, payload)
     }
 
     /** Request player statistics for the selected player. */
     fun requestStats() {
+        _loadingStatus.value = "Requesting statistics\u2026"
         client.sendRequest(MessageType.REQUEST_STATS)
     }
 
     /** Request advancement progress for the selected player. */
     fun requestAdvancements() {
+        _loadingStatus.value = "Requesting advancements\u2026"
         client.sendRequest(MessageType.REQUEST_ADVANCEMENTS)
     }
 
     /** Request tamed pets list for the selected world. */
     fun requestPets() {
+        _loadingStatus.value = "Requesting pets\u2026"
         client.sendRequest(MessageType.REQUEST_PETS)
     }
 
     /** Request a second player's data for side-by-side comparison. */
     fun requestComparePlayer(uuid: String) {
+        _loadingStatus.value = "Requesting player data\u2026"
         pendingCompareUuid = uuid
         val payload = json.encodeToJsonElement(RequestPlayerPayload(uuid))
         client.sendRequest(MessageType.REQUEST_PLAYER, payload)
@@ -714,6 +726,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
      *                for manual pick (never fall back to a random player).
      */
     private fun handlePlayerList(message: SpyglassMessage) {
+        _loadingStatus.value = null
         val payload = json.decodeFromJsonElement(PlayerListPayload.serializer(), message.payload)
         Timber.i("  ${payload.players.size} players: ${payload.players.joinToString { it.name ?: it.uuid.take(8) }}")
         _playerList.value = payload.players
@@ -755,6 +768,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
      * compare request, otherwise update the main player data + cache.
      */
     private fun handlePlayerData(message: SpyglassMessage) {
+        _loadingStatus.value = null
         val payload = json.decodeFromJsonElement(PlayerData.serializer(), message.payload)
         Timber.i("  Player: ${payload.playerName ?: payload.playerUuid?.take(8) ?: "owner"} — HP:${payload.health.toInt()} Food:${payload.foodLevel} XP:${payload.xpLevel} Dim:${payload.dimension}")
 
@@ -787,6 +801,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Chest contents received — update state and cache if changed. */
     private fun handleChestContents(message: SpyglassMessage) {
+        _loadingStatus.value = null
         val payload = json.decodeFromJsonElement(ChestContentsPayload.serializer(), message.payload)
         Timber.i("  ${payload.containers.size} containers (${payload.totalItemStacks} item stacks)")
         if (_chestContents.value != payload) {
@@ -818,6 +833,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Map tiles received — update state and cache if changed. */
     private fun handleMapRender(message: SpyglassMessage) {
+        _loadingStatus.value = null
         val payload = json.decodeFromJsonElement(MapRenderPayload.serializer(), message.payload)
         Timber.i("  Map tiles: ${payload.tiles.size} tiles")
         if (_mapTiles.value != payload) {
@@ -830,6 +846,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Player stats received — update state and cache if changed. */
     private fun handlePlayerStats(message: SpyglassMessage) {
+        _loadingStatus.value = null
         val payload = json.decodeFromJsonElement(PlayerStatsPayload.serializer(), message.payload)
         if (_playerStats.value != payload) {
             _playerStats.value = payload
@@ -842,6 +859,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Player advancements received — update state and cache if changed. */
     private fun handlePlayerAdvancements(message: SpyglassMessage) {
+        _loadingStatus.value = null
         val payload = json.decodeFromJsonElement(PlayerAdvancementsPayload.serializer(), message.payload)
         if (_playerAdvancements.value != payload) {
             _playerAdvancements.value = payload
@@ -854,6 +872,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Pets list received — update state and cache if changed. */
     private fun handlePetsList(message: SpyglassMessage) {
+        _loadingStatus.value = null
         val payload = json.decodeFromJsonElement(PetsListPayload.serializer(), message.payload)
         Timber.i("  ${payload.pets.size} pets")
         if (_pets.value != payload.pets) {

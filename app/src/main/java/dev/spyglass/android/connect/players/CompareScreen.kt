@@ -26,6 +26,7 @@ fun CompareScreen(
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
     val compareData by viewModel.comparePlayerData.collectAsStateWithLifecycle()
     val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
+    val loadingStatus by viewModel.loadingStatus.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -45,7 +46,7 @@ fun CompareScreen(
                 contentAlignment = Alignment.Center,
             ) {
                 if (isConnected) {
-                    ChestDiamondLoader()
+                    ChestDiamondLoader(statusText = loadingStatus)
                 } else {
                     Text(stringResource(R.string.connect_connect_to_compare), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }

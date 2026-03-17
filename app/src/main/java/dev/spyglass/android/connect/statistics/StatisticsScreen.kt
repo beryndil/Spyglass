@@ -58,6 +58,7 @@ fun StatisticsScreen(
 ) {
     val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
     val stats by viewModel.playerStats.collectAsStateWithLifecycle()
+    val loadingStatus by viewModel.loadingStatus.collectAsStateWithLifecycle()
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
 
@@ -93,12 +94,12 @@ fun StatisticsScreen(
             OfflineIndicator(lastUpdated, modifier = Modifier.padding(horizontal = 16.dp))
         }
 
-        StatsContent(stats = stats, isOffline = !isConnected)
+        StatsContent(stats = stats, isOffline = !isConnected, loadingStatus = loadingStatus)
     }
 }
 
 @Composable
-private fun StatsContent(stats: PlayerStatsPayload?, isOffline: Boolean) {
+private fun StatsContent(stats: PlayerStatsPayload?, isOffline: Boolean, loadingStatus: String? = null) {
     if (stats == null) {
         Box(
             modifier = Modifier
@@ -109,7 +110,7 @@ private fun StatsContent(stats: PlayerStatsPayload?, isOffline: Boolean) {
             if (isOffline) {
                 Text(stringResource(R.string.connect_no_cached_statistics), color = MaterialTheme.colorScheme.onSurfaceVariant)
             } else {
-                ChestDiamondLoader()
+                ChestDiamondLoader(statusText = loadingStatus)
             }
         }
         return
