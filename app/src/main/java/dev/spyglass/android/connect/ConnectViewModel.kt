@@ -889,7 +889,8 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private fun handleScanProgress(message: SpyglassMessage) {
         val payload = json.decodeFromJsonElement(ScanProgressPayload.serializer(), message.payload)
         val dim = payload.dimension.replace("_", " ").replaceFirstChar { it.uppercase() }
-        _loadingStatus.value = "Scanning $dim\u2026 ${payload.regionFile} (${payload.currentRegion}/${payload.totalRegions}) \u00B7 ${payload.containersFound} found"
+        val containers = if (payload.containersFound > 0) "\n${payload.containersFound} containers found" else ""
+        _loadingStatus.value = "Scanning $dim (${payload.currentRegion} of ${payload.totalRegions})$containers"
     }
 
     /** World file changed on disk — refresh the selected player's data. */
