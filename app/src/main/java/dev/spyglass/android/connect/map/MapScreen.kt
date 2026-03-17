@@ -26,6 +26,7 @@ import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.connect.MapTile
 import dev.spyglass.android.connect.OfflineIndicator
+import dev.spyglass.android.connect.ServerSyncNote
 import dev.spyglass.android.connect.StructureLocation
 
 /**
@@ -62,7 +63,9 @@ fun MapContent(viewModel: ConnectViewModel) {
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
     val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
+    val selectedWorld by viewModel.selectedWorld.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
+    val isServerWorld = selectedWorld?.startsWith("ptero_") == true
 
     // Request initial data only when connected
     LaunchedEffect(isConnected) {
@@ -74,6 +77,8 @@ fun MapContent(viewModel: ConnectViewModel) {
 
     if (!isConnected && lastUpdated != null) {
         OfflineIndicator(lastUpdated, modifier = Modifier.padding(horizontal = 16.dp))
+    } else if (isConnected && isServerWorld) {
+        ServerSyncNote(modifier = Modifier.padding(horizontal = 16.dp))
     }
 
     var scale by remember { mutableFloatStateOf(4f) }

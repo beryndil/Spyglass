@@ -32,6 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.R
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.OfflineIndicator
+import dev.spyglass.android.connect.ServerSyncNote
 import dev.spyglass.android.connect.PlayerData
 import dev.spyglass.android.connect.client.ConnectionState
 import dev.spyglass.android.core.ui.*
@@ -118,7 +119,9 @@ fun ConnectWaypointsScreen(
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
     val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
+    val selectedWorld by viewModel.selectedWorld.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
+    val isServerWorld = selectedWorld?.startsWith("ptero_") == true
     val primary = MaterialTheme.colorScheme.primary
 
     var dimensionFilter by remember { mutableStateOf("all") }
@@ -188,9 +191,11 @@ fun ConnectWaypointsScreen(
             contentPadding = PaddingValues(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            // Offline indicator
+            // Offline indicator / server sync note
             if (!isConnected) {
                 item { OfflineIndicator(lastUpdated) }
+            } else if (isServerWorld) {
+                item { ServerSyncNote() }
             }
 
             // Dimension filter chips

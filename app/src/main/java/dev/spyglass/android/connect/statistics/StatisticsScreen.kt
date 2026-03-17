@@ -12,6 +12,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ChestDiamondLoader
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.OfflineIndicator
+import dev.spyglass.android.connect.ServerSyncNote
 import dev.spyglass.android.connect.PlayerStatsPayload
 import dev.spyglass.android.connect.StatCategory
 import dev.spyglass.android.core.ui.ResultCard
@@ -60,7 +61,9 @@ fun StatisticsScreen(
     val stats by viewModel.playerStats.collectAsStateWithLifecycle()
     val loadingStatus by viewModel.loadingStatus.collectAsStateWithLifecycle()
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
+    val selectedWorld by viewModel.selectedWorld.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
+    val isServerWorld = selectedWorld?.startsWith("ptero_") == true
 
     DisposableEffect(Unit) {
         viewModel.setActiveScreen("statistics")
@@ -92,6 +95,8 @@ fun StatisticsScreen(
 
         if (!isConnected && lastUpdated != null) {
             OfflineIndicator(lastUpdated, modifier = Modifier.padding(horizontal = 16.dp))
+        } else if (isConnected && isServerWorld) {
+            ServerSyncNote(modifier = Modifier.padding(horizontal = 16.dp))
         }
 
         StatsContent(stats = stats, isOffline = !isConnected, loadingStatus = loadingStatus)

@@ -17,6 +17,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.spyglass.android.connect.ChestDiamondLoader
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.connect.ContainerInfo
+import dev.spyglass.android.connect.ServerSyncNote
 import dev.spyglass.android.connect.SearchHit
 import dev.spyglass.android.connect.inventory.InventorySlotView
 import androidx.compose.ui.res.stringResource
@@ -34,6 +35,8 @@ fun ChestFinderScreen(
     onBack: () -> Unit,
 ) {
     val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
+    val selectedWorld by viewModel.selectedWorld.collectAsStateWithLifecycle()
+    val isServerWorld = selectedWorld?.startsWith("ptero_") == true
 
     DisposableEffect(Unit) {
         viewModel.setActiveScreen("chestfinder")
@@ -57,6 +60,10 @@ fun ChestFinderScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(stringResource(R.string.connect_storage), style = MaterialTheme.typography.titleMedium)
+        }
+
+        if (connectionState.isConnected && isServerWorld) {
+            ServerSyncNote(modifier = Modifier.padding(horizontal = 16.dp))
         }
 
         ChestFinderContent(viewModel = viewModel)
