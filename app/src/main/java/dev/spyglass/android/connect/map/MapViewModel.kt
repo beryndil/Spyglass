@@ -37,14 +37,28 @@ class MapState(
     /** Loading timeout job — auto-clears isLoading after 15s as a safety net. */
     private var loadingTimeoutJob: Job? = null
 
-    /** Merge an incoming tile batch into the cache. */
+    /** Background bitmap decode job — cancelled on clearAll or new batch. */
+    private var decodeJob: Job? = null
+
+    /** Merge an incoming tile batch into the cache. Decodes bitmaps off-thread. */
     fun mergeTiles(payload: MapRenderPayload) {
         loadingTimeoutJob?.cancel()
-        if (payload.tiles.isNotEmpty()) {
-            tileCache.mergeTiles(payload)
+        decodeJob?.cancel()
+        if (payload.tiles.isEmpty()) {
+            _tileRevision.value++
+            _isLoading.value = false
+            return
         }
-        _tileRevision.value++
-        _isLoading.value = false
+        // Fast: store metadata on main thread
+        tileCache.storeTiles(payload)
+        val dim = payload.tiles.first().dimension
+        // Decode bitmaps in background chunks — tiles appear progressively
+        decodeJob = scope?.launch {
+            tileCache.decodeBitmaps(payload.tiles, dim) {
+                _tileRevision.value++
+            }
+            _isLoading.value = false
+        }
     }
 
     /**
@@ -98,6 +112,7 @@ class MapState(
     /** Clear tile cache (e.g. on world change). */
     fun clearAll() {
         loadingTimeoutJob?.cancel()
+        decodeJob?.cancel()
         tileCache.clearAll()
         _tileRevision.value++
         _isLoading.value = false

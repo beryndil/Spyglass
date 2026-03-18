@@ -7,12 +7,15 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import dev.spyglass.android.connect.MapRenderPayload
 import dev.spyglass.android.connect.MapTile
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentHashMap
 
 /**
  * In-memory tile accumulator + bitmap cache for the world map.
  * Tiles are keyed by packed (chunkX, chunkZ) per dimension.
- * Bitmaps are decoded on merge (not on draw) and held in an LRU cache.
+ * Bitmaps are decoded off the main thread in chunks for progressive rendering.
  */
 class MapTileCache {
 
@@ -41,8 +44,8 @@ class MapTileCache {
         val bitmap: ImageBitmap?,
     )
 
-    /** Merge an incoming batch of tiles. Decodes bitmaps eagerly. */
-    fun mergeTiles(payload: MapRenderPayload) {
+    /** Store tile metadata and bounds (fast, no bitmap decoding). */
+    fun storeTiles(payload: MapRenderPayload) {
         if (payload.tiles.isEmpty()) return
 
         val dim = payload.tiles.first().dimension
@@ -58,19 +61,6 @@ class MapTileCache {
         for (tile in payload.tiles) {
             val key = packKey(tile.chunkX, tile.chunkZ)
             dimTiles[key] = tile
-
-            // Pre-decode bitmap
-            val cacheKey = "${tile.chunkX}:${tile.chunkZ}:$dim"
-            try {
-                val bytes = Base64.decode(tile.imageBase64, Base64.DEFAULT)
-                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                if (bitmap != null) {
-                    bitmapCache.put(cacheKey, bitmap.asImageBitmap())
-                }
-            } catch (_: Exception) {
-                // Skip corrupt tile
-            }
-
             minX = minOf(minX, tile.chunkX)
             maxX = maxOf(maxX, tile.chunkX)
             minZ = minOf(minZ, tile.chunkZ)
@@ -78,6 +68,34 @@ class MapTileCache {
         }
 
         _loadedBounds[dim] = TileBounds(minX, maxX, minZ, maxZ)
+    }
+
+    /**
+     * Decode bitmaps on a background thread in chunks of [chunkSize].
+     * Calls [onChunkDecoded] after each chunk so the UI can refresh progressively.
+     */
+    suspend fun decodeBitmaps(
+        tiles: List<MapTile>,
+        dim: String,
+        chunkSize: Int = 50,
+        onChunkDecoded: () -> Unit,
+    ) = withContext(Dispatchers.Default) {
+        for (chunk in tiles.chunked(chunkSize)) {
+            ensureActive()
+            for (tile in chunk) {
+                val cacheKey = "${tile.chunkX}:${tile.chunkZ}:$dim"
+                try {
+                    val bytes = Base64.decode(tile.imageBase64, Base64.DEFAULT)
+                    val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                    if (bitmap != null) {
+                        bitmapCache.put(cacheKey, bitmap.asImageBitmap())
+                    }
+                } catch (_: Exception) {
+                    // Skip corrupt tile
+                }
+            }
+            onChunkDecoded()
+        }
     }
 
     /** Get all cached tiles for a dimension with pre-decoded bitmaps. */
