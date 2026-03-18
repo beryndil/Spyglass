@@ -72,6 +72,7 @@ class MapTileCache {
 
     /**
      * Decode bitmaps on a background thread in chunks of [chunkSize].
+     * Skips tiles that already have a cached bitmap.
      * Calls [onChunkDecoded] after each chunk so the UI can refresh progressively.
      */
     suspend fun decodeBitmaps(
@@ -82,19 +83,22 @@ class MapTileCache {
     ) = withContext(Dispatchers.Default) {
         for (chunk in tiles.chunked(chunkSize)) {
             ensureActive()
+            var decoded = false
             for (tile in chunk) {
                 val cacheKey = "${tile.chunkX}:${tile.chunkZ}:$dim"
+                if (bitmapCache.get(cacheKey) != null) continue
                 try {
                     val bytes = Base64.decode(tile.imageBase64, Base64.DEFAULT)
                     val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                     if (bitmap != null) {
                         bitmapCache.put(cacheKey, bitmap.asImageBitmap())
+                        decoded = true
                     }
                 } catch (_: Exception) {
                     // Skip corrupt tile
                 }
             }
-            onChunkDecoded()
+            if (decoded) onChunkDecoded()
         }
     }
 

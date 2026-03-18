@@ -52,9 +52,11 @@ class MapState(
         // Fast: store metadata on main thread
         tileCache.storeTiles(payload)
         val dim = payload.tiles.first().dimension
-        // Decode bitmaps in background chunks — tiles appear progressively
+        // Decode ALL tiles for this dimension (skips already-decoded ones).
+        // This ensures tiles from a cancelled previous batch don't stay blank.
+        val allTiles = tileCache.getRawTilesForDimension(dim)
         decodeJob = scope?.launch {
-            tileCache.decodeBitmaps(payload.tiles, dim) {
+            tileCache.decodeBitmaps(allTiles, dim) {
                 _tileRevision.value++
             }
             _isLoading.value = false
