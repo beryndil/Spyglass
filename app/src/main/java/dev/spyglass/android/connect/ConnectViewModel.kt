@@ -960,6 +960,9 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private fun handleError(message: SpyglassMessage) {
         val payload = json.decodeFromJsonElement(ErrorPayload.serializer(), message.payload)
         Timber.w("Server error: ${payload.code} — ${payload.message}")
+        _loadingStatus.value = null
+        // Emit empty map payload so MapState clears its loading indicator
+        _mapTileBatch.tryEmit(MapRenderPayload("", emptyList(), 0.0, 0.0))
     }
 
     /**

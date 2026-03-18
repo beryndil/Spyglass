@@ -9,10 +9,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
@@ -24,11 +23,11 @@ import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.rememberHapticClick
 import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.ServerSyncNote
-import kotlin.math.roundToInt
 
 /**
- * Canvas-based overhead map: accumulates tiles from desktop,
- * supports pinch-to-zoom, pan, dimension switcher, dynamic edge loading.
+ * Canvas-based overhead map: accumulates tiles like Minecraft's in-game map.
+ * Tiles are fetched around the player's physical position, not the viewport.
+ * Panning shows cached tiles only — new tiles load as the player moves.
  */
 @Composable
 fun MapScreen(
@@ -36,7 +35,6 @@ fun MapScreen(
     onBack: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        // Top bar
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -54,8 +52,8 @@ fun MapScreen(
 @Composable
 fun MapContent(viewModel: ConnectViewModel) {
     val hapticClick = rememberHapticClick()
-    val scope = rememberCoroutineScope()
-    val mapState = remember { MapState(viewModel, scope) }
+    val coroutineScope = rememberCoroutineScope()
+    val mapState = remember { MapState(viewModel, coroutineScope) }
     val tileRevision by mapState.tileRevision.collectAsStateWithLifecycle()
     val isLoading by mapState.isLoading.collectAsStateWithLifecycle()
     val structures by viewModel.structures.collectAsStateWithLifecycle()
@@ -78,12 +76,19 @@ fun MapContent(viewModel: ConnectViewModel) {
         mapState.clearAll()
     }
 
-    // Request initial data only when connected
+    // Request initial tiles + structures when connected
     LaunchedEffect(isConnected) {
         if (isConnected) {
             mapState.requestAroundPlayer()
             viewModel.requestStructures()
         }
+    }
+
+    // Watch player position — request new tiles when the player moves to a new chunk
+    LaunchedEffect(playerData?.posX, playerData?.posZ, playerData?.dimension) {
+        val player = playerData ?: return@LaunchedEffect
+        if (!isConnected) return@LaunchedEffect
+        mapState.onPlayerMoved(player.posX, player.posZ, player.dimension)
     }
 
     if (!isConnected && lastUpdated != null) {
@@ -109,9 +114,9 @@ fun MapContent(viewModel: ConnectViewModel) {
             dimensions.forEach { dim ->
                 val selected = mapState.currentDimension == dim
                 val label = when (dim) {
-                    "overworld" -> "OW"
-                    "the_nether" -> "N"
-                    "the_end" -> "E"
+                    "overworld" -> "Overworld"
+                    "the_nether" -> "Nether"
+                    "the_end" -> "End"
                     else -> dim
                 }
                 FilterChip(
@@ -120,7 +125,7 @@ fun MapContent(viewModel: ConnectViewModel) {
                         hapticClick()
                         mapState.switchDimension(dim)
                     },
-                    enabled = true, // Always enabled — can view cached tiles offline
+                    enabled = true,
                     label = { Text(label, style = MaterialTheme.typography.labelSmall) },
                     modifier = Modifier.padding(horizontal = 2.dp),
                 )
@@ -143,7 +148,8 @@ fun MapContent(viewModel: ConnectViewModel) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(400.dp)
+                .weight(1f)
+                .clipToBounds()
                 .pointerInput(Unit) {
                     detectTransformGestures { _, pan, zoom, _ ->
                         scale = (scale * zoom).coerceIn(1f, 16f)
@@ -152,7 +158,6 @@ fun MapContent(viewModel: ConnectViewModel) {
                     }
                 },
         ) {
-            // Use tileRevision to trigger recompose when cache changes
             @Suppress("UNUSED_VARIABLE")
             val revision = tileRevision
 
@@ -176,7 +181,7 @@ fun MapContent(viewModel: ConnectViewModel) {
                     val screenX = canvasWidth / 2 + relX / 16 * tileSize + offsetX
                     val screenY = canvasHeight / 2 + relZ / 16 * tileSize + offsetY
 
-                    // Frustum culling — skip tiles entirely outside canvas
+                    // Frustum culling
                     if (screenX + tileSize < 0 || screenX > canvasWidth ||
                         screenY + tileSize < 0 || screenY > canvasHeight
                     ) return@forEach
@@ -188,37 +193,17 @@ fun MapContent(viewModel: ConnectViewModel) {
                     )
                 }
 
-                // Draw player marker
+                // Player marker
                 val playerScreenX = canvasWidth / 2 + offsetX
                 val playerScreenY = canvasHeight / 2 + offsetY
-                drawCircle(
-                    color = Color.Red,
-                    radius = 6f,
-                    center = Offset(playerScreenX, playerScreenY),
-                )
-                drawCircle(
-                    color = Color.White,
-                    radius = 4f,
-                    center = Offset(playerScreenX, playerScreenY),
-                )
+                drawCircle(color = Color.Red, radius = 6f, center = Offset(playerScreenX, playerScreenY))
+                drawCircle(color = Color.White, radius = 4f, center = Offset(playerScreenX, playerScreenY))
 
-                // Draw structure markers
+                // Structure markers
                 structures.filter { it.dimension == mapState.currentDimension }.forEach { structure ->
                     val sx = canvasWidth / 2 + ((structure.x - px.toFloat()) / 16f * tileSize) + offsetX
                     val sy = canvasHeight / 2 + ((structure.z - pz.toFloat()) / 16f * tileSize) + offsetY
-                    drawCircle(
-                        color = Color.Yellow,
-                        radius = 5f,
-                        center = Offset(sx, sy),
-                    )
-                }
-
-                // Viewport tracking for dynamic edge loading
-                if (isConnected) {
-                    val viewCenterChunkX = ((px - offsetX / tileSize * 16) / 16).roundToInt()
-                    val viewCenterChunkZ = ((pz - offsetY / tileSize * 16) / 16).roundToInt()
-                    val visibleRadiusChunks = (canvasWidth / tileSize / 2).roundToInt() + 1
-                    mapState.onViewportChanged(viewCenterChunkX, viewCenterChunkZ, visibleRadiusChunks)
+                    drawCircle(color = Color.Yellow, radius = 5f, center = Offset(sx, sy))
                 }
             }
 

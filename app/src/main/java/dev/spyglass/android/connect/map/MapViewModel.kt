@@ -11,11 +11,12 @@ import kotlinx.coroutines.launch
 
 /**
  * State holder for the map screen.
- * Owns the tile cache, tracks viewport, requests new tiles at edges.
+ * Owns the tile cache, requests tiles around the player's physical position.
+ * Panning only shows cached tiles — new tiles are only fetched when the player moves.
  */
 class MapState(
     private val viewModel: ConnectViewModel,
-    private val scope: CoroutineScope,
+    private val scope: CoroutineScope? = null,
 ) {
     val tileCache = MapTileCache()
 
@@ -30,75 +31,86 @@ class MapState(
     var currentDimension: String = "overworld"
         private set
 
-    private var viewportDebounceJob: Job? = null
-    private var pendingRequestCenter: Pair<Int, Int>? = null
+    /** Last chunk coords we requested tiles for — avoids duplicate requests. */
+    private var lastRequestedChunk: Pair<Int, Int>? = null
+
+    /** Loading timeout job — auto-clears isLoading after 15s as a safety net. */
+    private var loadingTimeoutJob: Job? = null
 
     /** Merge an incoming tile batch into the cache. */
     fun mergeTiles(payload: MapRenderPayload) {
-        tileCache.mergeTiles(payload)
+        loadingTimeoutJob?.cancel()
+        if (payload.tiles.isNotEmpty()) {
+            tileCache.mergeTiles(payload)
+        }
         _tileRevision.value++
         _isLoading.value = false
-        pendingRequestCenter = null
     }
 
-    fun requestTiles(centerX: Int, centerZ: Int, radius: Int = 8) {
-        _isLoading.value = true
-        viewModel.requestMap(centerX, centerZ, radius, currentDimension)
+    /**
+     * Request tiles around the player's current position if we haven't
+     * already loaded this chunk area. Called when player data updates.
+     */
+    fun onPlayerMoved(posX: Double, posZ: Double, dimension: String) {
+        if (!viewModel.connectionState.value.isConnected) return
+
+        val chunkX = posX.toInt() shr 4
+        val chunkZ = posZ.toInt() shr 4
+        val chunkCoord = chunkX to chunkZ
+
+        // Only request if the player moved to a new chunk or changed dimension
+        if (chunkCoord == lastRequestedChunk && dimension == currentDimension) return
+
+        currentDimension = dimension
+        lastRequestedChunk = chunkCoord
+        setLoadingWithTimeout()
+        viewModel.requestMap(posX.toInt(), posZ.toInt(), 8, dimension)
     }
 
     fun switchDimension(dimension: String) {
         currentDimension = dimension
-        // If we already have tiles for this dimension, don't request again
+        // If we already have tiles for this dimension, just show them
         if (tileCache.tileCount(dimension) > 0) {
-            _tileRevision.value++ // trigger recompose with cached data
+            _isLoading.value = false
+            _tileRevision.value++
             return
         }
+        if (!viewModel.connectionState.value.isConnected) return
         val player = viewModel.playerData.value
         val cx = player?.posX?.toInt() ?: 0
         val cz = player?.posZ?.toInt() ?: 0
-        requestTiles(cx, cz)
+        lastRequestedChunk = (cx shr 4) to (cz shr 4)
+        setLoadingWithTimeout()
+        viewModel.requestMap(cx, cz, 8, dimension)
     }
 
     fun requestAroundPlayer() {
+        if (!viewModel.connectionState.value.isConnected) return
         val player = viewModel.playerData.value
         val cx = player?.posX?.toInt() ?: 0
         val cz = player?.posZ?.toInt() ?: 0
         currentDimension = player?.dimension ?: "overworld"
-        requestTiles(cx, cz)
-    }
-
-    /**
-     * Called after each gesture/pan. If the viewport is within 2 chunks of the
-     * loaded boundary, debounce 300ms then request more tiles.
-     */
-    fun onViewportChanged(viewCenterChunkX: Int, viewCenterChunkZ: Int, visibleRadiusChunks: Int) {
-        val bounds = tileCache.loadedBounds[currentDimension] ?: return
-        if (_isLoading.value) return // already loading
-
-        val margin = 2
-        val needsMore = viewCenterChunkX - visibleRadiusChunks <= bounds.minChunkX + margin ||
-            viewCenterChunkX + visibleRadiusChunks >= bounds.maxChunkX - margin ||
-            viewCenterChunkZ - visibleRadiusChunks <= bounds.minChunkZ + margin ||
-            viewCenterChunkZ + visibleRadiusChunks >= bounds.maxChunkZ - margin
-
-        if (!needsMore) return
-
-        val requestCenter = viewCenterChunkX to viewCenterChunkZ
-        if (requestCenter == pendingRequestCenter) return
-
-        viewportDebounceJob?.cancel()
-        viewportDebounceJob = scope.launch {
-            delay(300)
-            pendingRequestCenter = requestCenter
-            requestTiles(viewCenterChunkX * 16, viewCenterChunkZ * 16)
-        }
+        lastRequestedChunk = (cx shr 4) to (cz shr 4)
+        setLoadingWithTimeout()
+        viewModel.requestMap(cx, cz, 8, currentDimension)
     }
 
     /** Clear tile cache (e.g. on world change). */
     fun clearAll() {
+        loadingTimeoutJob?.cancel()
         tileCache.clearAll()
         _tileRevision.value++
         _isLoading.value = false
-        pendingRequestCenter = null
+        lastRequestedChunk = null
+    }
+
+    /** Set loading=true with a 15s timeout safety net. */
+    private fun setLoadingWithTimeout() {
+        _isLoading.value = true
+        loadingTimeoutJob?.cancel()
+        loadingTimeoutJob = scope?.launch {
+            delay(15_000)
+            _isLoading.value = false
+        }
     }
 }
