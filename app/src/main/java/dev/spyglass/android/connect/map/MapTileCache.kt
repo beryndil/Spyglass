@@ -60,6 +60,8 @@ class MapTileCache {
 
         for (tile in payload.tiles) {
             val key = packKey(tile.chunkX, tile.chunkZ)
+            // Evict stale bitmap so fresh tile data gets decoded
+            bitmapCache.remove("${tile.chunkX}:${tile.chunkZ}:$dim")
             dimTiles[key] = tile
             minX = minOf(minX, tile.chunkX)
             maxX = maxOf(maxX, tile.chunkX)
