@@ -450,7 +450,7 @@ fun ChestDiamondLoader(
         verticalArrangement = Arrangement.Center,
     ) {
         Canvas(
-            modifier = Modifier.fillMaxWidth().height(350.dp),
+            modifier = Modifier.fillMaxWidth().height(280.dp),
         ) {
             val w = size.width
             val h = size.height

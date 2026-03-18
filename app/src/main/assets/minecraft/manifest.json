@@ -1,5 +1,5 @@
 {
-  "version": "FireHorse.0308.1234",
+  "version": "FireHorse.0306.1707",
   "blocks": "FireHorse.0303.0500",
   "mobs": "FireHorse.0303.0500",
   "biomes": "FireHorse.0303.0500",
@@ -11,9 +11,10 @@
   "items": "FireHorse.0303.0500",
   "advancements": "FireHorse.0302.1319",
   "commands": "FireHorse.0302.1319",
-  "version_tags": "FireHorse.0308.1234",
-  "textures": "FireHorse.0302.2227",
-  "texture_map": "FireHorse.0303.1800",
+  "version_tags": "FireHorse.0306.1707",
+  "textures": "FireHorse.0316.1258",
+  "texture_map": "FireHorse.0307.2122",
   "news": "FireHorse.0302.1319",
-  "tips": "FireHorse.0307.0800"
+  "tips": "FireHorse.0307.0800",
+  "latest_app": "FireHorse.0307.2049"
 }
