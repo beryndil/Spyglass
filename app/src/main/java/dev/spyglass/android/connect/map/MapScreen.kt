@@ -54,6 +54,11 @@ fun MapContent(viewModel: ConnectViewModel) {
     val hapticClick = rememberHapticClick()
     val coroutineScope = rememberCoroutineScope()
     val mapState = remember { MapState(viewModel, coroutineScope) }
+
+    // Release bitmaps and cancel jobs when leaving the map screen
+    DisposableEffect(Unit) {
+        onDispose { mapState.clearAll() }
+    }
     val tileRevision by mapState.tileRevision.collectAsStateWithLifecycle()
     val isLoading by mapState.isLoading.collectAsStateWithLifecycle()
     val structures by viewModel.structures.collectAsStateWithLifecycle()

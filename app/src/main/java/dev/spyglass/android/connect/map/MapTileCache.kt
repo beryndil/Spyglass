@@ -19,8 +19,8 @@ class MapTileCache {
     /** Raw tile data keyed by packed coords, per dimension. */
     private val tilesByDimension = ConcurrentHashMap<String, ConcurrentHashMap<Long, MapTile>>()
 
-    /** Pre-decoded bitmaps keyed by "chunkX:chunkZ:dim". 4 MB cap. */
-    private val bitmapCache = LruCache<String, ImageBitmap>(4 * 1024 * 1024)
+    /** Pre-decoded bitmaps keyed by "chunkX:chunkZ:dim". 500-entry cap. */
+    private val bitmapCache = LruCache<String, ImageBitmap>(500)
 
     /** Per-dimension player position from the most recent payload. */
     private val playerPosition = ConcurrentHashMap<String, Pair<Double, Double>>()
