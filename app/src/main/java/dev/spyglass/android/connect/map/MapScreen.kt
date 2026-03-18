@@ -1,7 +1,5 @@
 package dev.spyglass.android.connect.map
 
-import android.graphics.BitmapFactory
-import android.util.Base64
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.*
@@ -13,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
@@ -24,14 +22,13 @@ import dev.spyglass.android.connect.ConnectViewModel
 import androidx.compose.ui.res.stringResource
 import dev.spyglass.android.R
 import dev.spyglass.android.core.ui.rememberHapticClick
-import dev.spyglass.android.connect.MapTile
 import dev.spyglass.android.connect.OfflineIndicator
 import dev.spyglass.android.connect.ServerSyncNote
-import dev.spyglass.android.connect.StructureLocation
+import kotlin.math.roundToInt
 
 /**
- * Canvas-based overhead map: receives base64 PNG tiles from desktop,
- * supports pinch-to-zoom, pan, dimension switcher.
+ * Canvas-based overhead map: accumulates tiles from desktop,
+ * supports pinch-to-zoom, pan, dimension switcher, dynamic edge loading.
  */
 @Composable
 fun MapScreen(
@@ -57,8 +54,10 @@ fun MapScreen(
 @Composable
 fun MapContent(viewModel: ConnectViewModel) {
     val hapticClick = rememberHapticClick()
-    val mapState = remember { MapState(viewModel) }
-    val mapData by mapState.mapData.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()
+    val mapState = remember { MapState(viewModel, scope) }
+    val tileRevision by mapState.tileRevision.collectAsStateWithLifecycle()
+    val isLoading by mapState.isLoading.collectAsStateWithLifecycle()
     val structures by viewModel.structures.collectAsStateWithLifecycle()
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
     val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
@@ -66,6 +65,18 @@ fun MapContent(viewModel: ConnectViewModel) {
     val selectedWorld by viewModel.selectedWorld.collectAsStateWithLifecycle()
     val isConnected = connectionState.isConnected
     val isServerWorld = selectedWorld?.startsWith("ptero_") == true
+
+    // Collect tile batches from ViewModel → merge into cache
+    LaunchedEffect(Unit) {
+        viewModel.mapTileBatch.collect { payload ->
+            mapState.mergeTiles(payload)
+        }
+    }
+
+    // Clear cache on world change
+    LaunchedEffect(selectedWorld) {
+        mapState.clearAll()
+    }
 
     // Request initial data only when connected
     LaunchedEffect(isConnected) {
@@ -105,8 +116,11 @@ fun MapContent(viewModel: ConnectViewModel) {
                 }
                 FilterChip(
                     selected = selected,
-                    onClick = { if (isConnected) { hapticClick(); mapState.switchDimension(dim) } },
-                    enabled = isConnected,
+                    onClick = {
+                        hapticClick()
+                        mapState.switchDimension(dim)
+                    },
+                    enabled = true, // Always enabled — can view cached tiles offline
                     label = { Text(label, style = MaterialTheme.typography.labelSmall) },
                     modifier = Modifier.padding(horizontal = 2.dp),
                 )
@@ -138,20 +152,45 @@ fun MapContent(viewModel: ConnectViewModel) {
                     }
                 },
         ) {
-            val tiles = mapData?.tiles ?: emptyList()
-            val px = mapData?.playerX ?: 0.0
-            val pz = mapData?.playerZ ?: 0.0
+            // Use tileRevision to trigger recompose when cache changes
+            @Suppress("UNUSED_VARIABLE")
+            val revision = tileRevision
+
+            val cachedTiles = mapState.tileCache.getTilesForDimension(mapState.currentDimension)
+            val playerPos = mapState.tileCache.getPlayerPosition(mapState.currentDimension)
+            val px = playerPos?.first ?: playerData?.posX ?: 0.0
+            val pz = playerPos?.second ?: playerData?.posZ ?: 0.0
 
             Canvas(modifier = Modifier.fillMaxSize()) {
                 val tileSize = 16f * scale
+                val canvasWidth = size.width
+                val canvasHeight = size.height
 
-                tiles.forEach { tile ->
-                    drawMapTile(tile, px, pz, tileSize, offsetX, offsetY)
+                cachedTiles.values.forEach { cached ->
+                    val tile = cached.tile
+                    val bitmap = cached.bitmap ?: return@forEach
+
+                    val relX = (tile.chunkX * 16 - px).toFloat()
+                    val relZ = (tile.chunkZ * 16 - pz).toFloat()
+
+                    val screenX = canvasWidth / 2 + relX / 16 * tileSize + offsetX
+                    val screenY = canvasHeight / 2 + relZ / 16 * tileSize + offsetY
+
+                    // Frustum culling — skip tiles entirely outside canvas
+                    if (screenX + tileSize < 0 || screenX > canvasWidth ||
+                        screenY + tileSize < 0 || screenY > canvasHeight
+                    ) return@forEach
+
+                    drawImage(
+                        image = bitmap,
+                        dstOffset = IntOffset(screenX.toInt(), screenY.toInt()),
+                        dstSize = IntSize(tileSize.toInt(), tileSize.toInt()),
+                    )
                 }
 
                 // Draw player marker
-                val playerScreenX = size.width / 2 + offsetX
-                val playerScreenY = size.height / 2 + offsetY
+                val playerScreenX = canvasWidth / 2 + offsetX
+                val playerScreenY = canvasHeight / 2 + offsetY
                 drawCircle(
                     color = Color.Red,
                     radius = 6f,
@@ -165,14 +204,35 @@ fun MapContent(viewModel: ConnectViewModel) {
 
                 // Draw structure markers
                 structures.filter { it.dimension == mapState.currentDimension }.forEach { structure ->
-                    val sx = size.width / 2 + ((structure.x - px.toFloat()) * scale / 16f * tileSize / scale) + offsetX
-                    val sy = size.height / 2 + ((structure.z - pz.toFloat()) * scale / 16f * tileSize / scale) + offsetY
+                    val sx = canvasWidth / 2 + ((structure.x - px.toFloat()) / 16f * tileSize) + offsetX
+                    val sy = canvasHeight / 2 + ((structure.z - pz.toFloat()) / 16f * tileSize) + offsetY
                     drawCircle(
                         color = Color.Yellow,
                         radius = 5f,
                         center = Offset(sx, sy),
                     )
                 }
+
+                // Viewport tracking for dynamic edge loading
+                if (isConnected) {
+                    val viewCenterChunkX = ((px - offsetX / tileSize * 16) / 16).roundToInt()
+                    val viewCenterChunkZ = ((pz - offsetY / tileSize * 16) / 16).roundToInt()
+                    val visibleRadiusChunks = (canvasWidth / tileSize / 2).roundToInt() + 1
+                    mapState.onViewportChanged(viewCenterChunkX, viewCenterChunkZ, visibleRadiusChunks)
+                }
+            }
+
+            // Loading indicators
+            if (isLoading && cachedTiles.isNotEmpty()) {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.TopCenter),
+                )
+            } else if (isLoading && cachedTiles.isEmpty()) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                )
             }
 
             // Coordinates label
@@ -185,33 +245,5 @@ fun MapContent(viewModel: ConnectViewModel) {
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
             )
         }
-    }
-}
-
-private fun DrawScope.drawMapTile(
-    tile: MapTile,
-    playerX: Double,
-    playerZ: Double,
-    tileSize: Float,
-    offsetX: Float,
-    offsetY: Float,
-) {
-    try {
-        val bytes = Base64.decode(tile.imageBase64, Base64.DEFAULT)
-        val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size) ?: return
-
-        val relX = (tile.chunkX * 16 - playerX).toFloat()
-        val relZ = (tile.chunkZ * 16 - playerZ).toFloat()
-
-        val screenX = size.width / 2 + relX / 16 * tileSize + offsetX
-        val screenY = size.height / 2 + relZ / 16 * tileSize + offsetY
-
-        drawImage(
-            image = bitmap.asImageBitmap(),
-            dstOffset = IntOffset(screenX.toInt(), screenY.toInt()),
-            dstSize = IntSize(tileSize.toInt(), tileSize.toInt()),
-        )
-    } catch (_: Exception) {
-        // Skip corrupt tiles
     }
 }

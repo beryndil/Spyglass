@@ -123,6 +123,12 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private val _mapTiles = MutableStateFlow<MapRenderPayload?>(null)
     val mapTiles: StateFlow<MapRenderPayload?> = _mapTiles
 
+    /** Emits each incoming tile batch for the MapTileCache to accumulate. */
+    private val _mapTileBatch = MutableSharedFlow<MapRenderPayload>(extraBufferCapacity = 1)
+    val mapTileBatch: SharedFlow<MapRenderPayload> = _mapTileBatch
+
+    private var mapSaveJob: Job? = null
+
     private val _playerStats = MutableStateFlow<PlayerStatsPayload?>(null)
     val playerStats: StateFlow<PlayerStatsPayload?> = _playerStats
 
@@ -328,7 +334,10 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         }
 
         ConnectCache.loadStructures(ctx, worldFolder)?.let { _structures.value = it }
-        ConnectCache.loadMapData(ctx, worldFolder)?.let { _mapTiles.value = it }
+        ConnectCache.loadMapData(ctx, worldFolder)?.let {
+            _mapTiles.value = it
+            _mapTileBatch.tryEmit(it)
+        }
         ConnectCache.loadChests(ctx, worldFolder)?.let { _chestContents.value = it }
         ConnectCache.loadStats(ctx, worldFolder)?.let { _playerStats.value = it }
         ConnectCache.loadAdvancements(ctx, worldFolder)?.let { _playerAdvancements.value = it }
@@ -852,13 +861,17 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    /** Map tiles received — update state and cache if changed. */
+    /** Map tiles received — emit to SharedFlow for accumulation, debounce disk save. */
     private fun handleMapRender(message: SpyglassMessage) {
         _loadingStatus.value = null
         val payload = json.decodeFromJsonElement(MapRenderPayload.serializer(), message.payload)
         Timber.i("  Map tiles: ${payload.tiles.size} tiles")
-        if (_mapTiles.value != payload) {
-            _mapTiles.value = payload
+        _mapTiles.value = payload
+        _mapTileBatch.tryEmit(payload)
+        // Debounce disk save — 5s after last batch to avoid thrashing during rapid pan-loading
+        mapSaveJob?.cancel()
+        mapSaveJob = viewModelScope.launch(Dispatchers.IO) {
+            kotlinx.coroutines.delay(5000)
             cacheIfWorldSelected { world ->
                 ConnectCache.saveMapData(getApplication(), world, payload)
             }
