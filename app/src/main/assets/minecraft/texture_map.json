@@ -943,6 +943,5 @@
     "writable_book": "item_book_and_quill",
     "written_book": "item_book",
     "yellow_dye": "item_yellow_dye"
-  },
-  "shield": "item_shield"
+  }
 }

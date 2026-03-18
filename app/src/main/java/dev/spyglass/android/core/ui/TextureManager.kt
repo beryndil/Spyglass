@@ -83,7 +83,7 @@ object TextureManager {
                     if (!entry.isDirectory) {
                         val name = entry.name.substringAfterLast('/')
                         val target = File(dir, name)
-                        if (name.isNotEmpty() && !target.exists()) {
+                        if (name.isNotEmpty() && (!target.exists() || (entry.size >= 0 && target.length() != entry.size))) {
                             var entryBytes = 0L
                             val buf = ByteArray(8192)
                             target.outputStream().use { out ->
