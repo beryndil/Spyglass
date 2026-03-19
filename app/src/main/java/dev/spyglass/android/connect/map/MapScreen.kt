@@ -61,7 +61,6 @@ fun MapContent(viewModel: ConnectViewModel) {
     }
     val tileRevision by mapState.tileRevision.collectAsStateWithLifecycle()
     val isLoading by mapState.isLoading.collectAsStateWithLifecycle()
-    val structures by viewModel.structures.collectAsStateWithLifecycle()
     val playerData by viewModel.playerData.collectAsStateWithLifecycle()
     val connectionState by viewModel.connectionState.collectAsStateWithLifecycle()
     val lastUpdated by viewModel.lastUpdated.collectAsStateWithLifecycle()
@@ -82,11 +81,10 @@ fun MapContent(viewModel: ConnectViewModel) {
         mapState.clearAll()
     }
 
-    // Request initial tiles + structures when connected
+    // Request initial tiles when connected
     LaunchedEffect(isConnected) {
         if (isConnected) {
             mapState.requestAroundPlayer()
-            viewModel.requestStructures()
         }
     }
 
@@ -205,12 +203,6 @@ fun MapContent(viewModel: ConnectViewModel) {
                 drawCircle(color = Color.Red, radius = 6f, center = Offset(playerScreenX, playerScreenY))
                 drawCircle(color = Color.White, radius = 4f, center = Offset(playerScreenX, playerScreenY))
 
-                // Structure markers
-                structures.filter { it.dimension == mapState.currentDimension }.forEach { structure ->
-                    val sx = canvasWidth / 2 + ((structure.x - px.toFloat()) / 16f * tileSize) + offsetX
-                    val sy = canvasHeight / 2 + ((structure.z - pz.toFloat()) / 16f * tileSize) + offsetY
-                    drawCircle(color = Color.Yellow, radius = 5f, center = Offset(sx, sy))
-                }
             }
 
             // Loading indicators
