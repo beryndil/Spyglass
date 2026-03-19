@@ -69,8 +69,9 @@ fun MapContent(viewModel: ConnectViewModel) {
     val isConnected = connectionState.isConnected
     val isServerWorld = selectedWorld?.startsWith("ptero_") == true
 
-    // Collect tile batches from ViewModel → merge into cache
+    // Seed from ViewModel's accumulated tiles (survives navigation), then collect live batches
     LaunchedEffect(Unit) {
+        viewModel.getAllAccumulatedTiles()?.let { mapState.mergeTiles(it) }
         viewModel.mapTileBatch.collect { payload ->
             mapState.mergeTiles(payload)
         }

@@ -22,6 +22,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 import timber.log.Timber
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * ViewModel managing the full Spyglass Connect lifecycle.
@@ -121,14 +122,27 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
     private val _structures = MutableStateFlow<List<StructureLocation>>(emptyList())
     val structures: StateFlow<List<StructureLocation>> = _structures
 
-    private val _mapTiles = MutableStateFlow<MapRenderPayload?>(null)
-    val mapTiles: StateFlow<MapRenderPayload?> = _mapTiles
+    /** Accumulated map tiles keyed by dimension → packed(chunkX,chunkZ) → tile. Survives navigation. */
+    private val accumulatedMapTiles = ConcurrentHashMap<String, ConcurrentHashMap<Long, MapTile>>()
 
     /** Emits each incoming tile batch for the MapTileCache to accumulate. */
     private val _mapTileBatch = MutableSharedFlow<MapRenderPayload>(extraBufferCapacity = 1)
     val mapTileBatch: SharedFlow<MapRenderPayload> = _mapTileBatch
 
     private var mapSaveJob: Job? = null
+
+    /** Build a full MapRenderPayload from all accumulated tiles (for seeding MapState on navigation). */
+    fun getAllAccumulatedTiles(): MapRenderPayload? {
+        val allTiles = accumulatedMapTiles.values.flatMap { it.values }
+        if (allTiles.isEmpty()) return null
+        val player = _playerData.value
+        return MapRenderPayload(
+            worldName = _selectedWorld.value ?: "",
+            tiles = allTiles,
+            playerX = player?.posX ?: 0.0,
+            playerZ = player?.posZ ?: 0.0,
+        )
+    }
 
     private val _playerStats = MutableStateFlow<PlayerStatsPayload?>(null)
     val playerStats: StateFlow<PlayerStatsPayload?> = _playerStats
@@ -335,9 +349,14 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         }
 
         ConnectCache.loadStructures(ctx, worldFolder)?.let { _structures.value = it }
-        ConnectCache.loadMapData(ctx, worldFolder)?.let {
-            _mapTiles.value = it
-            _mapTileBatch.tryEmit(it)
+        ConnectCache.loadMapData(ctx, worldFolder)?.let { cached ->
+            // Populate accumulator from disk cache
+            for (tile in cached.tiles) {
+                val dimMap = accumulatedMapTiles.getOrPut(tile.dimension) { ConcurrentHashMap() }
+                val key = (tile.chunkX.toLong() shl 32) or (tile.chunkZ.toLong() and 0xFFFFFFFFL)
+                dimMap[key] = tile
+            }
+            _mapTileBatch.tryEmit(cached)
         }
         ConnectCache.loadChests(ctx, worldFolder)?.let { _chestContents.value = it }
         ConnectCache.loadStats(ctx, worldFolder)?.let { _playerStats.value = it }
@@ -581,6 +600,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         _selectedWorld.value = folderName
         _playerList.value = emptyList()
         _selectedPlayerUuid.value = null
+        accumulatedMapTiles.clear()
         viewModelScope.launch(Dispatchers.IO) {
             ConnectCache.saveMeta(
                 getApplication(),
@@ -639,7 +659,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Request map tiles around a position (defaults to origin, overworld). */
     fun requestMap(centerX: Int = 0, centerZ: Int = 0, radius: Int = 8, dimension: String = "overworld") {
-        if (_mapTiles.value == null) _loadingStatus.value = "Requesting map data\u2026"
+        if (accumulatedMapTiles.isEmpty()) _loadingStatus.value = "Requesting map data\u2026"
         val payload = json.encodeToJsonElement(RequestMapPayload(centerX, centerZ, radius, dimension))
         client.sendRequest(MessageType.REQUEST_MAP, payload)
     }
@@ -864,19 +884,38 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    /** Map tiles received — emit to SharedFlow for accumulation, debounce disk save. */
+    /** Map tiles received — accumulate, emit batch for live rendering, debounce full disk save. */
     private fun handleMapRender(message: SpyglassMessage) {
         _loadingStatus.value = null
         val payload = json.decodeFromJsonElement(MapRenderPayload.serializer(), message.payload)
         Timber.i("  Map tiles: ${payload.tiles.size} tiles")
-        _mapTiles.value = payload
+
+        // Accumulate into ViewModel-scoped map (survives navigation)
+        for (tile in payload.tiles) {
+            val dimMap = accumulatedMapTiles.getOrPut(tile.dimension) { ConcurrentHashMap() }
+            val key = (tile.chunkX.toLong() shl 32) or (tile.chunkZ.toLong() and 0xFFFFFFFFL)
+            dimMap[key] = tile
+        }
+
+        // Emit individual batch for live progressive rendering
         _mapTileBatch.tryEmit(payload)
-        // Debounce disk save — 5s after last batch to avoid thrashing during rapid pan-loading
+
+        // Debounce disk save — 5s after last batch, saves full accumulated set
         mapSaveJob?.cancel()
         mapSaveJob = viewModelScope.launch(Dispatchers.IO) {
             kotlinx.coroutines.delay(5000)
-            cacheIfWorldSelected { world ->
-                ConnectCache.saveMapData(getApplication(), world, payload)
+            val allTiles = accumulatedMapTiles.values.flatMap { it.values }
+            if (allTiles.isNotEmpty()) {
+                val player = _playerData.value
+                val fullPayload = MapRenderPayload(
+                    worldName = _selectedWorld.value ?: "",
+                    tiles = allTiles,
+                    playerX = player?.posX ?: 0.0,
+                    playerZ = player?.posZ ?: 0.0,
+                )
+                cacheIfWorldSelected { world ->
+                    ConnectCache.saveMapData(getApplication(), world, fullPayload)
+                }
             }
         }
     }
@@ -1127,7 +1166,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
         _searchResults.value = null
         _chestContents.value = null
         _structures.value = emptyList()
-        _mapTiles.value = null
+        accumulatedMapTiles.clear()
         _selectedWorld.value = null
         _lastUpdated.value = null
         _pets.value = emptyList()
