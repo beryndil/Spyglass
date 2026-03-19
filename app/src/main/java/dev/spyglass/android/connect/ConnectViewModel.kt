@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 import timber.log.Timber
@@ -586,11 +587,13 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
                 ConnectCache.CacheMeta(selectedWorld = folderName, worlds = _worlds.value),
             )
             loadCachedWorldData(folderName)
-        }
-        if (connectionState.value.isConnected) {
-            val payload = json.encodeToJsonElement(SelectWorldPayload(folderName))
-            client.sendRequest(MessageType.SELECT_WORLD, payload)
-            requestPlayerList()
+            withContext(Dispatchers.Main) {
+                if (connectionState.value.isConnected) {
+                    val payload = json.encodeToJsonElement(SelectWorldPayload(folderName))
+                    client.sendRequest(MessageType.SELECT_WORLD, payload)
+                    requestPlayerList()
+                }
+            }
         }
     }
 
@@ -601,14 +604,14 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
      */
     fun requestPlayerData() {
         val uuid = _selectedPlayerUuid.value ?: return
-        _loadingStatus.value = "Requesting player data\u2026"
+        if (_playerData.value == null) _loadingStatus.value = "Requesting player data\u2026"
         val payload = json.encodeToJsonElement(RequestPlayerPayload(uuid))
         client.sendRequest(MessageType.REQUEST_PLAYER, payload)
     }
 
     /** Request the list of all players in the selected world. */
     fun requestPlayerList() {
-        _loadingStatus.value = "Requesting player list\u2026"
+        if (_playerList.value.isEmpty()) _loadingStatus.value = "Requesting player list\u2026"
         client.sendRequest(MessageType.REQUEST_PLAYER_LIST)
     }
 
@@ -625,7 +628,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Request chest contents scan for the selected world. */
     fun requestChests() {
-        _loadingStatus.value = "Scanning containers\u2026"
+        if (_chestContents.value == null) _loadingStatus.value = "Scanning containers\u2026"
         client.sendRequest(MessageType.REQUEST_CHESTS)
     }
 
@@ -636,26 +639,26 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Request map tiles around a position (defaults to origin, overworld). */
     fun requestMap(centerX: Int = 0, centerZ: Int = 0, radius: Int = 8, dimension: String = "overworld") {
-        _loadingStatus.value = "Requesting map data\u2026"
+        if (_mapTiles.value == null) _loadingStatus.value = "Requesting map data\u2026"
         val payload = json.encodeToJsonElement(RequestMapPayload(centerX, centerZ, radius, dimension))
         client.sendRequest(MessageType.REQUEST_MAP, payload)
     }
 
     /** Request player statistics for the selected player. */
     fun requestStats() {
-        _loadingStatus.value = "Requesting statistics\u2026"
+        if (_playerStats.value == null) _loadingStatus.value = "Requesting statistics\u2026"
         client.sendRequest(MessageType.REQUEST_STATS)
     }
 
     /** Request advancement progress for the selected player. */
     fun requestAdvancements() {
-        _loadingStatus.value = "Requesting advancements\u2026"
+        if (_playerAdvancements.value == null) _loadingStatus.value = "Requesting advancements\u2026"
         client.sendRequest(MessageType.REQUEST_ADVANCEMENTS)
     }
 
     /** Request tamed pets list for the selected world. */
     fun requestPets() {
-        _loadingStatus.value = "Requesting pets\u2026"
+        if (_pets.value.isEmpty()) _loadingStatus.value = "Requesting pets\u2026"
         client.sendRequest(MessageType.REQUEST_PETS)
     }
 
@@ -920,6 +923,7 @@ class ConnectViewModel(application: Application) : AndroidViewModel(application)
 
     /** Scan progress update from desktop — update loading status with real-time feedback. */
     private fun handleScanProgress(message: SpyglassMessage) {
+        if (_chestContents.value != null) return
         val payload = json.decodeFromJsonElement(ScanProgressPayload.serializer(), message.payload)
         val dim = payload.dimension.replace("_", " ").replaceFirstChar { it.uppercase() }
         val containers = if (payload.containersFound > 0) "\n${payload.containersFound} containers found" else ""
