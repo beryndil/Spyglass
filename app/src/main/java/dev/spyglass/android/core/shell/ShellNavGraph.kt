@@ -56,7 +56,6 @@ import dev.spyglass.android.calculators.clock.ClockEngine
 import dev.spyglass.android.calculators.clock.eventColor
 import dev.spyglass.android.connect.ConnectViewModel
 import dev.spyglass.android.core.module.BottomNavItem
-import dev.spyglass.android.core.module.HomeSectionScope
 import dev.spyglass.android.core.module.ModuleNavActions
 import dev.spyglass.android.core.module.ModuleRegistry
 import dev.spyglass.android.core.module.ModuleRoute
@@ -76,6 +75,7 @@ import dev.spyglass.android.settings.PreferenceKeys
 import dev.spyglass.android.settings.dataStore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 
 // ── Top-level destination ───────────────────────────────────────────────────
 
@@ -164,12 +164,18 @@ fun ShellNavGraph() {
                 launchSingleTop = true
                 restoreState = route != "home"  // Home always starts at top
             }
-        } catch (_: IllegalStateException) { }
+        } catch (e: IllegalStateException) {
+            Timber.w(e, "Navigation to %s failed — graph not ready", route)
+        }
     }
 
     fun navigateToSub(route: String, isForward: Boolean = false) {
-        if (!isForward) navHistory.onNewNavigation()
-        navController.navigate(route) { launchSingleTop = true }
+        try {
+            if (!isForward) navHistory.onNewNavigation()
+            navController.navigate(route) { launchSingleTop = true }
+        } catch (e: IllegalArgumentException) {
+            Timber.w(e, "Navigation to sub-route %s failed — route not in graph", route)
+        }
     }
 
     fun navigateCrossLink(route: String) {
@@ -192,20 +198,6 @@ fun ShellNavGraph() {
 
     // ── Scope implementations ───────────────────────────────────────────────
 
-    val homeSectionScope = object : HomeSectionScope {
-        override fun navigateTo(route: String) = navigateToSub(route)
-        override fun navigateToBrowseTab(tab: Int, id: String) {
-            pendingTarget = BrowseTarget(tab, id)
-            navigateToTop("browse")
-        }
-        override fun navigateToCalcTab(tab: Int) {
-            pendingCalcTab = tab
-            navigateToTop("calculators")
-        }
-        override fun navigateToSearch() = navigateToTop("search")
-        override fun navigateToScanQr() = navigateToSub("connect_scan")
-    }
-
     val settingsSectionScope = object : SettingsSectionScope {
         override fun navigateTo(route: String) = navigateToSub(route)
         override fun navigateToCalcTab(tab: Int) {
@@ -218,7 +210,7 @@ fun ShellNavGraph() {
     val moduleNavActions = object : ModuleNavActions {
         override fun navigateTo(route: String) = navigateToSub(route)
         override fun navigateBack() {
-            if (currentRoute != null) navHistory.onNavigateBack(currentRoute!!)
+            currentRoute?.let { navHistory.onNavigateBack(it) }
             navController.popBackStack()
         }
         override fun navigateToBrowseTab(tab: Int, id: String) {
@@ -284,7 +276,7 @@ fun ShellNavGraph() {
             canGoForward = navHistory.canGoForward,
             onSwipeBack = {
                 if (canGoBack) {
-                    if (currentRoute != null) navHistory.onNavigateBack(currentRoute!!)
+                    currentRoute?.let { navHistory.onNavigateBack(it) }
                     navController.popBackStack()
                 }
             },
@@ -295,9 +287,23 @@ fun ShellNavGraph() {
             startDestination = startDest,
             modifier = Modifier.padding(innerPadding),
         ) {
-            // Home
+            // Home — standalone screen with Connect hub, todo, favorites, tips
             composable("home") {
-                ShellHomeScreen(homeSectionScope, scrollToTopTrigger)
+                dev.spyglass.android.home.HomeScreen(
+                    onBrowseTarget = { target ->
+                        pendingTarget = target
+                        navigateCrossLink("browse")
+                    },
+                    onCalcTab = { tab ->
+                        pendingCalcTab = tab
+                        navigateToTop("calculators")
+                    },
+                    onSearch = { navigateToTop("search") },
+                    connectViewModel = connectViewModel,
+                    onScanQr = { navigateToSub("connect_scan") },
+                    onConnectNav = { route -> navigateToSub(route) },
+                    scrollToTopTrigger = scrollToTopTrigger,
+                )
             }
 
             // Search — provided by DatabaseModule or fallback

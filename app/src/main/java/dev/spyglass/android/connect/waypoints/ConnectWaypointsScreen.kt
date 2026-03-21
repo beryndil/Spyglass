@@ -323,8 +323,7 @@ fun ConnectWaypointsScreen(
         )
     }
 
-    if (editingWaypoint != null) {
-        val wp = editingWaypoint!!
+    editingWaypoint?.let { wp ->
         WaypointDialog(
             title = stringResource(R.string.connect_edit_waypoint_title),
             initialName = wp.name,

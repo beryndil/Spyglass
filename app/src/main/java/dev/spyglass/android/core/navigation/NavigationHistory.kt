@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
  */
 class NavigationHistory {
 
+    /** Capped at 50 entries to prevent unbounded memory growth. */
     private val forwardStack = ArrayDeque<String>()
 
     /** Observable — true when at least one forward entry exists. */
@@ -19,8 +20,13 @@ class NavigationHistory {
 
     /** Called when the user navigates back. Pushes [currentRoute] onto the forward stack. */
     fun onNavigateBack(currentRoute: String) {
+        if (forwardStack.size >= MAX_STACK_SIZE) forwardStack.removeFirst()
         forwardStack.addLast(currentRoute)
         canGoForward = true
+    }
+
+    private companion object {
+        const val MAX_STACK_SIZE = 50
     }
 
     /** Pops the next forward route, or null if none. */

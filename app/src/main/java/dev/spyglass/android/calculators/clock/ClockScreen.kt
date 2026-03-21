@@ -437,7 +437,7 @@ private fun AddEventDialog(
                                         .clip(RoundedCornerShape(8.dp))
                                         .clickable {
                                             hapticClick()
-                                            onAddPredefined(event.predefinedId!!)
+                                            event.predefinedId?.let(onAddPredefined) ?: return@clickable
                                         }
                                         .padding(vertical = 6.dp, horizontal = 4.dp),
                                     verticalAlignment = Alignment.CenterVertically,

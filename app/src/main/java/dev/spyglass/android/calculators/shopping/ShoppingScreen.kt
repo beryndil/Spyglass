@@ -239,7 +239,9 @@ private fun ListDetail(vm: ShoppingViewModel) {
                                 hapticClick()
                                 val qty = quantityInput.toIntOrNull() ?: 1
                                 if (qty in 1..10_000_000) {
-                                    vm.addItem(selectedId!!, selectedName, qty)
+                                    val id = selectedId ?: return@IconButton
+                                    vm.addItem(id, selectedName, qty)
+
                                     selectedId = null
                                     selectedName = ""
                                     quantityInput = "1"

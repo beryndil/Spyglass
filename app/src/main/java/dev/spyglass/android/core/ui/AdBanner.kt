@@ -32,9 +32,9 @@ fun AdBanner(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val screenWidthDp = LocalConfiguration.current.screenWidthDp
 
-    val adPersonalizationConsent by context.dataStore.data
-        .map { it[PreferenceKeys.AD_PERSONALIZATION_CONSENT] ?: false }
-        .collectAsStateWithLifecycle(initialValue = false)
+    val adPersonalizationConsent by remember {
+        context.dataStore.data.map { it[PreferenceKeys.AD_PERSONALIZATION_CONSENT] ?: false }
+    }.collectAsStateWithLifecycle(initialValue = false)
 
     val adView by remember {
         mutableStateOf(
@@ -59,7 +59,7 @@ fun AdBanner(modifier: Modifier = Modifier) {
         )
     }
 
-    if (adView == null) return
+    val view = adView ?: return
 
     LaunchedEffect(adPersonalizationConsent) {
         val adRequest = if (adPersonalizationConsent) {
@@ -72,15 +72,15 @@ fun AdBanner(modifier: Modifier = Modifier) {
                 )
                 .build()
         }
-        adView?.loadAd(adRequest)
+        view.loadAd(adRequest)
     }
 
     DisposableEffect(Unit) {
-        onDispose { adView?.destroy() }
+        onDispose { view.destroy() }
     }
 
     AndroidView(
-        factory = { adView!! },
+        factory = { view },
         modifier = modifier.fillMaxWidth(),
     )
 }

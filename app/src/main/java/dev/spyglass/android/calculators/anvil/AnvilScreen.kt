@@ -54,8 +54,8 @@ fun AnvilScreen(vm: AnvilViewModel = viewModel()) {
     val hapticClick = rememberHapticClick()
 
     LaunchedEffect(warning) {
-        if (warning != null) {
-            snackbarHostState.showSnackbar(warning!!, duration = SnackbarDuration.Short)
+        warning?.let {
+            snackbarHostState.showSnackbar(it, duration = SnackbarDuration.Short)
             vm.clearWarning()
         }
     }

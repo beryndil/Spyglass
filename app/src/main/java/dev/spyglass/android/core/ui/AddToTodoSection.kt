@@ -94,8 +94,8 @@ fun AddToTodoSection(
         }
 
         // Success feedback
-        if (feedback != null) {
-            Text(feedback!!, style = MaterialTheme.typography.bodySmall, color = Emerald)
+        feedback?.let { msg ->
+            Text(msg, style = MaterialTheme.typography.bodySmall, color = Emerald)
             LaunchedEffect(feedback) {
                 delay(2000)
                 feedback = null

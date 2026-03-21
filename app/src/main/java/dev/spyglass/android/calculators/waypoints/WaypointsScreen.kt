@@ -258,8 +258,7 @@ fun WaypointsScreen(vm: WaypointsViewModel = viewModel()) {
         )
     }
 
-    if (editingWaypoint != null) {
-        val wp = editingWaypoint!!
+    editingWaypoint?.let { wp ->
         WaypointDialog(
             title = stringResource(R.string.waypoints_edit_dialog),
             initialName = wp.name,

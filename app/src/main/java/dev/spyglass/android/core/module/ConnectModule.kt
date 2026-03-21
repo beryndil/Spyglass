@@ -289,9 +289,9 @@ object ConnectModule : SpyglassModule {
         val worlds by connectViewModel.worlds.collectAsStateWithLifecycle()
         val scope = androidx.compose.runtime.rememberCoroutineScope()
 
-        val playerIgn by context.dataStore.data
-            .map { it[PreferenceKeys.PLAYER_IGN] ?: "" }
-            .collectAsStateWithLifecycle(initialValue = "")
+        val playerIgn by remember {
+            context.dataStore.data.map { it[PreferenceKeys.PLAYER_IGN] ?: "" }
+        }.collectAsStateWithLifecycle(initialValue = "")
         var showIgnDialog by remember { mutableStateOf(false) }
         var cachedWorlds by remember { mutableStateOf<List<String>>(emptyList()) }
         var showClearAllDialog by remember { mutableStateOf(false) }

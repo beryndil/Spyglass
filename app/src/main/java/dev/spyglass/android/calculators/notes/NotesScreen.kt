@@ -206,8 +206,7 @@ fun NotesScreen(vm: NotesViewModel = viewModel()) {
         )
     }
 
-    if (editingNote != null) {
-        val note = editingNote!!
+    editingNote?.let { note ->
         NoteDialog(
             title = stringResource(R.string.notes_edit_note_dialog),
             initialTitle = note.title,

@@ -67,7 +67,7 @@ fun QrScannerScreen(
                     future.get().unbindAll()
                 } else {
                     future.addListener(
-                        { try { future.get().unbindAll() } catch (_: Exception) {} },
+                        { try { future.get().unbindAll() } catch (e: Exception) { Timber.w(e, "Camera unbind failed") } },
                         ContextCompat.getMainExecutor(context),
                     )
                 }

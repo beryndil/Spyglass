@@ -325,7 +325,7 @@ fun BlocksScreen(
                 val addedIn = tag?.let { if (vFilter.edition == "java") it.addedInJava else it.addedInBedrock } ?: ""
                 val isExpanded = b.id in expandedIds
                 val glanceText = when {
-                    b.minY != null && b.maxY != null -> stringResource(R.string.blocks_glance_y_range, b.minY!!, b.maxY!!)
+                    b.minY != null && b.maxY != null -> stringResource(R.string.blocks_glance_y_range, b.minY ?: 0, b.maxY ?: 0)
                     b.lightLevel > 0 -> stringResource(R.string.blocks_glance_light, b.lightLevel)
                     b.hasGravity -> stringResource(R.string.blocks_glance_gravity)
                     b.category == "redstone" -> stringResource(R.string.blocks_glance_redstone)

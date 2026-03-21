@@ -128,7 +128,7 @@ fun BrowseScreen(
 
     val scope = rememberCoroutineScope()
     BackHandler(enabled = backStack.isNotEmpty()) {
-        val entry = backStack.removeLast()
+        val entry = backStack.removeAt(backStack.lastIndex)
         clearAllTargets()
         setTargetForTab(entry.tab, entry.targetId)
         tab = entry.tab
@@ -222,7 +222,7 @@ fun BrowseScreen(
                 onBiomeTap = onBiomeTap,
                 onTradeTap = onTradeTap,
                 onStructureTap = onStructureTap,
-                listState = listStates[0]!!,
+                listState = listStates.getValue(0),
             )
             1 -> ItemsScreen(
                 targetItemId = targetItemId,
@@ -233,13 +233,13 @@ fun BrowseScreen(
                 onBiomeTap = onBiomeTap,
                 onEnchantTap = onEnchantTap,
                 entityLinkIndex = entityLinkIndex,
-                listState = listStates[1]!!,
+                listState = listStates.getValue(1),
             )
             2 -> CraftingScreen(
                 targetRecipeId = targetRecipeId,
                 onItemTap = onItemTap,
                 onBiomeTap = onBiomeTap,
-                listState = listStates[2]!!,
+                listState = listStates.getValue(2),
             )
             3 -> MobsScreen(
                 targetMobId = targetMobId,
@@ -249,12 +249,12 @@ fun BrowseScreen(
                 onMobTap = onMobTap,
                 onCalcTab = onCalcTab,
                 entityLinkIndex = entityLinkIndex,
-                listState = listStates[3]!!,
+                listState = listStates.getValue(3),
             )
             4 -> TradesScreen(
                 targetProfession = targetProfession,
                 onItemTap = onItemTap,
-                listState = listStates[4]!!,
+                listState = listStates.getValue(4),
             )
             5 -> BiomesScreen(
                 targetBiomeId = targetBiomeId,
@@ -262,7 +262,7 @@ fun BrowseScreen(
                 onNavigateToStructure = onStructureTap,
                 onItemTap = onItemTap,
                 onCalcTab = onCalcTab,
-                listState = listStates[5]!!,
+                listState = listStates.getValue(5),
             )
             6 -> StructuresScreen(
                 targetStructureId = targetStructureId,
@@ -272,7 +272,7 @@ fun BrowseScreen(
                 onCalcTab = onCalcTab,
                 entityLinkIndex = entityLinkIndex,
                 onEnchantTap = onEnchantTap,
-                listState = listStates[6]!!,
+                listState = listStates.getValue(6),
             )
             7 -> EnchantsScreen(
                 targetEnchantId = targetEnchantId,
@@ -283,9 +283,9 @@ fun BrowseScreen(
                 onStructureTap = onStructureTap,
                 onEnchantTap = onEnchantTap,
                 entityLinkIndex = entityLinkIndex,
-                listState = listStates[7]!!,
+                listState = listStates.getValue(7),
             )
-            8 -> PotionsScreen(onItemTap = onItemTap, listState = listStates[8]!!)
+            8 -> PotionsScreen(onItemTap = onItemTap, listState = listStates.getValue(8))
             9 -> CommandsScreen(
                 targetCommandId = targetCommandId,
                 onItemTap = onItemTap,
@@ -294,10 +294,10 @@ fun BrowseScreen(
                 onStructureTap = onStructureTap,
                 onEnchantTap = onEnchantTap,
                 entityLinkIndex = entityLinkIndex,
-                listState = listStates[9]!!,
+                listState = listStates.getValue(9),
             )
             10 -> ReferenceScreen()
-            11 -> VersionsScreen(listState = listStates[11]!!)
+            11 -> VersionsScreen(listState = listStates.getValue(11))
         }
     }
 }

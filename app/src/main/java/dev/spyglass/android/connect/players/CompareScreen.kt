@@ -54,8 +54,8 @@ fun CompareScreen(
             return
         }
 
-        val p1 = playerData!!
-        val p2 = compareData!!
+        val p1 = playerData ?: return
+        val p2 = compareData ?: return
 
         Column(
             modifier = Modifier

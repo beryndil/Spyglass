@@ -131,9 +131,9 @@ private fun PetCard(pet: PetData) {
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                    if (pet.ownerName != null) {
+                    pet.ownerName?.let { owner ->
                         Text(
-                            stringResource(R.string.connect_owner_label, pet.ownerName!!),
+                            stringResource(R.string.connect_owner_label, owner),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -147,7 +147,7 @@ private fun PetCard(pet: PetData) {
                 // Extra details
                 val details = buildList {
                     if (pet.collarColor >= 0) add(stringResource(R.string.connect_collar, COLLAR_COLORS[pet.collarColor] ?: stringResource(R.string.connect_unknown)))
-                    if (pet.catVariant != null) add(stringResource(R.string.connect_variant, pet.catVariant!!.replace("_", " ").replaceFirstChar { it.uppercase() }))
+                    pet.catVariant?.let { add(stringResource(R.string.connect_variant, it.replace("_", " ").replaceFirstChar { c -> c.uppercase() })) }
                     if (pet.horseSpeed > 0) add(stringResource(R.string.connect_speed_format, "%.2f".format(pet.horseSpeed * 43.17)))
                     if (pet.horseJump > 0) add(stringResource(R.string.connect_jump_format, "%.1f".format(pet.horseJump * 5.0)))
                 }

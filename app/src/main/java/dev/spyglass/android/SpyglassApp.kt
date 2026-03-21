@@ -82,13 +82,25 @@ class SpyglassApp : Application() {
             // Pre-warm database, seed data, init textures — all on IO to avoid ANR
             appScope.launch(Dispatchers.IO) {
                 // Init TextureManager (checks if textures are already downloaded)
-                TextureManager.init(this@SpyglassApp)
+                try {
+                    TextureManager.init(this@SpyglassApp)
+                } catch (e: Exception) {
+                    Timber.w(e, "TextureManager init failed — textures will be unavailable")
+                }
 
                 // Init CustomWallpaper (loads cached theme from user's photo if set)
-                CustomWallpaper.init(this@SpyglassApp)
+                try {
+                    CustomWallpaper.init(this@SpyglassApp)
+                } catch (e: Exception) {
+                    Timber.w(e, "CustomWallpaper init failed — falling back to default theme")
+                }
 
                 // Load texture mappings (block/item ID -> filename) from JSON
-                TextureManager.loadTextureMaps(this@SpyglassApp)
+                try {
+                    TextureManager.loadTextureMaps(this@SpyglassApp)
+                } catch (e: Exception) {
+                    Timber.w(e, "Texture map loading failed — icons will use fallbacks")
+                }
 
                 Trace.beginSection("SpyglassApp.seedAndWarm")
                 try {

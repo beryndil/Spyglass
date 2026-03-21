@@ -134,6 +134,11 @@ android {
         compose = true
         buildConfig = true
     }
+
+    lint {
+        // Translations are in progress (Phase 1 i18n) — suppress until complete
+        disable += "MissingTranslation"
+    }
 }
 
 baselineProfile {

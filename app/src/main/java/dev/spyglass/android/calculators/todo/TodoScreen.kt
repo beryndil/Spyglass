@@ -152,8 +152,9 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
                                 onClick = {
                                     val qty = quantityInput.toIntOrNull() ?: 1
                                     if (qty in 1..10_000_000) {
+                                        val id = selectedId ?: return@IconButton
                                         vm.createItemTodo(
-                                            selectedId!!, selectedName, qty,
+                                            id, selectedName, qty,
                                             linkedType = createLinkedList?.let { "shopping_list" },
                                             linkedId = createLinkedList?.id,
                                         )
@@ -248,20 +249,20 @@ fun TodoScreen(vm: TodoViewModel = viewModel()) {
     }
 
     // ── Edit dialog ──
-    if (editDialogTodo != null) {
+    editDialogTodo?.let { todo ->
         EditTodoDialog(
-            todo = editDialogTodo!!,
-            onSave = { newTitle -> vm.editTitle(editDialogTodo!!.id, newTitle); editDialogTodo = null },
+            todo = todo,
+            onSave = { newTitle -> vm.editTitle(todo.id, newTitle); editDialogTodo = null },
             onDismiss = { editDialogTodo = null },
         )
     }
 
     // ── Link dialog ──
-    if (linkDialogTodo != null) {
+    linkDialogTodo?.let { todo ->
         LinkDialog(
-            todo = linkDialogTodo!!,
+            todo = todo,
             shoppingLists = shoppingLists,
-            onLink = { type, id -> vm.linkToTool(linkDialogTodo!!.id, type, id) },
+            onLink = { type, id -> vm.linkToTool(todo.id, type, id) },
             onDismiss = { linkDialogTodo = null },
         )
     }
@@ -455,9 +456,7 @@ private fun LinkDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    if (selectedList != null) {
-                        onLink("shopping_list", selectedList!!.id)
-                    }
+                    selectedList?.let { onLink("shopping_list", it.id) }
                     onDismiss()
                 },
                 enabled = selectedList != null,

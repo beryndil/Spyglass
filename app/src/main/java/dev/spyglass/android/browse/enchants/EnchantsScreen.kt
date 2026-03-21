@@ -220,8 +220,8 @@ fun EnchantsScreen(
 
     // Show snackbar when incompatible enchant warning fires
     LaunchedEffect(warning) {
-        if (warning != null) {
-            snackbarHostState.showSnackbar(warning!!, duration = SnackbarDuration.Short)
+        warning?.let {
+            snackbarHostState.showSnackbar(it, duration = SnackbarDuration.Short)
             vm.clearWarning()
         }
     }

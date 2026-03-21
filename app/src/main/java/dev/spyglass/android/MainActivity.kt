@@ -62,31 +62,31 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContent {
-            val theme by dataStore.data
-                .map { it[PreferenceKeys.BACKGROUND_THEME] ?: DEFAULT_THEME }
-                .collectAsStateWithLifecycle(initialValue = DEFAULT_THEME)
+            val theme by remember {
+                dataStore.data.map { it[PreferenceKeys.BACKGROUND_THEME] ?: DEFAULT_THEME }
+            }.collectAsStateWithLifecycle(initialValue = DEFAULT_THEME)
 
-            val highContrast by dataStore.data
-                .map { it[PreferenceKeys.HIGH_CONTRAST] ?: false }
-                .collectAsStateWithLifecycle(initialValue = false)
+            val highContrast by remember {
+                dataStore.data.map { it[PreferenceKeys.HIGH_CONTRAST] ?: false }
+            }.collectAsStateWithLifecycle(initialValue = false)
 
-            val hapticEnabled by dataStore.data
-                .map { it[PreferenceKeys.HAPTIC_FEEDBACK] ?: true }
-                .collectAsStateWithLifecycle(initialValue = true)
+            val hapticEnabled by remember {
+                dataStore.data.map { it[PreferenceKeys.HAPTIC_FEEDBACK] ?: true }
+            }.collectAsStateWithLifecycle(initialValue = true)
 
-            val reduceAnimations by dataStore.data
-                .map { it[PreferenceKeys.REDUCE_ANIMATIONS] ?: false }
-                .collectAsStateWithLifecycle(initialValue = false)
+            val reduceAnimations by remember {
+                dataStore.data.map { it[PreferenceKeys.REDUCE_ANIMATIONS] ?: false }
+            }.collectAsStateWithLifecycle(initialValue = false)
 
-            val fontScale by dataStore.data
-                .map { it[PreferenceKeys.FONT_SCALE] ?: 1 }
-                .collectAsStateWithLifecycle(initialValue = 1)
+            val fontScale by remember {
+                dataStore.data.map { it[PreferenceKeys.FONT_SCALE] ?: 1 }
+            }.collectAsStateWithLifecycle(initialValue = 1)
 
             val resolvedLocale = "en"
 
-            val consentShown by dataStore.data
-                .map { it[PreferenceKeys.CONSENT_SHOWN] ?: false }
-                .collectAsStateWithLifecycle(initialValue = true) // default true to avoid flash
+            val consentShown by remember {
+                dataStore.data.map { it[PreferenceKeys.CONSENT_SHOWN] ?: false }
+            }.collectAsStateWithLifecycle(initialValue = true) // default true to avoid flash
 
             var showIgnPrompt by remember { mutableStateOf(false) }
 
